@@ -1,0 +1,1 @@
+"""Design ontology ingestion harness."""

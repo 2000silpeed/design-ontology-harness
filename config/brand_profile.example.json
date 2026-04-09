@@ -1,0 +1,62 @@
+{
+  "brand_name": "Signal Desk",
+  "system_name": "Signal System",
+  "product_summary": "작은 팀과 개인 제작자를 위한 고집 있는 에디토리얼 업무 앱",
+  "audiences": [
+    "독립 창작자",
+    "콘텐츠 팀",
+    "브랜드 운영자"
+  ],
+  "brand_keywords": [
+    "calm",
+    "precise",
+    "editorial",
+    "trustworthy"
+  ],
+  "anti_keywords": [
+    "generic",
+    "noisy",
+    "overdecorated",
+    "playful"
+  ],
+  "tone_of_voice": [
+    "clear",
+    "warm",
+    "confident"
+  ],
+  "visual_keywords": [
+    "structured whitespace",
+    "measured contrast",
+    "text-first hierarchy"
+  ],
+  "interaction_keywords": [
+    "predictable states",
+    "low-noise motion",
+    "deliberate emphasis"
+  ],
+  "platforms": [
+    "web",
+    "ios"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "workspace navigation",
+    "rich text editor",
+    "command palette",
+    "dashboard cards",
+    "data tables"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "typography",
+      "accessibility",
+      "components",
+      "design token"
+    ],
+    "avoid_sources_containing": [
+      "brand-only"
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/design-ontology-harness/brand-profile.schema.json",
+  "title": "Brand Profile",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "brand_name",
+    "system_name",
+    "product_summary",
+    "audiences",
+    "brand_keywords",
+    "anti_keywords",
+    "tone_of_voice",
+    "visual_keywords",
+    "interaction_keywords",
+    "platforms",
+    "accessibility_targets",
+    "product_primitives"
+  ],
+  "properties": {
+    "brand_name": { "type": "string", "minLength": 1 },
+    "system_name": { "type": "string", "minLength": 1 },
+    "product_summary": { "type": "string", "minLength": 1 },
+    "audiences": { "type": "array", "items": { "type": "string" } },
+    "brand_keywords": { "type": "array", "items": { "type": "string" } },
+    "anti_keywords": { "type": "array", "items": { "type": "string" } },
+    "tone_of_voice": { "type": "array", "items": { "type": "string" } },
+    "visual_keywords": { "type": "array", "items": { "type": "string" } },
+    "interaction_keywords": { "type": "array", "items": { "type": "string" } },
+    "platforms": { "type": "array", "items": { "type": "string" } },
+    "accessibility_targets": { "type": "array", "items": { "type": "string" } },
+    "product_primitives": { "type": "array", "items": { "type": "string" } },
+    "reference_preferences": {
+      "type": "object",
+      "properties": {
+        "prioritize_sources_containing": { "type": "array", "items": { "type": "string" } },
+        "avoid_sources_containing": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}
