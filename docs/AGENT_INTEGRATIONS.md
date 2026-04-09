@@ -62,6 +62,8 @@ The generated skills and agents expect these files inside the implementation rep
 - `design-system/component_inventory.json`
 - `design-system/system_ontology.json`
 
+If a curated color reference is connected through the harness project, the generated `system_spec.md` and `token_schema.json` will also carry the palette cues and semantic role hints that agents should follow.
+
 You should sync them from a harness project output such as:
 
 - `build/system/blueprint/system_spec.md`
@@ -85,3 +87,14 @@ In a frontend repo:
 - ask the architect skill/agent to map a new screen to component families
 - ask the implementer skill/agent to build the screen using existing tokens and primitives
 - if the request falls outside the current artifacts, update the harness project first instead of improvising a new system
+
+## Refactor Safety Expectation
+
+생성되는 Codex / Claude Code skills는 기본적으로 아래 원칙을 따르도록 설계되어 있습니다.
+
+- 기존 기능과 진입점 보존
+- 전체 셸 리라이트보다 점진적 적용
+- theme / breakpoint 호환성 유지
+- semantic token 우선, 하드코딩 색상 지양
+
+즉 이 integration pack은 "멋있게 다시 만들어라"보다 "기존 제품을 깨지 않으면서 시스템적으로 개선하라"에 더 가깝습니다.

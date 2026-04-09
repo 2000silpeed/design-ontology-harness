@@ -58,6 +58,7 @@ uv run design-ontology init \
 - 플랫폼
 - 접근성 기준
 - 핵심 product primitive
+- 선택적으로 curated color reference 경로와 palette role
 
 를 작성합니다.
 
@@ -136,6 +137,62 @@ uv run design-ontology init-agent-pack \
 3. feedback / overlay
 4. 제품 특화 primitive
 5. 문서화와 테스트
+
+## Optional Curated Color Input
+
+색상 방향이 이미 별도 문서로 정리되어 있다면 `brand_profile.json`의 `color_reference`로 연결할 수 있습니다.
+
+예:
+
+```json
+{
+  "color_reference": {
+    "path": "/absolute/path/to/color-reference.md",
+    "preferred_families": ["Deep Reds", "Standard Oranges"],
+    "selected_colors": ["Claret", "Tangerine", "Creamsicle"],
+    "palette_roles": {
+      "primary": "Claret",
+      "accent": "Tangerine",
+      "surface_tint": "Creamsicle"
+    }
+  }
+}
+```
+
+이 값이 있으면 하네스는:
+
+- markdown 색상 문서를 파싱하고
+- 선택한 색상 이름을 실제 HEX/mood/pairing과 연결하고
+- `system_spec.md`와 `token_schema.json`에 색상 기준으로 기록합니다.
+
+## Safe Refactor Policy
+
+이 프레임워크의 산출물은 "전체 UI를 한 번에 갈아엎으라"는 신호가 아닙니다.
+
+기본 원칙:
+
+- 기존 핵심 기능, 진입점, 작업 흐름은 명시적 요청 없이 제거하거나 숨기지 않기
+- 전체 셸 리디자인보다 `token -> primitive -> feature surface` 순서의 점진적 적용 우선
+- 지원 대상 theme와 breakpoint에서 동시에 성립하는 semantic token부터 먼저 적용
+- 시각 개선보다 기능 회귀 방지가 우선
+- 패널 위치 변경, 내비게이션 구조 변경, 기본 상호작용 변경은 별도 migration decision으로 다루기
+
+## Safe Refactor Checklist
+
+실제 구현 저장소에서 리팩터 전후로 최소한 아래를 확인하는 것을 권장합니다.
+
+1. 기존에 보이던 핵심 패널, 버튼, 입력창이 그대로 노출되는가
+2. light/dark 또는 지원하는 theme 조합에서 텍스트와 surface 대비가 유지되는가
+3. desktop/tablet/mobile 또는 지원 breakpoint에서 주요 패널이 화면 밖으로 밀리지 않는가
+4. 기존 데이터 밀도와 핵심 업무 흐름이 악화되지 않았는가
+5. build/lint/test가 통과하는가
+
+## What To Avoid
+
+- 디자인 시스템을 핑계로 한 전면 셸 재작성
+- semantic token 없이 하드코딩 색상으로 화면 전체를 덮는 방식
+- 기존 기능을 없애거나 숨긴 뒤 "더 깔끔해졌다"고 판단하는 방식
+- 한 번의 리팩터에서 정보 구조와 시각 구조를 동시에 크게 바꾸는 방식
 
 ## Versioning Advice
 

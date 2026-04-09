@@ -5,6 +5,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 from .authoring import generate_system_pack
+from .color_reference import resolve_color_reference
 from .models import DocumentRecord, ReferenceLink
 from .utils import ensure_dir, write_json
 
@@ -38,7 +39,15 @@ KEYWORD_PRINCIPLES = {
 
 
 def load_brand_profile(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    profile = json.loads(path.read_text(encoding="utf-8"))
+    reference_config = profile.get("color_reference")
+    if reference_config:
+        resolved_reference, issues = resolve_color_reference(reference_config, path.parent)
+        if resolved_reference:
+            profile["_resolved_color_reference"] = resolved_reference
+        if issues:
+            profile["_color_reference_issues"] = issues
+    return profile
 
 
 def build_blueprint(
@@ -86,18 +95,27 @@ def build_blueprint(
         },
         "token_strategy": _build_token_strategy(brand_profile, prioritized_concepts),
         "component_strategy": _build_component_strategy(brand_profile, prioritized_concepts),
+        "color_reference": brand_profile.get("_resolved_color_reference"),
         "governance": {
             "source_of_truth": [
                 "brand profile",
                 "design tokens",
                 "component specs",
-                "usage rules"
+                "usage rules",
+                "existing product surfaces and task flows"
             ],
             "change_policy": [
                 "새 컴포넌트보다 기존 primitive 확장을 우선",
                 "예외 케이스는 variant로 흡수 가능한지 먼저 검토",
                 "브랜드 키워드와 anti-keyword를 위반하면 추가하지 않음"
-            ]
+            ],
+            "implementation_guardrails": [
+                "기존 핵심 화면, 진입점, 작업 흐름은 명시적 승인 없이 제거하거나 숨기지 않음",
+                "전면 셸 리라이트보다 토큰 -> primitive -> feature surface 순서의 점진적 롤아웃을 우선",
+                "새 시각 규칙은 지원 대상 테마와 breakpoint 전체에서 먼저 검증",
+                "기존 데이터 밀도와 업무 완료 경로를 유지한 상태에서 시각 품질을 높이는 방향을 우선",
+                "기능 위치 변경, 정보 구조 변경, 패널 제거는 별도의 migration plan이 있을 때만 수행"
+            ],
         },
         "ontology_targets": prioritized_concepts,
     }
@@ -163,7 +181,9 @@ def _build_token_strategy(brand_profile: dict, prioritized_concepts: list[dict])
             "rules": [
                 "brand color는 1개의 primary accent를 중심으로 설계",
                 "semantic color는 brand color와 분리해서 유지",
-                "contrast ratio는 접근성 목표를 우선"
+                "contrast ratio는 접근성 목표를 우선",
+                "지원하는 theme 모드마다 semantic surface/text/border 쌍을 함께 정의",
+                "하드코딩 색상보다 semantic token 적용을 우선"
             ],
         },
         "typography": {
@@ -209,7 +229,9 @@ def _build_component_strategy(brand_profile: dict, prioritized_concepts: list[di
         "rules": [
             "primitive 단위로 책임을 먼저 정의하고 컴포넌트는 그 위에 매핑",
             "variant proliferation을 막기 위해 상태와 강조 레벨을 먼저 표준화",
-            "브랜드 표현은 surface, emphasis, typography에서 주고 구조는 안정적으로 유지"
+            "브랜드 표현은 surface, emphasis, typography에서 주고 구조는 안정적으로 유지",
+            "기존 기능 진입점은 유지한 채 내부 구현과 시각 언어부터 교체",
+            "전체 셸을 한 번에 다시 그리기보다 feature surface 단위로 순차 적용"
         ],
         "concept_alignment": sorted(concept_ids),
     }

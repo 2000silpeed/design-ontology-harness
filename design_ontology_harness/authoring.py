@@ -164,6 +164,8 @@ def validate_brand_profile(profile: dict) -> dict:
         warnings.append("Add more product_primitives so component planning reflects the real app surface.")
     if not profile.get("accessibility_targets"):
         warnings.append("Define accessibility_targets so the system has an explicit compliance floor.")
+    for issue in profile.get("_color_reference_issues", []):
+        warnings.append(issue)
 
     return {
         "valid": not errors,
@@ -195,8 +197,9 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
     brand_keywords = [keyword.lower() for keyword in brand_profile.get("brand_keywords", [])]
     calm_system = "calm" in brand_keywords or "trustworthy" in brand_keywords
     editorial_system = "editorial" in brand_keywords
+    color_reference = brand_profile.get("_resolved_color_reference")
 
-    return {
+    schema = {
         "naming": {
             "core": "{category}.{role}.{scale}",
             "semantic": "{category}.{intent}.{state}",
@@ -262,6 +265,38 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
             "system_name": blueprint.get("system_name"),
         },
     }
+    if color_reference:
+        schema["categories"]["color"]["reference_palette"] = {
+            "source_title": color_reference.get("title"),
+            "source_path": color_reference.get("source_path"),
+            "preferred_families": color_reference.get("preferred_families", []),
+            "selected_colors": [
+                {
+                    "name": item.get("name"),
+                    "family": item.get("family"),
+                    "hex": item.get("hex"),
+                    "mood": item.get("mood"),
+                    "pairings": item.get("pairings", [])[:6],
+                }
+                for item in color_reference.get("selected_colors", [])
+            ],
+            "palette_roles": {
+                role: {
+                    "name": item.get("name"),
+                    "family": item.get("family"),
+                    "hex": item.get("hex"),
+                    "mood": item.get("mood"),
+                    "pairings": item.get("pairings", [])[:6],
+                }
+                for role, item in color_reference.get("palette_roles", {}).items()
+            },
+            "rules": [
+                "컬러 레퍼런스의 mood와 pairings를 semantic token 설계의 출발점으로 사용",
+                "chosen palette는 semantic roles로 번역하고 raw reference color를 그대로 남용하지 않기",
+                "surface/text/border 대비는 레퍼런스보다 접근성 기준을 우선"
+            ],
+        }
+    return schema
 
 
 def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
@@ -439,10 +474,16 @@ def build_system_spec_markdown(
         f"- **{foundation['name']}** ({foundation['priority']}): signal {foundation['signal_count']}"
         for foundation in foundations
     )
+    implementation_guardrail_lines = "\n".join(
+        f"- {line}"
+        for line in blueprint.get("governance", {}).get("implementation_guardrails", [])
+    ) or "- No implementation guardrails defined."
     family_lines = "\n".join(
         f"- **{family['family']}**: {', '.join(family.get('components', [])[:8]) or 'TBD'}"
         for family in component_inventory.get("families", [])
     )
+    color_reference = brand_profile.get("_resolved_color_reference")
+    color_reference_lines = _build_color_reference_section(color_reference)
     validation_lines = "\n".join(
         [f"- Error: {message}" for message in validation.get("errors", [])]
         + [f"- Warning: {message}" for message in validation.get("warnings", [])]
@@ -487,24 +528,32 @@ def build_system_spec_markdown(
 - **Typography families**: {', '.join(token_schema['categories']['typography']['families'])}
 - **Spacing scale**: {', '.join(str(item) for item in token_schema['categories']['spacing']['scale'])}
 
-## 6. Component Strategy
+## 6. Color Reference
+
+{color_reference_lines}
+
+## 7. Component Strategy
 
 - **Product primitives**: {', '.join(brand_profile.get('product_primitives', []))}
 - **Required families**: {', '.join(item['family'] for item in component_inventory.get('families', []))}
 
 {family_lines}
 
-## 7. Reference Absorption Rule
+## 8. Implementation Guardrails
+
+{implementation_guardrail_lines}
+
+## 9. Reference Absorption Rule
 
 - Analysed live reference sources: {source_count}
 - Rule: copy visuals from no single source; absorb patterns only when they reinforce brand keywords and avoid anti-keywords.
 - Use references to validate structure, accessibility, token discipline, and documentation quality.
 
-## 8. Ontology Targets
+## 10. Ontology Targets
 
 {concept_lines}
 
-## 9. Profile Validation
+## 11. Profile Validation
 
 {validation_lines}
 """
@@ -535,3 +584,39 @@ def _dedupe_edges(edges: list[dict]) -> list[dict]:
 
 def slugify_text(value: str) -> str:
     return "".join(ch.lower() if ch.isalnum() else "-" for ch in value).strip("-")
+
+
+def _build_color_reference_section(color_reference: dict | None) -> str:
+    if not color_reference:
+        return "- No curated color reference connected."
+
+    lines = [
+        f"- **Source**: {color_reference.get('title', 'Color Reference')} ({color_reference.get('source_path', '')})",
+    ]
+    preferred_families = color_reference.get("preferred_families", [])
+    if preferred_families:
+        lines.append(f"- **Preferred families**: {', '.join(preferred_families)}")
+
+    palette_roles = color_reference.get("palette_roles", {})
+    if palette_roles:
+        lines.append("- **Palette roles**:")
+        for role, item in palette_roles.items():
+            lines.append(
+                f"  - `{role}` -> {item.get('name')} {item.get('hex', '')} / {item.get('family', '')}"
+            )
+
+    selected_colors = color_reference.get("selected_colors", [])
+    if selected_colors:
+        lines.append("- **Selected colors**:")
+        for item in selected_colors[:6]:
+            mood = item.get("mood") or ""
+            lines.append(
+                f"  - {item.get('name')} {item.get('hex', '')} / {item.get('family', '')} / {mood}"
+            )
+
+    notes = color_reference.get("notes", [])
+    if notes:
+        lines.append(f"- **Notes**: {', '.join(str(item) for item in notes)}")
+
+    lines.append("- **Application rule**: 레퍼런스 컬러는 semantic token으로 번역해서 사용하고, 접근성과 theme 호환성을 우선합니다.")
+    return "\n".join(lines)

@@ -26,6 +26,8 @@
 
 의 흐름으로 해결하려고 합니다.
 
+중요하게, 이 산출물들은 "전면 UI 리라이트 허가서"가 아닙니다. 기본 철학은 기존 제품의 기능과 진입점을 보존한 채, 토큰과 primitive부터 점진적으로 시스템화하는 것입니다.
+
 핵심은 "남의 시스템을 복제"하는 것이 아니라:
 
 1. 레퍼런스를 수집하고
@@ -41,6 +43,7 @@
 4. 디자인 시스템 개념어를 기준으로 온톨로지 후보와 근거 문장을 JSONL로 저장합니다.
 5. 브랜드 아이덴티티 프로필을 주입하면, 레퍼런스를 참고하되 복제하지 않는 자체 디자인 시스템 블루프린트를 생성합니다.
 6. 블루프린트에서 끝나지 않고 실제 시스템 스펙, 토큰 스키마, 컴포넌트 인벤토리, 시스템 온톨로지 그래프 초안을 함께 생성합니다.
+7. 필요하면 로컬의 curated color reference markdown을 읽어 색상 방향을 시스템 산출물에 반영합니다.
 
 ## TL;DR
 
@@ -104,6 +107,23 @@ uv run design-ontology init \
 - 필요하면 `project_manifest.json`의 `kb_dir` 수정
 - `seeds/seed_urls.txt`는 provenance 또는 차후 KB 갱신용 메모로 유지 가능
 
+선택적으로 `brand_profile.json`에 `color_reference`를 넣으면 로컬 markdown 색상 문서를 읽어 system spec과 token schema에 반영할 수 있습니다.
+
+```json
+{
+  "color_reference": {
+    "path": "/absolute/path/to/color-reference.md",
+    "preferred_families": ["Deep Reds", "Standard Oranges"],
+    "selected_colors": ["Claret", "Tangerine", "Creamsicle"],
+    "palette_roles": {
+      "primary": "Claret",
+      "accent": "Tangerine",
+      "surface_tint": "Creamsicle"
+    }
+  }
+}
+```
+
 ### 3. 프로젝트 실행
 
 ```bash
@@ -118,6 +138,14 @@ uv run design-ontology run-project --project-dir projects/my-app
 - `build/system/blueprint/token_schema.json`
 - `build/system/blueprint/component_inventory.json`
 - `build/system/blueprint/system_ontology.json`
+
+`color_reference`가 설정되어 있으면 위 산출물 안에:
+
+- 색상 기준 source path
+- 선택된 컬러와 family
+- semantic palette role 힌트
+
+가 함께 들어갑니다.
 
 ## Direct Run
 
@@ -162,7 +190,7 @@ uv run design-ontology run \
 - `schemas/`: input schemas
 - `config/`: example brand profiles
 - `docs/`: architecture and implementation docs
-- `kb/`: reusable knowledge bases
+- `kb/`: reusable knowledge bases, usually generated locally and gitignored
 - `projects/`: scaffolded project workspaces
 
 ## Agent Packs
@@ -182,6 +210,15 @@ uv run design-ontology init-agent-pack \
 - Claude Code project skills + subagents
 
 를 생성합니다. 자세한 내용은 `docs/AGENT_INTEGRATIONS.md`를 참고하세요.
+
+생성되는 스킬들은 기본적으로:
+
+- 기존 feature surface 보존
+- theme / breakpoint 호환 유지
+- semantic token 우선 적용
+- 전면 셸 리라이트보다 점진적 리팩터 우선
+
+원칙을 따르도록 설계되어 있습니다.
 
 ## Authoring Flow
 

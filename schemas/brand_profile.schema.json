@@ -37,6 +37,19 @@
         "prioritize_sources_containing": { "type": "array", "items": { "type": "string" } },
         "avoid_sources_containing": { "type": "array", "items": { "type": "string" } }
       }
+    },
+    "color_reference": {
+      "type": "object",
+      "properties": {
+        "path": { "type": "string" },
+        "preferred_families": { "type": "array", "items": { "type": "string" } },
+        "selected_colors": { "type": "array", "items": { "type": "string" } },
+        "palette_roles": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
     }
   }
 }

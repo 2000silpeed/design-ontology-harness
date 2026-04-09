@@ -181,6 +181,12 @@ Expected files:
 - `component_inventory.json`
 - `system_ontology.json`
 
+Important usage rule:
+
+- treat these artifacts as alignment inputs, not a license for a full-shell rewrite
+- preserve existing product features and entry points unless an explicit migration is requested
+- validate supported themes and responsive states when applying visual refactors
+
 Recommended sync source:
 
 - a harness project output such as `build/system/blueprint/*`
@@ -219,6 +225,9 @@ When this skill is active:
    - required implementation order
 5. Favor extending existing primitives over inventing new components.
 6. Explicitly guard against anti-keywords from the system spec.
+7. Preserve existing user-facing entry points and feature surfaces unless the user explicitly asks for a structural change.
+8. Prefer incremental rollout plans over full-shell rewrites.
+9. If `token_schema.json` contains a curated color reference or palette roles, treat that as the starting point for semantic color decisions.
 
 If any artifact file is missing, say exactly which file is missing and recommend syncing artifacts from the harness repo before implementation.
 """
@@ -249,12 +258,18 @@ Implementation rules:
 - Keep implementation aligned with the product's brand keywords and anti-keywords.
 - Implement high-priority component families before medium-priority families.
 - Reuse or extend primitives before adding net-new components.
+- Preserve existing features, navigation entry points, and data flows unless removal is explicitly requested.
+- Keep supported themes, breakpoints, and critical interaction states working while refactoring.
+- Prefer semantic tokens over one-off hardcoded colors so theme support survives future changes.
+- Default to the smallest viable surface refactor; do not rewrite the whole shell unless the task explicitly calls for it.
+- If `token_schema.json` includes a curated color reference or palette roles, align color decisions to that input before inventing a new palette.
 - Update nearby documentation or tests when implementation meaningfully changes.
 
 When finishing:
 
 - State which artifact files guided the implementation.
 - Mention any gaps between the requested UI and the current system artifacts.
+- Mention any feature, theme, or layout risks that still need manual verification.
 """
 
 
@@ -282,6 +297,9 @@ Always:
    - rollout order
 4. Prefer extending existing primitives over introducing new abstractions.
 5. Call out conflicts with anti-keywords or missing artifacts.
+6. Treat existing screens and interaction entry points as constraints, not disposable implementation details.
+7. Recommend incremental rollout steps before proposing a shell-level rewrite.
+8. If the token schema includes curated palette roles, use those roles as the default color direction in the plan.
 
 You are primarily a planning and alignment agent, not an implementation agent.
 """
@@ -309,6 +327,10 @@ Implementation rules:
 - Keep code aligned with system principles.
 - Use the token schema to name and organize variables or theme values.
 - Use the component inventory to decide whether to create, extend, or defer a component.
+- Preserve existing feature surfaces and task-completion paths unless the user explicitly wants a structural redesign.
+- Maintain supported themes and responsive layouts; avoid introducing hardcoded colors that only work in one mode.
+- Prefer local, reversible refactors over all-at-once shell rewrites.
+- If token_schema includes curated palette roles or selected reference colors, preserve that color direction while implementing.
 - If the request falls outside the current system artifacts, state the gap clearly instead of inventing an ungrounded pattern.
 """
 
@@ -338,7 +360,9 @@ Read these files first when they exist:
 2. Map the request to token categories and component families.
 3. Prefer extending an existing primitive over introducing a new abstraction.
 4. Call out any conflict with anti-keywords or missing system coverage.
-5. Produce a concise implementation plan the coding agent can follow.
+5. Preserve existing surface structure and user flows unless the task explicitly asks to replace them.
+6. Produce a concise, incremental implementation plan the coding agent can follow.
+7. Use curated palette roles from the token schema as the default color direction when available.
 """
 
 
@@ -366,12 +390,17 @@ Read these files first when they exist:
 2. Keep implementation aligned with brand keywords and anti-keywords.
 3. Implement high-priority families before medium-priority families.
 4. Reuse or extend primitives before adding net-new components.
-5. Update nearby documentation or tests when behavior or structure changes.
+5. Preserve existing features, entry points, and task flows unless removal is explicitly requested.
+6. Keep supported themes and responsive layouts working during refactors.
+7. Use semantic tokens before introducing hardcoded surface or text colors.
+8. Update nearby documentation or tests when behavior or structure changes.
+9. Respect curated palette roles and reference colors recorded in the token schema when choosing UI colors.
 
 ## Output Expectations
 
 - State which artifact files informed the implementation.
 - Mention any gap between the requested UI and the current system artifacts.
+- Call out any remaining feature-regression or theme-regression risk.
 """
 
 

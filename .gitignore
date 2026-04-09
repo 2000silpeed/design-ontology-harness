@@ -6,3 +6,4 @@ data/
 data_*/
 build/
 projects/*/build/
+kb/
