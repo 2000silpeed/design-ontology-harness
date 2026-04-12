@@ -282,7 +282,7 @@ Implementation rules:
 - If `token_schema.json` includes a curated color reference or palette roles, align color decisions to that input before inventing a new palette.
 - Update nearby documentation or tests when implementation meaningfully changes.
 - NEVER change layout properties (display, flex-direction, grid-template, position, width, height).
-- NEVER change font-size or line-height unless the exact same px value exists in the token scale — rounding breaks text wrapping.
+- NEVER change font-size or line-height to "fit the token scale." Existing sizes are tuned to the layout. Only replace when the token resolves to the exact same px. If no match, keep original + TODO.
 - NEVER round spacing values to the nearest token — if no exact match, leave as-is with a TODO.
 
 When finishing:
@@ -353,6 +353,7 @@ Implementation rules:
 - If token_schema includes curated palette roles or selected reference colors, preserve that color direction while implementing.
 - If the request falls outside the current system artifacts, state the gap clearly instead of inventing an ungrounded pattern.
 - NEVER change layout properties, element sizes, or text-flow properties (font-size, line-height, white-space, word-break) unless explicitly requested.
+- NEVER change font-size to match a token scale — existing sizes are already tuned to the layout. Only replace when the token is the exact same px value. "Fitting the scale" is a design change, not a refactor.
 - When replacing spacing/sizing values with tokens, only use exact matches — never round to the nearest token value.
 """
 
@@ -525,60 +526,60 @@ function Button({{ children, variant = "primary", size = "md", disabled, loading
 금지: line-height: 1.4 → line-height: 1.75 (텍스트 높이가 바뀜)
 ```
 
-### font-size 변경 시 연쇄 조정 규칙 (Typography Cascade)
+### font-size / line-height: 원칙적으로 바꾸지 않음
 
-font-size를 변경하면 주변 spacing도 함께 조정해야 합니다. 그렇지 않으면:
-- 글자가 커졌는데 패딩이 그대로 → 요소 사이 시각적 구분이 사라짐
-- 보더 없는 리스트 아이템에서 글자가 뭉쳐 보임
-- 카드 안 텍스트가 여백을 먹고 답답해 보임
+**기존 코드의 font-size는 이미 화면에 맞게 조정된 값입니다.**
+토큰 스케일(xs=12, sm=13, md=15, lg=21...)에 기계적으로 맞추려고
+기존 14px → 15px, 16px → 21px 같은 변경을 하면 안 됩니다.
 
-**원칙: font-size를 바꾸면 반드시 아래 체크리스트를 순회합니다.**
+이런 일이 실제로 발생합니다:
+- 카드 제목 16px → 18px(lg)로 올림 → 한 줄이 두 줄로 넘침 → 카드 높이 깨짐
+- 배지 텍스트 11px → 12px(xs)로 올림 → 배지 폭 증가 → 줄 끝에서 밀려남
+- 리스트 아이템 13px → 14px → padding 그대로인데 글자가 커져서 뭉쳐 보임
+- 가격 텍스트 15px → 16px → 옆 요소와 정렬 어긋남
 
-1. **line-height**: 변경된 font-size에 맞는 값인지 확인
-   - 본문(md): 1.5~1.6 / 헤딩(lg~3xl): 1.2~1.3 / 캡션(xs~sm): 1.4~1.5
-2. **padding**: 요소 내부 여백이 새 글자 크기 대비 충분한지 확인
-   - 최소 기준: padding-top/bottom >= font-size * 0.5
-3. **gap/margin**: 인접 요소 사이 간격 확인
-   - 보더/구분선 없는 목록 → gap >= font-size * 0.75 (가장 위험한 케이스)
-4. **컨테이너 높이**: 고정 height가 있으면 font-size 증가분 * 줄 수만큼 넘침 여부 확인
-5. **줄바꿈**: 고정 width 안에서 font-size 키우면 한 줄 → 두 줄로 넘칠 수 있음
+**리팩토링에서 font-size를 바꾸는 것은 디자인 변경이지 리팩토링이 아닙니다.**
 
-**판단 기준:**
-- font-size 차이 1px 이내 → 안 바꾸는 것이 가장 안전
-- font-size 차이 2px 이상이면서 연쇄 조정이 필요 → padding/gap도 함께 조정
-- 연쇄 조정이 5개 이상 속성에 영향 → 안 바꾸고 TODO로 남김
-
-**적용 예시 (보더 없는 리스트):**
-
+허용되는 경우:
 ```
-Before: font-size: 14px; padding: 8px 12px; .list gap: 4px;
-
-BAD  — font-size만 올림 → 글자가 뭉쳐 보임
-After: font-size: 15px; padding: 8px 12px; .list gap: 4px;
-
-GOOD — 연쇄 조정 포함
-After: font-size: 15px; padding: 10px 12px; .list gap: 6px;
-
-BEST — 1px 차이이므로 원본 유지
-After: font-size: 14px; (원본 유지, TODO 주석)
+font-size: 14px → var(--text-sm)   (단, --text-sm이 정확히 14px일 때만)
+font-size: 16px → var(--text-md)   (단, --text-md가 정확히 16px일 때만)
 ```
+
+금지되는 경우:
+```
+font-size: 14px → var(--text-md)   (md가 15px이면 × — 1px 차이라도 안 됨)
+font-size: 16px → var(--text-lg)   (lg가 21px이면 × — "스케일에 맞추려고" 키우면 안 됨)
+font-size: 11px → var(--text-xs)   (xs가 12px이면 × — 배지/뱃지 크기가 바뀜)
+```
+
+토큰 스케일에 정확히 맞는 값이 없으면:
+```
+// 토큰 스케일에 14px가 없음 — 원본 유지
+font-size: 14px; /* TODO: token scale에 없는 값, 커스텀 토큰 추가 검토 */
+```
+
+line-height도 동일하게 적용합니다.
+**토큰이 코드에 맞춰야지, 코드가 토큰에 맞추면 안 됩니다.**
 
 ### spacing 교체 시 주의
 
-- `padding`/`margin` 교체는 spacing scale에서 **같은 값**이 있을 때만 1:1 교체
+- `padding`/`margin` 교체는 spacing scale에서 **정확히 같은 값**이 있을 때만 1:1 교체
 - spacing scale에 없는 값(14px, 18px, 22px 등)은 교체하지 않고 TODO로 남김
 - 절대로 "가장 가까운 값"으로 반올림하지 않음 — 1px 차이로도 레이아웃이 깨질 수 있음
 - 특히 **보더나 구분선이 없는 반복 요소**(리스트, 카드 나열)는 spacing이 유일한 시각적 구분 — 더 신중하게
+- 배지/뱃지의 padding을 키우면 배지 자체 크기가 바뀌고 주변 정렬에 영향 — 원본 유지
 
 ### 리팩토링 후 자가 검증
 
 매 파일 수정 후 아래를 확인합니다:
 
-1. **박스 크기 불변**: 수정 전후로 요소의 width/height가 동일한가?
-2. **줄바꿈 불변**: 텍스트의 줄바꿈 위치가 바뀌지 않았는가?
+1. **줄바꿈 불변**: 텍스트의 줄바꿈 위치가 바뀌지 않았는가?
+2. **박스 크기 불변**: 수정 전후로 요소의 width/height가 동일한가?
 3. **간격 불변**: 요소 사이 간격이 달라지지 않았는가?
 4. **넘침 없음**: 텍스트나 요소가 컨테이너를 벗어나지 않는가?
 5. **뭉침 없음**: 보더 없는 목록에서 아이템 간 시각적 구분이 유지되는가?
+6. **정렬 유지**: 인접 요소 간 baseline/vertical 정렬이 바뀌지 않았는가?
 
 확신이 없으면 **수정하지 않고** 리포트에 "수동 확인 필요" 항목으로 남깁니다.
 
@@ -657,14 +658,11 @@ Refactoring must NEVER break existing layout or text flow.
 If no exact token match exists, leave the value as-is and add a TODO comment.
 One pixel of rounding can break text wrapping and card layouts.
 
-**Typography Cascade Rule**: If font-size MUST change (2px+ difference):
-- Adjust line-height proportionally
-- Check padding: padding-y should be >= new font-size * 0.5
-- Check gap: for borderless lists, gap should be >= new font-size * 0.75
-- Check container height: fixed heights may overflow with larger text
-- Check line wrapping: fixed-width containers may wrap differently
-- If cascade affects 5+ properties, do NOT change font-size — leave TODO instead
-- Most dangerous case: borderless vertical lists where spacing is the only separator
+**Typography Rule**: Do NOT change font-size or line-height to "fit the token scale."
+Existing font sizes are already tuned to the layout. Changing 14px→15px or 16px→18px
+to match a token scale causes text wrapping changes, card height breakage, and badge
+misalignment. Only replace with a token when the token resolves to the EXACT same px value.
+If no exact match exists, keep the original value and add a TODO comment.
 """
 
 
