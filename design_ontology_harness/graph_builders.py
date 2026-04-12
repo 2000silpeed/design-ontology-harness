@@ -40,23 +40,23 @@ def build_brand_layer(graph: DesignOntologyGraph, brand_profile: dict, blueprint
 
 
 def build_foundation_layer(graph: DesignOntologyGraph, token_schema: dict) -> None:
-    layers = token_schema.get("layers", {})
+    categories = token_schema.get("categories", {})
 
-    for token in layers.get("core", {}).get("spacing", {}).get("scale", []):
+    for token in categories.get("spacing", {}).get("scale", []):
         tid = f"spacing:{token}"
-        graph.add_node(OntologyNode(id=tid, type=NodeType.SpacingToken, label=token))
+        graph.add_node(OntologyNode(id=tid, type=NodeType.SpacingToken, label=str(token)))
 
-    for token in layers.get("core", {}).get("radius", {}).get("scale", []):
+    for token in categories.get("radius", {}).get("scale", []):
         tid = f"radius:{token}"
-        graph.add_node(OntologyNode(id=tid, type=NodeType.RadiusToken, label=token))
+        graph.add_node(OntologyNode(id=tid, type=NodeType.RadiusToken, label=str(token)))
 
-    for token in layers.get("core", {}).get("motion", {}).get("durations", []):
+    for token in categories.get("motion", {}).get("durations", []):
         tid = f"motion:{token}"
-        graph.add_node(OntologyNode(id=tid, type=NodeType.MotionToken, label=token))
+        graph.add_node(OntologyNode(id=tid, type=NodeType.MotionToken, label=str(token)))
 
-    for token in layers.get("core", {}).get("elevation", {}).get("scale", []):
+    for token in categories.get("elevation", {}).get("scale", []):
         tid = f"elevation:{token}"
-        graph.add_node(OntologyNode(id=tid, type=NodeType.ElevationToken, label=token))
+        graph.add_node(OntologyNode(id=tid, type=NodeType.ElevationToken, label=str(token)))
 
 
 def build_component_layer(
@@ -104,27 +104,63 @@ def build_color_layer(
     if not color_ref:
         return
 
-    for palette_name, palette_data in color_ref.get("palettes", {}).items():
-        pal_id = f"palette:{slugify(palette_name)}"
-        graph.add_node(OntologyNode(
-            id=pal_id, type=NodeType.ColorPalette, label=palette_name,
-            meta={"role": palette_data.get("role", "")},
-        ))
-
-        for swatch in palette_data.get("swatches", []):
-            token_id = f"color:{slugify(palette_name)}-{slugify(swatch.get('name', swatch.get('scale', '')))}"
+    seen_families: set[str] = set()
+    for color_info in color_ref.get("selected_colors", []):
+        family = color_info.get("family", "")
+        if family and family not in seen_families:
+            seen_families.add(family)
+            pal_id = f"palette:{slugify(family)}"
             graph.add_node(OntologyNode(
-                id=token_id, type=NodeType.ColorToken, label=swatch.get("name", ""),
-                meta={"hex": swatch.get("hex", ""), "tier": "core"},
+                id=pal_id, type=NodeType.ColorPalette, label=family,
             ))
-            graph.add_edge(OntologyEdge(type=EdgeType.belongs_to_palette, source=token_id, target=pal_id))
 
-    for role_name, role_value in color_ref.get("roles", {}).items():
-        token_id = f"color:{slugify(role_name)}"
-        graph.add_node(OntologyNode(
-            id=token_id, type=NodeType.ColorToken, label=role_name,
-            meta={"hex": role_value if isinstance(role_value, str) else "", "tier": "semantic"},
-        ))
+        name = color_info.get("name", "")
+        if name:
+            token_id = f"color:{slugify(name)}"
+            graph.add_node(OntologyNode(
+                id=token_id, type=NodeType.ColorToken, label=name,
+                meta={"hex": color_info.get("hex", ""), "tier": "core", "mood": color_info.get("mood", "")},
+            ))
+            if family:
+                graph.add_edge(OntologyEdge(
+                    type=EdgeType.belongs_to_palette, source=token_id, target=f"palette:{slugify(family)}",
+                ))
+
+    for role_name, role_data in color_ref.get("palette_roles", {}).items():
+        if isinstance(role_data, dict):
+            name = role_data.get("name", role_name)
+            token_id = f"color:{slugify(name)}"
+            graph.add_node(OntologyNode(
+                id=token_id, type=NodeType.ColorToken, label=name,
+                meta={"hex": role_data.get("hex", ""), "tier": "semantic", "role": role_name},
+            ))
+
+    expanded = color_ref.get("expanded_palette", {})
+    for role_name, role_data in expanded.get("semantic_roles", {}).items():
+        if isinstance(role_data, dict):
+            name = role_data.get("name", role_name)
+            token_id = f"color:{slugify(name)}"
+            graph.add_node(OntologyNode(
+                id=token_id, type=NodeType.ColorToken, label=name,
+                meta={"hex": role_data.get("hex", ""), "tier": "semantic", "role": role_name},
+            ))
+
+    for color_info in expanded.get("supporting_colors", []):
+        name = color_info.get("name", "")
+        if name:
+            token_id = f"color:{slugify(name)}"
+            graph.add_node(OntologyNode(
+                id=token_id, type=NodeType.ColorToken, label=name,
+                meta={"hex": color_info.get("hex", ""), "tier": "supporting"},
+            ))
+            family = color_info.get("family", "")
+            if family:
+                pal_id = f"palette:{slugify(family)}"
+                if not graph.get_node(pal_id):
+                    graph.add_node(OntologyNode(id=pal_id, type=NodeType.ColorPalette, label=family))
+                graph.add_edge(OntologyEdge(
+                    type=EdgeType.belongs_to_palette, source=token_id, target=pal_id,
+                ))
 
     if alias_result:
         for tier_name, tokens in alias_result.items():
@@ -137,10 +173,6 @@ def build_color_layer(
                     id=token_id, type=NodeType.ColorToken, label=name,
                     meta={"tier": tier_name, "value": token_info.get("resolved", "")},
                 ))
-                if tier_name == "component":
-                    graph.add_edge(OntologyEdge(
-                        type=EdgeType.maps_to_tier, source=token_id, target="tier:component",
-                    ))
 
     if var_chains:
         for derived, source in var_chains.items():
@@ -150,18 +182,6 @@ def build_color_layer(
                 graph.add_edge(OntologyEdge(type=EdgeType.derived_from, source=derived_id, target=source_id))
 
     _build_contrast_pairs(graph, color_ref)
-
-    modes = color_ref.get("modes", [])
-    for mode in modes:
-        mode_id = f"mode:{slugify(mode.get('name', 'default'))}"
-        graph.add_node(OntologyNode(id=mode_id, type=NodeType.ColorMode, label=mode.get("name", "")))
-        for override in mode.get("overrides", []):
-            token_id = f"color:{slugify(override.get('token', ''))}"
-            if graph.get_node(token_id):
-                graph.add_edge(OntologyEdge(
-                    type=EdgeType.overrides_in_mode, source=token_id, target=mode_id,
-                    meta={"value": override.get("value", "")},
-                ))
 
 
 def _build_contrast_pairs(graph: DesignOntologyGraph, color_ref: dict) -> None:
@@ -200,12 +220,27 @@ def build_typography_layer(
         return
 
     font_ids: dict[str, str] = {}
-    for role, font_name in font_system.get("fonts", {}).items():
+    for role in ["heading", "body", "mono"]:
+        font_data = font_system.get(role)
+        if not font_data:
+            continue
+        if isinstance(font_data, dict):
+            font_name = font_data.get("name", "")
+            meta = {
+                "role": role,
+                "family_type": font_data.get("family", ""),
+                "weight_range": font_data.get("weight_range", ""),
+                "variable": font_data.get("variable", False),
+                "source": font_data.get("source", ""),
+            }
+        else:
+            font_name = str(font_data)
+            meta = {"role": role}
+
+        if not font_name:
+            continue
         fid = f"font:{slugify(font_name)}"
-        graph.add_node(OntologyNode(
-            id=fid, type=NodeType.FontFamily, label=font_name,
-            meta={"role": role},
-        ))
+        graph.add_node(OntologyNode(id=fid, type=NodeType.FontFamily, label=font_name, meta=meta))
         font_ids[role] = fid
 
     if "heading" in font_ids and "body" in font_ids and font_ids["heading"] != font_ids["body"]:
