@@ -79,6 +79,15 @@ FONT_DB: list[dict] = [
         "best_for": ["saas", "enterprise", "editorial", "mobile"],
         "korean_pair": None,
         "korean_native": True,
+        "korean_context": {
+            "glyph_width": "중간",
+            "jaso_balance": "우수 — 초성/중성/종성 균형이 잘 잡혀 있음",
+            "small_size": "13px까지 가독성 유지",
+            "best_for_kr": ["UI 전반", "대시보드", "모바일 앱", "장문 본문"],
+            "avoid_for_kr": [],
+            "pair_with_latin": "Inter (x-height/weight 일치)",
+            "note_kr": "한글 UI 서체의 사실상 표준. 토스, 당근, 리디 등 국내 주요 서비스에서 사용. 자간이 자연스럽고 weight 전 구간에서 안정적.",
+        },
         "weight_range": "100-900",
         "variable": True,
         "source": "GitHub (cactus/pretendard)",
@@ -107,12 +116,21 @@ FONT_DB: list[dict] = [
         "note": "IBM Carbon Design System 공식 서체. Mono 패밀리까지 일관된 디자인.",
     },
     {
-        "name": "Noto Sans",
+        "name": "Noto Sans KR",
         "family": "humanist-sans",
         "personality": ["neutral", "readable", "universal"],
         "best_for": ["global", "enterprise", "documentation", "mobile"],
         "korean_pair": None,
         "korean_native": True,
+        "korean_context": {
+            "glyph_width": "넓음",
+            "jaso_balance": "양호 — 고딕 기반 깔끔한 형태",
+            "small_size": "12px까지 가독성 유지",
+            "best_for_kr": ["다국어 서비스", "공공/기관", "문서 중심", "장문 본문"],
+            "avoid_for_kr": ["좁은 UI 공간 — 글자폭이 넓어서 공간을 많이 차지"],
+            "pair_with_latin": "Noto Sans (같은 Noto 패밀리)",
+            "note_kr": "Google이 만든 범용 한글 서체. 글자폭이 넓어서 여유 있는 레이아웃에 적합. 다국어 지원이 필요한 서비스의 기본 선택.",
+        },
         "weight_range": "100-900",
         "variable": True,
         "source": "Google Fonts",
@@ -125,6 +143,15 @@ FONT_DB: list[dict] = [
         "best_for": ["saas", "hr-tech", "mobile"],
         "korean_pair": None,
         "korean_native": True,
+        "korean_context": {
+            "glyph_width": "중간-좁음",
+            "jaso_balance": "우수 — 현대적 비율, 자간이 좋음",
+            "small_size": "13px까지 가독성 유지",
+            "best_for_kr": ["SaaS", "모바일 앱", "현대적 브랜딩", "데이터 대시보드"],
+            "avoid_for_kr": ["장문 본문 — Pretendard보다 line-height 여유가 적음"],
+            "pair_with_latin": "Plus Jakarta Sans (weight/personality 일치)",
+            "note_kr": "원티드에서 공개. Pretendard보다 현대적이고 자신감 있는 인상. 헤딩에서 특히 좋음. bold weight에서 임팩트.",
+        },
         "weight_range": "400-800",
         "variable": True,
         "source": "GitHub (wanteddev)",
@@ -137,6 +164,15 @@ FONT_DB: list[dict] = [
         "best_for": ["mobile", "consumer", "saas"],
         "korean_pair": None,
         "korean_native": True,
+        "korean_context": {
+            "glyph_width": "중간",
+            "jaso_balance": "양호 — Pretendard 계열이지만 더 둥글고 부드러움",
+            "small_size": "13px까지 가독성 유지",
+            "best_for_kr": ["소비자 앱", "모바일", "친근한 톤의 서비스"],
+            "avoid_for_kr": ["기관/금융 — 너무 캐주얼할 수 있음"],
+            "pair_with_latin": "Outfit (둥근 터미널 매칭)",
+            "note_kr": "Pretendard보다 부드럽고 친근한 인상. 교육, 라이프스타일, 커뮤니티 서비스에 적합.",
+        },
         "weight_range": "100-900",
         "variable": True,
         "source": "GitHub (sun-typeface)",
@@ -217,6 +253,15 @@ FONT_DB: list[dict] = [
         "best_for": ["editorial", "publishing", "content"],
         "korean_pair": None,
         "korean_native": True,
+        "korean_context": {
+            "glyph_width": "넓음",
+            "jaso_balance": "우수 — 전통 명조 기반 현대적 재해석",
+            "small_size": "14px 이상 권장 (세리프 특성상)",
+            "best_for_kr": ["에디토리얼 헤딩", "콘텐츠 플랫폼", "매거진", "장문 읽기"],
+            "avoid_for_kr": ["UI 라벨 — 작은 크기에서 가독성 저하", "모바일 본문 — 화면이 좁으면 답답함"],
+            "pair_with_latin": "Playfair Display (세리프 헤딩) 또는 Lora (세리프 본문)",
+            "note_kr": "한글 세리프 웹폰트 중 사실상 유일한 고품질 선택지. 헤딩에서 격조 있는 인상. 본문에도 쓸 수 있지만 16px 이상 추천.",
+        },
         "weight_range": "200-900",
         "variable": False,
         "source": "Google Fonts",
@@ -229,6 +274,15 @@ FONT_DB: list[dict] = [
         "best_for": ["publishing", "government", "documentation"],
         "korean_pair": None,
         "korean_native": True,
+        "korean_context": {
+            "glyph_width": "넓음",
+            "jaso_balance": "전통적 — 인쇄용 바탕체에 가까움",
+            "small_size": "14px 이상 권장",
+            "best_for_kr": ["출판물", "공공 문서", "법률/계약서", "전통적 인상이 필요한 서비스"],
+            "avoid_for_kr": ["모던 UI — 너무 전통적", "모바일 — 글자폭이 넓어 공간 부족"],
+            "pair_with_latin": "Libre Baskerville",
+            "note_kr": "한국 출판 표준 바탕체. 웹보다는 PDF/인쇄 맥락에 더 적합. 웹에서는 Noto Serif KR이 더 안정적.",
+        },
         "weight_range": "300-700",
         "variable": False,
         "source": "한국출판인회의",
@@ -547,9 +601,9 @@ def resolve_font_system(brand_profile: dict) -> dict:
     needs_korean = _needs_korean(brand_profile)
     needs_mono = _needs_mono(product_type, brand_profile)
 
-    heading_scores = _score_fonts(brand_keywords, anti_keywords, product_type, "heading")
-    body_scores = _score_fonts(brand_keywords, anti_keywords, product_type, "body")
-    mono_scores = _score_fonts(brand_keywords, anti_keywords, product_type, "mono") if needs_mono else {}
+    heading_scores = _score_fonts(brand_keywords, anti_keywords, product_type, "heading", needs_korean)
+    body_scores = _score_fonts(brand_keywords, anti_keywords, product_type, "body", needs_korean)
+    mono_scores = _score_fonts(brand_keywords, anti_keywords, product_type, "mono", needs_korean) if needs_mono else {}
 
     heading_font = _pick_best(heading_scores)
     body_font = _pick_best(body_scores, exclude=heading_font if _should_contrast(brand_keywords) else None)
@@ -564,14 +618,40 @@ def resolve_font_system(brand_profile: dict) -> dict:
     type_scale = _pick_type_scale(product_type, brand_keywords)
     line_height = _pick_line_height(brand_keywords)
 
+    # 한글 서체 선택 이유 기록
+    korean_rationale = None
+    if needs_korean and body_font:
+        if body_font.get("korean_native"):
+            kr_ctx = body_font.get("korean_context", {})
+            korean_rationale = {
+                "primary_is_korean": True,
+                "font": body_font["name"],
+                "reason": kr_ctx.get("note_kr", "한글 네이티브 서체"),
+                "glyph_width": kr_ctx.get("glyph_width"),
+                "small_size_limit": kr_ctx.get("small_size"),
+                "best_for_kr": kr_ctx.get("best_for_kr", []),
+                "avoid_for_kr": kr_ctx.get("avoid_for_kr", []),
+                "latin_pair": kr_ctx.get("pair_with_latin"),
+            }
+        elif korean_font:
+            kr_ctx = korean_font.get("korean_context", {})
+            korean_rationale = {
+                "primary_is_korean": False,
+                "font": korean_font["name"],
+                "reason": kr_ctx.get("note_kr", "한글 페어링 서체") if kr_ctx else "기본 한글 페어링",
+                "latin_pair": body_font["name"],
+            }
+
     result = {
         "heading": _font_summary(heading_font),
         "body": _font_summary(body_font),
         "korean": _font_summary(korean_font) if korean_font else None,
+        "korean_rationale": korean_rationale,
         "mono": _font_summary(mono_font) if mono_font else None,
         "type_scale": type_scale,
         "line_height_preset": line_height,
         "product_type_detected": product_type,
+        "needs_korean": needs_korean,
         "pairing_source": pairing.get("context") if pairing else "auto-scored",
         "strategy": _build_strategy_notes(heading_font, body_font, mono_font, korean_font, brand_keywords, product_type),
         "loading": _build_loading_strategy(heading_font, body_font, mono_font, korean_font, platforms),
@@ -634,6 +714,7 @@ def _score_fonts(
     anti_keywords: list[str],
     product_type: str,
     role: str,
+    needs_korean: bool = False,
 ) -> dict[str, float]:
     scores: dict[str, float] = {}
     product_config = PRODUCT_TYPE_SIGNALS.get(product_type, {})
@@ -653,6 +734,23 @@ def _score_fonts(
             continue
         if role != "mono" and family == "monospace":
             continue
+
+        # 한국어 제품이면 한글 네이티브 서체를 강하게 우선
+        if needs_korean:
+            if font.get("korean_native"):
+                score += 5.0  # 한글 네이티브 서체 강한 가산점
+                kr_ctx = font.get("korean_context", {})
+                # 제품 유형이 한글 best_for에 포함되면 추가 가산
+                kr_best = [x.lower() for x in kr_ctx.get("best_for_kr", [])]
+                if any(product_type in item for item in kr_best):
+                    score += 2.0
+                # avoid_for에 해당하면 감점
+                kr_avoid = [x.lower() for x in kr_ctx.get("avoid_for_kr", [])]
+                if any(product_type in item for item in kr_avoid):
+                    score -= 3.0
+            else:
+                # 한국어 제품인데 영어 전용 서체면 감점
+                score -= 2.0
 
         if family in target_families:
             score += 3.0
