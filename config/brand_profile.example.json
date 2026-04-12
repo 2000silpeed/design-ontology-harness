@@ -63,21 +63,38 @@
     "path": "docs/color-reference.md",
     "preferred_families": [
       "Deep Reds",
-      "Standard Oranges"
+      "Standard Oranges",
+      "Pastel Oranges"
     ],
-    "selected_colors": [
-      "Claret",
-      "Tangerine",
-      "Creamsicle"
-    ],
-    "palette_roles": {
-      "primary": "Claret",
-      "accent": "Tangerine",
-      "surface_tint": "Creamsicle"
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "warm",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "tinted",
+      "prefer_moods": [
+        "세련됨",
+        "신뢰감"
+      ],
+      "avoid_moods": [
+        "달콤함",
+        "귀여움"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 12,
+      "combination_count": 4,
+      "prefer_pairings": true,
+      "prefer_related_families": true
     },
     "notes": [
       "색상 레퍼런스는 semantic token 설계의 출발점으로 사용",
-      "raw reference color를 그대로 전체 UI에 덮지 않기"
+      "raw reference color를 그대로 전체 UI에 덮지 않기",
+      "selected_colors와 palette_roles를 넣으면 manual override로 동작",
+      "palette_expansion은 seed color를 기반으로 support, neutral, semantic state 후보를 확장합니다"
     ]
   }
 }

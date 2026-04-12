@@ -4,6 +4,12 @@
 
 이 프레임워크는 KB와 디자인 시스템 산출물을 만드는 데서 끝나지 않고, 실제 구현 저장소에서 바로 사용할 수 있는 Codex / Claude Code 에이전트 설정까지 스캐폴드할 수 있습니다.
 
+중요한 포지션 정리:
+
+- 이 저장소의 본체는 GitHub에서 clone해서 쓰는 하네스 코어입니다.
+- Codex / Claude Code integration은 선택적 부가 레이어입니다.
+- 즉 이 repo는 "Claude plugin product"라기보다 "plugin-friendly harness"에 가깝습니다.
+
 ## Supported Targets
 
 ### Codex
@@ -34,6 +40,8 @@
 - project-level skills
 - project-level subagents
 
+현재 Claude Code 쪽은 설치형 marketplace plugin 패키지보다 project-local 설정 생성에 더 가깝습니다. 즉 바로 `.claude/` 아래에 심어서 쓰는 흐름을 기본으로 합니다.
+
 Claude Code 공식 문서 기준으로 project skills는 `.claude/skills/<skill-name>/SKILL.md`, project subagents는 `.claude/agents/*.md` 위치를 사용합니다.
 
 References:
@@ -62,7 +70,7 @@ The generated skills and agents expect these files inside the implementation rep
 - `design-system/component_inventory.json`
 - `design-system/system_ontology.json`
 
-If a curated color reference is connected through the harness project, the generated `system_spec.md` and `token_schema.json` will also carry the palette cues and semantic role hints that agents should follow.
+If a curated color reference is connected through the harness project, the generated `system_spec.md` and `token_schema.json` will also carry the active palette, alternative palette candidates, and semantic role hints that agents should follow.
 
 You should sync them from a harness project output such as:
 
@@ -79,6 +87,8 @@ You should sync them from a harness project output such as:
 4. Use:
    - Codex skills for implementation inside Codex
    - Claude Code skills and subagents inside Claude Code
+
+If you do not need agent integrations, you can stop at step 2. The harness remains fully useful without any Codex or Claude-specific layer.
 
 ## Practical Example
 

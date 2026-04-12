@@ -48,6 +48,35 @@
           "type": "object",
           "additionalProperties": { "type": "string" }
         },
+        "palette_strategy": {
+          "type": "object",
+          "properties": {
+            "mode": { "type": "string", "enum": ["manual", "brand-guided", "exploratory"] },
+            "candidate_count": { "type": "integer", "minimum": 1, "maximum": 5 },
+            "active_candidate": {
+              "oneOf": [
+                { "type": "integer", "minimum": 1 },
+                { "type": "string" }
+              ]
+            },
+            "temperature": { "type": "string", "enum": ["warm", "neutral", "mixed"] },
+            "contrast": { "type": "string", "enum": ["soft", "balanced", "vivid"] },
+            "diversity": { "type": "string", "enum": ["cohesive", "balanced", "exploratory"] },
+            "surface_style": { "type": "string", "enum": ["airy", "tinted", "grounded"] },
+            "prefer_moods": { "type": "array", "items": { "type": "string" } },
+            "avoid_moods": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "palette_expansion": {
+          "type": "object",
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "supporting_color_count": { "type": "integer", "minimum": 4, "maximum": 24 },
+            "combination_count": { "type": "integer", "minimum": 2, "maximum": 6 },
+            "prefer_pairings": { "type": "boolean" },
+            "prefer_related_families": { "type": "boolean" }
+          }
+        },
         "notes": { "type": "array", "items": { "type": "string" } }
       }
     }

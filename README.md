@@ -1,6 +1,19 @@
 # Design Ontology Harness
 
-디자인 시스템 레퍼런스를 수집하고, 그 근거를 바탕으로 각자 자신의 디자인 시스템 하네스 프로젝트를 만들 수 있게 해주는 공개용 프레임워크입니다.
+디자인 시스템 레퍼런스를 수집해 KB로 저장하고, 그 근거를 바탕으로 각자 자신의 디자인 시스템 하네스 프로젝트를 만들 수 있게 해주는 GitHub 배포형 오픈소스 프레임워크입니다.
+
+즉 이 저장소의 기본 정체성은:
+
+- Claude/Codex 전용 플러그인 자체
+- 하나의 앱을 대신 디자인해주는 생성기
+
+가 아니라
+
+- 재사용 가능한 디자인 시스템 하네스 코어
+- 프로젝트별 시스템 산출물 생성기
+- 필요하면 Claude/Codex가 읽을 수 있는 integration pack 생성기
+
+입니다.
 
 레퍼런스를 "매번 다시 읽는 크롤러"가 아니라:
 
@@ -9,6 +22,18 @@
 - 각 제품의 브랜드 정체성에 맞는 시스템 산출물을 생성하는
 
 재사용 가능한 디자인 시스템 authoring framework를 목표로 합니다.
+
+## What This Is
+
+- GitHub에서 배포하고 각자가 clone해서 쓰는 하네스
+- KB build -> brand-driven synthesis -> implementation handoff 흐름의 프레임워크
+- `system_spec`, `token_schema`, `component_inventory`, `system_ontology`를 만드는 코어 엔진
+
+## What This Is Not
+
+- Claude Code 전용 marketplace plugin 제품
+- 레퍼런스를 그대로 복제하는 스크래퍼
+- 기존 앱을 한 번에 갈아엎는 리디자인 도구
 
 ## Why
 
@@ -50,21 +75,23 @@
 ```bash
 uv sync
 
-# 1) shared knowledge base
+# 1) build shared knowledge
 uv run design-ontology build-kb \
   --kb-dir kb/default \
   --seed-url https://spacebar310.tistory.com/86
 
-# 2) new project
+# 2) create your project workspace
 uv run design-ontology init \
   --project-dir projects/my-app \
   --brand-name "My App" \
   --product-summary "What this product is for" \
   --kb-dir ../../kb/default
 
-# 3) generate project outputs
+# 3) generate brand-specific system outputs
 uv run design-ontology run-project --project-dir projects/my-app
 ```
+
+이 세 단계만으로도 이 저장소의 핵심 가치는 충분히 사용 가능합니다. Claude/Codex 연동은 선택 사항입니다.
 
 ## Public Repo Flow
 
@@ -113,16 +140,35 @@ uv run design-ontology init \
 {
   "color_reference": {
     "path": "/absolute/path/to/color-reference.md",
-    "preferred_families": ["Deep Reds", "Standard Oranges"],
-    "selected_colors": ["Claret", "Tangerine", "Creamsicle"],
-    "palette_roles": {
-      "primary": "Claret",
-      "accent": "Tangerine",
-      "surface_tint": "Creamsicle"
+    "preferred_families": ["Deep Reds", "Standard Oranges", "Pastel Oranges"],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "temperature": "warm",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "tinted",
+      "prefer_moods": ["세련됨", "신뢰감"],
+      "avoid_moods": ["달콤함", "귀여움"]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 12,
+      "combination_count": 4,
+      "prefer_pairings": true,
+      "prefer_related_families": true
     }
   }
 }
 ```
+
+`selected_colors`와 `palette_roles`를 넣으면 manual override로 동작합니다. 자동 모드에서는 브랜드 키워드와 색상 문서의 mood/usage를 바탕으로 여러 palette candidate를 만들고, 그중 active palette를 system outputs에 기록합니다. `preferred_families`는 hard filter가 아니라 우선순위 bias로 취급됩니다.
+
+`palette_expansion`이 켜져 있으면 하네스는 active palette 3색에서 끝나지 않고:
+
+- seed color의 `pairings`를 우선 검색하고
+- 같은 hue의 다른 tone, 관련 family, 브랜드 mood 신호를 함께 점수화하고
+- support / neutral / semantic state / surface-system까지 확장된 색상 리스트를 만듭니다.
 
 ### 3. 프로젝트 실행
 
@@ -142,8 +188,10 @@ uv run design-ontology run-project --project-dir projects/my-app
 `color_reference`가 설정되어 있으면 위 산출물 안에:
 
 - 색상 기준 source path
-- 선택된 컬러와 family
-- semantic palette role 힌트
+- active palette와 semantic role 힌트
+- palette candidate 목록과 선택 전략
+- expanded supporting colors와 combination lists
+- surface/text/border/status까지 이어지는 semantic color roles
 
 가 함께 들어갑니다.
 
@@ -195,7 +243,7 @@ uv run design-ontology run \
 
 ## Agent Packs
 
-Implementation repo에 바로 심을 수 있는 Codex / Claude Code integration pack도 생성할 수 있습니다.
+Implementation repo에 바로 심을 수 있는 Codex / Claude Code integration pack도 생성할 수 있습니다. 다만 이건 이 저장소의 본체가 아니라, 생성된 산출물을 실제 구현 레포에서 더 잘 쓰기 위한 선택적 부가 레이어입니다.
 
 ```bash
 uv run design-ontology init-agent-pack \

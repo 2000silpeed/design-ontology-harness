@@ -266,10 +266,15 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
         },
     }
     if color_reference:
+        active_palette = color_reference.get("active_palette", {}) or {}
+        expanded_palette = color_reference.get("expanded_palette", {}) or {}
         schema["categories"]["color"]["reference_palette"] = {
             "source_title": color_reference.get("title"),
             "source_path": color_reference.get("source_path"),
             "preferred_families": color_reference.get("preferred_families", []),
+            "selection_mode": color_reference.get("selection_mode"),
+            "strategy": color_reference.get("strategy"),
+            "expansion": color_reference.get("expansion"),
             "selected_colors": [
                 {
                     "name": item.get("name"),
@@ -290,9 +295,68 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
                 }
                 for role, item in color_reference.get("palette_roles", {}).items()
             },
+            "active_palette": {
+                "candidate_id": active_palette.get("candidate_id"),
+                "selection_mode": active_palette.get("selection_mode"),
+                "roles": {
+                    role: {
+                        "name": item.get("name"),
+                        "family": item.get("family"),
+                        "hex": item.get("hex"),
+                        "mood": item.get("mood"),
+                    }
+                    for role, item in active_palette.get("roles", {}).items()
+                },
+            },
+            "palette_candidates": [
+                {
+                    "id": candidate.get("id"),
+                    "label": candidate.get("label"),
+                    "score": candidate.get("score"),
+                    "rationale": candidate.get("rationale", []),
+                    "strategy_snapshot": candidate.get("strategy_snapshot", {}),
+                    "roles": {
+                        role: {
+                            "name": item.get("name"),
+                            "family": item.get("family"),
+                            "hex": item.get("hex"),
+                            "mood": item.get("mood"),
+                        }
+                        for role, item in candidate.get("roles", {}).items()
+                    },
+                }
+                for candidate in color_reference.get("palette_candidates", [])
+            ],
+            "expanded_palette": {
+                "search_strategy": expanded_palette.get("search_strategy", {}),
+                "supporting_colors": [
+                    {
+                        "name": item.get("name"),
+                        "family": item.get("family"),
+                        "hex": item.get("hex"),
+                        "mood": item.get("mood"),
+                        "source_type": item.get("source_type"),
+                        "source_seed_names": item.get("source_seed_names", []),
+                        "search_score": item.get("search_score"),
+                        "search_reasons": item.get("search_reasons", []),
+                    }
+                    for item in expanded_palette.get("supporting_colors", [])
+                ],
+                "semantic_roles": {
+                    role: {
+                        "name": item.get("name"),
+                        "family": item.get("family"),
+                        "hex": item.get("hex"),
+                        "source_type": item.get("source_type"),
+                    }
+                    for role, item in expanded_palette.get("semantic_roles", {}).items()
+                },
+                "combination_lists": expanded_palette.get("combination_lists", []),
+            },
             "rules": [
                 "컬러 레퍼런스의 mood와 pairings를 semantic token 설계의 출발점으로 사용",
                 "chosen palette는 semantic roles로 번역하고 raw reference color를 그대로 남용하지 않기",
+                "seed color만 쓰지 말고 expanded palette에서 surface/text/border/support 역할까지 확장하기",
                 "surface/text/border 대비는 레퍼런스보다 접근성 기준을 우선"
             ],
         }
@@ -593,13 +657,40 @@ def _build_color_reference_section(color_reference: dict | None) -> str:
     lines = [
         f"- **Source**: {color_reference.get('title', 'Color Reference')} ({color_reference.get('source_path', '')})",
     ]
+    if color_reference.get("selection_mode"):
+        lines.append(f"- **Selection mode**: {color_reference.get('selection_mode')}")
     preferred_families = color_reference.get("preferred_families", [])
     if preferred_families:
         lines.append(f"- **Preferred families**: {', '.join(preferred_families)}")
+    strategy = color_reference.get("strategy", {})
+    if strategy:
+        lines.append(
+            "- **Palette strategy**: "
+            f"temperature={strategy.get('temperature')}, "
+            f"contrast={strategy.get('contrast')}, "
+            f"diversity={strategy.get('diversity')}, "
+            f"surface_style={strategy.get('surface_style')}"
+        )
+    expansion = color_reference.get("expansion", {})
+    if expansion:
+        lines.append(
+            "- **Palette expansion**: "
+            f"supporting_color_count={expansion.get('supporting_color_count')}, "
+            f"combination_count={expansion.get('combination_count')}, "
+            f"prefer_pairings={expansion.get('prefer_pairings')}"
+        )
 
-    palette_roles = color_reference.get("palette_roles", {})
+    active_palette = color_reference.get("active_palette", {}) or {}
+    palette_roles = active_palette.get("roles") or color_reference.get("palette_roles", {})
     if palette_roles:
-        lines.append("- **Palette roles**:")
+        candidate_id = active_palette.get("candidate_id")
+        label = "Active palette" if candidate_id else "Palette roles"
+        if candidate_id:
+            lines.append(f"- **{label}**: {candidate_id}")
+        else:
+            lines.append(f"- **{label}**:")
+        if candidate_id:
+            lines.append("- **Active roles**:")
         for role, item in palette_roles.items():
             lines.append(
                 f"  - `{role}` -> {item.get('name')} {item.get('hex', '')} / {item.get('family', '')}"
@@ -612,6 +703,51 @@ def _build_color_reference_section(color_reference: dict | None) -> str:
             mood = item.get("mood") or ""
             lines.append(
                 f"  - {item.get('name')} {item.get('hex', '')} / {item.get('family', '')} / {mood}"
+            )
+
+    palette_candidates = color_reference.get("palette_candidates", [])
+    if palette_candidates:
+        lines.append("- **Palette candidates**:")
+        for candidate in palette_candidates[:4]:
+            role_summary = ", ".join(
+                f"{role}={item.get('name')}"
+                for role, item in candidate.get("roles", {}).items()
+            )
+            rationale = "; ".join(candidate.get("rationale", [])[:2])
+            lines.append(
+                f"  - {candidate.get('id')} ({candidate.get('label')}): {role_summary}"
+                + (f" / {rationale}" if rationale else "")
+            )
+
+    expanded_palette = color_reference.get("expanded_palette", {}) or {}
+    supporting_colors = expanded_palette.get("supporting_colors", [])
+    if supporting_colors:
+        lines.append("- **Expanded supporting colors**:")
+        for item in supporting_colors[:8]:
+            reasons = "; ".join(item.get("search_reasons", [])[:2])
+            lines.append(
+                f"  - {item.get('name')} {item.get('hex', '')} / {item.get('family', '')} / {item.get('source_type', '')}"
+                + (f" / {reasons}" if reasons else "")
+            )
+
+    semantic_roles = expanded_palette.get("semantic_roles", {})
+    if semantic_roles:
+        lines.append("- **Expanded semantic roles**:")
+        for role, item in list(semantic_roles.items())[:10]:
+            lines.append(
+                f"  - `{role}` -> {item.get('name')} {item.get('hex', '')} / {item.get('family', '')}"
+            )
+
+    combination_lists = expanded_palette.get("combination_lists", [])
+    if combination_lists:
+        lines.append("- **Combination lists**:")
+        for combination in combination_lists[:4]:
+            color_summary = ", ".join(
+                f"{item.get('role')}={item.get('name')}"
+                for item in combination.get("colors", [])[:6]
+            )
+            lines.append(
+                f"  - {combination.get('label')}: {color_summary}"
             )
 
     notes = color_reference.get("notes", [])

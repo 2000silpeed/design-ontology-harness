@@ -148,12 +148,23 @@ uv run design-ontology init-agent-pack \
 {
   "color_reference": {
     "path": "/absolute/path/to/color-reference.md",
-    "preferred_families": ["Deep Reds", "Standard Oranges"],
-    "selected_colors": ["Claret", "Tangerine", "Creamsicle"],
-    "palette_roles": {
-      "primary": "Claret",
-      "accent": "Tangerine",
-      "surface_tint": "Creamsicle"
+    "preferred_families": ["Deep Reds", "Standard Oranges", "Pastel Oranges"],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "temperature": "warm",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "tinted",
+      "prefer_moods": ["세련됨", "신뢰감"],
+      "avoid_moods": ["달콤함", "귀여움"]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 12,
+      "combination_count": 4,
+      "prefer_pairings": true,
+      "prefer_related_families": true
     }
   }
 }
@@ -162,8 +173,13 @@ uv run design-ontology init-agent-pack \
 이 값이 있으면 하네스는:
 
 - markdown 색상 문서를 파싱하고
-- 선택한 색상 이름을 실제 HEX/mood/pairing과 연결하고
+- 브랜드 키워드와 색상 문서의 mood/usage를 함께 보고 palette candidate를 만들고
+- active palette를 semantic role 힌트와 함께 고정하고
+- seed color pairings와 관련 family를 추가 검색해 support / neutral / state color를 확장하고
 - `system_spec.md`와 `token_schema.json`에 색상 기준으로 기록합니다.
+
+특정 팔레트를 직접 고정하고 싶으면 `selected_colors`와 `palette_roles`를 추가하면 됩니다. 그 경우 selection mode는 `manual`로 기록됩니다.
+`preferred_families`는 hard filter가 아니라 우선순위 bias로 동작하므로, 자동 모드에서도 다른 family 후보가 대안으로 남을 수 있습니다.
 
 ## Safe Refactor Policy
 

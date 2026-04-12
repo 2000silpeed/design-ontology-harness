@@ -42,7 +42,7 @@ def load_brand_profile(path: Path) -> dict:
     profile = json.loads(path.read_text(encoding="utf-8"))
     reference_config = profile.get("color_reference")
     if reference_config:
-        resolved_reference, issues = resolve_color_reference(reference_config, path.parent)
+        resolved_reference, issues = resolve_color_reference(reference_config, path.parent, profile)
         if resolved_reference:
             profile["_resolved_color_reference"] = resolved_reference
         if issues:

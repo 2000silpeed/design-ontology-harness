@@ -1,7 +1,7 @@
 [project]
 name = "design-ontology-harness"
 version = "0.1.0"
-description = "Build reusable design-system knowledge bases and synthesize brand-specific system outputs."
+description = "GitHub-distributed harness for building reusable design-system knowledge bases and brand-specific system outputs."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
