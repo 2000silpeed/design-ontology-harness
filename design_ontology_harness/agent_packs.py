@@ -525,16 +525,42 @@ function Button({{ children, variant = "primary", size = "md", disabled, loading
 금지: line-height: 1.4 → line-height: 1.75 (텍스트 높이가 바뀜)
 ```
 
-### font-size / line-height 교체 시 주의
+### font-size 변경 시 연쇄 조정 규칙 (Typography Cascade)
 
-- `font-size`는 기존 px 값과 같거나 ±1px 이내의 토큰으로만 교체
-- `line-height`는 기존 비율과 같은 토큰으로만 교체
-- 만약 적절한 토큰이 없으면 교체하지 않고 TODO 주석으로 남김
+font-size를 변경하면 주변 spacing도 함께 조정해야 합니다. 그렇지 않으면:
+- 글자가 커졌는데 패딩이 그대로 → 요소 사이 시각적 구분이 사라짐
+- 보더 없는 리스트 아이템에서 글자가 뭉쳐 보임
+- 카드 안 텍스트가 여백을 먹고 답답해 보임
+
+**원칙: font-size를 바꾸면 반드시 아래 체크리스트를 순회합니다.**
+
+1. **line-height**: 변경된 font-size에 맞는 값인지 확인
+   - 본문(md): 1.5~1.6 / 헤딩(lg~3xl): 1.2~1.3 / 캡션(xs~sm): 1.4~1.5
+2. **padding**: 요소 내부 여백이 새 글자 크기 대비 충분한지 확인
+   - 최소 기준: padding-top/bottom >= font-size * 0.5
+3. **gap/margin**: 인접 요소 사이 간격 확인
+   - 보더/구분선 없는 목록 → gap >= font-size * 0.75 (가장 위험한 케이스)
+4. **컨테이너 높이**: 고정 height가 있으면 font-size 증가분 * 줄 수만큼 넘침 여부 확인
+5. **줄바꿈**: 고정 width 안에서 font-size 키우면 한 줄 → 두 줄로 넘칠 수 있음
+
+**판단 기준:**
+- font-size 차이 1px 이내 → 안 바꾸는 것이 가장 안전
+- font-size 차이 2px 이상이면서 연쇄 조정이 필요 → padding/gap도 함께 조정
+- 연쇄 조정이 5개 이상 속성에 영향 → 안 바꾸고 TODO로 남김
+
+**적용 예시 (보더 없는 리스트):**
 
 ```
-// 기존: font-size: 14px; line-height: 1.4;
-// 토큰 scale에 14px이 없으면:
-// TODO: font-size 14px → 가장 가까운 토큰은 md(15px)이나 줄바꿈 영향 있음, 수동 확인 필요
+Before: font-size: 14px; padding: 8px 12px; .list gap: 4px;
+
+BAD  — font-size만 올림 → 글자가 뭉쳐 보임
+After: font-size: 15px; padding: 8px 12px; .list gap: 4px;
+
+GOOD — 연쇄 조정 포함
+After: font-size: 15px; padding: 10px 12px; .list gap: 6px;
+
+BEST — 1px 차이이므로 원본 유지
+After: font-size: 14px; (원본 유지, TODO 주석)
 ```
 
 ### spacing 교체 시 주의
@@ -542,6 +568,7 @@ function Button({{ children, variant = "primary", size = "md", disabled, loading
 - `padding`/`margin` 교체는 spacing scale에서 **같은 값**이 있을 때만 1:1 교체
 - spacing scale에 없는 값(14px, 18px, 22px 등)은 교체하지 않고 TODO로 남김
 - 절대로 "가장 가까운 값"으로 반올림하지 않음 — 1px 차이로도 레이아웃이 깨질 수 있음
+- 특히 **보더나 구분선이 없는 반복 요소**(리스트, 카드 나열)는 spacing이 유일한 시각적 구분 — 더 신중하게
 
 ### 리팩토링 후 자가 검증
 
@@ -551,6 +578,7 @@ function Button({{ children, variant = "primary", size = "md", disabled, loading
 2. **줄바꿈 불변**: 텍스트의 줄바꿈 위치가 바뀌지 않았는가?
 3. **간격 불변**: 요소 사이 간격이 달라지지 않았는가?
 4. **넘침 없음**: 텍스트나 요소가 컨테이너를 벗어나지 않는가?
+5. **뭉침 없음**: 보더 없는 목록에서 아이템 간 시각적 구분이 유지되는가?
 
 확신이 없으면 **수정하지 않고** 리포트에 "수동 확인 필요" 항목으로 남깁니다.
 
@@ -628,6 +656,15 @@ Refactoring must NEVER break existing layout or text flow.
 
 If no exact token match exists, leave the value as-is and add a TODO comment.
 One pixel of rounding can break text wrapping and card layouts.
+
+**Typography Cascade Rule**: If font-size MUST change (2px+ difference):
+- Adjust line-height proportionally
+- Check padding: padding-y should be >= new font-size * 0.5
+- Check gap: for borderless lists, gap should be >= new font-size * 0.75
+- Check container height: fixed heights may overflow with larger text
+- Check line wrapping: fixed-width containers may wrap differently
+- If cascade affects 5+ properties, do NOT change font-size — leave TODO instead
+- Most dangerous case: borderless vertical lists where spacing is the only separator
 """
 
 
