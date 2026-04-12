@@ -198,6 +198,7 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
     calm_system = "calm" in brand_keywords or "trustworthy" in brand_keywords
     editorial_system = "editorial" in brand_keywords
     color_reference = brand_profile.get("_resolved_color_reference")
+    font_system = brand_profile.get("_resolved_font_system")
 
     schema = {
         "naming": {
@@ -232,15 +233,7 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
                     "text/surface 조합은 접근성 기준을 우선"
                 ],
             },
-            "typography": {
-                "families": ["display", "text", "mono"] if editorial_system else ["brand", "text", "mono"],
-                "size_scale": ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl"],
-                "rules": [
-                    "display는 마케팅/영웅 구역으로 제한",
-                    "text는 제품 본문과 UI 라벨의 기본",
-                    "mono는 데이터와 shortcut hint에 제한"
-                ],
-            },
+            "typography": _build_typography_category(editorial_system, font_system),
             "spacing": {
                 "scale": [0, 2, 4, 8, 12, 16, 24, 32, 48, 64, 96],
                 "density_modes": ["comfortable", "compact"] if calm_system else ["default", "dense"],
@@ -592,6 +585,8 @@ def build_system_spec_markdown(
 - **Typography families**: {', '.join(token_schema['categories']['typography']['families'])}
 - **Spacing scale**: {', '.join(str(item) for item in token_schema['categories']['spacing']['scale'])}
 
+{_build_typography_section(token_schema['categories']['typography'])}
+
 ## 6. Color Reference
 
 {color_reference_lines}
@@ -648,6 +643,98 @@ def _dedupe_edges(edges: list[dict]) -> list[dict]:
 
 def slugify_text(value: str) -> str:
     return "".join(ch.lower() if ch.isalnum() else "-" for ch in value).strip("-")
+
+
+def _build_typography_category(editorial_system: bool, font_system: dict | None) -> dict:
+    base = {
+        "families": ["display", "text", "mono"] if editorial_system else ["brand", "text", "mono"],
+        "size_scale": ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl"],
+        "rules": [
+            "display는 마케팅/영웅 구역으로 제한",
+            "text는 제품 본문과 UI 라벨의 기본",
+            "mono는 데이터와 shortcut hint에 제한",
+        ],
+    }
+    if not font_system:
+        return base
+
+    heading = font_system.get("heading") or {}
+    body = font_system.get("body") or {}
+    mono = font_system.get("mono")
+    korean = font_system.get("korean")
+    type_scale = font_system.get("type_scale", {})
+
+    base["recommended_fonts"] = {
+        "heading": heading.get("name"),
+        "body": body.get("name"),
+        "mono": mono.get("name") if mono else None,
+        "korean": korean.get("name") if korean else None,
+    }
+    base["heading_note"] = heading.get("note", "")
+    base["body_note"] = body.get("note", "")
+    base["product_type"] = font_system.get("product_type_detected", "")
+    base["pairing_source"] = font_system.get("pairing_source", "")
+    base["line_height_preset"] = font_system.get("line_height_preset", "normal")
+    base["strategy"] = font_system.get("strategy", [])
+    base["loading"] = font_system.get("loading", {})
+
+    if type_scale:
+        base["type_scale"] = {
+            "base_size": type_scale.get("base"),
+            "scale_ratio": type_scale.get("scale_ratio"),
+            "sizes": type_scale.get("sizes", {}),
+            "line_heights": type_scale.get("line_heights", {}),
+        }
+
+    return base
+
+
+def _build_typography_section(typography: dict) -> str:
+    fonts = typography.get("recommended_fonts")
+    if not fonts:
+        return ""
+
+    lines = ["### Typography System (auto-resolved)\n"]
+    lines.append(f"- **Heading**: {fonts.get('heading', 'N/A')}")
+    lines.append(f"- **Body**: {fonts.get('body', 'N/A')}")
+    if fonts.get("korean"):
+        lines.append(f"- **Korean**: {fonts.get('korean')}")
+    if fonts.get("mono"):
+        lines.append(f"- **Mono**: {fonts.get('mono')}")
+
+    if typography.get("product_type"):
+        lines.append(f"- **Product type detected**: {typography['product_type']}")
+    if typography.get("pairing_source"):
+        lines.append(f"- **Pairing source**: {typography['pairing_source']}")
+    if typography.get("line_height_preset"):
+        lines.append(f"- **Line height**: {typography['line_height_preset']}")
+
+    type_scale = typography.get("type_scale", {})
+    if type_scale:
+        sizes = type_scale.get("sizes", {})
+        if sizes:
+            scale_str = ", ".join(f"{k}={v}px" for k, v in sizes.items())
+            lines.append(f"- **Type scale**: base {type_scale.get('base_size', '?')}px, ratio {type_scale.get('scale_ratio', '?')} ({scale_str})")
+
+    strategy = typography.get("strategy", [])
+    if strategy:
+        lines.append("- **Strategy**:")
+        for note in strategy:
+            lines.append(f"  - {note}")
+
+    heading_note = typography.get("heading_note")
+    body_note = typography.get("body_note")
+    if heading_note:
+        lines.append(f"- **Heading note**: {heading_note}")
+    if body_note:
+        lines.append(f"- **Body note**: {body_note}")
+
+    loading = typography.get("loading", {})
+    if loading.get("fonts"):
+        font_list = ", ".join(f"{f['font']}({f['priority']})" for f in loading["fonts"])
+        lines.append(f"- **Loading**: {font_list} | display: {loading.get('display', 'swap')}")
+
+    return "\n".join(lines)
 
 
 def _build_color_reference_section(color_reference: dict | None) -> str:

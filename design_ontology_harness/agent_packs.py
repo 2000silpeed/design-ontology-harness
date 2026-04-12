@@ -77,6 +77,20 @@ def _scaffold_claude_pack(target_repo: Path, artifact_dir: str, force: bool, cre
         created=created,
     )
 
+    refactor_skill_dir = ensure_dir(skills_dir / "design-system-refactor")
+    _write_if_allowed(
+        refactor_skill_dir / "SKILL.md",
+        _claude_refactor_skill(artifact_dir),
+        force=force,
+        created=created,
+    )
+    _write_if_allowed(
+        agents_dir / "design-system-refactor.md",
+        _claude_refactor_agent(artifact_dir),
+        force=force,
+        created=created,
+    )
+
 
 def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, created: list[str]) -> None:
     plugin_root = ensure_dir(target_repo / "plugins" / "design-system-harness")
@@ -180,6 +194,8 @@ Expected files:
 - `token_schema.json`
 - `component_inventory.json`
 - `system_ontology.json`
+- `components/component_specs.json` (optional, from build-components)
+- `components/component_specs.md` (optional, human-readable version)
 
 Important usage rule:
 
@@ -197,6 +213,7 @@ Recommended mapping:
 - `build/system/blueprint/token_schema.json` -> `{artifact_dir}/token_schema.json`
 - `build/system/blueprint/component_inventory.json` -> `{artifact_dir}/component_inventory.json`
 - `build/system/blueprint/system_ontology.json` -> `{artifact_dir}/system_ontology.json`
+- `build/system/components/` -> `{artifact_dir}/components/`
 """
 
 
@@ -332,6 +349,197 @@ Implementation rules:
 - Prefer local, reversible refactors over all-at-once shell rewrites.
 - If token_schema includes curated palette roles or selected reference colors, preserve that color direction while implementing.
 - If the request falls outside the current system artifacts, state the gap clearly instead of inventing an ungrounded pattern.
+"""
+
+
+def _claude_refactor_skill(artifact_dir: str) -> str:
+    return f"""---
+name: design-system-refactor
+description: AI가 만든 UI 코드를 디자인 시스템 스펙에 맞게 자동 리팩토링합니다. /design-refactor 로 실행하세요.
+allowed-tools: Read Glob Grep Bash Edit Write
+paths:
+  - "{artifact_dir}/**"
+  - "src/**"
+  - "app/**"
+  - "components/**"
+  - "styles/**"
+  - "lib/**"
+---
+
+# Design System Refactor
+
+AI가 생성한 UI 코드나 급하게 만든 프로토타입을, 디자인 시스템 스펙 기준으로 체계적으로 리팩토링합니다.
+
+## 실행 절차
+
+### Phase 1: 스펙 로드
+
+1. `{artifact_dir}/component_specs.json` 또는 `{artifact_dir}/components/component_specs.json`을 읽습니다.
+   - 없으면 `{artifact_dir}/component_inventory.json`을 읽습니다.
+2. `{artifact_dir}/token_schema.json`을 읽습니다.
+3. `{artifact_dir}/system_spec.md`를 읽어 브랜드 키워드, 안티 키워드, 디자인 원칙을 파악합니다.
+
+이 세 파일이 리팩토링의 기준입니다. 파일이 없으면 어떤 파일이 빠졌는지 알리고 멈춥니다.
+
+### Phase 2: 코드베이스 스캔
+
+1. `src/`, `app/`, `components/` 에서 UI 컴포넌트 파일을 찾습니다.
+   - React: `*.tsx`, `*.jsx`
+   - Vue: `*.vue`
+   - Svelte: `*.svelte`
+2. 각 파일에서 아래 문제를 탐지합니다:
+
+**토큰 위반**
+- 하드코딩된 색상값 (`#fff`, `rgb(...)`, `bg-blue-500` 등)
+- 하드코딩된 spacing (`margin: 12px`, `p-3` 등 — 토큰 scale에 없는 값)
+- 하드코딩된 font-size, border-radius
+- 인라인 스타일에 직접 값 사용
+
+**컴포넌트 구조 위반**
+- 스펙에 정의된 상태(states)가 빠져 있는 컴포넌트
+- anatomy에 정의된 필수 파트가 없는 컴포넌트
+- variant 없이 조건부로 스타일 하드코딩
+
+**접근성 위반**
+- button에 role/aria 속성 누락
+- input에 label 연결 누락
+- modal에 focus trap 누락
+- 이미지에 alt 누락
+- 터치 영역 44px 미만
+
+**브랜드 위반**
+- 안티 키워드에 해당하는 시각적 패턴 (예: "noisy" 안티키워드인데 과한 그림자/애니메이션)
+- 브랜드 키워드와 충돌하는 인터랙션 (예: "calm"인데 bounce 애니메이션)
+
+### Phase 3: 리팩토링 실행
+
+탐지된 문제를 **우선순위 순서**로 수정합니다:
+
+1. **접근성 위반** (가장 먼저 — 법적/윤리적 요구사항)
+2. **토큰 하드코딩** (시스템의 기반)
+3. **컴포넌트 구조** (누락된 상태/파트 추가)
+4. **브랜드 정합성** (시각적 미세 조정)
+
+각 수정은:
+- 한 파일씩 순차적으로 처리
+- 수정 전후를 설명
+- 기존 기능을 깨뜨리지 않는 범위에서만 변경
+- 확신이 없는 변경은 TODO 주석으로 남김
+
+### Phase 4: 리포트
+
+리팩토링 완료 후 요약을 출력합니다:
+
+```
+## 리팩토링 결과
+
+### 수정 완료
+- [파일명]: 토큰 위반 3건, 접근성 위반 1건 수정
+- [파일명]: 컴포넌트 구조 보완 (disabled 상태 추가)
+
+### 수동 확인 필요
+- [파일명]: 색상 팔레트 적용 확인 필요
+- [파일명]: 반응형 레이아웃 테스트 필요
+
+### 스펙 미커버
+- [컴포넌트명]: 스펙에 없는 컴포넌트 — component_specs에 추가 필요
+```
+
+## 수정 규칙
+
+### 토큰 교체 예시
+
+```tsx
+// Before (하드코딩)
+<div className="bg-white text-gray-900 p-4 rounded-lg shadow-md">
+
+// After (토큰 기반)
+<div className="bg-surface-default text-text-primary p-spacing-16 rounded-radius-md shadow-elevation-raised">
+```
+
+### 상태 추가 예시
+
+```tsx
+// Before (상태 누락)
+function Button({{ children }}) {{
+  return <button>{{children}}</button>
+}}
+
+// After (스펙 기반 상태)
+function Button({{ children, variant = "primary", size = "md", disabled, loading }}) {{
+  return (
+    <button
+      disabled={{disabled || loading}}
+      aria-busy={{loading}}
+      aria-disabled={{disabled}}
+      className={{buttonStyles({{ variant, size, disabled, loading }})}}
+    >
+      {{loading ? <Spinner /> : children}}
+    </button>
+  )
+}}
+```
+
+### 접근성 추가 예시
+
+```tsx
+// Before
+<input placeholder="이름" />
+
+// After
+<label htmlFor="name">이름</label>
+<input id="name" aria-required="true" />
+```
+
+## 금지 사항
+
+- 기존 기능이나 라우팅을 변경하지 않음
+- 스펙에 없는 새 컴포넌트를 발명하지 않음
+- 전체 파일을 리라이트하지 않음 — 문제가 있는 부분만 수정
+- 테마/다크모드 지원이 있으면 깨뜨리지 않음
+- 동작하는 로직을 건드리지 않음 — 시각적/구조적 레이어만 수정
+"""
+
+
+def _claude_refactor_agent(artifact_dir: str) -> str:
+    return f"""---
+name: design-system-refactor
+description: AI가 만든 UI를 디자인 시스템 스펙 기반으로 자동 리팩토링하는 에이전트. 토큰 위반, 접근성 누락, 브랜드 불일치를 찾아서 수정합니다.
+tools: Read, Glob, Grep, Bash, Edit, Write
+model: sonnet
+color: orange
+---
+
+You are a design-system refactoring specialist.
+
+Your job is to take existing UI code (often AI-generated or prototyped quickly) and systematically refactor it to match the project's design system specifications.
+
+## Startup
+
+1. Read `{artifact_dir}/component_specs.json` or `{artifact_dir}/components/component_specs.json`.
+   - Fallback: `{artifact_dir}/component_inventory.json`
+2. Read `{artifact_dir}/token_schema.json`.
+3. Read `{artifact_dir}/system_spec.md`.
+
+These three files are your source of truth. If any are missing, report which files are needed.
+
+## What to fix (in priority order)
+
+1. **Accessibility violations**: missing roles, aria attributes, labels, focus management, touch targets
+2. **Hardcoded tokens**: colors (#hex, rgb, tailwind color classes), spacing (px values not on scale), font sizes, border-radius, shadows → replace with semantic tokens
+3. **Missing component states**: components that lack states defined in the spec (disabled, loading, error, hover, focus)
+4. **Missing anatomy parts**: components missing required parts from the spec (e.g., button without loading spinner slot)
+5. **Brand misalignment**: visual patterns that conflict with brand keywords or match anti-keywords
+
+## Rules
+
+- Fix one file at a time, explain what you changed and why
+- Never break existing functionality — only change the visual/structural layer
+- Never invent components not in the spec
+- Never rewrite entire files — surgical fixes only
+- If unsure, leave a TODO comment instead of guessing
+- Preserve dark mode / theme support if present
+- After finishing, produce a summary report listing: fixed items, items needing manual review, and components not covered by the spec
 """
 
 

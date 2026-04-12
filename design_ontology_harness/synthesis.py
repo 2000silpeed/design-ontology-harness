@@ -6,6 +6,7 @@ from pathlib import Path
 
 from .authoring import generate_system_pack
 from .color_reference import resolve_color_reference
+from .font_reference import resolve_font_system
 from .models import DocumentRecord, ReferenceLink
 from .utils import ensure_dir, write_json
 
@@ -47,6 +48,11 @@ def load_brand_profile(path: Path) -> dict:
             profile["_resolved_color_reference"] = resolved_reference
         if issues:
             profile["_color_reference_issues"] = issues
+
+    font_config = profile.get("font_reference")
+    if font_config is None or font_config is True:
+        profile["_resolved_font_system"] = resolve_font_system(profile)
+
     return profile
 
 

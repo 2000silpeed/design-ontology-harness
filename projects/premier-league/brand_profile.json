@@ -1,0 +1,86 @@
+{
+  "brand_name": "PL Stats",
+  "system_name": "PL Stats System",
+  "product_summary": "프리미어리그 경기 결과, 순위, 선수 통계를 보여주는 스포츠 데이터 웹사이트",
+  "audiences": [
+    "프리미어리그 팬",
+    "축구 데이터 분석에 관심 있는 사용자",
+    "판타지 풋볼 플레이어"
+  ],
+  "brand_keywords": [
+    "bold",
+    "precise",
+    "energetic"
+  ],
+  "anti_keywords": [
+    "generic",
+    "cluttered",
+    "childish"
+  ],
+  "tone_of_voice": [
+    "confident",
+    "data-driven",
+    "exciting"
+  ],
+  "visual_keywords": [
+    "strong contrast",
+    "data-rich layout",
+    "sport editorial",
+    "dark mode first"
+  ],
+  "interaction_keywords": [
+    "fast navigation",
+    "real-time updates",
+    "comparison tools"
+  ],
+  "platforms": [
+    "web",
+    "mobile-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "dashboard cards",
+    "data tables",
+    "workspace navigation",
+    "search and filter",
+    "charts and visualization",
+    "tags and labels"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "color",
+      "typography",
+      "data-display"
+    ],
+    "avoid_sources_containing": [
+      "brand-only"
+    ]
+  },
+  "color_reference": {
+    "path": "docs/color-reference.md",
+    "preferred_families": [
+      "Deep Reds",
+      "Deep Neutrals"
+    ],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "temperature": "neutral",
+      "contrast": "vivid",
+      "diversity": "balanced",
+      "surface_style": "grounded",
+      "prefer_moods": ["강렬함", "신뢰감", "주목성"],
+      "avoid_moods": ["달콤함", "부드러움"]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    }
+  }
+}

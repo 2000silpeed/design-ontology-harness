@@ -9,10 +9,12 @@ import httpx
 
 from .agent_packs import scaffold_agent_pack
 from .cli_shared import run_pipeline
+from .component_specs import generate_component_specs, write_component_specs
 from .kb import build_knowledge_base, load_knowledge_base
 from .models import DocumentRecord, ReferenceLink
 from .scaffold import load_project, resolve_kb_dir, scaffold_project
 from .seed_article import fetch_seed_article
+from .spec_analyzer import analyze_spec, analyze_spec_file, build_component_list, detected_to_primitives
 from .synthesis import build_blueprint, load_brand_profile
 from .utils import ensure_dir, write_json, write_jsonl
 
@@ -84,12 +86,88 @@ def build_parser() -> argparse.ArgumentParser:
     project_parser.add_argument("--project-dir", required=True, help="Project directory created by init")
     project_parser.add_argument("--kb-dir", default=None, help="Optional override for the knowledge base path")
 
+    analyze_parser = subparsers.add_parser("analyze-spec", help="Analyze a product spec to auto-detect needed UI components")
+    analyze_parser.add_argument("--spec-file", required=True, help="Path to a product spec file (markdown, text)")
+    analyze_parser.add_argument("--project-dir", default=None, help="Optional: update this project's brand_profile with detected primitives")
+    analyze_parser.add_argument("--output-dir", default=None, help="Optional: write analysis results to this directory")
+
+    comp_parser = subparsers.add_parser("build-components", help="Generate detailed component specs from spec + KB + brand profile")
+    comp_parser.add_argument("--spec-file", required=True, help="Product spec file to analyze")
+    comp_parser.add_argument("--project-dir", required=True, help="Project directory with brand_profile.json")
+    comp_parser.add_argument("--kb-dir", default=None, help="Optional override for the knowledge base path")
+
     return parser
 
 
 def main() -> None:
     args = build_parser().parse_args()
-    output_dir = ensure_dir(Path(args.output_dir)) if hasattr(args, "output_dir") else None
+    raw_output = getattr(args, "output_dir", None)
+    output_dir = ensure_dir(Path(raw_output)) if raw_output else None
+
+    if args.command == "analyze-spec":
+        spec_path = Path(args.spec_file)
+        if not spec_path.exists():
+            raise SystemExit(f"파일을 찾을 수 없습니다: {spec_path}")
+        detected = analyze_spec_file(spec_path)
+        if not detected:
+            print("[analyze-spec] UI 패턴을 감지하지 못했습니다.")
+            return
+        print(f"[analyze-spec] {len(detected)}개 UI 패턴 감지:")
+        for item in detected:
+            terms = ", ".join(item["matched_terms"][:4])
+            print(f"  [{item['confidence']:2d}] {item['pattern']}: {item['description']}")
+            print(f"       매칭: {terms}")
+            print(f"       컴포넌트: {', '.join(c['name'] for c in item['components'][:5])}")
+        component_list = build_component_list(detected)
+        print(f"\n  총 {len(component_list)}개 컴포넌트 도출")
+        if args.project_dir:
+            project_dir = Path(args.project_dir)
+            bp_path = project_dir / "brand_profile.json"
+            if bp_path.exists():
+                bp = json.loads(bp_path.read_text(encoding="utf-8"))
+                bp["product_primitives"] = detected_to_primitives(detected)
+                write_json(bp_path, bp)
+                print(f"\n  -> {bp_path} 의 product_primitives를 업데이트했습니다.")
+        if args.output_dir:
+            out = ensure_dir(Path(args.output_dir))
+            write_json(out / "spec_analysis.json", {
+                "spec_file": str(spec_path),
+                "detected_patterns": detected,
+                "component_list": component_list,
+            })
+            print(f"  -> {out}/spec_analysis.json 저장 완료")
+        return
+
+    if args.command == "build-components":
+        spec_path = Path(args.spec_file)
+        project_dir = Path(args.project_dir)
+        if not spec_path.exists():
+            raise SystemExit(f"파일을 찾을 수 없습니다: {spec_path}")
+        manifest = load_project(project_dir)
+        kb_dir = resolve_kb_dir(project_dir, manifest, args.kb_dir)
+        references, documents, kb_manifest = load_knowledge_base(kb_dir)
+        brand_profile_path = project_dir / manifest["brand_profile"]
+        brand_profile = load_brand_profile(brand_profile_path)
+        detected = analyze_spec_file(spec_path)
+        component_list = build_component_list(detected)
+        print(f"[build-components] {len(detected)}개 UI 패턴에서 {len(component_list)}개 컴포넌트 도출")
+        build_root = ensure_dir(project_dir / manifest.get("build_dir", "build"))
+        output_dir = ensure_dir(build_root / "system")
+        blueprint = {}
+        bp_path = output_dir / "blueprint" / "design_system_blueprint.json"
+        if bp_path.exists():
+            blueprint = json.loads(bp_path.read_text(encoding="utf-8"))
+        specs_data = generate_component_specs(
+            brand_profile=brand_profile,
+            blueprint=blueprint,
+            component_list=component_list,
+            documents=documents,
+        )
+        write_component_specs(output_dir, specs_data)
+        print(f"[build-components] 컴포넌트 스펙 생성 완료:")
+        print(f"  -> {output_dir}/components/component_specs.md")
+        print(f"  -> {output_dir}/components/component_specs.json")
+        return
 
     if args.command == "init":
         result = scaffold_project(
@@ -208,6 +286,26 @@ def main() -> None:
                     "output_dir": str(output_dir),
                 },
             )
+            spec_file = project_dir / "spec.md"
+            if not spec_file.exists():
+                spec_file = project_dir / "PRD.md"
+            if spec_file.exists():
+                detected = analyze_spec_file(spec_file)
+                if detected:
+                    component_list = build_component_list(detected)
+                    bp_path = output_dir / "blueprint" / "design_system_blueprint.json"
+                    blueprint_data = {}
+                    if bp_path.exists():
+                        blueprint_data = json.loads(bp_path.read_text(encoding="utf-8"))
+                    specs_data = generate_component_specs(
+                        brand_profile=brand_profile,
+                        blueprint=blueprint_data,
+                        component_list=component_list,
+                        documents=documents,
+                    )
+                    write_component_specs(output_dir, specs_data)
+                    print(f"  -> 설계서({spec_file.name})에서 {len(component_list)}개 컴포넌트 스펙 자동 생성")
+
             print(f"[run-project] 시스템 산출물 생성 완료: {output_dir}/blueprint/")
             print(f"  -> 레퍼런스: {len(references)}개 | 문서: {len(documents)}개")
             print(f"  -> system_spec.md 를 확인하세요.")
