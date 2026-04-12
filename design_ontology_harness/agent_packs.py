@@ -281,6 +281,9 @@ Implementation rules:
 - Default to the smallest viable surface refactor; do not rewrite the whole shell unless the task explicitly calls for it.
 - If `token_schema.json` includes a curated color reference or palette roles, align color decisions to that input before inventing a new palette.
 - Update nearby documentation or tests when implementation meaningfully changes.
+- NEVER change layout properties (display, flex-direction, grid-template, position, width, height).
+- NEVER change font-size or line-height unless the exact same px value exists in the token scale — rounding breaks text wrapping.
+- NEVER round spacing values to the nearest token — if no exact match, leave as-is with a TODO.
 
 When finishing:
 
@@ -349,6 +352,8 @@ Implementation rules:
 - Prefer local, reversible refactors over all-at-once shell rewrites.
 - If token_schema includes curated palette roles or selected reference colors, preserve that color direction while implementing.
 - If the request falls outside the current system artifacts, state the gap clearly instead of inventing an ungrounded pattern.
+- NEVER change layout properties, element sizes, or text-flow properties (font-size, line-height, white-space, word-break) unless explicitly requested.
+- When replacing spacing/sizing values with tokens, only use exact matches — never round to the nearest token value.
 """
 
 
@@ -491,6 +496,64 @@ function Button({{ children, variant = "primary", size = "md", disabled, loading
 <input id="name" aria-required="true" />
 ```
 
+## 레이아웃 보호 규칙 (최우선)
+
+리팩토링은 **기존 화면의 레이아웃과 텍스트 흐름을 절대 깨뜨리지 않는 범위**에서만 진행합니다.
+
+### 절대 건드리지 않는 것
+
+- `display`, `flex-direction`, `grid-template-columns`, `position`, `float` 등 **레이아웃 속성**
+- `width`, `height`, `max-width`, `min-height` 등 **박스 크기**
+- `overflow`, `text-overflow`, `white-space`, `word-break` 등 **텍스트 줄바꿈 제어**
+- `line-clamp`, `-webkit-line-clamp` 등 **말줄임 처리**
+- `gap`, `margin`, `padding` 중 **레이아웃 간격에 영향을 주는 값** (단, 토큰으로 1:1 교체는 허용)
+
+### 안전한 교체만 허용
+
+```
+허용: color: #334155 → color: var(--text-primary)
+허용: background: #fff → background: var(--surface-default)
+허용: border: 1px solid #e5e7eb → border: 1px solid var(--border-default)
+허용: border-radius: 8px → border-radius: var(--radius-md)
+허용: font-weight: 600 → font-weight: var(--font-weight-semibold)
+허용: box-shadow: 0 1px 3px ... → box-shadow: var(--elevation-raised)
+
+금지: padding: 12px 16px → padding: 16px 24px (크기가 바뀌면 레이아웃 깨짐)
+금지: display: flex → display: grid (레이아웃 변경)
+금지: width: 100% → width: auto (크기 변경)
+금지: font-size: 14px → font-size: 16px (줄바꿈 위치가 바뀜)
+금지: line-height: 1.4 → line-height: 1.75 (텍스트 높이가 바뀜)
+```
+
+### font-size / line-height 교체 시 주의
+
+- `font-size`는 기존 px 값과 같거나 ±1px 이내의 토큰으로만 교체
+- `line-height`는 기존 비율과 같은 토큰으로만 교체
+- 만약 적절한 토큰이 없으면 교체하지 않고 TODO 주석으로 남김
+
+```
+// 기존: font-size: 14px; line-height: 1.4;
+// 토큰 scale에 14px이 없으면:
+// TODO: font-size 14px → 가장 가까운 토큰은 md(15px)이나 줄바꿈 영향 있음, 수동 확인 필요
+```
+
+### spacing 교체 시 주의
+
+- `padding`/`margin` 교체는 spacing scale에서 **같은 값**이 있을 때만 1:1 교체
+- spacing scale에 없는 값(14px, 18px, 22px 등)은 교체하지 않고 TODO로 남김
+- 절대로 "가장 가까운 값"으로 반올림하지 않음 — 1px 차이로도 레이아웃이 깨질 수 있음
+
+### 리팩토링 후 자가 검증
+
+매 파일 수정 후 아래를 확인합니다:
+
+1. **박스 크기 불변**: 수정 전후로 요소의 width/height가 동일한가?
+2. **줄바꿈 불변**: 텍스트의 줄바꿈 위치가 바뀌지 않았는가?
+3. **간격 불변**: 요소 사이 간격이 달라지지 않았는가?
+4. **넘침 없음**: 텍스트나 요소가 컨테이너를 벗어나지 않는가?
+
+확신이 없으면 **수정하지 않고** 리포트에 "수동 확인 필요" 항목으로 남깁니다.
+
 ## 금지 사항
 
 - 기존 기능이나 라우팅을 변경하지 않음
@@ -498,6 +561,9 @@ function Button({{ children, variant = "primary", size = "md", disabled, loading
 - 전체 파일을 리라이트하지 않음 — 문제가 있는 부분만 수정
 - 테마/다크모드 지원이 있으면 깨뜨리지 않음
 - 동작하는 로직을 건드리지 않음 — 시각적/구조적 레이어만 수정
+- **레이아웃 속성을 변경하지 않음** — 색상/보더/그림자/radius만 토큰으로 교체
+- **font-size/line-height를 함부로 바꾸지 않음** — 줄바꿈이 바뀔 수 있음
+- **spacing을 반올림하지 않음** — 정확히 같은 값의 토큰이 없으면 교체하지 않음
 """
 
 
@@ -540,6 +606,28 @@ These three files are your source of truth. If any are missing, report which fil
 - If unsure, leave a TODO comment instead of guessing
 - Preserve dark mode / theme support if present
 - After finishing, produce a summary report listing: fixed items, items needing manual review, and components not covered by the spec
+
+## Layout Protection (highest priority)
+
+Refactoring must NEVER break existing layout or text flow.
+
+**Safe to replace** (value-for-value swaps only):
+- color, background-color, border-color → token
+- border-radius → token (same px value)
+- box-shadow → token
+- font-weight → token
+- opacity, transition → token
+
+**NEVER change**:
+- display, flex-direction, grid-template, position, float
+- width, height, max-width, min-height
+- overflow, white-space, word-break, text-overflow, line-clamp
+- font-size (unless exact same px exists in token scale)
+- line-height (unless exact same ratio exists in token scale)
+- padding/margin (unless exact same px exists in spacing scale — NEVER round to nearest)
+
+If no exact token match exists, leave the value as-is and add a TODO comment.
+One pixel of rounding can break text wrapping and card layouts.
 """
 
 
