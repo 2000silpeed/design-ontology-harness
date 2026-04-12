@@ -48,6 +48,8 @@ def build_knowledge_base(
             {
                 "seed_url": seed_url,
                 "seed_slug": seed_slug,
+                "seed_kind": result["seed_article"].seed_kind,
+                "seed_title": result["seed_article"].title,
                 "output_dir": str(seed_output_dir),
                 "reference_count": len(result["references"]),
                 "document_count": len(result["documents"]),

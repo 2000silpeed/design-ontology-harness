@@ -22,7 +22,7 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     run_parser = subparsers.add_parser("run", help="Run the full pipeline")
-    run_parser.add_argument("--seed-url", required=True, help="Curated article URL")
+    run_parser.add_argument("--seed-url", required=True, help="Seed URL. Can be a curated article or a direct design-system URL.")
     run_parser.add_argument("--output-dir", default="data", help="Directory for outputs")
     run_parser.add_argument(
         "--brand-profile",
@@ -40,7 +40,7 @@ def build_parser() -> argparse.ArgumentParser:
         action="append",
         dest="seed_urls",
         default=[],
-        help="Seed URL to ingest. Can be passed multiple times.",
+        help="Seed URL to ingest. Can be a curated article or a direct design-system URL. Can be passed multiple times.",
     )
     kb_parser.add_argument("--seeds-file", default=None, help="Optional file containing seed URLs")
     kb_parser.add_argument("--max-sources", type=int, default=None)
@@ -57,7 +57,7 @@ def build_parser() -> argparse.ArgumentParser:
         action="append",
         dest="seed_urls",
         default=[],
-        help="Optional initial seed URL. Can be passed multiple times.",
+        help="Optional initial seed URL. Can be a curated article or a direct design-system URL. Can be passed multiple times.",
     )
     init_parser.add_argument("--kb-dir", default=None, help="Optional default knowledge base path to store in the project manifest")
     init_parser.add_argument("--force", action="store_true", help="Allow writing into a non-empty directory")
@@ -73,7 +73,7 @@ def build_parser() -> argparse.ArgumentParser:
     agent_pack_parser.add_argument("--force", action="store_true", help="Overwrite existing integration files")
 
     seed_parser = subparsers.add_parser("extract-seed", help="Only extract references")
-    seed_parser.add_argument("--seed-url", required=True, help="Curated article URL")
+    seed_parser.add_argument("--seed-url", required=True, help="Seed URL. Can be a curated article or a direct design-system URL.")
     seed_parser.add_argument("--output-dir", default="data", help="Directory for outputs")
 
     synth_parser = subparsers.add_parser("synthesize", help="Build a custom blueprint from existing crawl outputs")

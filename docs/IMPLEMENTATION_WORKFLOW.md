@@ -181,6 +181,77 @@ uv run design-ontology init-agent-pack \
 특정 팔레트를 직접 고정하고 싶으면 `selected_colors`와 `palette_roles`를 추가하면 됩니다. 그 경우 selection mode는 `manual`로 기록됩니다.
 `preferred_families`는 hard filter가 아니라 우선순위 bias로 동작하므로, 자동 모드에서도 다른 family 후보가 대안으로 남을 수 있습니다.
 
+## Adding More Reference Sites
+
+기존 `seed-url` 하나만 쓰지 않아도 됩니다. 새 디자인 시스템 참고 사이트를 찾았다면 KB에 추가해서 다시 빌드하면 됩니다.
+
+### 추천 입력 방식
+
+- 공식 디자인 시스템 문서의 메인 페이지
+- overview, foundations, components를 함께 링크하는 index 페이지
+- 브랜드 쇼케이스 글보다 실제 시스템 문서 쪽을 우선
+- seed는 블로그형 큐레이션 글일 수도 있고, 직접 디자인 시스템 URL일 수도 있음
+
+### 방법 1. `--seed-url` 여러 개 사용
+
+```bash
+uv run design-ontology build-kb \
+  --kb-dir kb/default \
+  --seed-url https://spacebar310.tistory.com/86 \
+  --seed-url https://example.com/design-system \
+  --seed-url https://another-example.com/system
+```
+
+### 방법 2. seeds 파일 사용
+
+```text
+# seeds/design-systems.txt
+https://spacebar310.tistory.com/86
+https://example.com/design-system
+https://another-example.com/system
+```
+
+```bash
+uv run design-ontology build-kb \
+  --kb-dir kb/default \
+  --seeds-file seeds/design-systems.txt
+```
+
+### 중요한 구분
+
+- 새 참고 사이트를 반영하려면 `build-kb`를 다시 실행해야 합니다.
+- `projects/<name>/seeds/seed_urls.txt`는 provenance와 메모용입니다.
+- 프로젝트 결과물만 다시 만들고 싶을 때는 `run-project`만 실행하면 됩니다.
+
+즉:
+
+- reference source 변경 -> `build-kb`
+- brand/profile 변경 -> `run-project`
+
+### Direct Seed Mode
+
+이 하네스는 이제 seed URL을 두 가지 방식으로 해석합니다.
+
+1. curated article seed
+   - 블로그 글이나 링크 모음 페이지
+   - 내부의 레퍼런스 링크를 추출해 여러 reference로 확장
+
+2. direct reference seed
+   - 실제 디자인 시스템 사이트 URL 자체
+   - 그 URL 하나를 곧바로 reference로 사용
+
+예:
+
+```bash
+uv run design-ontology build-kb \
+  --kb-dir kb/default \
+  --seed-url https://carbondesignsystem.com \
+  --seed-url https://primer.style \
+  --seed-url https://design-system.service.gov.uk
+```
+
+이 방식은 특정 블로그 글에 의존하지 않고, 공식 디자인 시스템 사이트들을 KB의 1급 입력으로 삼고 싶을 때 더 적합합니다.
+
 ## Safe Refactor Policy
 
 이 프레임워크의 산출물은 "전체 UI를 한 번에 갈아엎으라"는 신호가 아닙니다.

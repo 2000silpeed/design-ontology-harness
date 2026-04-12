@@ -134,6 +134,86 @@ uv run design-ontology init \
 - 필요하면 `project_manifest.json`의 `kb_dir` 수정
 - `seeds/seed_urls.txt`는 provenance 또는 차후 KB 갱신용 메모로 유지 가능
 
+### 2-1. 새 참고 사이트를 찾았을 때
+
+현재 프로젝트에 없는 디자인 시스템 참고 사이트를 새로 찾았다면, 아래 순서로 반영하면 됩니다.
+
+1. seed URL을 모읍니다.
+   - 가장 추천하는 입력은 공식 디자인 시스템 문서의 landing page, index page, overview page입니다.
+   - 단일 컴포넌트 상세 페이지보다 전체 구조를 보여주는 진입 페이지가 KB 품질에 더 유리합니다.
+   - 이 하네스의 seed URL은 블로그형 링크 모음 글일 수도 있고, 실제 디자인 시스템 사이트 URL 자체일 수도 있습니다.
+
+2. KB를 다시 빌드합니다.
+   - `build-kb`는 `--seed-url`를 여러 번 받을 수 있습니다.
+   - 또는 `--seeds-file`로 여러 URL을 한 번에 넣을 수 있습니다.
+
+예시:
+
+```bash
+uv run design-ontology build-kb \
+  --kb-dir kb/default \
+  --seed-url https://spacebar310.tistory.com/86 \
+  --seed-url https://example.com/design-system \
+  --seed-url https://another-example.com/system
+```
+
+파일로 관리하고 싶으면:
+
+```text
+# seeds/design-systems.txt
+https://spacebar310.tistory.com/86
+https://example.com/design-system
+https://another-example.com/system
+```
+
+```bash
+uv run design-ontology build-kb \
+  --kb-dir kb/default \
+  --seeds-file seeds/design-systems.txt
+```
+
+3. 프로젝트 산출물을 다시 생성합니다.
+   - KB가 갱신된 뒤에만 `run-project`를 다시 실행하면 됩니다.
+   - `projects/<name>/seeds/seed_urls.txt`는 메모와 provenance용이며, 이 파일만 수정해도 KB가 자동 갱신되지는 않습니다.
+
+```bash
+uv run design-ontology run-project --project-dir projects/my-app
+```
+
+정리하면:
+
+- 새 참고 사이트 추가 = `build-kb` 다시 실행
+- 브랜드만 변경 = `run-project`만 다시 실행
+- `seed_urls.txt` 수정만으로는 실제 KB가 바뀌지 않음
+
+### 2-2. 블로그 글 대신 직접 디자인 시스템 URL을 seed로 쓰기
+
+이제 seed는 꼭 `spacebar310` 같은 큐레이션 글일 필요가 없습니다.
+
+예를 들어:
+
+- 블로그 글 + 직접 URL 혼합
+- 직접 디자인 시스템 URL만 여러 개
+
+둘 다 가능합니다.
+
+예시:
+
+```bash
+uv run design-ontology build-kb \
+  --kb-dir kb/default \
+  --seed-url https://carbondesignsystem.com \
+  --seed-url https://design-system.service.gov.uk \
+  --seed-url https://primer.style
+```
+
+동작 방식은 이렇게 바뀝니다.
+
+- seed가 링크 모음 글이면: 내부 레퍼런스를 추출해서 여러 reference로 확장
+- seed가 직접 디자인 시스템 URL이면: 그 URL 자체를 하나의 1급 reference로 취급
+
+즉 KB는 이제 "블로그 기반 레퍼런스 수집"뿐 아니라 "실제 디자인 시스템 사이트 직접 수집"도 지원합니다.
+
 선택적으로 `brand_profile.json`에 `color_reference`를 넣으면 로컬 markdown 색상 문서를 읽어 system spec과 token schema에 반영할 수 있습니다.
 
 ```json

@@ -12,6 +12,7 @@ class SeedArticle:
     category: str
     published_at: str | None
     extracted_at: str
+    seed_kind: str = "curated-article"
     references: list["ReferenceLink"] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
