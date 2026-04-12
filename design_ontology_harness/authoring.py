@@ -5,6 +5,8 @@ from pathlib import Path
 
 from .models import DocumentRecord, ReferenceLink
 from .utils import ensure_dir, write_json
+from .graph_builders import build_full_ontology_graph
+from .graph_spec_sections import build_graph_spec_sections
 
 REQUIRED_PROFILE_KEYS = {
     "brand_name": str,
@@ -115,7 +117,14 @@ def generate_system_pack(
     foundations = derive_foundations(blueprint)
     token_schema = build_token_schema(brand_profile, blueprint)
     component_inventory = build_component_inventory(brand_profile, blueprint)
-    ontology_graph = build_system_ontology(brand_profile, blueprint, references, component_inventory)
+    ontology_graph = build_full_ontology_graph(
+        brand_profile=brand_profile,
+        blueprint=blueprint,
+        component_inventory=component_inventory,
+        token_schema=token_schema,
+    )
+    ontology_dict = ontology_graph.to_dict()
+    graph_sections = build_graph_spec_sections(ontology_graph)
     system_spec = build_system_spec_markdown(
         brand_profile=brand_profile,
         blueprint=blueprint,
@@ -125,19 +134,20 @@ def generate_system_pack(
         component_inventory=component_inventory,
         documents=documents,
         css_extraction=blueprint.get("css_extraction"),
+        graph_sections=graph_sections,
     )
 
     write_json(blueprint_dir / "profile_validation.json", validation)
     write_json(blueprint_dir / "token_schema.json", token_schema)
     write_json(blueprint_dir / "component_inventory.json", component_inventory)
-    write_json(blueprint_dir / "system_ontology.json", ontology_graph)
+    write_json(blueprint_dir / "system_ontology.json", ontology_dict)
     (blueprint_dir / "system_spec.md").write_text(system_spec, encoding="utf-8")
 
     return {
         "validation": validation,
         "token_schema": token_schema,
         "component_inventory": component_inventory,
-        "system_ontology": ontology_graph,
+        "system_ontology": ontology_dict,
     }
 
 
@@ -525,6 +535,7 @@ def build_system_spec_markdown(
     component_inventory: dict,
     documents: list[DocumentRecord],
     css_extraction: dict | None = None,
+    graph_sections: str = "",
 ) -> str:
     source_count = len({document.reference_slug for document in documents if not document.error})
     principle_lines = "\n".join(
@@ -648,7 +659,8 @@ def build_system_spec_markdown(
 ## 16. CSS Extraction Summary
 
 {css_extraction_section}
-"""
+
+{graph_sections}"""
 
 
 def _dedupe_nodes(nodes: list[dict]) -> list[dict]:

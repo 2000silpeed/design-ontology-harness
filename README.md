@@ -15,28 +15,30 @@
 flowchart TB
     subgraph PREPARE["1. 준비"]
         SEED["시드 URL\n참고할 디자인 시스템"] -->|build-kb| KB["지식베이스(KB)"]
-        SPEC["설계서\nspec.md / PRD"] --> ANALYZE
+        SPEC["설계서\nspec.md / PRD"] --> ANALYZE["설계서 ���석"]
     end
 
     subgraph GENERATE["2. 자동 생성"]
         KB --> SYNTH["합성 엔진"]
-        BRAND["브랜드 프로필\nbrand_profile.json"] --> SYNTH
-        ANALYZE["설계서 분석\nanalyze-spec"] -->|컴포넌트 탐지| SYNTH
-        COLOR_REF["색상 레퍼런스\ncolor-reference.md"] -->|팔레트 자동 결정| SYNTH
+        BRAND["브랜드 프로필"] --> SYNTH
+        ANALYZE -->|컴포넌트 탐지| SYNTH
+        COLOR_REF["색상 레퍼런스"] -->|팔레트 결정| SYNTH
+        SYNTH --> GRAPH["온톨로지 그래프\n20노드 × 24관계"]
         SYNTH --> OUTPUT["산출물"]
+        GRAPH -->|17-19섹션| OUTPUT
     end
 
     subgraph OUTPUT_DETAIL["산출물"]
-        SYS_SPEC["system_spec.md\n디자인 원칙·팔레트·서체"]
+        SYS_SPEC["system_spec.md\n19섹션 설계 스펙"]
         TOKEN["token_schema.json\n토큰 체계"]
-        COMP_SPEC["component_specs.md\n컴포넌트별 상세 스펙"]
-        COMP_INV["component_inventory.json"]
+        ONTOLOGY["system_ontology.json\n관계 그래프"]
+        COMP_SPEC["component_specs.md\n컴포넌트 상세"]
     end
 
     subgraph APPLY["3. 적용"]
-        OUTPUT --> AGENT_PACK["에이전트 팩\ninit-agent-pack"]
-        AGENT_PACK --> REFACTOR["/design-refactor\n안전한 토큰 교체"]
-        AGENT_PACK --> REBUILD["/design-rebuild\n화면 전체 재구성"]
+        OUTPUT --> AGENT_PACK["에이전트 팩"]
+        AGENT_PACK --> REFACTOR["/design-refactor\n토큰 교체"]
+        AGENT_PACK --> REBUILD["/design-rebuild\n전체 재구성"]
     end
 
     OUTPUT --> OUTPUT_DETAIL
@@ -119,7 +121,7 @@ uv run design-ontology run-project \
 | `blueprint/system_spec.md` | 디자인 원칙, 색상 팔레트, 서체 추천, 컴포넌트 정책 |
 | `blueprint/token_schema.json` | 색상·여백·타이포 등 토큰 계층 구조 |
 | `blueprint/component_inventory.json` | 컴포넌트 패밀리와 상태 정의 |
-| `blueprint/system_ontology.json` | 브랜드→원칙→토큰→컴포넌트 관계 그래프 |
+| `blueprint/system_ontology.json` | 20종 노드 × 24종 관계의 온톨로지 그래프 |
 | `components/component_specs.md` | 컴포넌트별 상세 스펙 (구조, 상태, 토큰, 접근성, 브랜드 적용) |
 | `components/component_specs.json` | 같은 내용의 JSON (에이전트용) |
 
@@ -285,9 +287,9 @@ uv run design-ontology benchmark --brand-profile brand_profile.json --output-dir
 
 합성 시 자동으로 매칭된 벤치마크 컨텍스트가 blueprint에 포함됩니다.
 
-## 산출물 16섹션 구성
+## 산출물 19섹션 구성
 
-`system_spec.md`는 아래 16개 섹션으로 구성됩니다.
+`system_spec.md`는 아래 19개 섹션으로 구성됩니다.
 
 | 번호 | 섹션 | 내용 |
 |------|------|------|
@@ -303,10 +305,66 @@ uv run design-ontology benchmark --brand-profile brand_profile.json --output-dir
 | 10 | AI Synthesis Principles | hex 미생성, 토큰명 미생성, 팩트 기반 해석 |
 | 11 | Ontology Targets | 핵심 개념 신호 |
 | 12 | Profile Validation | 프로필 검증 결과 |
-| 13 | **Quick Start** | 시작 가이드, 적용 순서, 우선순위 |
-| 14 | **DO / DON'T** | 브랜드 키워드 기반 구체적 규칙 |
-| 15 | **Drop-in CSS** | 즉시 사용 가능한 `:root` CSS 변수 |
-| 16 | **CSS Extraction Summary** | 크롤링 CSS 분석 결과 요약 |
+| 13 | Quick Start | 시작 가이드, 적용 순서, 우선순위 |
+| 14 | DO / DON'T | 브랜드 키워드 기반 구체적 규칙 |
+| 15 | Drop-in CSS | 즉시 사용 가능한 `:root` CSS 변수 |
+| 16 | CSS Extraction Summary | 크롤링 CSS 분석 결과 요약 |
+| 17 | **Component-Token Map** | 컴포넌트별 사용 토큰 테이블 (그래프 기반) |
+| 18 | **Contrast Audit** | surface/text 조합별 대비 비율 + AA/AAA 판정 |
+| 19 | **Pattern Catalog** | 레이아웃/인터랙션 패턴 + 구성 컴포넌트 |
+
+## 온톨로지 그래프
+
+`system_ontology.json`은 단순 키워드 매칭이 아닌 **20종 노드 × 24종 관계**의 진짜 그래프입니다.
+
+**노드 타입 (20종):**
+
+| 카테고리 | 노드 |
+|---------|------|
+| 브랜드 | Brand, Principle |
+| 컬러 | ColorPalette, ColorToken, ColorMode |
+| 타이포 | FontFamily, TypeScaleEntry |
+| 토큰 | SpacingToken, RadiusToken, MotionToken, ElevationToken |
+| 컴포넌트 | ComponentFamily, Component, ComponentState |
+| 패턴 | LayoutPattern, InteractionPattern |
+| 기타 | AccessibilityRule, ProductPrimitive, SourceReference, BenchmarkSystem |
+
+**엣지 타입 (24종):**
+
+```
+Brand ──expresses──▶ Principle ──constrains──▶ TokenCategory
+Brand ──inspired_by──▶ BenchmarkSystem ──references_font──▶ FontFamily
+ColorToken ──belongs_to_palette──▶ ColorPalette
+ColorToken ──derived_from──▶ ColorToken (CSS var chain)
+ColorToken ──contrast_pair──▶ ColorToken (WCAG ratio)
+ColorToken ──overrides_in_mode──▶ ColorMode
+FontFamily ──pairs_with──▶ FontFamily (heading↔body)
+TypeScaleEntry ──uses_font──▶ FontFamily
+Component ──member_of_family──▶ ComponentFamily
+Component ──uses_token──▶ ColorToken
+Component ──implements──▶ InteractionPattern
+LayoutPattern ──composed_of──▶ Component
+ComponentFamily ──requires──▶ AccessibilityRule
+BenchmarkSystem ──similar_to──▶ BenchmarkSystem (Jaccard)
+...
+```
+
+**그래프 쿼리:**
+
+```python
+from design_ontology_harness.graph_schema import DesignOntologyGraph, NodeType, EdgeType
+
+graph = build_full_ontology_graph(brand_profile, blueprint, component_inventory, token_schema)
+
+# 특정 타입의 모든 노드
+colors = graph.get_nodes_by_type(NodeType.ColorToken)
+
+# 특정 노드에서 나가는 엣지
+edges = graph.get_edges_from("brand:my-app", EdgeType.expresses)
+
+# 이웃 노드 탐색
+neighbors = graph.get_neighbors("component:primary-button")
+```
 
 ## CLI 명령어 전체 목록
 
@@ -330,56 +388,106 @@ uv run design-ontology benchmark --brand-profile brand_profile.json --output-dir
 flowchart TB
     subgraph KB["지식베이스 빌드 (build-kb)"]
         S1["시드 URL"] --> SEED["시드 파싱\n링크 추출"]
-        SEED --> CRAWL["레퍼런스 크롤링\n문서 수집"]
-        CRAWL --> ONT["온톨로지 추출\n개념·관계 매칭"]
+        SEED --> CRAWL["5-tier 크롤링\n+ CSS 병렬 다운로드"]
+        CRAWL --> CSS_EX["CSS 추출 파이프라인\nvar/brand/typo/alias"]
+        CRAWL --> ONT["개념 매칭\n문서→개념 증거"]
     end
 
     subgraph PROJECT["프로젝트 실행 (run-project)"]
         BP["브랜드 프로필"] --> SYNTH["블루프린트 합성"]
         KB_LOAD["KB 로드"] --> SYNTH
-        COLOR["color_reference.py\n팔레트 자동 결정"] --> SYNTH
-        FONT["font_reference.py\n서체 자동 결정"] --> SYNTH
-        SYNTH --> AUTH["산출물 생성"]
-        SPEC_FILE["spec.md"] --> SPEC_AN["spec_analyzer.py\nUI 패턴 탐지"]
-        SPEC_AN --> COMP_GEN["component_specs.py\n컴포넌트 스펙 생성"]
-        AUTH --> SYS["system_spec.md"]
+        COLOR["color_reference.py\n팔레트 결정"] --> SYNTH
+        FONT["font_reference.py\n서체 결정"] --> SYNTH
+        BENCH["benchmark_kb.py\n35개 벤치마크"] --> SYNTH
+
+        SYNTH --> AUTH["authoring.py"]
+        AUTH --> GRAPH["graph_builders.py\n온톨로지 그래프 구축"]
+        GRAPH --> GRAPH_SEC["graph_spec_sections.py\n17-19섹션 도출"]
+
+        AUTH --> SYS["system_spec.md\n(19섹션)"]
         AUTH --> TOK["token_schema.json"]
+        AUTH --> ONT_OUT["system_ontology.json\n(그래프 구조)"]
+        GRAPH_SEC --> SYS
+
+        SPEC_FILE["spec.md"] --> SPEC_AN["spec_analyzer.py\nUI 패턴 탐지"]
+        SPEC_AN --> COMP_GEN["component_specs.py"]
         COMP_GEN --> COMP["component_specs.md"]
     end
 
     ONT --> KB_LOAD
+    CSS_EX --> KB_LOAD
 ```
 
 ## 모듈 구조
 
 ```mermaid
 graph TB
-    CLI["cli.py\n명령어 분기"] --> SHARED["cli_shared.py\n파이프라인 실행"]
-    CLI --> KB["kb.py\nKB 빌드·로드"]
-    CLI --> SCAFFOLD["scaffold.py\n프로젝트 초기화"]
-    CLI --> AGENT["agent_packs.py\n에이전트 팩 생성\n(4종 스킬)"]
-    CLI --> SPEC_AN["spec_analyzer.py\n설계서 분석"]
-    CLI --> COMP_SPEC["component_specs.py\n컴포넌트 스펙"]
-    CLI --> BENCH["benchmark_kb.py\n35개 실서비스 벤치마크"]
+    subgraph ENTRY["진입점"]
+        CLI["cli.py"]
+    end
 
-    SHARED --> SEED_MOD["seed_article.py\n시드 파싱"]
-    SHARED --> CRAWLER["crawler.py\n5-tier 크롤링"]
-    SHARED --> CSS_PIPE["css_pipeline.py\nCSS 추출 파이프라인"]
-    SHARED --> ONTOLOGY["ontology.py\n개념 추출"]
-    SHARED --> SYNTH["synthesis.py\n블루프린트 합성"]
+    subgraph PIPELINE["수집 파이프라인"]
+        SHARED["cli_shared.py"]
+        SEED_MOD["seed_article.py\n시드 파싱"]
+        CRAWLER["crawler.py\n5-tier 크롤링"]
+        ONTOLOGY["ontology.py\n크롤 증거 매칭"]
+    end
 
-    CRAWLER --> VAR_RES["var_resolver.py\nCSS var() 해결"]
+    subgraph CSS["CSS 추출"]
+        CSS_PIPE["css_pipeline.py"]
+        VAR_RES["var_resolver.py\nvar() 체인 해결"]
+        BRAND_C["brand_candidates.py\n브랜드 색상"]
+        TYPO_EX["typo_extractor.py\n타이포 스케일"]
+        ALIAS["alias_layer.py\n토큰 tier 분류"]
+    end
+
+    subgraph SYNTHESIS["합성 엔진"]
+        SYNTH["synthesis.py\n블루프린트"]
+        COLOR["color_reference.py\n팔레트 결정"]
+        FONT["font_reference.py\n서체 결정"]
+        BENCH["benchmark_kb.py\n35개 벤치마크"]
+    end
+
+    subgraph GRAPH["온톨로지 그래프"]
+        SCHEMA["graph_schema.py\n20 NodeType\n24 EdgeType"]
+        BUILDERS["graph_builders.py\n7개 레이어 빌더"]
+        SECTIONS["graph_spec_sections.py\n17-19섹션 도출"]
+    end
+
+    subgraph OUTPUT["산출물 생성"]
+        AUTH["authoring.py\n19섹션 spec"]
+        COMP_SPEC["component_specs.py\n컴포넌트 스펙"]
+        AGENT["agent_packs.py\n에이전트 팩 4종"]
+    end
+
+    CLI --> SHARED
+    CLI --> KB["kb.py"] --> SHARED
+    CLI --> SCAFFOLD["scaffold.py"]
+    CLI --> SPEC_AN["spec_analyzer.py"] --> COMP_SPEC
+
+    SHARED --> SEED_MOD --> CRAWLER
+    CRAWLER --> CSS_PIPE
+    CRAWLER --> ONTOLOGY
     CSS_PIPE --> VAR_RES
-    CSS_PIPE --> BRAND_C["brand_candidates.py\n브랜드 색상 추출"]
-    CSS_PIPE --> TYPO_EX["typo_extractor.py\n타이포 스케일 추출"]
-    CSS_PIPE --> ALIAS["alias_layer.py\n시멘틱 토큰 tier"]
+    CSS_PIPE --> BRAND_C
+    CSS_PIPE --> TYPO_EX
+    CSS_PIPE --> ALIAS
 
-    SYNTH --> AUTHORING["authoring.py\n16섹션 산출물 생성"]
-    SYNTH --> COLOR["color_reference.py\n색상 팔레트 결정"]
-    SYNTH --> FONT["font_reference.py\n서체 결정"]
+    SHARED --> SYNTH
+    SYNTH --> COLOR
+    SYNTH --> FONT
     SYNTH --> BENCH
+    SYNTH --> AUTH
 
-    KB --> SHARED
+    AUTH --> BUILDERS
+    BUILDERS --> SCHEMA
+    BUILDERS --> SECTIONS
+    SECTIONS --> AUTH
+
+    BENCH --> BUILDERS
+    COLOR --> BUILDERS
+    FONT --> BUILDERS
+    ALIAS --> BUILDERS
 ```
 
 ## 예제 프로젝트
@@ -401,14 +509,17 @@ design_ontology_harness/   코어 프레임워크
   typo_extractor.py        타이포그래피 스케일 추출
   alias_layer.py           시멘틱 토큰 tier 분류
   synthesis.py             블루프린트 합성
-  authoring.py             16섹션 산출물 생성
+  authoring.py             19섹션 산출물 생성
+  graph_schema.py          온톨로지 그래프 스키마 (20 NodeType, 24 EdgeType)
+  graph_builders.py        그래프 빌더 (brand/foundation/color/typo/pattern/a11y/benchmark)
+  graph_spec_sections.py   그래프 기반 spec 섹션 생성 (17-19)
   benchmark_kb.py          35개 실서비스 벤치마크 KB
   color_reference.py       색상 팔레트 자동 결정
   font_reference.py        서체 자동 결정 (25+ 실무 서체 DB)
   spec_analyzer.py         설계서 → UI 패턴 탐지
   component_specs.py       컴포넌트별 상세 스펙 생성
   agent_packs.py           AI 에이전트 스킬 생성 (4종)
-  ontology.py              개념 추출
+  ontology.py              크롤 증거 기반 개념 매칭 (문서→개념)
 schemas/                   입력 스키마
 config/                    브랜드 프로필 예시
 docs/                      설계 문서
@@ -420,7 +531,7 @@ projects/                  프로젝트 워크스페이스
 
 - 크롤링은 5-tier fallback 체인으로 대부분의 사이트를 수집합니다. Playwright tier를 사용하려면 `pip install playwright && playwright install chromium`이 필요합니다.
 - 크롤링 시 CSS를 자동으로 병렬 다운로드하고 추출 파이프라인을 실행합니다.
-- 온톨로지 추출은 현재 규칙 기반입니다. LLM 기반 확장을 위한 구조가 준비되어 있습니다.
+- 온톨로지는 2-tier: `ontology.py`(크롤 증거 키워드 매칭) + `graph_builders.py`(20종 노드 관계 그래프). 그래프는 컬러↔컴포넌트↔패턴을 유기적으로 연결합니다.
 - `config/brand_profile.example.json`을 참고해 브랜드 프로필을 작성하세요.
 - 서체 결정은 Google Fonts/GitHub에서 무료로 사용 가능한 서체만 추천합니다.
 - 벤치마크 KB의 35개 시스템은 합성 품질 비교와 키워드 매칭에 활용됩니다.
