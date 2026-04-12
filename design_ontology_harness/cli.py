@@ -92,7 +92,7 @@ def main() -> None:
     output_dir = ensure_dir(Path(args.output_dir)) if hasattr(args, "output_dir") else None
 
     if args.command == "init":
-        scaffold_project(
+        result = scaffold_project(
             project_dir=Path(args.project_dir),
             brand_name=args.brand_name,
             system_name=args.system_name,
@@ -101,6 +101,8 @@ def main() -> None:
             kb_dir=args.kb_dir,
             force=args.force,
         )
+        print(f"[init] 프로젝트 생성 완료: {result['project_dir']}")
+        print(f"  -> brand_profile.json 을 열어 브랜드 정보를 입력하세요.")
         return
 
     if args.command == "init-agent-pack":
@@ -110,6 +112,7 @@ def main() -> None:
             targets=[item.strip() for item in args.targets.split(",") if item.strip()],
             force=args.force,
         )
+        print(f"[init-agent-pack] 에이전트 팩 생성 완료: {args.target_repo}")
         return
 
     headers = {
@@ -129,7 +132,8 @@ def main() -> None:
                 )
             if not seed_urls:
                 raise SystemExit("Provide at least one --seed-url or a --seeds-file.")
-            build_knowledge_base(
+            print(f"[build-kb] {len(seed_urls)}개 시드 URL에서 KB 빌드 시작...")
+            manifest = build_knowledge_base(
                 client=client,
                 seed_urls=seed_urls,
                 kb_dir=Path(args.kb_dir),
@@ -137,6 +141,8 @@ def main() -> None:
                 max_pages_per_source=args.max_pages_per_source,
                 max_depth=args.max_depth,
             )
+            print(f"[build-kb] KB 빌드 완료: {args.kb_dir}")
+            print(f"  -> 시드: {manifest['seed_count']}개 | 레퍼런스: {manifest['reference_count']}개 | 문서: {manifest['document_count']}개")
             return
 
         if args.command == "extract-seed":
@@ -146,6 +152,8 @@ def main() -> None:
                 output_dir / "references.jsonl",
                 [reference.to_dict() for reference in seed_article.references],
             )
+            print(f"[extract-seed] 시드 추출 완료: {seed_article.title}")
+            print(f"  -> 레퍼런스 {len(seed_article.references)}개 발견 ({output_dir})")
             return
 
         if args.command == "synthesize":
@@ -166,6 +174,7 @@ def main() -> None:
                 if line.strip()
             ]
             build_blueprint(output_dir, brand_profile, references, documents)
+            print(f"[synthesize] 블루프린트 재생성 완료 ({output_dir}/blueprint/)")
             return
 
         if args.command == "run-project":
@@ -174,6 +183,8 @@ def main() -> None:
             kb_dir = resolve_kb_dir(project_dir, manifest, args.kb_dir)
             references, documents, kb_manifest = load_knowledge_base(kb_dir)
             brand_profile_path = project_dir / manifest["brand_profile"]
+            brand_profile = load_brand_profile(brand_profile_path)
+            _warn_placeholder_profile(brand_profile)
             build_root = ensure_dir(project_dir / manifest.get("build_dir", "build"))
             output_dir = ensure_dir(build_root / "system")
             write_jsonl(output_dir / "references.jsonl", [reference.to_dict() for reference in references])
@@ -182,7 +193,7 @@ def main() -> None:
                 shutil.copytree(kb_dir / "ontology", output_dir / "ontology", dirs_exist_ok=True)
             build_blueprint(
                 output_dir=output_dir,
-                brand_profile=load_brand_profile(brand_profile_path),
+                brand_profile=brand_profile,
                 references=references,
                 documents=documents,
             )
@@ -197,9 +208,12 @@ def main() -> None:
                     "output_dir": str(output_dir),
                 },
             )
+            print(f"[run-project] 시스템 산출물 생성 완료: {output_dir}/blueprint/")
+            print(f"  -> 레퍼런스: {len(references)}개 | 문서: {len(documents)}개")
+            print(f"  -> system_spec.md 를 확인하세요.")
             return
 
-        run_pipeline(
+        result = run_pipeline(
             client=client,
             seed_url=args.seed_url,
             output_dir=output_dir,
@@ -208,6 +222,36 @@ def main() -> None:
             max_pages_per_source=args.max_pages_per_source,
             max_depth=args.max_depth,
         )
+        print(f"[run] 파이프라인 완료: {output_dir}")
+        print(f"  -> 레퍼런스: {len(result['references'])}개 | 문서: {len(result['documents'])}개")
+        if args.brand_profile:
+            print(f"  -> 블루프린트: {output_dir}/blueprint/")
+
+
+_PLACEHOLDER_PATTERNS = [
+    "Describe your",
+    "Describe the",
+    "List the core",
+]
+
+
+def _warn_placeholder_profile(profile: dict) -> None:
+    found = []
+    for key, value in profile.items():
+        if key.startswith("_"):
+            continue
+        texts = []
+        if isinstance(value, str):
+            texts = [value]
+        elif isinstance(value, list):
+            texts = [item for item in value if isinstance(item, str)]
+        for text in texts:
+            if any(pattern in text for pattern in _PLACEHOLDER_PATTERNS):
+                found.append(key)
+                break
+    if found:
+        print(f"[warning] brand_profile.json에 아직 기본값이 남아 있는 항목: {', '.join(found)}")
+        print(f"  -> 실제 브랜드 정보를 입력해야 의미 있는 산출물이 나옵니다.")
 
 
 if __name__ == "__main__":

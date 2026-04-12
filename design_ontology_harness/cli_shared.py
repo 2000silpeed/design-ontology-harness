@@ -39,7 +39,10 @@ def run_pipeline(
         max_depth=max_depth,
     )
 
-    for reference in references:
+    crawl_errors = []
+    for index, reference in enumerate(references, start=1):
+        label = reference.curated_title or reference.href
+        print(f"  [{index}/{len(references)}] 크롤링: {label[:60]}")
         documents, manifest = crawl_reference(
             client=client,
             robots=robots,
@@ -48,12 +51,24 @@ def run_pipeline(
         )
         all_documents.extend(documents)
         manifests.append(manifest.to_dict())
+        if manifest.error_count > 0:
+            crawl_errors.append((label, manifest.error_count, manifest.errors))
 
     write_json(output_dir / "crawl_manifests.json", {"manifests": manifests})
     write_jsonl(
         output_dir / "all_documents.jsonl",
         [document.to_dict() for document in all_documents],
     )
+    ok_count = sum(1 for doc in all_documents if not doc.error)
+    err_count = len(all_documents) - ok_count
+    print(f"  크롤링 완료: 성공 {ok_count}건 / 실패 {err_count}건")
+    if crawl_errors:
+        print(f"  실패한 소스:")
+        for label, count, errors in crawl_errors:
+            print(f"    - {label[:50]}: {count}건 에러")
+            for error in errors[:2]:
+                print(f"      {error.get('url', '')} -> {error.get('reason', '')}")
+
     build_ontology_outputs(output_dir, references, all_documents)
     if brand_profile_path:
         brand_profile = load_brand_profile(brand_profile_path)
