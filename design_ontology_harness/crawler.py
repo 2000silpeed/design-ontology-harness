@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import concurrent.futures
 import re
 from collections import deque
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterable
 from urllib.parse import urljoin, urlparse
@@ -39,12 +40,32 @@ DISALLOWED_PATH_PARTS = (
 )
 
 
+MOBILE_UA = (
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) "
+    "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"
+)
+JINA_READER_PREFIX = "https://r.jina.ai/"
+CSS_PARALLEL_WORKERS = 8
+
+
+@dataclass(slots=True)
+class FetchResult:
+    html: str
+    status_code: int
+    final_url: str
+    tier: str
+    css_urls: list[str] = field(default_factory=list)
+    css_contents: dict[str, str] = field(default_factory=dict)
+
+
 @dataclass(slots=True)
 class CrawlConfig:
     output_dir: Path
     max_pages_per_source: int = 3
     max_depth: int = 1
     user_agent: str = "DesignOntologyHarness/0.1 (+https://spacebar310.tistory.com/86)"
+    enable_fallback: bool = True
+    enable_css_download: bool = True
 
 
 class RobotsCache:
@@ -69,6 +90,137 @@ class RobotsCache:
                 parser.parse([])
             self._cache[key] = parser
         return parser.can_fetch(user_agent, url)
+
+
+def _fetch_with_fallback(
+    client: httpx.Client,
+    url: str,
+    config: CrawlConfig,
+) -> FetchResult:
+    """5-tier fallback: httpx 기본 → Mobile UA → Jina Reader → Playwright → 중단."""
+    tiers = [
+        ("default", {}),
+        ("mobile_ua", {"headers": {"User-Agent": MOBILE_UA}}),
+    ]
+    if not config.enable_fallback:
+        tiers = tiers[:1]
+
+    for tier_name, extra_kwargs in tiers:
+        try:
+            response = client.get(url, timeout=30.0, follow_redirects=True, **extra_kwargs)
+            content_type = response.headers.get("content-type", "")
+            if "text/html" not in content_type:
+                continue
+            if response.status_code >= 400:
+                continue
+            text = response.text
+            if len(text.strip()) < 200:
+                continue
+            return FetchResult(
+                html=text,
+                status_code=response.status_code,
+                final_url=str(response.url),
+                tier=tier_name,
+            )
+        except httpx.HTTPError:
+            continue
+
+    if config.enable_fallback:
+        try:
+            jina_url = JINA_READER_PREFIX + url
+            response = client.get(
+                jina_url,
+                timeout=45.0,
+                follow_redirects=True,
+                headers={"Accept": "text/html"},
+            )
+            if response.status_code < 400 and len(response.text.strip()) >= 100:
+                return FetchResult(
+                    html=response.text,
+                    status_code=response.status_code,
+                    final_url=url,
+                    tier="jina_reader",
+                )
+        except httpx.HTTPError:
+            pass
+
+        try:
+            result = _fetch_with_playwright(url)
+            if result:
+                return result
+        except Exception:
+            pass
+
+    raise RuntimeError(f"All fetch tiers exhausted for {url}")
+
+
+def _fetch_with_playwright(url: str) -> FetchResult | None:
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        return None
+
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            page = browser.new_page()
+            response = page.goto(url, wait_until="domcontentloaded", timeout=30000)
+            status = response.status if response else 0
+            html = page.content()
+            final_url = page.url
+            browser.close()
+            if status >= 400 or len(html.strip()) < 200:
+                return None
+            return FetchResult(
+                html=html,
+                status_code=status,
+                final_url=final_url,
+                tier="playwright",
+            )
+    except Exception:
+        return None
+
+
+def _extract_css_links(html: str, base_url: str) -> list[str]:
+    soup = BeautifulSoup(html, "html.parser")
+    urls: list[str] = []
+    seen: set[str] = set()
+    for link in soup.find_all("link", rel=lambda v: v and "stylesheet" in v):
+        href = link.get("href", "").strip()
+        if not href:
+            continue
+        absolute = urljoin(base_url, href)
+        if absolute not in seen:
+            seen.add(absolute)
+            urls.append(absolute)
+    return urls
+
+
+def _download_css_parallel(
+    client: httpx.Client,
+    css_urls: list[str],
+    max_workers: int = CSS_PARALLEL_WORKERS,
+) -> dict[str, str]:
+    results: dict[str, str] = {}
+    if not css_urls:
+        return results
+
+    def fetch_one(url: str) -> tuple[str, str]:
+        try:
+            response = client.get(url, timeout=20.0, follow_redirects=True)
+            if response.status_code < 400:
+                return url, response.text
+        except httpx.HTTPError:
+            pass
+        return url, ""
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(fetch_one, url): url for url in css_urls}
+        for future in concurrent.futures.as_completed(futures):
+            url, content = future.result()
+            if content:
+                results[url] = content
+    return results
 
 
 def crawl_reference(
@@ -116,23 +268,35 @@ def crawl_reference(
             continue
 
         try:
-            response = client.get(current_url, timeout=30.0, follow_redirects=True)
-            status_code = response.status_code
-            final_url = str(response.url)
+            fetch = _fetch_with_fallback(client, current_url, config)
+            status_code = fetch.status_code
+            final_url = fetch.final_url
             final_host = urlparse(final_url).netloc.lower()
             source_host = urlparse(reference.href).netloc.lower()
             allowed_hosts.update({source_host, final_host})
-            content_type = response.headers.get("content-type", "")
-            if "text/html" not in content_type:
-                raise ValueError(f"Unsupported content type: {content_type}")
+
+            if config.enable_css_download and depth == 0:
+                css_urls = _extract_css_links(fetch.html, final_url)
+                fetch.css_urls = css_urls
+                fetch.css_contents = _download_css_parallel(client, css_urls)
+                if fetch.css_contents:
+                    css_dir = ensure_dir(crawl_dir / "css")
+                    for i, (css_url, css_text) in enumerate(fetch.css_contents.items()):
+                        css_filename = f"{i:03d}_{urlparse(css_url).path.split('/')[-1] or 'style.css'}"
+                        if not css_filename.endswith(".css"):
+                            css_filename += ".css"
+                        (css_dir / css_filename).write_text(css_text, encoding="utf-8")
+
             document = _parse_document(
-                html=response.text,
+                html=fetch.html,
                 request_url=current_url,
                 final_url=final_url,
                 source_label=reference.curated_title,
                 slug=slug,
                 depth=depth,
                 status_code=status_code,
+                fetch_tier=fetch.tier,
+                css_count=len(fetch.css_contents),
             )
             documents.append(document)
             if depth < config.max_depth:
@@ -184,6 +348,8 @@ def _parse_document(
     slug: str,
     depth: int,
     status_code: int,
+    fetch_tier: str = "default",
+    css_count: int = 0,
 ) -> DocumentRecord:
     soup = BeautifulSoup(html, "html.parser")
     for selector in ("script", "style", "noscript", "svg", "canvas", "footer", "nav", "aside", "form"):
@@ -227,6 +393,8 @@ def _parse_document(
         text=text,
         internal_links=internal_links,
         fetched_at=utc_now_iso(),
+        fetch_tier=fetch_tier,
+        css_count=css_count,
     )
 
 

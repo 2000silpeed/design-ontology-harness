@@ -49,6 +49,8 @@ class DocumentRecord:
     internal_links: list[str]
     fetched_at: str
     error: str | None = None
+    fetch_tier: str = "default"
+    css_count: int = 0
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

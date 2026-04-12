@@ -124,6 +124,7 @@ def generate_system_pack(
         token_schema=token_schema,
         component_inventory=component_inventory,
         documents=documents,
+        css_extraction=blueprint.get("css_extraction"),
     )
 
     write_json(blueprint_dir / "profile_validation.json", validation)
@@ -205,6 +206,7 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
             "core": "{category}.{role}.{scale}",
             "semantic": "{category}.{intent}.{state}",
             "component": "{component}.{slot}.{property}",
+            "rule": "네이밍 패턴만 정의하고 구체적 토큰명은 실제 컴포넌트·역할에서 도출 — 임의 토큰명 생성 금지",
         },
         "layers": [
             {
@@ -230,7 +232,8 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
                 "rules": [
                     "accent는 최대 1개의 주 계열로 시작",
                     "semantic feedback은 accent와 분리",
-                    "text/surface 조합은 접근성 기준을 우선"
+                    "text/surface 조합은 접근성 기준을 우선",
+                    "hex 값은 color_reference·CSS 추출·브랜드 가이드에서만 가져오고 임의 생성 금지",
                 ],
             },
             "typography": _build_typography_category(editorial_system, font_system),
@@ -521,6 +524,7 @@ def build_system_spec_markdown(
     token_schema: dict,
     component_inventory: dict,
     documents: list[DocumentRecord],
+    css_extraction: dict | None = None,
 ) -> str:
     source_count = len({document.reference_slug for document in documents if not document.error})
     principle_lines = "\n".join(
@@ -545,10 +549,19 @@ def build_system_spec_markdown(
         [f"- Error: {message}" for message in validation.get("errors", [])]
         + [f"- Warning: {message}" for message in validation.get("warnings", [])]
     ) or "- No validation issues."
+    ai_synthesis_lines = "\n".join(
+        f"- **{principle['rule']}**: {principle['detail']}"
+        for principle in blueprint.get("governance", {}).get("ai_synthesis_principles", [])
+    ) or "- No AI synthesis principles defined."
     concept_lines = "\n".join(
         f"- **{target['concept_id']}**: {target['count']}"
         for target in blueprint.get("ontology_targets", [])
     )
+
+    quick_start_section = _build_quick_start_section(brand_profile, token_schema, color_reference)
+    do_dont_section = _build_do_dont_section(brand_profile, blueprint)
+    drop_in_css_section = _build_drop_in_css_section(brand_profile, token_schema, color_reference)
+    css_extraction_section = _build_css_extraction_section(css_extraction)
 
     return f"""# {blueprint.get('system_name', 'Design System')} Spec
 
@@ -608,13 +621,33 @@ def build_system_spec_markdown(
 - Rule: copy visuals from no single source; absorb patterns only when they reinforce brand keywords and avoid anti-keywords.
 - Use references to validate structure, accessibility, token discipline, and documentation quality.
 
-## 10. Ontology Targets
+## 10. AI Synthesis Principles
+
+{ai_synthesis_lines}
+
+## 11. Ontology Targets
 
 {concept_lines}
 
-## 11. Profile Validation
+## 12. Profile Validation
 
 {validation_lines}
+
+## 13. Quick Start
+
+{quick_start_section}
+
+## 14. DO / DON'T
+
+{do_dont_section}
+
+## 15. Drop-in CSS
+
+{drop_in_css_section}
+
+## 16. CSS Extraction Summary
+
+{css_extraction_section}
 """
 
 
@@ -843,3 +876,189 @@ def _build_color_reference_section(color_reference: dict | None) -> str:
 
     lines.append("- **Application rule**: 레퍼런스 컬러는 semantic token으로 번역해서 사용하고, 접근성과 theme 호환성을 우선합니다.")
     return "\n".join(lines)
+
+
+def _build_quick_start_section(
+    brand_profile: dict,
+    token_schema: dict,
+    color_reference: dict | None,
+) -> str:
+    brand_name = brand_profile.get("brand_name", "Brand")
+    system_name = brand_profile.get("system_name", "Design System")
+    lines = [
+        f"이 문서는 **{system_name}**의 디자인 시스템 사양입니다.",
+        "",
+        "### 시작하기",
+        "",
+        f"1. **토큰 적용**: Drop-in CSS(아래 섹션 15)의 CSS 변수를 프로젝트에 복사합니다.",
+        "2. **컬러 세팅**: Color Reference(섹션 6)의 semantic role을 기준으로 surface/text/border를 잡습니다.",
+        "3. **타이포 세팅**: Token Strategy(섹션 5)의 font family와 type scale을 적용합니다.",
+        "4. **컴포넌트 구현**: Component Strategy(섹션 7)의 family 순서대로 하나씩 빌드합니다.",
+        "",
+        "### 우선순위",
+        "",
+    ]
+    primitives = brand_profile.get("product_primitives", [])[:5]
+    if primitives:
+        lines.append(f"핵심 primitive: **{', '.join(primitives)}**")
+        lines.append("")
+        lines.append("이 primitive를 지원하는 컴포넌트부터 구현하고, 나머지는 필요에 따라 확장합니다.")
+    else:
+        lines.append("product_primitives를 brand_profile에 정의하면 우선순위가 자동으로 결정됩니다.")
+    return "\n".join(lines)
+
+
+def _build_do_dont_section(brand_profile: dict, blueprint: dict) -> str:
+    brand_keywords = brand_profile.get("brand_keywords", [])
+    anti_keywords = brand_profile.get("anti_keywords", [])
+    principles = blueprint.get("principles", [])
+
+    lines = ["### DO\n"]
+    for principle in principles[:4]:
+        implications = principle.get("implications", [])
+        if implications:
+            lines.append(f"- **{principle['name']}**: {implications[0]}")
+    if brand_keywords:
+        lines.append(f"- 모든 시각적 선택에서 **{', '.join(brand_keywords[:3])}** 기준을 적용")
+    lines.append("- semantic token을 통해 컬러를 적용 (하드코딩 금지)")
+    lines.append("- 접근성 기준을 모든 text/surface 조합에서 먼저 검증")
+    lines.append("- 컴포넌트 변형 추가 전 기존 variant로 해결 가능한지 먼저 확인")
+
+    lines.append("\n### DON'T\n")
+    if anti_keywords:
+        for keyword in anti_keywords[:4]:
+            lines.append(f"- **{keyword}** 방향의 디자인 결정을 하지 않음")
+    lines.append("- hex 값을 임의로 생성하지 않음 (반드시 레퍼런스에서 가져오기)")
+    lines.append("- 토큰명을 임의로 발명하지 않음 (네이밍 패턴에서 도출)")
+    lines.append("- 한 레퍼런스의 비주얼을 그대로 복제하지 않음")
+    lines.append("- 기존 기능 진입점을 승인 없이 제거하지 않음")
+    return "\n".join(lines)
+
+
+def _build_drop_in_css_section(
+    brand_profile: dict,
+    token_schema: dict,
+    color_reference: dict | None,
+) -> str:
+    lines = ["아래 CSS 변수를 `:root`에 복사하여 즉시 사용할 수 있습니다.\n"]
+    lines.append("```css")
+    lines.append(":root {")
+
+    lines.append("  /* --- Spacing --- */")
+    spacing_scale = token_schema.get("categories", {}).get("spacing", {}).get("scale", [])
+    for val in spacing_scale:
+        lines.append(f"  --space-{val}: {val}px;")
+
+    lines.append("")
+    lines.append("  /* --- Radius --- */")
+    radius_map = {"none": "0", "sm": "4px", "md": "8px", "lg": "12px", "xl": "16px", "pill": "9999px"}
+    for name, val in radius_map.items():
+        lines.append(f"  --radius-{name}: {val};")
+
+    lines.append("")
+    lines.append("  /* --- Typography --- */")
+    typography = token_schema.get("categories", {}).get("typography", {})
+    fonts = typography.get("recommended_fonts", {})
+    if fonts:
+        if fonts.get("heading"):
+            lines.append(f"  --font-heading: '{fonts['heading']}', serif;")
+        if fonts.get("body"):
+            lines.append(f"  --font-body: '{fonts['body']}', sans-serif;")
+        if fonts.get("mono"):
+            lines.append(f"  --font-mono: '{fonts['mono']}', monospace;")
+
+    type_scale = typography.get("type_scale", {})
+    sizes = type_scale.get("sizes", {})
+    if sizes:
+        for name, px in sizes.items():
+            lines.append(f"  --text-{name}: {px}px;")
+
+    line_heights = type_scale.get("line_heights", {})
+    if line_heights:
+        lines.append("")
+        for name, lh in line_heights.items():
+            lines.append(f"  --leading-{name}: {lh};")
+
+    if color_reference:
+        lines.append("")
+        lines.append("  /* --- Color (from reference) --- */")
+        active_palette = color_reference.get("active_palette", {}) or {}
+        roles = active_palette.get("roles") or color_reference.get("palette_roles", {})
+        for role, item in roles.items():
+            hex_val = item.get("hex", "")
+            if hex_val:
+                lines.append(f"  --color-{role.replace('_', '-')}: {hex_val};")
+        expanded = color_reference.get("expanded_palette", {}) or {}
+        semantic_roles = expanded.get("semantic_roles", {})
+        if semantic_roles:
+            lines.append("")
+            lines.append("  /* --- Semantic roles (expanded) --- */")
+            for role, item in semantic_roles.items():
+                hex_val = item.get("hex", "")
+                if hex_val:
+                    lines.append(f"  --color-{role.replace('_', '-')}: {hex_val};")
+
+    lines.append("")
+    lines.append("  /* --- Motion --- */")
+    motion = token_schema.get("categories", {}).get("motion", {})
+    for dur in motion.get("durations_ms", []):
+        lines.append(f"  --duration-{dur}: {dur}ms;")
+    for easing in motion.get("easing_tokens", []):
+        if easing == "standard":
+            lines.append(f"  --ease-{easing}: cubic-bezier(0.4, 0, 0.2, 1);")
+        elif easing == "enter":
+            lines.append(f"  --ease-{easing}: cubic-bezier(0, 0, 0.2, 1);")
+        elif easing == "exit":
+            lines.append(f"  --ease-{easing}: cubic-bezier(0.4, 0, 1, 1);")
+        elif easing == "emphasized":
+            lines.append(f"  --ease-{easing}: cubic-bezier(0.2, 0, 0, 1);")
+
+    lines.append("}")
+    lines.append("```")
+    return "\n".join(lines)
+
+
+def _build_css_extraction_section(css_extraction: dict | None) -> str:
+    if not css_extraction:
+        return "- CSS 추출 데이터 없음 (크롤링 시 CSS가 수집되지 않았거나 extract-css가 실행되지 않음)"
+
+    lines = []
+
+    var_info = css_extraction.get("var_resolution", {})
+    if var_info:
+        total = var_info.get("total_vars", 0)
+        resolved = var_info.get("resolved_count", 0)
+        unresolved = var_info.get("unresolved_count", 0)
+        lines.append(f"### Variable Resolution\n")
+        lines.append(f"- 전체 CSS 변수: **{total}**개")
+        lines.append(f"- 해결됨: **{resolved}**개 ({round(resolved / total * 100) if total else 0}%)")
+        lines.append(f"- 미해결: **{unresolved}**개")
+
+    brand_info = css_extraction.get("brand_colors", {})
+    summary = brand_info.get("summary", {})
+    if summary:
+        lines.append(f"\n### Brand Color Candidates\n")
+        lines.append(f"- 후보 수: **{summary.get('total_candidates', 0)}**개")
+        lines.append(f"- 시멘틱 변수 기반: {summary.get('semantic_count', 0)}개")
+        lines.append(f"- 빈도 기반: {summary.get('frequency_count', 0)}개")
+        lines.append(f"- Selector 역할 기반: {summary.get('selector_count', 0)}개")
+
+    typo_info = css_extraction.get("typography", {})
+    stats = typo_info.get("stats", {})
+    if stats:
+        lines.append(f"\n### Typography Extraction\n")
+        lines.append(f"- 스케일 항목: **{stats.get('scale_entries', 0)}**개")
+        lines.append(f"- 고유 폰트 패밀리: **{stats.get('unique_families', 0)}**개")
+        lines.append(f"- 카테고리: heading={stats.get('heading_count', 0)}, text={stats.get('text_count', 0)}, display={stats.get('display_count', 0)}")
+
+    alias_info = css_extraction.get("alias_layer", {})
+    alias_stats = alias_info.get("stats", {})
+    if alias_stats:
+        lines.append(f"\n### Alias Layer\n")
+        lines.append(f"- 전체 토큰: **{alias_stats.get('total_tokens', 0)}**개")
+        tiers = alias_stats.get("tier_counts", {})
+        if tiers:
+            tier_str = ", ".join(f"{k}={v}" for k, v in tiers.items())
+            lines.append(f"- Tier 분포: {tier_str}")
+
+    return "\n".join(lines) if lines else "- CSS 추출 결과가 비어 있습니다."

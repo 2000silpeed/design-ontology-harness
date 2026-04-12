@@ -8,8 +8,10 @@ from pathlib import Path
 import httpx
 
 from .agent_packs import scaffold_agent_pack
+from .benchmark_kb import get_benchmark_systems, get_benchmark_by_keywords, save_benchmark_report
 from .cli_shared import run_pipeline
 from .component_specs import generate_component_specs, write_component_specs
+from .css_pipeline import run_and_save as run_css_extraction
 from .kb import build_knowledge_base, load_knowledge_base
 from .models import DocumentRecord, ReferenceLink
 from .scaffold import load_project, resolve_kb_dir, scaffold_project
@@ -91,10 +93,20 @@ def build_parser() -> argparse.ArgumentParser:
     analyze_parser.add_argument("--project-dir", default=None, help="Optional: update this project's brand_profile with detected primitives")
     analyze_parser.add_argument("--output-dir", default=None, help="Optional: write analysis results to this directory")
 
+    css_parser = subparsers.add_parser("extract-css", help="Extract design tokens from CSS files (var resolution, brand colors, typography)")
+    css_parser.add_argument("--css-dir", required=True, help="Directory containing .css files")
+    css_parser.add_argument("--html-file", default=None, help="Optional HTML file for frequency/logo-wall analysis")
+    css_parser.add_argument("--output-dir", default="data", help="Directory for outputs")
+
     comp_parser = subparsers.add_parser("build-components", help="Generate detailed component specs from spec + KB + brand profile")
     comp_parser.add_argument("--spec-file", required=True, help="Product spec file to analyze")
     comp_parser.add_argument("--project-dir", required=True, help="Project directory with brand_profile.json")
     comp_parser.add_argument("--kb-dir", default=None, help="Optional override for the knowledge base path")
+
+    bench_parser = subparsers.add_parser("benchmark", help="Show benchmark references matching brand keywords")
+    bench_parser.add_argument("--keywords", nargs="+", default=[], help="Brand keywords to match against 35 real-world design systems")
+    bench_parser.add_argument("--brand-profile", default=None, help="Optional brand profile JSON to auto-extract keywords")
+    bench_parser.add_argument("--output-dir", default=None, help="Optional directory to save benchmark report")
 
     return parser
 
@@ -103,6 +115,34 @@ def main() -> None:
     args = build_parser().parse_args()
     raw_output = getattr(args, "output_dir", None)
     output_dir = ensure_dir(Path(raw_output)) if raw_output else None
+
+    if args.command == "benchmark":
+        keywords = list(args.keywords)
+        if args.brand_profile:
+            bp = json.loads(Path(args.brand_profile).read_text(encoding="utf-8"))
+            keywords.extend(bp.get("brand_keywords", []))
+        if not keywords:
+            systems = get_benchmark_systems()
+            print(f"[benchmark] 전체 {len(systems)}개 실서비스 디자인 시스템 레퍼런스:")
+            for s in systems:
+                print(f"  - {s['name']} ({s['category']}): {', '.join(s['keywords'])}")
+            return
+        matched = get_benchmark_by_keywords(keywords)
+        print(f"[benchmark] '{', '.join(keywords)}' 키워드와 매칭되는 시스템 ({len(matched)}개):")
+        for s in matched[:10]:
+            overlap = set(kw.lower() for kw in keywords) & set(s["keywords"])
+            print(f"  - {s['name']} ({s['category']})")
+            print(f"    키워드: {', '.join(s['keywords'])} | 매칭: {', '.join(overlap)}")
+            print(f"    컬러: {s['color_strategy']}")
+            print(f"    특징: {', '.join(s['notable'][:3])}")
+        if args.output_dir:
+            out = ensure_dir(Path(args.output_dir))
+            bp = {"brand_keywords": keywords}
+            if args.brand_profile:
+                bp = json.loads(Path(args.brand_profile).read_text(encoding="utf-8"))
+            report = save_benchmark_report(out, bp)
+            print(f"\n  -> {out}/benchmark/ 저장 완료")
+        return
 
     if args.command == "analyze-spec":
         spec_path = Path(args.spec_file)
@@ -136,6 +176,21 @@ def main() -> None:
                 "component_list": component_list,
             })
             print(f"  -> {out}/spec_analysis.json 저장 완료")
+        return
+
+    if args.command == "extract-css":
+        css_dir = Path(args.css_dir)
+        if not css_dir.is_dir():
+            raise SystemExit(f"CSS 디렉토리를 찾을 수 없습니다: {css_dir}")
+        html_path = Path(args.html_file) if args.html_file else None
+        result = run_css_extraction(css_dir, output_dir, html_path)
+        var_info = result["var_resolution"]
+        brand_info = result["brand_colors"]["summary"]
+        typo_info = result["typography"]["stats"]
+        print(f"[extract-css] CSS 추출 완료 ({output_dir}/css_extraction/)")
+        print(f"  -> var 해석: {var_info['resolved_count']}/{var_info['total_vars']}개 해결")
+        print(f"  -> 브랜드 색상: {brand_info['total_candidates']}개 후보")
+        print(f"  -> 타이포그래피: {typo_info['scale_entries']}개 스케일, {typo_info['unique_families']}개 폰트 패밀리")
         return
 
     if args.command == "build-components":

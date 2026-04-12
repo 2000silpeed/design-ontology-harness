@@ -667,6 +667,26 @@ def resolve_font_system(brand_profile: dict) -> dict:
                 "latin_pair": body_font["name"],
             }
 
+    # ── Pitfall guardrails ──
+    pitfall_warnings: list[str] = []
+
+    # #14 Variable font 비표준 weight: 표준 100단위가 아닌 weight 경고
+    for role_font, role_name in [(heading_font, "heading"), (body_font, "body"), (mono_font, "mono")]:
+        if role_font:
+            warnings = _check_nonstandard_weights(role_font)
+            for w in warnings:
+                pitfall_warnings.append(f"[pitfall#14] {role_name}: {w}")
+
+    # #9 next/font fallback: fallback 폰트명이 선택되지 않도록 확인
+    for role_font, role_name in [(heading_font, "heading"), (body_font, "body")]:
+        if role_font and _is_nextfont_fallback(role_font["name"]):
+            pitfall_warnings.append(
+                f"[pitfall#9] {role_name}: '{role_font['name']}' appears to be a next/font metric fallback, not a real font."
+            )
+
+    # #13 Letter-spacing optical compensation: heading에 negative tracking 권장
+    letter_spacing_note = _heading_tracking_recommendation(type_scale, brand_keywords)
+
     result = {
         "heading": _font_summary(heading_font),
         "body": _font_summary(body_font),
@@ -680,6 +700,8 @@ def resolve_font_system(brand_profile: dict) -> dict:
         "pairing_source": pairing.get("context") if pairing else "auto-scored",
         "strategy": _build_strategy_notes(heading_font, body_font, mono_font, korean_font, brand_keywords, product_type),
         "loading": _build_loading_strategy(heading_font, body_font, mono_font, korean_font, platforms),
+        "pitfall_warnings": pitfall_warnings,
+        "letter_spacing": letter_spacing_note,
     }
     return result
 
@@ -1055,4 +1077,83 @@ def parse_font_reference_markdown(path: Path) -> dict:
         "font_count": len(fonts),
         "categories": sorted({f["category"] for f in fonts if f.get("category")}),
         "fonts": fonts,
+    }
+
+
+# ──────────────────────────────────────────────
+# 9. Pitfall Guardrails
+# ──────────────────────────────────────────────
+
+_STANDARD_WEIGHTS = {100, 200, 300, 400, 500, 600, 700, 800, 900}
+
+
+def _parse_weight_range(weight_range: str) -> list[int]:
+    """Parse weight_range string like '100-900' or '300/380/570' into int list."""
+    if "-" in weight_range and "/" not in weight_range:
+        parts = weight_range.split("-")
+        try:
+            lo, hi = int(parts[0].strip()), int(parts[-1].strip())
+            return list(range(lo, hi + 1, 100))
+        except ValueError:
+            return []
+    if "/" in weight_range:
+        try:
+            return [int(w.strip()) for w in weight_range.split("/")]
+        except ValueError:
+            return []
+    try:
+        return [int(weight_range.strip())]
+    except ValueError:
+        return []
+
+
+def _check_nonstandard_weights(font: dict) -> list[str]:
+    """Pitfall #14: warn if a font uses non-standard weight values.
+
+    Saans uses 300/380/570, ShopifySans uses 330/420/550.
+    These can't be reproduced with standard Inter-like weights.
+    """
+    weight_range = font.get("weight_range", "")
+    weights = _parse_weight_range(weight_range)
+    nonstandard = [w for w in weights if w not in _STANDARD_WEIGHTS]
+    if nonstandard:
+        return [
+            f"'{font['name']}' has non-standard weights {nonstandard} "
+            f"(from '{weight_range}'). Cannot reproduce with standard font weights."
+        ]
+    return []
+
+
+def _is_nextfont_fallback(font_name: str) -> bool:
+    """Pitfall #9: detect next/font metric fallback font names.
+
+    Names like 'Inter Fallback', 'Mona Sans Header Fallback' are
+    layout-shift prevention fonts injected by Next.js, not real choices.
+    """
+    lower = font_name.lower()
+    return "fallback" in lower and any(
+        kw in lower for kw in ["inter", "mona", "sans", "serif", "mono"]
+    )
+
+
+def _heading_tracking_recommendation(type_scale: dict, brand_keywords: list[str]) -> dict:
+    """Pitfall #13: recommend negative letter-spacing for large headings.
+
+    Large headings without negative tracking look 'loose'.
+    Standard: -0.01em for md~xl, -0.02em for 2xl+.
+    """
+    sizes = type_scale.get("sizes", {})
+    tracking: dict[str, str] = {}
+    for size_key, size_px in sizes.items():
+        if size_px >= 30:
+            tracking[size_key] = "-0.02em"
+        elif size_px >= 20:
+            tracking[size_key] = "-0.01em"
+    if "precise" in brand_keywords or "minimal" in brand_keywords:
+        for key in tracking:
+            if tracking[key] == "-0.01em":
+                tracking[key] = "-0.015em"
+    return {
+        "heading_tracking": tracking,
+        "note": "큰 헤딩에 negative tracking 적용. 미적용 시 글자가 풀어진 느낌.",
     }

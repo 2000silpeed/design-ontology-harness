@@ -5,10 +5,30 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 from .authoring import generate_system_pack
+from .benchmark_kb import build_benchmark_context, save_benchmark_report
 from .color_reference import resolve_color_reference
+from .css_pipeline import load_css_extraction
 from .font_reference import resolve_font_system
 from .models import DocumentRecord, ReferenceLink
 from .utils import ensure_dir, write_json
+
+AI_SYNTHESIS_PRINCIPLES = [
+    {
+        "id": "no_fabricated_hex",
+        "rule": "hex를 만들지 않는다",
+        "detail": "AI는 색상 hex 값을 임의로 생성하지 않는다. 반드시 color_reference, CSS 추출, 브랜드 가이드 등 실증 소스에서 가져온 값만 사용한다.",
+    },
+    {
+        "id": "no_fabricated_token_names",
+        "rule": "토큰명을 만들지 않는다",
+        "detail": "AI는 토큰 이름을 임의로 발명하지 않는다. 네이밍 패턴(core/semantic/component 레이어 규칙)은 정의하되, 구체적 토큰명은 실제 컴포넌트와 역할에서 도출한다.",
+    },
+    {
+        "id": "interpretation_over_facts_only",
+        "rule": "팩트 위에 해석만",
+        "detail": "AI는 수집된 레퍼런스, 프로필, 온톨로지 증거 위에 해석과 구조화만 수행한다. 증거 없는 추론, 존재하지 않는 패턴 서술, 가상의 사용 사례 생성을 금지한다.",
+    },
+]
 
 KEYWORD_PRINCIPLES = {
     "calm": {
@@ -102,6 +122,7 @@ def build_blueprint(
         "token_strategy": _build_token_strategy(brand_profile, prioritized_concepts),
         "component_strategy": _build_component_strategy(brand_profile, prioritized_concepts),
         "color_reference": brand_profile.get("_resolved_color_reference"),
+        "css_extraction": load_css_extraction(output_dir),
         "governance": {
             "source_of_truth": [
                 "brand profile",
@@ -122,10 +143,13 @@ def build_blueprint(
                 "기존 데이터 밀도와 업무 완료 경로를 유지한 상태에서 시각 품질을 높이는 방향을 우선",
                 "기능 위치 변경, 정보 구조 변경, 패널 제거는 별도의 migration plan이 있을 때만 수행"
             ],
+            "ai_synthesis_principles": AI_SYNTHESIS_PRINCIPLES,
         },
         "ontology_targets": prioritized_concepts,
+        "benchmark": build_benchmark_context(brand_profile),
     }
 
+    save_benchmark_report(output_dir, brand_profile)
     write_json(blueprint_dir / "design_system_blueprint.json", blueprint)
     generate_system_pack(output_dir, brand_profile, blueprint, references, documents)
     return blueprint

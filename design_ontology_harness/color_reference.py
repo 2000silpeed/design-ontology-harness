@@ -343,6 +343,13 @@ def resolve_color_reference(
         brand_profile=profile,
     )
 
+    # ── Pitfall #3 리브랜딩 지체 경고 ──
+    # 팔레트 내 동일 hue 계열에서 명도/채도가 크게 다른 색이 공존하면
+    # 구 브랜드 hex가 섞여있을 가능성 경고
+    pitfall_warnings = _detect_rebrand_remnants(resolved_selected)
+    for warning in pitfall_warnings:
+        issues.append(f"[pitfall#3-rebrand] {warning}")
+
     summary = {
         "title": parsed["title"],
         "source_path": parsed["source_path"],
@@ -636,6 +643,31 @@ def _score_color(
     score += _temperature_bonus(hue, variant["temperature"])
     score += _contrast_bonus(role, tone, lightness, variant["contrast"])
     score += _surface_style_bonus(role, lightness, tone, variant["surface_style"])
+
+    # ── Pitfall guardrails ──
+
+    # #2 브랜드키트≠UI색 / #12 Logo wall 오염: 과포화 색상은 로고/일러스트 전용일 가능성
+    saturation = _hex_saturation(color.get("hex"))
+    if saturation > 90 and role in ("primary", "surface_tint"):
+        score -= 2.0
+        reasons.append(f"{color['name']} penalized: oversaturated ({saturation:.0f}%) — likely brand-kit/logo color, not UI color.")
+    elif saturation > 90 and role == "accent":
+        score -= 0.5
+        reasons.append(f"{color['name']} mildly penalized: oversaturated ({saturation:.0f}%) for accent.")
+
+    # #12 Logo wall: usage/mood에 logo/brand-kit 키워드가 있으면 UI 용도 감점
+    _logo_keywords = {"logo", "로고", "brand kit", "브랜드키트", "illustration", "일러스트"}
+    usage_text = (color.get("usage") or "").lower()
+    mood_text = (color.get("mood") or "").lower()
+    if any(kw in usage_text or kw in mood_text for kw in _logo_keywords):
+        score -= 3.0
+        reasons.append(f"{color['name']} penalized: tagged as logo/brand-kit color, not for UI.")
+
+    # #10 Warm/Cool neutral: neutral 색의 온도 감지 (순흑/순백이 아닌 warm/cool 구분)
+    if hue == "neutral":
+        _warm_cool = _neutral_temperature(color.get("hex"))
+        if _warm_cool != "achromatic":
+            tokens.add(f"neutral-{_warm_cool}")
 
     if role == "accent" and primary:
         score += _diversity_bonus(primary, color, variant["diversity"])
@@ -1346,6 +1378,59 @@ def _surface_pairing_bonus(primary: dict, surface: dict) -> float:
 
 def _diversity_signature(color: dict) -> str:
     return f"{_family_hue(color)}:{_family_tone(color)}"
+
+
+def _detect_rebrand_remnants(colors: list[dict]) -> list[str]:
+    """Pitfall #3: detect potential old-brand hex remnants.
+
+    If two colors share the same hue bucket but differ significantly in
+    lightness (>25) or saturation (>30), one may be a legacy brand color
+    that wasn't fully removed after rebranding.
+    """
+    warnings: list[str] = []
+    by_hue: dict[str, list[dict]] = {}
+    for color in colors:
+        hue = _family_hue(color)
+        if hue == "neutral":
+            continue
+        by_hue.setdefault(hue, []).append(color)
+
+    for hue, group in by_hue.items():
+        if len(group) < 2:
+            continue
+        for i, a in enumerate(group):
+            for b in group[i + 1:]:
+                l_diff = abs(_hex_lightness(a.get("hex")) - _hex_lightness(b.get("hex")))
+                s_diff = abs(_hex_saturation(a.get("hex")) - _hex_saturation(b.get("hex")))
+                if l_diff > 25 or s_diff > 30:
+                    warnings.append(
+                        f"{a['name']} vs {b['name']} ({hue}): lightness diff {l_diff:.0f}, "
+                        f"saturation diff {s_diff:.0f} — possible rebrand remnant"
+                    )
+    return warnings
+
+
+def _neutral_temperature(hex_value: str | None) -> str:
+    """Detect warm/cool bias in neutral colors (pitfall #10).
+
+    Notion uses warm ink (#37352F), Retool uses cream (#E9EBDF).
+    Pure black/white are achromatic; biased neutrals carry brand identity.
+    """
+    rgb = _hex_rgb(hex_value)
+    if not rgb:
+        return "achromatic"
+    red, green, blue = rgb
+    if red == green == blue:
+        return "achromatic"
+    _, _, sat = colorsys.rgb_to_hls(red / 255, green / 255, blue / 255)
+    if sat * 100 > 12:
+        return "achromatic"  # not neutral enough
+    hue = _hex_hue(hex_value)
+    if 15 <= hue <= 70:
+        return "warm"
+    if 170 <= hue <= 290:
+        return "cool"
+    return "achromatic"
 
 
 def _hex_rgb(hex_value: str | None) -> tuple[int, int, int] | None:

@@ -1,0 +1,198 @@
+"""Extract brand color candidates from CSS and HTML via three independent methods.
+
+Adapted from fivetaku/insane-design brand_candidates.py.
+
+Methods:
+  1. Semantic variable naming (--*-brand-*, --*-primary-*, etc.)
+  2. CSS selector role patterns (button, CTA, primary, action, nav)
+  3. Hex frequency analysis with SVG/logo-wall filtering
+"""
+
+from __future__ import annotations
+
+import re
+from collections import Counter
+
+
+def _normalize_hex(hex_value: str) -> str:
+    value = hex_value.lstrip("#")
+    if len(value) in (3, 4):
+        value = "".join(ch * 2 for ch in value)
+    return f"#{value.upper()}"
+
+
+def _pick_role(name: str) -> str:
+    best: tuple[int, int, str] | None = None
+    lowered = name.lower()
+    for order, keyword in enumerate(("brand", "primary", "accent", "action", "cta")):
+        index = lowered.find(keyword)
+        if index == -1:
+            continue
+        candidate = (index, order, keyword)
+        if best is None or candidate < best:
+            best = candidate
+    return "" if best is None else best[2]
+
+
+def _count_hexes(text: str) -> Counter:
+    counts: Counter = Counter()
+    for match in re.finditer(r"#[0-9a-fA-F]{3,8}", text):
+        counts[_normalize_hex(match.group(0))] += 1
+    return counts
+
+
+def _hex_saturation(hex_value: str) -> float:
+    value = _normalize_hex(hex_value)[1:]
+    red = int(value[0:2], 16) / 255
+    green = int(value[2:4], 16) / 255
+    blue = int(value[4:6], 16) / 255
+    high = max(red, green, blue)
+    low = min(red, green, blue)
+    if high == low:
+        return 0.0
+    lightness = (high + low) / 2
+    divisor = 1 - abs(2 * lightness - 1)
+    if divisor == 0:
+        return 0.0
+    return ((high - low) / divisor) * 100
+
+
+def _extract_svg_counts(html: str) -> Counter:
+    counts: Counter = Counter()
+    for match in re.finditer(r"<svg\b[\s\S]*?</svg>", html, re.IGNORECASE):
+        counts.update(_count_hexes(match.group(0)))
+    return counts
+
+
+def _extract_logo_wall_counts(html: str) -> Counter:
+    counts: Counter = Counter()
+    blocks: list[str] = []
+    for match in re.finditer(
+        r"<(?P<tag>section|div|aside)\b(?=[^>]*(?:class|id|data-[\w-]+)=(['\"])[^'\"]*(?:customer|logo-wall|trusted|featured)[^'\"]*\2)[^>]*>[\s\S]*?</(?P=tag)>",
+        html,
+        re.IGNORECASE,
+    ):
+        blocks.append(match.group(0))
+    if not any("logo-carousel" in block for block in blocks):
+        for match in re.finditer(
+            r"<ul\b(?=[^>]*(?:class|id|data-[\w-]+)=(['\"])[^'\"]*logo-carousel[^'\"]*\1)[^>]*>[\s\S]*?</ul>",
+            html,
+            re.IGNORECASE,
+        ):
+            blocks.append(match.group(0))
+    for block in blocks:
+        counts.update(_count_hexes(block))
+    return counts
+
+
+def extract_semantic_brand_vars(css: str) -> list[dict]:
+    """Return [{name, value_hex, role}] for CSS vars named --*-brand-* / --*-primary-* / --*-accent-* / --*-action-* / --*-cta-*."""
+    results: list[dict] = []
+    seen: set[tuple[str, str, str]] = set()
+    for match in re.finditer(r"--([\w-]+)\s*:\s*#([0-9a-fA-F]{3,8})", css):
+        role = _pick_role(match.group(1))
+        if not role:
+            continue
+        name = f"--{match.group(1)}"
+        value_hex = _normalize_hex(match.group(2))
+        key = (name, value_hex, role)
+        if key in seen:
+            continue
+        seen.add(key)
+        results.append({"name": name, "value_hex": value_hex, "role": role})
+    return results
+
+
+def extract_selector_role_hex(css: str) -> list[dict]:
+    """Return [{selector, property, hex, rule_snippet}] for hex values inside CSS rules matching button/CTA/primary/nav patterns."""
+    results: list[dict] = []
+    seen: set[tuple[str, str, str, str]] = set()
+    for rule_match in re.finditer(r"([^{}]+)\{([^{}]*)\}", css):
+        selector = " ".join(rule_match.group(1).split())
+        if not selector or not re.search(
+            r"button|btn|cta|primary|action|nav|link", selector, re.IGNORECASE
+        ):
+            continue
+        body = rule_match.group(2)
+        rule_snippet = re.sub(r"\s+", " ", f"{selector} {{{body}}}").strip()[:200]
+        for decl_match in re.finditer(
+            r"([\w-]+)\s*:\s*([^;{}]*#[0-9a-fA-F]{3,8}[^;{}]*)", body
+        ):
+            property_name = decl_match.group(1)
+            for hex_match in re.finditer(r"#[0-9a-fA-F]{3,8}", decl_match.group(2)):
+                hex_value = _normalize_hex(hex_match.group(0))
+                key = (selector, property_name, hex_value, rule_snippet)
+                if key in seen:
+                    continue
+                seen.add(key)
+                results.append({
+                    "selector": selector,
+                    "property": property_name,
+                    "hex": hex_value,
+                    "rule_snippet": rule_snippet,
+                })
+    return results
+
+
+def extract_frequency_candidates(css: str, html: str) -> list[dict]:
+    """Return [{hex, count, kind}] where kind is one of: frequency|svg_pattern|logo_wall|neutral|chromatic."""
+    total_counts = _count_hexes(f"{css}\n{html}")
+    if not total_counts:
+        return []
+
+    svg_counts = _extract_svg_counts(html)
+    logo_wall_counts = _extract_logo_wall_counts(html)
+
+    candidates: list[dict] = []
+    for hex_value, count in sorted(
+        total_counts.items(), key=lambda item: (-item[1], item[0])
+    )[:30]:
+        kind = "frequency"
+        logo_wall_count = logo_wall_counts.get(hex_value, 0)
+        if logo_wall_count and logo_wall_count * 2 >= count:
+            kind = "logo_wall"
+        else:
+            svg_count = svg_counts.get(hex_value, 0)
+            external_count = count - svg_count
+            if svg_count and svg_count >= max(1, external_count * 2):
+                kind = "svg_pattern"
+            elif _hex_saturation(hex_value) < 10:
+                kind = "neutral"
+            else:
+                kind = "chromatic"
+        candidates.append({"hex": hex_value, "count": count, "kind": kind})
+    return candidates
+
+
+def extract_brand_colors(css: str, html: str = "") -> dict:
+    """Pipeline entry point: extract brand color candidates from CSS and HTML.
+
+    Returns:
+        {
+            "semantic_vars": [{name, value_hex, role}, ...],
+            "selector_role": [{selector, property, hex, rule_snippet}, ...],
+            "frequency_candidates": [{hex, count, kind}, ...],
+            "summary": {total_candidates, by_role: {role: count}},
+        }
+    """
+    semantic_vars = extract_semantic_brand_vars(css)
+    selector_role = extract_selector_role_hex(css)
+    frequency_candidates = extract_frequency_candidates(css, html)
+
+    by_role: Counter = Counter()
+    for item in semantic_vars:
+        by_role[item["role"]] += 1
+    if selector_role:
+        by_role["selector"] += len(selector_role)
+    for item in frequency_candidates:
+        by_role[item["kind"]] += 1
+
+    return {
+        "semantic_vars": semantic_vars,
+        "selector_role": selector_role,
+        "frequency_candidates": frequency_candidates,
+        "summary": {
+            "total_candidates": len(semantic_vars) + len(selector_role) + len(frequency_candidates),
+            "by_role": dict(sorted(by_role.items())),
+        },
+    }

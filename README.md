@@ -239,6 +239,75 @@ Refactor: 기존 코드 유지 → color: #3b82f6 → color: var(--accent) 교�
 - **레이아웃 속성 변경 금지** — display, width, height, position, flex-direction
 - 확신 없으면 TODO 주석으로 남김
 
+## CSS 추출 파이프라인
+
+크롤링된 CSS에서 디자인 토큰을 자동으로 추출합니다.
+
+```bash
+# CSS 파일에서 직접 추출
+uv run design-ontology extract-css --css-dir ./css --output-dir data
+
+# 크롤링 시 자동 실행: HTML의 <link rel="stylesheet"> → 8개 병렬 다운로드 → 추출
+```
+
+**추출 항목:**
+- **var_resolver**: CSS `var()` 체인 재귀 해결 + 순환 참조 감지
+- **brand_candidates**: 시멘틱 변수 + selector 역할 + 빈도 기반 브랜드 색상 추출
+- **typo_extractor**: 커스텀 프로퍼티에서 타이포그래피 스케일 자동 추출 (heading/text/display 분류)
+- **alias_layer**: 시멘틱 토큰 tier 분류 (core → util → action → component)
+
+## 5-tier Fallback 크롤링
+
+JS 렌더링이나 접근 제한이 있는 사이트도 단계적으로 시도합니다.
+
+```
+Tier 1: httpx 기본 요청
+Tier 2: Mobile UA (iPhone Safari)
+Tier 3: Jina Reader (r.jina.ai)
+Tier 4: Playwright (headless Chrome)
+Tier 5: 중단 (에러 기록)
+```
+
+## 벤치마크 레퍼런스
+
+35개 실서비스 디자인 시스템(Stripe, Vercel, Linear, Toss 등)의 특성 데이터를 내장하고 있습니다. 브랜드 키워드로 유사한 시스템을 찾을 수 있습니다.
+
+```bash
+# 키워드로 유사 시스템 검색
+uv run design-ontology benchmark --keywords calm precise
+
+# 전체 35개 시스템 목록
+uv run design-ontology benchmark
+
+# 브랜드 프로필 기반 자동 매칭 + 리포트 저장
+uv run design-ontology benchmark --brand-profile brand_profile.json --output-dir data
+```
+
+합성 시 자동으로 매칭된 벤치마크 컨텍스트가 blueprint에 포함됩니다.
+
+## 산출물 16섹션 구성
+
+`system_spec.md`는 아래 16개 섹션으로 구성됩니다.
+
+| 번호 | 섹션 | 내용 |
+|------|------|------|
+| 1 | Positioning | 브랜드, 제품, 대상, 플랫폼, 접근성 |
+| 2 | Identity Guardrails | 키워드, 안티키워드, 톤, 시각/인터랙션 방향 |
+| 3 | Design Principles | 브랜드 키워드 기반 원칙 |
+| 4 | Foundation Priorities | 온톨로지에서 도출한 기초 우선순위 |
+| 5 | Token Strategy | 토큰 계층, 타이포, 스페이싱, 서체 |
+| 6 | Color Reference | 팔레트 결정, semantic role, 확장 |
+| 7 | Component Strategy | 제품 primitive → 컴포넌트 패밀리 |
+| 8 | Implementation Guardrails | 안전한 적용을 위한 규칙 |
+| 9 | Reference Absorption Rule | 레퍼런스 활용 원칙 |
+| 10 | AI Synthesis Principles | hex 미생성, 토큰명 미생성, 팩트 기반 해석 |
+| 11 | Ontology Targets | 핵심 개념 신호 |
+| 12 | Profile Validation | 프로필 검증 결과 |
+| 13 | **Quick Start** | 시작 가이드, 적용 순서, 우선순위 |
+| 14 | **DO / DON'T** | 브랜드 키워드 기반 구체적 규칙 |
+| 15 | **Drop-in CSS** | 즉시 사용 가능한 `:root` CSS 변수 |
+| 16 | **CSS Extraction Summary** | 크롤링 CSS 분석 결과 요약 |
+
 ## CLI 명령어 전체 목록
 
 | 명령어 | 용도 | 핵심 옵션 |
@@ -248,6 +317,8 @@ Refactor: 기존 코드 유지 → color: #3b82f6 → color: var(--accent) 교�
 | `run-project` | 설계도 + 컴포넌트 스펙 생성 | `--project-dir`, `--kb-dir` |
 | `analyze-spec` | 설계서에서 UI 패턴 자동 탐지 | `--spec-file`, `--project-dir` |
 | `build-components` | 상세 컴포넌트 스펙 생성 | `--spec-file`, `--project-dir`, `--kb-dir` |
+| `extract-css` | CSS에서 디자인 토큰 추출 | `--css-dir`, `--html-file` |
+| `benchmark` | 벤치마크 레퍼런스 검색 | `--keywords`, `--brand-profile` |
 | `run` | KB 없이 한번에 실행 | `--seed-url`, `--brand-profile` |
 | `synthesize` | 기존 크롤 결과로 재생성 | `--output-dir`, `--brand-profile` |
 | `extract-seed` | 시드에서 링크만 추출 | `--seed-url` |
@@ -289,15 +360,24 @@ graph TB
     CLI --> AGENT["agent_packs.py\n에이전트 팩 생성\n(4종 스킬)"]
     CLI --> SPEC_AN["spec_analyzer.py\n설계서 분석"]
     CLI --> COMP_SPEC["component_specs.py\n컴포넌트 스펙"]
+    CLI --> BENCH["benchmark_kb.py\n35개 실서비스 벤치마크"]
 
     SHARED --> SEED_MOD["seed_article.py\n시드 파싱"]
-    SHARED --> CRAWLER["crawler.py\n웹 크롤링"]
+    SHARED --> CRAWLER["crawler.py\n5-tier 크롤링"]
+    SHARED --> CSS_PIPE["css_pipeline.py\nCSS 추출 파이프라인"]
     SHARED --> ONTOLOGY["ontology.py\n개념 추출"]
     SHARED --> SYNTH["synthesis.py\n블루프린트 합성"]
 
-    SYNTH --> AUTHORING["authoring.py\n산출물 생성"]
+    CRAWLER --> VAR_RES["var_resolver.py\nCSS var() 해결"]
+    CSS_PIPE --> VAR_RES
+    CSS_PIPE --> BRAND_C["brand_candidates.py\n브랜드 색상 추출"]
+    CSS_PIPE --> TYPO_EX["typo_extractor.py\n타이포 스케일 추출"]
+    CSS_PIPE --> ALIAS["alias_layer.py\n시멘틱 토큰 tier"]
+
+    SYNTH --> AUTHORING["authoring.py\n16섹션 산출물 생성"]
     SYNTH --> COLOR["color_reference.py\n색상 팔레트 결정"]
     SYNTH --> FONT["font_reference.py\n서체 결정"]
+    SYNTH --> BENCH
 
     KB --> SHARED
 ```
@@ -314,14 +394,20 @@ graph TB
 ```
 design_ontology_harness/   코어 프레임워크
   cli.py                   CLI 명령어 분기
-  spec_analyzer.py         설계서 → UI 패턴 탐지
-  component_specs.py       컴포넌트별 상세 스펙 생성
+  crawler.py               5-tier fallback 크롤링 + CSS 병렬 다운로드
+  css_pipeline.py          CSS 추출 파이프라인 (var/brand/typo/alias 통합)
+  var_resolver.py          CSS var() 체인 재귀 해결
+  brand_candidates.py      브랜드 색상 후보 추출
+  typo_extractor.py        타이포그래피 스케일 추출
+  alias_layer.py           시멘틱 토큰 tier 분류
+  synthesis.py             블루프린트 합성
+  authoring.py             16섹션 산출물 생성
+  benchmark_kb.py          35개 실서비스 벤치마크 KB
   color_reference.py       색상 팔레트 자동 결정
   font_reference.py        서체 자동 결정 (25+ 실무 서체 DB)
-  synthesis.py             블루프린트 합성
-  authoring.py             산출물 생성
+  spec_analyzer.py         설계서 → UI 패턴 탐지
+  component_specs.py       컴포넌트별 상세 스펙 생성
   agent_packs.py           AI 에이전트 스킬 생성 (4종)
-  crawler.py               웹 크롤링
   ontology.py              개념 추출
 schemas/                   입력 스키마
 config/                    브랜드 프로필 예시
@@ -332,10 +418,12 @@ projects/                  프로젝트 워크스페이스
 
 ## 참고
 
-- 일부 외부 사이트는 접근 제한이나 JS 렌더링 의존으로 크롤링에 실패할 수 있습니다. 실패 내역은 CLI에 요약 출력됩니다.
+- 크롤링은 5-tier fallback 체인으로 대부분의 사이트를 수집합니다. Playwright tier를 사용하려면 `pip install playwright && playwright install chromium`이 필요합니다.
+- 크롤링 시 CSS를 자동으로 병렬 다운로드하고 추출 파이프라인을 실행합니다.
 - 온톨로지 추출은 현재 규칙 기반입니다. LLM 기반 확장을 위한 구조가 준비되어 있습니다.
 - `config/brand_profile.example.json`을 참고해 브랜드 프로필을 작성하세요.
 - 서체 결정은 Google Fonts/GitHub에서 무료로 사용 가능한 서체만 추천합니다.
+- 벤치마크 KB의 35개 시스템은 합성 품질 비교와 키워드 매칭에 활용됩니다.
 
 ## 라이선스
 
