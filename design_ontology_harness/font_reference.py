@@ -3,10 +3,13 @@
 Selects optimal typeface combinations based on brand keywords,
 product type, platform, and reading context. All fonts in the
 database are production-proven choices used by professional designers.
+
+Supports optional font-reference.md for curated font data.
 """
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 
@@ -177,6 +180,28 @@ FONT_DB: list[dict] = [
         "variable": True,
         "source": "GitHub (sun-typeface)",
         "note": "Pretendard 계열이지만 더 둥글고 부드러운 한글 서체.",
+    },
+    # ── Serif Display ──
+    {
+        "name": "Spoqa Han Sans Neo",
+        "family": "geometric-sans",
+        "personality": ["clean", "precise", "geometric"],
+        "best_for": ["saas", "dashboard", "data-heavy"],
+        "korean_pair": None,
+        "korean_native": True,
+        "korean_context": {
+            "glyph_width": "중간-좁음",
+            "jaso_balance": "양호 — 기하학적이고 직선적",
+            "small_size": "13px까지 가독성 유지",
+            "best_for_kr": ["SaaS", "데이터 대시보드", "깔끔한 UI"],
+            "avoid_for_kr": ["장문 본문 — line-height 여유 부족", "감성적 브랜딩"],
+            "pair_with_latin": "Source Sans 3 (같은 Source 계열)",
+            "note_kr": "Pretendard 이전 시대의 한글 UI 표준. 요기요, 여기어때 등에서 사용. 깔끔하지만 weight 범위와 Variable 미지원이 아쉬움. 신규 프로젝트에서는 Pretendard 추천.",
+        },
+        "weight_range": "100-700",
+        "variable": False,
+        "source": "GitHub (spoqa/spoqa-han-sans)",
+        "note": "스포카에서 만든 한글 산세리프. Source Sans Pro 기반. 깔끔한 데이터 UI에 적합.",
     },
     # ── Serif Display ──
     {
@@ -934,4 +959,100 @@ def _build_loading_strategy(
         "display": "swap",
         "subset": "latin,korean" if korean else "latin",
         "note": "본문 서체를 preload, 모노스페이스는 lazy load. font-display: swap으로 FOUT 최소화.",
+    }
+
+
+# ──────────────────────────────────────────────
+# 8. Font Reference Markdown Parser
+# ──────────────────────────────────────────────
+
+def parse_font_reference_markdown(path: Path) -> dict:
+    """Parse a font-reference.md file into structured data."""
+    title = path.stem
+    current_category: str | None = None
+    current_font: dict | None = None
+    fonts: list[dict] = []
+
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line:
+            continue
+
+        if line.startswith("# "):
+            title = line[2:].strip()
+            continue
+
+        if line.startswith("## "):
+            current_category = line[3:].strip()
+            continue
+
+        if line.startswith("### ") and not line.startswith("### 제품") and not line.startswith("### 브랜드") and not line.startswith("### 한글"):
+            current_font = {
+                "name": line[4:].strip(),
+                "category": current_category,
+                "classification": None,
+                "maker": None,
+                "source": None,
+                "license": None,
+                "weight_range": None,
+                "latin_compatible": None,
+                "glyph_width": None,
+                "jaso_balance": None,
+                "small_size": None,
+                "line_height_recommend": None,
+                "letter_spacing": None,
+                "rendering": None,
+                "used_by": [],
+                "best_for": [],
+                "avoid_for": [],
+                "pairing": [],
+                "selection_reason": None,
+            }
+            fonts.append(current_font)
+            continue
+
+        if not current_font or not line.startswith("- **"):
+            continue
+
+        try:
+            label_part, value = line[2:].split("**:", 1)
+        except ValueError:
+            continue
+
+        label = label_part.replace("**", "").strip()
+        value = value.strip()
+
+        field_map = {
+            "분류": "classification",
+            "제작": "maker",
+            "소스": "source",
+            "라이선스": "license",
+            "웨이트": "weight_range",
+            "라틴 호환": "latin_compatible",
+            "글자폭": "glyph_width",
+            "자소 균형": "jaso_balance",
+            "소형 가독성": "small_size",
+            "행간 권장": "line_height_recommend",
+            "자간 특성": "letter_spacing",
+            "렌더링 특성": "rendering",
+            "선택 이유": "selection_reason",
+        }
+
+        if label in field_map:
+            current_font[field_map[label]] = value
+        elif label == "사용 서비스":
+            current_font["used_by"] = [s.strip() for s in value.split(",")]
+        elif label == "적합한 용도":
+            current_font["best_for"] = [s.strip() for s in value.split(",")]
+        elif label == "부적합한 용도":
+            current_font["avoid_for"] = [s.strip() for s in value.split(",")]
+        elif label == "페어링":
+            current_font["pairing"] = [s.strip() for s in value.split(",")]
+
+    return {
+        "title": title,
+        "source_path": str(path),
+        "font_count": len(fonts),
+        "categories": sorted({f["category"] for f in fonts if f.get("category")}),
+        "fonts": fonts,
     }
