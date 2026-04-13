@@ -27,34 +27,59 @@ def build_knowledge_base(
     all_references: list[ReferenceLink] = []
     all_documents: list[DocumentRecord] = []
     seed_runs: list[dict] = []
+    seed_errors: list[dict] = []
 
     for index, seed_url in enumerate(seed_urls, start=1):
         parsed = urlparse(seed_url)
         seed_slug = slugify(f"{index}-{parsed.netloc}-{parsed.path or 'seed'}")
         seed_output_dir = ensure_dir(seeds_dir / seed_slug)
-        result = run_pipeline(
-            client=client,
-            seed_url=seed_url,
-            output_dir=seed_output_dir,
-            brand_profile_path=None,
-            max_sources=max_sources,
-            max_pages_per_source=max_pages_per_source,
-            max_depth=max_depth,
-        )
-        all_seed_articles.append(result["seed_article"].to_dict())
-        all_references.extend(result["references"])
-        all_documents.extend(result["documents"])
-        seed_runs.append(
-            {
-                "seed_url": seed_url,
-                "seed_slug": seed_slug,
-                "seed_kind": result["seed_article"].seed_kind,
-                "seed_title": result["seed_article"].title,
-                "output_dir": str(seed_output_dir),
-                "reference_count": len(result["references"]),
-                "document_count": len(result["documents"]),
-            }
-        )
+        try:
+            result = run_pipeline(
+                client=client,
+                seed_url=seed_url,
+                output_dir=seed_output_dir,
+                brand_profile_path=None,
+                max_sources=max_sources,
+                max_pages_per_source=max_pages_per_source,
+                max_depth=max_depth,
+            )
+            all_seed_articles.append(result["seed_article"].to_dict())
+            all_references.extend(result["references"])
+            all_documents.extend(result["documents"])
+            seed_runs.append(
+                {
+                    "seed_url": seed_url,
+                    "seed_slug": seed_slug,
+                    "seed_kind": result["seed_article"].seed_kind,
+                    "seed_title": result["seed_article"].title,
+                    "output_dir": str(seed_output_dir),
+                    "reference_count": len(result["references"]),
+                    "document_count": len(result["documents"]),
+                    "status": "ok",
+                }
+            )
+        except Exception as exc:
+            error_message = str(exc)
+            seed_errors.append(
+                {
+                    "seed_url": seed_url,
+                    "seed_slug": seed_slug,
+                    "error": error_message,
+                }
+            )
+            seed_runs.append(
+                {
+                    "seed_url": seed_url,
+                    "seed_slug": seed_slug,
+                    "seed_kind": "error",
+                    "seed_title": "",
+                    "output_dir": str(seed_output_dir),
+                    "reference_count": 0,
+                    "document_count": 0,
+                    "status": "error",
+                    "error": error_message,
+                }
+            )
 
     write_json(kb_dir / "all_seed_articles.json", {"items": all_seed_articles})
     write_jsonl(kb_dir / "references.jsonl", [reference.to_dict() for reference in all_references])
@@ -68,6 +93,8 @@ def build_knowledge_base(
         "reference_count": len(all_references),
         "document_count": len(all_documents),
         "seeds": seed_runs,
+        "seed_error_count": len(seed_errors),
+        "seed_errors": seed_errors,
         "settings": {
             "max_sources": max_sources,
             "max_pages_per_source": max_pages_per_source,

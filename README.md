@@ -74,6 +74,21 @@ uv run design-ontology build-kb \
   --seed-url https://primer.style
 ```
 
+바로 쓸 수 있는 공식 seed pack도 포함되어 있습니다.
+
+- `seeds/professional-design-systems.txt`: 현재 크롤러로 바로 KB 빌드 가능한 공식 디자인 시스템 목록
+- `seeds/browser-required-official-design-systems.txt`: 공식이지만 JS/접근 제약이 있어 브라우저 기반 수집기에 더 적합한 watchlist
+
+예:
+
+```bash
+uv run design-ontology build-kb \
+  --kb-dir kb/professional \
+  --seeds-file seeds/professional-design-systems.txt
+```
+
+설명은 [docs/SEED_PACKS.md](/Users/sungwoon/Documents/designSystem/docs/SEED_PACKS.md)에서 볼 수 있습니다.
+
 ### 3단계: 프로젝트 만들기
 
 ```bash

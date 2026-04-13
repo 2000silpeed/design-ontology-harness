@@ -1,0 +1,11 @@
+# Official design systems that are valuable references
+# but may be JS-heavy, browser-dependent, or access-constrained for the current crawler.
+# Keep these as a future watchlist for a browser-backed KB pipeline.
+
+https://m3.material.io/
+https://developer.apple.com/design/human-interface-guidelines/
+https://spectrum.adobe.com/
+https://www.lightningdesignsystem.com/
+https://polaris-react.shopify.com/
+https://www.sap.com/design-system/
+https://design.education.gov.uk/design-system/

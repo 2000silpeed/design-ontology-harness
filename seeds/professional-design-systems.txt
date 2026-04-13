@@ -1,0 +1,21 @@
+# Professional official design systems
+# Crawler-friendly direct seeds for the current harness.
+# Use with:
+# uv run design-ontology build-kb --kb-dir kb/professional --seeds-file seeds/professional-design-systems.txt
+
+# Product / enterprise systems
+https://atlassian.design/
+https://primer.style/
+https://carbondesignsystem.com/
+https://fluent2.microsoft.design/
+https://core.clarity.design/
+https://eui.elastic.co/
+https://protocol.mozilla.org/
+
+# Government / service design systems
+https://designsystem.digital.gov/
+https://design-system.service.gov.uk/
+https://service-manual.nhs.uk/design-system
+https://design-system.dwp.gov.uk/
+https://design-system.nhsapp.service.nhs.uk/
+https://design-system.service.mod.gov.uk/
