@@ -22,7 +22,7 @@
 검증:
 
 - 2026-04-13 기준 `uv run design-ontology build-kb --seeds-file seeds/professional-design-systems.txt --max-pages-per-source 1 --max-depth 0` 스모크 테스트 통과
-- 결과: seed 13개 / reference 13개 / document 13개 / seed error 0개
+- 결과: seed 26개 / reference 26개 / document 26개 / seed error 0개
 
 ## 2. Browser-Required Watchlist
 
@@ -42,6 +42,8 @@
 - Salesforce Lightning Design System
 - SAP Design System (현재 기본 httpx 요청에서 403 가능)
 - Department for Education Design System (현재 robots.txt 차단)
+- Intuit Design Hub (디자인 허브 성격이 강함)
+- Decathlon Design (현재는 기대한 시스템 문서 대신 다른 페이지로 리다이렉트됨)
 
 ## Recommended Usage
 
@@ -81,6 +83,15 @@ uv run design-ontology run-project --project-dir projects/my-app
 - Clarity
 - Elastic UI
 - Mozilla Protocol
+- Thumbprint
+- GitLab Pajamas
+- Morningstar Design
+- Cedar Design System
+- Base Web
+
+### Content / communication
+
+- Intuit Content Design System
 
 ### Government / public service
 
@@ -90,3 +101,13 @@ uv run design-ontology run-project --project-dir projects/my-app
 - DWP Design System
 - NHS App Design System
 - MOD.UK Design System
+- GC Design System
+- NSW Design System
+- Ontario Design System
+- Queensland Government design system
+- VA.gov Design System
+- CMS Design System
+
+### Standards / platform
+
+- W3C Design System

@@ -79,6 +79,8 @@ uv run design-ontology build-kb \
 - `seeds/professional-design-systems.txt`: 현재 크롤러로 바로 KB 빌드 가능한 공식 디자인 시스템 목록
 - `seeds/browser-required-official-design-systems.txt`: 공식이지만 JS/접근 제약이 있어 브라우저 기반 수집기에 더 적합한 watchlist
 
+현재 professional pack에는 Atlassian, Primer, Carbon, Fluent, GitLab Pajamas, Thumbprint, VA.gov, CMS, W3C 같은 26개의 공식 레퍼런스가 들어 있습니다.
+
 예:
 
 ```bash

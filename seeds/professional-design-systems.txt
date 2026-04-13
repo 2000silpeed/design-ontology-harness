@@ -11,6 +11,14 @@ https://fluent2.microsoft.design/
 https://core.clarity.design/
 https://eui.elastic.co/
 https://protocol.mozilla.org/
+https://thumbprint.design/
+https://design.gitlab.com/
+https://design.morningstar.com/
+https://cedar.rei.com/patterns
+https://baseweb.design/
+
+# Content / communication systems
+https://contentdesign.intuit.com/
 
 # Government / service design systems
 https://designsystem.digital.gov/
@@ -19,3 +27,12 @@ https://service-manual.nhs.uk/design-system
 https://design-system.dwp.gov.uk/
 https://design-system.nhsapp.service.nhs.uk/
 https://design-system.service.mod.gov.uk/
+https://design-system.canada.ca/
+https://designsystem.nsw.gov.au/
+https://designsystem.ontario.ca/index.html
+https://www.forgov.qld.gov.au/communication-and-publishing/website-standards-guidelines-and-templates/queensland-government-design-system
+https://design.va.gov/
+https://developer.cms.gov/design-system/
+
+# Standards / platform systems
+https://design-system.w3.org/
