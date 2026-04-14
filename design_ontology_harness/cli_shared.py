@@ -75,25 +75,38 @@ def run_pipeline(
     css_crawl_dirs = sorted((output_dir / "crawls").glob("*/css")) if (output_dir / "crawls").exists() else []
     if css_crawl_dirs:
         all_css = ""
+        css_file_count = 0
         for css_dir in css_crawl_dirs:
             for css_file in sorted(css_dir.glob("*.css")):
                 all_css += css_file.read_text(encoding="utf-8", errors="replace") + "\n"
+                css_file_count += 1
         if all_css.strip():
-            first_doc_html = ""
-            for doc in all_documents:
-                if not doc.error and doc.depth == 0:
-                    html_path = output_dir / "crawls" / doc.reference_slug / "documents.jsonl"
-                    break
             css_result = run_css_extraction(all_css)
             css_out = ensure_dir(output_dir / "css_extraction")
             write_json(css_out / "resolved_tokens.json", css_result["var_resolution"])
             write_json(css_out / "brand_candidates.json", css_result["brand_colors"])
             write_json(css_out / "typography.json", css_result["typography"])
             write_json(css_out / "alias_layer.json", css_result["alias_layer"])
+            summary = {
+                "css_file_count": css_file_count,
+                "var_resolution": {
+                    "total_vars": css_result["var_resolution"]["total_vars"],
+                    "resolved_count": css_result["var_resolution"]["resolved_count"],
+                    "unresolved_count": css_result["var_resolution"]["unresolved_count"],
+                },
+                "brand_colors": css_result["brand_colors"]["summary"],
+                "typography": css_result["typography"]["stats"],
+                "alias_layer": css_result["alias_layer"]["stats"],
+            }
+            write_json(css_out / "extraction_summary.json", summary)
             var_info = css_result["var_resolution"]
             brand_info = css_result["brand_colors"]["summary"]
             typo_info = css_result["typography"]["stats"]
-            print(f"  CSS 추출: var {var_info['resolved_count']}/{var_info['total_vars']}개 | 브랜드색 {brand_info['total_candidates']}개 | 타이포 {typo_info['scale_entries']}개")
+            print(f"  CSS 추출: {css_file_count}개 파일 | var {var_info['resolved_count']}/{var_info['total_vars']}개 | 브랜드색 {brand_info['total_candidates']}개 | 타이포 {typo_info['scale_entries']}개")
+        else:
+            print(f"  CSS 추출: CSS 파일은 수집됐지만 내용이 비어 있음")
+    else:
+        print(f"  CSS 추출: CSS 파일 없음 (크롤 시 <link rel=stylesheet> 미발견)")
 
     if brand_profile_path:
         brand_profile = load_brand_profile(brand_profile_path)

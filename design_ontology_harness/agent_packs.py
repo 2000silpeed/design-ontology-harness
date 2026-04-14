@@ -298,6 +298,9 @@ Implementation rules:
 - NEVER change layout properties (display, flex-direction, grid-template, position, width, height).
 - NEVER change font-size or line-height to "fit the token scale." Existing sizes are tuned to the layout. Only replace when the token resolves to the exact same px. If no match, keep original + TODO.
 - NEVER round spacing values to the nearest token — if no exact match, leave as-is with a TODO.
+- **NEVER use emojis as UI icons, state indicators, button decorations, or navigation markers** (no 🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 etc.). Always implement proper SVG icon components or import from Lucide / Heroicons / Phosphor / Tabler. Emojis are only allowed inside user-generated content (blog text, user input) — never as part of the design system itself.
+- **NEVER leave half-finished components** like "TODO component", "placeholder card", "temp button". Read `{artifact_dir}/components/component_specs.md` and implement the full anatomy, states, and token bindings defined there.
+- **NEVER use bare library components (e.g., default `<Button>` from a UI lib) without binding design tokens.** Every component must have its colors, spacing, radius, and typography wired to the token system. If you import from a library, wrap it and override styles with CSS variables from the token schema.
 
 When finishing:
 
@@ -858,6 +861,9 @@ focus:      focus-ring 토큰 (접근성 필수)
 - 스펙에 없는 장식적 요소를 추가하지 않음 (그라데이션, 글로우 등 — 스펙에 있으면 OK)
 - 안티 키워드에 해당하는 시각적 패턴을 사용하지 않음
 - 접근성을 빠뜨리지 않음 — rebuild는 접근성이 더 좋아져야 함
+- **이모지를 UI 요소로 사용하지 않음** (🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등). 아이콘 자리에는 반드시 SVG 컴포넌트 또는 Lucide/Heroicons/Phosphor/Tabler 라이브러리 사용. 이모지는 본문 콘텐츠(사용자 입력, 블로그 텍스트)에서만 허용.
+- **반쪽 구현 금지** — "TODO 컴포넌트", "임시 버튼", "플레이스홀더 카드"를 남기지 않음. component_specs.json의 anatomy/states/tokens를 그대로 따라 완전히 구현.
+- **라이브러리 기본 컴포넌트 금지** — `<Button>` 같은 라이브러리 컴포넌트를 기본 스타일로 그냥 쓰지 않음. 반드시 디자인 토큰으로 색상, spacing, radius, typography를 명시적으로 바인딩.
 """
 
 
@@ -980,6 +986,9 @@ Read these files first when they exist:
 7. Use semantic tokens before introducing hardcoded surface or text colors.
 8. Update nearby documentation or tests when behavior or structure changes.
 9. Respect curated palette roles and reference colors recorded in the token schema when choosing UI colors.
+10. **NEVER use emojis as UI icons, state indicators, or button decorations** (no 🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊). Always implement SVG icon components or import from Lucide / Heroicons / Phosphor / Tabler. Emojis only belong in user-generated content, never in system UI.
+11. **NEVER leave half-finished components** ("TODO", "placeholder", "temp"). Read `{artifact_dir}/components/component_specs.md` and implement the full anatomy, states, and token bindings.
+12. **NEVER use bare library components without token binding.** If you import from a UI library, wrap it and override colors, spacing, radius, and typography using tokens from the schema.
 
 ## Output Expectations
 

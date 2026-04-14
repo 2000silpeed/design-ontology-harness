@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 import httpx
 
 from .cli_shared import run_pipeline
+from .css_pipeline import run_css_extraction
 from .models import DocumentRecord, ReferenceLink, SeedArticle, utc_now_iso
 from .ontology import build_ontology_outputs
 from .utils import ensure_dir, slugify, write_json, write_jsonl
@@ -85,6 +86,7 @@ def build_knowledge_base(
     write_jsonl(kb_dir / "references.jsonl", [reference.to_dict() for reference in all_references])
     write_jsonl(kb_dir / "all_documents.jsonl", [document.to_dict() for document in all_documents])
     build_ontology_outputs(kb_dir, all_references, all_documents)
+    _merge_css_extraction(kb_dir, seeds_dir)
 
     manifest = {
         "kind": "knowledge_base",
@@ -103,6 +105,55 @@ def build_knowledge_base(
     }
     write_json(kb_dir / "kb_manifest.json", manifest)
     return manifest
+
+
+def _merge_css_extraction(kb_dir: Path, seeds_dir: Path) -> None:
+    """Collect all .css files crawled across all seeds and re-run extraction at KB root."""
+    all_css_parts: list[str] = []
+    css_file_count = 0
+
+    for css_dir in sorted(seeds_dir.glob("*/crawls/*/css")):
+        for css_file in sorted(css_dir.glob("*.css")):
+            try:
+                all_css_parts.append(css_file.read_text(encoding="utf-8", errors="replace"))
+                css_file_count += 1
+            except OSError:
+                continue
+
+    if not all_css_parts:
+        print(f"  [kb] CSS 병합 건너뜀: 수집된 CSS 파일이 없습니다")
+        return
+
+    all_css = "\n".join(all_css_parts)
+    css_result = run_css_extraction(all_css)
+
+    css_out = ensure_dir(kb_dir / "css_extraction")
+    write_json(css_out / "resolved_tokens.json", css_result["var_resolution"])
+    write_json(css_out / "brand_candidates.json", css_result["brand_colors"])
+    write_json(css_out / "typography.json", css_result["typography"])
+    write_json(css_out / "alias_layer.json", css_result["alias_layer"])
+    summary = {
+        "css_file_count": css_file_count,
+        "var_resolution": {
+            "total_vars": css_result["var_resolution"]["total_vars"],
+            "resolved_count": css_result["var_resolution"]["resolved_count"],
+            "unresolved_count": css_result["var_resolution"]["unresolved_count"],
+        },
+        "brand_colors": css_result["brand_colors"]["summary"],
+        "typography": css_result["typography"]["stats"],
+        "alias_layer": css_result["alias_layer"]["stats"],
+    }
+    write_json(css_out / "extraction_summary.json", summary)
+
+    var_info = css_result["var_resolution"]
+    brand_info = css_result["brand_colors"]["summary"]
+    typo_info = css_result["typography"]["stats"]
+    print(
+        f"  [kb] CSS 병합: {css_file_count}개 파일 | "
+        f"var {var_info['resolved_count']}/{var_info['total_vars']}개 | "
+        f"브랜드색 {brand_info['total_candidates']}개 | "
+        f"타이포 {typo_info['scale_entries']}개"
+    )
 
 
 def load_knowledge_base(kb_dir: Path) -> tuple[list[ReferenceLink], list[DocumentRecord], dict]:

@@ -241,6 +241,15 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
     md_lines.append(f"총 {specs_data['total_components']}개 컴포넌트 | "
                     f"패밀리: {', '.join(specs_data['families'])}\n")
 
+    md_lines.append("## 구현 원칙 (Non-negotiable)\n")
+    md_lines.append("이 스펙의 모든 컴포넌트를 구현할 때 반드시 지킨다:\n")
+    md_lines.append("1. **이모지를 UI로 쓰지 않는다** — 🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등 이모지를 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 자리에 절대 넣지 않는다. 아이콘 자리에는 SVG 컴포넌트 또는 Lucide/Heroicons/Phosphor/Tabler 라이브러리를 사용한다.")
+    md_lines.append("2. **컴포넌트를 직접 구현한다** — 아래 각 컴포넌트의 anatomy(구조), states(상태), 토큰 바인딩, 접근성 규칙을 그대로 따라 완전하게 구현한다. '임시', 'TODO', '플레이스홀더' 같은 반쪽 구현을 남기지 않는다.")
+    md_lines.append("3. **라이브러리 기본 스타일 금지** — 라이브러리 컴포넌트를 그대로 import해서 쓰지 않는다. 반드시 디자인 토큰(--color-*, --space-*, --radius-*, --font-*)으로 스타일을 명시적으로 바인딩한다.")
+    md_lines.append("4. **접근성은 옵션이 아니다** — 각 컴포넌트의 '접근성' 섹션에 정의된 role, aria-*, label, focus 관리 규칙을 전부 적용한다.")
+    md_lines.append("5. **hex 값 하드코딩 금지** — 색상은 반드시 semantic token을 경유한다 (예: `color: var(--color-ink)` not `color: #2C2C2C`).")
+    md_lines.append("")
+
     md_lines.append("## 브랜드 적용 규칙\n")
     for aspect, rule in specs_data.get("global_adaptation", {}).items():
         md_lines.append(f"- **{aspect}**: {rule}")

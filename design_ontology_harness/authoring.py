@@ -117,11 +117,36 @@ def generate_system_pack(
     foundations = derive_foundations(blueprint)
     token_schema = build_token_schema(brand_profile, blueprint)
     component_inventory = build_component_inventory(brand_profile, blueprint)
+    css_extraction = blueprint.get("css_extraction") or {}
+    alias_result = None
+    var_chains = None
+    typo_scale = None
+    if css_extraction:
+        alias_data = css_extraction.get("alias_layer") or {}
+        if isinstance(alias_data, dict):
+            alias_result = {
+                tier: alias_data.get(tier, [])
+                for tier in ["core", "util", "action", "component"]
+                if alias_data.get(tier)
+            } or None
+        var_data = css_extraction.get("var_resolution") or {}
+        resolved_vars = var_data.get("resolved") or {}
+        if isinstance(resolved_vars, dict):
+            var_chains = {
+                k: v for k, v in resolved_vars.items()
+                if isinstance(v, str) and v.startswith("var(")
+            } or None
+        typo_data = css_extraction.get("typography") or {}
+        typo_scale = typo_data.get("scale") or None
+
     ontology_graph = build_full_ontology_graph(
         brand_profile=brand_profile,
         blueprint=blueprint,
         component_inventory=component_inventory,
         token_schema=token_schema,
+        alias_result=alias_result,
+        var_chains=var_chains,
+        typo_scale=typo_scale,
     )
     ontology_dict = ontology_graph.to_dict()
     graph_sections = build_graph_spec_sections(ontology_graph)
@@ -935,6 +960,8 @@ def _build_do_dont_section(brand_profile: dict, blueprint: dict) -> str:
     lines.append("- semantic token을 통해 컬러를 적용 (하드코딩 금지)")
     lines.append("- 접근성 기준을 모든 text/surface 조합에서 먼저 검증")
     lines.append("- 컴포넌트 변형 추가 전 기존 variant로 해결 가능한지 먼저 확인")
+    lines.append("- 아이콘은 SVG 컴포넌트 또는 Lucide/Heroicons/Phosphor/Tabler 등 라이브러리로 구현")
+    lines.append("- component_specs.md의 anatomy/states/token binding을 그대로 따라 완전히 구현")
 
     lines.append("\n### DON'T\n")
     if anti_keywords:
@@ -944,6 +971,9 @@ def _build_do_dont_section(brand_profile: dict, blueprint: dict) -> str:
     lines.append("- 토큰명을 임의로 발명하지 않음 (네이밍 패턴에서 도출)")
     lines.append("- 한 레퍼런스의 비주얼을 그대로 복제하지 않음")
     lines.append("- 기존 기능 진입점을 승인 없이 제거하지 않음")
+    lines.append("- **이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 아이콘/버튼/상태 표시로 절대 쓰지 않음** — 본문 콘텐츠에만 허용")
+    lines.append("- '임시 버튼', 'TODO 컴포넌트', '플레이스홀더 카드' 같은 반쪽 구현을 남기지 않음")
+    lines.append("- 라이브러리 컴포넌트를 기본 스타일로 그냥 쓰지 않음 — 반드시 디자인 토큰으로 스타일 바인딩")
     return "\n".join(lines)
 
 

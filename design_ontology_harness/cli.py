@@ -324,6 +324,29 @@ def main() -> None:
             write_jsonl(output_dir / "all_documents.jsonl", [document.to_dict() for document in documents])
             if (kb_dir / "ontology").exists():
                 shutil.copytree(kb_dir / "ontology", output_dir / "ontology", dirs_exist_ok=True)
+            if (kb_dir / "css_extraction").exists():
+                shutil.copytree(kb_dir / "css_extraction", output_dir / "css_extraction", dirs_exist_ok=True)
+                css_summary_path = kb_dir / "css_extraction" / "extraction_summary.json"
+                if css_summary_path.exists():
+                    css_summary = json.loads(css_summary_path.read_text(encoding="utf-8"))
+                    var_info = css_summary.get("var_resolution", {})
+                    brand_info = css_summary.get("brand_colors", {})
+                    typo_info = css_summary.get("typography", {})
+                    print(
+                        f"  CSS 추출 (KB): {css_summary.get('css_file_count', 0)}개 파일 | "
+                        f"var {var_info.get('resolved_count', 0)}/{var_info.get('total_vars', 0)}개 | "
+                        f"브랜드색 {brand_info.get('total_candidates', 0)}개 | "
+                        f"타이포 {typo_info.get('scale_entries', 0)}개"
+                    )
+            else:
+                print(f"  CSS 추출 (KB): 없음 — KB를 재빌드하면 자동 수집됩니다")
+            print(f"  폰트 결정: {', '.join([role for role in ['heading', 'body', 'mono'] if brand_profile.get('_resolved_font_system', {}).get(role)])}")
+            color_ref = brand_profile.get('_resolved_color_reference')
+            if color_ref:
+                active_roles = color_ref.get('palette_roles', {})
+                print(f"  색상 결정: {len(active_roles)}개 role 활성화")
+            else:
+                print(f"  색상 결정: 실행 안 됨 (brand_profile.color_reference가 설정되지 않음)")
             build_blueprint(
                 output_dir=output_dir,
                 brand_profile=brand_profile,

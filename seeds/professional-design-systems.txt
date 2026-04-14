@@ -3,7 +3,7 @@
 # Use with:
 # uv run design-ontology build-kb --kb-dir kb/professional --seeds-file seeds/professional-design-systems.txt
 
-# Product / enterprise systems
+# ===== Product / Enterprise systems =====
 https://atlassian.design/
 https://primer.style/
 https://carbondesignsystem.com/
@@ -16,23 +16,70 @@ https://design.gitlab.com/
 https://design.morningstar.com/
 https://cedar.rei.com/patterns
 https://baseweb.design/
+https://canvas.workday.com/
+https://www.audi.com/ci/en/guides/user-interface/introduction.html
+https://www.telus.com/en/thorium
+https://wise.design/
+https://cultureamp.design/
 
-# Content / communication systems
+# ===== Developer tools / DevOps =====
+https://vercel.com/geist/introduction
+https://primer.style/design/
+https://design.digitalocean.com/
+https://design.sentry.io/
+https://www.patternfly.org/
+https://supabase.com/docs/guides/getting-started
+https://mantine.dev/
+https://chakra-ui.com/
+https://ui.shadcn.com/
+https://www.radix-ui.com/primitives
+https://ant.design/
+https://react.semantic-ui.com/
+https://tailwindui.com/
+
+# ===== Content / communication systems =====
 https://contentdesign.intuit.com/
+https://zeroheight.com/examples/
+https://www.marriott.com/design/
 
-# Government / service design systems
+# ===== Consumer product systems =====
+https://gestalt.pinterest.systems/
+https://base.uber.com/
+https://design.vtex.com/
+https://design.grab.com/
+https://design.trade.gov.uk/
+https://bolt.tegrita.com/
+
+# ===== Government / service design systems (US) =====
 https://designsystem.digital.gov/
+https://design.va.gov/
+https://developer.cms.gov/design-system/
+
+# ===== Government / service design systems (UK) =====
 https://design-system.service.gov.uk/
 https://service-manual.nhs.uk/design-system
 https://design-system.dwp.gov.uk/
 https://design-system.nhsapp.service.nhs.uk/
 https://design-system.service.mod.gov.uk/
+https://design-system.homeoffice.gov.uk/
+https://design.homeoffice.gov.uk/
+https://design.tax.service.gov.uk/hmrc-design-patterns/
+
+# ===== Government / service design systems (Commonwealth) =====
 https://design-system.canada.ca/
 https://designsystem.nsw.gov.au/
 https://designsystem.ontario.ca/index.html
 https://www.forgov.qld.gov.au/communication-and-publishing/website-standards-guidelines-and-templates/queensland-government-design-system
-https://design.va.gov/
-https://developer.cms.gov/design-system/
+https://design-system.dta.gov.au/
+https://designsystem.gov.bc.ca/
+https://www.digital.govt.nz/standards-and-guidance/design-and-ux/
+https://www.designsystem.sg/
 
-# Standards / platform systems
+# ===== Standards / platform systems =====
 https://design-system.w3.org/
+https://wet-boew.github.io/
+
+# ===== Education / research =====
+https://www.nngroup.com/articles/design-systems-101/
+https://bbc.github.io/gel/
+https://www.orbit.kiwi/

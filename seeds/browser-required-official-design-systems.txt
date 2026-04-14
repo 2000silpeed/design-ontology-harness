@@ -1,13 +1,42 @@
 # Official design systems that are valuable references
 # but may be JS-heavy, browser-dependent, or access-constrained for the current crawler.
-# Keep these as a future watchlist for a browser-backed KB pipeline.
+# Keep these as a future watchlist for a browser-backed KB pipeline (Playwright/Jina fallback).
 
+# ===== Platform / OS =====
 https://m3.material.io/
 https://developer.apple.com/design/human-interface-guidelines/
 https://spectrum.adobe.com/
+https://www.sap.com/design-system/
+https://www.figma.com/community/design-systems
+
+# ===== Enterprise SaaS =====
 https://www.lightningdesignsystem.com/
 https://polaris-react.shopify.com/
-https://www.sap.com/design-system/
-https://design.education.gov.uk/design-system/
 https://design.intuit.com/
+https://design.hubspot.com/
+https://www.oracle.com/webfolder/ux/middleware/alta/index.html
+https://design.education.gov.uk/design-system/
+
+# ===== Consumer product =====
+https://airbnb.design/
+https://design.spotify.com/
 https://www.decathlon.design/
+https://mailchimp.com/developer/
+https://monzo.com/
+
+# ===== Fintech / finance =====
+https://stripe.com/docs/elements
+https://www.capitalone.com/os/
+https://design.pagerduty.com/
+https://paypal.design/
+https://design.cash.app/
+
+# ===== Developer tools =====
+https://linear.app/method
+https://railway.app/design
+https://supabase.com/ui
+https://planetscale.com/docs
+
+# ===== Accessibility / standards =====
+https://accessibility.digital.gov/
+https://www.w3.org/WAI/ARIA/apg/
