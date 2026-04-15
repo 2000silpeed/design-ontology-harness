@@ -46,7 +46,16 @@
     "rich text editor",
     "command palette",
     "dashboard cards",
-    "data tables"
+    "data tables",
+    "hero section",
+    "feature grid",
+    "social proof",
+    "testimonial",
+    "faq accordion",
+    "landing cta section",
+    "site footer",
+    "site header",
+    "pricing and plans"
   ],
   "reference_preferences": {
     "prioritize_sources_containing": [
@@ -60,10 +69,13 @@
     ]
   },
   "color_reference": {
-    "path": "docs/color-reference.md",
+    "path": "/Users/sungwoon/Documents/designSystem/docs/color-reference.md",
     "preferred_families": [
       "Deep Reds",
+      "Natural Reds",
+      "Pastel Reds",
       "Standard Oranges",
+      "Natural Oranges",
       "Pastel Oranges"
     ],
     "palette_strategy": {

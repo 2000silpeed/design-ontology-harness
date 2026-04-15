@@ -347,6 +347,19 @@ def main() -> None:
                 print(f"  색상 결정: {len(active_roles)}개 role 활성화")
             else:
                 print(f"  색상 결정: 실행 안 됨 (brand_profile.color_reference가 설정되지 않음)")
+
+            spec_file = project_dir / "spec.md"
+            if not spec_file.exists():
+                spec_file = project_dir / "PRD.md"
+            detected_patterns: list[dict] = []
+            component_list: list[dict] = []
+            if spec_file.exists():
+                detected_patterns = analyze_spec_file(spec_file)
+                if detected_patterns:
+                    component_list = build_component_list(detected_patterns)
+                    brand_profile["_spec_components"] = component_list
+                    brand_profile["_spec_detected_patterns"] = detected_patterns
+
             build_blueprint(
                 output_dir=output_dir,
                 brand_profile=brand_profile,
@@ -364,25 +377,19 @@ def main() -> None:
                     "output_dir": str(output_dir),
                 },
             )
-            spec_file = project_dir / "spec.md"
-            if not spec_file.exists():
-                spec_file = project_dir / "PRD.md"
-            if spec_file.exists():
-                detected = analyze_spec_file(spec_file)
-                if detected:
-                    component_list = build_component_list(detected)
-                    bp_path = output_dir / "blueprint" / "design_system_blueprint.json"
-                    blueprint_data = {}
-                    if bp_path.exists():
-                        blueprint_data = json.loads(bp_path.read_text(encoding="utf-8"))
-                    specs_data = generate_component_specs(
-                        brand_profile=brand_profile,
-                        blueprint=blueprint_data,
-                        component_list=component_list,
-                        documents=documents,
-                    )
-                    write_component_specs(output_dir, specs_data)
-                    print(f"  -> 설계서({spec_file.name})에서 {len(component_list)}개 컴포넌트 스펙 자동 생성")
+            if component_list:
+                bp_path = output_dir / "blueprint" / "design_system_blueprint.json"
+                blueprint_data = {}
+                if bp_path.exists():
+                    blueprint_data = json.loads(bp_path.read_text(encoding="utf-8"))
+                specs_data = generate_component_specs(
+                    brand_profile=brand_profile,
+                    blueprint=blueprint_data,
+                    component_list=component_list,
+                    documents=documents,
+                )
+                write_component_specs(output_dir, specs_data)
+                print(f"  -> 설계서({spec_file.name})에서 {len(component_list)}개 컴포넌트 스펙 자동 생성")
 
             print(f"[run-project] 시스템 산출물 생성 완료: {output_dir}/blueprint/")
             print(f"  -> 레퍼런스: {len(references)}개 | 문서: {len(documents)}개")

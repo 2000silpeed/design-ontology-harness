@@ -21,12 +21,15 @@ COMPONENT_ANATOMY: dict[str, dict] = {
             "텍스트 대비 4.5:1 이상",
         ],
         "tokens": {
-            "surface": "{component}.surface.{state}",
-            "text": "{component}.text.{state}",
-            "border": "{component}.border.{state}",
-            "radius": "radius.md",
-            "padding": "spacing.12 spacing.24",
-            "font": "typography.text.md.semibold",
+            "surface": "var(--color-brand-primary)",
+            "text": "var(--color-text-inverse)",
+            "border": "var(--color-brand-primary)",
+            "radius": "var(--radius-md)",
+            "padding": "var(--space-12) var(--space-24)",
+            "font": "var(--font-body) / var(--text-md) / semibold",
+            "hover-surface": "var(--color-link-hover)",
+            "focus-ring": "box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-brand-primary)",
+            "motion": "background var(--duration-180) var(--ease-standard)",
         },
     },
     "input": {
@@ -39,12 +42,15 @@ COMPONENT_ANATOMY: dict[str, dict] = {
             "aria-required=\"true\" when required",
         ],
         "tokens": {
-            "surface": "surface.input.{state}",
-            "text": "text.input.{state}",
-            "border": "border.input.{state}",
-            "radius": "radius.sm",
-            "padding": "spacing.8 spacing.12",
-            "font": "typography.text.md.regular",
+            "surface": "var(--color-surface)",
+            "text": "var(--color-text)",
+            "placeholder": "var(--color-text-subtle)",
+            "border": "var(--color-border)",
+            "border-focus": "var(--color-brand-primary)",
+            "border-error": "var(--color-danger)",
+            "radius": "var(--radius-sm)",
+            "padding": "var(--space-8) var(--space-12)",
+            "font": "var(--font-body) / var(--text-md) / regular",
         },
     },
     "navigation": {
@@ -56,10 +62,12 @@ COMPONENT_ANATOMY: dict[str, dict] = {
             "키보드 화살표 탐색 지원",
         ],
         "tokens": {
-            "surface": "surface.nav.{state}",
-            "text": "text.nav.{state}",
-            "indicator": "color.accent.500",
-            "padding": "spacing.8 spacing.16",
+            "surface": "var(--color-surface)",
+            "text": "var(--color-text-muted)",
+            "text-active": "var(--color-text)",
+            "indicator": "var(--color-brand-accent)",
+            "padding": "var(--space-8) var(--space-16)",
+            "font": "var(--font-body) / var(--text-sm) / medium",
         },
     },
     "data-display": {
@@ -71,11 +79,14 @@ COMPONENT_ANATOMY: dict[str, dict] = {
             "빈 상태에서 안내 텍스트 제공",
         ],
         "tokens": {
-            "surface": "surface.card.default",
-            "border": "border.subtle",
-            "radius": "radius.md",
-            "padding": "spacing.16 spacing.20",
-            "shadow": "elevation.raised",
+            "surface": "var(--color-surface)",
+            "border": "var(--color-border)",
+            "radius": "var(--radius-md)",
+            "padding": "var(--space-16) var(--space-20)",
+            "heading-font": "var(--font-heading) / var(--text-md) / semibold",
+            "body-font": "var(--font-body) / var(--text-sm) / regular",
+            "text": "var(--color-text)",
+            "text-muted": "var(--color-text-muted)",
         },
     },
     "feedback": {
@@ -88,11 +99,16 @@ COMPONENT_ANATOMY: dict[str, dict] = {
             "닫기 버튼에 aria-label 필수",
         ],
         "tokens": {
-            "surface": "feedback.{severity}.surface",
-            "text": "feedback.{severity}.text",
-            "icon": "feedback.{severity}.icon",
-            "border": "feedback.{severity}.border",
-            "radius": "radius.sm",
+            "surface": "var(--color-surface-muted)",
+            "text": "var(--color-text)",
+            "icon": "var(--color-info)",
+            "border": "var(--color-border)",
+            "radius": "var(--radius-sm)",
+            "padding": "var(--space-12) var(--space-16)",
+            "severity-info": "var(--color-info)",
+            "severity-success": "var(--color-success)",
+            "severity-warning": "var(--color-warning)",
+            "severity-danger": "var(--color-danger)",
         },
     },
     "overlay": {
@@ -106,11 +122,12 @@ COMPONENT_ANATOMY: dict[str, dict] = {
             "닫은 후 trigger 요소로 포커스 복귀",
         ],
         "tokens": {
-            "surface": "surface.overlay",
-            "backdrop": "color.neutral.900/60",
-            "radius": "radius.lg",
-            "shadow": "elevation.modal",
-            "padding": "spacing.24",
+            "surface": "var(--color-surface-elevated)",
+            "backdrop": "rgb(0 0 0 / 0.5)",
+            "radius": "var(--radius-lg)",
+            "padding": "var(--space-24)",
+            "border": "var(--color-border)",
+            "motion": "opacity var(--duration-180) var(--ease-standard)",
         },
     },
     "editorial": {
@@ -123,14 +140,320 @@ COMPONENT_ANATOMY: dict[str, dict] = {
             "서식 버튼에 aria-pressed 상태",
         ],
         "tokens": {
-            "surface": "surface.canvas.default",
-            "text": "typography.text.md.regular",
-            "heading": "typography.display.lg.bold",
-            "padding": "spacing.24 spacing.32",
-            "line-height": "typography.leading.relaxed",
+            "surface": "var(--color-surface)",
+            "text": "var(--color-text)",
+            "font": "var(--font-body) / var(--text-md) / regular",
+            "heading-font": "var(--font-heading) / var(--text-2xl) / bold",
+            "padding": "var(--space-24) var(--space-32)",
+            "line-height": "var(--leading-relaxed)",
+        },
+    },
+    "marketing": {
+        "parts": ["section-container", "inner-max-width", "content"],
+        "states": ["default", "in-view", "hover"],
+        "accessibility": [
+            "의미 있는 <section> 또는 <header>/<footer> 랜드마크 사용",
+            "aria-labelledby로 제목(<h1>/<h2>)과 연결",
+            "색상만으로 의미 전달 금지",
+            "키보드로 CTA와 링크 접근 가능",
+        ],
+        "tokens": {
+            "section-background": "var(--color-canvas)",
+            "inner-padding": "var(--space-96) var(--space-24)",
+            "inner-max-width": "1120px",
+            "heading-font": "var(--font-heading) / var(--text-3xl) / semibold",
+            "body-font": "var(--font-body) / var(--text-md) / regular",
+            "text": "var(--color-text)",
+            "text-muted": "var(--color-text-muted)",
         },
     },
 }
+
+
+# ---------------------------------------------------------------------------
+# Slot archetypes — component-level overrides picked by name pattern.
+# Each archetype supplies its own parts / states / tokens / accessibility.
+# When an archetype matches, it overrides the family-default anatomy.
+# Tokens use real CSS variable names so specs are directly consumable.
+# ---------------------------------------------------------------------------
+
+
+SLOT_ARCHETYPES: dict[str, dict] = {
+    "text-heading": {
+        "parts": ["heading-text"],
+        "states": ["default"],
+        "accessibility": [
+            "의미 있는 heading 태그 사용 (<h1>~<h3>)",
+            "페이지당 <h1>은 1개",
+            "aria-labelledby의 id 타깃이 되어야 함",
+        ],
+        "tokens": {
+            "font": "var(--font-heading)",
+            "size": "var(--text-3xl)",
+            "weight": "semibold (600)",
+            "line-height": "var(--leading-tight)",
+            "color": "var(--color-text)",
+            "letter-spacing": "-0.01em",
+        },
+    },
+    "text-eyebrow": {
+        "parts": ["eyebrow-label"],
+        "states": ["default"],
+        "accessibility": [
+            "장식용 카테고리 레이블 — 스크린 리더가 건너뛸 수 있어야 함",
+            "의미가 필요하면 heading 위 <p> 또는 <span> 사용",
+        ],
+        "tokens": {
+            "font": "var(--font-mono)",
+            "size": "var(--text-xs)",
+            "weight": "medium (500)",
+            "color": "var(--color-text-subtle)",
+            "letter-spacing": "0.08em",
+            "text-transform": "uppercase",
+        },
+    },
+    "text-body": {
+        "parts": ["body-text"],
+        "states": ["default"],
+        "accessibility": [
+            "의미 있는 <p> 태그 사용",
+            "line-length 75ch 이하 권장",
+        ],
+        "tokens": {
+            "font": "var(--font-body)",
+            "size": "var(--text-lg)",
+            "line-height": "var(--leading-relaxed)",
+            "color": "var(--color-text-muted)",
+            "max-width": "65ch",
+        },
+    },
+    "surface-card": {
+        "parts": ["container", "inner-content"],
+        "states": ["default", "hover", "focus-visible"],
+        "accessibility": [
+            "카드 자체가 링크/버튼이면 <a>/<button> 래퍼 사용",
+            "장식적 카드는 단순 <article> 또는 <div>",
+        ],
+        "tokens": {
+            "surface": "var(--color-surface)",
+            "border": "var(--color-border)",
+            "border-hover": "var(--color-border-strong)",
+            "radius": "var(--radius-lg)",
+            "padding": "var(--space-32)",
+            "gap": "var(--space-16)",
+            "motion": "border-color var(--duration-180) var(--ease-standard)",
+        },
+    },
+    "icon-holder": {
+        "parts": ["icon-container", "icon-svg"],
+        "states": ["default"],
+        "accessibility": [
+            "장식용이면 aria-hidden=\"true\"",
+            "의미가 있으면 <title> 포함",
+        ],
+        "tokens": {
+            "container-surface": "var(--color-surface-tint)",
+            "container-size": "40px",
+            "container-radius": "var(--radius-md)",
+            "icon-stroke": "var(--color-brand-primary)",
+            "icon-size": "20px",
+            "icon-stroke-width": "1.75",
+        },
+    },
+    "nav-bar": {
+        "parts": ["sticky-container", "inner-max-width", "left-group", "right-group"],
+        "states": ["default", "scrolled"],
+        "accessibility": [
+            "<header role=\"banner\"> 또는 <nav aria-label=\"Primary\">",
+            "키보드 탐색 시 논리적 탭 순서 유지",
+            "랜드마크가 중복되지 않도록 main 이외 영역에만 배치",
+        ],
+        "tokens": {
+            "surface": "var(--color-surface)",
+            "border-bottom": "var(--color-border)",
+            "height": "64px",
+            "padding": "0 var(--space-24)",
+            "inner-max-width": "1120px",
+            "z-index": "50",
+            "backdrop-filter": "blur(8px)",
+        },
+    },
+    "footer-bar": {
+        "parts": ["container", "column-grid", "legal-strip", "social-strip"],
+        "states": ["default"],
+        "accessibility": [
+            "<footer role=\"contentinfo\">",
+            "링크 그룹에 의미 있는 heading 제공",
+        ],
+        "tokens": {
+            "surface": "var(--color-surface-muted)",
+            "border-top": "var(--color-border)",
+            "padding": "var(--space-64) var(--space-24) var(--space-32)",
+            "column-gap": "var(--space-48)",
+            "inner-max-width": "1120px",
+            "text": "var(--color-text-muted)",
+        },
+    },
+    "layout-grid": {
+        "parts": ["grid-container"],
+        "states": ["default"],
+        "accessibility": [
+            "장식적 컨테이너 — 시맨틱은 자식 요소에 위임",
+        ],
+        "tokens": {
+            "display": "grid",
+            "gap": "var(--space-24)",
+            "grid-1": "1 column <768px",
+            "grid-2": "2 columns 768-1039px",
+            "grid-3": "3 columns ≥1040px",
+        },
+    },
+    "link": {
+        "parts": ["anchor"],
+        "states": ["default", "hover", "focus-visible", "visited"],
+        "accessibility": [
+            "의미 있는 링크 텍스트 (\"여기 클릭\" 금지)",
+            "외부 링크는 aria-label에 명시",
+            "focus ring은 전역 :focus-visible 규칙 사용",
+        ],
+        "tokens": {
+            "color": "var(--color-text-muted)",
+            "color-hover": "var(--color-text)",
+            "underline-hover": "1px solid currentColor",
+            "motion": "color var(--duration-120) var(--ease-standard)",
+        },
+    },
+    "cta-inverse": {
+        "parts": ["section-container", "headline", "supporting-text", "button-group"],
+        "states": ["default"],
+        "accessibility": [
+            "aria-labelledby로 cta-headline id 연결",
+            "primary CTA는 페이지당 1-2개로 제한",
+        ],
+        "tokens": {
+            "surface": "var(--color-brand-primary)",
+            "text": "var(--color-text-inverse)",
+            "text-supporting": "var(--color-surface-tint)",
+            "radius": "var(--radius-xl)",
+            "padding": "var(--space-96) var(--space-48)",
+            "button-primary-surface": "var(--color-surface)",
+            "button-primary-text": "var(--color-brand-primary)",
+            "button-secondary-border": "var(--color-text-inverse)",
+        },
+    },
+    "quote-block": {
+        "parts": ["blockquote", "quote-text", "attribution"],
+        "states": ["default"],
+        "accessibility": [
+            "<blockquote>과 <cite> 사용",
+            "인용부호는 CSS content 또는 장식 SVG로 처리",
+        ],
+        "tokens": {
+            "border-left": "2px solid var(--color-border-strong)",
+            "padding-left": "var(--space-16)",
+            "text": "var(--color-text)",
+            "text-muted": "var(--color-text-muted)",
+            "font": "var(--font-body)",
+            "size": "var(--text-lg)",
+            "line-height": "var(--leading-relaxed)",
+        },
+    },
+    "badge": {
+        "parts": ["container", "value", "label(optional)"],
+        "states": ["default"],
+        "accessibility": [
+            "정보를 담으면 aria-label 제공",
+            "장식이면 aria-hidden=\"true\"",
+        ],
+        "tokens": {
+            "surface": "var(--color-surface-tint)",
+            "text": "var(--color-brand-primary)",
+            "value-size": "var(--text-4xl)",
+            "label-size": "var(--text-sm)",
+            "label-color": "var(--color-text-muted)",
+            "radius": "var(--radius-md)",
+            "padding": "var(--space-12) var(--space-16)",
+        },
+    },
+    "media-frame": {
+        "parts": ["frame-container", "visual"],
+        "states": ["default"],
+        "accessibility": [
+            "의미 있는 이미지면 alt 필수, 장식이면 alt=\"\"",
+            "SVG는 role=\"img\"과 <title> 포함",
+        ],
+        "tokens": {
+            "radius": "var(--radius-xl)",
+            "border": "var(--color-border)",
+            "surface": "var(--color-surface-tint)",
+            "aspect-ratio": "4 / 3",
+            "padding": "var(--space-24)",
+        },
+    },
+    "trust-strip": {
+        "parts": ["list-container", "item", "bullet-icon"],
+        "states": ["default"],
+        "accessibility": [
+            "role=\"list\"로 리스트 시맨틱 유지",
+            "불릿 SVG는 aria-hidden=\"true\"",
+        ],
+        "tokens": {
+            "text": "var(--color-text-muted)",
+            "font": "var(--font-mono)",
+            "size": "var(--text-xs)",
+            "bullet-color": "var(--color-brand-primary)",
+            "gap": "var(--space-16)",
+        },
+    },
+}
+
+
+# Ordered list of (pattern, archetype) — first match wins.
+# Regex-free simple substring matching keeps this easy to audit and extend.
+SLOT_NAME_PATTERNS: list[tuple[str, str]] = [
+    ("subheadline", "text-body"),
+    ("supporting-text", "text-body"),
+    ("description", "text-body"),
+    ("-answer", "text-body"),
+    ("eyebrow", "text-eyebrow"),
+    ("headline", "text-heading"),
+    ("-title", "text-heading"),
+    ("site-header", "nav-bar"),
+    ("site-nav", "nav-bar"),
+    ("site-footer", "footer-bar"),
+    ("footer-column", "footer-bar"),
+    ("footer-legal", "footer-bar"),
+    ("footer-social", "footer-bar"),
+    ("footer-link", "link"),
+    ("-link", "link"),
+    ("press-quote", "quote-block"),
+    ("-quote", "quote-block"),
+    ("trust-strip", "trust-strip"),
+    ("metric-highlight", "badge"),
+    ("upgrade-banner", "badge"),
+    ("feature-icon", "icon-holder"),
+    ("-icon", "icon-holder"),
+    ("feature-card", "surface-card"),
+    ("testimonial-card", "surface-card"),
+    ("pricing-card", "surface-card"),
+    ("-card", "surface-card"),
+    ("feature-grid", "layout-grid"),
+    ("logo-cloud", "layout-grid"),
+    ("-grid", "layout-grid"),
+    ("cta-section", "cta-inverse"),
+    ("cta-headline", "text-heading"),
+    ("hero-visual", "media-frame"),
+    ("-visual", "media-frame"),
+]
+
+
+def _infer_slot_archetype(name: str) -> str | None:
+    """Return the archetype key for a component name, or None for family default."""
+    low = name.lower()
+    for needle, archetype in SLOT_NAME_PATTERNS:
+        if needle in low:
+            return archetype
+    return None
 
 
 BRAND_ADAPTATIONS: dict[str, dict[str, str]] = {
@@ -199,20 +522,25 @@ def generate_component_specs(
     specs: list[dict] = []
     for comp in component_list:
         family = comp["family"]
-        anatomy = COMPONENT_ANATOMY.get(family, COMPONENT_ANATOMY.get("data-display", {}))
+        archetype_key = _infer_slot_archetype(comp["name"])
+        archetype = SLOT_ARCHETYPES.get(archetype_key) if archetype_key else None
+        family_anatomy = COMPONENT_ANATOMY.get(family) or COMPONENT_ANATOMY.get("data-display", {})
+        source = archetype or family_anatomy
+
         kb_evidence = _find_kb_evidence(comp["name"], family, documents)
 
         spec = {
             "name": comp["name"],
             "family": family,
+            "archetype": archetype_key,
             "role": comp.get("role", ""),
             "source_pattern": comp.get("source", ""),
             "anatomy": {
-                "parts": anatomy.get("parts", []),
-                "states": anatomy.get("states", []),
+                "parts": source.get("parts", []),
+                "states": source.get("states", []),
             },
-            "tokens": _build_token_bindings(comp["name"], family, anatomy),
-            "accessibility": anatomy.get("accessibility", []),
+            "tokens": _build_token_bindings(comp["name"], family, source),
+            "accessibility": source.get("accessibility", []),
             "brand_adaptation": _build_adaptation_notes(
                 comp["name"], family, brand_keywords, anti_keywords, adaptations, anti_rules
             ),
@@ -262,6 +590,8 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
 
         if spec.get("source_pattern"):
             md_lines.append(f"**탐지 출처**: {spec['source_pattern']}\n")
+        if spec.get("archetype"):
+            md_lines.append(f"**Slot archetype**: `{spec['archetype']}`\n")
 
         md_lines.append("### 구조 (Anatomy)\n")
         for part in spec["anatomy"]["parts"]:
@@ -330,10 +660,19 @@ def _collect_anti_rules(anti_keywords: list[str]) -> list[str]:
     return rules
 
 
-def _build_token_bindings(name: str, family: str, anatomy: dict) -> dict[str, str]:
-    raw = anatomy.get("tokens", {})
-    result = {}
+def _build_token_bindings(name: str, family: str, source: dict) -> dict[str, str]:
+    """Return the token bindings for a component.
+
+    Uses the provided source (either a slot archetype or a family anatomy entry)
+    and substitutes any remaining `{component}` / `{severity}` placeholders that
+    predate the var(--*) migration.
+    """
+    raw = source.get("tokens", {})
+    result: dict[str, str] = {}
     for slot, pattern in raw.items():
+        if not isinstance(pattern, str):
+            result[slot] = pattern
+            continue
         result[slot] = pattern.replace("{component}", name).replace("{severity}", "info")
     return result
 
@@ -356,6 +695,7 @@ def _build_adaptation_notes(
         "feedback": ["feedback", "motion", "color"],
         "overlay": ["motion", "density"],
         "editorial": ["density", "color", "motion"],
+        "marketing": ["color", "motion", "density"],
     }
     relevant = family_aspects.get(family, ["hover", "motion", "color"])
 
@@ -475,6 +815,10 @@ def _build_implementation_notes(name: str, family: str, brand_keywords: list[str
         notes.append("auto-dismiss 시간은 내용 길이에 비례 (기본 5초)")
     elif family == "data-display":
         notes.append("빈 상태(empty-state)와 에러 상태를 반드시 처리")
+    elif family == "marketing":
+        notes.append("섹션에 <h2 id=\"...\">과 aria-labelledby 필수")
+        notes.append("CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지")
+        notes.append("다크 모드는 globals.css의 prefers-color-scheme 블록에 위임")
 
     if "calm" in brand_keywords:
         notes.append("애니메이션은 상태 설명용으로만 사용, 장식 효과 금지")

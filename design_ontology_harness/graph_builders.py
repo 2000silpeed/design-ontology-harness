@@ -274,13 +274,11 @@ def build_typography_layer(
 # ---------------------------------------------------------------------------
 
 
-LAYOUT_PATTERNS = [
-    "workspace navigation", "dashboard cards", "data tables", "recommendation feed",
-    "closet analysis", "shopping price comparison",
+DEFAULT_LAYOUT_PATTERNS = [
+    "workspace navigation", "dashboard cards", "data tables",
 ]
-INTERACTION_PATTERNS = [
-    "command palette", "rich text editor", "forms", "notifications",
-    "personal color onboarding", "outfit detail and comparison",
+DEFAULT_INTERACTION_PATTERNS = [
+    "command palette", "forms", "notifications",
 ]
 
 ACCESSIBILITY_RULES = [
@@ -295,26 +293,79 @@ ACCESSIBILITY_RULES = [
 ]
 
 
-def build_pattern_layer(graph: DesignOntologyGraph, component_inventory: dict) -> None:
+def _classify_primitive(primitive: str) -> str:
+    from .authoring import INTERACTION_PRIMITIVE_KEYWORDS, LAYOUT_PRIMITIVE_KEYWORDS
+
+    low = primitive.lower()
+    if any(keyword in low for keyword in INTERACTION_PRIMITIVE_KEYWORDS):
+        return "interaction"
+    if any(keyword in low for keyword in LAYOUT_PRIMITIVE_KEYWORDS):
+        return "layout"
+    return "layout"
+
+
+def build_pattern_layer(
+    graph: DesignOntologyGraph,
+    component_inventory: dict,
+    brand_profile: dict | None = None,
+) -> None:
     from .authoring import PRIMITIVE_COMPONENTS
 
-    for pattern_name in LAYOUT_PATTERNS:
-        pid = f"pattern:layout-{slugify(pattern_name)}"
-        graph.add_node(OntologyNode(id=pid, type=NodeType.LayoutPattern, label=pattern_name))
-        for comp_name in PRIMITIVE_COMPONENTS.get(pattern_name, []):
-            cid = f"component:{slugify(comp_name)}"
-            if graph.get_node(cid):
-                graph.add_edge(OntologyEdge(type=EdgeType.composed_of, source=pid, target=cid))
-                graph.add_edge(OntologyEdge(type=EdgeType.implements, source=cid, target=pid))
+    primitives = []
+    if brand_profile:
+        primitives = [p for p in brand_profile.get("product_primitives", []) if isinstance(p, str) and p.strip()]
 
-    for pattern_name in INTERACTION_PATTERNS:
-        pid = f"pattern:interaction-{slugify(pattern_name)}"
-        graph.add_node(OntologyNode(id=pid, type=NodeType.InteractionPattern, label=pattern_name))
-        for comp_name in PRIMITIVE_COMPONENTS.get(pattern_name, []):
+    layout_set: list[str] = []
+    interaction_set: list[str] = []
+    seen: set[str] = set()
+
+    for primitive in primitives:
+        key = primitive.strip().lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        bucket = _classify_primitive(primitive)
+        if bucket == "layout":
+            layout_set.append(primitive)
+        else:
+            interaction_set.append(primitive)
+
+    for fallback in DEFAULT_LAYOUT_PATTERNS:
+        if fallback.lower() not in seen:
+            seen.add(fallback.lower())
+            layout_set.append(fallback)
+    for fallback in DEFAULT_INTERACTION_PATTERNS:
+        if fallback.lower() not in seen:
+            seen.add(fallback.lower())
+            interaction_set.append(fallback)
+
+    def _wire_pattern(pattern_name: str, node_type: NodeType, prefix: str) -> None:
+        pid = f"pattern:{prefix}-{slugify(pattern_name)}"
+        graph.add_node(OntologyNode(id=pid, type=node_type, label=pattern_name))
+        wired: set[str] = set()
+
+        for comp_name in PRIMITIVE_COMPONENTS.get(pattern_name.lower(), []):
             cid = f"component:{slugify(comp_name)}"
-            if graph.get_node(cid):
+            if cid in wired or not graph.get_node(cid):
+                continue
+            graph.add_edge(OntologyEdge(type=EdgeType.composed_of, source=pid, target=cid))
+            graph.add_edge(OntologyEdge(type=EdgeType.implements, source=cid, target=pid))
+            wired.add(cid)
+
+        for comp in component_inventory.get("components", []):
+            supports = (comp.get("supports_primitive") or "").strip().lower()
+            if supports and supports == pattern_name.strip().lower():
+                cid = f"component:{slugify(comp['name'])}"
+                if cid in wired or not graph.get_node(cid):
+                    continue
                 graph.add_edge(OntologyEdge(type=EdgeType.composed_of, source=pid, target=cid))
                 graph.add_edge(OntologyEdge(type=EdgeType.implements, source=cid, target=pid))
+                wired.add(cid)
+
+    for pattern_name in layout_set:
+        _wire_pattern(pattern_name, NodeType.LayoutPattern, "layout")
+    for pattern_name in interaction_set:
+        _wire_pattern(pattern_name, NodeType.InteractionPattern, "interaction")
 
 
 def build_accessibility_layer(graph: DesignOntologyGraph, component_inventory: dict) -> None:
@@ -339,6 +390,181 @@ def build_accessibility_layer(graph: DesignOntologyGraph, component_inventory: d
 
         if family_name == "input":
             graph.add_edge(OntologyEdge(type=EdgeType.requires, source=fid, target="a11y:label-association"))
+
+
+def build_component_token_layer(
+    graph: DesignOntologyGraph,
+    component_inventory: dict,
+    brand_profile: dict,
+) -> None:
+    """Link components to color/spacing/radius/font tokens via `uses_token` / `uses_font`.
+
+    Uses the resolved color palette roles (primary/accent/surface_tint) as the color
+    token targets. Interactive families (button/input/navigation/overlay) also wire up
+    radius and spacing defaults so that Section 17 (Component-Token Map) is populated.
+    """
+    color_ref = brand_profile.get("_resolved_color_reference") or {}
+    palette_roles = color_ref.get("palette_roles", {}) or {}
+    role_token_ids: dict[str, str] = {}
+    for role_name, role_data in palette_roles.items():
+        if isinstance(role_data, dict):
+            name = role_data.get("name", role_name)
+            tid = f"color:{slugify(name)}"
+            if graph.get_node(tid):
+                role_token_ids[role_name] = tid
+
+    font_system = brand_profile.get("_resolved_font_system") or {}
+    font_ids: dict[str, str] = {}
+    for role in ("heading", "body", "mono"):
+        entry = font_system.get(role)
+        if isinstance(entry, dict):
+            name = entry.get("name") or ""
+        else:
+            name = str(entry) if entry else ""
+        if name:
+            fid = f"font:{slugify(name)}"
+            if graph.get_node(fid):
+                font_ids[role] = fid
+
+    spacing_md = "spacing:12"
+    radius_md = "radius:md"
+
+    interactive = {"button", "input", "navigation", "overlay"}
+
+    for comp in component_inventory.get("components", []):
+        cid = f"component:{slugify(comp['name'])}"
+        if not graph.get_node(cid):
+            continue
+        family = comp.get("family", "")
+        is_interactive = family in interactive
+
+        if is_interactive and "primary" in role_token_ids:
+            graph.add_edge(OntologyEdge(
+                type=EdgeType.uses_token, source=cid, target=role_token_ids["primary"],
+                meta={"slot": "surface"},
+            ))
+        if is_interactive and "accent" in role_token_ids:
+            graph.add_edge(OntologyEdge(
+                type=EdgeType.uses_token, source=cid, target=role_token_ids["accent"],
+                meta={"slot": "emphasis"},
+            ))
+        if "surface_tint" in role_token_ids:
+            graph.add_edge(OntologyEdge(
+                type=EdgeType.uses_token, source=cid, target=role_token_ids["surface_tint"],
+                meta={"slot": "background"},
+            ))
+
+        if graph.get_node(spacing_md):
+            graph.add_edge(OntologyEdge(
+                type=EdgeType.uses_token, source=cid, target=spacing_md,
+                meta={"slot": "padding"},
+            ))
+        if graph.get_node(radius_md):
+            graph.add_edge(OntologyEdge(
+                type=EdgeType.uses_token, source=cid, target=radius_md,
+                meta={"slot": "radius"},
+            ))
+
+        if "body" in font_ids:
+            graph.add_edge(OntologyEdge(
+                type=EdgeType.uses_font, source=cid, target=font_ids["body"],
+            ))
+
+
+def _hex_to_rgb(hex_code: str) -> tuple[int, int, int] | None:
+    value = (hex_code or "").strip().lstrip("#")
+    if len(value) == 3:
+        value = "".join(ch * 2 for ch in value)
+    if len(value) != 6:
+        return None
+    try:
+        return int(value[0:2], 16), int(value[2:4], 16), int(value[4:6], 16)
+    except ValueError:
+        return None
+
+
+def _relative_luminance(rgb: tuple[int, int, int]) -> float:
+    def _channel(v: int) -> float:
+        c = v / 255.0
+        return c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
+
+    r, g, b = rgb
+    return 0.2126 * _channel(r) + 0.7152 * _channel(g) + 0.0722 * _channel(b)
+
+
+def _contrast_ratio(bg_hex: str, fg_hex: str) -> float | None:
+    bg = _hex_to_rgb(bg_hex)
+    fg = _hex_to_rgb(fg_hex)
+    if not bg or not fg:
+        return None
+    l1 = _relative_luminance(bg)
+    l2 = _relative_luminance(fg)
+    lighter, darker = max(l1, l2), min(l1, l2)
+    return (lighter + 0.05) / (darker + 0.05)
+
+
+def build_contrast_audit_layer(graph: DesignOntologyGraph, brand_profile: dict) -> None:
+    """Emit `contrast_pair` edges for the active palette + common ink/paper combos.
+
+    If `contrast_surfaces` is manually defined in color_reference, it is honored via
+    `_build_contrast_pairs` (already called from build_color_layer). Otherwise we auto-
+    compose the palette roles against black/white baselines so Section 18 is never empty.
+    """
+    color_ref = brand_profile.get("_resolved_color_reference") or {}
+    roles = color_ref.get("palette_roles", {}) or {}
+
+    role_colors: dict[str, dict] = {}
+    for role_name, role_data in roles.items():
+        if isinstance(role_data, dict) and role_data.get("hex"):
+            role_colors[role_name] = role_data
+
+    if not role_colors:
+        return
+
+    baselines = [
+        {"name": "Paper", "hex": "#FFFFFF"},
+        {"name": "Ink", "hex": "#111111"},
+    ]
+    for baseline in baselines:
+        token_id = f"color:{slugify(baseline['name'])}"
+        if not graph.get_node(token_id):
+            graph.add_node(OntologyNode(
+                id=token_id, type=NodeType.ColorToken, label=baseline["name"],
+                meta={"hex": baseline["hex"], "tier": "baseline", "role": baseline["name"].lower()},
+            ))
+
+    pairings: list[tuple[str, str, str, str]] = []
+    for role_name, role_data in role_colors.items():
+        role_hex = role_data["hex"]
+        role_name_label = role_data.get("name") or role_name
+        role_id = f"color:{slugify(role_name_label)}"
+        for baseline in baselines:
+            pairings.append((role_id, role_hex, f"color:{slugify(baseline['name'])}", baseline["hex"]))
+
+    role_items = list(role_colors.items())
+    for i in range(len(role_items)):
+        for j in range(i + 1, len(role_items)):
+            a_name, a_data = role_items[i]
+            b_name, b_data = role_items[j]
+            a_id = f"color:{slugify(a_data.get('name') or a_name)}"
+            b_id = f"color:{slugify(b_data.get('name') or b_name)}"
+            pairings.append((a_id, a_data["hex"], b_id, b_data["hex"]))
+
+    seen_edges: set[tuple[str, str]] = set()
+    for bg_id, bg_hex, fg_id, fg_hex in pairings:
+        if (bg_id, fg_id) in seen_edges:
+            continue
+        if not graph.get_node(bg_id) or not graph.get_node(fg_id):
+            continue
+        ratio = _contrast_ratio(bg_hex, fg_hex)
+        if ratio is None:
+            continue
+        level = "AAA" if ratio >= 7 else "AA" if ratio >= 4.5 else "AA-large" if ratio >= 3 else "fail"
+        graph.add_edge(OntologyEdge(
+            type=EdgeType.contrast_pair, source=bg_id, target=fg_id,
+            meta={"ratio": round(ratio, 2), "level": level},
+        ))
+        seen_edges.add((bg_id, fg_id))
 
 
 def build_benchmark_layer(graph: DesignOntologyGraph, brand_profile: dict) -> None:
@@ -415,7 +641,9 @@ def build_full_ontology_graph(
     build_component_layer(graph, component_inventory, brand_profile)
     build_color_layer(graph, brand_profile, alias_result, var_chains)
     build_typography_layer(graph, brand_profile, typo_scale)
-    build_pattern_layer(graph, component_inventory)
+    build_pattern_layer(graph, component_inventory, brand_profile)
+    build_component_token_layer(graph, component_inventory, brand_profile)
+    build_contrast_audit_layer(graph, brand_profile)
     build_accessibility_layer(graph, component_inventory)
     build_benchmark_layer(graph, brand_profile)
 

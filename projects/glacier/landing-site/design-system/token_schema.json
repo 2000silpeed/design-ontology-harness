@@ -1,0 +1,850 @@
+{
+  "naming": {
+    "core": "{category}.{role}.{scale}",
+    "semantic": "{category}.{intent}.{state}",
+    "component": "{component}.{slot}.{property}",
+    "rule": "네이밍 패턴만 정의하고 구체적 토큰명은 실제 컴포넌트·역할에서 도출 — 임의 토큰명 생성 금지"
+  },
+  "layers": [
+    {
+      "name": "core",
+      "purpose": "브랜드에 종속되지 않는 수치와 원재료 토큰",
+      "categories": [
+        "color",
+        "spacing",
+        "radius",
+        "typography",
+        "motion",
+        "elevation"
+      ]
+    },
+    {
+      "name": "semantic",
+      "purpose": "역할 중심 토큰",
+      "categories": [
+        "surface",
+        "text",
+        "border",
+        "focus",
+        "feedback"
+      ]
+    },
+    {
+      "name": "component",
+      "purpose": "컴포넌트 슬롯별 적용 토큰",
+      "categories": [
+        "button",
+        "input",
+        "navigation",
+        "overlay",
+        "editor"
+      ]
+    }
+  ],
+  "categories": {
+    "color": {
+      "core_groups": [
+        "neutral",
+        "accent",
+        "success",
+        "warning",
+        "danger",
+        "info"
+      ],
+      "scale": [
+        0,
+        50,
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900,
+        1000
+      ],
+      "rules": [
+        "accent는 최대 1개의 주 계열로 시작",
+        "semantic feedback은 accent와 분리",
+        "text/surface 조합은 접근성 기준을 우선",
+        "hex 값은 color_reference·CSS 추출·브랜드 가이드에서만 가져오고 임의 생성 금지"
+      ],
+      "reference_palette": {
+        "source_title": "REFERENCE X Vol.1 - Color Reference",
+        "source_path": "/Users/sungwoon/Documents/designSystem/docs/color-reference.md",
+        "preferred_families": [
+          "Deep Blues",
+          "Natural Blues",
+          "Standard Blues"
+        ],
+        "selection_mode": "brand-guided",
+        "strategy": {
+          "mode": "brand-guided",
+          "candidate_count": 3,
+          "active_candidate": 1,
+          "temperature": "mixed",
+          "contrast": "balanced",
+          "diversity": "balanced",
+          "surface_style": "tinted",
+          "prefer_moods": [
+            "신뢰",
+            "권위",
+            "집중",
+            "전문성",
+            "안정"
+          ],
+          "avoid_moods": [
+            "따뜻함",
+            "달콤함",
+            "귀여움",
+            "열정"
+          ]
+        },
+        "expansion": {
+          "enabled": true,
+          "supporting_color_count": 8,
+          "combination_count": 3,
+          "prefer_pairings": true,
+          "prefer_related_families": true
+        },
+        "selected_colors": [
+          {
+            "name": "Navy Blue",
+            "family": "Deep Blues",
+            "hex": "#000080",
+            "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함",
+            "pairings": [
+              "#FFFFFF",
+              "#D6C6A6",
+              "#D4AF37",
+              "#E97E68",
+              "#708090",
+              "#B0C4DE"
+            ]
+          },
+          {
+            "name": "Ochre",
+            "family": "Standard Oranges",
+            "hex": "#CC7722",
+            "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성",
+            "pairings": [
+              "#1C2E4A",
+              "#4C7A77",
+              "#D7B899",
+              "#F3E9DA",
+              "#6E7B8B",
+              "#B6B995"
+            ]
+          },
+          {
+            "name": "Sky Blue",
+            "family": "Natural Blues",
+            "hex": "#87CEEB",
+            "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음",
+            "pairings": [
+              "#F5F5F5",
+              "#E6DBB8",
+              "#333333",
+              "#D8A7A7",
+              "#B6E3C1",
+              "#CFC7B5"
+            ]
+          }
+        ],
+        "palette_roles": {
+          "primary": {
+            "name": "Navy Blue",
+            "family": "Deep Blues",
+            "hex": "#000080",
+            "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함",
+            "pairings": [
+              "#FFFFFF",
+              "#D6C6A6",
+              "#D4AF37",
+              "#E97E68",
+              "#708090",
+              "#B0C4DE"
+            ]
+          },
+          "accent": {
+            "name": "Ochre",
+            "family": "Standard Oranges",
+            "hex": "#CC7722",
+            "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성",
+            "pairings": [
+              "#1C2E4A",
+              "#4C7A77",
+              "#D7B899",
+              "#F3E9DA",
+              "#6E7B8B",
+              "#B6B995"
+            ]
+          },
+          "surface_tint": {
+            "name": "Sky Blue",
+            "family": "Natural Blues",
+            "hex": "#87CEEB",
+            "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음",
+            "pairings": [
+              "#F5F5F5",
+              "#E6DBB8",
+              "#333333",
+              "#D8A7A7",
+              "#B6E3C1",
+              "#CFC7B5"
+            ]
+          }
+        },
+        "active_palette": {
+          "candidate_id": "signature-1",
+          "selection_mode": "brand-guided",
+          "roles": {
+            "primary": {
+              "name": "Navy Blue",
+              "family": "Deep Blues",
+              "hex": "#000080",
+              "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함"
+            },
+            "accent": {
+              "name": "Ochre",
+              "family": "Standard Oranges",
+              "hex": "#CC7722",
+              "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성"
+            },
+            "surface_tint": {
+              "name": "Sky Blue",
+              "family": "Natural Blues",
+              "hex": "#87CEEB",
+              "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음"
+            }
+          }
+        },
+        "palette_candidates": [
+          {
+            "id": "signature-1",
+            "label": "Signature",
+            "score": 45.78,
+            "rationale": [
+              "Navy Blue is inside preferred families.",
+              "Ochre matches brand tone keywords.",
+              "Sky Blue is inside preferred families."
+            ],
+            "strategy_snapshot": {
+              "temperature": "mixed",
+              "contrast": "balanced",
+              "diversity": "balanced",
+              "surface_style": "tinted"
+            },
+            "roles": {
+              "primary": {
+                "name": "Navy Blue",
+                "family": "Deep Blues",
+                "hex": "#000080",
+                "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함"
+              },
+              "accent": {
+                "name": "Ochre",
+                "family": "Standard Oranges",
+                "hex": "#CC7722",
+                "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성"
+              },
+              "surface_tint": {
+                "name": "Sky Blue",
+                "family": "Natural Blues",
+                "hex": "#87CEEB",
+                "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음"
+              }
+            }
+          },
+          {
+            "id": "soft-spread-2",
+            "label": "Soft Spread",
+            "score": 42.73,
+            "rationale": [
+              "Navy Blue is inside preferred families.",
+              "Ochre matches brand tone keywords.",
+              "Ocean Blue is inside preferred families."
+            ],
+            "strategy_snapshot": {
+              "temperature": "mixed",
+              "contrast": "soft",
+              "diversity": "balanced",
+              "surface_style": "airy"
+            },
+            "roles": {
+              "primary": {
+                "name": "Navy Blue",
+                "family": "Deep Blues",
+                "hex": "#000080",
+                "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함"
+              },
+              "accent": {
+                "name": "Ochre",
+                "family": "Standard Oranges",
+                "hex": "#CC7722",
+                "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성"
+              },
+              "surface_tint": {
+                "name": "Ocean Blue",
+                "family": "Natural Blues",
+                "hex": "#4F97A3",
+                "mood": "중명도, 중채도, 매트한 청록색 계열 / 신뢰, 정화, 깊이감, 유연함, 안정감"
+              }
+            }
+          },
+          {
+            "id": "assertive-3",
+            "label": "Assertive",
+            "score": 48.13,
+            "rationale": [
+              "Navy Blue is inside preferred families.",
+              "Classic Blue matches brand tone keywords.",
+              "Sky Blue is inside preferred families."
+            ],
+            "strategy_snapshot": {
+              "temperature": "mixed",
+              "contrast": "vivid",
+              "diversity": "balanced",
+              "surface_style": "grounded"
+            },
+            "roles": {
+              "primary": {
+                "name": "Navy Blue",
+                "family": "Deep Blues",
+                "hex": "#000080",
+                "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함"
+              },
+              "accent": {
+                "name": "Classic Blue",
+                "family": "Pantone Trend Blues",
+                "hex": "#0F4C81",
+                "mood": "중명도, 중채도, 클래식한 딥 블루 톤 / 신뢰, 평온함, 지성, 안정감"
+              },
+              "surface_tint": {
+                "name": "Sky Blue",
+                "family": "Natural Blues",
+                "hex": "#87CEEB",
+                "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음"
+              }
+            }
+          }
+        ],
+        "expanded_palette": {
+          "search_strategy": {
+            "sources": [
+              "seed pairings",
+              "brand keywords",
+              "family tone",
+              "hue compatibility",
+              "related families"
+            ],
+            "supporting_color_count": 8,
+            "combination_count": 3,
+            "seed_roles": {
+              "primary": {
+                "name": "Navy Blue",
+                "hex": "#000080",
+                "family": "Deep Blues"
+              },
+              "accent": {
+                "name": "Ochre",
+                "hex": "#CC7722",
+                "family": "Standard Oranges"
+              },
+              "surface_tint": {
+                "name": "Sky Blue",
+                "hex": "#87CEEB",
+                "family": "Natural Blues"
+              }
+            },
+            "preferred_families": [
+              "Deep Blues",
+              "Natural Blues",
+              "Standard Blues"
+            ]
+          },
+          "supporting_colors": [
+            {
+              "name": "Pairing #333333",
+              "family": "Derived Pairing",
+              "hex": "#333333",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Sky Blue"
+              ],
+              "search_score": 9.05,
+              "search_reasons": [
+                "Pairing #333333 comes from the seed pairing references.",
+                "Pairing #333333 is explicitly paired with Sky Blue.",
+                "Pairing #333333 can act as a neutral support color."
+              ]
+            },
+            {
+              "name": "Pairing #708090",
+              "family": "Derived Pairing",
+              "hex": "#708090",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Navy Blue"
+              ],
+              "search_score": 9.05,
+              "search_reasons": [
+                "Pairing #708090 comes from the seed pairing references.",
+                "Pairing #708090 is explicitly paired with Navy Blue.",
+                "Pairing #708090 can act as a neutral support color."
+              ]
+            },
+            {
+              "name": "Pairing #F5F5F5",
+              "family": "Derived Pairing",
+              "hex": "#F5F5F5",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Sky Blue"
+              ],
+              "search_score": 8.75,
+              "search_reasons": [
+                "Pairing #F5F5F5 comes from the seed pairing references.",
+                "Pairing #F5F5F5 is explicitly paired with Sky Blue."
+              ]
+            },
+            {
+              "name": "Pairing #FFFFFF",
+              "family": "Derived Pairing",
+              "hex": "#FFFFFF",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Navy Blue"
+              ],
+              "search_score": 8.75,
+              "search_reasons": [
+                "Pairing #FFFFFF comes from the seed pairing references.",
+                "Pairing #FFFFFF is explicitly paired with Navy Blue."
+              ]
+            },
+            {
+              "name": "Pairing #B0C4DE",
+              "family": "Derived Pairing",
+              "hex": "#B0C4DE",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Navy Blue"
+              ],
+              "search_score": 8.65,
+              "search_reasons": [
+                "Pairing #B0C4DE comes from the seed pairing references.",
+                "Pairing #B0C4DE is explicitly paired with Navy Blue."
+              ]
+            },
+            {
+              "name": "Pairing #B6E3C1",
+              "family": "Derived Pairing",
+              "hex": "#B6E3C1",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Sky Blue"
+              ],
+              "search_score": 8.65,
+              "search_reasons": [
+                "Pairing #B6E3C1 comes from the seed pairing references.",
+                "Pairing #B6E3C1 is explicitly paired with Sky Blue."
+              ]
+            },
+            {
+              "name": "Pairing #CFC7B5",
+              "family": "Derived Pairing",
+              "hex": "#CFC7B5",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Sky Blue"
+              ],
+              "search_score": 8.65,
+              "search_reasons": [
+                "Pairing #CFC7B5 comes from the seed pairing references.",
+                "Pairing #CFC7B5 is explicitly paired with Sky Blue."
+              ]
+            },
+            {
+              "name": "Pairing #D6C6A6",
+              "family": "Derived Pairing",
+              "hex": "#D6C6A6",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Navy Blue"
+              ],
+              "search_score": 8.65,
+              "search_reasons": [
+                "Pairing #D6C6A6 comes from the seed pairing references.",
+                "Pairing #D6C6A6 is explicitly paired with Navy Blue."
+              ]
+            }
+          ],
+          "semantic_roles": {
+            "brand_primary": {
+              "name": "Navy Blue",
+              "family": "Deep Blues",
+              "hex": "#000080",
+              "source_type": null
+            },
+            "brand_accent": {
+              "name": "Ochre",
+              "family": "Standard Oranges",
+              "hex": "#CC7722",
+              "source_type": null
+            },
+            "surface_tint": {
+              "name": "Sky Blue",
+              "family": "Natural Blues",
+              "hex": "#87CEEB",
+              "source_type": null
+            },
+            "canvas": {
+              "name": "Pairing #F5F5F5",
+              "family": "Derived Pairing",
+              "hex": "#F5F5F5",
+              "source_type": "pairing-swatch"
+            },
+            "surface": {
+              "name": "Sky Blue",
+              "family": "Natural Blues",
+              "hex": "#87CEEB",
+              "source_type": null
+            },
+            "border": {
+              "name": "Pairing #CFC7B5",
+              "family": "Derived Pairing",
+              "hex": "#CFC7B5",
+              "source_type": "pairing-swatch"
+            },
+            "ink": {
+              "name": "Pairing #333333",
+              "family": "Derived Pairing",
+              "hex": "#333333",
+              "source_type": "pairing-swatch"
+            },
+            "ink_muted": {
+              "name": "Muted Ink",
+              "family": "Generated Fallback",
+              "hex": "#6B6F74",
+              "source_type": "generated-fallback"
+            },
+            "primary_support": {
+              "name": "Pairing #333333",
+              "family": "Derived Pairing",
+              "hex": "#333333",
+              "source_type": "pairing-swatch"
+            },
+            "accent_support": {
+              "name": "Ochre",
+              "family": "Standard Oranges",
+              "hex": "#CC7722",
+              "source_type": null
+            },
+            "info": {
+              "name": "Pairing #333333",
+              "family": "Derived Pairing",
+              "hex": "#333333",
+              "source_type": "pairing-swatch"
+            },
+            "warning": {
+              "name": "Ochre",
+              "family": "Standard Oranges",
+              "hex": "#CC7722",
+              "source_type": null
+            }
+          },
+          "combination_lists": [
+            {
+              "id": "seed-core",
+              "label": "Seed Core",
+              "purpose": "기본 테마를 이루는 핵심 색",
+              "colors": [
+                {
+                  "role": "primary",
+                  "name": "Navy Blue",
+                  "hex": "#000080",
+                  "family": "Deep Blues",
+                  "source_type": null
+                },
+                {
+                  "role": "accent",
+                  "name": "Ochre",
+                  "hex": "#CC7722",
+                  "family": "Standard Oranges",
+                  "source_type": null
+                },
+                {
+                  "role": "surface_tint",
+                  "name": "Sky Blue",
+                  "hex": "#87CEEB",
+                  "family": "Natural Blues",
+                  "source_type": null
+                }
+              ]
+            },
+            {
+              "id": "surface-system",
+              "label": "Surface System",
+              "purpose": "배경, 패널, 텍스트, 보더에 쓰는 기본 조합",
+              "colors": [
+                {
+                  "role": "canvas",
+                  "name": "Pairing #F5F5F5",
+                  "hex": "#F5F5F5",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "surface",
+                  "name": "Sky Blue",
+                  "hex": "#87CEEB",
+                  "family": "Natural Blues",
+                  "source_type": null
+                },
+                {
+                  "role": "surface_tint",
+                  "name": "Sky Blue",
+                  "hex": "#87CEEB",
+                  "family": "Natural Blues",
+                  "source_type": null
+                },
+                {
+                  "role": "border",
+                  "name": "Pairing #CFC7B5",
+                  "hex": "#CFC7B5",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "ink",
+                  "name": "Pairing #333333",
+                  "hex": "#333333",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "ink_muted",
+                  "name": "Muted Ink",
+                  "hex": "#6B6F74",
+                  "family": "Generated Fallback",
+                  "source_type": "generated-fallback"
+                }
+              ]
+            },
+            {
+              "id": "support-spectrum",
+              "label": "Support Spectrum",
+              "purpose": "보조 하이라이트, 차트, 2차 액션에 쓰는 확장 리스트",
+              "colors": [
+                {
+                  "role": "support",
+                  "name": "Pairing #333333",
+                  "hex": "#333333",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "support",
+                  "name": "Pairing #708090",
+                  "hex": "#708090",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "support",
+                  "name": "Pairing #F5F5F5",
+                  "hex": "#F5F5F5",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "support",
+                  "name": "Pairing #FFFFFF",
+                  "hex": "#FFFFFF",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "support",
+                  "name": "Pairing #B0C4DE",
+                  "hex": "#B0C4DE",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "support",
+                  "name": "Pairing #B6E3C1",
+                  "hex": "#B6E3C1",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                }
+              ]
+            }
+          ]
+        },
+        "rules": [
+          "컬러 레퍼런스의 mood와 pairings를 semantic token 설계의 출발점으로 사용",
+          "chosen palette는 semantic roles로 번역하고 raw reference color를 그대로 남용하지 않기",
+          "seed color만 쓰지 말고 expanded palette에서 surface/text/border/support 역할까지 확장하기",
+          "surface/text/border 대비는 레퍼런스보다 접근성 기준을 우선"
+        ]
+      }
+    },
+    "typography": {
+      "families": [
+        "brand",
+        "text",
+        "mono"
+      ],
+      "size_scale": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "2xl",
+        "3xl",
+        "4xl"
+      ],
+      "rules": [
+        "display는 마케팅/영웅 구역으로 제한",
+        "text는 제품 본문과 UI 라벨의 기본",
+        "mono는 데이터와 shortcut hint에 제한"
+      ],
+      "recommended_fonts": {
+        "heading": "Spoqa Han Sans Neo",
+        "body": "Spoqa Han Sans Neo",
+        "mono": "JetBrains Mono",
+        "korean": "Spoqa Han Sans Neo"
+      },
+      "heading_note": "스포카에서 만든 한글 산세리프. Source Sans Pro 기반. 깔끔한 데이터 UI에 적합.",
+      "body_note": "스포카에서 만든 한글 산세리프. Source Sans Pro 기반. 깔끔한 데이터 UI에 적합.",
+      "product_type": "saas",
+      "pairing_source": "auto-scored",
+      "line_height_preset": "normal",
+      "strategy": [
+        "단일 서체(Spoqa Han Sans Neo)로 weight 대비 위계 — 일관성 우선",
+        "한글 서체: Spoqa Han Sans Neo — 라틴과 x-height/weight 조화",
+        "모노스페이스: JetBrains Mono — 코드/데이터 영역 전용",
+        "precise 키워드 → tight letter-spacing, tabular figures 권장"
+      ],
+      "loading": {
+        "fonts": [
+          {
+            "font": "Spoqa Han Sans Neo",
+            "weights": "400;500;600",
+            "priority": "preload"
+          },
+          {
+            "font": "JetBrains Mono",
+            "weights": "400;500",
+            "priority": "lazy"
+          }
+        ],
+        "fallback_strategy": "system-ui → font swap",
+        "display": "swap",
+        "subset": "latin,korean",
+        "note": "본문 서체를 preload, 모노스페이스는 lazy load. font-display: swap으로 FOUT 최소화."
+      },
+      "type_scale": {
+        "base_size": 15,
+        "scale_ratio": 1.25,
+        "sizes": {
+          "xs": 12,
+          "sm": 13,
+          "md": 15,
+          "lg": 19,
+          "xl": 24,
+          "2xl": 30,
+          "3xl": 37
+        },
+        "line_heights": {
+          "tight": 1.25,
+          "normal": 1.45,
+          "comfortable": 1.55,
+          "relaxed": 1.65
+        }
+      }
+    },
+    "spacing": {
+      "scale": [
+        0,
+        2,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        48,
+        64,
+        96
+      ],
+      "density_modes": [
+        "default",
+        "dense"
+      ]
+    },
+    "radius": {
+      "scale": [
+        "none",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "pill"
+      ],
+      "rule": "라운딩은 브랜드 성격을 드러내지만 컴포넌트 계층별로 제한적으로 사용"
+    },
+    "motion": {
+      "durations_ms": [
+        0,
+        80,
+        120,
+        180,
+        240,
+        320
+      ],
+      "easing_tokens": [
+        "standard",
+        "enter",
+        "exit",
+        "emphasized"
+      ],
+      "rule": "모션은 상태 설명용이며 과장된 장식 효과는 금지"
+    },
+    "elevation": {
+      "levels": [
+        "flat",
+        "raised",
+        "overlay",
+        "modal"
+      ],
+      "rule": "그림자보다 layer 의미가 먼저 드러나야 함"
+    }
+  },
+  "brand_alignment": {
+    "visual_keywords": [
+      "mono-weight icons",
+      "dense data tables",
+      "text-first hierarchy",
+      "low-chroma surfaces"
+    ],
+    "interaction_keywords": [
+      "predictable states",
+      "zero-surprise motion",
+      "keyboard-first"
+    ],
+    "system_name": "Glacier System"
+  }
+}

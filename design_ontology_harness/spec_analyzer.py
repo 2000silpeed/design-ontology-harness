@@ -178,6 +178,75 @@ UI_PATTERNS: dict[str, dict] = {
         ],
         "description": "비디오/오디오 재생 컨트롤",
     },
+    "hero section": {
+        "terms": [
+            "히어로", "메인 비주얼", "랜딩 상단", "랜딩 헤더",
+            "가치 제안", "첫 화면", "메인 헤드라인", "어보브 더 폴드",
+            "hero", "hero section", "headline", "value proposition",
+            "above the fold", "lead copy", "tagline",
+        ],
+        "description": "랜딩 페이지 최상단의 헤드라인과 핵심 메시지 영역",
+    },
+    "feature grid": {
+        "terms": [
+            "기능 소개", "특징", "주요 기능", "기능 카드", "장점",
+            "혜택", "benefit", "feature section", "feature grid",
+            "feature card", "key feature", "capability", "highlight grid",
+        ],
+        "description": "제품의 핵심 기능과 혜택을 카드나 컬럼으로 소개하는 섹션",
+    },
+    "social proof": {
+        "terms": [
+            "고객사", "사용 기업", "파트너 로고", "로고 클라우드",
+            "신뢰", "사용자 수", "지표", "metric highlight",
+            "logo cloud", "trusted by", "social proof", "customer logo",
+            "partner", "press mention",
+        ],
+        "description": "고객 로고·지표·언론 인용으로 신뢰를 구축하는 섹션",
+    },
+    "testimonial": {
+        "terms": [
+            "고객 후기", "사용자 후기", "고객 추천사", "추천사", "인용구",
+            "testimonial", "customer quote", "customer testimonial",
+            "customer story", "case study", "endorsement",
+        ],
+        "description": "고객 추천사와 사용자 인용을 보여주는 마케팅 섹션",
+    },
+    "faq accordion": {
+        "terms": [
+            "자주 묻는 질문", "질문과 답변", "FAQ", "궁금한 점",
+            "아코디언",
+            "faq", "frequently asked", "q and a", "question and answer",
+            "accordion",
+        ],
+        "description": "자주 묻는 질문을 접고 펼치는 아코디언 섹션",
+    },
+    "landing cta section": {
+        "terms": [
+            "시작하기", "무료로 시작", "지금 시작", "가입 유도", "전환 섹션",
+            "CTA 섹션", "행동 유도",
+            "get started", "start free", "sign up banner", "cta section",
+            "conversion section", "call to action",
+        ],
+        "description": "랜딩 페이지 하단에서 가입/전환을 유도하는 CTA 섹션",
+    },
+    "site footer": {
+        "terms": [
+            "푸터", "사이트 하단", "하단 링크", "저작권", "사이트맵",
+            "법적 고지",
+            "footer", "site footer", "copyright", "sitemap", "legal links",
+            "bottom navigation",
+        ],
+        "description": "사이트 전역 하단의 링크·법적 고지·소셜 영역",
+    },
+    "site header": {
+        "terms": [
+            "사이트 헤더", "랜딩 네비", "마케팅 헤더", "상단 메뉴",
+            "site header", "marketing nav", "landing nav", "top navigation",
+            "nav menu", "hamburger menu",
+        ],
+        "description": "랜딩/마케팅 페이지 상단의 고정 헤더와 내비게이션",
+    },
 }
 
 # 패턴 → 생성할 컴포넌트 매핑
@@ -295,6 +364,61 @@ PATTERN_COMPONENTS: dict[str, list[dict]] = {
         {"name": "video-player", "family": "data-display", "role": "비디오 재생기"},
         {"name": "player-controls", "family": "button", "role": "재생/일시정지/시크 컨트롤"},
         {"name": "volume-slider", "family": "input", "role": "볼륨 조절 슬라이더"},
+    ],
+    "hero section": [
+        {"name": "hero-container", "family": "marketing", "role": "랜딩 상단 히어로 섹션 컨테이너"},
+        {"name": "hero-eyebrow", "family": "marketing", "role": "헤드라인 위 카테고리/레이블 텍스트"},
+        {"name": "hero-headline", "family": "marketing", "role": "핵심 가치 제안 헤드라인"},
+        {"name": "hero-subheadline", "family": "marketing", "role": "헤드라인을 보강하는 서브 카피"},
+        {"name": "hero-cta-group", "family": "button", "role": "primary/secondary CTA 버튼 묶음"},
+        {"name": "hero-visual", "family": "marketing", "role": "히어로 우측/하단의 제품 스크린샷 또는 일러스트"},
+        {"name": "hero-trust-strip", "family": "marketing", "role": "히어로 바로 아래의 신뢰 라인 (사용자 수, 평가 등)"},
+    ],
+    "feature grid": [
+        {"name": "feature-section", "family": "marketing", "role": "기능 섹션 컨테이너와 섹션 헤더"},
+        {"name": "feature-grid", "family": "marketing", "role": "여러 개의 기능 카드를 배치하는 그리드"},
+        {"name": "feature-card", "family": "marketing", "role": "개별 기능 카드 (아이콘+제목+설명)"},
+        {"name": "feature-icon", "family": "marketing", "role": "기능을 상징하는 아이콘"},
+        {"name": "feature-title", "family": "marketing", "role": "기능 카드 제목"},
+        {"name": "feature-description", "family": "marketing", "role": "기능 카드 본문 설명"},
+    ],
+    "social proof": [
+        {"name": "logo-cloud", "family": "marketing", "role": "고객/파트너 로고를 나열하는 영역"},
+        {"name": "customer-logo", "family": "marketing", "role": "개별 고객사 로고 아이템"},
+        {"name": "metric-highlight", "family": "marketing", "role": "주요 지표를 크게 강조하는 숫자 카드"},
+        {"name": "press-quote", "family": "marketing", "role": "언론 인용 또는 어워드 스트립"},
+    ],
+    "testimonial": [
+        {"name": "testimonial-section", "family": "marketing", "role": "추천사 섹션 컨테이너"},
+        {"name": "testimonial-card", "family": "marketing", "role": "고객 인용을 담는 카드"},
+        {"name": "testimonial-quote", "family": "marketing", "role": "추천사 본문 텍스트"},
+        {"name": "testimonial-author", "family": "marketing", "role": "추천사 작성자 정보 (이름/직책/회사)"},
+    ],
+    "faq accordion": [
+        {"name": "faq-section", "family": "marketing", "role": "FAQ 섹션 컨테이너와 섹션 헤더"},
+        {"name": "faq-item", "family": "marketing", "role": "접고 펼 수 있는 개별 FAQ 항목"},
+        {"name": "faq-question", "family": "marketing", "role": "FAQ 질문 헤더 (클릭 가능한 트리거)"},
+        {"name": "faq-answer", "family": "marketing", "role": "FAQ 답변 본문"},
+    ],
+    "landing cta section": [
+        {"name": "cta-section", "family": "marketing", "role": "전환 유도 CTA 섹션 컨테이너"},
+        {"name": "cta-headline", "family": "marketing", "role": "전환을 유도하는 헤드라인"},
+        {"name": "cta-supporting-text", "family": "marketing", "role": "CTA를 보강하는 서포팅 카피"},
+        {"name": "cta-button-group", "family": "button", "role": "primary/secondary CTA 묶음"},
+    ],
+    "site footer": [
+        {"name": "site-footer", "family": "marketing", "role": "사이트 전역 하단 컨테이너"},
+        {"name": "footer-column", "family": "marketing", "role": "링크 그룹을 담는 세로 컬럼"},
+        {"name": "footer-link", "family": "marketing", "role": "푸터 내 개별 링크"},
+        {"name": "footer-legal", "family": "marketing", "role": "저작권·법적 고지 영역"},
+        {"name": "footer-social", "family": "marketing", "role": "소셜 링크 아이콘 그룹"},
+    ],
+    "site header": [
+        {"name": "site-header", "family": "marketing", "role": "랜딩 상단 고정 헤더"},
+        {"name": "site-logo", "family": "marketing", "role": "브랜드 로고 영역"},
+        {"name": "site-nav", "family": "marketing", "role": "주요 섹션 내비게이션 링크"},
+        {"name": "site-nav-cta", "family": "button", "role": "헤더 우측 CTA 버튼 (로그인/시작하기)"},
+        {"name": "mobile-menu-trigger", "family": "button", "role": "모바일 햄버거 메뉴 버튼"},
     ],
 }
 

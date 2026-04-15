@@ -132,6 +132,7 @@ def build_blueprint(
         "token_strategy": _build_token_strategy(brand_profile, prioritized_concepts),
         "component_strategy": _build_component_strategy(brand_profile, prioritized_concepts),
         "color_reference": brand_profile.get("_resolved_color_reference"),
+        "font_system": brand_profile.get("_resolved_font_system"),
         "css_extraction": load_css_extraction(output_dir),
         "governance": {
             "source_of_truth": [

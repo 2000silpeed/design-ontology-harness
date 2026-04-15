@@ -31,44 +31,16 @@ PRIMITIVE_COMPONENTS = {
     "data tables": ["data-table", "column-header", "filter-chip", "row-actions", "pagination"],
     "forms": ["text-field", "select", "checkbox", "radio", "textarea", "form-section"],
     "notifications": ["toast", "inline-alert", "empty-state", "banner"],
-    "personal color onboarding": [
-        "step-progress",
-        "tone-selector",
-        "mood-tag-selector",
-        "budget-range-slider",
-        "preference-card",
-    ],
-    "recommendation feed": [
-        "outfit-feed-card",
-        "score-bar-chart",
-        "reason-chip",
-        "tpo-filter-tab",
-        "save-toggle",
-    ],
-    "outfit detail and comparison": [
-        "outfit-detail-sheet",
-        "comparison-overlay-chart",
-        "top-pick-badge",
-        "recommendation-reason-list",
-    ],
-    "shopping price comparison": [
-        "price-compare-table",
-        "merchant-row",
-        "price-highlight-badge",
-        "similar-item-card",
-    ],
-    "closet analysis": [
-        "closet-grid",
-        "item-score-badge",
-        "upload-dropzone",
-        "analysis-summary-card",
-    ],
-    "ai try-on": [
-        "try-on-preview",
-        "generation-state-panel",
-        "premium-gate-card",
-        "multi-item-selector",
-    ],
+}
+
+LAYOUT_PRIMITIVE_KEYWORDS = {
+    "workspace navigation", "dashboard cards", "data tables", "layout", "grid",
+    "sidebar", "table", "card", "navigation", "archive browser", "audit log",
+}
+
+INTERACTION_PRIMITIVE_KEYWORDS = {
+    "command palette", "rich text editor", "forms", "notifications",
+    "restore workflow", "wizard", "editor", "search", "filter",
 }
 
 FOUNDATION_FROM_CONCEPT = {
@@ -407,6 +379,7 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
         "overlay": {"states": ["closed", "opening", "open"], "priority": "medium"},
         "editorial": {"states": ["default", "selected", "editing"], "priority": "high"},
         "data-display": {"states": ["default", "sorted", "filtered", "empty"], "priority": "high"},
+        "marketing": {"states": ["default", "hover", "in-view"], "priority": "high"},
     }
 
     for family in blueprint.get("component_strategy", {}).get("required_component_families", []):
@@ -455,6 +428,37 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
             )
             existing.add(component_name)
 
+    spec_components = brand_profile.get("_spec_components") or []
+    for entry in spec_components:
+        if not isinstance(entry, dict):
+            continue
+        component_name = entry.get("name")
+        if not component_name:
+            continue
+        family = entry.get("family") or classify_component_family(component_name)
+        primitive = entry.get("source") or entry.get("supports_primitive") or "spec-detected"
+        families.setdefault(
+            family,
+            {
+                "family": family,
+                "priority": family_specs.get(family, {}).get("priority", "medium"),
+                "required_states": family_specs.get(family, {}).get("states", ["default"]),
+                "components": [],
+            },
+        )
+        if component_name in families[family]["components"]:
+            continue
+        families[family]["components"].append(component_name)
+        all_components.append(
+            {
+                "name": component_name,
+                "family": family,
+                "supports_primitive": primitive,
+                "status": "planned",
+                "must_document": ["anatomy", "states", "content rules", "accessibility", "dos and donts"],
+            }
+        )
+
     return {
         "families": sorted(families.values(), key=lambda item: (item["priority"] != "high", item["family"])),
         "components": all_components,
@@ -462,6 +466,15 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
 
 
 def classify_component_family(component_name: str) -> str:
+    if any(token in component_name for token in [
+        "hero", "feature-card", "feature-grid", "feature-icon", "feature-title",
+        "feature-description", "feature-section", "logo-cloud", "customer-logo",
+        "metric-highlight", "press-quote", "testimonial", "faq", "cta-section",
+        "cta-headline", "cta-supporting", "site-footer", "footer-column",
+        "footer-link", "footer-legal", "footer-social", "site-header",
+        "site-logo", "site-nav",
+    ]):
+        return "marketing"
     if any(token in component_name for token in ["chart", "table", "grid", "summary", "score"]):
         return "data-display"
     if any(token in component_name for token in ["editor", "block", "slash"]):
@@ -1036,9 +1049,46 @@ def _build_drop_in_css_section(
             lines.append("")
             lines.append("  /* --- Semantic roles (expanded) --- */")
             for role, item in semantic_roles.items():
-                hex_val = item.get("hex", "")
+                hex_val = item.get("hex", "") if isinstance(item, dict) else ""
                 if hex_val:
                     lines.append(f"  --color-{role.replace('_', '-')}: {hex_val};")
+
+        component_sets = expanded.get("component_sets") or {}
+        if component_sets:
+            pretty_group_labels = {
+                "button_primary": "Button — primary",
+                "button_secondary": "Button — secondary",
+                "button_ghost": "Button — ghost",
+                "button_danger": "Button — danger",
+                "input": "Input",
+                "card": "Card",
+                "nav_link": "Nav link",
+                "link": "Link",
+                "feedback_info": "Feedback — info",
+                "feedback_success": "Feedback — success",
+                "feedback_warning": "Feedback — warning",
+                "feedback_danger": "Feedback — danger",
+            }
+            preferred_order = [
+                "button_primary", "button_secondary", "button_ghost", "button_danger",
+                "input", "card", "nav_link", "link",
+                "feedback_info", "feedback_success", "feedback_warning", "feedback_danger",
+            ]
+            ordered_keys = [k for k in preferred_order if k in component_sets]
+            ordered_keys += [k for k in component_sets if k not in preferred_order]
+            for group_key in ordered_keys:
+                entries = component_sets.get(group_key) or {}
+                if not entries:
+                    continue
+                lines.append("")
+                label = pretty_group_labels.get(group_key, group_key.replace("_", " ").title())
+                lines.append(f"  /* --- {label} --- */")
+                prefix = group_key.replace("_", "-")
+                for slot, hex_val in entries.items():
+                    if not hex_val:
+                        continue
+                    slot_name = slot.replace("_", "-")
+                    lines.append(f"  --color-{prefix}-{slot_name}: {hex_val};")
 
     lines.append("")
     lines.append("  /* --- Motion --- */")
@@ -1081,9 +1131,11 @@ def _build_css_extraction_section(css_extraction: dict | None) -> str:
     if summary:
         lines.append(f"\n### Brand Color Candidates\n")
         lines.append(f"- 후보 수: **{summary.get('total_candidates', 0)}**개")
-        lines.append(f"- 시멘틱 변수 기반: {summary.get('semantic_count', 0)}개")
-        lines.append(f"- 빈도 기반: {summary.get('frequency_count', 0)}개")
-        lines.append(f"- Selector 역할 기반: {summary.get('selector_count', 0)}개")
+        by_role = summary.get("by_role", {}) or {}
+        if by_role:
+            top_roles = sorted(by_role.items(), key=lambda kv: kv[1], reverse=True)
+            role_str = ", ".join(f"{k}={v}" for k, v in top_roles)
+            lines.append(f"- Role 분포: {role_str}")
 
     typo_info = css_extraction.get("typography", {})
     stats = typo_info.get("stats", {})
@@ -1091,16 +1143,24 @@ def _build_css_extraction_section(css_extraction: dict | None) -> str:
         lines.append(f"\n### Typography Extraction\n")
         lines.append(f"- 스케일 항목: **{stats.get('scale_entries', 0)}**개")
         lines.append(f"- 고유 폰트 패밀리: **{stats.get('unique_families', 0)}**개")
-        lines.append(f"- 카테고리: heading={stats.get('heading_count', 0)}, text={stats.get('text_count', 0)}, display={stats.get('display_count', 0)}")
+        lines.append(f"- 고유 weight 수: **{stats.get('unique_weights', 0)}**개")
 
     alias_info = css_extraction.get("alias_layer", {})
     alias_stats = alias_info.get("stats", {})
     if alias_stats:
         lines.append(f"\n### Alias Layer\n")
-        lines.append(f"- 전체 토큰: **{alias_stats.get('total_tokens', 0)}**개")
-        tiers = alias_stats.get("tier_counts", {})
+        lines.append(f"- 전체 토큰: **{alias_stats.get('total', 0)}**개")
+        tiers = alias_stats.get("by_tier", {}) or {}
         if tiers:
-            tier_str = ", ".join(f"{k}={v}" for k, v in tiers.items())
+            tier_str = ", ".join(f"{k}={v}" for k, v in sorted(tiers.items()))
             lines.append(f"- Tier 분포: {tier_str}")
+        schema_layers = alias_stats.get("by_schema_layer", {}) or {}
+        if schema_layers:
+            schema_str = ", ".join(f"{k}={v}" for k, v in sorted(schema_layers.items()))
+            lines.append(f"- Schema layer 분포: {schema_str}")
+        avg_chain = alias_stats.get("avg_chain_length")
+        max_chain = alias_stats.get("max_chain_length")
+        if avg_chain is not None:
+            lines.append(f"- var() 체인: 평균 {avg_chain}, 최대 {max_chain}")
 
     return "\n".join(lines) if lines else "- CSS 추출 결과가 비어 있습니다."

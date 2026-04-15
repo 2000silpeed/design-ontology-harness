@@ -6,6 +6,9 @@ from pathlib import Path
 from .models import utc_now_iso
 from .utils import ensure_dir, slugify, write_json
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_COLOR_REFERENCE_PATH = REPO_ROOT / "docs" / "color-reference.md"
+
 
 def scaffold_project(
     project_dir: Path,
@@ -47,6 +50,35 @@ def scaffold_project(
             "avoid_sources_containing": ["brand-only"],
         },
     }
+
+    if DEFAULT_COLOR_REFERENCE_PATH.exists():
+        brand_profile["color_reference"] = {
+            "path": str(DEFAULT_COLOR_REFERENCE_PATH),
+            "preferred_families": [],
+            "palette_strategy": {
+                "mode": "brand-guided",
+                "candidate_count": 3,
+                "active_candidate": 1,
+                "temperature": "balanced",
+                "contrast": "balanced",
+                "diversity": "balanced",
+                "surface_style": "flat",
+                "prefer_moods": [],
+                "avoid_moods": [],
+            },
+            "palette_expansion": {
+                "enabled": True,
+                "supporting_color_count": 8,
+                "combination_count": 3,
+                "prefer_pairings": True,
+                "prefer_related_families": True,
+            },
+            "notes": [
+                "REFERENCE X Vol.1 Color Reference (30 families, blues/greens/violets 포함)",
+                "preferred_families 를 브랜드 방향에 맞춰 채우세요",
+                "prefer_moods / avoid_moods 로 mood 기반 팔레트 선택 가능",
+            ],
+        }
 
     manifest = {
         "project_slug": slugify(project_dir.name),
@@ -137,7 +169,12 @@ def load_seed_urls(project_dir: Path, manifest: dict) -> list[str]:
 
 
 def resolve_kb_dir(project_dir: Path, manifest: dict, override: str | None = None) -> Path:
-    kb_value = override or manifest.get("kb_dir")
+    if override:
+        kb_path = Path(override)
+        if not kb_path.is_absolute():
+            kb_path = (Path.cwd() / kb_path).resolve()
+        return kb_path
+    kb_value = manifest.get("kb_dir")
     if not kb_value:
         raise ValueError("No kb_dir configured. Set it in project_manifest.json or pass --kb-dir.")
     kb_path = Path(kb_value)

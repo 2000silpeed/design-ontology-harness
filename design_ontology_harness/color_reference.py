@@ -783,6 +783,7 @@ def _build_expanded_palette(
     )[: expansion["supporting_color_count"]]
 
     semantic_roles = _build_semantic_roles(active_palette, support_candidates)
+    component_sets = build_component_color_sets(semantic_roles)
     combination_lists = _build_combination_lists(
         active_palette=active_palette,
         supporting_colors=support_candidates,
@@ -813,6 +814,7 @@ def _build_expanded_palette(
         },
         "supporting_colors": support_candidates,
         "semantic_roles": semantic_roles,
+        "component_sets": component_sets,
         "combination_lists": combination_lists,
     }
 
@@ -1004,35 +1006,57 @@ def _build_semantic_roles(active_palette: dict, supporting_colors: list[dict]) -
     semantic_roles["canvas"] = _choose_palette_entry(
         pool,
         min_lightness=94,
-        max_saturation=22,
+        max_saturation=18,
         prefer_source_types={"pairing-reference", "pairing-swatch"},
-    ) or _fallback_color("Canvas White", "#FAF7F2")
+    ) or _fallback_color("Canvas White", "#F7F8FA")
+    # Surface should be near-white, NOT the branded surface_tint. Previously the
+    # fallback returned surface_tint which produced Sky Blue as surface in Glacier.
     semantic_roles["surface"] = _choose_palette_entry(
         pool,
-        min_lightness=82,
-        max_lightness=94,
-        prefer_tones={"pastel", "natural"},
+        min_lightness=95,
+        max_saturation=10,
         prefer_source_types={"pairing-reference", "pairing-swatch"},
-    ) or surface_tint or _fallback_color("Soft Surface", "#F3E9DA")
+    ) or _fallback_color("Paper", "#FFFFFF")
+    semantic_roles["surface_muted"] = _choose_palette_entry(
+        pool,
+        min_lightness=88,
+        max_lightness=95,
+        max_saturation=14,
+        prefer_source_types={"pairing-reference", "pairing-swatch"},
+    ) or _fallback_color("Surface Muted", "#EEF1F6")
+    semantic_roles["surface_elevated"] = semantic_roles.get("surface") or _fallback_color("Surface Elevated", "#FFFFFF")
     semantic_roles["border"] = _choose_palette_entry(
         pool,
-        min_lightness=60,
-        max_lightness=84,
-        max_saturation=38,
+        min_lightness=76,
+        max_lightness=92,
+        max_saturation=20,
         prefer_source_types={"pairing-reference", "pairing-swatch"},
-    ) or _fallback_color("Border Neutral", "#D8C4A5")
+    ) or _fallback_color("Border Neutral", "#D6DDE6")
+    semantic_roles["border_strong"] = _choose_palette_entry(
+        pool,
+        min_lightness=58,
+        max_lightness=78,
+        max_saturation=24,
+        prefer_source_types={"pairing-reference", "pairing-swatch"},
+    ) or _fallback_color("Border Strong", "#B0BAC7")
     semantic_roles["ink"] = _choose_palette_entry(
         pool,
-        prefer_hues={_family_hue(primary)} if primary else {"neutral", "brown"},
-        max_lightness=24,
+        max_lightness=20,
         prefer_source_types={"pairing-reference", "pairing-swatch", "reference-color"},
-    ) or primary or _fallback_color("Ink", "#2E2E2E")
+    ) or _fallback_color("Ink", "#111111")
     semantic_roles["ink_muted"] = _choose_palette_entry(
         pool,
-        min_lightness=26,
-        max_lightness=48,
-        max_saturation=42,
-    ) or _fallback_color("Muted Ink", "#6B6F74")
+        min_lightness=30,
+        max_lightness=52,
+        max_saturation=32,
+    ) or _fallback_color("Muted Ink", "#4B5563")
+    semantic_roles["ink_subtle"] = _choose_palette_entry(
+        pool,
+        min_lightness=46,
+        max_lightness=66,
+        max_saturation=28,
+    ) or _fallback_color("Subtle Ink", "#6B7280")
+    semantic_roles["ink_inverse"] = _fallback_color("Ink Inverse", "#FFFFFF")
 
     if primary:
         primary_hue = _family_hue(primary)
@@ -1051,18 +1075,25 @@ def _build_semantic_roles(active_palette: dict, supporting_colors: list[dict]) -
             strict_hue_match=True,
         ) or accent
 
-    semantic_roles["info"] = _choose_palette_entry(pool, prefer_hues={"blue", "purple"}, strict_hue_match=True)
-    semantic_roles["success"] = _choose_palette_entry(pool, prefer_hues={"green"}, strict_hue_match=True)
+    semantic_roles["info"] = _choose_palette_entry(pool, prefer_hues={"blue", "purple"}, strict_hue_match=True) or _fallback_color("Info", "#4A6B8A")
+    semantic_roles["success"] = _choose_palette_entry(pool, prefer_hues={"green"}, strict_hue_match=True) or _fallback_color("Success", "#4A7C59")
     semantic_roles["warning"] = (
         accent
         if accent and _family_hue(accent) in {"orange", "yellow"}
         else _choose_palette_entry(pool, prefer_hues={"orange", "yellow"}, strict_hue_match=True)
-    )
+    ) or _fallback_color("Warning", "#B8860B")
     semantic_roles["danger"] = (
         primary
         if primary and _family_hue(primary) == "red"
         else _choose_palette_entry(pool, prefer_hues={"red"}, strict_hue_match=True)
-    )
+    ) or _fallback_color("Danger", "#8B2252")
+
+    link_source = primary or accent
+    if link_source:
+        link_hex = link_source.get("hex")
+        semantic_roles["link"] = link_source
+        if link_hex:
+            semantic_roles["link_hover"] = _fallback_color("Link Hover", _shift_hex(link_hex, dl=-0.08) or link_hex)
 
     return {role: item for role, item in semantic_roles.items() if item}
 
@@ -1284,6 +1315,14 @@ def _family_tone(color: dict) -> str:
 
 
 def _family_hue(color: dict) -> str:
+    # Derived pairing swatches carry cross-reference text ("pairing for Sky Blue")
+    # in their usage field that would otherwise trick the token map. For those
+    # items, rely purely on the hex so a neutral #333333 pairing isn't classified
+    # as "blue" just because the seed it's paired with happens to be blue.
+    source_type = str(color.get("source_type") or "")
+    if source_type in {"pairing-swatch", "pairing-reference"}:
+        return _hex_family_hue(color.get("hex"))
+
     searchable = _color_text(color)
 
     token_map = {
@@ -1301,8 +1340,12 @@ def _family_hue(color: dict) -> str:
         if any(token in searchable for token in tokens):
             return hue
 
-    hue_value = _hex_hue(color.get("hex"))
-    saturation = _hex_saturation(color.get("hex"))
+    return _hex_family_hue(color.get("hex"))
+
+
+def _hex_family_hue(hex_value: str | None) -> str:
+    hue_value = _hex_hue(hex_value)
+    saturation = _hex_saturation(hex_value)
     if saturation <= 12:
         return "neutral"
     if hue_value < 15 or hue_value >= 345:
@@ -1474,3 +1517,213 @@ def _hex_lightness(hex_value: str | None) -> float:
         return 50.0
     red, green, blue = rgb
     return ((max(red, green, blue) + min(red, green, blue)) / 510) * 100
+
+
+def _rgb_hex(rgb: tuple[int, int, int]) -> str:
+    r, g, b = (max(0, min(255, int(round(c)))) for c in rgb)
+    return f"#{r:02X}{g:02X}{b:02X}"
+
+
+def _hsl_to_hex(hue: float, sat: float, lightness: float) -> str:
+    h = (hue % 360) / 360
+    s = max(0.0, min(1.0, sat))
+    l = max(0.0, min(1.0, lightness))
+    r, g, b = colorsys.hls_to_rgb(h, l, s)
+    return _rgb_hex((r * 255, g * 255, b * 255))
+
+
+def _shift_hex(hex_value: str | None, *, dl: float = 0.0, ds: float = 0.0) -> str | None:
+    """Shift a hex color in HSL space. dl/ds are in [-1, 1]."""
+    rgb = _hex_rgb(hex_value)
+    if not rgb:
+        return None
+    r, g, b = rgb
+    h, l, s = colorsys.rgb_to_hls(r / 255, g / 255, b / 255)
+    new_l = max(0.0, min(1.0, l + dl))
+    new_s = max(0.0, min(1.0, s + ds))
+    nr, ng, nb = colorsys.hls_to_rgb(h, new_l, new_s)
+    return _rgb_hex((nr * 255, ng * 255, nb * 255))
+
+
+def _mix_hex(hex_a: str | None, hex_b: str | None, weight_b: float) -> str | None:
+    """Linear RGB mix. weight_b in [0,1]; 0 returns a, 1 returns b."""
+    ra = _hex_rgb(hex_a)
+    rb = _hex_rgb(hex_b)
+    if not ra or not rb:
+        return None
+    wa = max(0.0, min(1.0, 1 - weight_b))
+    wb = 1 - wa
+    return _rgb_hex(
+        (
+            ra[0] * wa + rb[0] * wb,
+            ra[1] * wa + rb[1] * wb,
+            ra[2] * wa + rb[2] * wb,
+        )
+    )
+
+
+def _alpha_over_white(hex_value: str | None, alpha: float) -> str | None:
+    """Flatten a transparent color over white — used to fake alpha in CSS var outputs."""
+    rgb = _hex_rgb(hex_value)
+    if not rgb:
+        return None
+    r, g, b = rgb
+    a = max(0.0, min(1.0, alpha))
+    return _rgb_hex(
+        (
+            r * a + 255 * (1 - a),
+            g * a + 255 * (1 - a),
+            b * a + 255 * (1 - a),
+        )
+    )
+
+
+def _is_dark(hex_value: str | None) -> bool:
+    return _hex_lightness(hex_value or "") < 55
+
+
+def build_component_color_sets(semantic_roles: dict[str, dict]) -> dict[str, dict[str, str]]:
+    """Derive per-component state color sets from semantic role colors.
+
+    Takes the resolved semantic_roles (brand_primary, brand_accent, surface,
+    canvas, ink, ink_muted, etc.) and returns a nested dict:
+        { "button_primary": {"surface_default": "#XXX", "surface_hover": "#YYY", ...},
+          "input": {...}, "card": {...}, ... }
+
+    The output is consumed by Section 15 Drop-in CSS renderer to emit
+    component-specific CSS variables that agents and designers can copy directly.
+
+    All derivations use simple HSL shifts so the brand identity is preserved
+    and no new hues are invented. Disabled states mix against the canvas
+    surface to simulate alpha without requiring rgba() in the output.
+    """
+    def _hex(role: str) -> str | None:
+        item = semantic_roles.get(role)
+        if isinstance(item, dict):
+            return item.get("hex")
+        return None
+
+    brand_primary = _hex("brand_primary")
+    brand_accent = _hex("brand_accent")
+    surface_tint = _hex("surface_tint")
+    surface = _hex("surface") or "#FFFFFF"
+    canvas = _hex("canvas") or "#F7F8FA"
+    ink = _hex("ink") or "#111111"
+    ink_muted = _hex("ink_muted") or "#4B5563"
+    border = _hex("border") or "#D6DDE6"
+    info = _hex("info")
+    success = _hex("success")
+    warning = _hex("warning")
+    danger = _hex("danger")
+
+    primary_on_light = _is_dark(brand_primary)
+    primary_text = "#FFFFFF" if primary_on_light else ink
+    accent_text = "#FFFFFF" if _is_dark(brand_accent) else ink
+
+    sets: dict[str, dict[str, str]] = {}
+
+    if brand_primary:
+        sets["button_primary"] = {
+            "surface_default": brand_primary,
+            "surface_hover": _shift_hex(brand_primary, dl=-0.06) or brand_primary,
+            "surface_active": _shift_hex(brand_primary, dl=-0.1) or brand_primary,
+            "surface_disabled": _mix_hex(brand_primary, canvas, 0.6) or brand_primary,
+            "text_default": primary_text,
+            "text_disabled": _mix_hex(primary_text, canvas, 0.5) or primary_text,
+            "border_default": brand_primary,
+            "focus_ring": brand_primary,
+        }
+
+    sets["button_secondary"] = {
+        "surface_default": surface,
+        "surface_hover": _mix_hex(surface, ink, 0.06) or surface,
+        "surface_active": _mix_hex(surface, ink, 0.1) or surface,
+        "surface_disabled": canvas,
+        "text_default": ink,
+        "text_disabled": _mix_hex(ink, canvas, 0.55) or ink_muted,
+        "border_default": _shift_hex(border, dl=-0.08) or border,
+        "border_hover": _shift_hex(border, dl=-0.16) or border,
+        "focus_ring": brand_primary or ink,
+    }
+
+    sets["button_ghost"] = {
+        "surface_default": "transparent",
+        "surface_hover": _mix_hex(surface, ink, 0.05) or surface,
+        "surface_active": _mix_hex(surface, ink, 0.09) or surface,
+        "surface_disabled": "transparent",
+        "text_default": ink_muted,
+        "text_hover": ink,
+        "text_disabled": _mix_hex(ink_muted, canvas, 0.55) or ink_muted,
+        "border_default": "transparent",
+        "focus_ring": brand_primary or ink,
+    }
+
+    if danger:
+        sets["button_danger"] = {
+            "surface_default": danger,
+            "surface_hover": _shift_hex(danger, dl=-0.06) or danger,
+            "surface_active": _shift_hex(danger, dl=-0.1) or danger,
+            "text_default": "#FFFFFF" if _is_dark(danger) else ink,
+            "border_default": danger,
+            "focus_ring": danger,
+        }
+
+    sets["input"] = {
+        "surface_default": surface,
+        "surface_filled": surface,
+        "surface_disabled": canvas,
+        "text_default": ink,
+        "text_placeholder": _mix_hex(ink_muted, canvas, 0.4) or ink_muted,
+        "text_disabled": _mix_hex(ink_muted, canvas, 0.55) or ink_muted,
+        "border_default": border,
+        "border_hover": _shift_hex(border, dl=-0.1) or border,
+        "border_focus": brand_primary or ink,
+        "border_error": danger or "#B3261E",
+        "border_disabled": _shift_hex(border, dl=0.05) or border,
+    }
+
+    sets["card"] = {
+        "surface_default": surface,
+        "surface_hover": _mix_hex(surface, ink, 0.02) or surface,
+        "surface_muted": canvas,
+        "border_default": border,
+        "border_hover": _shift_hex(border, dl=-0.1) or border,
+        "border_focus": brand_primary or ink,
+    }
+
+    sets["nav_link"] = {
+        "text_default": ink_muted,
+        "text_hover": ink,
+        "text_active": brand_primary or ink,
+        "surface_hover": _mix_hex(surface, ink, 0.04) or surface,
+        "indicator": brand_accent or brand_primary or ink,
+    }
+
+    sets["link"] = {
+        "text_default": brand_primary or ink,
+        "text_hover": _shift_hex(brand_primary, dl=-0.1) if brand_primary else ink,
+        "text_visited": _shift_hex(brand_primary, dl=-0.05, ds=-0.2) if brand_primary else ink_muted,
+    }
+
+    if info:
+        sets["feedback_info"] = _feedback_set(info, surface, ink, canvas)
+    if success:
+        sets["feedback_success"] = _feedback_set(success, surface, ink, canvas)
+    if warning:
+        sets["feedback_warning"] = _feedback_set(warning, surface, ink, canvas)
+    if danger:
+        sets["feedback_danger"] = _feedback_set(danger, surface, ink, canvas)
+
+    return {name: {k: v for k, v in entries.items() if v} for name, entries in sets.items()}
+
+
+def _feedback_set(color: str, surface: str, ink: str, canvas: str) -> dict[str, str]:
+    bg = _mix_hex(surface, color, 0.12) or surface
+    border = _mix_hex(color, canvas, 0.3) or color
+    text = color if not _is_dark(surface) else _shift_hex(color, dl=0.1) or color
+    return {
+        "surface": bg,
+        "text": text,
+        "border": border,
+        "icon": color,
+    }

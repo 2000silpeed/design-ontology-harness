@@ -1,0 +1,114 @@
+{
+  "brand_name": "Glacier",
+  "system_name": "Glacier System",
+  "product_summary": "개발팀을 위한 코드와 데이터 아카이브 서비스. 장기 보관, 검증된 복원, 감사 로그.",
+  "audiences": [
+    "플랫폼 엔지니어",
+    "SRE / DevOps",
+    "데이터 플랫폼 팀"
+  ],
+  "brand_keywords": [
+    "precise",
+    "resilient",
+    "minimal",
+    "technical"
+  ],
+  "anti_keywords": [
+    "playful",
+    "decorative",
+    "warm",
+    "noisy"
+  ],
+  "tone_of_voice": [
+    "direct",
+    "technical",
+    "measured"
+  ],
+  "visual_keywords": [
+    "mono-weight icons",
+    "dense data tables",
+    "text-first hierarchy",
+    "low-chroma surfaces"
+  ],
+  "interaction_keywords": [
+    "predictable states",
+    "zero-surprise motion",
+    "keyboard-first"
+  ],
+  "platforms": [
+    "web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "archive browser",
+    "restore workflow",
+    "audit log",
+    "data tables",
+    "command palette",
+    "dashboard cards",
+    "hero section",
+    "feature grid",
+    "social proof",
+    "testimonial",
+    "faq accordion",
+    "landing cta section",
+    "site footer",
+    "site header",
+    "pricing and plans"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "typography",
+      "accessibility",
+      "components",
+      "design token"
+    ],
+    "avoid_sources_containing": [
+      "brand-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/Documents/designSystem/docs/color-reference.md",
+    "preferred_families": [
+      "Deep Blues",
+      "Natural Blues",
+      "Standard Blues"
+    ],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "cool",
+      "contrast": "high",
+      "diversity": "focused",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "신뢰",
+        "권위",
+        "집중",
+        "전문성",
+        "안정"
+      ],
+      "avoid_moods": [
+        "따뜻함",
+        "달콤함",
+        "귀여움",
+        "열정"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 8,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Glacier는 차가운 중성톤 중심의 최소주의 시스템",
+      "raw reference color를 그대로 전체 UI에 덮지 않기",
+      "팔레트 확장은 semantic state와 surface tier 생성에만 사용"
+    ]
+  }
+}
