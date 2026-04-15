@@ -161,7 +161,7 @@
 
 ### 핵심 원칙
 
-- [ ] **V-0. truth source 분리 원칙 고정**
+- [x] **V-0. truth source 분리 원칙 고정**
   - 공식 KB / spec / brand_profile / color_reference는 구조적 근거
   - visual reference는 감성, 레이아웃 밀도, 표면 처리, 타이포 분위기 보강용
   - 이미지에서 추출한 값은 `observed`, `inferred`, `unverified` 레벨로 provenance를 남김
@@ -219,7 +219,7 @@
 
 ### Stage B: Pinterest-assisted 검색/수집 보조
 
-- [ ] **V-5. brand_profile + spec 기반 검색어 생성기**
+- [x] **V-5. brand_profile + spec 기반 검색어 생성기**
   - 대상: `spec_analyzer.py` 또는 신규 `visual_queries.py`
   - 입력:
     - `brand_keywords`
@@ -230,7 +230,7 @@
     - Pinterest/이미지 검색용 query 10~20개
     - 예: `editorial fintech dashboard`, `warm premium onboarding flow`, `dense operations control panel`
 
-- [ ] **V-6. Pinterest 보조 수집 모드 설계**
+- [x] **V-6. Pinterest 보조 수집 모드 설계**
   - 1차 목표는 "직접 크롤링"이 아니라 "검색 보조 + 선택 보조"
   - 구현 방향:
     - 사용자가 Pinterest에서 이미지 저장/스크린샷 추출
@@ -240,7 +240,7 @@
     - query별 보드/핀 후보 스냅샷 생성
     - 최종 채택은 사용자 또는 에이전트가 명시적으로 고정
 
-- [ ] **V-7. Pinterest 전용 리스크 가드레일**
+- [x] **V-7. Pinterest 전용 리스크 가드레일**
   - 로그인 필요 / 동적 로딩 / 결과 변경성 / 저작권 이슈 문서화
   - 직접 asset 다운로드보다 screenshot/reference URL 저장 우선
   - 재배포 금지, "참고용 분석"임을 명시
@@ -296,19 +296,19 @@
     - `analyze-visuals`
     - `run-project`
 
-- [ ] **V-12. README / workflow 문서화**
+- [x] **V-12. README / workflow 문서화**
   - "공식 KB + visual references" 이중 입력 구조 설명
   - Pinterest는 필수가 아니라 선택적 보조 레이어라고 명시
   - 로컬 이미지 기반 시작 흐름을 Quick Start에 추가
 
 ### Stage E: 검증 및 샘플
 
-- [ ] **V-13. 샘플 프로젝트 2종 검증**
+- [x] **V-13. 샘플 프로젝트 2종 검증**
   - `signal-desk` 같은 정보 밀도 높은 dashboard
   - `brand/landing` 성격이 강한 marketing surface
   - 같은 KB라도 visual reference에 따라 다른 visual direction이 나오는지 비교
 
-- [ ] **V-14. 결과 비교 리포트**
+- [x] **V-14. 결과 비교 리포트**
   - without visual reference
   - with local visual reference
   - with pinterest-assisted query set
@@ -357,3 +357,11 @@
 | 2026-04-15 | V-3 visual motifs / layout cues / component style hints 구현 | done |
 | 2026-04-15 | V-4 visual archetype 추출 + component inventory 연결 | done |
 | 2026-04-15 | V-8~V-9 synthesis / system_spec / token_schema 통합 | done |
+| 2026-04-15 | V-10 component_specs visual adaptation hints 통합 | done |
+| 2026-04-15 | V-5~V-11 visual query generator + CLI 확장 | done |
+| 2026-04-15 | V-12 README / workflow 문서화 | done |
+| 2026-04-15 | V-6 Pinterest-assisted 보조 수집 plan / manifest 설계 | done |
+| 2026-04-15 | V-0 provenance / advisory truth-source 원칙 명시 및 authoring 반영 | done |
+| 2026-04-15 | V-7 Pinterest 리스크 가드레일 및 manifest usage policy 반영 | done |
+| 2026-04-15 | V-13 signal-desk / glacier 샘플 검증 수행 | done |
+| 2026-04-15 | V-14 without / local visual / pinterest-assisted 비교 리포트 작성 | done |

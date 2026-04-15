@@ -15,12 +15,14 @@
 flowchart TB
     subgraph PREPARE["1. 준비"]
         SEED["시드 URL\n참고할 디자인 시스템"] -->|build-kb| KB["지식베이스(KB)"]
-        SPEC["설계서\nspec.md / PRD"] --> ANALYZE["설계서 ���석"]
+        VISUAL_REF["로컬 시각 레퍼런스\n스크린샷 / saved images"] --> VISUAL_PREP["visual query / visual analysis"]
+        SPEC["설계서\nspec.md / PRD"] --> ANALYZE["설계서 해석"]
     end
 
     subgraph GENERATE["2. 자동 생성"]
         KB --> SYNTH["합성 엔진"]
         BRAND["브랜드 프로필"] --> SYNTH
+        VISUAL_PREP -->|advisory hints| SYNTH
         ANALYZE -->|컴포넌트 탐지| SYNTH
         COLOR_REF["색상 레퍼런스"] -->|팔레트 결정| SYNTH
         SYNTH --> GRAPH["온톨로지 그래프\n20노드 × 24관계"]
@@ -51,9 +53,26 @@ flowchart TB
 | **시드 URL** | 참고할 디자인 시스템의 웹 주소 (Carbon, Primer, GOV.UK 등) |
 | **지식베이스(KB)** | 시드에서 수집한 정보를 정리한 저장소. 한 번 만들면 여러 프로젝트에서 재사용 |
 | **브랜드 프로필** | 우리 제품의 정체성을 정의한 JSON (브랜드명, 키워드, 톤, 대상 사용자 등) |
+| **시각 레퍼런스** | 로컬 스크린샷/레퍼런스 이미지를 분석해 visual motif, density, layout cue를 보강하는 입력 |
 | **색상 레퍼런스** | 선택 가능한 색상 목록이 담긴 마크다운. 브랜드 키워드와 mood 매칭으로 팔레트를 자동 결정 |
 | **서체 엔진** | 25+ 실무 서체 DB에서 브랜드/제품 유형에 맞는 서체 조합을 자동 선택 |
 | **Rebuild** | 기존 화면의 기능은 보존하되, 디자인 시스템 기반으로 비주얼을 새로 구성하는 것 |
+
+## 입력 구조: 공식 KB + Visual References
+
+이 하네스는 입력을 두 층으로 나눠서 다룹니다.
+
+- **구조적 truth source**: 공식 KB, `spec.md`, `brand_profile.json`, `color_reference`
+- **시각 보조 입력**: `visual_reference`에 연결한 로컬 이미지, 스크린샷, 수집한 레퍼런스
+
+중요한 원칙은 다음과 같습니다.
+
+- 공식 KB와 spec은 컴포넌트 구조, 상태, 접근성, 토큰 정책의 근거입니다.
+- visual reference는 density, surface language, corner bias, CTA prominence 같은 조형 힌트를 보강합니다.
+- image-derived signal은 `observed`, `inferred`, `unverified` provenance 레벨을 함께 남깁니다.
+- Pinterest는 필수 의존성이 아니라 **선택적 검색 보조 레이어**입니다. 직접 크롤링보다 검색어 생성과 사용자의 수동 수집을 우선합니다.
+- Pinterest 보조 수집에서는 raw asset 다운로드보다 screenshot/reference URL 기록을 우선하고, 수집물이 재배포 가능한 에셋이라고 가정하지 않습니다.
+- `system_spec.md`와 `component_specs.md`에서 image-derived hints는 advisory signal로만 취급됩니다.
 
 ## 빠른 시작
 
@@ -104,7 +123,53 @@ uv run design-ontology init \
 
 생성된 `brand_profile.json`을 열어 브랜드 정보를 채워 넣으세요.
 
-### 4단계: 설계서 작성
+### 4단계: 로컬 시각 레퍼런스 연결
+
+`brand_profile.json`의 `visual_reference.sources`에 로컬 이미지나 스크린샷 경로를 넣으면, 공식 KB와 별도로 visual direction을 분석할 수 있습니다.
+
+```json
+{
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "editorial dashboard",
+      "premium app UI"
+    ],
+    "sources": [
+      "references/editorial-dashboard",
+      "references/landing-hero-01.png"
+    ],
+    "preferred_count": 12,
+    "extraction_policy": "advisory-only"
+  }
+}
+```
+
+원하면 설계서와 브랜드 프로필을 바탕으로 이미지 검색용 query set도 먼저 생성할 수 있습니다.
+
+```bash
+uv run design-ontology generate-visual-queries \
+  --project-dir projects/my-app \
+  --spec projects/my-app/spec.md \
+  --sync-brand-profile
+```
+
+이 명령은 query set뿐 아니라 아래 보조 수집 산출물도 함께 생성합니다.
+
+- `build/visuals/pinterest_assist_plan.json`
+- `build/visuals/pinterest_candidate_manifest.json`
+- `build/visuals/pinterest_selection_manifest.json`
+
+로컬 이미지를 넣은 뒤에는 visual layer만 별도로 점검할 수도 있습니다.
+
+```bash
+uv run design-ontology analyze-visuals \
+  --project-dir projects/my-app
+```
+
+이 단계는 선택 사항이지만, dashboard/landing처럼 조형 언어가 중요한 프로젝트에는 권장됩니다.
+
+### 5단계: 설계서 작성
 
 `projects/my-app/spec.md`에 제품의 화면 구성을 작성합니다.
 
@@ -123,7 +188,7 @@ uv run design-ontology init \
 
 이 파일이 있으면 `run-project` 시 **필요한 UI 컴포넌트를 자동으로 탐지**합니다.
 
-### 5단계: 설계도 생성
+### 6단계: 설계도 생성
 
 ```bash
 uv run design-ontology run-project \
@@ -178,7 +243,44 @@ uv run design-ontology build-components \
 - **토큰 바인딩**: surface, text, border, radius, padding, font 토큰 매핑
 - **접근성**: role, aria, label, focus 관리 규칙
 - **브랜드 적용**: 브랜드 키워드별 구체적 행동 지침
+- **Visual adaptation hints**: 카드 elevation, border/fill, CTA prominence, filter/nav density, chart framing
 - **레퍼런스 근거**: KB에서 매칭된 참고 자료 (BBC, Carbon 등)
+
+## Visual Reference Quick Start
+
+로컬 이미지 기반으로 바로 시작하는 가장 짧은 흐름입니다.
+
+```bash
+# 1) KB는 먼저 한 번 구축
+uv run design-ontology build-kb --kb-dir kb/default --seeds-file seeds/professional-design-systems.txt
+
+# 2) 프로젝트 생성
+uv run design-ontology init --project-dir projects/my-app --brand-name "My App" --kb-dir ../../kb/default
+
+# 3) brand_profile.json 에 visual_reference.sources 추가
+
+# 4) 시각 분석만 먼저 확인
+uv run design-ontology analyze-visuals --project-dir projects/my-app
+
+# 5) 필요하면 검색 query 생성
+uv run design-ontology generate-visual-queries --project-dir projects/my-app --spec projects/my-app/spec.md
+
+# 6) 최종 산출물 생성
+uv run design-ontology run-project --project-dir projects/my-app
+```
+
+생성되는 visual 산출물:
+
+- `build/visuals/visual_reference_report.json`
+- `build/visuals/visual_motifs.json`
+- `build/visuals/layout_cues.json`
+- `build/visuals/component_style_hints.json`
+- `build/visuals/visual_query_suggestions.json`
+- `build/visuals/pinterest_assist_plan.json`
+- `build/visuals/pinterest_candidate_manifest.json`
+- `build/visuals/pinterest_selection_manifest.json`
+
+Pinterest-assisted 운영 상세는 [docs/PINTEREST_ASSISTED_WORKFLOW.md](/Users/sungwoon/Documents/designSystem/docs/PINTEREST_ASSISTED_WORKFLOW.md)에서 볼 수 있습니다.
 
 ## 색상 자동 결정
 
@@ -391,6 +493,8 @@ neighbors = graph.get_neighbors("component:primary-button")
 |--------|------|-----------|
 | `build-kb` | 지식베이스 만들기 | `--kb-dir`, `--seed-url`, `--seeds-file` |
 | `init` | 프로젝트 초기화 | `--project-dir`, `--brand-name` |
+| `analyze-visuals` | 로컬 visual reference 단독 분석 | `--project-dir` or `--brand-profile` |
+| `generate-visual-queries` | 이미지 검색용 query 생성 | `--project-dir` or `--brand-profile`, `--spec`, `--sync-brand-profile` |
 | `run-project` | 설계도 + 컴포넌트 스펙 생성 | `--project-dir`, `--kb-dir` |
 | `analyze-spec` | 설계서에서 UI 패턴 자동 탐지 | `--spec-file`, `--project-dir` |
 | `build-components` | 상세 컴포넌트 스펙 생성 | `--spec-file`, `--project-dir`, `--kb-dir` |
@@ -418,6 +522,7 @@ flowchart TB
         COLOR["color_reference.py\n팔레트 결정"] --> SYNTH
         FONT["font_reference.py\n서체 결정"] --> SYNTH
         BENCH["benchmark_kb.py\n35개 벤치마크"] --> SYNTH
+        VISUAL_REF["visual_reference.py\nmotif / layout / component hints"] --> SYNTH
 
         SYNTH --> AUTH["authoring.py"]
         AUTH --> GRAPH["graph_builders.py\n온톨로지 그래프 구축"]
@@ -465,6 +570,8 @@ graph TB
         COLOR["color_reference.py\n팔레트 결정"]
         FONT["font_reference.py\n서체 결정"]
         BENCH["benchmark_kb.py\n35개 벤치마크"]
+        VISUAL["visual_reference.py\n시각 레퍼런스 해석"]
+        VQUERY["visual_queries.py\n검색 query 생성"]
     end
 
     subgraph GRAPH["온톨로지 그래프"]
@@ -496,7 +603,9 @@ graph TB
     SYNTH --> COLOR
     SYNTH --> FONT
     SYNTH --> BENCH
+    SYNTH --> VISUAL
     SYNTH --> AUTH
+    CLI --> VQUERY
 
     AUTH --> BUILDERS
     BUILDERS --> SCHEMA

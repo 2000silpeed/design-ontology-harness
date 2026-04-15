@@ -102,6 +102,18 @@ def scaffold_project(
             "로컬에 저장한 레퍼런스 이미지나 스크린샷 경로를 sources에 추가하세요",
             "현재 단계에서는 Pinterest URL을 직접 수집하지 않고 로컬 파일 기준으로 분석합니다",
         ],
+        "pinterest_assist": {
+            "enabled": False,
+            "capture_mode": "manual-save",
+            "capture_dir": "references/visual/pinterest-assisted",
+            "max_candidates_per_query": 6,
+            "max_selected_per_query": 2,
+            "preferred_sources": ["pins", "boards", "adjacent-search"],
+            "notes": [
+                "Pinterest는 query 생성과 후보 수집 보조에만 사용합니다",
+                "최종 분석 입력은 항상 visual_reference.sources 의 로컬 파일로 고정합니다",
+            ],
+        },
     }
 
     manifest = {

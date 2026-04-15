@@ -1054,6 +1054,7 @@ def _build_visual_reference_section(visual_reference: dict | None) -> str:
         f"- **Mode**: {visual_reference.get('mode', 'local-images')}",
         f"- **Coverage**: source {visual_reference.get('coverage', {}).get('source_count', 0)} / image {visual_reference.get('coverage', {}).get('image_count', 0)} / selected {visual_reference.get('coverage', {}).get('selected_image_count', 0)}",
         "- **Rule**: visual references are advisory signals for motif and layout direction; official KB/spec remain the structural source of truth.",
+        "- **Provenance**: `observed` = directly measured from local pixels, `inferred` = synthesized from image/query/brand signals, `unverified` = reliable visual evidence not yet available.",
     ]
 
     queries = visual_reference.get("query", [])
@@ -1068,18 +1069,21 @@ def _build_visual_reference_section(visual_reference: dict | None) -> str:
             if not item:
                 continue
             evidence = ", ".join(item.get("evidence", [])[:3])
+            provenance = ((item.get("provenance") or {}).get("level") or "n/a")
             lines.append(
                 f"- **{key.replace('_', ' ').title()}**: {item.get('value')} "
-                f"(confidence {item.get('confidence')})"
+                f"(confidence {item.get('confidence')}, provenance {provenance})"
                 + (f" / {evidence}" if evidence else "")
             )
         color_balance = motifs.get("color_balance", {}) or {}
         if color_balance:
             dominant = ", ".join(item.get("hex") for item in color_balance.get("dominant", [])[:4] if item.get("hex"))
+            provenance = ((color_balance.get("provenance") or {}).get("level") or "n/a")
             lines.append(
                 f"- **Color balance**: temperature={color_balance.get('temperature')}, "
                 f"contrast={color_balance.get('contrast_profile')}, "
-                f"neutral_bias={color_balance.get('neutral_bias')}"
+                f"neutral_bias={color_balance.get('neutral_bias')}, "
+                f"provenance={provenance}"
                 + (f" / dominant {dominant}" if dominant else "")
             )
 
@@ -1088,8 +1092,9 @@ def _build_visual_reference_section(visual_reference: dict | None) -> str:
         lines.append("\n### Layout Rhythm\n")
         for cue in layout_cues[:4]:
             evidence = ", ".join(cue.get("evidence", [])[:4])
+            provenance = ((cue.get("provenance") or {}).get("level") or "n/a")
             lines.append(
-                f"- **{cue.get('label')}**: confidence {cue.get('confidence')}"
+                f"- **{cue.get('label')}**: confidence {cue.get('confidence')} / provenance {provenance}"
                 + (f" / {evidence}" if evidence else "")
             )
 
@@ -1098,8 +1103,9 @@ def _build_visual_reference_section(visual_reference: dict | None) -> str:
         lines.append("\n### Image-derived Component Hints\n")
         for name, hint in list(component_hints.items())[:6]:
             evidence = ", ".join(hint.get("evidence", [])[:3])
+            provenance = ((hint.get("provenance") or {}).get("level") or "n/a")
             lines.append(
-                f"- **{name.replace('_', ' ').title()}**: {hint.get('direction')}"
+                f"- **{name.replace('_', ' ').title()}**: {hint.get('direction')} / provenance {provenance}"
                 + (f" / {evidence}" if evidence else "")
             )
 

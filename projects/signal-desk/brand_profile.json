@@ -108,5 +108,65 @@
       "selected_colors와 palette_roles를 넣으면 manual override로 동작",
       "palette_expansion은 seed color를 기반으로 support, neutral, semantic state 후보를 확장합니다"
     ]
+  },
+  "visual_reference": {
+    "mode": "pinterest-assisted",
+    "query": [
+      "editorial dashboard ui",
+      "warm premium onboarding flow",
+      "serif product landing page"
+    ],
+    "sources": [
+      {
+        "kind": "directory",
+        "path": "references/visual",
+        "label": "Signal Desk curated local references",
+        "tags": [
+          "editorial",
+          "dashboard",
+          "split-pane",
+          "warm",
+          "landing"
+        ]
+      }
+    ],
+    "preferred_count": 6,
+    "weights": {
+      "layout": 0.32,
+      "component_shape": 0.2,
+      "color_balance": 0.18,
+      "typography_mood": 0.18,
+      "surface_style": 0.12
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "split-pane workspace",
+      "editorial hierarchy",
+      "low-elevation cards"
+    ],
+    "avoid_patterns": [
+      "glassmorphism-heavy surfaces",
+      "high-saturation neon UI",
+      "playful candy gradients"
+    ],
+    "notes": [
+      "Signal Desk는 text-first editorial hierarchy와 warm surface language를 우선합니다.",
+      "이미지 기반 힌트는 표현 계층에만 사용하고 구조적 의사결정은 spec과 KB를 유지합니다."
+    ],
+    "pinterest_assist": {
+      "enabled": true,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "Pinterest는 검색 보조용이며 raw asset 다운로드보다 screenshot/reference URL 기록을 우선합니다."
+      ]
+    }
   }
 }
