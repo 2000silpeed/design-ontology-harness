@@ -639,15 +639,49 @@ def _build_visual_motifs(
         weight=config["weights"]["component_shape"],
     )
 
+    color_provenance = "observed" if color_balance.get("observed") else "unverified"
+
     return {
-        "density": density,
-        "surface_style": surface_style,
-        "typography_mood": typography_mood,
-        "corner_style": corner_style,
-        "color_balance": color_balance,
+        "density": _with_provenance(
+            density,
+            level="inferred",
+            detail="Derived from selected image signals plus query and brand context.",
+        ),
+        "surface_style": _with_provenance(
+            surface_style,
+            level="inferred",
+            detail="Derived from selected image signals plus query and brand context.",
+        ),
+        "typography_mood": _with_provenance(
+            typography_mood,
+            level="inferred",
+            detail="Derived from selected image signals plus query and brand context.",
+        ),
+        "corner_style": _with_provenance(
+            corner_style,
+            level="inferred",
+            detail="Derived from selected image geometry and supporting signal terms.",
+        ),
+        "color_balance": _with_provenance(
+            color_balance,
+            level=color_provenance,
+            detail=(
+                "Observed directly from sampled image colors."
+                if color_provenance == "observed"
+                else "No reliable pixel-color sample was available from the current selection."
+            ),
+        ),
         "image_selection": {
             "selected_image_count": len(selected_images),
             "available_image_count": len(image_records),
+            "provenance": {
+                "level": "observed" if image_records else "unverified",
+                "detail": (
+                    "Selection is grounded in resolved local image files."
+                    if image_records
+                    else "No local image files were available for selection."
+                ),
+            },
         },
     }
 
@@ -685,12 +719,16 @@ def _build_layout_cues(
         if score <= 0:
             continue
         cues.append(
-            {
+            _with_provenance(
+                {
                 "id": definition["id"],
                 "label": definition["label"],
                 "confidence": _confidence_from_score(score, config["weights"]["layout"]),
                 "evidence": evidence[:6],
-            }
+                },
+                level="inferred",
+                detail="Layout cue inferred from selected image signals and reference context.",
+            )
         )
 
     cues.sort(key=lambda item: (-item["confidence"], item["label"]))
@@ -767,7 +805,14 @@ def _build_component_style_hints(
             "evidence": [cue["label"] for cue in layout_cues[:1]],
         }
 
-    return hints
+    return {
+        name: _with_provenance(
+            hint,
+            level="inferred",
+            detail="Component styling hint synthesized from visual motifs and layout cues.",
+        )
+        for name, hint in hints.items()
+    }
 
 
 def _build_reference_mood_summary(
@@ -796,12 +841,16 @@ def _build_reference_mood_summary(
     if not avoid and brand_profile.get("anti_keywords"):
         avoid = [f"{keyword}하게 보이는 시각 패턴" for keyword in brand_profile.get("anti_keywords", [])[:3]]
 
-    return {
+    return _with_provenance(
+        {
         "top_layout": top_layout,
         "recommended_direction": recommended,
         "avoidance": avoid,
         "component_focus": sorted(component_style_hints.keys()),
-    }
+        },
+        level="inferred",
+        detail="Mood summary synthesized from visual motifs, layout cues, and component hints.",
+    )
 
 
 def _build_candidate_component_archetypes(
@@ -853,7 +902,8 @@ def _build_candidate_component_archetypes(
             continue
 
         candidates.append(
-            {
+            _with_provenance(
+                {
                 "id": definition["id"],
                 "label": definition["label"],
                 "family": definition["family"],
@@ -861,7 +911,10 @@ def _build_candidate_component_archetypes(
                 "suggested_components": definition["suggested_components"],
                 "supports_primitives": definition.get("primitive_matches", []),
                 "evidence": evidence[:6],
-            }
+                },
+                level="inferred",
+                detail="Archetype candidate inferred from layout cues, image signals, and product primitives.",
+            )
         )
 
     candidates.sort(key=lambda item: (-item["confidence"], item["label"]))
@@ -878,6 +931,15 @@ def _build_brand_context(brand_profile: dict) -> dict:
         "interaction_keywords": brand_profile.get("interaction_keywords", []),
         "product_primitives": brand_profile.get("product_primitives", []),
     }
+
+
+def _with_provenance(payload: dict, level: str, detail: str) -> dict:
+    enriched = dict(payload)
+    enriched["provenance"] = {
+        "level": level,
+        "detail": detail,
+    }
+    return enriched
 
 
 def _collect_term_counts(

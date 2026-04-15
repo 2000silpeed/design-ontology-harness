@@ -12,6 +12,7 @@ from .css_pipeline import run_and_save as run_css_extraction
 from .kb import build_knowledge_base, load_knowledge_base
 from .models import DocumentRecord, ReferenceLink
 from .scaffold import load_project, resolve_kb_dir, scaffold_project
+from .pinterest_assist import build_pinterest_assist_bundle
 from .spec_analyzer import analyze_spec, analyze_spec_file, build_component_list, detected_to_primitives
 from .synthesis import build_blueprint, load_brand_profile
 from .utils import ensure_dir, write_json, write_jsonl
@@ -296,8 +297,15 @@ def main() -> None:
             folder_name="visuals",
         )
         write_json(visuals_dir / "visual_query_suggestions.json", report)
+        assist_bundle = build_pinterest_assist_bundle(brand_profile=brand_profile, query_report=report)
+        write_json(visuals_dir / "pinterest_assist_plan.json", assist_bundle["plan"])
+        write_json(visuals_dir / "pinterest_candidate_manifest.json", assist_bundle["candidate_manifest"])
+        write_json(visuals_dir / "pinterest_selection_manifest.json", assist_bundle["selection_manifest"])
 
         print(f"[generate-visual-queries] {report['query_count']}개 query 생성 완료: {visuals_dir}/visual_query_suggestions.json")
+        print(f"  -> Pinterest assist plan: {visuals_dir}/pinterest_assist_plan.json")
+        print(f"  -> Candidate manifest: {visuals_dir}/pinterest_candidate_manifest.json")
+        print(f"  -> Selection manifest: {visuals_dir}/pinterest_selection_manifest.json")
         if spec_path and spec_path.exists():
             print(f"  -> spec 반영: {spec_path}")
         else:
@@ -335,6 +343,127 @@ def main() -> None:
             force=args.force,
         )
         print(f"[init-agent-pack] 에이전트 팩 생성 완료: {args.target_repo}")
+        return
+
+    if args.command == "synthesize":
+        brand_profile = load_brand_profile(Path(args.brand_profile))
+        references_path = output_dir / "references.jsonl"
+        documents_path = output_dir / "all_documents.jsonl"
+        if not references_path.exists() or not documents_path.exists():
+            raise SystemExit("Run the crawl pipeline first so references and documents exist.")
+
+        references = [
+            ReferenceLink(**json.loads(line))
+            for line in references_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        documents = [
+            DocumentRecord(**json.loads(line))
+            for line in documents_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        build_blueprint(output_dir, brand_profile, references, documents)
+        print(f"[synthesize] 블루프린트 재생성 완료 ({output_dir}/blueprint/)")
+        return
+
+    if args.command == "run-project":
+        project_dir = Path(args.project_dir)
+        manifest = load_project(project_dir)
+        kb_dir = resolve_kb_dir(project_dir, manifest, args.kb_dir)
+        references, documents, kb_manifest = load_knowledge_base(kb_dir)
+        brand_profile_path = project_dir / manifest["brand_profile"]
+        brand_profile = load_brand_profile(brand_profile_path)
+        _warn_placeholder_profile(brand_profile)
+        build_root = ensure_dir(project_dir / manifest.get("build_dir", "build"))
+        output_dir = ensure_dir(build_root / "system")
+        write_jsonl(output_dir / "references.jsonl", [reference.to_dict() for reference in references])
+        write_jsonl(output_dir / "all_documents.jsonl", [document.to_dict() for document in documents])
+        if (kb_dir / "ontology").exists():
+            shutil.copytree(kb_dir / "ontology", output_dir / "ontology", dirs_exist_ok=True)
+        if (kb_dir / "css_extraction").exists():
+            shutil.copytree(kb_dir / "css_extraction", output_dir / "css_extraction", dirs_exist_ok=True)
+            css_summary_path = kb_dir / "css_extraction" / "extraction_summary.json"
+            if css_summary_path.exists():
+                css_summary = json.loads(css_summary_path.read_text(encoding="utf-8"))
+                var_info = css_summary.get("var_resolution", {})
+                brand_info = css_summary.get("brand_colors", {})
+                typo_info = css_summary.get("typography", {})
+                print(
+                    f"  CSS 추출 (KB): {css_summary.get('css_file_count', 0)}개 파일 | "
+                    f"var {var_info.get('resolved_count', 0)}/{var_info.get('total_vars', 0)}개 | "
+                    f"브랜드색 {brand_info.get('total_candidates', 0)}개 | "
+                    f"타이포 {typo_info.get('scale_entries', 0)}개"
+                )
+        else:
+            print(f"  CSS 추출 (KB): 없음 — KB를 재빌드하면 자동 수집됩니다")
+        print(f"  폰트 결정: {', '.join([role for role in ['heading', 'body', 'mono'] if brand_profile.get('_resolved_font_system', {}).get(role)])}")
+        color_ref = brand_profile.get('_resolved_color_reference')
+        if color_ref:
+            active_roles = color_ref.get('palette_roles', {})
+            print(f"  색상 결정: {len(active_roles)}개 role 활성화")
+        else:
+            print(f"  색상 결정: 실행 안 됨 (brand_profile.color_reference가 설정되지 않음)")
+        visual_ref = brand_profile.get('_resolved_visual_reference')
+        if visual_ref:
+            coverage = visual_ref.get("coverage", {})
+            motifs = visual_ref.get("visual_motifs", {}) or {}
+            layout_cues = visual_ref.get("layout_cues", []) or []
+            top_layout = layout_cues[0]["id"] if layout_cues else "n/a"
+            print(
+                f"  시각 레퍼런스: 소스 {coverage.get('source_count', 0)}개 | "
+                f"이미지 {coverage.get('image_count', 0)}개 | "
+                f"density {(motifs.get('density') or {}).get('value', 'n/a')} | "
+                f"layout {top_layout}"
+            )
+        elif brand_profile.get("visual_reference"):
+            print("  시각 레퍼런스: 설정됨, 하지만 유효한 로컬 이미지가 아직 해석되지 않음")
+
+        spec_file = project_dir / "spec.md"
+        if not spec_file.exists():
+            spec_file = project_dir / "PRD.md"
+        detected_patterns: list[dict] = []
+        component_list: list[dict] = []
+        if spec_file.exists():
+            detected_patterns = analyze_spec_file(spec_file)
+            if detected_patterns:
+                component_list = build_component_list(detected_patterns)
+                brand_profile["_spec_components"] = component_list
+                brand_profile["_spec_detected_patterns"] = detected_patterns
+
+        build_blueprint(
+            output_dir=output_dir,
+            brand_profile=brand_profile,
+            references=references,
+            documents=documents,
+        )
+        write_json(
+            build_root / "project_summary.json",
+            {
+                "project_dir": str(project_dir),
+                "kb_dir": str(kb_dir),
+                "reference_count": len(references),
+                "document_count": len(documents),
+                "kb_built_at": kb_manifest.get("built_at"),
+                "output_dir": str(output_dir),
+            },
+        )
+        if component_list:
+            bp_path = output_dir / "blueprint" / "design_system_blueprint.json"
+            blueprint_data = {}
+            if bp_path.exists():
+                blueprint_data = json.loads(bp_path.read_text(encoding="utf-8"))
+            specs_data = generate_component_specs(
+                brand_profile=brand_profile,
+                blueprint=blueprint_data,
+                component_list=component_list,
+                documents=documents,
+            )
+            write_component_specs(output_dir, specs_data)
+            print(f"  -> 설계서({spec_file.name})에서 {len(component_list)}개 컴포넌트 스펙 자동 생성")
+
+        print(f"[run-project] 시스템 산출물 생성 완료: {output_dir}/blueprint/")
+        print(f"  -> 레퍼런스: {len(references)}개 | 문서: {len(documents)}개")
+        print(f"  -> system_spec.md 를 확인하세요.")
         return
 
     import httpx
@@ -380,127 +509,6 @@ def main() -> None:
             )
             print(f"[extract-seed] 시드 추출 완료: {seed_article.title}")
             print(f"  -> 레퍼런스 {len(seed_article.references)}개 발견 ({output_dir})")
-            return
-
-        if args.command == "synthesize":
-            brand_profile = load_brand_profile(Path(args.brand_profile))
-            references_path = output_dir / "references.jsonl"
-            documents_path = output_dir / "all_documents.jsonl"
-            if not references_path.exists() or not documents_path.exists():
-                raise SystemExit("Run the crawl pipeline first so references and documents exist.")
-
-            references = [
-                ReferenceLink(**json.loads(line))
-                for line in references_path.read_text(encoding="utf-8").splitlines()
-                if line.strip()
-            ]
-            documents = [
-                DocumentRecord(**json.loads(line))
-                for line in documents_path.read_text(encoding="utf-8").splitlines()
-                if line.strip()
-            ]
-            build_blueprint(output_dir, brand_profile, references, documents)
-            print(f"[synthesize] 블루프린트 재생성 완료 ({output_dir}/blueprint/)")
-            return
-
-        if args.command == "run-project":
-            project_dir = Path(args.project_dir)
-            manifest = load_project(project_dir)
-            kb_dir = resolve_kb_dir(project_dir, manifest, args.kb_dir)
-            references, documents, kb_manifest = load_knowledge_base(kb_dir)
-            brand_profile_path = project_dir / manifest["brand_profile"]
-            brand_profile = load_brand_profile(brand_profile_path)
-            _warn_placeholder_profile(brand_profile)
-            build_root = ensure_dir(project_dir / manifest.get("build_dir", "build"))
-            output_dir = ensure_dir(build_root / "system")
-            write_jsonl(output_dir / "references.jsonl", [reference.to_dict() for reference in references])
-            write_jsonl(output_dir / "all_documents.jsonl", [document.to_dict() for document in documents])
-            if (kb_dir / "ontology").exists():
-                shutil.copytree(kb_dir / "ontology", output_dir / "ontology", dirs_exist_ok=True)
-            if (kb_dir / "css_extraction").exists():
-                shutil.copytree(kb_dir / "css_extraction", output_dir / "css_extraction", dirs_exist_ok=True)
-                css_summary_path = kb_dir / "css_extraction" / "extraction_summary.json"
-                if css_summary_path.exists():
-                    css_summary = json.loads(css_summary_path.read_text(encoding="utf-8"))
-                    var_info = css_summary.get("var_resolution", {})
-                    brand_info = css_summary.get("brand_colors", {})
-                    typo_info = css_summary.get("typography", {})
-                    print(
-                        f"  CSS 추출 (KB): {css_summary.get('css_file_count', 0)}개 파일 | "
-                        f"var {var_info.get('resolved_count', 0)}/{var_info.get('total_vars', 0)}개 | "
-                        f"브랜드색 {brand_info.get('total_candidates', 0)}개 | "
-                        f"타이포 {typo_info.get('scale_entries', 0)}개"
-                    )
-            else:
-                print(f"  CSS 추출 (KB): 없음 — KB를 재빌드하면 자동 수집됩니다")
-            print(f"  폰트 결정: {', '.join([role for role in ['heading', 'body', 'mono'] if brand_profile.get('_resolved_font_system', {}).get(role)])}")
-            color_ref = brand_profile.get('_resolved_color_reference')
-            if color_ref:
-                active_roles = color_ref.get('palette_roles', {})
-                print(f"  색상 결정: {len(active_roles)}개 role 활성화")
-            else:
-                print(f"  색상 결정: 실행 안 됨 (brand_profile.color_reference가 설정되지 않음)")
-            visual_ref = brand_profile.get('_resolved_visual_reference')
-            if visual_ref:
-                coverage = visual_ref.get("coverage", {})
-                motifs = visual_ref.get("visual_motifs", {}) or {}
-                layout_cues = visual_ref.get("layout_cues", []) or []
-                top_layout = layout_cues[0]["id"] if layout_cues else "n/a"
-                print(
-                    f"  시각 레퍼런스: 소스 {coverage.get('source_count', 0)}개 | "
-                    f"이미지 {coverage.get('image_count', 0)}개 | "
-                    f"density {(motifs.get('density') or {}).get('value', 'n/a')} | "
-                    f"layout {top_layout}"
-                )
-            elif brand_profile.get("visual_reference"):
-                print("  시각 레퍼런스: 설정됨, 하지만 유효한 로컬 이미지가 아직 해석되지 않음")
-
-            spec_file = project_dir / "spec.md"
-            if not spec_file.exists():
-                spec_file = project_dir / "PRD.md"
-            detected_patterns: list[dict] = []
-            component_list: list[dict] = []
-            if spec_file.exists():
-                detected_patterns = analyze_spec_file(spec_file)
-                if detected_patterns:
-                    component_list = build_component_list(detected_patterns)
-                    brand_profile["_spec_components"] = component_list
-                    brand_profile["_spec_detected_patterns"] = detected_patterns
-
-            build_blueprint(
-                output_dir=output_dir,
-                brand_profile=brand_profile,
-                references=references,
-                documents=documents,
-            )
-            write_json(
-                build_root / "project_summary.json",
-                {
-                    "project_dir": str(project_dir),
-                    "kb_dir": str(kb_dir),
-                    "reference_count": len(references),
-                    "document_count": len(documents),
-                    "kb_built_at": kb_manifest.get("built_at"),
-                    "output_dir": str(output_dir),
-                },
-            )
-            if component_list:
-                bp_path = output_dir / "blueprint" / "design_system_blueprint.json"
-                blueprint_data = {}
-                if bp_path.exists():
-                    blueprint_data = json.loads(bp_path.read_text(encoding="utf-8"))
-                specs_data = generate_component_specs(
-                    brand_profile=brand_profile,
-                    blueprint=blueprint_data,
-                    component_list=component_list,
-                    documents=documents,
-                )
-                write_component_specs(output_dir, specs_data)
-                print(f"  -> 설계서({spec_file.name})에서 {len(component_list)}개 컴포넌트 스펙 자동 생성")
-
-            print(f"[run-project] 시스템 산출물 생성 완료: {output_dir}/blueprint/")
-            print(f"  -> 레퍼런스: {len(references)}개 | 문서: {len(documents)}개")
-            print(f"  -> system_spec.md 를 확인하세요.")
             return
 
         from .cli_shared import run_pipeline

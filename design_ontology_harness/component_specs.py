@@ -690,6 +690,8 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
                     meta_bits.append(f"source={note['source_hint']}")
                 if note.get("confidence") is not None:
                     meta_bits.append(f"confidence={note['confidence']}")
+                if note.get("provenance"):
+                    meta_bits.append(f"provenance={note['provenance']}")
                 if note.get("direction"):
                     meta_bits.append(f"direction={note['direction']}")
                 if note.get("evidence"):
@@ -948,6 +950,7 @@ def _make_visual_note(
         "summary": summary,
         "source_hint": source_hint,
         "confidence": confidence,
+        "provenance": ((signal or {}).get("provenance") or {}).get("level") if isinstance(signal, dict) else None,
         "direction": direction,
         "evidence": deduped_evidence,
     }

@@ -98,7 +98,7 @@
     ]
   },
   "visual_reference": {
-    "mode": "local-images",
+    "mode": "pinterest-assisted",
     "query": [
       "editorial dashboard",
       "warm productivity workspace",
@@ -145,6 +145,22 @@
     "notes": [
       "현재 단계에서는 로컬 이미지/스크린샷만 직접 분석합니다",
       "Pinterest는 query 생성과 수집 보조 채널로만 사용하고, 최종 입력은 로컬 파일로 고정합니다"
-    ]
+    ],
+    "pinterest_assist": {
+      "enabled": true,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "generate-visual-queries 는 build/visuals 아래에 plan / candidate / selection manifest를 생성합니다",
+        "사용자나 에이전트가 명시적으로 selected 로 승격한 캡처만 visual_reference.sources 로 연결합니다"
+      ]
+    }
   }
 }

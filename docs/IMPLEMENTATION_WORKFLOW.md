@@ -59,10 +59,51 @@ uv run design-ontology init \
 - 접근성 기준
 - 핵심 product primitive
 - 선택적으로 curated color reference 경로와 palette role
+- 선택적으로 `visual_reference.sources`에 로컬 스크린샷 / 레퍼런스 이미지
 
 를 작성합니다.
 
-### 4. 프로젝트 산출물 생성
+### 4. 시각 레퍼런스 준비 (선택)
+
+이 단계는 필수는 아니지만, 공식 KB만으로 잡기 어려운 density / surface language / CTA emphasis를 보강하고 싶을 때 권장합니다.
+
+핵심 원칙:
+
+- 공식 KB / spec / brand profile / color reference는 구조적 truth source
+- visual reference는 조형 언어를 보강하는 advisory signal
+- image-derived 결과에는 `observed` / `inferred` / `unverified` provenance 레벨을 함께 남김
+- Pinterest는 필수 의존성이 아니라 검색 보조 채널
+- 직접 크롤링보다 query 생성 -> 사용자의 로컬 저장 -> 로컬 이미지 분석 흐름을 우선
+- raw asset 다운로드보다 screenshot/reference URL provenance 기록을 우선하고, 재배포 가능한 에셋으로 간주하지 않음
+
+예:
+
+```bash
+# 설계서 + 브랜드 프로필 기반 query set 생성
+uv run design-ontology generate-visual-queries \
+  --project-dir projects/my-app \
+  --spec projects/my-app/spec.md \
+  --sync-brand-profile
+
+# 로컬 이미지가 연결된 뒤 visual layer만 별도 분석
+uv run design-ontology analyze-visuals \
+  --project-dir projects/my-app
+```
+
+생성 파일:
+
+- `build/visuals/visual_query_suggestions.json`
+- `build/visuals/pinterest_assist_plan.json`
+- `build/visuals/pinterest_candidate_manifest.json`
+- `build/visuals/pinterest_selection_manifest.json`
+- `build/visuals/visual_reference_report.json`
+- `build/visuals/visual_motifs.json`
+- `build/visuals/layout_cues.json`
+- `build/visuals/component_style_hints.json`
+
+세부 운영 규칙과 manifest 구조는 [docs/PINTEREST_ASSISTED_WORKFLOW.md](/Users/sungwoon/Documents/designSystem/docs/PINTEREST_ASSISTED_WORKFLOW.md)를 참고합니다.
+
+### 5. 프로젝트 산출물 생성
 
 ```bash
 uv run design-ontology run-project --project-dir projects/my-app
@@ -74,6 +115,8 @@ uv run design-ontology run-project --project-dir projects/my-app
 - `build/system/blueprint/token_schema.json`
 - `build/system/blueprint/component_inventory.json`
 - `build/system/blueprint/system_ontology.json`
+
+`visual_reference`가 연결돼 있으면 위 산출물 안에 visual direction, layout rhythm, image-derived component hints도 함께 반영됩니다.
 
 ## How To Use In A Real Implementation Repo
 
@@ -108,7 +151,7 @@ uv run design-ontology init-agent-pack \
 제품 저장소 내부에 `tools/design-ontology-harness` 형태로 포함시키고:
 
 1. KB는 별도 버전 디렉터리로 유지
-2. 앱 팀은 `run-project`만 실행
+2. 앱 팀은 기본적으로 `run-project`만 실행하고, 필요하면 `analyze-visuals`를 선행
 3. 결과를 `design-system/` 또는 `docs/design-system/` 아래에 반영
 
 ## Suggested Agent Usage
@@ -126,6 +169,7 @@ uv run design-ontology init-agent-pack \
 - `token_schema.json`에 맞춰 CSS 변수와 theme object 생성
 - `component_inventory.json`의 high priority family부터 구현
 - `system_spec.md`의 anti-keyword를 위반하지 않게 UI 의사결정
+- `system_spec.md`와 `component_specs.md`의 visual hints는 구조 변경이 아니라 표현 계층 결정에만 사용
 - 새 컴포넌트 추가보다 기존 primitive 확장을 우선
 
 ## Practical Rollout Order
@@ -221,12 +265,14 @@ uv run design-ontology build-kb \
 
 - 새 참고 사이트를 반영하려면 `build-kb`를 다시 실행해야 합니다.
 - `projects/<name>/seeds/seed_urls.txt`는 provenance와 메모용입니다.
+- visual reference 이미지를 바꾸면 `analyze-visuals`로 먼저 확인한 뒤 `run-project`를 다시 실행하면 됩니다.
 - 프로젝트 결과물만 다시 만들고 싶을 때는 `run-project`만 실행하면 됩니다.
 
 즉:
 
 - reference source 변경 -> `build-kb`
 - brand/profile 변경 -> `run-project`
+- visual query / visual sources 변경 -> `analyze-visuals` -> `run-project`
 
 ### Direct Seed Mode
 
@@ -263,6 +309,7 @@ uv run design-ontology build-kb \
 - 지원 대상 theme와 breakpoint에서 동시에 성립하는 semantic token부터 먼저 적용
 - 시각 개선보다 기능 회귀 방지가 우선
 - 패널 위치 변경, 내비게이션 구조 변경, 기본 상호작용 변경은 별도 migration decision으로 다루기
+- image-derived hints는 advisory signal이며, anatomy / states / accessibility의 structural source를 대체하지 않기
 
 ## Safe Refactor Checklist
 

@@ -110,5 +110,65 @@
       "raw reference color를 그대로 전체 UI에 덮지 않기",
       "팔레트 확장은 semantic state와 surface tier 생성에만 사용"
     ]
+  },
+  "visual_reference": {
+    "mode": "pinterest-assisted",
+    "query": [
+      "technical archive dashboard ui",
+      "dense audit log table interface",
+      "minimal enterprise landing page"
+    ],
+    "sources": [
+      {
+        "kind": "directory",
+        "path": "references/visual",
+        "label": "Glacier curated local references",
+        "tags": [
+          "technical",
+          "dashboard",
+          "audit",
+          "dense-table",
+          "minimal"
+        ]
+      }
+    ],
+    "preferred_count": 6,
+    "weights": {
+      "layout": 0.34,
+      "component_shape": 0.22,
+      "color_balance": 0.16,
+      "typography_mood": 0.12,
+      "surface_style": 0.16
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "dense data tables",
+      "audit timeline",
+      "restrained surface hierarchy"
+    ],
+    "avoid_patterns": [
+      "warm playful gradients",
+      "soft whimsical illustrations",
+      "exaggerated glassmorphism"
+    ],
+    "notes": [
+      "Glacier는 검증성과 감사 가능성을 우선하는 차가운 enterprise tone을 유지합니다.",
+      "이미지 기반 힌트는 surface framing과 density 조정에만 사용합니다."
+    ],
+    "pinterest_assist": {
+      "enabled": true,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "Pinterest는 보조 query 채널이며 접근 제한이 있으면 manual-save로 폴백합니다."
+      ]
+    }
   }
 }
