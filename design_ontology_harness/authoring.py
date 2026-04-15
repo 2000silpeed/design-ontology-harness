@@ -174,6 +174,8 @@ def validate_brand_profile(profile: dict) -> dict:
         warnings.append("Define accessibility_targets so the system has an explicit compliance floor.")
     for issue in profile.get("_color_reference_issues", []):
         warnings.append(issue)
+    for issue in profile.get("_visual_reference_issues", []):
+        warnings.append(issue)
 
     return {
         "valid": not errors,
@@ -207,6 +209,7 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
     editorial_system = "editorial" in brand_keywords
     color_reference = brand_profile.get("_resolved_color_reference")
     font_system = brand_profile.get("_resolved_font_system")
+    visual_reference = brand_profile.get("_resolved_visual_reference")
 
     schema = {
         "naming": {
@@ -363,6 +366,27 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
                 "surface/text/border 대비는 레퍼런스보다 접근성 기준을 우선"
             ],
         }
+    if visual_reference:
+        motifs = visual_reference.get("visual_motifs", {}) or {}
+        layout_cues = visual_reference.get("layout_cues", []) or []
+        color_balance = motifs.get("color_balance", {}) or {}
+        schema["brand_alignment"]["visual_reference_hints"] = {
+            "density_bias": (motifs.get("density") or {}).get("value"),
+            "surface_style": (motifs.get("surface_style") or {}).get("value"),
+            "corner_style": (motifs.get("corner_style") or {}).get("value"),
+            "typography_mood": (motifs.get("typography_mood") or {}).get("value"),
+            "top_layout_cue": layout_cues[0]["id"] if layout_cues else None,
+        }
+        schema["categories"]["spacing"]["visual_density_bias"] = (motifs.get("density") or {}).get("value")
+        schema["categories"]["radius"]["visual_corner_bias"] = (motifs.get("corner_style") or {}).get("value")
+        schema["categories"]["elevation"]["visual_surface_bias"] = (motifs.get("surface_style") or {}).get("value")
+        if color_balance:
+            schema["categories"]["color"]["visual_balance"] = {
+                "observed": color_balance.get("observed"),
+                "temperature": color_balance.get("temperature"),
+                "contrast_profile": color_balance.get("contrast_profile"),
+                "neutral_bias": color_balance.get("neutral_bias"),
+            }
     return schema
 
 
@@ -593,7 +617,9 @@ def build_system_spec_markdown(
         for family in component_inventory.get("families", [])
     )
     color_reference = brand_profile.get("_resolved_color_reference")
+    visual_reference = brand_profile.get("_resolved_visual_reference")
     color_reference_lines = _build_color_reference_section(color_reference)
+    visual_reference_lines = _build_visual_reference_section(visual_reference)
     validation_lines = "\n".join(
         [f"- Error: {message}" for message in validation.get("errors", [])]
         + [f"- Warning: {message}" for message in validation.get("warnings", [])]
@@ -653,48 +679,52 @@ def build_system_spec_markdown(
 
 {color_reference_lines}
 
-## 7. Component Strategy
+## 7. Visual Reference Signals
+
+{visual_reference_lines}
+
+## 8. Component Strategy
 
 - **Product primitives**: {', '.join(brand_profile.get('product_primitives', []))}
 - **Required families**: {', '.join(item['family'] for item in component_inventory.get('families', []))}
 
 {family_lines}
 
-## 8. Implementation Guardrails
+## 9. Implementation Guardrails
 
 {implementation_guardrail_lines}
 
-## 9. Reference Absorption Rule
+## 10. Reference Absorption Rule
 
 - Analysed live reference sources: {source_count}
 - Rule: copy visuals from no single source; absorb patterns only when they reinforce brand keywords and avoid anti-keywords.
 - Use references to validate structure, accessibility, token discipline, and documentation quality.
 
-## 10. AI Synthesis Principles
+## 11. AI Synthesis Principles
 
 {ai_synthesis_lines}
 
-## 11. Ontology Targets
+## 12. Ontology Targets
 
 {concept_lines}
 
-## 12. Profile Validation
+## 13. Profile Validation
 
 {validation_lines}
 
-## 13. Quick Start
+## 14. Quick Start
 
 {quick_start_section}
 
-## 14. DO / DON'T
+## 15. DO / DON'T
 
 {do_dont_section}
 
-## 15. Drop-in CSS
+## 16. Drop-in CSS
 
 {drop_in_css_section}
 
-## 16. CSS Extraction Summary
+## 17. CSS Extraction Summary
 
 {css_extraction_section}
 
@@ -928,6 +958,74 @@ def _build_color_reference_section(color_reference: dict | None) -> str:
     return "\n".join(lines)
 
 
+def _build_visual_reference_section(visual_reference: dict | None) -> str:
+    if not visual_reference:
+        return "- No visual reference connected."
+
+    lines = [
+        f"- **Mode**: {visual_reference.get('mode', 'local-images')}",
+        f"- **Coverage**: source {visual_reference.get('coverage', {}).get('source_count', 0)} / image {visual_reference.get('coverage', {}).get('image_count', 0)} / selected {visual_reference.get('coverage', {}).get('selected_image_count', 0)}",
+        "- **Rule**: visual references are advisory signals for motif and layout direction; official KB/spec remain the structural source of truth.",
+    ]
+
+    queries = visual_reference.get("query", [])
+    if queries:
+        lines.append(f"- **Query seeds**: {', '.join(queries[:6])}")
+
+    motifs = visual_reference.get("visual_motifs", {}) or {}
+    if motifs:
+        lines.append("### Visual Direction\n")
+        for key in ["density", "surface_style", "corner_style", "typography_mood"]:
+            item = motifs.get(key) or {}
+            if not item:
+                continue
+            evidence = ", ".join(item.get("evidence", [])[:3])
+            lines.append(
+                f"- **{key.replace('_', ' ').title()}**: {item.get('value')} "
+                f"(confidence {item.get('confidence')})"
+                + (f" / {evidence}" if evidence else "")
+            )
+        color_balance = motifs.get("color_balance", {}) or {}
+        if color_balance:
+            dominant = ", ".join(item.get("hex") for item in color_balance.get("dominant", [])[:4] if item.get("hex"))
+            lines.append(
+                f"- **Color balance**: temperature={color_balance.get('temperature')}, "
+                f"contrast={color_balance.get('contrast_profile')}, "
+                f"neutral_bias={color_balance.get('neutral_bias')}"
+                + (f" / dominant {dominant}" if dominant else "")
+            )
+
+    layout_cues = visual_reference.get("layout_cues", [])
+    if layout_cues:
+        lines.append("\n### Layout Rhythm\n")
+        for cue in layout_cues[:4]:
+            evidence = ", ".join(cue.get("evidence", [])[:4])
+            lines.append(
+                f"- **{cue.get('label')}**: confidence {cue.get('confidence')}"
+                + (f" / {evidence}" if evidence else "")
+            )
+
+    component_hints = visual_reference.get("component_style_hints", {}) or {}
+    if component_hints:
+        lines.append("\n### Image-derived Component Hints\n")
+        for name, hint in list(component_hints.items())[:6]:
+            evidence = ", ".join(hint.get("evidence", [])[:3])
+            lines.append(
+                f"- **{name.replace('_', ' ').title()}**: {hint.get('direction')}"
+                + (f" / {evidence}" if evidence else "")
+            )
+
+    mood_summary = visual_reference.get("reference_mood_summary", {}) or {}
+    if mood_summary.get("recommended_direction"):
+        lines.append("\n### Synthesis Notes\n")
+        for item in mood_summary.get("recommended_direction", [])[:5]:
+            lines.append(f"- {item}")
+        for item in mood_summary.get("avoidance", [])[:4]:
+            lines.append(f"- Avoid: {item}")
+
+    return "\n".join(lines)
+
+
 def _build_quick_start_section(
     brand_profile: dict,
     token_schema: dict,
@@ -940,10 +1038,11 @@ def _build_quick_start_section(
         "",
         "### 시작하기",
         "",
-        f"1. **토큰 적용**: Drop-in CSS(아래 섹션 15)의 CSS 변수를 프로젝트에 복사합니다.",
+        f"1. **토큰 적용**: Drop-in CSS(아래 섹션 16)의 CSS 변수를 프로젝트에 복사합니다.",
         "2. **컬러 세팅**: Color Reference(섹션 6)의 semantic role을 기준으로 surface/text/border를 잡습니다.",
         "3. **타이포 세팅**: Token Strategy(섹션 5)의 font family와 type scale을 적용합니다.",
-        "4. **컴포넌트 구현**: Component Strategy(섹션 7)의 family 순서대로 하나씩 빌드합니다.",
+        "4. **시각 방향 확인**: Visual Reference Signals(섹션 7)에서 density/surface/layout cue를 먼저 확인합니다.",
+        "5. **컴포넌트 구현**: Component Strategy(섹션 8)의 family 순서대로 하나씩 빌드합니다.",
         "",
         "### 우선순위",
         "",

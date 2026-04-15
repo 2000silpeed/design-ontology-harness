@@ -79,6 +79,62 @@
         },
         "notes": { "type": "array", "items": { "type": "string" } }
       }
+    },
+    "visual_reference": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["local-images", "pinterest-assisted"]
+        },
+        "query": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": { "type": "string" },
+                  "path": { "type": "string" },
+                  "url": { "type": "string" },
+                  "label": { "type": "string" },
+                  "tags": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "preferred_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 48
+        },
+        "weights": {
+          "type": "object",
+          "properties": {
+            "layout": { "type": "number", "minimum": 0 },
+            "component_shape": { "type": "number", "minimum": 0 },
+            "color_balance": { "type": "number", "minimum": 0 },
+            "typography_mood": { "type": "number", "minimum": 0 },
+            "surface_style": { "type": "number", "minimum": 0 }
+          }
+        },
+        "extraction_policy": {
+          "type": "string",
+          "enum": ["advisory-only", "allow-token-suggestions"]
+        },
+        "notes": { "type": "array", "items": { "type": "string" } },
+        "must_include": { "type": "array", "items": { "type": "string" } },
+        "avoid_patterns": { "type": "array", "items": { "type": "string" } }
+      }
     }
   }
 }

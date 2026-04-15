@@ -80,6 +80,30 @@ def scaffold_project(
             ],
         }
 
+    brand_profile["visual_reference"] = {
+        "mode": "local-images",
+        "query": [
+            "editorial dashboard",
+            "premium app UI",
+        ],
+        "sources": [],
+        "preferred_count": 12,
+        "weights": {
+            "layout": 0.3,
+            "component_shape": 0.25,
+            "color_balance": 0.2,
+            "typography_mood": 0.15,
+            "surface_style": 0.1,
+        },
+        "extraction_policy": "advisory-only",
+        "must_include": [],
+        "avoid_patterns": [],
+        "notes": [
+            "로컬에 저장한 레퍼런스 이미지나 스크린샷 경로를 sources에 추가하세요",
+            "현재 단계에서는 Pinterest URL을 직접 수집하지 않고 로컬 파일 기준으로 분석합니다",
+        ],
+    }
+
     manifest = {
         "project_slug": slugify(project_dir.name),
         "brand_profile": "brand_profile.json",

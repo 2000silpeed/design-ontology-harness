@@ -1,4 +1,4 @@
-"""Generate system_spec.md sections 17-19 from the ontology graph."""
+"""Generate system_spec.md sections 18-20 from the ontology graph."""
 
 from __future__ import annotations
 
@@ -115,15 +115,15 @@ def build_pattern_catalog_section(graph: DesignOntologyGraph) -> str:
 
 
 def build_graph_spec_sections(graph: DesignOntologyGraph) -> str:
-    return f"""## 17. Component-Token Map
+    return f"""## 18. Component-Token Map
 
 {build_component_token_map_section(graph)}
 
-## 18. Contrast Audit
+## 19. Contrast Audit
 
 {build_contrast_audit_section(graph)}
 
-## 19. Pattern Catalog
+## 20. Pattern Catalog
 
 {build_pattern_catalog_section(graph)}
 """

@@ -347,6 +347,20 @@ def main() -> None:
                 print(f"  색상 결정: {len(active_roles)}개 role 활성화")
             else:
                 print(f"  색상 결정: 실행 안 됨 (brand_profile.color_reference가 설정되지 않음)")
+            visual_ref = brand_profile.get('_resolved_visual_reference')
+            if visual_ref:
+                coverage = visual_ref.get("coverage", {})
+                motifs = visual_ref.get("visual_motifs", {}) or {}
+                layout_cues = visual_ref.get("layout_cues", []) or []
+                top_layout = layout_cues[0]["id"] if layout_cues else "n/a"
+                print(
+                    f"  시각 레퍼런스: 소스 {coverage.get('source_count', 0)}개 | "
+                    f"이미지 {coverage.get('image_count', 0)}개 | "
+                    f"density {(motifs.get('density') or {}).get('value', 'n/a')} | "
+                    f"layout {top_layout}"
+                )
+            elif brand_profile.get("visual_reference"):
+                print("  시각 레퍼런스: 설정됨, 하지만 유효한 로컬 이미지가 아직 해석되지 않음")
 
             spec_file = project_dir / "spec.md"
             if not spec_file.exists():

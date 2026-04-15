@@ -11,6 +11,7 @@ from .css_pipeline import load_css_extraction
 from .font_reference import resolve_font_system
 from .models import DocumentRecord, ReferenceLink
 from .utils import ensure_dir, write_json
+from .visual_reference import resolve_visual_reference
 
 AI_SYNTHESIS_PRINCIPLES = [
     {
@@ -83,6 +84,14 @@ def load_brand_profile(path: Path) -> dict:
     if font_config is None or font_config is True:
         profile["_resolved_font_system"] = resolve_font_system(profile)
 
+    visual_config = profile.get("visual_reference")
+    if visual_config:
+        resolved_visual_reference, issues = resolve_visual_reference(visual_config, path.parent, profile)
+        if resolved_visual_reference:
+            profile["_resolved_visual_reference"] = resolved_visual_reference
+        if issues:
+            profile["_visual_reference_issues"] = issues
+
     return profile
 
 
@@ -132,6 +141,12 @@ def build_blueprint(
         "token_strategy": _build_token_strategy(brand_profile, prioritized_concepts),
         "component_strategy": _build_component_strategy(brand_profile, prioritized_concepts),
         "color_reference": brand_profile.get("_resolved_color_reference"),
+        "visual_reference": brand_profile.get("_resolved_visual_reference"),
+        "visual_reference_issues": brand_profile.get("_visual_reference_issues", []),
+        "visual_language": (brand_profile.get("_resolved_visual_reference") or {}).get("visual_motifs"),
+        "layout_cues": (brand_profile.get("_resolved_visual_reference") or {}).get("layout_cues"),
+        "component_style_hints": (brand_profile.get("_resolved_visual_reference") or {}).get("component_style_hints"),
+        "reference_mood_summary": (brand_profile.get("_resolved_visual_reference") or {}).get("reference_mood_summary"),
         "font_system": brand_profile.get("_resolved_font_system"),
         "css_extraction": load_css_extraction(output_dir),
         "governance": {
@@ -163,6 +178,8 @@ def build_blueprint(
         "benchmark": build_benchmark_context(brand_profile),
     }
 
+    if blueprint["visual_reference"]:
+        write_json(blueprint_dir / "visual_reference_report.json", blueprint["visual_reference"])
     save_benchmark_report(output_dir, brand_profile)
     write_json(blueprint_dir / "design_system_blueprint.json", blueprint)
     generate_system_pack(output_dir, brand_profile, blueprint, references, documents)
