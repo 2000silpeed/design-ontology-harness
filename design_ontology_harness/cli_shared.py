@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import httpx
-
 from .crawler import CrawlConfig, RobotsCache, crawl_reference
 from .css_pipeline import run_css_extraction
 from .ontology import build_ontology_outputs

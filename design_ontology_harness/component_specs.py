@@ -501,6 +501,45 @@ BRAND_ADAPTATIONS: dict[str, dict[str, str]] = {
     },
 }
 
+CARD_COMPONENT_TOKENS = (
+    "card",
+    "tile",
+    "module",
+    "banner",
+)
+
+CTA_COMPONENT_TOKENS = (
+    "button",
+    "cta",
+    "upgrade-banner",
+)
+
+NAV_DENSITY_TOKENS = (
+    "nav",
+    "menu",
+    "sidebar",
+    "topbar",
+    "breadcrumb",
+    "tab",
+    "pagination",
+    "filter",
+    "chip",
+    "toolbar",
+    "switcher",
+    "search",
+)
+
+DATA_PANEL_TOKENS = (
+    "chart",
+    "panel",
+    "table",
+    "grid",
+    "stat",
+    "insight",
+    "metric",
+    "summary",
+)
+
 
 def generate_component_specs(
     brand_profile: dict,
@@ -514,6 +553,7 @@ def generate_component_specs(
 
     adaptations = _collect_brand_adaptations(brand_keywords)
     anti_rules = _collect_anti_rules(anti_keywords)
+    visual_guidance = _collect_visual_guidance(brand_profile, blueprint)
 
     families: dict[str, list[dict]] = {}
     for comp in component_list:
@@ -544,6 +584,9 @@ def generate_component_specs(
             "brand_adaptation": _build_adaptation_notes(
                 comp["name"], family, brand_keywords, anti_keywords, adaptations, anti_rules
             ),
+            "visual_adaptation": _build_visual_adaptation_notes(
+                comp["name"], family, archetype_key, visual_guidance
+            ),
             "reference_evidence": kb_evidence,
             "implementation_notes": _build_implementation_notes(comp["name"], family, brand_keywords),
         }
@@ -556,6 +599,7 @@ def generate_component_specs(
         "brand_keywords": brand_keywords,
         "anti_keywords": anti_keywords,
         "global_adaptation": adaptations,
+        "visual_guidance": visual_guidance,
         "specs": specs,
     }
 
@@ -582,6 +626,22 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
     for aspect, rule in specs_data.get("global_adaptation", {}).items():
         md_lines.append(f"- **{aspect}**: {rule}")
     md_lines.append("")
+
+    visual_guidance = specs_data.get("visual_guidance") or {}
+    if visual_guidance.get("connected"):
+        md_lines.append("## Visual-reference 적용 원칙\n")
+        md_lines.append("- anatomy / states / accessibility는 설계서(spec)와 KB 근거를 유지하고, visual adaptation은 elevation / framing / prominence / density 같은 표현 계층에만 advisory signal로 적용한다.")
+        summary_bits = []
+        for key in ["surface_style", "density", "corner_style", "top_layout_cue"]:
+            value = visual_guidance.get(key)
+            if value:
+                summary_bits.append(f"{key}={value}")
+        if summary_bits:
+            md_lines.append(f"- Active visual signals: {', '.join(summary_bits)}")
+        hint_keys = sorted((visual_guidance.get("component_style_hints") or {}).keys())
+        if hint_keys:
+            md_lines.append(f"- Connected component hints: {', '.join(hint_keys)}")
+        md_lines.append("")
 
     for spec in specs_data["specs"]:
         md_lines.append(f"---\n")
@@ -622,6 +682,22 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
             md_lines.append(f"- {note}")
         md_lines.append("")
 
+        if spec.get("visual_adaptation"):
+            md_lines.append("### Visual Adaptation Hints\n")
+            for note in spec["visual_adaptation"]:
+                meta_bits = []
+                if note.get("source_hint"):
+                    meta_bits.append(f"source={note['source_hint']}")
+                if note.get("confidence") is not None:
+                    meta_bits.append(f"confidence={note['confidence']}")
+                if note.get("direction"):
+                    meta_bits.append(f"direction={note['direction']}")
+                if note.get("evidence"):
+                    meta_bits.append(f"evidence={', '.join(note['evidence'])}")
+                suffix = f" ({'; '.join(meta_bits)})" if meta_bits else ""
+                md_lines.append(f"- **{note['aspect']}**: {note['summary']}{suffix}")
+            md_lines.append("")
+
         if spec["reference_evidence"]:
             md_lines.append("### 레퍼런스 근거\n")
             for evidence in spec["reference_evidence"][:3]:
@@ -658,6 +734,28 @@ def _collect_anti_rules(anti_keywords: list[str]) -> list[str]:
             for aspect, rule in adaptation.items():
                 rules.append(f"({keyword}) {aspect}: {rule} — 이것을 피할 것")
     return rules
+
+
+def _collect_visual_guidance(brand_profile: dict, blueprint: dict) -> dict:
+    visual_reference = blueprint.get("visual_reference") or brand_profile.get("_resolved_visual_reference") or {}
+    component_style_hints = (
+        blueprint.get("component_style_hints")
+        or visual_reference.get("component_style_hints")
+        or {}
+    )
+    visual_motifs = blueprint.get("visual_language") or visual_reference.get("visual_motifs") or {}
+    layout_cues = blueprint.get("layout_cues") or visual_reference.get("layout_cues") or []
+
+    return {
+        "connected": bool(visual_reference or component_style_hints or visual_motifs or layout_cues),
+        "policy": "advisory-only: anatomy / states / accessibility stay grounded in spec and KB evidence",
+        "surface_style": (visual_motifs.get("surface_style") or {}).get("value"),
+        "density": (visual_motifs.get("density") or {}).get("value"),
+        "corner_style": (visual_motifs.get("corner_style") or {}).get("value"),
+        "typography_mood": (visual_motifs.get("typography_mood") or {}).get("value"),
+        "top_layout_cue": layout_cues[0]["id"] if layout_cues else None,
+        "component_style_hints": component_style_hints,
+    }
 
 
 def _build_token_bindings(name: str, family: str, source: dict) -> dict[str, str]:
@@ -709,6 +807,211 @@ def _build_adaptation_notes(
         notes.append(f"[금지] {rule}")
 
     return notes or ["브랜드 기본 규칙을 따릅니다."]
+
+
+def _build_visual_adaptation_notes(
+    name: str,
+    family: str,
+    archetype_key: str | None,
+    visual_guidance: dict,
+) -> list[dict]:
+    if not visual_guidance.get("connected"):
+        return []
+
+    hints = visual_guidance.get("component_style_hints") or {}
+    low_name = name.lower()
+    surface_style = visual_guidance.get("surface_style") or "flat"
+    density = visual_guidance.get("density") or "balanced"
+    top_layout_cue = visual_guidance.get("top_layout_cue")
+
+    notes: list[dict] = []
+    card_signal = hints.get("cards")
+    nav_signal = hints.get("navigation")
+    data_signal = hints.get("data_display")
+    hero_signal = hints.get("hero")
+    panel_signal = hints.get("panel")
+
+    card_like = archetype_key == "surface-card" or _matches_any_token(low_name, CARD_COMPONENT_TOKENS)
+    cta_like = family == "button" or archetype_key == "cta-inverse" or _matches_any_token(low_name, CTA_COMPONENT_TOKENS)
+    nav_like = family == "navigation" or archetype_key == "nav-bar" or _matches_any_token(low_name, NAV_DENSITY_TOKENS)
+    data_panel_like = family == "data-display" or _matches_any_token(low_name, DATA_PANEL_TOKENS)
+
+    if card_like or data_panel_like:
+        notes.append(
+            _make_visual_note(
+                aspect="card_elevation_tendency",
+                summary=_describe_card_elevation_tendency(surface_style, density),
+                source_hint="cards",
+                signal=card_signal,
+                extra_evidence=[f"surface={surface_style}", f"density={density}"],
+            )
+        )
+        notes.append(
+            _make_visual_note(
+                aspect="border_vs_fill_emphasis",
+                summary=_describe_border_fill_emphasis(surface_style),
+                source_hint="cards",
+                signal=card_signal,
+                extra_evidence=[f"surface={surface_style}"],
+            )
+        )
+
+    if cta_like:
+        cta_signal = hero_signal or card_signal
+        cta_source = "hero" if hero_signal else "cards" if card_signal else "layout_cue"
+        extra = [f"layout={top_layout_cue}"] if top_layout_cue else []
+        extra.append(f"density={density}")
+        notes.append(
+            _make_visual_note(
+                aspect="cta_prominence",
+                summary=_describe_cta_prominence(
+                    top_layout_cue,
+                    density,
+                    has_hero_signal=bool(hero_signal or archetype_key == "cta-inverse" or "cta" in low_name),
+                ),
+                source_hint=cta_source,
+                signal=cta_signal,
+                extra_evidence=extra,
+            )
+        )
+
+    if nav_like:
+        nav_source = "navigation" if nav_signal else "data_display" if data_signal else "layout_cue"
+        nav_primary_signal = nav_signal or data_signal
+        extra = [f"layout={top_layout_cue}"] if top_layout_cue else []
+        extra.append(f"density={density}")
+        notes.append(
+            _make_visual_note(
+                aspect="filter_nav_density",
+                summary=_describe_filter_nav_density(top_layout_cue, density),
+                source_hint=nav_source,
+                signal=nav_primary_signal,
+                extra_evidence=extra,
+            )
+        )
+
+    if data_panel_like:
+        panel_source = "data_display" if data_signal else "panel" if panel_signal else "cards"
+        panel_primary_signal = data_signal or panel_signal or card_signal
+        extra = [f"layout={top_layout_cue}"] if top_layout_cue else []
+        extra.extend([f"surface={surface_style}", f"density={density}"])
+        notes.append(
+            _make_visual_note(
+                aspect="chart_panel_framing",
+                summary=_describe_chart_panel_framing(surface_style, density, top_layout_cue),
+                source_hint=panel_source,
+                signal=panel_primary_signal,
+                extra_evidence=extra,
+            )
+        )
+
+    deduped: list[dict] = []
+    seen_aspects: set[str] = set()
+    for note in notes:
+        aspect = note.get("aspect")
+        if not aspect or aspect in seen_aspects:
+            continue
+        seen_aspects.add(aspect)
+        deduped.append(note)
+    return deduped
+
+
+def _make_visual_note(
+    aspect: str,
+    summary: str,
+    source_hint: str,
+    signal: dict | None,
+    extra_evidence: list[str] | None = None,
+) -> dict:
+    confidence = 0.45
+    direction = None
+    evidence: list[str] = []
+
+    if isinstance(signal, dict):
+        raw_confidence = signal.get("confidence")
+        if isinstance(raw_confidence, (int, float)):
+            confidence = round(float(raw_confidence), 2)
+        raw_direction = signal.get("direction")
+        if isinstance(raw_direction, str) and raw_direction.strip():
+            direction = raw_direction.strip()
+        for item in signal.get("evidence", []):
+            if isinstance(item, str) and item.strip():
+                evidence.append(item.strip())
+
+    for item in extra_evidence or []:
+        if item:
+            evidence.append(item)
+
+    deduped_evidence = list(dict.fromkeys(evidence))[:4]
+    return {
+        "aspect": aspect,
+        "summary": summary,
+        "source_hint": source_hint,
+        "confidence": confidence,
+        "direction": direction,
+        "evidence": deduped_evidence,
+    }
+
+
+def _matches_any_token(name: str, tokens: tuple[str, ...]) -> bool:
+    return any(token in name for token in tokens)
+
+
+def _describe_card_elevation_tendency(surface_style: str, density: str) -> str:
+    base = {
+        "flat": "카드는 거의 무그림자 평면으로 유지하고 tint/divider로 계층을 만든다.",
+        "tinted": "카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다.",
+        "outlined": "카드는 shadow보다 thin border framing으로 위계를 만든다.",
+        "elevated": "카드는 중간 이하 shadow만 허용하고 deep shadow stack은 피한다.",
+        "glassy": "카드는 translucent fill과 얕은 blur를 쓰되 contrast guardrail을 먼저 확보한다.",
+    }.get(surface_style, "카드는 과장된 depth 없이 절제된 surface hierarchy로 정리한다.")
+    density_note = {
+        "airy": "내부 여백은 넉넉하게 두고 card breathing room을 확보한다.",
+        "balanced": "padding은 균형 있게 유지하되 header/body 구획은 분명하게 둔다.",
+        "dense": "압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다.",
+    }.get(density, "spacing 계층은 안정적으로 유지한다.")
+    return f"{base} {density_note}"
+
+
+def _describe_border_fill_emphasis(surface_style: str) -> str:
+    return {
+        "flat": "fill 중심이다. neutral surface를 기본으로 하고 border는 상태 변화나 구획 보조에만 쓴다.",
+        "tinted": "fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다.",
+        "outlined": "border 중심이다. fill은 조용하게 유지하고 thin outline과 divider로 구조를 드러낸다.",
+        "elevated": "fill 중심이다. depth와 surface contrast가 우선이며 border는 선택적으로만 쓴다.",
+        "glassy": "fill 중심이되 edge contrast guardrail이 필요하다. 투명 fill과 얇은 경계선을 함께 관리한다.",
+    }.get(surface_style, "fill과 border를 동시에 과장하지 말고 한 축만 주도적으로 사용한다.")
+
+
+def _describe_cta_prominence(top_layout_cue: str | None, density: str, has_hero_signal: bool = False) -> str:
+    if has_hero_signal or top_layout_cue == "landing-narrative":
+        return "CTA prominence는 strong이다. 섹션당 primary CTA 1개만 fill/accent로 강하게 띄우고 secondary는 조용하게 후퇴시킨다."
+    if top_layout_cue in {"dashboard-grid", "data-review-surface", "split-pane-workspace"} or density == "dense":
+        return "CTA prominence는 restrained이다. 데이터 작업 흐름을 가리지 않도록 primary만 선명하게 두고 나머지는 text/ghost로 낮춘다."
+    return "CTA prominence는 medium이다. primary action은 분명하게 보이되 화면 전체를 지배하지 않게 유지한다."
+
+
+def _describe_filter_nav_density(top_layout_cue: str | None, density: str) -> str:
+    if top_layout_cue == "split-pane-workspace":
+        return "filter/nav density는 compact하다. 고정 sidebar와 scope controls를 묶고 toolbar는 1줄 우선으로 유지한다."
+    if top_layout_cue == "landing-narrative":
+        return "filter/nav density는 low다. top nav는 가볍게 유지하고 filter controls는 별도 섹션 또는 로컬 toolbar로 분리한다."
+    if top_layout_cue == "data-review-surface" or density == "dense":
+        return "filter/nav density는 compact하다. chip, scope, pagination을 촘촘하게 묶되 의미 단위별 group은 분리한다."
+    return "filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다."
+
+
+def _describe_chart_panel_framing(surface_style: str, density: str, top_layout_cue: str | None) -> str:
+    base = {
+        "flat": "차트 패널은 flush surface와 thin divider 중심으로 프레이밍한다.",
+        "tinted": "차트 패널은 soft tint frame과 restrained divider로 프레이밍한다.",
+        "outlined": "차트 패널은 thin border, labeled header, body/footer 분리로 프레이밍한다.",
+        "elevated": "차트 패널은 single raised surface로 프레이밍하고 nested card는 피한다.",
+        "glassy": "차트 패널은 translucent surface를 쓰더라도 axis, legend, tooltip 대비를 먼저 확보한다.",
+    }.get(surface_style, "차트 패널은 데이터를 읽기 쉬운 단일 frame으로 정리한다.")
+    if top_layout_cue in {"dashboard-grid", "data-review-surface"} or density == "dense":
+        return f"{base} 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다."
+    return f"{base} 헤더 메타데이터와 본문 visualization 사이의 breathing room을 충분히 둔다."
 
 
 def _find_kb_evidence(
