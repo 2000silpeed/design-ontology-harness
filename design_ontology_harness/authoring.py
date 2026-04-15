@@ -392,6 +392,8 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
 
 def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
     primitives = brand_profile.get("product_primitives", [])
+    visual_reference = brand_profile.get("_resolved_visual_reference") or {}
+    candidate_archetypes = visual_reference.get("candidate_component_archetypes", []) or []
     families: dict[str, dict] = {}
     all_components: list[dict] = []
 
@@ -413,6 +415,7 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
             "priority": spec["priority"],
             "required_states": spec["states"],
             "components": [],
+            "visual_reference_signals": [],
         }
 
     for primitive in primitives:
@@ -429,7 +432,13 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
             all_components.append(component)
             families.setdefault(
                 family,
-                {"family": family, "priority": "medium", "required_states": ["default"], "components": []},
+                {
+                    "family": family,
+                    "priority": "medium",
+                    "required_states": ["default"],
+                    "components": [],
+                    "visual_reference_signals": [],
+                },
             )
             families[family]["components"].append(component_name)
 
@@ -468,6 +477,7 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
                 "priority": family_specs.get(family, {}).get("priority", "medium"),
                 "required_states": family_specs.get(family, {}).get("states", ["default"]),
                 "components": [],
+                "visual_reference_signals": [],
             },
         )
         if component_name in families[family]["components"]:
@@ -483,9 +493,68 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
             }
         )
 
+    existing_components_by_name = {component["name"]: component for component in all_components}
+    for archetype in candidate_archetypes:
+        if archetype.get("confidence", 0.0) < 0.55:
+            continue
+        family = archetype.get("family") or "foundation"
+        family_entry = families.setdefault(
+            family,
+            {
+                "family": family,
+                "priority": family_specs.get(family, {}).get("priority", "medium"),
+                "required_states": family_specs.get(family, {}).get("states", ["default"]),
+                "components": [],
+                "visual_reference_signals": [],
+            },
+        )
+        signal = {
+            "id": archetype.get("id"),
+            "label": archetype.get("label"),
+            "confidence": archetype.get("confidence"),
+            "evidence": archetype.get("evidence", []),
+        }
+        family_entry["visual_reference_signals"].append(signal)
+
+        supports_primitive = (
+            (archetype.get("supports_primitives") or ["visual-reference"])[0]
+        )
+        for component_name in archetype.get("suggested_components", [])[:5]:
+            existing_component = existing_components_by_name.get(component_name)
+            if existing_component:
+                existing_family = existing_component.get("family")
+                if existing_family == "foundation" and family != "foundation":
+                    old_family_entry = families.get(existing_family)
+                    if old_family_entry and component_name in old_family_entry["components"]:
+                        old_family_entry["components"].remove(component_name)
+                    existing_component["family"] = family
+                    existing_component.setdefault("source", "visual-reference")
+                    existing_component.setdefault("archetype", archetype.get("id"))
+                    if component_name not in family_entry["components"]:
+                        family_entry["components"].append(component_name)
+                elif existing_family == family:
+                    if component_name not in family_entry["components"]:
+                        family_entry["components"].append(component_name)
+                continue
+            if component_name not in family_entry["components"]:
+                family_entry["components"].append(component_name)
+            all_components.append(
+                {
+                    "name": component_name,
+                    "family": family,
+                    "supports_primitive": supports_primitive,
+                    "status": "candidate-from-visual-reference",
+                    "source": "visual-reference",
+                    "archetype": archetype.get("id"),
+                    "must_document": ["anatomy", "states", "content rules", "accessibility", "dos and donts"],
+                }
+            )
+            existing_components_by_name[component_name] = all_components[-1]
+
     return {
         "families": sorted(families.values(), key=lambda item: (item["priority"] != "high", item["family"])),
         "components": all_components,
+        "candidate_component_archetypes": candidate_archetypes,
     }
 
 
@@ -613,9 +682,25 @@ def build_system_spec_markdown(
         for line in blueprint.get("governance", {}).get("implementation_guardrails", [])
     ) or "- No implementation guardrails defined."
     family_lines = "\n".join(
-        f"- **{family['family']}**: {', '.join(family.get('components', [])[:8]) or 'TBD'}"
+        (
+            f"- **{family['family']}**: {', '.join(family.get('components', [])[:8]) or 'TBD'}"
+            + (
+                f" / visual signals: "
+                + ", ".join(
+                    f"{signal.get('label')} ({signal.get('confidence')})"
+                    for signal in family.get("visual_reference_signals", [])[:2]
+                )
+                if family.get("visual_reference_signals")
+                else ""
+            )
+        )
         for family in component_inventory.get("families", [])
     )
+    archetype_lines = "\n".join(
+        f"- **{item.get('label')}** ({item.get('family')} / {item.get('confidence')}): "
+        f"{', '.join(item.get('suggested_components', [])[:5])}"
+        for item in component_inventory.get("candidate_component_archetypes", [])[:6]
+    ) or "- No visual-reference archetypes suggested."
     color_reference = brand_profile.get("_resolved_color_reference")
     visual_reference = brand_profile.get("_resolved_visual_reference")
     color_reference_lines = _build_color_reference_section(color_reference)
@@ -687,6 +772,9 @@ def build_system_spec_markdown(
 
 - **Product primitives**: {', '.join(brand_profile.get('product_primitives', []))}
 - **Required families**: {', '.join(item['family'] for item in component_inventory.get('families', []))}
+- **Visual-reference archetypes**:
+
+{archetype_lines}
 
 {family_lines}
 

@@ -185,6 +185,98 @@ DENSITY_DEFINITIONS = {
     "dense": {"dashboard": 3, "table": 3, "analytics": 2, "monitoring": 2, "ops": 2, "control": 2},
 }
 
+COMPONENT_ARCHETYPE_DEFINITIONS = [
+    {
+        "id": "workspace-shell",
+        "label": "Workspace shell",
+        "family": "navigation",
+        "suggested_components": [
+            "app-shell",
+            "sidebar-nav",
+            "workspace-switcher",
+            "breadcrumb",
+            "context-panel",
+        ],
+        "layout_matches": ["split-pane-workspace"],
+        "keywords": {"workspace": 3, "sidebar": 3, "navigation": 2, "panel": 2, "shell": 2},
+        "primitive_matches": ["workspace navigation"],
+    },
+    {
+        "id": "dashboard-insight-module",
+        "label": "Dashboard insight module",
+        "family": "data-display",
+        "suggested_components": [
+            "stat-card",
+            "insight-card",
+            "chart-panel",
+            "section-header",
+            "filter-chip",
+        ],
+        "layout_matches": ["dashboard-grid"],
+        "keywords": {"dashboard": 3, "analytics": 2, "metric": 2, "kpi": 2, "chart": 2, "insight": 2},
+        "primitive_matches": ["dashboard cards", "charts and visualization"],
+    },
+    {
+        "id": "data-review-table",
+        "label": "Data review table",
+        "family": "data-display",
+        "suggested_components": [
+            "data-table",
+            "column-header",
+            "row-actions",
+            "filter-toolbar",
+            "pagination",
+        ],
+        "layout_matches": ["data-review-surface", "dashboard-grid"],
+        "keywords": {"table": 3, "data": 2, "grid": 2, "audit": 2, "log": 2, "records": 2, "filter": 1},
+        "primitive_matches": ["data tables", "search and filter"],
+    },
+    {
+        "id": "editorial-content-block",
+        "label": "Editorial content block",
+        "family": "editorial",
+        "suggested_components": [
+            "content-card",
+            "featured-story-card",
+            "section-header",
+            "content-meta",
+            "byline-row",
+        ],
+        "layout_matches": ["editorial-feed"],
+        "keywords": {"editorial": 3, "article": 2, "content": 2, "story": 2, "magazine": 2},
+        "primitive_matches": ["rich text editor"],
+    },
+    {
+        "id": "conversation-sidecar",
+        "label": "Conversation sidecar",
+        "family": "overlay",
+        "suggested_components": [
+            "chat-panel",
+            "message-thread",
+            "message-composer",
+            "context-drawer",
+        ],
+        "layout_matches": ["conversation-panel", "split-pane-workspace"],
+        "keywords": {"chat": 3, "assistant": 3, "message": 2, "conversation": 2, "panel": 1},
+        "primitive_matches": ["chat and messaging"],
+    },
+    {
+        "id": "marketing-hero-stack",
+        "label": "Marketing hero stack",
+        "family": "marketing",
+        "suggested_components": [
+            "hero-section",
+            "hero-headline",
+            "hero-visual",
+            "cta-button-group",
+            "trust-strip",
+        ],
+        "layout_matches": ["landing-narrative"],
+        "keywords": {"hero": 3, "landing": 3, "pricing": 2, "testimonial": 2, "cta": 2, "marketing": 2},
+        "primitive_matches": ["hero section", "pricing and plans", "social proof"],
+    },
+]
+
 
 def resolve_visual_reference(
     reference_config: dict,
@@ -237,6 +329,13 @@ def resolve_visual_reference(
         layout_cues=layout_cues,
         brand_profile=brand_profile or {},
     )
+    candidate_component_archetypes = _build_candidate_component_archetypes(
+        selected_images=selected_images,
+        layout_cues=layout_cues,
+        visual_motifs=visual_motifs,
+        config=config,
+        brand_profile=brand_profile or {},
+    )
     reference_mood_summary = _build_reference_mood_summary(
         visual_motifs=visual_motifs,
         layout_cues=layout_cues,
@@ -263,6 +362,7 @@ def resolve_visual_reference(
         "visual_motifs": visual_motifs,
         "layout_cues": layout_cues,
         "component_style_hints": component_style_hints,
+        "candidate_component_archetypes": candidate_component_archetypes,
         "reference_mood_summary": reference_mood_summary,
         "brand_context": _build_brand_context(brand_profile or {}),
     }
@@ -702,6 +802,70 @@ def _build_reference_mood_summary(
         "avoidance": avoid,
         "component_focus": sorted(component_style_hints.keys()),
     }
+
+
+def _build_candidate_component_archetypes(
+    selected_images: list[dict],
+    layout_cues: list[dict],
+    visual_motifs: dict,
+    config: dict,
+    brand_profile: dict,
+) -> list[dict]:
+    term_counts = _collect_term_counts(selected_images, config, brand_profile)
+    layout_confidence = {cue["id"]: cue["confidence"] for cue in layout_cues}
+    primitives = {item.lower() for item in brand_profile.get("product_primitives", [])}
+
+    candidates: list[dict] = []
+    for definition in COMPONENT_ARCHETYPE_DEFINITIONS:
+        score = 0.0
+        evidence: list[str] = []
+
+        for layout_id in definition.get("layout_matches", []):
+            confidence = layout_confidence.get(layout_id, 0.0)
+            if confidence:
+                score += 6 * confidence
+                evidence.append(f"layout={layout_id} ({confidence})")
+
+        for keyword, keyword_weight in definition.get("keywords", {}).items():
+            hits = term_counts.get(keyword, 0)
+            if hits:
+                score += hits * keyword_weight
+                evidence.append(f"{keyword} x{hits}")
+
+        for primitive in definition.get("primitive_matches", []):
+            if primitive.lower() in primitives:
+                score += 3
+                evidence.append(f"primitive={primitive}")
+
+        if definition["id"] == "workspace-shell":
+            density = (visual_motifs.get("density") or {}).get("value")
+            if density in {"balanced", "dense"}:
+                score += 1
+        if definition["id"] == "editorial-content-block":
+            mood = (visual_motifs.get("typography_mood") or {}).get("value")
+            if mood == "editorial":
+                score += 2
+        if definition["id"] == "dashboard-insight-module":
+            if (visual_motifs.get("density") or {}).get("value") == "dense":
+                score += 1.5
+
+        if score < 4.5:
+            continue
+
+        candidates.append(
+            {
+                "id": definition["id"],
+                "label": definition["label"],
+                "family": definition["family"],
+                "confidence": _confidence_from_score(score, 0.25),
+                "suggested_components": definition["suggested_components"],
+                "supports_primitives": definition.get("primitive_matches", []),
+                "evidence": evidence[:6],
+            }
+        )
+
+    candidates.sort(key=lambda item: (-item["confidence"], item["label"]))
+    return candidates[:6]
 
 
 def _build_brand_context(brand_profile: dict) -> dict:

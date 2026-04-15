@@ -146,6 +146,7 @@ def build_blueprint(
         "visual_language": (brand_profile.get("_resolved_visual_reference") or {}).get("visual_motifs"),
         "layout_cues": (brand_profile.get("_resolved_visual_reference") or {}).get("layout_cues"),
         "component_style_hints": (brand_profile.get("_resolved_visual_reference") or {}).get("component_style_hints"),
+        "candidate_component_archetypes": (brand_profile.get("_resolved_visual_reference") or {}).get("candidate_component_archetypes"),
         "reference_mood_summary": (brand_profile.get("_resolved_visual_reference") or {}).get("reference_mood_summary"),
         "font_system": brand_profile.get("_resolved_font_system"),
         "css_extraction": load_css_extraction(output_dir),
