@@ -5,20 +5,17 @@ import json
 import shutil
 from pathlib import Path
 
-import httpx
-
 from .agent_packs import scaffold_agent_pack
 from .benchmark_kb import get_benchmark_systems, get_benchmark_by_keywords, save_benchmark_report
-from .cli_shared import run_pipeline
 from .component_specs import generate_component_specs, write_component_specs
 from .css_pipeline import run_and_save as run_css_extraction
 from .kb import build_knowledge_base, load_knowledge_base
 from .models import DocumentRecord, ReferenceLink
 from .scaffold import load_project, resolve_kb_dir, scaffold_project
-from .seed_article import fetch_seed_article
 from .spec_analyzer import analyze_spec, analyze_spec_file, build_component_list, detected_to_primitives
 from .synthesis import build_blueprint, load_brand_profile
 from .utils import ensure_dir, write_json, write_jsonl
+from .visual_queries import generate_visual_queries
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -87,6 +84,21 @@ def build_parser() -> argparse.ArgumentParser:
     project_parser = subparsers.add_parser("run-project", help="Run a scaffolded harness project against an existing KB")
     project_parser.add_argument("--project-dir", required=True, help="Project directory created by init")
     project_parser.add_argument("--kb-dir", default=None, help="Optional override for the knowledge base path")
+
+    visual_parser = subparsers.add_parser("analyze-visuals", help="Analyze local visual references independently from the KB flow")
+    visual_target = visual_parser.add_mutually_exclusive_group(required=True)
+    visual_target.add_argument("--brand-profile", default=None, help="Path to a JSON brand profile")
+    visual_target.add_argument("--project-dir", default=None, help="Optional project directory created by init")
+    visual_parser.add_argument("--output-dir", default=None, help="Optional directory to write visual analysis outputs")
+
+    query_parser = subparsers.add_parser("generate-visual-queries", help="Generate Pinterest/image-search query candidates from brand profile and spec")
+    query_target = query_parser.add_mutually_exclusive_group(required=True)
+    query_target.add_argument("--brand-profile", default=None, help="Path to a JSON brand profile")
+    query_target.add_argument("--project-dir", default=None, help="Optional project directory created by init")
+    query_parser.add_argument("--spec", "--spec-file", dest="spec_file", default=None, help="Optional spec file used to bias the query set")
+    query_parser.add_argument("--limit", type=int, default=16, help="Maximum number of query suggestions to generate")
+    query_parser.add_argument("--output-dir", default=None, help="Optional directory to write query suggestions")
+    query_parser.add_argument("--sync-brand-profile", action="store_true", help="Write generated queries back into brand_profile.visual_reference.query")
 
     analyze_parser = subparsers.add_parser("analyze-spec", help="Analyze a product spec to auto-detect needed UI components")
     analyze_parser.add_argument("--spec-file", required=True, help="Path to a product spec file (markdown, text)")
@@ -224,6 +236,83 @@ def main() -> None:
         print(f"  -> {output_dir}/components/component_specs.json")
         return
 
+    if args.command == "analyze-visuals":
+        brand_profile_path, project_dir, manifest = _resolve_brand_profile_target(
+            brand_profile_arg=args.brand_profile,
+            project_dir_arg=args.project_dir,
+        )
+        brand_profile = load_brand_profile(brand_profile_path)
+        if not isinstance(brand_profile.get("visual_reference"), dict):
+            raise SystemExit("brand_profile.visual_reference 가 설정되지 않았습니다.")
+
+        visuals_dir = _resolve_support_output_dir(
+            raw_output=args.output_dir,
+            project_dir=project_dir,
+            manifest=manifest,
+            folder_name="visuals",
+        )
+        visual_report = brand_profile.get("_resolved_visual_reference") or {}
+        issues = brand_profile.get("_visual_reference_issues", [])
+        _write_visual_analysis_outputs(visuals_dir, brand_profile_path, visual_report, issues)
+
+        coverage = visual_report.get("coverage", {}) or {}
+        motifs = visual_report.get("visual_motifs", {}) or {}
+        layout_cues = visual_report.get("layout_cues", []) or []
+        top_layout = layout_cues[0]["id"] if layout_cues else "n/a"
+        print(f"[analyze-visuals] 시각 레퍼런스 분석 완료: {visuals_dir}")
+        print(
+            f"  -> 소스 {coverage.get('source_count', 0)}개 | "
+            f"이미지 {coverage.get('image_count', 0)}개 | "
+            f"selected {coverage.get('selected_image_count', 0)}개"
+        )
+        print(
+            f"  -> density {(motifs.get('density') or {}).get('value', 'n/a')} | "
+            f"surface {(motifs.get('surface_style') or {}).get('value', 'n/a')} | "
+            f"layout {top_layout}"
+        )
+        print(f"  -> visual_reference_report.json, visual_motifs.json, layout_cues.json 저장")
+        if issues:
+            print("  -> 이슈:")
+            for issue in issues[:5]:
+                print(f"     - {issue}")
+        return
+
+    if args.command == "generate-visual-queries":
+        brand_profile_path, project_dir, manifest = _resolve_brand_profile_target(
+            brand_profile_arg=args.brand_profile,
+            project_dir_arg=args.project_dir,
+        )
+        brand_profile = load_brand_profile(brand_profile_path)
+        spec_path = _resolve_spec_path(project_dir, args.spec_file)
+        if args.spec_file and not spec_path.exists():
+            raise SystemExit(f"파일을 찾을 수 없습니다: {spec_path}")
+
+        spec_text = spec_path.read_text(encoding="utf-8") if spec_path and spec_path.exists() else None
+        report = generate_visual_queries(brand_profile=brand_profile, spec_text=spec_text, limit=args.limit)
+        visuals_dir = _resolve_support_output_dir(
+            raw_output=args.output_dir,
+            project_dir=project_dir,
+            manifest=manifest,
+            folder_name="visuals",
+        )
+        write_json(visuals_dir / "visual_query_suggestions.json", report)
+
+        print(f"[generate-visual-queries] {report['query_count']}개 query 생성 완료: {visuals_dir}/visual_query_suggestions.json")
+        if spec_path and spec_path.exists():
+            print(f"  -> spec 반영: {spec_path}")
+        else:
+            print("  -> spec 미사용: brand_profile.product_primitives 기준")
+        for index, item in enumerate(report["queries"][: min(10, len(report["queries"]))], start=1):
+            print(f"  {index:2d}. {item['query']} [{item['intent']}]")
+
+        if args.sync_brand_profile:
+            raw_profile = json.loads(brand_profile_path.read_text(encoding="utf-8"))
+            visual_reference = raw_profile.setdefault("visual_reference", {})
+            visual_reference["query"] = [item["query"] for item in report["queries"]]
+            write_json(brand_profile_path, raw_profile)
+            print(f"  -> {brand_profile_path} 의 visual_reference.query 를 업데이트했습니다.")
+        return
+
     if args.command == "init":
         result = scaffold_project(
             project_dir=Path(args.project_dir),
@@ -247,6 +336,8 @@ def main() -> None:
         )
         print(f"[init-agent-pack] 에이전트 팩 생성 완료: {args.target_repo}")
         return
+
+    import httpx
 
     headers = {
         "User-Agent": "Mozilla/5.0 (compatible; DesignOntologyHarness/0.1)",
@@ -279,6 +370,8 @@ def main() -> None:
             return
 
         if args.command == "extract-seed":
+            from .seed_article import fetch_seed_article
+
             seed_article = fetch_seed_article(client, args.seed_url)
             write_json(output_dir / "seed_article.json", seed_article.to_dict())
             write_jsonl(
@@ -410,6 +503,8 @@ def main() -> None:
             print(f"  -> system_spec.md 를 확인하세요.")
             return
 
+        from .cli_shared import run_pipeline
+
         result = run_pipeline(
             client=client,
             seed_url=args.seed_url,
@@ -449,6 +544,84 @@ def _warn_placeholder_profile(profile: dict) -> None:
     if found:
         print(f"[warning] brand_profile.json에 아직 기본값이 남아 있는 항목: {', '.join(found)}")
         print(f"  -> 실제 브랜드 정보를 입력해야 의미 있는 산출물이 나옵니다.")
+
+
+def _resolve_brand_profile_target(
+    brand_profile_arg: str | None,
+    project_dir_arg: str | None,
+) -> tuple[Path, Path | None, dict | None]:
+    if project_dir_arg:
+        project_dir = Path(project_dir_arg)
+        manifest = load_project(project_dir)
+        brand_profile_path = project_dir / manifest["brand_profile"]
+        if not brand_profile_path.exists():
+            raise SystemExit(f"brand_profile.json 을 찾을 수 없습니다: {brand_profile_path}")
+        return brand_profile_path, project_dir, manifest
+
+    if not brand_profile_arg:
+        raise SystemExit("Provide either --brand-profile or --project-dir.")
+
+    brand_profile_path = Path(brand_profile_arg)
+    if not brand_profile_path.exists():
+        raise SystemExit(f"파일을 찾을 수 없습니다: {brand_profile_path}")
+    return brand_profile_path, None, None
+
+
+def _resolve_support_output_dir(
+    raw_output: str | None,
+    project_dir: Path | None,
+    manifest: dict | None,
+    folder_name: str,
+) -> Path:
+    if raw_output:
+        return ensure_dir(Path(raw_output))
+    if project_dir and manifest:
+        build_root = ensure_dir(project_dir / manifest.get("build_dir", "build"))
+        return ensure_dir(build_root / folder_name)
+    return ensure_dir(Path("data") / folder_name)
+
+
+def _resolve_spec_path(project_dir: Path | None, explicit_spec: str | None) -> Path | None:
+    if explicit_spec:
+        return Path(explicit_spec)
+    if not project_dir:
+        return None
+    for candidate in [project_dir / "spec.md", project_dir / "PRD.md"]:
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def _write_visual_analysis_outputs(
+    output_dir: Path,
+    brand_profile_path: Path,
+    visual_report: dict,
+    issues: list[str],
+) -> None:
+    motifs = visual_report.get("visual_motifs", {}) or {}
+    layout_cues = visual_report.get("layout_cues", []) or []
+    component_hints = visual_report.get("component_style_hints", {}) or {}
+    archetypes = visual_report.get("candidate_component_archetypes", []) or []
+    mood_summary = visual_report.get("reference_mood_summary", {}) or {}
+
+    write_json(output_dir / "visual_reference_report.json", visual_report)
+    write_json(output_dir / "visual_motifs.json", motifs)
+    write_json(output_dir / "layout_cues.json", layout_cues)
+    write_json(output_dir / "component_style_hints.json", component_hints)
+    write_json(output_dir / "candidate_component_archetypes.json", archetypes)
+    write_json(output_dir / "reference_mood_summary.json", mood_summary)
+    write_json(
+        output_dir / "visual_analysis_summary.json",
+        {
+            "brand_profile": str(brand_profile_path),
+            "issues": issues,
+            "coverage": visual_report.get("coverage", {}),
+            "top_layout_cue": layout_cues[0]["id"] if layout_cues else None,
+            "density": (motifs.get("density") or {}).get("value"),
+            "surface_style": (motifs.get("surface_style") or {}).get("value"),
+            "component_hint_keys": sorted(component_hints.keys()),
+        },
+    )
 
 
 if __name__ == "__main__":

@@ -4,9 +4,6 @@ import json
 from pathlib import Path
 from urllib.parse import urlparse
 
-import httpx
-
-from .cli_shared import run_pipeline
 from .css_pipeline import run_css_extraction
 from .models import DocumentRecord, ReferenceLink, SeedArticle, utc_now_iso
 from .ontology import build_ontology_outputs
@@ -21,6 +18,8 @@ def build_knowledge_base(
     max_pages_per_source: int,
     max_depth: int,
 ) -> dict:
+    from .cli_shared import run_pipeline
+
     ensure_dir(kb_dir)
     seeds_dir = ensure_dir(kb_dir / "seeds")
 

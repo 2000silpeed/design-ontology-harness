@@ -4,7 +4,6 @@ import re
 from typing import Iterable
 from urllib.parse import urlparse
 
-import httpx
 from bs4 import BeautifulSoup
 
 from .models import ReferenceLink, SeedArticle, utc_now_iso

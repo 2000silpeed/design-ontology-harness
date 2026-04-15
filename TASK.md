@@ -169,7 +169,7 @@
 
 ### Stage A: 로컬 이미지 기반 visual_reference (우선 구현)
 
-- [ ] **V-1. brand_profile 스키마 확장**
+- [x] **V-1. brand_profile 스키마 확장**
   - 대상: `schemas/brand_profile.schema.json`, `config/brand_profile.example.json`
   - `visual_reference` 필드 추가:
     - `mode`: `local-images` | `pinterest-assisted`
@@ -180,7 +180,7 @@
     - `extraction_policy`: `advisory-only` | `allow-token-suggestions`
   - `notes`, `must_include`, `avoid_patterns` 같은 가드레일도 포함
 
-- [ ] **V-2. visual_reference 파서 및 정규화 모듈 추가**
+- [x] **V-2. visual_reference 파서 및 정규화 모듈 추가**
   - 신규: `design_ontology_harness/visual_reference.py`
   - 입력:
     - 로컬 이미지 파일
@@ -191,7 +191,7 @@
     - 이미지별 메타데이터, 출처, 해상도, aspect ratio
     - 중복/유사 이미지 그룹핑
 
-- [ ] **V-3. 이미지 기반 시각 규칙 추출기**
+- [x] **V-3. 이미지 기반 시각 규칙 추출기**
   - 추출 항목:
     - dominant / supporting / neutral / accent 비중
     - surface style: flat / tinted / elevated / outlined
@@ -204,7 +204,7 @@
     - `layout_cues.json`
     - `component_style_hints.json`
 
-- [ ] **V-4. 컴포넌트 archetype 탐지**
+- [x] **V-4. 컴포넌트 archetype 탐지**
   - 이미지에서 추정 가능한 archetype만 다룸:
     - top nav
     - sidebar
@@ -248,7 +248,7 @@
 
 ### Stage C: synthesis 및 산출물 통합
 
-- [ ] **V-8. synthesis에 visual reference 결합**
+- [x] **V-8. synthesis에 visual reference 결합**
   - 대상: `synthesis.py`
   - `load_brand_profile()`에서 `_resolved_visual_reference` 생성
   - blueprint에 아래 항목 추가:
@@ -258,7 +258,7 @@
     - `reference_mood_summary`
   - 공식 KB와 충돌 시 KB 우선, visual reference는 보조로만 사용
 
-- [ ] **V-9. authoring 산출물 확장**
+- [x] **V-9. authoring 산출물 확장**
   - 대상: `authoring.py`
   - `system_spec.md`에 신규 섹션 추가:
     - Visual Direction
@@ -274,7 +274,7 @@
     - color balance hints
     - 정도를 넣음
 
-- [ ] **V-10. component_specs 연계**
+- [x] **V-10. component_specs 연계**
   - 대상: `component_specs.py`
   - 이미지 기반 규칙으로 컴포넌트별 adaptation hint 추가:
     - card elevation 성향
@@ -286,7 +286,7 @@
 
 ### Stage D: CLI / 문서 / 운영 흐름
 
-- [ ] **V-11. CLI 확장**
+- [x] **V-11. CLI 확장**
   - 후보 명령:
     - `analyze-visuals --brand-profile ...`
     - `generate-visual-queries --brand-profile ... --spec ...`
@@ -353,3 +353,7 @@
 | 2026-04-12 | 4-2 35개 실서비스 벤치마크 KB | done |
 | 2026-04-12 | Phase 5 온톨로지 그래프 (O-1~O-6) | done |
 | 2026-04-15 | Phase 6 Visual Reference Harness 상세 계획 수립 | done |
+| 2026-04-15 | V-1~V-2 visual_reference 스키마/파서/정규화 모듈 구현 | done |
+| 2026-04-15 | V-3 visual motifs / layout cues / component style hints 구현 | done |
+| 2026-04-15 | V-4 visual archetype 추출 + component inventory 연결 | done |
+| 2026-04-15 | V-8~V-9 synthesis / system_spec / token_schema 통합 | done |
