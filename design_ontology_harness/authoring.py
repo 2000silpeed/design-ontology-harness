@@ -878,6 +878,14 @@ def _build_typography_category(editorial_system: bool, font_system: dict | None)
     base["line_height_preset"] = font_system.get("line_height_preset", "normal")
     base["strategy"] = font_system.get("strategy", [])
     base["loading"] = font_system.get("loading", {})
+    base["korean_rationale"] = font_system.get("korean_rationale")
+    base["pitfall_warnings"] = font_system.get("pitfall_warnings", [])
+    base["letter_spacing"] = font_system.get("letter_spacing")
+
+    script_guardrails = font_system.get("script_guardrails")
+    if script_guardrails:
+        base["script_guardrails"] = script_guardrails
+        base["rules"].extend(script_guardrails.get("rules", []))
 
     if type_scale:
         base["type_scale"] = {
@@ -930,10 +938,58 @@ def _build_typography_section(typography: dict) -> str:
     if body_note:
         lines.append(f"- **Body note**: {body_note}")
 
+    korean_rationale = typography.get("korean_rationale") or {}
+    if korean_rationale:
+        lines.append(
+            "- **Korean rationale**: "
+            f"{korean_rationale.get('font', 'N/A')} — {korean_rationale.get('reason', '')}"
+        )
+
+    letter_spacing = typography.get("letter_spacing") or {}
+    heading_tracking = (letter_spacing.get("heading_tracking") or {})
+    if heading_tracking:
+        tracking_str = ", ".join(f"{k}={v}" for k, v in heading_tracking.items())
+        lines.append(f"- **Heading tracking**: {tracking_str}")
+
+    script_guardrails = typography.get("script_guardrails") or {}
+    if script_guardrails:
+        headline_font = script_guardrails.get("headline_font") or {}
+        body_font = script_guardrails.get("body_font") or {}
+        wrap = script_guardrails.get("wrap") or {}
+        headline_wrap = wrap.get("headline") or {}
+        body_wrap = wrap.get("body") or {}
+
+        lines.append(f"- **Primary script**: {script_guardrails.get('primary_script', 'N/A')}")
+        lines.append(
+            "- **Hangul headline defaults**: "
+            f"{headline_font.get('name', 'N/A')} | line-height {headline_font.get('line_height', 'n/a')} | "
+            f"tracking {headline_font.get('letter_spacing', 'n/a')}"
+        )
+        lines.append(
+            "- **Hangul body defaults**: "
+            f"{body_font.get('name', 'N/A')} | line-height {body_font.get('line_height', 'n/a')} | "
+            f"label line-height {body_font.get('ui_label_line_height', 'n/a')}"
+        )
+        lines.append(
+            "- **Wrap defaults**: "
+            f"headline word-break={headline_wrap.get('word_break', 'n/a')}, "
+            f"headline text-wrap={headline_wrap.get('text_wrap', 'n/a')}, "
+            f"body word-break={body_wrap.get('word_break', 'n/a')}"
+        )
+        scale = script_guardrails.get("scale") or {}
+        if scale.get("guidance"):
+            lines.append(f"- **Scale guidance**: {scale['guidance']}")
+        for warning in script_guardrails.get("warnings", [])[:3]:
+            lines.append(f"- **Hangul warning**: {warning}")
+
     loading = typography.get("loading", {})
     if loading.get("fonts"):
         font_list = ", ".join(f"{f['font']}({f['priority']})" for f in loading["fonts"])
         lines.append(f"- **Loading**: {font_list} | display: {loading.get('display', 'swap')}")
+
+    pitfall_warnings = typography.get("pitfall_warnings", [])
+    for warning in pitfall_warnings[:3]:
+        lines.append(f"- **Pitfall warning**: {warning}")
 
     return "\n".join(lines)
 

@@ -385,6 +385,86 @@ FONT_DB: list[dict] = [
 
 
 # ──────────────────────────────────────────────
+# 1-b. Korean typography implementation profiles
+# ──────────────────────────────────────────────
+
+KOREAN_TYPOGRAPHY_PROFILES: dict[str, dict[str, str]] = {
+    "Pretendard": {
+        "heading_line_height": "1.25-1.35",
+        "body_line_height": "1.6-1.7",
+        "ui_label_line_height": "1.4-1.5",
+        "heading_tracking": "0em",
+        "body_tracking": "0em",
+        "display_scale_bias": "stable",
+        "note": "기본 자간/행간이 안정적이라 추가 보정 없이 바로 쓰기 좋다.",
+    },
+    "Wanted Sans": {
+        "heading_line_height": "1.2-1.3",
+        "body_line_height": "1.5-1.6",
+        "ui_label_line_height": "1.4-1.5",
+        "heading_tracking": "-0.01em",
+        "body_tracking": "0em",
+        "display_scale_bias": "stable",
+        "note": "현대적 헤딩에는 강하지만 장문 본문은 Pretendard보다 여유를 덜 준다.",
+    },
+    "Noto Sans KR": {
+        "heading_line_height": "1.25-1.4",
+        "body_line_height": "1.6-1.8",
+        "ui_label_line_height": "1.45-1.55",
+        "heading_tracking": "-0.01em",
+        "body_tracking": "-0.01em",
+        "display_scale_bias": "reduce-one-step",
+        "note": "글자폭이 넓어 밀집 UI에서는 더 넓은 inline space와 보수적인 display scale이 필요하다.",
+    },
+    "SUIT": {
+        "heading_line_height": "1.25-1.35",
+        "body_line_height": "1.6-1.7",
+        "ui_label_line_height": "1.4-1.5",
+        "heading_tracking": "0em",
+        "body_tracking": "0em",
+        "display_scale_bias": "stable",
+        "note": "Pretendard 계열의 안정성을 유지하면서 더 부드러운 톤을 낸다.",
+    },
+    "Spoqa Han Sans Neo": {
+        "heading_line_height": "1.2-1.3",
+        "body_line_height": "1.5-1.6",
+        "ui_label_line_height": "1.4-1.5",
+        "heading_tracking": "-0.02em",
+        "body_tracking": "0em",
+        "display_scale_bias": "stable",
+        "note": "조밀한 UI에서는 tracking 보정이 유효하지만 장문 본문용으로는 여유가 적다.",
+    },
+    "IBM Plex Sans KR": {
+        "heading_line_height": "1.2-1.3",
+        "body_line_height": "1.5-1.6",
+        "ui_label_line_height": "1.4-1.5",
+        "heading_tracking": "0em",
+        "body_tracking": "0em",
+        "display_scale_bias": "stable",
+        "note": "기업형 제품에서 안정적이며 과한 tracking 보정보다 정확한 weight 운용이 중요하다.",
+    },
+    "Noto Serif KR": {
+        "heading_line_height": "1.2-1.4",
+        "body_line_height": "1.7-1.9",
+        "ui_label_line_height": "avoid-small-serif-ui",
+        "heading_tracking": "-0.02em",
+        "body_tracking": "0em",
+        "display_scale_bias": "reduce-one-step",
+        "note": "넓은 획과 글자폭 때문에 헤딩은 짧고 크게, 본문은 충분한 행간과 여백이 필요하다.",
+    },
+    "KoPubWorldBatang": {
+        "heading_line_height": "1.25-1.45",
+        "body_line_height": "1.8-2.0",
+        "ui_label_line_height": "avoid-small-serif-ui",
+        "heading_tracking": "0em",
+        "body_tracking": "0em",
+        "display_scale_bias": "reduce-one-step",
+        "note": "전통적 바탕체라 웹 UI보다 문서형 레이아웃에서 더 넓은 measure와 행간이 필요하다.",
+    },
+}
+
+
+# ──────────────────────────────────────────────
 # 2. 브랜드 키워드 → 서체 성격 매핑
 # ──────────────────────────────────────────────
 
@@ -702,6 +782,14 @@ def resolve_font_system(brand_profile: dict) -> dict:
         "loading": _build_loading_strategy(heading_font, body_font, mono_font, korean_font, platforms),
         "pitfall_warnings": pitfall_warnings,
         "letter_spacing": letter_spacing_note,
+        "script_guardrails": _build_script_guardrails(
+            heading=heading_font,
+            body=body_font,
+            korean=korean_font,
+            brand_keywords=brand_keywords,
+            product_type=product_type,
+            needs_korean=needs_korean,
+        ),
     }
     return result
 
@@ -981,6 +1069,138 @@ def _build_loading_strategy(
         "display": "swap",
         "subset": "latin,korean" if korean else "latin",
         "note": "본문 서체를 preload, 모노스페이스는 lazy load. font-display: swap으로 FOUT 최소화.",
+    }
+
+
+def _build_script_guardrails(
+    heading: dict | None,
+    body: dict | None,
+    korean: dict | None,
+    brand_keywords: list[str],
+    product_type: str,
+    needs_korean: bool,
+) -> dict | None:
+    if not needs_korean:
+        return None
+
+    headline_font = _pick_korean_script_font(heading, korean, fallback=body)
+    body_font = _pick_korean_script_font(body, korean, fallback=heading)
+    headline_profile = _lookup_korean_typography_profile(headline_font)
+    body_profile = _lookup_korean_typography_profile(body_font)
+
+    headline_name = (headline_font or {}).get("name", "Korean heading font")
+    body_name = (body_font or {}).get("name", "Korean body font")
+    headline_ctx = (headline_font or {}).get("korean_context", {})
+    body_ctx = (body_font or {}).get("korean_context", {})
+
+    conservative_scale = headline_profile.get("display_scale_bias") == "reduce-one-step"
+    editorial_headline = (
+        "editorial" in brand_keywords
+        or "luxury" in brand_keywords
+        or "serif" in (headline_font or {}).get("family", "")
+        or product_type in {"editorial", "content", "luxury", "fashion"}
+    )
+    if editorial_headline:
+        conservative_scale = True
+
+    rules = [
+        "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
+        "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
+        "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
+    ]
+    if conservative_scale:
+        rules.append("폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다.")
+    if body_ctx.get("glyph_width") == "넓음":
+        rules.append(f"{body_name}처럼 글자폭이 넓은 본문은 카드, 배지, 표 헤더에 더 넓은 inline space를 남긴다.")
+    if headline_profile.get("ui_label_line_height") == "avoid-small-serif-ui":
+        rules.append(f"{headline_name}는 작은 UI 라벨/배지용으로 쓰지 않고, 그런 슬롯은 sans body font로 분리한다.")
+
+    warnings = []
+    if headline_ctx.get("avoid_for_kr"):
+        warnings.extend(headline_ctx.get("avoid_for_kr", [])[:2])
+    if body_ctx.get("avoid_for_kr"):
+        warnings.extend(body_ctx.get("avoid_for_kr", [])[:2])
+
+    return {
+        "primary_script": "korean",
+        "headline_font": {
+            "name": headline_name,
+            "line_height": headline_profile.get("heading_line_height"),
+            "letter_spacing": headline_profile.get("heading_tracking"),
+            "note": headline_profile.get("note") or headline_ctx.get("note_kr"),
+        },
+        "body_font": {
+            "name": body_name,
+            "line_height": body_profile.get("body_line_height"),
+            "ui_label_line_height": body_profile.get("ui_label_line_height"),
+            "letter_spacing": body_profile.get("body_tracking"),
+            "note": body_profile.get("note") or body_ctx.get("note_kr"),
+        },
+        "wrap": {
+            "headline": {
+                "word_break": "keep-all",
+                "overflow_wrap": "normal",
+                "text_wrap": "balance",
+            },
+            "body": {
+                "word_break": "keep-all",
+                "overflow_wrap": "normal",
+            },
+            "avoid": [
+                "forced <br /> before breakpoint QA",
+                "English-first ch heuristics without real Korean copy review",
+            ],
+        },
+        "scale": {
+            "headline_start": "one-step-smaller" if conservative_scale else "default-scale",
+            "guidance": (
+                "한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다."
+                if conservative_scale
+                else "기본 스케일을 사용할 수 있지만 한글 문장 기준으로 실제 wrap을 먼저 검증한다."
+            ),
+        },
+        "warnings": warnings,
+        "rules": rules,
+    }
+
+
+def _pick_korean_script_font(
+    preferred: dict | None,
+    korean: dict | None,
+    fallback: dict | None = None,
+) -> dict | None:
+    if preferred and preferred.get("korean_native"):
+        return preferred
+    if korean and korean.get("korean_native"):
+        return korean
+    return preferred or korean or fallback
+
+
+def _lookup_korean_typography_profile(font: dict | None) -> dict[str, str]:
+    if not font:
+        return {}
+    profile = KOREAN_TYPOGRAPHY_PROFILES.get(font.get("name"), {})
+    if profile:
+        return profile
+    family = font.get("family", "")
+    if "serif" in family:
+        return {
+            "heading_line_height": "1.2-1.4",
+            "body_line_height": "1.7-1.9",
+            "ui_label_line_height": "avoid-small-serif-ui",
+            "heading_tracking": "-0.02em",
+            "body_tracking": "0em",
+            "display_scale_bias": "reduce-one-step",
+            "note": "한글 세리프는 넓은 획과 글자폭 때문에 더 보수적인 display scale과 넉넉한 행간이 필요하다.",
+        }
+    return {
+        "heading_line_height": "1.2-1.35",
+        "body_line_height": "1.55-1.7",
+        "ui_label_line_height": "1.4-1.5",
+        "heading_tracking": "0em",
+        "body_tracking": "0em",
+        "display_scale_bias": "stable",
+        "note": "한글 산세리프 기본값을 따르되 실제 문자열 기준으로 wrap을 확인한다.",
     }
 
 

@@ -231,6 +231,20 @@ Recommended mapping:
 """
 
 
+def _script_aware_typography_guidance() -> str:
+    return """
+## Script-aware typography
+
+If `system_spec.md` or `token_schema.json` contains typography `script_guardrails`, treat that as the default-safe implementation baseline, not optional polish.
+
+- For Korean-first UI or marketing copy, default to `word-break: keep-all` plus `overflow-wrap: normal`.
+- Use `text-wrap: balance` on major headings when browser support allows it.
+- Avoid forced `<br/>` in Korean headlines until desktop/mobile wrapping is verified with real copy.
+- For wide or serif Hangul display fonts, start one type step smaller than English-first hero comps and only scale up after wrap review.
+- Respect font-specific line-height and letter-spacing guidance from the artifacts instead of reusing English defaults.
+"""
+
+
 def _claude_architect_skill(artifact_dir: str) -> str:
     return f"""---
 name: design-system-architect
@@ -259,6 +273,7 @@ When this skill is active:
 7. Preserve existing user-facing entry points and feature surfaces unless the user explicitly asks for a structural change.
 8. Prefer incremental rollout plans over full-shell rewrites.
 9. If `token_schema.json` contains a curated color reference or palette roles, treat that as the starting point for semantic color decisions.
+10. If typography artifacts include script guardrails, account for their line-break and type-scale rules before proposing hero or landing compositions.
 
 If any artifact file is missing, say exactly which file is missing and recommend syncing artifacts from the harness repo before implementation.
 """
@@ -302,6 +317,8 @@ Implementation rules:
 - **NEVER leave half-finished components** like "TODO component", "placeholder card", "temp button". Read `{artifact_dir}/components/component_specs.md` and implement the full anatomy, states, and token bindings defined there.
 - **NEVER use bare library components (e.g., default `<Button>` from a UI lib) without binding design tokens.** Every component must have its colors, spacing, radius, and typography wired to the token system. If you import from a library, wrap it and override styles with CSS variables from the token schema.
 
+{_script_aware_typography_guidance()}
+
 When finishing:
 
 - State which artifact files guided the implementation.
@@ -337,6 +354,7 @@ Always:
 6. Treat existing screens and interaction entry points as constraints, not disposable implementation details.
 7. Recommend incremental rollout steps before proposing a shell-level rewrite.
 8. If the token schema includes curated palette roles, use those roles as the default color direction in the plan.
+9. If typography script guardrails exist, reflect them in line length, headline scale, and Korean copy layout decisions.
 
 You are primarily a planning and alignment agent, not an implementation agent.
 """
@@ -372,6 +390,8 @@ Implementation rules:
 - NEVER change layout properties, element sizes, or text-flow properties (font-size, line-height, white-space, word-break) unless explicitly requested.
 - NEVER change font-size to match a token scale — existing sizes are already tuned to the layout. Only replace when the token is the exact same px value. "Fitting the scale" is a design change, not a refactor.
 - When replacing spacing/sizing values with tokens, only use exact matches — never round to the nearest token value.
+
+{_script_aware_typography_guidance()}
 """
 
 
@@ -778,6 +798,8 @@ system_spec.md의 Typography System에서:
 데이터 숫자: mono 또는 tabular figures, lg-2xl, weight 700-800
 ```
 
+{_script_aware_typography_guidance()}
+
 #### 3-3. 여백과 리듬
 
 spacing scale을 활용해 시각적 리듬을 만듭니다:
@@ -909,6 +931,8 @@ Refactoring: `color: #3b82f6` → `color: var(--accent)` (same layout, different
 - Anti-keywords are hard constraints — if "cluttered" is anti, ensure generous whitespace
 - Brand keywords drive visual decisions — "bold" means strong contrast, "calm" means subtle transitions
 
+{_script_aware_typography_guidance()}
+
 ## What to preserve from existing code
 
 - All data bindings and state management
@@ -954,6 +978,7 @@ Read these files first when they exist:
 5. Preserve existing surface structure and user flows unless the task explicitly asks to replace them.
 6. Produce a concise, incremental implementation plan the coding agent can follow.
 7. Use curated palette roles from the token schema as the default color direction when available.
+8. If typography script guardrails exist, incorporate them into headline scale, measure, and Korean copy wrapping decisions up front.
 """
 
 
@@ -989,6 +1014,8 @@ Read these files first when they exist:
 10. **NEVER use emojis as UI icons, state indicators, or button decorations** (no 🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊). Always implement SVG icon components or import from Lucide / Heroicons / Phosphor / Tabler. Emojis only belong in user-generated content, never in system UI.
 11. **NEVER leave half-finished components** ("TODO", "placeholder", "temp"). Read `{artifact_dir}/components/component_specs.md` and implement the full anatomy, states, and token bindings.
 12. **NEVER use bare library components without token binding.** If you import from a UI library, wrap it and override colors, spacing, radius, and typography using tokens from the schema.
+
+{_script_aware_typography_guidance()}
 
 ## Output Expectations
 

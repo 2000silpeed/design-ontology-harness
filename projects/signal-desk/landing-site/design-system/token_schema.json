@@ -777,6 +777,12 @@
           "seed color만 쓰지 말고 expanded palette에서 surface/text/border/support 역할까지 확장하기",
           "surface/text/border 대비는 레퍼런스보다 접근성 기준을 우선"
         ]
+      },
+      "visual_balance": {
+        "observed": true,
+        "temperature": "warm",
+        "contrast_profile": "high",
+        "neutral_bias": "moderate"
       }
     },
     "typography": {
@@ -798,7 +804,12 @@
       "rules": [
         "display는 마케팅/영웅 구역으로 제한",
         "text는 제품 본문과 UI 라벨의 기본",
-        "mono는 데이터와 shortcut hint에 제한"
+        "mono는 데이터와 shortcut hint에 제한",
+        "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
+        "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
+        "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
+        "폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다.",
+        "Noto Serif KR는 작은 UI 라벨/배지용으로 쓰지 않고, 그런 슬롯은 sans body font로 분리한다."
       ],
       "recommended_fonts": {
         "heading": "Noto Serif KR",
@@ -842,6 +853,77 @@
         "subset": "latin,korean",
         "note": "본문 서체를 preload, 모노스페이스는 lazy load. font-display: swap으로 FOUT 최소화."
       },
+      "korean_rationale": {
+        "primary_is_korean": true,
+        "font": "Pretendard",
+        "reason": "한글 UI 서체의 사실상 표준. 토스, 당근, 리디 등 국내 주요 서비스에서 사용. 자간이 자연스럽고 weight 전 구간에서 안정적.",
+        "glyph_width": "중간",
+        "small_size_limit": "13px까지 가독성 유지",
+        "best_for_kr": [
+          "UI 전반",
+          "대시보드",
+          "모바일 앱",
+          "장문 본문"
+        ],
+        "avoid_for_kr": [],
+        "latin_pair": "Inter (x-height/weight 일치)"
+      },
+      "pitfall_warnings": [],
+      "letter_spacing": {
+        "heading_tracking": {
+          "lg": "-0.015em",
+          "xl": "-0.015em",
+          "2xl": "-0.02em",
+          "3xl": "-0.02em"
+        },
+        "note": "큰 헤딩에 negative tracking 적용. 미적용 시 글자가 풀어진 느낌."
+      },
+      "script_guardrails": {
+        "primary_script": "korean",
+        "headline_font": {
+          "name": "Noto Serif KR",
+          "line_height": "1.2-1.4",
+          "letter_spacing": "-0.02em",
+          "note": "넓은 획과 글자폭 때문에 헤딩은 짧고 크게, 본문은 충분한 행간과 여백이 필요하다."
+        },
+        "body_font": {
+          "name": "Pretendard",
+          "line_height": "1.6-1.7",
+          "ui_label_line_height": "1.4-1.5",
+          "letter_spacing": "0em",
+          "note": "기본 자간/행간이 안정적이라 추가 보정 없이 바로 쓰기 좋다."
+        },
+        "wrap": {
+          "headline": {
+            "word_break": "keep-all",
+            "overflow_wrap": "normal",
+            "text_wrap": "balance"
+          },
+          "body": {
+            "word_break": "keep-all",
+            "overflow_wrap": "normal"
+          },
+          "avoid": [
+            "forced <br /> before breakpoint QA",
+            "English-first ch heuristics without real Korean copy review"
+          ]
+        },
+        "scale": {
+          "headline_start": "one-step-smaller",
+          "guidance": "한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다."
+        },
+        "warnings": [
+          "UI 라벨 — 작은 크기에서 가독성 저하",
+          "모바일 본문 — 화면이 좁으면 답답함"
+        ],
+        "rules": [
+          "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
+          "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
+          "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
+          "폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다.",
+          "Noto Serif KR는 작은 UI 라벨/배지용으로 쓰지 않고, 그런 슬롯은 sans body font로 분리한다."
+        ]
+      },
       "type_scale": {
         "base_size": 16,
         "scale_ratio": 1.333,
@@ -879,7 +961,8 @@
       "density_modes": [
         "comfortable",
         "compact"
-      ]
+      ],
+      "visual_density_bias": "airy"
     },
     "radius": {
       "scale": [
@@ -890,7 +973,8 @@
         "xl",
         "pill"
       ],
-      "rule": "라운딩은 브랜드 성격을 드러내지만 컴포넌트 계층별로 제한적으로 사용"
+      "rule": "라운딩은 브랜드 성격을 드러내지만 컴포넌트 계층별로 제한적으로 사용",
+      "visual_corner_bias": "pill"
     },
     "motion": {
       "durations_ms": [
@@ -916,7 +1000,8 @@
         "overlay",
         "modal"
       ],
-      "rule": "그림자보다 layer 의미가 먼저 드러나야 함"
+      "rule": "그림자보다 layer 의미가 먼저 드러나야 함",
+      "visual_surface_bias": "tinted"
     }
   },
   "brand_alignment": {
@@ -930,6 +1015,13 @@
       "low-noise motion",
       "deliberate emphasis"
     ],
-    "system_name": "Signal System"
+    "system_name": "Signal System",
+    "visual_reference_hints": {
+      "density_bias": "airy",
+      "surface_style": "tinted",
+      "corner_style": "pill",
+      "typography_mood": "editorial",
+      "top_layout_cue": "dashboard-grid"
+    }
   }
 }

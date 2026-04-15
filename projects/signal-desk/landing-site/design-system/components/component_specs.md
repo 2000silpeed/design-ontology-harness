@@ -20,6 +20,24 @@
 - **density**: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - **feedback**: subtle inline alert 선호, 과한 컬러 블록 지양 + 명확한 상태 구분, 진행률/결과를 수치로 표시 + 콘텐츠 맥락 안에서 인라인 표시, 토스트보다 인라인 선호 + 결과를 반드시 확인, 실패 시 복구 방법 안내
 
+## Visual-reference 적용 원칙
+
+- anatomy / states / accessibility는 설계서(spec)와 KB 근거를 유지하고, visual adaptation은 elevation / framing / prominence / density 같은 표현 계층에만 advisory signal로 적용한다.
+- Active visual signals: surface_style=tinted, density=airy, corner_style=pill, top_layout_cue=dashboard-grid
+- Connected component hints: cards, data_display, navigation, typography
+
+## Typography Guardrails
+
+- 한글 기반 제품은 line-break / scale / tracking을 영문 랜딩 기본값으로 처리하지 않고, 아래 가드레일을 구현 기본값으로 사용한다.
+- Headline: Noto Serif KR | line-height 1.2-1.4 | tracking -0.02em
+- Body: Pretendard | line-height 1.6-1.7 | label line-height 1.4-1.5
+- Wrap defaults: headline word-break=keep-all, headline text-wrap=balance, body word-break=keep-all
+- Scale guidance: 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.
+- 한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.
+- 한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.
+- 폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다.
+
 ---
 
 ## button / primary-button
@@ -72,6 +90,10 @@ motion: background var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] hover: opacity 변화 (0.08-0.12), elevation 변화 없음 + 정확한 border/outline 변화 + 텍스트 underline 또는 color shift, 장식적 효과 없음 + 예측 가능하고 일관된 hover 패턴
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **cta_prominence**: CTA prominence는 restrained이다. 데이터 작업 흐름을 가리지 않도록 primary만 선명하게 두고 나머지는 text/ghost로 낮춘다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
 
 ### 레퍼런스 근거
 
@@ -140,6 +162,10 @@ motion: background var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **cta_prominence**: CTA prominence는 restrained이다. 데이터 작업 흐름을 가리지 않도록 primary만 선명하게 두고 나머지는 text/ghost로 낮춘다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
+
 ### 레퍼런스 근거
 
 - **Carbon Design System**: These components can toggle between the AI variant and the default variant depending on the user’s interaction. If the user manually overrides the ...
@@ -206,6 +232,10 @@ motion: background var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] hover: opacity 변화 (0.08-0.12), elevation 변화 없음 + 정확한 border/outline 변화 + 텍스트 underline 또는 color shift, 장식적 효과 없음 + 예측 가능하고 일관된 hover 패턴
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **cta_prominence**: CTA prominence는 restrained이다. 데이터 작업 흐름을 가리지 않도록 primary만 선명하게 두고 나머지는 text/ghost로 낮춘다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
 
 ### 레퍼런스 근거
 
@@ -274,6 +304,10 @@ motion: background var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **cta_prominence**: CTA prominence는 restrained이다. 데이터 작업 흐름을 가리지 않도록 primary만 선명하게 두고 나머지는 text/ghost로 낮춘다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
+
 ### 레퍼런스 근거
 
 - **Carbon Design System**: These components can toggle between the AI variant and the default variant depending on the user’s interaction. If the user manually overrides the ...
@@ -340,6 +374,10 @@ motion: background var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] hover: opacity 변화 (0.08-0.12), elevation 변화 없음 + 정확한 border/outline 변화 + 텍스트 underline 또는 color shift, 장식적 효과 없음 + 예측 가능하고 일관된 hover 패턴
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **cta_prominence**: CTA prominence는 restrained이다. 데이터 작업 흐름을 가리지 않도록 primary만 선명하게 두고 나머지는 text/ghost로 낮춘다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
 
 ### 레퍼런스 근거
 
@@ -408,6 +446,9 @@ line-height: var(--leading-relaxed)
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 블록 단위 데이터 모델, JSON 직렬화 가능한 구조
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -459,11 +500,18 @@ line-height: var(--leading-relaxed)
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 블록 단위 데이터 모델, JSON 직렬화 가능한 구조
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -515,11 +563,18 @@ line-height: var(--leading-relaxed)
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 블록 단위 데이터 모델, JSON 직렬화 가능한 구조
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -571,11 +626,18 @@ line-height: var(--leading-relaxed)
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 블록 단위 데이터 모델, JSON 직렬화 가능한 구조
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -632,6 +694,9 @@ line-height: var(--leading-relaxed)
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 블록 단위 데이터 모델, JSON 직렬화 가능한 구조
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -1108,6 +1173,10 @@ motion: background var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **cta_prominence**: CTA prominence는 restrained이다. 데이터 작업 흐름을 가리지 않도록 primary만 선명하게 두고 나머지는 text/ghost로 낮춘다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
+
 ### 레퍼런스 근거
 
 - **Carbon Design System**: These components can toggle between the AI variant and the default variant depending on the user’s interaction. If the user manually overrides the ...
@@ -1171,6 +1240,13 @@ text-muted: var(--color-text-muted)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 레퍼런스 근거
 
 - **Carbon Design System**: Data table Modal
@@ -1181,6 +1257,7 @@ text-muted: var(--color-text-muted)
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -1233,11 +1310,18 @@ text-muted: var(--color-text-muted)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -1290,11 +1374,18 @@ text-muted: var(--color-text-muted)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -1347,6 +1438,10 @@ font: var(--font-body) / var(--text-sm) / medium
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 레퍼런스 근거
 
 - **Elastic UI Framework | Elastic UI Framework**: Table Flexible tables with sorting, pagination, selection and actions Table
@@ -1358,6 +1453,7 @@ font: var(--font-body) / var(--text-sm) / medium
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - active 상태는 URL/라우터와 자동 동기화
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -1415,6 +1511,10 @@ font: var(--font-body) / var(--text-md) / regular
 - [calm+precise+editorial+trustworthy] hover: opacity 변화 (0.08-0.12), elevation 변화 없음 + 정확한 border/outline 변화 + 텍스트 underline 또는 color shift, 장식적 효과 없음 + 예측 가능하고 일관된 hover 패턴
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] feedback: subtle inline alert 선호, 과한 컬러 블록 지양 + 명확한 상태 구분, 진행률/결과를 수치로 표시 + 콘텐츠 맥락 안에서 인라인 표시, 토스트보다 인라인 선호 + 결과를 반드시 확인, 실패 시 복구 방법 안내
+
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
 
 ### 레퍼런스 근거
 
@@ -1480,11 +1580,18 @@ text-muted: var(--color-text-muted)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -1537,11 +1644,18 @@ text-muted: var(--color-text-muted)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -1590,11 +1704,18 @@ motion: border-color var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -1647,11 +1768,18 @@ text-muted: var(--color-text-muted)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -1838,6 +1966,10 @@ font: var(--font-body) / var(--text-sm) / medium
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 레퍼런스 근거
 
 - **Cedar Design System | REI Co-op**: Don’t reuse bespoke UI intended for other message or navigation types Options
@@ -1849,6 +1981,7 @@ font: var(--font-body) / var(--text-sm) / medium
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - active 상태는 URL/라우터와 자동 동기화
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -1901,6 +2034,10 @@ font: var(--font-body) / var(--text-sm) / medium
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 레퍼런스 근거
 
 - **Cedar Design System | REI Co-op**: Don’t reuse bespoke UI intended for other message or navigation types Options
@@ -1912,6 +2049,7 @@ font: var(--font-body) / var(--text-sm) / medium
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - active 상태는 URL/라우터와 자동 동기화
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -1964,6 +2102,10 @@ font: var(--font-body) / var(--text-sm) / medium
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 레퍼런스 근거
 
 - **Cedar Design System | REI Co-op**: Don’t reuse bespoke UI intended for other message or navigation types Options
@@ -1975,6 +2117,7 @@ font: var(--font-body) / var(--text-sm) / medium
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - active 상태는 URL/라우터와 자동 동기화
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -2027,6 +2170,10 @@ font: var(--font-body) / var(--text-sm) / medium
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 레퍼런스 근거
 
 - **Cedar Design System | REI Co-op**: Don’t reuse bespoke UI intended for other message or navigation types Options
@@ -2038,6 +2185,7 @@ font: var(--font-body) / var(--text-sm) / medium
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - active 상태는 URL/라우터와 자동 동기화
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -2090,6 +2238,10 @@ font: var(--font-body) / var(--text-sm) / medium
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 레퍼런스 근거
 
 - **Cedar Design System | REI Co-op**: Don’t reuse bespoke UI intended for other message or navigation types Options
@@ -2101,6 +2253,7 @@ font: var(--font-body) / var(--text-sm) / medium
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - active 상태는 URL/라우터와 자동 동기화
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -2213,11 +2366,18 @@ grid-3: 3 columns ≥1040px
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -2548,6 +2708,12 @@ severity-danger: var(--color-danger)
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 레퍼런스 근거
 
 - **Atlassian Design**: We finish what we start before starting something new. We're informed by continuous feedback. 3. Bring people on the journey before helping for the...
@@ -2614,6 +2780,11 @@ severity-danger: var(--color-danger)
 - [calm+precise+editorial+trustworthy] feedback: subtle inline alert 선호, 과한 컬러 블록 지양 + 명확한 상태 구분, 진행률/결과를 수치로 표시 + 콘텐츠 맥락 안에서 인라인 표시, 토스트보다 인라인 선호 + 결과를 반드시 확인, 실패 시 복구 방법 안내
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
 
 ### 레퍼런스 근거
 
@@ -2684,6 +2855,10 @@ font: var(--font-body) / var(--text-md) / regular
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] feedback: subtle inline alert 선호, 과한 컬러 블록 지양 + 명확한 상태 구분, 진행률/결과를 수치로 표시 + 콘텐츠 맥락 안에서 인라인 표시, 토스트보다 인라인 선호 + 결과를 반드시 확인, 실패 시 복구 방법 안내
 
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 레퍼런스 근거
 
 - **Carbon Design System**: Number input Text input
@@ -2748,11 +2923,19 @@ text-muted: var(--color-text-muted)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -2810,6 +2993,13 @@ font: var(--font-body) / var(--text-md) / regular
 - [calm+precise+editorial+trustworthy] hover: opacity 변화 (0.08-0.12), elevation 변화 없음 + 정확한 border/outline 변화 + 텍스트 underline 또는 color shift, 장식적 효과 없음 + 예측 가능하고 일관된 hover 패턴
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] feedback: subtle inline alert 선호, 과한 컬러 블록 지양 + 명확한 상태 구분, 진행률/결과를 수치로 표시 + 콘텐츠 맥락 안에서 인라인 표시, 토스트보다 인라인 선호 + 결과를 반드시 확인, 실패 시 복구 방법 안내
+
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
 
 ### 레퍼런스 근거
 
@@ -3130,11 +3320,18 @@ motion: border-color var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -3183,11 +3380,18 @@ motion: border-color var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -3236,11 +3440,18 @@ motion: border-color var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -3293,11 +3504,18 @@ text-muted: var(--color-text-muted)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -3346,11 +3564,18 @@ motion: border-color var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -3403,11 +3628,18 @@ text-muted: var(--color-text-muted)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -3455,6 +3687,12 @@ padding: var(--space-12) var(--space-16)
 - [calm+precise+editorial+trustworthy] feedback: subtle inline alert 선호, 과한 컬러 블록 지양 + 명확한 상태 구분, 진행률/결과를 수치로 표시 + 콘텐츠 맥락 안에서 인라인 표시, 토스트보다 인라인 선호 + 결과를 반드시 확인, 실패 시 복구 방법 안내
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **cta_prominence**: CTA prominence는 restrained이다. 데이터 작업 흐름을 가리지 않도록 primary만 선명하게 두고 나머지는 text/ghost로 낮춘다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
 
 ### 레퍼런스 근거
 
@@ -3530,6 +3768,9 @@ text-muted: var(--color-text-muted)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -3588,6 +3829,9 @@ text-transform: uppercase
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -3647,6 +3891,9 @@ letter-spacing: -0.01em
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -3704,6 +3951,9 @@ max-width: 65ch
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -3759,6 +4009,10 @@ motion: background var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] hover: opacity 변화 (0.08-0.12), elevation 변화 없음 + 정확한 border/outline 변화 + 텍스트 underline 또는 color shift, 장식적 효과 없음 + 예측 가능하고 일관된 hover 패턴
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **cta_prominence**: CTA prominence는 strong이다. 섹션당 primary CTA 1개만 fill/accent로 강하게 띄우고 secondary는 조용하게 후퇴시킨다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
 
 ### 레퍼런스 근거
 
@@ -3829,6 +4083,9 @@ padding: var(--space-24)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -3888,6 +4145,9 @@ gap: var(--space-16)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -3944,6 +4204,9 @@ grid-3: 3 columns ≥1040px
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -4007,6 +4270,9 @@ text-muted: var(--color-text-muted)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -4055,6 +4321,12 @@ padding: var(--space-12) var(--space-16)
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 레퍼런스 근거
 
 - **Primer**: Design digital marketing experiences with Primer Brand UI Shared Foundations
@@ -4068,6 +4340,9 @@ padding: var(--space-12) var(--space-16)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -4129,6 +4404,9 @@ line-height: var(--leading-relaxed)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -4179,6 +4457,10 @@ button-secondary-border: var(--color-text-inverse)
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 
+### Visual Adaptation Hints
+
+- **cta_prominence**: CTA prominence는 strong이다. 섹션당 primary CTA 1개만 fill/accent로 강하게 띄우고 secondary는 조용하게 후퇴시킨다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
+
 ### 레퍼런스 근거
 
 - **Primer**: Design digital marketing experiences with Primer Brand UI Shared Foundations
@@ -4192,6 +4474,9 @@ button-secondary-border: var(--color-text-inverse)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -4238,6 +4523,10 @@ letter-spacing: -0.01em
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 
+### Visual Adaptation Hints
+
+- **cta_prominence**: CTA prominence는 strong이다. 섹션당 primary CTA 1개만 fill/accent로 강하게 띄우고 secondary는 조용하게 후퇴시킨다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
+
 ### 레퍼런스 근거
 
 - **Primer**: Design digital marketing experiences with Primer Brand UI Shared Foundations
@@ -4251,6 +4540,9 @@ letter-spacing: -0.01em
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -4295,6 +4587,10 @@ max-width: 65ch
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 
+### Visual Adaptation Hints
+
+- **cta_prominence**: CTA prominence는 strong이다. 섹션당 primary CTA 1개만 fill/accent로 강하게 띄우고 secondary는 조용하게 후퇴시킨다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
+
 ### 레퍼런스 근거
 
 - **Primer**: Design digital marketing experiences with Primer Brand UI Shared Foundations
@@ -4308,6 +4604,9 @@ max-width: 65ch
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -4363,6 +4662,10 @@ motion: background var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] hover: opacity 변화 (0.08-0.12), elevation 변화 없음 + 정확한 border/outline 변화 + 텍스트 underline 또는 color shift, 장식적 효과 없음 + 예측 가능하고 일관된 hover 패턴
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **cta_prominence**: CTA prominence는 strong이다. 섹션당 primary CTA 1개만 fill/accent로 강하게 띄우고 secondary는 조용하게 후퇴시킨다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
 
 ### 레퍼런스 근거
 
@@ -4427,6 +4730,12 @@ text-muted: var(--color-text-muted)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 레퍼런스 근거
 
 - **Carbon Design System**: Tag Date picker
@@ -4438,6 +4747,7 @@ text-muted: var(--color-text-muted)
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -4493,6 +4803,12 @@ severity-danger: var(--color-danger)
 - [calm+precise+editorial+trustworthy] feedback: subtle inline alert 선호, 과한 컬러 블록 지양 + 명확한 상태 구분, 진행률/결과를 수치로 표시 + 콘텐츠 맥락 안에서 인라인 표시, 토스트보다 인라인 선호 + 결과를 반드시 확인, 실패 시 복구 방법 안내
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
 
 ### 레퍼런스 근거
 
@@ -4562,6 +4878,10 @@ font: var(--font-body) / var(--text-md) / regular
 - [calm+precise+editorial+trustworthy] hover: opacity 변화 (0.08-0.12), elevation 변화 없음 + 정확한 border/outline 변화 + 텍스트 underline 또는 color shift, 장식적 효과 없음 + 예측 가능하고 일관된 hover 패턴
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] feedback: subtle inline alert 선호, 과한 컬러 블록 지양 + 명확한 상태 구분, 진행률/결과를 수치로 표시 + 콘텐츠 맥락 안에서 인라인 표시, 토스트보다 인라인 선호 + 결과를 반드시 확인, 실패 시 복구 방법 안내
+
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
 
 ### 레퍼런스 근거
 
@@ -4638,6 +4958,9 @@ text-muted: var(--color-text-muted)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -4701,6 +5024,9 @@ text-muted: var(--color-text-muted)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -4764,6 +5090,9 @@ text-muted: var(--color-text-muted)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -4821,6 +5150,9 @@ max-width: 65ch
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -4882,6 +5214,9 @@ text: var(--color-text-muted)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -4943,6 +5278,9 @@ text: var(--color-text-muted)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -5003,6 +5341,9 @@ motion: color var(--duration-120) var(--ease-standard)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -5064,6 +5405,9 @@ text: var(--color-text-muted)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -5125,6 +5469,9 @@ text: var(--color-text-muted)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -5247,11 +5594,18 @@ text-muted: var(--color-text-muted)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -5382,6 +5736,9 @@ text-muted: var(--color-text-muted)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -5431,6 +5788,11 @@ motion: border-color var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+
 ### 레퍼런스 근거
 
 - **Primer**: Design digital marketing experiences with Primer Brand UI Shared Foundations
@@ -5444,6 +5806,9 @@ motion: border-color var(--duration-180) var(--ease-standard)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -5505,6 +5870,9 @@ line-height: var(--leading-relaxed)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -5568,6 +5936,9 @@ text-muted: var(--color-text-muted)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -5619,6 +5990,10 @@ backdrop-filter: blur(8px)
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 레퍼런스 근거
 
 - **Primer**: Design digital marketing experiences with Primer Brand UI Shared Foundations
@@ -5632,6 +6007,9 @@ backdrop-filter: blur(8px)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -5695,6 +6073,9 @@ text-muted: var(--color-text-muted)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -5746,6 +6127,10 @@ backdrop-filter: blur(8px)
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 레퍼런스 근거
 
 - **Primer**: Design digital marketing experiences with Primer Brand UI Shared Foundations
@@ -5759,6 +6144,9 @@ backdrop-filter: blur(8px)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -5809,6 +6197,11 @@ backdrop-filter: blur(8px)
 - [calm+precise+editorial+trustworthy] hover: opacity 변화 (0.08-0.12), elevation 변화 없음 + 정확한 border/outline 변화 + 텍스트 underline 또는 color shift, 장식적 효과 없음 + 예측 가능하고 일관된 hover 패턴
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **cta_prominence**: CTA prominence는 strong이다. 섹션당 primary CTA 1개만 fill/accent로 강하게 띄우고 secondary는 조용하게 후퇴시킨다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
 
 ### 레퍼런스 근거
 
@@ -5877,6 +6270,11 @@ motion: background var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **cta_prominence**: CTA prominence는 restrained이다. 데이터 작업 흐름을 가리지 않도록 primary만 선명하게 두고 나머지는 text/ghost로 낮춘다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill, layout=dashboard-grid)
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 레퍼런스 근거
 
 - **Carbon Design System**: These components can toggle between the AI variant and the default variant depending on the user’s interaction. If the user manually overrides the ...
@@ -5940,6 +6338,12 @@ text-muted: var(--color-text-muted)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 레퍼런스 근거
 
 - **Workday Canvas Design System**: New Avatar Component in Preview A new Avatar component will be available in Preview to reflect the updated brand guidelines.
@@ -5950,6 +6354,7 @@ text-muted: var(--color-text-muted)
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -6002,6 +6407,10 @@ motion: opacity var(--duration-180) var(--ease-standard)
 
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
 
 ### 레퍼런스 근거
 
@@ -6062,11 +6471,18 @@ motion: border-color var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] color: 중성 톤 위주, accent는 최소한으로 + 정확한 semantic 분리, 모호한 중간 톤 지양 + 타이포그래피로 위계 형성, 컬러보다 weight/size 활용 + 안정적인 neutral 기반, 과한 accent 변화 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -6130,6 +6546,9 @@ text-muted: var(--color-text-muted)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -6173,6 +6592,12 @@ grid-3: 3 columns ≥1040px
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.94; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=airy, surface=tinted)
+
 ### 레퍼런스 근거
 
 - **Primer**: Design digital marketing experiences with Primer Brand UI Shared Foundations
@@ -6186,6 +6611,9 @@ grid-3: 3 columns ≥1040px
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -6235,6 +6663,11 @@ motion: border-color var(--duration-180) var(--ease-standard)
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 내부 여백은 넉넉하게 두고 card breathing room을 확보한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.94; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.; evidence=surface=tinted, density=airy, corner=pill)
+
 ### 레퍼런스 근거
 
 - **Primer**: Design digital marketing experiences with Primer Brand UI Shared Foundations
@@ -6248,6 +6681,9 @@ motion: border-color var(--duration-180) var(--ease-standard)
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -6307,6 +6743,9 @@ icon-stroke-width: 1.75
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -6366,6 +6805,9 @@ letter-spacing: -0.01em
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -6423,6 +6865,9 @@ max-width: 65ch
 - 섹션에 <h2 id="...">과 aria-labelledby 필수
 - CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지
 - 다크 모드는 globals.css의 prefers-color-scheme 블록에 위임
+- 한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음
+- 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 
@@ -6542,6 +6987,10 @@ font: var(--font-body) / var(--text-sm) / medium
 - [calm+precise+editorial+trustworthy] density: comfortable 모드 기본, 여유로운 padding + 엄격한 spacing scale 준수, 임의 값 금지 + 넉넉한 line-height와 margin, 읽기 편한 간격 + 기존 레이아웃 유지, 갑작스런 위치 변경 없음
 - [calm+precise+editorial+trustworthy] motion: 150-200ms ease-out, bounce/spring 없음 + 120-180ms, 군더더기 없는 전환 + 콘텐츠 전환 위주, UI chrome 모션 최소화 + 모든 전환에 동일한 easing/duration
 
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 balanced다. global nav와 local filter를 섞지 말고 계층별 간격 차이로 구조를 드러낸다. (source=navigation; confidence=0.94; provenance=inferred; direction=고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.; evidence=Split-pane workspace, layout=dashboard-grid, density=airy)
+
 ### 레퍼런스 근거
 
 - **Cedar Design System | REI Co-op**: Don’t reuse bespoke UI intended for other message or navigation types Options
@@ -6553,6 +7002,7 @@ font: var(--font-body) / var(--text-sm) / medium
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - active 상태는 URL/라우터와 자동 동기화
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 애니메이션은 상태 설명용으로만 사용, 장식 효과 금지
 - 텍스트 위계가 핵심 — 컬러보다 weight/size로 구분
 

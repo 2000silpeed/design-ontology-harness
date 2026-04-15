@@ -22,7 +22,8 @@
         "cta-button-group",
         "site-nav-cta",
         "mobile-menu-trigger"
-      ]
+      ],
+      "visual_reference_signals": []
     },
     {
       "family": "data-display",
@@ -52,7 +53,32 @@
         "tag",
         "file-preview",
         "avatar",
-        "profile-card"
+        "profile-card",
+        "chart-panel",
+        "filter-toolbar"
+      ],
+      "visual_reference_signals": [
+        {
+          "id": "dashboard-insight-module",
+          "label": "Dashboard insight module",
+          "confidence": 0.94,
+          "evidence": [
+            "layout=dashboard-grid (0.94)",
+            "dashboard x4",
+            "primitive=dashboard cards"
+          ]
+        },
+        {
+          "id": "data-review-table",
+          "label": "Data review table",
+          "confidence": 0.87,
+          "evidence": [
+            "layout=dashboard-grid (0.94)",
+            "data x1",
+            "grid x1",
+            "primitive=data tables"
+          ]
+        }
       ]
     },
     {
@@ -68,7 +94,23 @@
         "editor-toolbar",
         "slash-command-menu",
         "block-controls",
-        "inline-format-menu"
+        "inline-format-menu",
+        "content-card",
+        "featured-story-card",
+        "content-meta",
+        "byline-row"
+      ],
+      "visual_reference_signals": [
+        {
+          "id": "editorial-content-block",
+          "label": "Editorial content block",
+          "confidence": 0.94,
+          "evidence": [
+            "layout=editorial-feed (0.94)",
+            "editorial x6",
+            "primitive=rich text editor"
+          ]
+        }
       ]
     },
     {
@@ -91,7 +133,8 @@
         "status-badge",
         "upload-progress",
         "step-progress"
-      ]
+      ],
+      "visual_reference_signals": []
     },
     {
       "family": "input",
@@ -119,7 +162,8 @@
         "filter-panel",
         "chip",
         "upload-dropzone"
-      ]
+      ],
+      "visual_reference_signals": []
     },
     {
       "family": "marketing",
@@ -164,7 +208,24 @@
         "feature-card",
         "feature-icon",
         "feature-title",
-        "feature-description"
+        "feature-description",
+        "hero-section",
+        "trust-strip"
+      ],
+      "visual_reference_signals": [
+        {
+          "id": "marketing-hero-stack",
+          "label": "Marketing hero stack",
+          "confidence": 0.94,
+          "evidence": [
+            "layout=landing-narrative (0.94)",
+            "hero x2",
+            "landing x4",
+            "pricing x1",
+            "testimonial x1",
+            "cta x1"
+          ]
+        }
       ]
     },
     {
@@ -189,7 +250,21 @@
         "pagination",
         "app-shell",
         "tab-bar",
-        "wizard-layout"
+        "wizard-layout",
+        "context-panel"
+      ],
+      "visual_reference_signals": [
+        {
+          "id": "workspace-shell",
+          "label": "Workspace shell",
+          "confidence": 0.94,
+          "evidence": [
+            "layout=split-pane-workspace (0.94)",
+            "workspace x2",
+            "navigation x1",
+            "primitive=workspace navigation"
+          ]
+        }
       ]
     },
     {
@@ -209,7 +284,8 @@
         "column-header",
         "row-actions",
         "pagination"
-      ]
+      ],
+      "visual_reference_signals": []
     },
     {
       "family": "overlay",
@@ -229,7 +305,8 @@
         "command-result-item",
         "user-menu",
         "tooltip-guide"
-      ]
+      ],
+      "visual_reference_signals": []
     }
   ],
   "components": [
@@ -1896,6 +1973,299 @@
         "accessibility",
         "dos and donts"
       ]
+    },
+    {
+      "name": "chart-panel",
+      "family": "data-display",
+      "supports_primitive": "dashboard cards",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "dashboard-insight-module",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "content-card",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "editorial-content-block",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "featured-story-card",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "editorial-content-block",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "content-meta",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "editorial-content-block",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "byline-row",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "editorial-content-block",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "hero-section",
+      "family": "marketing",
+      "supports_primitive": "hero section",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "marketing-hero-stack",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "trust-strip",
+      "family": "marketing",
+      "supports_primitive": "hero section",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "marketing-hero-stack",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "context-panel",
+      "family": "navigation",
+      "supports_primitive": "workspace navigation",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "workspace-shell",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "filter-toolbar",
+      "family": "data-display",
+      "supports_primitive": "data tables",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "data-review-table",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    }
+  ],
+  "candidate_component_archetypes": [
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.94)",
+        "dashboard x4",
+        "primitive=dashboard cards"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.94,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.94)",
+        "editorial x6",
+        "primitive=rich text editor"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.94,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "layout=landing-narrative (0.94)",
+        "hero x2",
+        "landing x4",
+        "pricing x1",
+        "testimonial x1",
+        "cta x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "workspace-shell",
+      "label": "Workspace shell",
+      "family": "navigation",
+      "confidence": 0.94,
+      "suggested_components": [
+        "app-shell",
+        "sidebar-nav",
+        "workspace-switcher",
+        "breadcrumb",
+        "context-panel"
+      ],
+      "supports_primitives": [
+        "workspace navigation"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.94)",
+        "workspace x2",
+        "navigation x1",
+        "primitive=workspace navigation"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.87,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.94)",
+        "data x1",
+        "grid x1",
+        "primitive=data tables"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "conversation-sidecar",
+      "label": "Conversation sidecar",
+      "family": "overlay",
+      "confidence": 0.52,
+      "suggested_components": [
+        "chat-panel",
+        "message-thread",
+        "message-composer",
+        "context-drawer"
+      ],
+      "supports_primitives": [
+        "chat and messaging"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.94)"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
     }
   ]
 }

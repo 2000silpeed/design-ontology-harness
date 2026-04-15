@@ -58,6 +58,15 @@
   - precise 키워드 → tight letter-spacing, tabular figures 권장
 - **Heading note**: 한글 세리프의 사실상 유일한 고품질 웹폰트. 에디토리얼 한글에 필수.
 - **Body note**: 한글 UI 서체의 사실상 표준. Apple SD Gothic Neo 기반이지만 더 정교함. 라틴은 Inter 계열.
+- **Korean rationale**: Pretendard — 한글 UI 서체의 사실상 표준. 토스, 당근, 리디 등 국내 주요 서비스에서 사용. 자간이 자연스럽고 weight 전 구간에서 안정적.
+- **Heading tracking**: lg=-0.015em, xl=-0.015em, 2xl=-0.02em, 3xl=-0.02em
+- **Primary script**: korean
+- **Hangul headline defaults**: Noto Serif KR | line-height 1.2-1.4 | tracking -0.02em
+- **Hangul body defaults**: Pretendard | line-height 1.6-1.7 | label line-height 1.4-1.5
+- **Wrap defaults**: headline word-break=keep-all, headline text-wrap=balance, body word-break=keep-all
+- **Scale guidance**: 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- **Hangul warning**: UI 라벨 — 작은 크기에서 가독성 저하
+- **Hangul warning**: 모바일 본문 — 화면이 좁으면 답답함
 - **Loading**: Pretendard(preload), Noto Serif KR(preload), Source Code Pro(lazy) | display: swap
 
 ## 6. Color Reference
@@ -107,22 +116,70 @@
 - **Notes**: 색상 레퍼런스는 semantic token 설계의 출발점으로 사용, raw reference color를 그대로 전체 UI에 덮지 않기, selected_colors와 palette_roles를 넣으면 manual override로 동작, palette_expansion은 seed color를 기반으로 support, neutral, semantic state 후보를 확장합니다
 - **Application rule**: 레퍼런스 컬러는 semantic token으로 번역해서 사용하고, 접근성과 theme 호환성을 우선합니다.
 
-## 7. Component Strategy
+## 7. Visual Reference Signals
+
+- **Mode**: pinterest-assisted
+- **Coverage**: source 1 / image 2 / selected 2
+- **Rule**: visual references are advisory signals for motif and layout direction; official KB/spec remain the structural source of truth.
+- **Provenance**: `observed` = directly measured from local pixels, `inferred` = synthesized from image/query/brand signals, `unverified` = reliable visual evidence not yet available.
+- **Query seeds**: editorial dashboard ui, warm premium onboarding flow, serif product landing page
+### Visual Direction
+
+- **Density**: airy (confidence 0.94, provenance inferred) / editorial x6, landing x4, hero x2
+- **Surface Style**: tinted (confidence 0.67, provenance inferred) / warm x4, editorial x6
+- **Corner Style**: pill (confidence 0.38, provenance inferred) / svg corner ratio 0.50
+- **Typography Mood**: editorial (confidence 0.94, provenance inferred) / editorial x6, serif x2
+- **Color balance**: temperature=warm, contrast=high, neutral_bias=moderate, provenance=observed / dominant #D9B7A2, #FFF9F3, #8A6A58
+
+### Layout Rhythm
+
+- **Dashboard grid**: confidence 0.94 / provenance inferred / dashboard x4, 3:2-ish x2
+- **Editorial feed**: confidence 0.94 / provenance inferred / editorial x6
+- **Narrative landing flow**: confidence 0.94 / provenance inferred / landing x4, hero x2, pricing x1, testimonial x1
+- **Split-pane workspace**: confidence 0.94 / provenance inferred / workspace x2, editor x1, navigation x1, command x1
+
+### Image-derived Component Hints
+
+- **Cards**: low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용. / provenance inferred / surface=tinted, density=airy, corner=pill
+- **Navigation**: 고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다. / provenance inferred / Split-pane workspace
+- **Typography**: headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다. / provenance inferred / typography_mood=editorial
+- **Data Display**: 정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다. / provenance inferred / layout=dashboard-grid, density=airy
+
+### Synthesis Notes
+
+- layout는 Dashboard grid 기준으로 정리
+- surface language는 tinted 성향 우선
+- typography mood는 editorial 축 유지
+- density는 airy 기준으로 primitive spacing 조정
+- palette temperature는 warm 쪽을 우선
+- Avoid: glassmorphism-heavy surfaces
+- Avoid: high-saturation neon UI
+- Avoid: playful candy gradients
+
+## 8. Component Strategy
 
 - **Product primitives**: workspace navigation, rich text editor, command palette, dashboard cards, data tables, hero section, feature grid, social proof, testimonial, faq accordion, landing cta section, site footer, site header, pricing and plans
 - **Required families**: button, data-display, editorial, feedback, input, marketing, navigation, foundation, overlay
+- **Visual-reference archetypes**:
+
+- **Dashboard insight module** (data-display / 0.94): stat-card, insight-card, chart-panel, section-header, filter-chip
+- **Editorial content block** (editorial / 0.94): content-card, featured-story-card, section-header, content-meta, byline-row
+- **Marketing hero stack** (marketing / 0.94): hero-section, hero-headline, hero-visual, cta-button-group, trust-strip
+- **Workspace shell** (navigation / 0.94): app-shell, sidebar-nav, workspace-switcher, breadcrumb, context-panel
+- **Data review table** (data-display / 0.87): data-table, column-header, row-actions, filter-toolbar, pagination
+- **Conversation sidecar** (overlay / 0.52): chat-panel, message-thread, message-composer, context-drawer
 
 - **button**: primary-button, secondary-button, ghost-button, icon-button, cta-button, link-button, form-actions, hero-cta-group
-- **data-display**: data-table, column-header, row-actions, kanban-board, kanban-column, kanban-card, comment-thread, calendar-grid
-- **editorial**: editor-canvas, editor-toolbar, slash-command-menu, block-controls, inline-format-menu
+- **data-display**: data-table, column-header, row-actions, kanban-board, kanban-column, kanban-card, comment-thread, calendar-grid / visual signals: Dashboard insight module (0.94), Data review table (0.87)
+- **editorial**: editor-canvas, editor-toolbar, slash-command-menu, block-controls, inline-format-menu, content-card, featured-story-card, content-meta / visual signals: Editorial content block (0.94)
 - **feedback**: filter-chip, inline-alert, empty-state, toast, banner, shortcut-hint, upgrade-banner, status-badge
 - **input**: text-field, search-field, segmented-control, textarea, select, checkbox, radio-group, form-section
-- **marketing**: hero-container, hero-eyebrow, hero-headline, hero-subheadline, hero-visual, hero-trust-strip, logo-cloud, customer-logo
-- **navigation**: sidebar-nav, topbar, breadcrumb, workspace-switcher, scope-switcher, mobile-topbar, mobile-tab-bar, back-button
+- **marketing**: hero-container, hero-eyebrow, hero-headline, hero-subheadline, hero-visual, hero-trust-strip, logo-cloud, customer-logo / visual signals: Marketing hero stack (0.94)
+- **navigation**: sidebar-nav, topbar, breadcrumb, workspace-switcher, scope-switcher, mobile-topbar, mobile-tab-bar, back-button / visual signals: Workspace shell (0.94)
 - **foundation**: app-shell, command-result-item, shortcut-hint, stat-card, insight-card, activity-card, section-header, column-header
 - **overlay**: inline-format-menu, command-palette, bottom-sheet, modal-dialog, mention-popup, autocomplete, command-result-item, user-menu
 
-## 8. Implementation Guardrails
+## 9. Implementation Guardrails
 
 - 기존 핵심 화면, 진입점, 작업 흐름은 명시적 승인 없이 제거하거나 숨기지 않음
 - 전면 셸 리라이트보다 토큰 -> primitive -> feature surface 순서의 점진적 롤아웃을 우선
@@ -133,13 +190,13 @@
 - 컴포넌트는 component_specs.md의 anatomy/states/token binding을 그대로 따라 완전히 구현
 - 'TODO 컴포넌트', '임시 버튼', '플레이스홀더 카드' 같은 반쪽 구현을 남기지 않음
 
-## 9. Reference Absorption Rule
+## 10. Reference Absorption Rule
 
 - Analysed live reference sources: 47
 - Rule: copy visuals from no single source; absorb patterns only when they reinforce brand keywords and avoid anti-keywords.
 - Use references to validate structure, accessibility, token discipline, and documentation quality.
 
-## 10. AI Synthesis Principles
+## 11. AI Synthesis Principles
 
 - **hex를 만들지 않는다**: AI는 색상 hex 값을 임의로 생성하지 않는다. 반드시 color_reference, CSS 추출, 브랜드 가이드 등 실증 소스에서 가져온 값만 사용한다.
 - **토큰명을 만들지 않는다**: AI는 토큰 이름을 임의로 발명하지 않는다. 네이밍 패턴(core/semantic/component 레이어 규칙)은 정의하되, 구체적 토큰명은 실제 컴포넌트와 역할에서 도출한다.
@@ -147,7 +204,7 @@
 - **이모지를 UI 요소로 쓰지 않는다**: AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 반드시 SVG 아이콘 컴포넌트를 직접 구현하거나, 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)를 import해서 사용한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다. 이 규칙은 AI가 UI를 만들 때 가장 자주 저지르는 실수이므로 엄격히 적용한다.
 - **컴포넌트를 직접 구현한다**: AI는 '임시 버튼', '플레이스홀더 카드', 'TODO 컴포넌트' 같은 반쪽 구현을 남기지 않는다. system_spec.md의 Component Strategy와 component_specs.md에 정의된 구조(anatomy), 상태(states), 토큰 바인딩, 접근성 규칙을 그대로 따라 완전한 컴포넌트를 구현한다. 기존 라이브러리 컴포넌트를 그냥 import해서 쓰는 대신, 디자인 시스템 토큰으로 스타일을 명시적으로 바인딩한다.
 
-## 11. Ontology Targets
+## 12. Ontology Targets
 
 - **component**: 319
 - **design_system**: 229
@@ -158,20 +215,21 @@
 - **accessibility**: 54
 - **typography**: 30
 
-## 12. Profile Validation
+## 13. Profile Validation
 
 - Warning: [pitfall#3-rebrand] Ochre vs Apricot (orange): lightness diff 28, saturation diff 29 — possible rebrand remnant
 
-## 13. Quick Start
+## 14. Quick Start
 
 이 문서는 **Signal System**의 디자인 시스템 사양입니다.
 
 ### 시작하기
 
-1. **토큰 적용**: Drop-in CSS(아래 섹션 15)의 CSS 변수를 프로젝트에 복사합니다.
+1. **토큰 적용**: Drop-in CSS(아래 섹션 16)의 CSS 변수를 프로젝트에 복사합니다.
 2. **컬러 세팅**: Color Reference(섹션 6)의 semantic role을 기준으로 surface/text/border를 잡습니다.
 3. **타이포 세팅**: Token Strategy(섹션 5)의 font family와 type scale을 적용합니다.
-4. **컴포넌트 구현**: Component Strategy(섹션 7)의 family 순서대로 하나씩 빌드합니다.
+4. **시각 방향 확인**: Visual Reference Signals(섹션 7)에서 density/surface/layout cue를 먼저 확인합니다.
+5. **컴포넌트 구현**: Component Strategy(섹션 8)의 family 순서대로 하나씩 빌드합니다.
 
 ### 우선순위
 
@@ -179,7 +237,7 @@
 
 이 primitive를 지원하는 컴포넌트부터 구현하고, 나머지는 필요에 따라 확장합니다.
 
-## 14. DO / DON'T
+## 15. DO / DON'T
 
 ### DO
 
@@ -208,7 +266,7 @@
 - '임시 버튼', 'TODO 컴포넌트', '플레이스홀더 카드' 같은 반쪽 구현을 남기지 않음
 - 라이브러리 컴포넌트를 기본 스타일로 그냥 쓰지 않음 — 반드시 디자인 토큰으로 스타일 바인딩
 
-## 15. Drop-in CSS
+## 16. Drop-in CSS
 
 아래 CSS 변수를 `:root`에 복사하여 즉시 사용할 수 있습니다.
 
@@ -391,7 +449,7 @@
 }
 ```
 
-## 16. CSS Extraction Summary
+## 17. CSS Extraction Summary
 
 ### Variable Resolution
 
@@ -417,7 +475,7 @@
 - Schema layer 분포: component=9295, core=9469, semantic=6520
 - var() 체인: 평균 2.79, 최대 9
 
-## 17. Component-Token Map
+## 18. Component-Token Map
 
 | Component | Tokens Used |
 |-----------|-------------|
@@ -430,7 +488,9 @@
 | block-controls | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | bottom-sheet | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | breadcrumb | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| byline-row | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | calendar-grid | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| chart-panel | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | checkbox | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | chip | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | column-header | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard`, `font:Pretendard` |
@@ -438,6 +498,9 @@
 | command-result-item | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius` |
 | comment-input | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | comment-thread | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| content-card | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| content-meta | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| context-panel | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | cta-button | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | cta-button-group | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | cta-headline | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
@@ -461,9 +524,11 @@
 | feature-icon | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | feature-section | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | feature-title | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| featured-story-card | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | file-preview | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | filter-chip | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius` |
 | filter-panel | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| filter-toolbar | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | footer-column | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | footer-legal | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | footer-link | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
@@ -475,6 +540,7 @@
 | hero-cta-group | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | hero-eyebrow | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | hero-headline | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| hero-section | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | hero-subheadline | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | hero-trust-strip | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | hero-visual | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
@@ -531,6 +597,7 @@
 | toast | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | tooltip-guide | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | topbar | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| trust-strip | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | upgrade-banner | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | upload-dropzone | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | upload-progress | `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
@@ -538,7 +605,7 @@
 | wizard-layout | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | workspace-switcher | `color.Ochre→surface`, `color.Apricot→emphasis`, `color.Wheat→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 
-## 18. Contrast Audit
+## 19. Contrast Audit
 
 | Background | Foreground | Ratio | Level |
 |------------|------------|-------|-------|
@@ -552,14 +619,14 @@
 | Apricot | Wheat | 1.34:1 | fail (FAIL) |
 | Wheat | Paper | 1.31:1 | fail (FAIL) |
 
-## 19. Pattern Catalog
+## 20. Pattern Catalog
 
 ### Layout Patterns
 
-- **workspace navigation**: app-shell, sidebar-nav, topbar, breadcrumb, workspace-switcher, tab-bar
-- **dashboard cards**: stat-card, insight-card, activity-card, section-header
-- **data tables**: data-table, column-header, filter-chip, row-actions, pagination
-- **hero section**: hero-container, hero-eyebrow, hero-headline, hero-subheadline, hero-cta-group, hero-visual, hero-trust-strip
+- **workspace navigation**: app-shell, sidebar-nav, topbar, breadcrumb, workspace-switcher, tab-bar, context-panel
+- **dashboard cards**: stat-card, insight-card, activity-card, section-header, chart-panel
+- **data tables**: data-table, column-header, filter-chip, row-actions, pagination, filter-toolbar
+- **hero section**: hero-container, hero-eyebrow, hero-headline, hero-subheadline, hero-cta-group, hero-visual, hero-trust-strip, hero-section, trust-strip
 - **feature grid**: feature-section, feature-grid, feature-card, feature-icon, feature-title, feature-description
 - **social proof**: logo-cloud, customer-logo, metric-highlight, press-quote
 - **testimonial**: testimonial-section, testimonial-card, testimonial-quote, testimonial-author
@@ -571,7 +638,7 @@
 
 ### Interaction Patterns
 
-- **rich text editor**: editor-canvas, editor-toolbar, inline-format-menu, slash-command-menu, block-controls
+- **rich text editor**: editor-canvas, editor-toolbar, inline-format-menu, slash-command-menu, block-controls, content-card, featured-story-card, content-meta, byline-row
 - **command palette**: command-palette, command-result-item, shortcut-hint, scope-switcher
 - **forms**: text-field, select, checkbox, textarea, form-section, radio-group, form-actions
 - **notifications**: toast, inline-alert, empty-state, banner

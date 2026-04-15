@@ -370,6 +370,16 @@
       "label": "profile-card"
     },
     {
+      "id": "component:chart-panel",
+      "type": "Component",
+      "label": "chart-panel"
+    },
+    {
+      "id": "component:filter-toolbar",
+      "type": "Component",
+      "label": "filter-toolbar"
+    },
+    {
       "id": "family:editorial",
       "type": "ComponentFamily",
       "label": "editorial",
@@ -416,6 +426,26 @@
       "id": "component:inline-format-menu",
       "type": "Component",
       "label": "inline-format-menu"
+    },
+    {
+      "id": "component:content-card",
+      "type": "Component",
+      "label": "content-card"
+    },
+    {
+      "id": "component:featured-story-card",
+      "type": "Component",
+      "label": "featured-story-card"
+    },
+    {
+      "id": "component:content-meta",
+      "type": "Component",
+      "label": "content-meta"
+    },
+    {
+      "id": "component:byline-row",
+      "type": "Component",
+      "label": "byline-row"
     },
     {
       "id": "family:feedback",
@@ -797,6 +827,16 @@
       "label": "feature-description"
     },
     {
+      "id": "component:hero-section",
+      "type": "Component",
+      "label": "hero-section"
+    },
+    {
+      "id": "component:trust-strip",
+      "type": "Component",
+      "label": "trust-strip"
+    },
+    {
       "id": "family:navigation",
       "type": "ComponentFamily",
       "label": "navigation",
@@ -888,6 +928,11 @@
       "id": "component:wizard-layout",
       "type": "Component",
       "label": "wizard-layout"
+    },
+    {
+      "id": "component:context-panel",
+      "type": "Component",
+      "label": "context-panel"
     },
     {
       "id": "family:foundation",
@@ -2121,6 +2166,16 @@
       "target": "family:data-display"
     },
     {
+      "type": "member_of_family",
+      "source": "component:chart-panel",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:filter-toolbar",
+      "target": "family:data-display"
+    },
+    {
       "type": "has_state",
       "source": "family:editorial",
       "target": "state:editorial-default"
@@ -2158,6 +2213,26 @@
     {
       "type": "member_of_family",
       "source": "component:inline-format-menu",
+      "target": "family:editorial"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:content-card",
+      "target": "family:editorial"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:featured-story-card",
+      "target": "family:editorial"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:content-meta",
+      "target": "family:editorial"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:byline-row",
       "target": "family:editorial"
     },
     {
@@ -2521,6 +2596,16 @@
       "target": "family:marketing"
     },
     {
+      "type": "member_of_family",
+      "source": "component:hero-section",
+      "target": "family:marketing"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:trust-strip",
+      "target": "family:marketing"
+    },
+    {
       "type": "has_state",
       "source": "family:navigation",
       "target": "state:navigation-default"
@@ -2603,6 +2688,11 @@
     {
       "type": "member_of_family",
       "source": "component:wizard-layout",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:context-panel",
       "target": "family:navigation"
     },
     {
@@ -3276,6 +3366,51 @@
       "target": "primitive:onboarding-and-stepper"
     },
     {
+      "type": "supports",
+      "source": "component:chart-panel",
+      "target": "primitive:dashboard-cards"
+    },
+    {
+      "type": "supports",
+      "source": "component:content-card",
+      "target": "primitive:rich-text-editor"
+    },
+    {
+      "type": "supports",
+      "source": "component:featured-story-card",
+      "target": "primitive:rich-text-editor"
+    },
+    {
+      "type": "supports",
+      "source": "component:content-meta",
+      "target": "primitive:rich-text-editor"
+    },
+    {
+      "type": "supports",
+      "source": "component:byline-row",
+      "target": "primitive:rich-text-editor"
+    },
+    {
+      "type": "supports",
+      "source": "component:hero-section",
+      "target": "primitive:hero-section"
+    },
+    {
+      "type": "supports",
+      "source": "component:trust-strip",
+      "target": "primitive:hero-section"
+    },
+    {
+      "type": "supports",
+      "source": "component:context-panel",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:filter-toolbar",
+      "target": "primitive:data-tables"
+    },
+    {
       "type": "belongs_to_palette",
       "source": "color:ochre",
       "target": "palette:standard-oranges"
@@ -3417,6 +3552,16 @@
     },
     {
       "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:context-panel"
+    },
+    {
+      "type": "implements",
+      "source": "component:context-panel",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
       "source": "pattern:layout-dashboard-cards",
       "target": "component:stat-card"
     },
@@ -3453,6 +3598,16 @@
     {
       "type": "implements",
       "source": "component:section-header",
+      "target": "pattern:layout-dashboard-cards"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-dashboard-cards",
+      "target": "component:chart-panel"
+    },
+    {
+      "type": "implements",
+      "source": "component:chart-panel",
       "target": "pattern:layout-dashboard-cards"
     },
     {
@@ -3503,6 +3658,16 @@
     {
       "type": "implements",
       "source": "component:pagination",
+      "target": "pattern:layout-data-tables"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-data-tables",
+      "target": "component:filter-toolbar"
+    },
+    {
+      "type": "implements",
+      "source": "component:filter-toolbar",
       "target": "pattern:layout-data-tables"
     },
     {
@@ -3573,6 +3738,26 @@
     {
       "type": "implements",
       "source": "component:hero-trust-strip",
+      "target": "pattern:layout-hero-section"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-hero-section",
+      "target": "component:hero-section"
+    },
+    {
+      "type": "implements",
+      "source": "component:hero-section",
+      "target": "pattern:layout-hero-section"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-hero-section",
+      "target": "component:trust-strip"
+    },
+    {
+      "type": "implements",
+      "source": "component:trust-strip",
       "target": "pattern:layout-hero-section"
     },
     {
@@ -3973,6 +4158,46 @@
     {
       "type": "implements",
       "source": "component:block-controls",
+      "target": "pattern:interaction-rich-text-editor"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-rich-text-editor",
+      "target": "component:content-card"
+    },
+    {
+      "type": "implements",
+      "source": "component:content-card",
+      "target": "pattern:interaction-rich-text-editor"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-rich-text-editor",
+      "target": "component:featured-story-card"
+    },
+    {
+      "type": "implements",
+      "source": "component:featured-story-card",
+      "target": "pattern:interaction-rich-text-editor"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-rich-text-editor",
+      "target": "component:content-meta"
+    },
+    {
+      "type": "implements",
+      "source": "component:content-meta",
+      "target": "pattern:interaction-rich-text-editor"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-rich-text-editor",
+      "target": "component:byline-row"
+    },
+    {
+      "type": "implements",
+      "source": "component:byline-row",
       "target": "pattern:interaction-rich-text-editor"
     },
     {
@@ -8622,6 +8847,283 @@
       "target": "font:pretendard"
     },
     {
+      "type": "uses_token",
+      "source": "component:chart-panel",
+      "target": "color:wheat",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-panel",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-panel",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:chart-panel",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:content-card",
+      "target": "color:wheat",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:content-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:content-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:content-card",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:featured-story-card",
+      "target": "color:wheat",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:featured-story-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:featured-story-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:featured-story-card",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:content-meta",
+      "target": "color:wheat",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:content-meta",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:content-meta",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:content-meta",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:byline-row",
+      "target": "color:wheat",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:byline-row",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:byline-row",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:byline-row",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-section",
+      "target": "color:wheat",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-section",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-section",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:hero-section",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:trust-strip",
+      "target": "color:wheat",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:trust-strip",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:trust-strip",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:trust-strip",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "color:ochre",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "color:apricot",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "color:wheat",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:context-panel",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-toolbar",
+      "target": "color:wheat",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-toolbar",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-toolbar",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:filter-toolbar",
+      "target": "font:pretendard"
+    },
+    {
       "type": "contrast_pair",
       "source": "color:ochre",
       "target": "color:paper",
@@ -9995,8 +10497,8 @@
     }
   ],
   "stats": {
-    "node_count": 303,
-    "edge_count": 1226,
+    "node_count": 312,
+    "edge_count": 1300,
     "nodes_by_type": {
       "Brand": 1,
       "Principle": 4,
@@ -10004,7 +10506,7 @@
       "RadiusToken": 6,
       "ComponentFamily": 9,
       "ComponentState": 31,
-      "Component": 116,
+      "Component": 125,
       "ProductPrimitive": 25,
       "ColorPalette": 13,
       "ColorToken": 25,

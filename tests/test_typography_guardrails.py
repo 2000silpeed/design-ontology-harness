@@ -1,0 +1,128 @@
+import unittest
+
+from design_ontology_harness.agent_packs import _codex_implementer_skill
+from design_ontology_harness.authoring import build_system_spec_markdown, build_token_schema
+from design_ontology_harness.component_specs import generate_component_specs
+from design_ontology_harness.font_reference import resolve_font_system
+
+
+def _sample_brand_profile() -> dict:
+    profile = {
+        "brand_name": "Signal Desk",
+        "system_name": "Signal Desk System",
+        "product_summary": "독립 편집팀을 위한 에디토리얼 협업 작업 공간",
+        "audiences": ["독립 편집자", "소규모 콘텐츠 팀"],
+        "brand_keywords": ["calm", "editorial", "precise"],
+        "anti_keywords": ["noisy"],
+        "tone_of_voice": ["사려 깊은", "정제된"],
+        "visual_keywords": ["editorial", "quiet contrast"],
+        "interaction_keywords": ["steady", "predictable"],
+        "platforms": ["web"],
+        "accessibility_targets": ["WCAG 2.2 AA"],
+        "product_primitives": ["workspace navigation", "rich text editor", "dashboard cards"],
+    }
+    profile["_resolved_font_system"] = resolve_font_system(profile)
+    return profile
+
+
+def _sample_blueprint() -> dict:
+    return {
+        "system_name": "Signal Desk System",
+        "principles": [
+            {
+                "name": "Editorial rhythm",
+                "rule": "Type and spacing should preserve reading rhythm before decorative impact.",
+            }
+        ],
+        "governance": {
+            "implementation_guardrails": [
+                "Preserve wrap stability while aligning code to tokens.",
+            ],
+            "ai_synthesis_principles": [],
+        },
+        "ontology_targets": [
+            {"concept_id": "typography", "count": 9},
+            {"concept_id": "layout", "count": 6},
+        ],
+        "component_strategy": {
+            "required_component_families": ["marketing", "editorial"],
+        },
+    }
+
+
+class TypographyGuardrailTests(unittest.TestCase):
+    def test_font_resolution_exposes_korean_script_guardrails(self) -> None:
+        font_system = resolve_font_system(_sample_brand_profile())
+
+        self.assertTrue(font_system["needs_korean"])
+        self.assertIsNotNone(font_system["script_guardrails"])
+        self.assertEqual(font_system["script_guardrails"]["primary_script"], "korean")
+        self.assertEqual(
+            font_system["script_guardrails"]["wrap"]["headline"]["word_break"],
+            "keep-all",
+        )
+        self.assertIn(
+            "<br />",
+            " ".join(font_system["script_guardrails"]["rules"]),
+        )
+
+    def test_system_spec_and_component_specs_surface_guardrails(self) -> None:
+        brand_profile = _sample_brand_profile()
+        blueprint = _sample_blueprint()
+        token_schema = build_token_schema(brand_profile, blueprint)
+
+        self.assertIn("script_guardrails", token_schema["categories"]["typography"])
+        self.assertIn(
+            "word-break: keep-all",
+            " ".join(token_schema["categories"]["typography"]["rules"]),
+        )
+
+        spec_md = build_system_spec_markdown(
+            brand_profile=brand_profile,
+            blueprint=blueprint,
+            validation={"errors": [], "warnings": []},
+            foundations=[
+                {
+                    "concept_id": "typography",
+                    "name": "Type scale and editorial hierarchy",
+                    "priority": "high",
+                    "signal_count": 9,
+                }
+            ],
+            token_schema=token_schema,
+            component_inventory={
+                "families": [{"family": "marketing", "components": ["hero-section"]}],
+                "candidate_component_archetypes": [],
+            },
+            documents=[],
+        )
+        self.assertIn("Hangul headline defaults", spec_md)
+        self.assertIn("word-break=keep-all", spec_md)
+
+        component_specs = generate_component_specs(
+            brand_profile=brand_profile,
+            blueprint=blueprint,
+            component_list=[
+                {
+                    "name": "hero-section",
+                    "family": "marketing",
+                    "role": "Landing hero",
+                    "source": "spec",
+                }
+            ],
+            documents=[],
+        )
+        self.assertTrue(component_specs["typography_guidance"]["active"])
+        self.assertIn(
+            "keep-all",
+            " ".join(component_specs["specs"][0]["implementation_notes"]),
+        )
+
+    def test_codex_skill_mentions_script_guardrails(self) -> None:
+        skill_text = _codex_implementer_skill("design-system")
+        self.assertIn("script_guardrails", skill_text)
+        self.assertIn("word-break: keep-all", skill_text)
+
+
+if __name__ == "__main__":
+    unittest.main()

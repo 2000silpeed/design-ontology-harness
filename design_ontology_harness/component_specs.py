@@ -554,6 +554,7 @@ def generate_component_specs(
     adaptations = _collect_brand_adaptations(brand_keywords)
     anti_rules = _collect_anti_rules(anti_keywords)
     visual_guidance = _collect_visual_guidance(brand_profile, blueprint)
+    typography_guidance = _collect_typography_guidance(brand_profile)
 
     families: dict[str, list[dict]] = {}
     for comp in component_list:
@@ -588,7 +589,12 @@ def generate_component_specs(
                 comp["name"], family, archetype_key, visual_guidance
             ),
             "reference_evidence": kb_evidence,
-            "implementation_notes": _build_implementation_notes(comp["name"], family, brand_keywords),
+            "implementation_notes": _build_implementation_notes(
+                comp["name"],
+                family,
+                brand_keywords,
+                typography_guidance,
+            ),
         }
         specs.append(spec)
 
@@ -600,6 +606,7 @@ def generate_component_specs(
         "anti_keywords": anti_keywords,
         "global_adaptation": adaptations,
         "visual_guidance": visual_guidance,
+        "typography_guidance": typography_guidance,
         "specs": specs,
     }
 
@@ -641,6 +648,36 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
         hint_keys = sorted((visual_guidance.get("component_style_hints") or {}).keys())
         if hint_keys:
             md_lines.append(f"- Connected component hints: {', '.join(hint_keys)}")
+        md_lines.append("")
+
+    typography_guidance = specs_data.get("typography_guidance") or {}
+    if typography_guidance.get("active"):
+        md_lines.append("## Typography Guardrails\n")
+        md_lines.append(
+            "- 한글 기반 제품은 line-break / scale / tracking을 영문 랜딩 기본값으로 처리하지 않고, 아래 가드레일을 구현 기본값으로 사용한다."
+        )
+        headline_font = typography_guidance.get("headline_font") or {}
+        body_font = typography_guidance.get("body_font") or {}
+        wrap = typography_guidance.get("wrap") or {}
+        headline_wrap = wrap.get("headline") or {}
+        body_wrap = wrap.get("body") or {}
+        md_lines.append(
+            f"- Headline: {headline_font.get('name', 'N/A')} | line-height {headline_font.get('line_height', 'n/a')} | tracking {headline_font.get('letter_spacing', 'n/a')}"
+        )
+        md_lines.append(
+            f"- Body: {body_font.get('name', 'N/A')} | line-height {body_font.get('line_height', 'n/a')} | label line-height {body_font.get('ui_label_line_height', 'n/a')}"
+        )
+        md_lines.append(
+            "- Wrap defaults: "
+            f"headline word-break={headline_wrap.get('word_break', 'n/a')}, "
+            f"headline text-wrap={headline_wrap.get('text_wrap', 'n/a')}, "
+            f"body word-break={body_wrap.get('word_break', 'n/a')}"
+        )
+        scale = typography_guidance.get("scale") or {}
+        if scale.get("guidance"):
+            md_lines.append(f"- Scale guidance: {scale['guidance']}")
+        for rule in typography_guidance.get("rules", [])[:4]:
+            md_lines.append(f"- {rule}")
         md_lines.append("")
 
     for spec in specs_data["specs"]:
@@ -758,6 +795,14 @@ def _collect_visual_guidance(brand_profile: dict, blueprint: dict) -> dict:
         "top_layout_cue": layout_cues[0]["id"] if layout_cues else None,
         "component_style_hints": component_style_hints,
     }
+
+
+def _collect_typography_guidance(brand_profile: dict) -> dict:
+    font_system = brand_profile.get("_resolved_font_system") or {}
+    script_guardrails = font_system.get("script_guardrails") or {}
+    if not script_guardrails:
+        return {"active": False}
+    return {"active": True, **script_guardrails}
 
 
 def _build_token_bindings(name: str, family: str, source: dict) -> dict[str, str]:
@@ -1100,7 +1145,12 @@ def _state_description(state: str, family: str) -> str:
     return descriptions.get(state, state)
 
 
-def _build_implementation_notes(name: str, family: str, brand_keywords: list[str]) -> list[str]:
+def _build_implementation_notes(
+    name: str,
+    family: str,
+    brand_keywords: list[str],
+    typography_guidance: dict | None = None,
+) -> list[str]:
     notes = [
         "기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작",
         "variant prop으로 시각적 변형을 관리 (하드코딩 금지)",
@@ -1125,6 +1175,19 @@ def _build_implementation_notes(name: str, family: str, brand_keywords: list[str
         notes.append("섹션에 <h2 id=\"...\">과 aria-labelledby 필수")
         notes.append("CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지")
         notes.append("다크 모드는 globals.css의 prefers-color-scheme 블록에 위임")
+
+    if typography_guidance and typography_guidance.get("primary_script") == "korean":
+        if family in {"marketing", "editorial"}:
+            notes.append("한글 헤딩은 `word-break: keep-all` / `overflow-wrap: normal`을 기본값으로 두고, 강제 `<br />`는 breakpoint 검증 전 넣지 않음")
+            scale = typography_guidance.get("scale") or {}
+            if scale.get("guidance"):
+                notes.append(scale["guidance"])
+        if family in {"marketing", "editorial", "data-display", "navigation"}:
+            body_font = typography_guidance.get("body_font") or {}
+            if body_font.get("ui_label_line_height"):
+                notes.append(
+                    f"좁은 UI 텍스트는 {body_font.get('name', 'body font')} 기준 label line-height {body_font.get('ui_label_line_height')}를 참고해 뭉침을 방지"
+                )
 
     if "calm" in brand_keywords:
         notes.append("애니메이션은 상태 설명용으로만 사용, 장식 효과 금지")
