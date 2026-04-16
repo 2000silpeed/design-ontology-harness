@@ -1,5 +1,5 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;800&display=swap");
 @import "tailwindcss";
 
 /*
@@ -29,8 +29,8 @@
   --radius-xl: 24px;
   --radius-pill: 9999px;
 
-  --font-heading: "Pretendard Variable", "Pretendard", "Apple SD Gothic Neo", sans-serif;
-  --font-body: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+  --font-heading: "Noto Serif KR", "Iowan Old Style", "Apple SD Gothic Neo", serif;
+  --font-body: "Pretendard Variable", "Pretendard", "Apple SD Gothic Neo", sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   --text-xs: 12px;
   --text-sm: 13px;
@@ -46,6 +46,8 @@
   --leading-normal: 1.5;
   --leading-comfortable: 1.65;
   --leading-relaxed: 1.78;
+  --hangul-display-line-height-safe: 1.08;
+  --hangul-display-tracking-safe: -0.02em;
 
   --color-brand-primary: #161d28;
   --color-brand-accent: #a6ff4d;
@@ -138,6 +140,7 @@ body {
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  margin: 0;
 }
 
 a {

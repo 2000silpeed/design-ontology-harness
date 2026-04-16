@@ -3,7 +3,10 @@ import unittest
 from design_ontology_harness.agent_packs import _codex_implementer_skill
 from design_ontology_harness.authoring import build_system_spec_markdown, build_token_schema
 from design_ontology_harness.component_specs import generate_component_specs
-from design_ontology_harness.font_reference import resolve_font_system
+from design_ontology_harness.font_reference import (
+    resolve_font_system,
+    validate_headline_display_guardrails,
+)
 
 
 def _sample_brand_profile() -> dict:
@@ -68,6 +71,10 @@ class TypographyGuardrailTests(unittest.TestCase):
         self.assertIsNotNone(font_system["script_guardrails"])
         self.assertEqual(font_system["script_guardrails"]["primary_script"], "korean")
         self.assertEqual(
+            font_system["script_guardrails"]["implementation_constraints"]["headline_display"]["line_height_min"],
+            "1.08",
+        )
+        self.assertEqual(
             font_system["script_guardrails"]["wrap"]["headline"]["word_break"],
             "keep-all",
         )
@@ -85,6 +92,10 @@ class TypographyGuardrailTests(unittest.TestCase):
         self.assertIn(
             "word-break: keep-all",
             " ".join(token_schema["categories"]["typography"]["rules"]),
+        )
+        self.assertIn(
+            "line_height_min",
+            token_schema["categories"]["typography"]["script_guardrails"]["implementation_constraints"]["headline_display"],
         )
 
         spec_md = build_system_spec_markdown(
@@ -108,6 +119,7 @@ class TypographyGuardrailTests(unittest.TestCase):
         )
         self.assertIn("Hangul headline defaults", spec_md)
         self.assertIn("word-break=keep-all", spec_md)
+        self.assertIn("Hangul display safety", spec_md)
 
         component_specs = generate_component_specs(
             brand_profile=brand_profile,
@@ -127,11 +139,28 @@ class TypographyGuardrailTests(unittest.TestCase):
             "keep-all",
             " ".join(component_specs["specs"][0]["implementation_notes"]),
         )
+        self.assertIn(
+            "line_height_min",
+            component_specs["typography_guidance"]["implementation_constraints"]["headline_display"],
+        )
+
+    def test_validator_flags_unsafe_hangul_display_values(self) -> None:
+        font_system = resolve_font_system(_sample_brand_profile())
+        issues = validate_headline_display_guardrails(
+            font_system["script_guardrails"],
+            line_height=0.93,
+            letter_spacing="-0.04em",
+        )
+
+        self.assertTrue(issues)
+        self.assertIn("line-height 0.93", issues[0])
+        self.assertTrue(any("letter-spacing -0.04em" in issue for issue in issues))
 
     def test_codex_skill_mentions_script_guardrails(self) -> None:
         skill_text = _codex_implementer_skill("design-system")
         self.assertIn("script_guardrails", skill_text)
         self.assertIn("word-break: keep-all", skill_text)
+        self.assertIn("line-height below the artifact safety minimum", skill_text)
 
 
 if __name__ == "__main__":

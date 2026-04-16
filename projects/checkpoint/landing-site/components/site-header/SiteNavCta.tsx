@@ -29,10 +29,10 @@ export function SiteNavCta() {
         }}
         className="site-nav-cta-ghost"
       >
-        뉴스레터
+        다이제스트
       </a>
       <a
-        href="#membership"
+        href="#newsletter"
         style={{
           display: "inline-flex",
           alignItems: "center",
@@ -53,7 +53,7 @@ export function SiteNavCta() {
         }}
         className="site-nav-cta-filled"
       >
-        멤버십 시작
+        금요일 요약 받기
       </a>
       <style>{`
         .site-nav-cta-ghost:hover {

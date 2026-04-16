@@ -242,6 +242,7 @@ If `system_spec.md` or `token_schema.json` contains typography `script_guardrail
 - Avoid forced `<br/>` in Korean headlines until desktop/mobile wrapping is verified with real copy.
 - For wide or serif Hangul display fonts, start one type step smaller than English-first hero comps and only scale up after wrap review.
 - Respect font-specific line-height and letter-spacing guidance from the artifacts instead of reusing English defaults.
+- Never set Hangul display line-height below the artifact safety minimum, and never tighten tracking past the allowed min/max range.
 """
 
 
