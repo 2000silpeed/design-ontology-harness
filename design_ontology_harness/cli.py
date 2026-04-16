@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+from copy import deepcopy
 from pathlib import Path
 
 from .agent_packs import scaffold_agent_pack
@@ -11,6 +12,7 @@ from .component_specs import generate_component_specs, write_component_specs
 from .css_pipeline import run_and_save as run_css_extraction
 from .kb import build_knowledge_base, load_knowledge_base
 from .models import DocumentRecord, ReferenceLink
+from .pinterest_capture import capture_pinterest_candidates
 from .scaffold import load_project, resolve_kb_dir, scaffold_project
 from .pinterest_assist import build_pinterest_assist_bundle
 from .spec_analyzer import analyze_spec, analyze_spec_file, build_component_list, detected_to_primitives
@@ -100,6 +102,37 @@ def build_parser() -> argparse.ArgumentParser:
     query_parser.add_argument("--limit", type=int, default=16, help="Maximum number of query suggestions to generate")
     query_parser.add_argument("--output-dir", default=None, help="Optional directory to write query suggestions")
     query_parser.add_argument("--sync-brand-profile", action="store_true", help="Write generated queries back into brand_profile.visual_reference.query")
+
+    capture_parser = subparsers.add_parser("capture-pinterest", help="Capture Pinterest search result tiles into the local pinterest_assist capture_dir")
+    capture_target = capture_parser.add_mutually_exclusive_group(required=True)
+    capture_target.add_argument("--brand-profile", default=None, help="Path to a JSON brand profile")
+    capture_target.add_argument("--project-dir", default=None, help="Optional project directory created by init")
+    capture_parser.add_argument("--spec", "--spec-file", dest="spec_file", default=None, help="Optional spec file used to regenerate query suggestions before capture")
+    capture_parser.add_argument("--limit-queries", type=int, default=None, help="Optional cap on how many query groups to capture")
+    capture_parser.add_argument("--max-candidates-per-query", type=int, default=None, help="Optional override for the per-query candidate cap")
+    capture_parser.add_argument("--timeout-ms", type=int, default=90000, help="Page navigation timeout in milliseconds")
+    capture_parser.add_argument("--wait-ms", type=int, default=7000, help="Initial wait after navigation in milliseconds")
+    capture_parser.add_argument("--scroll-rounds", type=int, default=2, help="How many additional scroll passes to run per query")
+    capture_parser.add_argument("--scroll-wait-ms", type=int, default=1500, help="Wait time after each scroll in milliseconds")
+    capture_parser.add_argument("--headed", action="store_true", help="Run the browser visibly instead of headless mode")
+    capture_parser.add_argument("--refresh-queries", action="store_true", help="Regenerate the query report before capturing")
+    capture_parser.add_argument("--output-dir", default=None, help="Optional directory to write refreshed manifests")
+
+    select_parser = subparsers.add_parser("select-pinterest-candidates", help="Explicitly lock captured Pinterest-assisted candidates into the selection manifest")
+    select_target = select_parser.add_mutually_exclusive_group(required=True)
+    select_target.add_argument("--brand-profile", default=None, help="Path to a JSON brand profile")
+    select_target.add_argument("--project-dir", default=None, help="Optional project directory created by init")
+    select_parser.add_argument("--candidate", action="append", required=True, help="Candidate id to select (for example q01-c03). Can be passed multiple times.")
+    select_parser.add_argument("--reason", default=None, help="Optional selection reason applied to the provided candidates")
+    select_parser.add_argument("--note", default=None, help="Optional note applied to the provided candidates")
+    select_parser.add_argument("--sync-sources", action="store_true", help="Immediately copy the selected captures into visual_reference.sources")
+    select_parser.add_argument("--output-dir", default=None, help="Optional directory containing the pinterest manifests")
+
+    sync_parser = subparsers.add_parser("sync-pinterest-selection", help="Copy selected Pinterest-assisted captures into visual_reference.sources")
+    sync_target = sync_parser.add_mutually_exclusive_group(required=True)
+    sync_target.add_argument("--brand-profile", default=None, help="Path to a JSON brand profile")
+    sync_target.add_argument("--project-dir", default=None, help="Optional project directory created by init")
+    sync_parser.add_argument("--output-dir", default=None, help="Optional directory containing the pinterest manifests")
 
     analyze_parser = subparsers.add_parser("analyze-spec", help="Analyze a product spec to auto-detect needed UI components")
     analyze_parser.add_argument("--spec-file", required=True, help="Path to a product spec file (markdown, text)")
@@ -297,10 +330,18 @@ def main() -> None:
             folder_name="visuals",
         )
         write_json(visuals_dir / "visual_query_suggestions.json", report)
-        assist_bundle = build_pinterest_assist_bundle(brand_profile=brand_profile, query_report=report)
-        write_json(visuals_dir / "pinterest_assist_plan.json", assist_bundle["plan"])
-        write_json(visuals_dir / "pinterest_candidate_manifest.json", assist_bundle["candidate_manifest"])
-        write_json(visuals_dir / "pinterest_selection_manifest.json", assist_bundle["selection_manifest"])
+        if args.sync_brand_profile:
+            raw_profile = json.loads(brand_profile_path.read_text(encoding="utf-8"))
+            visual_reference = raw_profile.setdefault("visual_reference", {})
+            visual_reference["query"] = [item["query"] for item in report["queries"]]
+            write_json(brand_profile_path, raw_profile)
+            brand_profile = load_brand_profile(brand_profile_path)
+        assist_bundle = _refresh_pinterest_assist_outputs(
+            visuals_dir=visuals_dir,
+            brand_profile=brand_profile,
+            query_report=report,
+            project_dir=project_dir,
+        )
 
         print(f"[generate-visual-queries] {report['query_count']}개 query 생성 완료: {visuals_dir}/visual_query_suggestions.json")
         print(f"  -> Pinterest assist plan: {visuals_dir}/pinterest_assist_plan.json")
@@ -314,11 +355,201 @@ def main() -> None:
             print(f"  {index:2d}. {item['query']} [{item['intent']}]")
 
         if args.sync_brand_profile:
-            raw_profile = json.loads(brand_profile_path.read_text(encoding="utf-8"))
-            visual_reference = raw_profile.setdefault("visual_reference", {})
-            visual_reference["query"] = [item["query"] for item in report["queries"]]
-            write_json(brand_profile_path, raw_profile)
             print(f"  -> {brand_profile_path} 의 visual_reference.query 를 업데이트했습니다.")
+
+        pinterest_config = (brand_profile.get("visual_reference") or {}).get("pinterest_assist") or {}
+        auto_capture = (
+            (brand_profile.get("visual_reference") or {}).get("mode") == "pinterest-assisted"
+            and pinterest_config.get("enabled")
+            and str(pinterest_config.get("capture_mode", "")).strip().lower() == "playwright-capture"
+        )
+        if auto_capture:
+            capture_report = capture_pinterest_candidates(
+                brand_profile=brand_profile,
+                query_report=report,
+                project_dir=project_dir,
+                headless=True,
+            )
+            assist_bundle = _refresh_pinterest_assist_outputs(
+                visuals_dir=visuals_dir,
+                brand_profile=brand_profile,
+                query_report=report,
+                project_dir=project_dir,
+                captured_candidates=_capture_map_from_report(capture_report),
+            )
+            print(
+                f"  -> Pinterest Playwright capture: {capture_report['captured_count']}개 candidate 저장 "
+                f"({assist_bundle['plan']['capture_progress']['capture_root']})"
+            )
+            for query_result in capture_report["queries"][: min(5, len(capture_report["queries"]))]:
+                print(f"     - {query_result['query_id']}: {len(query_result['captured_candidates'])} captured")
+        return
+
+    if args.command == "capture-pinterest":
+        brand_profile_path, project_dir, manifest = _resolve_brand_profile_target(
+            brand_profile_arg=args.brand_profile,
+            project_dir_arg=args.project_dir,
+        )
+        brand_profile = load_brand_profile(brand_profile_path)
+        visuals_dir = _resolve_support_output_dir(
+            raw_output=args.output_dir,
+            project_dir=project_dir,
+            manifest=manifest,
+            folder_name="visuals",
+        )
+        spec_path = _resolve_spec_path(project_dir, args.spec_file)
+        report = _load_or_build_query_report(
+            brand_profile=brand_profile,
+            visuals_dir=visuals_dir,
+            project_dir=project_dir,
+            spec_path=spec_path,
+            refresh=args.refresh_queries,
+        )
+        write_json(visuals_dir / "visual_query_suggestions.json", report)
+        capture_report = capture_pinterest_candidates(
+            brand_profile=brand_profile,
+            query_report=report,
+            project_dir=project_dir,
+            limit_queries=args.limit_queries,
+            max_candidates_per_query=args.max_candidates_per_query,
+            headless=not args.headed,
+            timeout_ms=args.timeout_ms,
+            initial_wait_ms=args.wait_ms,
+            scroll_rounds=args.scroll_rounds,
+            scroll_wait_ms=args.scroll_wait_ms,
+        )
+        assist_bundle = _refresh_pinterest_assist_outputs(
+            visuals_dir=visuals_dir,
+            brand_profile=brand_profile,
+            query_report=report,
+            project_dir=project_dir,
+            captured_candidates=_capture_map_from_report(capture_report),
+        )
+        print(
+            f"[capture-pinterest] {capture_report['captured_count']}개 candidate 저장 완료 "
+            f"({assist_bundle['plan']['capture_progress']['capture_root']})"
+        )
+        for query_result in capture_report["queries"][: min(10, len(capture_report["queries"]))]:
+            print(f"  {query_result['query_id']}: {len(query_result['captured_candidates'])} captured | {query_result['search_url']}")
+            for warning in query_result["warnings"][:2]:
+                print(f"     - {warning}")
+        print(f"  -> Candidate manifest: {visuals_dir}/pinterest_candidate_manifest.json")
+        print(f"  -> Selection manifest: {visuals_dir}/pinterest_selection_manifest.json")
+        return
+
+    if args.command == "select-pinterest-candidates":
+        brand_profile_path, project_dir, manifest = _resolve_brand_profile_target(
+            brand_profile_arg=args.brand_profile,
+            project_dir_arg=args.project_dir,
+        )
+        brand_profile = load_brand_profile(brand_profile_path)
+        visuals_dir = _resolve_support_output_dir(
+            raw_output=args.output_dir,
+            project_dir=project_dir,
+            manifest=manifest,
+            folder_name="visuals",
+        )
+        query_report = _read_json_if_exists(visuals_dir / "visual_query_suggestions.json")
+        candidate_manifest = _read_json_if_exists(visuals_dir / "pinterest_candidate_manifest.json")
+        selection_manifest = _read_json_if_exists(visuals_dir / "pinterest_selection_manifest.json")
+        if not isinstance(query_report, dict):
+            raise SystemExit(f"visual_query_suggestions.json 을 찾을 수 없습니다: {visuals_dir}")
+        if not isinstance(candidate_manifest, dict):
+            raise SystemExit(f"pinterest_candidate_manifest.json 을 찾을 수 없습니다: {visuals_dir}")
+        if not isinstance(selection_manifest, dict):
+            raise SystemExit(f"pinterest_selection_manifest.json 을 찾을 수 없습니다: {visuals_dir}")
+
+        updated_selection_manifest = _apply_pinterest_candidate_selection_updates(
+            candidate_manifest=candidate_manifest,
+            existing_selection_manifest=selection_manifest,
+            candidate_ids=args.candidate,
+            reason=args.reason,
+            note=args.note,
+        )
+        assist_bundle = _refresh_pinterest_assist_outputs(
+            visuals_dir=visuals_dir,
+            brand_profile=brand_profile,
+            query_report=query_report,
+            project_dir=project_dir,
+            existing_candidate_manifest=candidate_manifest,
+            existing_selection_manifest=updated_selection_manifest,
+        )
+        print(f"[select-pinterest-candidates] {len(_dedupe_preserve_order(args.candidate))}개 candidate 선택 완료")
+        print(f"  -> Selection manifest: {visuals_dir}/pinterest_selection_manifest.json")
+        print(f"  -> selected {assist_bundle['plan']['capture_progress']['selected_count']} / promoted {assist_bundle['plan']['capture_progress']['promoted_count']}")
+
+        if args.sync_sources:
+            raw_profile = json.loads(brand_profile_path.read_text(encoding="utf-8"))
+            sync_result = _sync_pinterest_selected_sources(
+                raw_brand_profile=raw_profile,
+                selection_manifest=assist_bundle["selection_manifest"],
+                base_dir=project_dir or brand_profile_path.parent,
+            )
+            write_json(brand_profile_path, raw_profile)
+            brand_profile = load_brand_profile(brand_profile_path)
+            assist_bundle = _refresh_pinterest_assist_outputs(
+                visuals_dir=visuals_dir,
+                brand_profile=brand_profile,
+                query_report=query_report,
+                project_dir=project_dir,
+                existing_candidate_manifest=assist_bundle["candidate_manifest"],
+                existing_selection_manifest=assist_bundle["selection_manifest"],
+            )
+            print(
+                f"  -> visual_reference.sources 동기화: {sync_result['selected_count']}개 선택 / "
+                f"{sync_result['managed_source_count']}개 Pinterest source 반영"
+            )
+            print(f"  -> {brand_profile_path} 업데이트 완료")
+        return
+
+    if args.command == "sync-pinterest-selection":
+        brand_profile_path, project_dir, manifest = _resolve_brand_profile_target(
+            brand_profile_arg=args.brand_profile,
+            project_dir_arg=args.project_dir,
+        )
+        brand_profile = load_brand_profile(brand_profile_path)
+        visuals_dir = _resolve_support_output_dir(
+            raw_output=args.output_dir,
+            project_dir=project_dir,
+            manifest=manifest,
+            folder_name="visuals",
+        )
+        spec_path = _resolve_spec_path(project_dir, None)
+        query_report = _load_or_build_query_report(
+            brand_profile=brand_profile,
+            visuals_dir=visuals_dir,
+            project_dir=project_dir,
+            spec_path=spec_path,
+            refresh=False,
+        )
+        write_json(visuals_dir / "visual_query_suggestions.json", query_report)
+        selection_manifest = _read_json_if_exists(visuals_dir / "pinterest_selection_manifest.json")
+        candidate_manifest = _read_json_if_exists(visuals_dir / "pinterest_candidate_manifest.json")
+        if not isinstance(selection_manifest, dict):
+            raise SystemExit(f"pinterest_selection_manifest.json 을 찾을 수 없습니다: {visuals_dir}")
+
+        raw_profile = json.loads(brand_profile_path.read_text(encoding="utf-8"))
+        sync_result = _sync_pinterest_selected_sources(
+            raw_brand_profile=raw_profile,
+            selection_manifest=selection_manifest,
+            base_dir=project_dir or brand_profile_path.parent,
+        )
+        write_json(brand_profile_path, raw_profile)
+        brand_profile = load_brand_profile(brand_profile_path)
+        assist_bundle = _refresh_pinterest_assist_outputs(
+            visuals_dir=visuals_dir,
+            brand_profile=brand_profile,
+            query_report=query_report,
+            project_dir=project_dir,
+            existing_candidate_manifest=candidate_manifest,
+            existing_selection_manifest=selection_manifest,
+        )
+        print(
+            f"[sync-pinterest-selection] visual_reference.sources 동기화 완료: "
+            f"selected {sync_result['selected_count']} / managed {sync_result['managed_source_count']}"
+        )
+        print(f"  -> {brand_profile_path}")
+        print(f"  -> promoted {assist_bundle['plan']['capture_progress']['promoted_count']}")
         return
 
     if args.command == "init":
@@ -598,6 +829,265 @@ def _resolve_spec_path(project_dir: Path | None, explicit_spec: str | None) -> P
         if candidate.exists():
             return candidate
     return None
+
+
+def _load_or_build_query_report(
+    brand_profile: dict,
+    visuals_dir: Path,
+    project_dir: Path | None,
+    spec_path: Path | None,
+    refresh: bool,
+) -> dict:
+    query_report_path = visuals_dir / "visual_query_suggestions.json"
+    if query_report_path.exists() and not refresh:
+        return json.loads(query_report_path.read_text(encoding="utf-8"))
+    spec_text = spec_path.read_text(encoding="utf-8") if spec_path and spec_path.exists() else None
+    return generate_visual_queries(brand_profile=brand_profile, spec_text=spec_text)
+
+
+def _refresh_pinterest_assist_outputs(
+    visuals_dir: Path,
+    brand_profile: dict,
+    query_report: dict,
+    project_dir: Path | None,
+    captured_candidates: dict[str, list[dict]] | None = None,
+    existing_candidate_manifest: dict | None = None,
+    existing_selection_manifest: dict | None = None,
+) -> dict:
+    if existing_candidate_manifest is None:
+        existing_candidate_manifest = _read_json_if_exists(visuals_dir / "pinterest_candidate_manifest.json")
+    if existing_selection_manifest is None:
+        existing_selection_manifest = _read_json_if_exists(visuals_dir / "pinterest_selection_manifest.json")
+    assist_bundle = build_pinterest_assist_bundle(
+        brand_profile=brand_profile,
+        query_report=query_report,
+        project_dir=project_dir,
+        captured_candidates=captured_candidates,
+        existing_candidate_manifest=existing_candidate_manifest,
+        existing_selection_manifest=existing_selection_manifest,
+    )
+    write_json(visuals_dir / "pinterest_assist_plan.json", assist_bundle["plan"])
+    write_json(visuals_dir / "pinterest_candidate_manifest.json", assist_bundle["candidate_manifest"])
+    write_json(visuals_dir / "pinterest_selection_manifest.json", assist_bundle["selection_manifest"])
+    return assist_bundle
+
+
+def _capture_map_from_report(capture_report: dict) -> dict[str, list[dict]]:
+    captured: dict[str, list[dict]] = {}
+    for query_result in capture_report.get("queries", []):
+        query_id = str(query_result.get("query_id", "")).strip()
+        if not query_id:
+            continue
+        captured[query_id] = list(query_result.get("captured_candidates", []))
+    return captured
+
+
+def _read_json_if_exists(path: Path) -> dict | None:
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _apply_pinterest_candidate_selection_updates(
+    *,
+    candidate_manifest: dict,
+    existing_selection_manifest: dict,
+    candidate_ids: list[str],
+    reason: str | None,
+    note: str | None,
+) -> dict:
+    selected_candidate_ids = _dedupe_preserve_order(candidate_ids)
+    candidate_lookup: dict[str, tuple[str, dict]] = {}
+    captured_count = 0
+    for query in candidate_manifest.get("queries", []):
+        query_id = str(query.get("query_id", "")).strip()
+        for candidate in query.get("candidates", []):
+            candidate_id = str(candidate.get("candidate_id", "")).strip()
+            if candidate.get("status") == "captured":
+                captured_count += 1
+            if candidate_id:
+                candidate_lookup[candidate_id] = (query_id, candidate)
+
+    missing_candidate_ids = [candidate_id for candidate_id in selected_candidate_ids if candidate_id not in candidate_lookup]
+    if missing_candidate_ids:
+        raise SystemExit(f"선택할 candidate_id 를 찾을 수 없습니다: {', '.join(missing_candidate_ids)}")
+
+    updated_selection_manifest = deepcopy(existing_selection_manifest)
+    query_lookup = {
+        str(query.get("query_id", "")).strip(): query
+        for query in updated_selection_manifest.get("queries", [])
+        if str(query.get("query_id", "")).strip()
+    }
+    selected_by_query: dict[str, list[dict]] = {}
+    for candidate_id in selected_candidate_ids:
+        query_id, candidate = candidate_lookup[candidate_id]
+        if candidate.get("status") != "captured" or not str(candidate.get("capture_path", "")).strip():
+            raise SystemExit(f"candidate 가 아직 캡처되지 않았습니다: {candidate_id}")
+        if query_id not in query_lookup:
+            raise SystemExit(f"selection manifest 에 query 가 없습니다: {query_id}")
+        selected_by_query.setdefault(query_id, []).append(candidate)
+
+    for query_id, selected_candidates in selected_by_query.items():
+        query_entry = query_lookup[query_id]
+        existing_selected_by_candidate = {
+            str(item.get("candidate_id", "")).strip(): item
+            for item in query_entry.get("selected", [])
+            if str(item.get("status", "")).strip().lower() == "selected" and str(item.get("candidate_id", "")).strip()
+        }
+        slot_count = len(query_entry.get("selected", []))
+        if len(selected_candidates) > slot_count:
+            raise SystemExit(
+                f"{query_id} 는 최대 {slot_count}개까지 선택할 수 있습니다 "
+                f"(요청 {len(selected_candidates)}개)."
+            )
+
+        updated_selected_entries: list[dict] = []
+        for slot in range(1, slot_count + 1):
+            selection_id = f"{query_id}-s{slot:02d}"
+            if slot <= len(selected_candidates):
+                candidate = selected_candidates[slot - 1]
+                candidate_id = str(candidate.get("candidate_id", "")).strip()
+                existing_selected = existing_selected_by_candidate.get(candidate_id, {})
+                updated_selected_entries.append(
+                    {
+                        "selection_id": selection_id,
+                        "status": "selected",
+                        "candidate_id": candidate_id,
+                        "reference_url": candidate.get("reference_url"),
+                        "capture_path": candidate.get("capture_path"),
+                        "usage_scope": "reference-analysis-only",
+                        "redistribution_allowed": False,
+                        "selection_reason": reason
+                        or existing_selected.get("selection_reason")
+                        or "Explicitly selected for promotion to visual_reference.sources.",
+                        "notes": note if note is not None else existing_selected.get("notes") or candidate.get("notes"),
+                        "promoted_to_sources": bool(existing_selected.get("promoted_to_sources", False)),
+                    }
+                )
+                continue
+            updated_selected_entries.append(_build_open_selection_manifest_entry(selection_id))
+        query_entry["selected"] = updated_selected_entries
+
+    has_selected_entries = any(
+        str(item.get("status", "")).strip().lower() == "selected"
+        for query in updated_selection_manifest.get("queries", [])
+        for item in query.get("selected", [])
+    )
+    updated_selection_manifest["status"] = (
+        "selected"
+        if has_selected_entries
+        else "ready-for-selection"
+        if captured_count
+        else "awaiting-selection"
+    )
+    return updated_selection_manifest
+
+
+def _sync_pinterest_selected_sources(
+    *,
+    raw_brand_profile: dict,
+    selection_manifest: dict,
+    base_dir: Path,
+) -> dict:
+    visual_reference = raw_brand_profile.setdefault("visual_reference", {})
+    capture_dir = str(selection_manifest.get("capture_dir", "")).strip() or "references/visual/pinterest-assisted"
+    selected_paths = _dedupe_preserve_order(
+        [
+            str(selection.get("capture_path", "")).strip()
+            for query in selection_manifest.get("queries", [])
+            for selection in query.get("selected", [])
+            if str(selection.get("status", "")).strip().lower() == "selected"
+            and str(selection.get("capture_path", "")).strip()
+        ]
+    )
+
+    preserved_sources: list[object] = []
+    existing_sources = visual_reference.get("sources", [])
+    if not isinstance(existing_sources, list):
+        existing_sources = []
+    for source in existing_sources:
+        if _is_pinterest_managed_source_entry(source, capture_dir=capture_dir, base_dir=base_dir):
+            continue
+        preserved_sources.append(source)
+
+    merged_sources = list(preserved_sources)
+    existing_keys = {
+        _source_entry_identity(source, base_dir=base_dir)
+        for source in merged_sources
+    }
+    for capture_path in selected_paths:
+        identity = _source_path_identity(capture_path, base_dir=base_dir)
+        if identity in existing_keys:
+            continue
+        merged_sources.append(capture_path)
+        existing_keys.add(identity)
+
+    visual_reference["sources"] = merged_sources
+    return {
+        "selected_count": len(selected_paths),
+        "managed_source_count": len(selected_paths),
+        "total_source_count": len(merged_sources),
+    }
+
+
+def _build_open_selection_manifest_entry(selection_id: str) -> dict:
+    return {
+        "selection_id": selection_id,
+        "status": "open",
+        "candidate_id": None,
+        "reference_url": None,
+        "capture_path": None,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": False,
+        "selection_reason": None,
+        "notes": None,
+        "promoted_to_sources": False,
+    }
+
+
+def _dedupe_preserve_order(values: list[str]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for value in values:
+        normalized = str(value).strip()
+        if not normalized or normalized in seen:
+            continue
+        seen.add(normalized)
+        result.append(normalized)
+    return result
+
+
+def _is_pinterest_managed_source_entry(source: object, *, capture_dir: str, base_dir: Path) -> bool:
+    raw_path = _source_entry_path(source)
+    if not raw_path:
+        return False
+    source_identity = _source_path_identity(raw_path, base_dir=base_dir)
+    capture_root_identity = _source_path_identity(capture_dir, base_dir=base_dir)
+    return source_identity == capture_root_identity or source_identity.startswith(capture_root_identity + "/")
+
+
+def _source_entry_identity(source: object, *, base_dir: Path) -> str:
+    return _source_path_identity(_source_entry_path(source), base_dir=base_dir)
+
+
+def _source_entry_path(source: object) -> str:
+    if isinstance(source, str):
+        return source.strip()
+    if isinstance(source, dict):
+        return str(source.get("path", "")).strip()
+    return ""
+
+
+def _source_path_identity(raw_path: str, *, base_dir: Path) -> str:
+    path_text = str(raw_path).strip()
+    if not path_text:
+        return ""
+    path = Path(path_text)
+    if not path.is_absolute():
+        path = (base_dir / path).resolve()
+    else:
+        path = path.resolve()
+    return str(path)
 
 
 def _write_visual_analysis_outputs(

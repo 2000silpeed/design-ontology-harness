@@ -1,0 +1,178 @@
+{
+  "brand_name": "Checkpoint",
+  "system_name": "Checkpoint System",
+  "product_summary": "콘솔과 PC 게임을 비평, 비교, 추천하는 에디토리얼 게임 리뷰 사이트",
+  "audiences": [
+    "신작 구매 결정을 빠르게 내리고 싶은 코어 게이머",
+    "플랫폼별 성능과 완성도를 비교하려는 사용자",
+    "신뢰 가능한 비평과 추천 큐레이션을 찾는 독자"
+  ],
+  "brand_keywords": [
+    "bold",
+    "editorial",
+    "analytical",
+    "trustworthy"
+  ],
+  "anti_keywords": [
+    "generic",
+    "cluttered",
+    "clickbait",
+    "childish"
+  ],
+  "tone_of_voice": [
+    "sharp",
+    "confident",
+    "credible"
+  ],
+  "visual_keywords": [
+    "cinematic crops",
+    "poster-led cards",
+    "strong contrast",
+    "data-rich editorial layout",
+    "dark mode first"
+  ],
+  "interaction_keywords": [
+    "fast filtering",
+    "clear comparison flows",
+    "predictable navigation",
+    "low-noise motion"
+  ],
+  "platforms": [
+    "web",
+    "mobile-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "hero spotlight",
+    "review cards",
+    "score badges",
+    "platform filters",
+    "comparison tables",
+    "ranking lists",
+    "search and autocomplete",
+    "release calendar"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "data-display",
+      "editorial"
+    ],
+    "avoid_sources_containing": [
+      "brand-only"
+    ]
+  },
+  "color_reference": {
+    "path": "docs/color-reference.md",
+    "preferred_families": [
+      "Carbon Neutrals",
+      "Signal Reds",
+      "Boss Stage Accents"
+    ],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "neutral",
+      "contrast": "vivid",
+      "diversity": "balanced",
+      "surface_style": "grounded",
+      "prefer_moods": [
+        "몰입감",
+        "긴장감",
+        "신뢰감"
+      ],
+      "avoid_moods": [
+        "달콤함",
+        "귀여움",
+        "장난스러움"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 12,
+      "combination_count": 4,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "게임 매거진처럼 어두운 배경 위에 강한 포인트 컬러가 올라오는 조합을 우선합니다",
+      "primary는 깊고 안정적이어야 하고 accent는 리뷰 스코어와 CTA를 분리해 보여줄 만큼 선명해야 합니다"
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "bold high-contrast review score comparison table",
+      "editorial text-first ranking leaderboard layout",
+      "analytical measured data review table ui",
+      "trustworthy measured comparison board layout",
+      "cinematic crops faceted discovery interface",
+      "poster-led cards platform filter bar ui",
+      "bold high-contrast filter control form ui",
+      "editorial text-first structured form layout",
+      "analytical measured status tag chip ui",
+      "trustworthy measured filter chip interface",
+      "cinematic crops analytics chart panel ui",
+      "poster-led cards dashboard data visualization",
+      "bold high-contrast editorial landing hero",
+      "editorial text-first feature spotlight hero layout",
+      "analytical measured feature grid editorial layout",
+      "trustworthy measured capability card spread"
+    ],
+    "sources": [
+      "references/visual/pinterest-assisted/q01-bold_high-contrast_review_score_comparison_table/q01-c06.png",
+      "references/visual/pinterest-assisted/q02-editorial_text-first_ranking_leaderboard_layout/q02-c06.png",
+      "references/visual/pinterest-assisted/q03-analytical_measured_data_review_table_ui/q03-c02.png",
+      "references/visual/pinterest-assisted/q05-cinematic_crops_faceted_discovery_interface/q05-c02.png",
+      "references/visual/pinterest-assisted/q06-poster-led_cards_platform_filter_bar_ui/q06-c05.png",
+      "references/visual/pinterest-assisted/q10-trustworthy_measured_filter_chip_interface/q10-c01.png",
+      "references/visual/pinterest-assisted/q11-cinematic_crops_analytics_chart_panel_ui/q11-c03.png",
+      "references/visual/pinterest-assisted/q13-bold_high-contrast_editorial_landing_hero/q13-c06.png",
+      "references/visual/pinterest-assisted/q15-analytical_measured_feature_grid_editorial_layout/q15-c03.png"
+    ],
+    "preferred_count": 12,
+    "weights": {
+      "layout": 0.3,
+      "component_shape": 0.25,
+      "color_balance": 0.2,
+      "typography_mood": 0.15,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "poster-led review cards",
+      "score badge hierarchy",
+      "platform filter bar"
+    ],
+    "avoid_patterns": [
+      "streamer overlay aesthetics",
+      "glassmorphism-heavy cards",
+      "rainbow neon clutter"
+    ],
+    "notes": [
+      "현재 테스트에서는 로컬 레퍼런스 없이도 query set과 브랜드 입력만으로 방향을 고정합니다",
+      "추후 게임 매거진, 포스터형 카드, 비교표 레퍼런스를 로컬 이미지로 추가할 수 있습니다"
+    ],
+    "pinterest_assist": {
+      "enabled": true,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "Pinterest는 query 생성과 후보 수집 보조에만 사용합니다",
+        "최종 분석 입력은 항상 visual_reference.sources 의 로컬 파일로 고정합니다"
+      ]
+    }
+  }
+}

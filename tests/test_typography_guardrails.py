@@ -51,6 +51,16 @@ def _sample_blueprint() -> dict:
 
 
 class TypographyGuardrailTests(unittest.TestCase):
+    def test_editorial_korean_heading_prefers_serif_pairing(self) -> None:
+        font_system = resolve_font_system(_sample_brand_profile())
+
+        self.assertEqual(font_system["product_type_detected"], "editorial")
+        self.assertIn("serif", font_system["heading"]["family"])
+        self.assertEqual(font_system["heading"]["name"], "Noto Serif KR")
+        self.assertEqual(font_system["body"]["name"], "Pretendard")
+        self.assertEqual(font_system["script_guardrails"]["headline_font"]["name"], "Noto Serif KR")
+        self.assertEqual(font_system["script_guardrails"]["body_font"]["name"], "Pretendard")
+
     def test_font_resolution_exposes_korean_script_guardrails(self) -> None:
         font_system = resolve_font_system(_sample_brand_profile())
 

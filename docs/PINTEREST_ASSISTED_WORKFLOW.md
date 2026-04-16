@@ -83,6 +83,34 @@ query별 후보 캡처를 적는 작업용 파일입니다.
 
 이 파일의 선택 항목만 `visual_reference.sources`로 승격하는 것을 권장합니다.
 
+선택 기록 예:
+
+```bash
+uv run design-ontology select-pinterest-candidates \
+  --project-dir projects/checkpoint \
+  --candidate q03-c02 \
+  --candidate q05-c02 \
+  --candidate q13-c05
+```
+
+선택과 동시에 `visual_reference.sources`까지 반영하려면:
+
+```bash
+uv run design-ontology select-pinterest-candidates \
+  --project-dir projects/checkpoint \
+  --candidate q03-c02 \
+  --candidate q05-c02 \
+  --candidate q13-c05 \
+  --sync-sources
+```
+
+이미 선택 manifest가 채워져 있다면, 나중에 별도로 동기화만 실행할 수도 있습니다.
+
+```bash
+uv run design-ontology sync-pinterest-selection \
+  --project-dir projects/checkpoint
+```
+
 ## Capture Modes
 
 ### 1. `manual-save`
@@ -96,13 +124,24 @@ query별 후보 캡처를 적는 작업용 파일입니다.
 
 ### 2. `playwright-capture`
 
-미래 확장 모드입니다.
+현재 구현된 자동 수집 모드입니다.
 
 - query별 검색 페이지 또는 후보 목록을 브라우저로 열기
-- 보드/핀 후보 썸네일/제목/URL 스냅샷 기록
+- 보이는 pin tile을 candidate 단위로 스크린샷 저장
+- pin URL, aria-label/alt text, search URL을 manifest에 기록
 - 최종 채택은 여전히 사용자 또는 에이전트가 명시적으로 고정
 
 중요: Playwright 자동화는 후보 수집을 돕는 용도이지, 선택을 자동 확정하는 용도가 아닙니다.
+
+실행 방법:
+
+```bash
+uv run design-ontology capture-pinterest \
+  --project-dir projects/checkpoint
+```
+
+또는 `brand_profile.visual_reference.pinterest_assist.capture_mode`가 `playwright-capture`이고
+`enabled: true`이면 `generate-visual-queries` 실행 직후 자동 캡처가 이어집니다.
 
 ## Risk Guardrails
 
@@ -158,8 +197,7 @@ query별 후보 캡처를 적는 작업용 파일입니다.
 
 ## 다음 단계
 
-이 설계 위에서 다음 구현이 붙을 수 있습니다.
+남은 확장 포인트:
 
-- Playwright 기반 query별 후보 스냅샷 수집기
-- manifest 편집 보조 CLI
-- selected 캡처를 `visual_reference.sources`로 승격하는 sync 유틸리티
+- 보드 단위 수집 / 다중 viewport 캡처
+- 캡처 실패 query만 재시도하는 retry CLI

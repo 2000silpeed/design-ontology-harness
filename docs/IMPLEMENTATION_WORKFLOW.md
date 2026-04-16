@@ -85,6 +85,13 @@ uv run design-ontology generate-visual-queries \
   --spec projects/my-app/spec.md \
   --sync-brand-profile
 
+# Pinterest-assisted shortlist를 실제 visual sources로 반영
+uv run design-ontology select-pinterest-candidates \
+  --project-dir projects/my-app \
+  --candidate q03-c02 \
+  --candidate q05-c02 \
+  --sync-sources
+
 # 로컬 이미지가 연결된 뒤 visual layer만 별도 분석
 uv run design-ontology analyze-visuals \
   --project-dir projects/my-app

@@ -82,10 +82,7 @@ def scaffold_project(
 
     brand_profile["visual_reference"] = {
         "mode": "local-images",
-        "query": [
-            "editorial dashboard",
-            "premium app UI",
-        ],
+        "query": [],
         "sources": [],
         "preferred_count": 12,
         "weights": {
@@ -100,6 +97,7 @@ def scaffold_project(
         "avoid_patterns": [],
         "notes": [
             "로컬에 저장한 레퍼런스 이미지나 스크린샷 경로를 sources에 추가하세요",
+            "generate-visual-queries 결과를 검토한 뒤 query를 확정하세요",
             "현재 단계에서는 Pinterest URL을 직접 수집하지 않고 로컬 파일 기준으로 분석합니다",
         ],
         "pinterest_assist": {

@@ -9,37 +9,37 @@ from pathlib import Path
 UI_PATTERNS: dict[str, dict] = {
     "workspace navigation": {
         "terms": [
-            "사이드바", "사이드 바", "네비게이션", "메뉴", "탐색", "워크스페이스",
+            "사이드바", "사이드 바", "네비게이션", "워크스페이스",
             "앱 셸", "탑바", "탭바", "브레드크럼",
             "sidebar", "navigation", "nav bar", "topbar", "breadcrumb",
-            "workspace", "app shell", "tab bar", "menu",
+            "workspace", "app shell", "tab bar",
         ],
         "description": "앱의 주요 영역 간 이동을 위한 네비게이션 구조",
     },
     "rich text editor": {
         "terms": [
-            "에디터", "편집기", "글쓰기", "작성기", "텍스트 편집", "마크다운",
+            "문서 에디터", "텍스트 에디터", "콘텐츠 에디터", "편집기", "글쓰기", "작성기", "텍스트 편집", "마크다운",
             "위지윅", "리치텍스트", "본문 작성", "콘텐츠 작성", "글 작성",
-            "editor", "rich text", "wysiwyg", "markdown", "writing",
+            "text editor", "content editor", "rich text", "wysiwyg", "markdown", "writing",
             "compose", "draft", "authoring",
         ],
         "description": "서식이 있는 텍스트를 작성하고 편집하는 영역",
     },
     "command palette": {
         "terms": [
-            "커맨드 팔레트", "명령 팔레트", "빠른 실행", "빠른 검색",
-            "글로벌 검색", "통합 검색", "단축키", "커맨드",
-            "command palette", "quick action", "spotlight", "omnibar",
-            "global search", "shortcut",
+            "커맨드 팔레트", "명령 팔레트", "빠른 실행", "명령 검색",
+            "커맨드 k", "단축키", "커맨드",
+            "command palette", "quick action", "spotlight search", "omnibar",
+            "command k", "shortcut",
         ],
         "description": "키보드로 빠르게 명령을 실행하거나 검색하는 오버레이",
     },
     "dashboard cards": {
         "terms": [
-            "대시보드", "통계", "요약", "현황", "인사이트", "지표",
+            "대시보드", "통계", "현황", "인사이트", "지표",
             "KPI", "메트릭", "카드형", "활동 피드",
             "dashboard", "stat card", "insight", "metric", "KPI",
-            "activity feed", "overview", "summary card",
+            "activity feed", "overview panel", "summary card",
         ],
         "description": "주요 지표와 활동을 카드 형태로 보여주는 대시보드",
     },
@@ -107,11 +107,20 @@ UI_PATTERNS: dict[str, dict] = {
     },
     "comments and discussion": {
         "terms": [
-            "댓글", "코멘트", "토론", "답글", "피드백", "리뷰",
+            "댓글", "토론", "답글", "피드백",
             "comment", "discussion", "reply", "thread", "feedback",
-            "review", "mention",
+            "mention",
         ],
         "description": "댓글, 토론, 피드백을 주고받는 영역",
+    },
+    "comparison and ranking": {
+        "terms": [
+            "비교", "비교표", "비교 테이블", "비교 보드", "랭킹", "순위", "리더보드",
+            "평점", "점수 브레이크다운", "버딕트", "구매 판단",
+            "comparison", "comparison table", "leaderboard", "ranking", "score breakdown",
+            "review score", "verdict",
+        ],
+        "description": "항목을 점수나 속성 기준으로 비교하거나 순위를 보여주는 요소",
     },
     "tags and labels": {
         "terms": [
@@ -148,8 +157,8 @@ UI_PATTERNS: dict[str, dict] = {
     },
     "pricing and plans": {
         "terms": [
-            "가격", "플랜", "요금", "구독", "결제", "과금",
-            "pricing", "plan", "subscription", "billing", "payment",
+            "가격 정책", "요금제", "플랜", "요금", "구독", "결제", "과금",
+            "pricing page", "pricing", "plan", "subscription", "billing", "payment",
             "checkout", "upgrade",
         ],
         "description": "가격 비교, 구독 플랜, 결제 관련 요소",
@@ -334,6 +343,13 @@ PATTERN_COMPONENTS: dict[str, list[dict]] = {
         {"name": "search-results", "family": "data-display", "role": "검색 결과 목록"},
         {"name": "filter-panel", "family": "input", "role": "필터 옵션 패널"},
         {"name": "autocomplete", "family": "overlay", "role": "자동완성 드롭다운"},
+    ],
+    "comparison and ranking": [
+        {"name": "feature-comparison", "family": "data-display", "role": "항목 간 속성/가격/점수를 나란히 비교하는 표"},
+        {"name": "data-table", "family": "data-display", "role": "정렬 가능한 랭킹 및 리뷰 목록"},
+        {"name": "status-badge", "family": "feedback", "role": "추천 여부나 구매 판단을 나타내는 상태 배지"},
+        {"name": "filter-chip", "family": "input", "role": "플랫폼/장르/점수 필터 칩"},
+        {"name": "section-header", "family": "data-display", "role": "랭킹/비교 섹션의 정렬 및 설명 헤더"},
     ],
     "modal and dialog": [
         {"name": "modal-dialog", "family": "overlay", "role": "확인/입력을 받는 모달"},

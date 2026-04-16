@@ -160,6 +160,16 @@ uv run design-ontology generate-visual-queries \
 - `build/visuals/pinterest_candidate_manifest.json`
 - `build/visuals/pinterest_selection_manifest.json`
 
+Pinterest-assisted 캡처 후보를 명시적으로 선택하고 최종 visual source로 승격하려면:
+
+```bash
+uv run design-ontology select-pinterest-candidates \
+  --project-dir projects/my-app \
+  --candidate q03-c02 \
+  --candidate q05-c02 \
+  --sync-sources
+```
+
 로컬 이미지를 넣은 뒤에는 visual layer만 별도로 점검할 수도 있습니다.
 
 ```bash
@@ -264,6 +274,13 @@ uv run design-ontology analyze-visuals --project-dir projects/my-app
 
 # 5) 필요하면 검색 query 생성
 uv run design-ontology generate-visual-queries --project-dir projects/my-app --spec projects/my-app/spec.md
+
+# 5-1) Pinterest-assisted 후보 선택 후 sources 동기화
+uv run design-ontology select-pinterest-candidates \
+  --project-dir projects/my-app \
+  --candidate q03-c02 \
+  --candidate q05-c02 \
+  --sync-sources
 
 # 6) 최종 산출물 생성
 uv run design-ontology run-project --project-dir projects/my-app

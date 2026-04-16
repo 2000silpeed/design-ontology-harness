@@ -7,6 +7,7 @@ STYLE_KEYWORD_ALIASES = {
     "calm": "calm quiet",
     "precise": "precise structured",
     "editorial": "editorial text-first",
+    "analytical": "analytical measured",
     "trustworthy": "trustworthy measured",
     "bold": "bold high-contrast",
     "minimal": "minimal clean",
@@ -35,10 +36,10 @@ PRIMITIVE_QUERY_TEMPLATES: dict[str, list[dict[str, str]]] = {
     ],
     "data tables": [
         {"phrase": "data review table ui", "intent": "data-display"},
-        {"phrase": "operations control panel", "intent": "data-display"},
+        {"phrase": "comparison board layout", "intent": "data-display"},
     ],
     "forms": [
-        {"phrase": "settings form ui", "intent": "input"},
+        {"phrase": "filter control form ui", "intent": "input"},
         {"phrase": "structured form layout", "intent": "input"},
     ],
     "notifications": [
@@ -63,15 +64,19 @@ PRIMITIVE_QUERY_TEMPLATES: dict[str, list[dict[str, str]]] = {
     ],
     "comments and discussion": [
         {"phrase": "comment thread interface", "intent": "discussion"},
-        {"phrase": "collaboration feedback panel", "intent": "discussion"},
+        {"phrase": "reader discussion panel", "intent": "discussion"},
+    ],
+    "comparison and ranking": [
+        {"phrase": "review score comparison table", "intent": "data-display"},
+        {"phrase": "ranking leaderboard layout", "intent": "data-display"},
     ],
     "tags and labels": [
         {"phrase": "status tag chip ui", "intent": "feedback"},
         {"phrase": "filter chip interface", "intent": "input"},
     ],
     "search and filter": [
-        {"phrase": "faceted search interface", "intent": "input"},
-        {"phrase": "filter toolbar ui", "intent": "input"},
+        {"phrase": "faceted discovery interface", "intent": "input"},
+        {"phrase": "platform filter bar ui", "intent": "input"},
     ],
     "modal and dialog": [
         {"phrase": "modal drawer interface", "intent": "overlay"},
@@ -98,12 +103,12 @@ PRIMITIVE_QUERY_TEMPLATES: dict[str, list[dict[str, str]]] = {
         {"phrase": "streaming playback interface", "intent": "media"},
     ],
     "hero section": [
-        {"phrase": "saas landing hero", "intent": "marketing"},
-        {"phrase": "product hero layout", "intent": "marketing"},
+        {"phrase": "editorial landing hero", "intent": "marketing"},
+        {"phrase": "feature spotlight hero layout", "intent": "marketing"},
     ],
     "feature grid": [
-        {"phrase": "feature grid landing page", "intent": "marketing"},
-        {"phrase": "product capability cards", "intent": "marketing"},
+        {"phrase": "feature grid editorial layout", "intent": "marketing"},
+        {"phrase": "capability card spread", "intent": "marketing"},
     ],
     "social proof": [
         {"phrase": "logo cloud social proof", "intent": "marketing"},
@@ -122,12 +127,12 @@ PRIMITIVE_QUERY_TEMPLATES: dict[str, list[dict[str, str]]] = {
         {"phrase": "signup banner ui", "intent": "marketing"},
     ],
     "site footer": [
-        {"phrase": "marketing footer ui", "intent": "marketing"},
+        {"phrase": "publisher footer ui", "intent": "marketing"},
         {"phrase": "site footer link layout", "intent": "marketing"},
     ],
     "site header": [
-        {"phrase": "marketing top navigation", "intent": "marketing"},
-        {"phrase": "landing header nav ui", "intent": "marketing"},
+        {"phrase": "publisher top navigation", "intent": "marketing"},
+        {"phrase": "editorial header nav ui", "intent": "marketing"},
     ],
 }
 
@@ -171,7 +176,7 @@ def generate_visual_queries(
         if len(queries) >= limit:
             break
 
-    for fallback in _build_crosscutting_queries(style_phrases, active_primitives, density_hint):
+    for fallback in _build_crosscutting_queries(style_phrases, active_primitives, density_hint, brand_profile):
         _push_query(
             queries=queries,
             seen_queries=seen_queries,
@@ -228,9 +233,9 @@ def _collect_active_primitives(brand_profile: dict, detected_patterns: list[dict
         return ordered[:10]
 
     return [
-        "workspace navigation",
-        "dashboard cards",
         "hero section",
+        "feature grid",
+        "search and filter",
     ]
 
 
@@ -286,6 +291,36 @@ def _templates_for_primitive(primitive: str) -> list[dict[str, str]]:
         return templates
 
     normalized = primitive.lower()
+    if any(token in normalized for token in ["review", "critic", "verdict"]):
+        return [
+            {"phrase": "editorial review card layout", "intent": "editorial"},
+            {"phrase": "critic verdict module ui", "intent": "editorial"},
+        ]
+    if any(token in normalized for token in ["score", "rating", "badge"]):
+        return [
+            {"phrase": "review score badge ui", "intent": "feedback"},
+            {"phrase": "rating chip system", "intent": "feedback"},
+        ]
+    if any(token in normalized for token in ["comparison", "ranking", "leaderboard", "rank"]):
+        return [
+            {"phrase": "comparison table editorial ui", "intent": "data-display"},
+            {"phrase": "ranking leaderboard layout", "intent": "data-display"},
+        ]
+    if any(token in normalized for token in ["search", "filter", "autocomplete", "discover"]):
+        return [
+            {"phrase": "faceted discovery interface", "intent": "input"},
+            {"phrase": "platform filter bar ui", "intent": "input"},
+        ]
+    if any(token in normalized for token in ["calendar", "release", "launch", "date"]):
+        return [
+            {"phrase": "release calendar editorial ui", "intent": "date"},
+            {"phrase": "launch timeline layout", "intent": "date"},
+        ]
+    if any(token in normalized for token in ["spotlight", "hero"]):
+        return [
+            {"phrase": "feature spotlight hero layout", "intent": "marketing"},
+            {"phrase": "editorial landing hero", "intent": "marketing"},
+        ]
     if any(token in normalized for token in ["dashboard", "table", "chart", "analytics", "data"]):
         return [{"phrase": f"{normalized} ui", "intent": "data-display"}]
     if any(token in normalized for token in ["hero", "landing", "pricing", "testimonial", "faq", "footer", "header"]):
@@ -299,12 +334,14 @@ def _build_crosscutting_queries(
     style_phrases: list[dict],
     active_primitives: list[str],
     density_hint: str | None,
+    brand_profile: dict,
 ) -> list[dict]:
     results: list[dict] = []
     if not style_phrases:
         return results
 
     primary_style = style_phrases[0]
+    archetypes = _infer_query_archetypes(brand_profile, active_primitives)
     has_marketing = any(
         primitive in {
             "hero section",
@@ -326,15 +363,51 @@ def _build_crosscutting_queries(
             "charts and visualization",
             "search and filter",
             "command palette",
+            "comparison and ranking",
         }
         for primitive in active_primitives
     )
 
-    if has_data:
+    if archetypes["review"]:
         results.append(
             {
-                "query": clean_text(f"{primary_style['phrase']} data dense dashboard ui" if density_hint == "dense" else f"{primary_style['phrase']} product dashboard ui").lower(),
+                "query": clean_text(f"{primary_style['phrase']} editorial review hub").lower(),
+                "primitive": "crosscutting:review-editorial",
+                "intent": "layout",
+                "sources": primary_style["sources"] + ["primitive_group:review"],
+            }
+        )
+        if has_data:
+            results.append(
+                {
+                    "query": clean_text(f"{primary_style['phrase']} comparison-first review surface").lower(),
+                    "primitive": "crosscutting:review-data",
+                    "intent": "data-display",
+                    "sources": primary_style["sources"] + [f"density_hint:{density_hint or 'balanced'}", "primitive_group:review"],
+                }
+            )
+    elif has_data and archetypes["workspace"]:
+        results.append(
+            {
+                "query": clean_text(
+                    f"{primary_style['phrase']} data dense workspace ui"
+                    if density_hint == "dense"
+                    else f"{primary_style['phrase']} product workspace ui"
+                ).lower(),
                 "primitive": "crosscutting:data-workspace",
+                "intent": "layout",
+                "sources": primary_style["sources"] + [f"density_hint:{density_hint or 'balanced'}"],
+            }
+        )
+    elif has_data:
+        results.append(
+            {
+                "query": clean_text(
+                    f"{primary_style['phrase']} structured data review surface"
+                    if density_hint == "dense"
+                    else f"{primary_style['phrase']} analytical comparison layout"
+                ).lower(),
+                "primitive": "crosscutting:data-review",
                 "intent": "layout",
                 "sources": primary_style["sources"] + [f"density_hint:{density_hint or 'balanced'}"],
             }
@@ -342,7 +415,11 @@ def _build_crosscutting_queries(
     if has_marketing:
         results.append(
             {
-                "query": clean_text(f"{primary_style['phrase']} saas landing page").lower(),
+                "query": clean_text(
+                    f"{primary_style['phrase']} editorial landing page"
+                    if archetypes["editorial"] or archetypes["review"]
+                    else f"{primary_style['phrase']} brand landing page"
+                ).lower(),
                 "primitive": "crosscutting:marketing",
                 "intent": "marketing",
                 "sources": primary_style["sources"] + ["primitive_group:marketing"],
@@ -403,11 +480,42 @@ def _infer_density_hint(brand_profile: dict, active_primitives: list[str]) -> st
             "landing cta section",
         }
     )
+    review_hits = sum(
+        1
+        for primitive in active_primitives
+        if primitive == "comparison and ranking"
+        or any(token in primitive for token in ["review", "comparison", "ranking", "score", "release"])
+    )
     if dense_hits >= 3:
         return "dense"
+    if review_hits >= 2 and dense_hits <= 2:
+        return "balanced"
     if marketing_hits >= 3 and dense_hits <= 1:
         return "airy"
     return "balanced"
+
+
+def _infer_query_archetypes(brand_profile: dict, active_primitives: list[str]) -> dict[str, bool]:
+    brand_keywords = {str(item).strip().lower() for item in brand_profile.get("brand_keywords", [])}
+    all_terms = " ".join(
+        [
+            *[str(item).strip().lower() for item in active_primitives],
+            *[str(item).strip().lower() for item in brand_profile.get("product_primitives", [])],
+            *[str(item).strip().lower() for item in brand_profile.get("visual_keywords", [])],
+            str(brand_profile.get("product_summary", "")).strip().lower(),
+        ]
+    )
+    return {
+        "editorial": "editorial" in brand_keywords or any(token in all_terms for token in ["editorial", "magazine", "content"]),
+        "review": any(
+            token in all_terms
+            for token in ["review", "critic", "verdict", "comparison", "ranking", "score", "leaderboard", "release"]
+        ),
+        "workspace": any(
+            token in all_terms
+            for token in ["workspace", "sidebar", "app shell", "command palette", "omnibar", "editor"]
+        ),
+    }
 
 
 def _extract_palette_temperature(brand_profile: dict) -> str | None:

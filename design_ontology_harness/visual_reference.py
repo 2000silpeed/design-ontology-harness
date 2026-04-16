@@ -71,12 +71,13 @@ LAYOUT_CUE_DEFINITIONS = [
         "keywords": {
             "workspace": 3,
             "sidebar": 3,
-            "panel": 2,
+            "app": 1,
+            "shell": 3,
             "editor": 2,
-            "navigation": 2,
-            "shell": 2,
+            "navigation": 1,
             "command": 1,
-            "dashboard": 1,
+            "topbar": 1,
+            "breadcrumb": 1,
         },
         "aspect_buckets": {"16:9-ish": 1, "3:2-ish": 1},
     },
@@ -106,6 +107,10 @@ LAYOUT_CUE_DEFINITIONS = [
             "feed": 2,
             "story": 2,
             "magazine": 2,
+            "review": 2,
+            "critique": 1,
+            "spotlight": 1,
+            "poster": 1,
             "publish": 1,
             "journal": 1,
         },
@@ -123,6 +128,10 @@ LAYOUT_CUE_DEFINITIONS = [
             "faq": 1,
             "marketing": 2,
             "brand": 1,
+            "spotlight": 2,
+            "feature": 1,
+            "launch": 1,
+            "poster": 1,
         },
         "aspect_buckets": {"16:9-ish": 1, "3:2-ish": 1},
     },
@@ -138,6 +147,11 @@ LAYOUT_CUE_DEFINITIONS = [
             "data": 2,
             "filter": 1,
             "timeline": 1,
+            "comparison": 3,
+            "ranking": 2,
+            "review": 2,
+            "score": 2,
+            "verdict": 2,
         },
         "aspect_buckets": {"3:2-ish": 1, "4:3-ish": 1},
     },
@@ -247,6 +261,28 @@ COMPONENT_ARCHETYPE_DEFINITIONS = [
         "primitive_matches": ["rich text editor"],
     },
     {
+        "id": "review-coverage-system",
+        "label": "Review coverage system",
+        "family": "editorial",
+        "suggested_components": [
+            "review-card",
+            "score-badge",
+            "comparison-table",
+            "ranking-list",
+            "filter-chip",
+        ],
+        "layout_matches": ["data-review-surface", "editorial-feed", "landing-narrative"],
+        "keywords": {
+            "review": 3,
+            "score": 3,
+            "comparison": 3,
+            "ranking": 2,
+            "verdict": 2,
+            "poster": 1,
+        },
+        "primitive_matches": ["comparison and ranking", "search and filter", "tags and labels"],
+    },
+    {
         "id": "conversation-sidecar",
         "label": "Conversation sidecar",
         "family": "overlay",
@@ -328,9 +364,11 @@ def resolve_visual_reference(
         visual_motifs=visual_motifs,
         layout_cues=layout_cues,
         brand_profile=brand_profile or {},
+        image_records=image_records,
     )
     candidate_component_archetypes = _build_candidate_component_archetypes(
         selected_images=selected_images,
+        image_records=image_records,
         layout_cues=layout_cues,
         visual_motifs=visual_motifs,
         config=config,
@@ -608,6 +646,7 @@ def _build_visual_motifs(
     config: dict,
     brand_profile: dict,
 ) -> dict:
+    query_only = not image_records
     term_counts = _collect_term_counts(selected_images, config, brand_profile)
     selected_aspect_counts = Counter(item.get("aspect_ratio_bucket", "unknown") for item in selected_images)
     selected_orientation_counts = Counter(item.get("orientation", "unknown") for item in selected_images)
@@ -643,24 +682,40 @@ def _build_visual_motifs(
 
     return {
         "density": _with_provenance(
-            density,
+            _adjust_inferred_choice(density, query_only=query_only, ceiling=0.52),
             level="inferred",
-            detail="Derived from selected image signals plus query and brand context.",
+            detail=(
+                "Derived from query and brand context only because no local image selection was available."
+                if query_only
+                else "Derived from selected image signals plus query and brand context."
+            ),
         ),
         "surface_style": _with_provenance(
-            surface_style,
+            _adjust_inferred_choice(surface_style, query_only=query_only, ceiling=0.5),
             level="inferred",
-            detail="Derived from selected image signals plus query and brand context.",
+            detail=(
+                "Derived from query and brand context only because no local image selection was available."
+                if query_only
+                else "Derived from selected image signals plus query and brand context."
+            ),
         ),
         "typography_mood": _with_provenance(
-            typography_mood,
+            _adjust_inferred_choice(typography_mood, query_only=query_only, ceiling=0.5),
             level="inferred",
-            detail="Derived from selected image signals plus query and brand context.",
+            detail=(
+                "Derived from query and brand context only because no local image selection was available."
+                if query_only
+                else "Derived from selected image signals plus query and brand context."
+            ),
         ),
         "corner_style": _with_provenance(
-            corner_style,
+            _adjust_inferred_choice(corner_style, query_only=query_only, ceiling=0.48),
             level="inferred",
-            detail="Derived from selected image geometry and supporting signal terms.",
+            detail=(
+                "Derived from query and brand context only because no local image geometry was available."
+                if query_only
+                else "Derived from selected image geometry and supporting signal terms."
+            ),
         ),
         "color_balance": _with_provenance(
             color_balance,
@@ -692,6 +747,7 @@ def _build_layout_cues(
     config: dict,
     brand_profile: dict,
 ) -> list[dict]:
+    query_only = not image_records
     term_counts = _collect_term_counts(selected_images, config, brand_profile)
     aspect_counts = Counter(item.get("aspect_ratio_bucket", "unknown") for item in selected_images)
     orientation_counts = Counter(item.get("orientation", "unknown") for item in selected_images)
@@ -716,18 +772,26 @@ def _build_layout_cues(
             score += 1
         if definition["id"] == "landing-narrative" and orientation_counts.get("landscape"):
             score += 1
-        if score <= 0:
+        if score <= 0 or (query_only and score < 2.0):
             continue
         cues.append(
             _with_provenance(
                 {
                 "id": definition["id"],
                 "label": definition["label"],
-                "confidence": _confidence_from_score(score, config["weights"]["layout"]),
+                "confidence": _query_only_confidence(
+                    _confidence_from_score(score, config["weights"]["layout"]),
+                    query_only=query_only,
+                    ceiling=0.56,
+                ),
                 "evidence": evidence[:6],
                 },
                 level="inferred",
-                detail="Layout cue inferred from selected image signals and reference context.",
+                detail=(
+                    "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+                    if query_only
+                    else "Layout cue inferred from selected image signals and reference context."
+                ),
             )
         )
 
@@ -739,7 +803,9 @@ def _build_component_style_hints(
     visual_motifs: dict,
     layout_cues: list[dict],
     brand_profile: dict,
+    image_records: list[dict],
 ) -> dict:
+    query_only = not image_records
     density = (visual_motifs.get("density") or {}).get("value", "balanced")
     surface_style = (visual_motifs.get("surface_style") or {}).get("value", "flat")
     corner_style = (visual_motifs.get("corner_style") or {}).get("value", "medium")
@@ -772,7 +838,7 @@ def _build_component_style_hints(
         "navigation": {
             "direction": _describe_navigation_direction(navigation_layout, density),
             "confidence": round(max(
-                0.45,
+                0.24 if query_only else 0.45,
                 cue_by_id.get(navigation_layout, {}).get("confidence", 0.0),
             ), 2),
             "evidence": [cue_by_id[navigation_layout]["label"]] if navigation_layout in cue_by_id else [cue["label"] for cue in layout_cues[:2]] or ["No strong layout cue"],
@@ -787,14 +853,14 @@ def _build_component_style_hints(
     if "dashboard cards" in primitives or data_layout in {"dashboard-grid", "data-review-surface"}:
         hints["data_display"] = {
             "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
-            "confidence": round(max(0.52, (visual_motifs.get("density") or {}).get("confidence", 0.0)), 2),
+            "confidence": round(max(0.3 if query_only else 0.52, (visual_motifs.get("density") or {}).get("confidence", 0.0)), 2),
             "evidence": [f"layout={data_layout or 'n/a'}", f"density={density}"],
         }
 
     if top_layout == "conversation-panel" or "chat" in primitives:
         hints["panel"] = {
             "direction": "보조 패널은 메인 표면보다 한 단계 더 조용한 tint와 명확한 section framing으로 구분한다.",
-            "confidence": round(max(0.5, layout_cues[0]["confidence"] if layout_cues else 0.0), 2),
+            "confidence": round(max(0.3 if query_only else 0.5, layout_cues[0]["confidence"] if layout_cues else 0.0), 2),
             "evidence": [cue["label"] for cue in layout_cues[:1]] or ["Conversation signal"],
         }
 
@@ -807,9 +873,13 @@ def _build_component_style_hints(
 
     return {
         name: _with_provenance(
-            hint,
+            _adjust_inferred_choice(hint, query_only=query_only, ceiling=0.46),
             level="inferred",
-            detail="Component styling hint synthesized from visual motifs and layout cues.",
+            detail=(
+                "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+                if query_only
+                else "Component styling hint synthesized from visual motifs and layout cues."
+            ),
         )
         for name, hint in hints.items()
     }
@@ -855,11 +925,13 @@ def _build_reference_mood_summary(
 
 def _build_candidate_component_archetypes(
     selected_images: list[dict],
+    image_records: list[dict],
     layout_cues: list[dict],
     visual_motifs: dict,
     config: dict,
     brand_profile: dict,
 ) -> list[dict]:
+    query_only = not image_records
     term_counts = _collect_term_counts(selected_images, config, brand_profile)
     layout_confidence = {cue["id"]: cue["confidence"] for cue in layout_cues}
     primitives = {item.lower() for item in brand_profile.get("product_primitives", [])}
@@ -898,7 +970,7 @@ def _build_candidate_component_archetypes(
             if (visual_motifs.get("density") or {}).get("value") == "dense":
                 score += 1.5
 
-        if score < 4.5:
+        if score < (5.5 if query_only else 4.5):
             continue
 
         candidates.append(
@@ -907,13 +979,21 @@ def _build_candidate_component_archetypes(
                 "id": definition["id"],
                 "label": definition["label"],
                 "family": definition["family"],
-                "confidence": _confidence_from_score(score, 0.25),
+                "confidence": _query_only_confidence(
+                    _confidence_from_score(score, 0.25),
+                    query_only=query_only,
+                    ceiling=0.48,
+                ),
                 "suggested_components": definition["suggested_components"],
                 "supports_primitives": definition.get("primitive_matches", []),
                 "evidence": evidence[:6],
                 },
                 level="inferred",
-                detail="Archetype candidate inferred from layout cues, image signals, and product primitives.",
+                detail=(
+                    "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+                    if query_only
+                    else "Archetype candidate inferred from layout cues, image signals, and product primitives."
+                ),
             )
         )
 
@@ -950,21 +1030,44 @@ def _collect_term_counts(
     counts: Counter = Counter()
 
     for record in selected_images:
-        counts.update(record.get("signal_terms", []))
+        _add_weighted_tokens(counts, record.get("signal_terms", []), weight=1.5)
 
-    for key in ["query", "must_include", "avoid_patterns", "notes"]:
-        counts.update(_tokenize_text_list(config.get(key, [])))
+    _add_weighted_tokens(counts, config.get("query", []), weight=0.45)
+    _add_weighted_tokens(counts, config.get("must_include", []), weight=0.9)
+    _add_weighted_tokens(counts, config.get("avoid_patterns", []), weight=0.15)
+    _add_weighted_tokens(counts, config.get("notes", []), weight=0.2)
 
-    for key in [
-        "brand_keywords",
-        "anti_keywords",
-        "visual_keywords",
-        "interaction_keywords",
-        "product_primitives",
-    ]:
-        counts.update(_tokenize_text_list(brand_profile.get(key, [])))
+    _add_weighted_tokens(counts, brand_profile.get("brand_keywords", []), weight=0.75)
+    _add_weighted_tokens(counts, brand_profile.get("anti_keywords", []), weight=0.1)
+    _add_weighted_tokens(counts, brand_profile.get("visual_keywords", []), weight=0.8)
+    _add_weighted_tokens(counts, brand_profile.get("interaction_keywords", []), weight=0.45)
+    _add_weighted_tokens(counts, brand_profile.get("product_primitives", []), weight=0.9)
 
     return counts
+
+
+def _add_weighted_tokens(counts: Counter, values: list[str], weight: float) -> None:
+    if not values or weight <= 0:
+        return
+    for value in values:
+        seen_tokens: set[str] = set()
+        for token in _tokenize_text_list([value]):
+            if token in seen_tokens:
+                continue
+            seen_tokens.add(token)
+            counts[token] += weight
+
+
+def _query_only_confidence(confidence: float, query_only: bool, ceiling: float) -> float:
+    if not query_only:
+        return round(confidence, 2)
+    return round(min(confidence * 0.55, ceiling), 2)
+
+
+def _adjust_inferred_choice(payload: dict, query_only: bool, ceiling: float) -> dict:
+    adjusted = dict(payload)
+    adjusted["confidence"] = _query_only_confidence(float(payload.get("confidence", 0.0)), query_only=query_only, ceiling=ceiling)
+    return adjusted
 
 
 def _extract_signal_terms(path: Path, label: str, tags: list[str]) -> list[str]:

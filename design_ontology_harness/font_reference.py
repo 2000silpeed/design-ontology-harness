@@ -719,7 +719,13 @@ def resolve_font_system(brand_profile: dict) -> dict:
         heading_font = _get_font(pairing["heading"]) or heading_font
         body_font = _get_font(pairing["body"]) or body_font
 
-    korean_font = _pick_korean_font(body_font, heading_font, needs_korean)
+    korean_font = _pick_korean_font(
+        body_font,
+        heading_font,
+        needs_korean,
+        product_type=product_type,
+        brand_keywords=brand_keywords,
+    )
     type_scale = _pick_type_scale(product_type, brand_keywords)
     line_height = _pick_line_height(brand_keywords)
 
@@ -796,7 +802,21 @@ def resolve_font_system(brand_profile: dict) -> dict:
 
 def _infer_product_type(summary: str, keywords: list[str], visual_kw: list[str]) -> str:
     type_signals = {
-        "editorial": ["에디토리얼", "콘텐츠", "글쓰기", "발행", "매거진", "editorial", "content", "writing", "publishing"],
+        "editorial": [
+            "에디토리얼",
+            "콘텐츠",
+            "글쓰기",
+            "발행",
+            "매거진",
+            "비평",
+            "리뷰",
+            "editorial",
+            "content",
+            "writing",
+            "publishing",
+            "review",
+            "critique",
+        ],
         "dashboard": ["대시보드", "통계", "분석", "모니터링", "dashboard", "analytics", "monitoring"],
         "saas": ["saas", "팀", "협업", "프로젝트", "관리", "team", "collaboration", "management"],
         "mobile": ["모바일", "앱", "mobile", "ios", "android"],
@@ -807,7 +827,7 @@ def _infer_product_type(summary: str, keywords: list[str], visual_kw: list[str])
         "luxury": ["럭셔리", "프리미엄", "하이엔드", "luxury", "premium"],
         "consumer": ["소비자", "쇼핑", "consumer", "shopping"],
         "education": ["교육", "학습", "education", "learning"],
-        "content": ["블로그", "뉴스", "미디어", "blog", "news", "media"],
+        "content": ["블로그", "뉴스", "미디어", "매체", "blog", "news", "media", "publisher"],
     }
 
     all_text = summary + " " + " ".join(keywords) + " " + " ".join(visual_kw)
@@ -870,10 +890,20 @@ def _score_fonts(
         if role != "mono" and family == "monospace":
             continue
 
-        # 한국어 제품이면 한글 네이티브 서체를 강하게 우선
+        editorial_heading_context = role == "heading" and product_type in {"editorial", "content", "fashion", "luxury"}
+        serif_heading = role == "heading" and "serif" in family
+
+        # 한국어 제품이면 한글 네이티브 서체를 우선하되, 에디토리얼 헤딩은 세리프 방향을 살린다.
         if needs_korean:
             if font.get("korean_native"):
-                score += 5.0  # 한글 네이티브 서체 강한 가산점
+                if role == "body":
+                    score += 5.0
+                elif editorial_heading_context and serif_heading:
+                    score += 4.5
+                elif role == "heading":
+                    score += 1.75
+                else:
+                    score += 3.0
                 kr_ctx = font.get("korean_context", {})
                 # 제품 유형이 한글 best_for에 포함되면 추가 가산
                 kr_best = [x.lower() for x in kr_ctx.get("best_for_kr", [])]
@@ -884,8 +914,8 @@ def _score_fonts(
                 if any(product_type in item for item in kr_avoid):
                     score -= 3.0
             else:
-                # 한국어 제품인데 영어 전용 서체면 감점
-                score -= 2.0
+                # 한국어 제품인데 영어 전용 서체면 감점. 단, 에디토리얼 헤딩용 세리프는 한글 pair가 있을 수 있어 감점을 완화한다.
+                score -= 0.5 if editorial_heading_context and serif_heading else 2.0
 
         if family in target_families:
             score += 3.0
@@ -964,9 +994,28 @@ def _find_proven_pairing(heading: dict | None, body: dict | None, needs_korean: 
     return None
 
 
-def _pick_korean_font(body: dict | None, heading: dict | None, needs_korean: bool) -> dict | None:
+def _pick_korean_font(
+    body: dict | None,
+    heading: dict | None,
+    needs_korean: bool,
+    product_type: str,
+    brand_keywords: list[str],
+) -> dict | None:
     if not needs_korean:
         return None
+    prefer_heading_pair = (
+        heading
+        and heading.get("korean_pair")
+        and (
+            "editorial" in brand_keywords
+            or product_type in {"editorial", "content", "fashion", "luxury"}
+            or "serif" in (heading or {}).get("family", "")
+        )
+    )
+    if prefer_heading_pair:
+        paired = _get_font(heading["korean_pair"])
+        if paired:
+            return paired
     if body and body.get("korean_native"):
         return body
     if body and body.get("korean_pair"):
@@ -1171,6 +1220,10 @@ def _pick_korean_script_font(
 ) -> dict | None:
     if preferred and preferred.get("korean_native"):
         return preferred
+    if preferred and preferred.get("korean_pair"):
+        paired = _get_font(preferred["korean_pair"])
+        if paired and paired.get("korean_native"):
+            return paired
     if korean and korean.get("korean_native"):
         return korean
     return preferred or korean or fallback
