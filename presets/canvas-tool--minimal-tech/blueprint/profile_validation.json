@@ -1,0 +1,8 @@
+{
+  "valid": true,
+  "errors": [],
+  "warnings": [
+    "[pitfall#3-rebrand] Cobalt Violet vs Misty Blue (blue): lightness diff 34, saturation diff 19 — possible rebrand remnant",
+    "visual_reference.sources is empty"
+  ]
+}

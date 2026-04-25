@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import re
 from pathlib import Path
 
 from .models import DocumentRecord
@@ -681,7 +680,7 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
         md_lines.append("")
 
     for spec in specs_data["specs"]:
-        md_lines.append(f"---\n")
+        md_lines.append("---\n")
         md_lines.append(f"## {spec['family']} / {spec['name']}\n")
         md_lines.append(f"**역할**: {spec['role']}\n")
 
@@ -696,8 +695,8 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
         md_lines.append("")
 
         md_lines.append("### 상태 (States)\n")
-        md_lines.append(f"| 상태 | 설명 |")
-        md_lines.append(f"|------|------|")
+        md_lines.append("| 상태 | 설명 |")
+        md_lines.append("|------|------|")
         for state in spec["anatomy"]["states"]:
             desc = _state_description(state, spec["family"])
             md_lines.append(f"| `{state}` | {desc} |")

@@ -1,0 +1,8 @@
+{
+  "ko": {
+    "heading_font": "Pretendard",
+    "body_font": "Pretendard",
+    "mono_font": "JetBrains Mono",
+    "notes": "bold-confident magazine/opinion long-form — 한국어 article-body / prose-block / paragraph-block keep-all line-height 1.6–1.7 (reading-first), masthead / cover headline / pull-quote 는 Pretendard 900 letter-spacing tight line-height 1.4–1.5, issue-number / credit-line / footnote number / reading-progress 는 mono 영문 tabular-nums 고정"
+  }
+}

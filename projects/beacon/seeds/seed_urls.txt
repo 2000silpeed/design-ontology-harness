@@ -1,0 +1,5 @@
+https://linear.app
+https://vercel.com
+https://stripe.com
+https://railway.app
+https://supabase.com

@@ -2,6 +2,23 @@
 
 다른 회사의 디자인 시스템을 참고해서, **우리 브랜드에 맞는 디자인 시스템 설계도**를 자동으로 만들고, 그 설계도를 기반으로 **AI가 만든 UI를 프로 수준으로 재구성**해주는 도구입니다.
 
+> **그냥 프리셋을 쓰고 싶다면 →** [`design-ontology-plugin`](https://github.com/design-ontology/design-ontology-plugin) 레포로 가세요. 15종 프리셋 카탈로그 + `/design-start` 4단계 질문 UX + Next·raw-CSS 어댑터가 `/plugin install design-ontology` 한 줄로 설치됩니다.
+>
+> 이 harness 레포는 **프리셋 생성기**이자 **공급원**입니다. 프리셋을 새로 만들거나, 커스터마이징하거나, 내부적으로 KB·블루프린트 파이프라인을 돌리려는 고급 사용자·메인테이너를 위한 문서입니다.
+>
+> **피드백·이슈는 plugin 레포 이슈 트래커로** ([preset-feedback / new-preset / bug-report 템플릿](https://github.com/design-ontology/design-ontology-plugin/issues/new/choose)). 새 P3 프리셋 기여는 [`docs/CONTRIBUTING_PRESETS.md`](./docs/CONTRIBUTING_PRESETS.md).
+
+## 플러그인 vs 하네스 — 언제 어느 쪽?
+
+| 쓰려는 것 | 추천 경로 |
+|-----------|-----------|
+| 이미 있는 프리셋으로 빠르게 시작 | **plugin** (`/plugin install design-ontology`) |
+| 자연어 / 4단계 질문으로 프리셋 고르기 | **plugin** (`/design-start`) |
+| 새 브랜드 프로필로 프리셋 처음부터 합성 | **harness** (`run-project`) |
+| 기존 프리셋을 복사해 커스터마이징 | **harness** (`customize-preset`) → `run-project` |
+| 프리셋 산출물을 플러그인에 싱크 | **harness** (`scripts/sync-plugin-presets.sh`) |
+| 공식 KB 크롤 + CSS 토큰 추출 | **harness** (`build-kb`) |
+
 ## 이 도구가 해결하는 문제
 
 1. AI가 UI를 만들면 Tailwind 기본 색상 + shadow 떡칠 + 이모지 아이콘 → **어떤 제품이든 똑같이 생김**
@@ -617,6 +634,112 @@ graph TB
     FONT --> BUILDERS
     ALIAS --> BUILDERS
 ```
+
+## 플러그인 배포 (Phase 7~14)
+
+이 harness 는 15종 프리셋을 찍어 [`design-ontology-plugin`](https://github.com/design-ontology/design-ontology-plugin) 공개 레포로 자동 싱크합니다. 최종 사용자는 `/plugin install design-ontology` 한 줄로 프리셋·스킬·에이전트·어댑터를 얻습니다.
+
+> **Pretendard 서체 / SIL OFL 1.1** — 플러그인은 Pretendard Variable 을 **런타임 fetch** 방식으로 주입합니다 (`scripts/fetch-pretendard.mjs`). woff2 바이너리는 harness/plugin 레포 어디에도 번들되지 않고, OFL 고지(`LICENSE-FONTS`) 와 함께 설치 시점에 다운로드됩니다. 재배포 시 이 고지를 유지해야 합니다 (OFL §2).
+
+### 프리셋 카탈로그 요약 (2026-04-20 현재 15종)
+
+자동 생성된 카드 + 축 매트릭스 + Core HEX 스와치는 [`design-ontology-plugin/docs/CATALOG.md`](https://github.com/design-ontology/design-ontology-plugin/blob/main/docs/CATALOG.md) 에서 확인하세요. Harness 쪽에서는 `python3 scripts/build-catalog.py --output <path>` 로 언제든 재생성.
+
+axis matrix (app_mode × brand_tone):
+
+| app_mode \ brand_tone | minimal-tech | editorial-warm | bold-confident | playful-soft | corporate-trust |
+|---|---|---|---|---|---|
+| **dashboard** | `P0` orbit | `P2` curator | — | — | `P1` ledger |
+| **document-content** | `P1` lattice | `P0` signal-desk | `P2` broadside | — | — |
+| **marketing-landing** | `P2` beacon | — | `P0` premier-league | — | — |
+| **commerce** | — | `P0` colorfit | `P2` drop | — | — |
+| **conversation-copilot** | `P0` glacier | `P2` quill | — | — | — |
+| **canvas-tool** | `P1` atelier | — | — | — | — |
+| **community-feed** | — | — | — | `P1` bloom | — |
+| **monitoring-ops** | `P1` pulse | — | — | — | — |
+
+- P0 5종: MVP 승격 (기존 4프로젝트 + 신규 `dashboard--minimal-tech`)
+- P1 5종: fintech · observability · reference-docs · social · canvas
+- P2 5종: 톤 다변화 (각 app_mode 두번째/세번째 tone)
+- P3: 커뮤니티 기여 + 실수요 검증 후 확장 (Phase 13-11 ~ 13-12)
+
+### 고급 사용자 / 메인테이너 워크플로우
+
+```bash
+# 1. 새 프리셋 합성
+uv run design-ontology run-project --project-dir projects/<new-project>
+uv run design-ontology build-preset \
+  --project projects/<new-project> \
+  --preset-id <app_mode>--<brand_tone> \
+  --owner maintainer --tier P2 \
+  --color-modes light,dark --default-color-mode light \
+  --tags <ko,saas,...>
+
+# 2. 전체 재빌드 + 검증
+uv run design-ontology rebuild-all-presets --projects-root projects
+uv run design-ontology validate-presets
+uv run design-ontology lint-previews
+
+# 3. 카탈로그 재생성
+python3 scripts/build-catalog.py \
+  --output /path/to/design-ontology-plugin/docs/CATALOG.md
+
+# 4. 플러그인 레포로 싱크 (compatibility 게이트 자동)
+./scripts/sync-plugin-presets.sh \
+  --plugin-repo /path/to/design-ontology-plugin
+
+# 5. 기존 프리셋을 복사해 커스터마이징
+uv run design-ontology customize-preset \
+  --preset-id dashboard--minimal-tech \
+  --project-name my-dashboard
+# projects/my-dashboard/brand_profile.json 편집 후 run-project
+```
+
+### 버전 계약 (4필드 + compatibility.json)
+
+프리셋 `manifest.json` 은 네 개의 1급 버전 필드를 가집니다:
+
+| 필드 | 의미 | 변경 트리거 |
+|------|------|-------------|
+| `schema_version` | 산출물 내부 스키마 (token_schema 등) | 산출물 구조 변경 |
+| `preset_api_version` | 플러그인 소비 계약 | manifest 필드 추가/삭제 |
+| `generated_by_harness_version` | 생성 시점 Python 코어 버전 | 매 빌드 |
+| `preview_version` | 프리뷰 아티팩트 포맷 | 텍스트/스크린샷 포맷 변경 |
+
+`presets/compatibility.json` 은 이 harness 가 찍는 `current_preset_api_version` 과 지원 range (`supported_preset_api_range`) + 어댑터 호환 range 를 기록합니다. 플러그인 `plugin.json` 의 `supported_preset_api` 와 교차 검증하는 sync 게이트는 `scripts/check-plugin-compatibility.py` 에 있습니다. 자세한 계약 구조는 [`docs/PLUGIN_PLAN.md`](docs/PLUGIN_PLAN.md) §3.3 참고.
+
+### Sync 파이프라인
+
+```
+harness presets/  ──(check-plugin-compatibility.py)──▶  plugin/presets/
+           │                     │
+           │                     └──(sync-plugin-presets.sh)── rsync + gh pr create
+           │
+           └──(.github/workflows/sync-plugin.yml)── main push 시 자동
+```
+
+- `scripts/sync-plugin-presets.sh --plugin-repo <path> [--dry-run]` — 로컬에서 수동 싱크
+- `.github/workflows/sync-plugin.yml` — main push 시 compatibility 통과 시에만 PR 자동 생성 (`PLUGIN_REPO_TOKEN` 필요)
+- `.github/workflows/validate.yml` (플러그인 쪽) — PR 수신 시 2차 compatibility 검증
+
+## Phase 진행 상태
+
+| Phase | 상태 | 산출물 |
+|-------|------|--------|
+| 1~6 | done | harness 코어 (KB · synthesis · graph · agent-pack) |
+| 7 | done | 프리셋 인프라 + 버전 계약 4필드 + sync validator |
+| 8 | done | P0 5종 프리셋 승격 + 텍스트 프리뷰 |
+| 9 | done (로컬 scaffold) | 플러그인 레포 분리 + skills/agents 이식 |
+| 10A | done | `nextjs-tailwind-shadcn` 어댑터 |
+| 10B | done | `raw-css-variables` 어댑터 + `design_system_mirror_ops` 공통화 |
+| 10C | done | `vite-tailwind` 어댑터 + base.py 승격 |
+| 11 | done | MVP alpha — `/design-start` + matcher + installer |
+| 12A | done | 텍스트 프리뷰 + preview_linter (E001–E008 / W001–W003) |
+| 12B | deferred | P0 선택적 스크린샷 (alpha 후) |
+| 13-1 ~ 13-10 | done | P1 + P2 누적 15종 |
+| 13-11 ~ 13-12 | pending | P3 커뮤니티 기여 경로 |
+| **14** | **in progress** | 공개 배포 — plugin/harness README · CATALOG · marketplace alpha 승격 · release 자동화 |
+| 15 | pending | 라이프사이클 정책 운영 (catalog-health · promote · deprecate) |
 
 ## 예제 프로젝트
 

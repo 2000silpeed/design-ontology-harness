@@ -10,8 +10,28 @@ dependencies = [
   "pillow>=10.4.0",
 ]
 
+[dependency-groups]
+dev = [
+  "pytest>=9.0.3",
+]
+
 [project.scripts]
 design-ontology = "design_ontology_harness.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["design_ontology_harness"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "design_ontology_harness",
+  "schemas",
+  "presets",
+  "adapters",
+  "scripts",
+  "docs",
+  "README.md",
+  "LICENSE",
+]
 
 [build-system]
 requires = ["hatchling"]

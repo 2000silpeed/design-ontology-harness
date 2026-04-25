@@ -1,0 +1,100 @@
+name: sync-plugin
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "presets/**"
+      - "adapters/**"
+      - "schemas/**"
+      - "scripts/sync-plugin-presets.sh"
+      - "scripts/check-plugin-compatibility.py"
+      - "design_ontology_harness/semver_range.py"
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Sync branch name (override)
+        required: false
+
+concurrency:
+  group: sync-plugin-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  compatibility-gate:
+    name: Compatibility gate
+    runs-on: ubuntu-latest
+    outputs:
+      plugin_path: ${{ steps.clone.outputs.plugin_path }}
+    steps:
+      - name: Checkout harness
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Clone plugin repo
+        id: clone
+        env:
+          PLUGIN_REPO: ${{ vars.PLUGIN_REPO || 'design-ontology/design-ontology-plugin' }}
+          PLUGIN_TOKEN: ${{ secrets.PLUGIN_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${PLUGIN_TOKEN:-}" ]]; then
+            echo "::warning::PLUGIN_REPO_TOKEN not configured — compatibility check only, sync skipped."
+            echo "plugin_path=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git clone --depth=1 "https://x-access-token:${PLUGIN_TOKEN}@github.com/${PLUGIN_REPO}.git" /tmp/plugin
+          echo "plugin_path=/tmp/plugin" >> "$GITHUB_OUTPUT"
+
+      - name: Run compatibility check
+        if: steps.clone.outputs.plugin_path != ''
+        run: |
+          python3 scripts/check-plugin-compatibility.py \
+            --plugin-repo "${{ steps.clone.outputs.plugin_path }}" \
+            --presets-dir presets
+
+  sync:
+    name: Open sync PR
+    needs: compatibility-gate
+    if: needs.compatibility-gate.outputs.plugin_path != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout harness
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Clone plugin repo
+        env:
+          PLUGIN_REPO: ${{ vars.PLUGIN_REPO || 'design-ontology/design-ontology-plugin' }}
+          PLUGIN_TOKEN: ${{ secrets.PLUGIN_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
+          git clone "https://x-access-token:${PLUGIN_TOKEN}@github.com/${PLUGIN_REPO}.git" /tmp/plugin
+          git -C /tmp/plugin config user.name "design-ontology-bot"
+          git -C /tmp/plugin config user.email "bot@design-ontology.local"
+
+      - name: Install gh
+        run: |
+          type -p gh >/dev/null 2>&1 || sudo apt-get install -y gh
+
+      - name: Run sync
+        env:
+          GH_TOKEN: ${{ secrets.PLUGIN_REPO_TOKEN }}
+          SYNC_BRANCH: ${{ inputs.branch }}
+        run: |
+          set -euo pipefail
+          BRANCH_ARG=()
+          if [[ -n "${SYNC_BRANCH:-}" ]]; then
+            BRANCH_ARG=(--branch "$SYNC_BRANCH")
+          fi
+          bash scripts/sync-plugin-presets.sh \
+            --plugin-repo /tmp/plugin \
+            "${BRANCH_ARG[@]}"

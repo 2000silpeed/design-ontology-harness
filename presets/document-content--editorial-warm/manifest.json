@@ -1,0 +1,36 @@
+{
+  "id": "document-content--editorial-warm",
+  "schema_version": "1.0.0",
+  "preset_api_version": "1.0.0",
+  "generated_by_harness_version": "0.1.0",
+  "preview_version": "1.0.0",
+  "adapter_compatibility": {
+    "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+    "raw-css-variables": ">=0.1.0 <1.0.0",
+    "vite-tailwind": ">=0.1.0 <1.0.0"
+  },
+  "source_project": "signal-desk",
+  "content_hash": "sha256:cc129a73546fafdbd458fa2ffd63428d1b7d65b1df3fa92a73421914fa8f4eff",
+  "app_mode": "document-content",
+  "brand_tone": "editorial-warm",
+  "color_modes": [
+    "light",
+    "dark"
+  ],
+  "default_color_mode": "light",
+  "tags": [
+    "reading-heavy",
+    "ko"
+  ],
+  "locale_pairings": {
+    "ko": {
+      "heading_font": "Pretendard",
+      "body_font": "Lora",
+      "notes": "editorial long-form — heading Pretendard, body Lora serif for reading comfort"
+    }
+  },
+  "owner": "maintainer",
+  "tier": "P0",
+  "generated_at": "2026-04-21T12:34:59Z",
+  "description": "작은 팀·제작자용 에디토리얼 워크스페이스 — 문서/콘텐츠 reading flow, split-pane, warm serif 페어링"
+}

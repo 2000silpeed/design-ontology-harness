@@ -1,0 +1,1039 @@
+{
+  "mode": "pinterest-assisted",
+  "query": [
+    "editorial dashboard ui",
+    "warm premium onboarding flow",
+    "serif product landing page"
+  ],
+  "preferred_count": 6,
+  "weights": {
+    "layout": 0.32,
+    "component_shape": 0.2,
+    "color_balance": 0.18,
+    "typography_mood": 0.18,
+    "surface_style": 0.12
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "Signal Desk는 text-first editorial hierarchy와 warm surface language를 우선합니다.",
+    "이미지 기반 힌트는 표현 계층에만 사용하고 구조적 의사결정은 spec과 KB를 유지합니다."
+  ],
+  "must_include": [
+    "split-pane workspace",
+    "editorial hierarchy",
+    "low-elevation cards"
+  ],
+  "avoid_patterns": [
+    "glassmorphism-heavy surfaces",
+    "high-saturation neon UI",
+    "playful candy gradients"
+  ],
+  "sources": [
+    {
+      "source_id": "source-01",
+      "kind": "directory",
+      "label": "Signal Desk curated local references",
+      "status": "resolved",
+      "original_path": "references/visual",
+      "resolved_path": "/Users/sungwoon/ai-projects/design-ontology-harness/projects/signal-desk/references/visual",
+      "url": null,
+      "tags": [
+        "editorial",
+        "dashboard",
+        "split-pane",
+        "warm",
+        "landing"
+      ],
+      "image_count": 2
+    }
+  ],
+  "images": [
+    {
+      "image_id": "source-01-image-01",
+      "source_id": "source-01",
+      "source_label": "Signal Desk curated local references",
+      "label": "editorial-dashboard-split-pane",
+      "tags": [
+        "editorial",
+        "dashboard",
+        "split-pane",
+        "warm",
+        "landing"
+      ],
+      "path": "/Users/sungwoon/ai-projects/design-ontology-harness/projects/signal-desk/references/visual/editorial-dashboard-split-pane.svg",
+      "relative_path": "/Users/sungwoon/ai-projects/design-ontology-harness/projects/signal-desk/references/visual/editorial-dashboard-split-pane.svg",
+      "file_name": "editorial-dashboard-split-pane.svg",
+      "extension": ".svg",
+      "mime_type": "image/svg+xml",
+      "file_size_bytes": 2226,
+      "width": 1440,
+      "height": 960,
+      "aspect_ratio": 1.5,
+      "aspect_ratio_bucket": "3:2-ish",
+      "orientation": "landscape",
+      "signal_terms": [
+        "curated",
+        "dashboard",
+        "desk",
+        "editorial",
+        "landing",
+        "local",
+        "pane",
+        "references",
+        "signal",
+        "split",
+        "visual",
+        "warm"
+      ],
+      "observed_colors": [
+        {
+          "hex": "#D9B7A2",
+          "count": 6.0,
+          "share": 0.1765,
+          "temperature": "warm",
+          "luminance": 0.5123,
+          "role_hint": "accent"
+        },
+        {
+          "hex": "#8A6A58",
+          "count": 5.0,
+          "share": 0.1471,
+          "temperature": "warm",
+          "luminance": 0.1642,
+          "role_hint": "accent-dark"
+        },
+        {
+          "hex": "#D3B9A8",
+          "count": 5.0,
+          "share": 0.1471,
+          "temperature": "warm",
+          "luminance": 0.5137,
+          "role_hint": "accent"
+        },
+        {
+          "hex": "#FAF2EB",
+          "count": 3.0,
+          "share": 0.0882,
+          "temperature": "neutral",
+          "luminance": 0.8983,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FFF9F3",
+          "count": 2.0,
+          "share": 0.0588,
+          "temperature": "neutral",
+          "luminance": 0.9548,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FBF4EE",
+          "count": 2.0,
+          "share": 0.0588,
+          "temperature": "neutral",
+          "luminance": 0.9138,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FCF7F1",
+          "count": 2.0,
+          "share": 0.0588,
+          "temperature": "neutral",
+          "luminance": 0.9357,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#5D4637",
+          "count": 2.0,
+          "share": 0.0588,
+          "temperature": "warm",
+          "luminance": 0.0698,
+          "role_hint": "accent-dark"
+        }
+      ],
+      "svg_features": {
+        "max_rect_corner_ratio": 0.5,
+        "has_stroke": true
+      },
+      "sha256": "25a7bf6618bd367dfce30c0da7d883572f9af94ad2913893f731b38a152f354f"
+    },
+    {
+      "image_id": "source-01-image-02",
+      "source_id": "source-01",
+      "source_label": "Signal Desk curated local references",
+      "label": "landing-hero-serif-trust-strip",
+      "tags": [
+        "editorial",
+        "dashboard",
+        "split-pane",
+        "warm",
+        "landing"
+      ],
+      "path": "/Users/sungwoon/ai-projects/design-ontology-harness/projects/signal-desk/references/visual/landing-hero-serif-trust-strip.svg",
+      "relative_path": "/Users/sungwoon/ai-projects/design-ontology-harness/projects/signal-desk/references/visual/landing-hero-serif-trust-strip.svg",
+      "file_name": "landing-hero-serif-trust-strip.svg",
+      "extension": ".svg",
+      "mime_type": "image/svg+xml",
+      "file_size_bytes": 1508,
+      "width": 1440,
+      "height": 960,
+      "aspect_ratio": 1.5,
+      "aspect_ratio_bucket": "3:2-ish",
+      "orientation": "landscape",
+      "signal_terms": [
+        "curated",
+        "dashboard",
+        "desk",
+        "editorial",
+        "hero",
+        "landing",
+        "local",
+        "pane",
+        "references",
+        "serif",
+        "signal",
+        "split",
+        "strip",
+        "trust",
+        "visual",
+        "warm"
+      ],
+      "observed_colors": [
+        {
+          "hex": "#FFF9F3",
+          "count": 4.0,
+          "share": 0.1905,
+          "temperature": "neutral",
+          "luminance": 0.9548,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#8C6B58",
+          "count": 2.0,
+          "share": 0.0952,
+          "temperature": "warm",
+          "luminance": 0.168,
+          "role_hint": "accent-dark"
+        },
+        {
+          "hex": "#B85C3B",
+          "count": 2.0,
+          "share": 0.0952,
+          "temperature": "warm",
+          "luminance": 0.1816,
+          "role_hint": "accent-dark"
+        },
+        {
+          "hex": "#F6EAE0",
+          "count": 2.0,
+          "share": 0.0952,
+          "temperature": "warm",
+          "luminance": 0.8382,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#F7F0E8",
+          "count": 1.0,
+          "share": 0.0476,
+          "temperature": "neutral",
+          "luminance": 0.8792,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#A56241",
+          "count": 1.0,
+          "share": 0.0476,
+          "temperature": "warm",
+          "luminance": 0.1712,
+          "role_hint": "accent-dark"
+        },
+        {
+          "hex": "#402B20",
+          "count": 1.0,
+          "share": 0.0476,
+          "temperature": "warm",
+          "luminance": 0.0292,
+          "role_hint": "accent-dark"
+        },
+        {
+          "hex": "#C7A28C",
+          "count": 1.0,
+          "share": 0.0476,
+          "temperature": "warm",
+          "luminance": 0.3988,
+          "role_hint": "accent"
+        }
+      ],
+      "svg_features": {
+        "max_rect_corner_ratio": 0.5,
+        "has_stroke": true
+      },
+      "sha256": "48dbc959d1dbc48a79a6bdec1e6893f86edcc528916bea72bdedfb984f6018a3"
+    }
+  ],
+  "selected_images": [
+    {
+      "image_id": "source-01-image-01",
+      "source_id": "source-01",
+      "source_label": "Signal Desk curated local references",
+      "label": "editorial-dashboard-split-pane",
+      "tags": [
+        "editorial",
+        "dashboard",
+        "split-pane",
+        "warm",
+        "landing"
+      ],
+      "path": "/Users/sungwoon/ai-projects/design-ontology-harness/projects/signal-desk/references/visual/editorial-dashboard-split-pane.svg",
+      "relative_path": "/Users/sungwoon/ai-projects/design-ontology-harness/projects/signal-desk/references/visual/editorial-dashboard-split-pane.svg",
+      "file_name": "editorial-dashboard-split-pane.svg",
+      "extension": ".svg",
+      "mime_type": "image/svg+xml",
+      "file_size_bytes": 2226,
+      "width": 1440,
+      "height": 960,
+      "aspect_ratio": 1.5,
+      "aspect_ratio_bucket": "3:2-ish",
+      "orientation": "landscape",
+      "signal_terms": [
+        "curated",
+        "dashboard",
+        "desk",
+        "editorial",
+        "landing",
+        "local",
+        "pane",
+        "references",
+        "signal",
+        "split",
+        "visual",
+        "warm"
+      ],
+      "observed_colors": [
+        {
+          "hex": "#D9B7A2",
+          "count": 6.0,
+          "share": 0.1765,
+          "temperature": "warm",
+          "luminance": 0.5123,
+          "role_hint": "accent"
+        },
+        {
+          "hex": "#8A6A58",
+          "count": 5.0,
+          "share": 0.1471,
+          "temperature": "warm",
+          "luminance": 0.1642,
+          "role_hint": "accent-dark"
+        },
+        {
+          "hex": "#D3B9A8",
+          "count": 5.0,
+          "share": 0.1471,
+          "temperature": "warm",
+          "luminance": 0.5137,
+          "role_hint": "accent"
+        },
+        {
+          "hex": "#FAF2EB",
+          "count": 3.0,
+          "share": 0.0882,
+          "temperature": "neutral",
+          "luminance": 0.8983,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FFF9F3",
+          "count": 2.0,
+          "share": 0.0588,
+          "temperature": "neutral",
+          "luminance": 0.9548,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FBF4EE",
+          "count": 2.0,
+          "share": 0.0588,
+          "temperature": "neutral",
+          "luminance": 0.9138,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FCF7F1",
+          "count": 2.0,
+          "share": 0.0588,
+          "temperature": "neutral",
+          "luminance": 0.9357,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#5D4637",
+          "count": 2.0,
+          "share": 0.0588,
+          "temperature": "warm",
+          "luminance": 0.0698,
+          "role_hint": "accent-dark"
+        }
+      ],
+      "svg_features": {
+        "max_rect_corner_ratio": 0.5,
+        "has_stroke": true
+      },
+      "sha256": "25a7bf6618bd367dfce30c0da7d883572f9af94ad2913893f731b38a152f354f"
+    },
+    {
+      "image_id": "source-01-image-02",
+      "source_id": "source-01",
+      "source_label": "Signal Desk curated local references",
+      "label": "landing-hero-serif-trust-strip",
+      "tags": [
+        "editorial",
+        "dashboard",
+        "split-pane",
+        "warm",
+        "landing"
+      ],
+      "path": "/Users/sungwoon/ai-projects/design-ontology-harness/projects/signal-desk/references/visual/landing-hero-serif-trust-strip.svg",
+      "relative_path": "/Users/sungwoon/ai-projects/design-ontology-harness/projects/signal-desk/references/visual/landing-hero-serif-trust-strip.svg",
+      "file_name": "landing-hero-serif-trust-strip.svg",
+      "extension": ".svg",
+      "mime_type": "image/svg+xml",
+      "file_size_bytes": 1508,
+      "width": 1440,
+      "height": 960,
+      "aspect_ratio": 1.5,
+      "aspect_ratio_bucket": "3:2-ish",
+      "orientation": "landscape",
+      "signal_terms": [
+        "curated",
+        "dashboard",
+        "desk",
+        "editorial",
+        "hero",
+        "landing",
+        "local",
+        "pane",
+        "references",
+        "serif",
+        "signal",
+        "split",
+        "strip",
+        "trust",
+        "visual",
+        "warm"
+      ],
+      "observed_colors": [
+        {
+          "hex": "#FFF9F3",
+          "count": 4.0,
+          "share": 0.1905,
+          "temperature": "neutral",
+          "luminance": 0.9548,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#8C6B58",
+          "count": 2.0,
+          "share": 0.0952,
+          "temperature": "warm",
+          "luminance": 0.168,
+          "role_hint": "accent-dark"
+        },
+        {
+          "hex": "#B85C3B",
+          "count": 2.0,
+          "share": 0.0952,
+          "temperature": "warm",
+          "luminance": 0.1816,
+          "role_hint": "accent-dark"
+        },
+        {
+          "hex": "#F6EAE0",
+          "count": 2.0,
+          "share": 0.0952,
+          "temperature": "warm",
+          "luminance": 0.8382,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#F7F0E8",
+          "count": 1.0,
+          "share": 0.0476,
+          "temperature": "neutral",
+          "luminance": 0.8792,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#A56241",
+          "count": 1.0,
+          "share": 0.0476,
+          "temperature": "warm",
+          "luminance": 0.1712,
+          "role_hint": "accent-dark"
+        },
+        {
+          "hex": "#402B20",
+          "count": 1.0,
+          "share": 0.0476,
+          "temperature": "warm",
+          "luminance": 0.0292,
+          "role_hint": "accent-dark"
+        },
+        {
+          "hex": "#C7A28C",
+          "count": 1.0,
+          "share": 0.0476,
+          "temperature": "warm",
+          "luminance": 0.3988,
+          "role_hint": "accent"
+        }
+      ],
+      "svg_features": {
+        "max_rect_corner_ratio": 0.5,
+        "has_stroke": true
+      },
+      "sha256": "48dbc959d1dbc48a79a6bdec1e6893f86edcc528916bea72bdedfb984f6018a3"
+    }
+  ],
+  "duplicate_groups": [],
+  "similar_groups": [
+    {
+      "type": "shape-family",
+      "signature": "3:2-ish / landscape / .svg",
+      "image_ids": [
+        "source-01-image-01",
+        "source-01-image-02"
+      ],
+      "paths": [
+        "/Users/sungwoon/ai-projects/design-ontology-harness/projects/signal-desk/references/visual/editorial-dashboard-split-pane.svg",
+        "/Users/sungwoon/ai-projects/design-ontology-harness/projects/signal-desk/references/visual/landing-hero-serif-trust-strip.svg"
+      ]
+    }
+  ],
+  "coverage": {
+    "source_count": 1,
+    "resolved_source_count": 1,
+    "image_count": 2,
+    "selected_image_count": 2,
+    "format_counts": {
+      ".svg": 2
+    },
+    "orientation_counts": {
+      "landscape": 2
+    },
+    "aspect_ratio_buckets": {
+      "3:2-ish": 2
+    }
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "airy",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x6",
+        "landing x4",
+        "hero x2",
+        "whitespace x1",
+        "calm x1"
+      ],
+      "candidates": [
+        {
+          "value": "airy",
+          "score": 28.0
+        },
+        {
+          "value": "dense",
+          "score": 12.5
+        },
+        {
+          "value": "balanced",
+          "score": 3.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.67,
+      "evidence": [
+        "warm x4",
+        "editorial x6"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 10.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "editorial",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x6",
+        "serif x2"
+      ],
+      "candidates": [
+        {
+          "value": "editorial",
+          "score": 22.0
+        },
+        {
+          "value": "utilitarian",
+          "score": 12.0
+        },
+        {
+          "value": "playful",
+          "score": 6.0
+        },
+        {
+          "value": "premium",
+          "score": 3.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "pill",
+      "confidence": 0.38,
+      "evidence": [
+        "svg corner ratio 0.50"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": true,
+      "temperature": "warm",
+      "contrast_profile": "high",
+      "neutral_bias": "moderate",
+      "dominant": [
+        {
+          "hex": "#D9B7A2",
+          "count": 6.0,
+          "temperature": "warm",
+          "luminance": 0.5123,
+          "role_hint": "accent",
+          "share": 0.1463
+        },
+        {
+          "hex": "#FFF9F3",
+          "count": 6.0,
+          "temperature": "neutral",
+          "luminance": 0.9548,
+          "role_hint": "neutral-light",
+          "share": 0.1463
+        },
+        {
+          "hex": "#8A6A58",
+          "count": 5.0,
+          "temperature": "warm",
+          "luminance": 0.1642,
+          "role_hint": "accent-dark",
+          "share": 0.122
+        }
+      ],
+      "supporting": [
+        {
+          "hex": "#D3B9A8",
+          "count": 5.0,
+          "temperature": "warm",
+          "luminance": 0.5137,
+          "role_hint": "accent",
+          "share": 0.122
+        },
+        {
+          "hex": "#FAF2EB",
+          "count": 3.0,
+          "temperature": "neutral",
+          "luminance": 0.8983,
+          "role_hint": "neutral-light",
+          "share": 0.0732
+        },
+        {
+          "hex": "#5D4637",
+          "count": 2.0,
+          "temperature": "warm",
+          "luminance": 0.0698,
+          "role_hint": "accent-dark",
+          "share": 0.0488
+        },
+        {
+          "hex": "#8C6B58",
+          "count": 2.0,
+          "temperature": "warm",
+          "luminance": 0.168,
+          "role_hint": "accent-dark",
+          "share": 0.0488
+        },
+        {
+          "hex": "#B85C3B",
+          "count": 2.0,
+          "temperature": "warm",
+          "luminance": 0.1816,
+          "role_hint": "accent-dark",
+          "share": 0.0488
+        }
+      ],
+      "provenance": {
+        "level": "observed",
+        "detail": "Observed directly from sampled image colors."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 2,
+      "available_image_count": 2,
+      "provenance": {
+        "level": "observed",
+        "detail": "Selection is grounded in resolved local image files."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.94,
+      "evidence": [
+        "dashboard x4",
+        "3:2-ish x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x6"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "landing-narrative",
+      "label": "Narrative landing flow",
+      "confidence": 0.94,
+      "evidence": [
+        "landing x4",
+        "hero x2",
+        "pricing x1",
+        "testimonial x1",
+        "cta x1",
+        "faq x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "split-pane-workspace",
+      "label": "Split-pane workspace",
+      "confidence": 0.94,
+      "evidence": [
+        "workspace x2",
+        "editor x1",
+        "navigation x1",
+        "command x1",
+        "dashboard x4",
+        "3:2-ish x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.",
+      "confidence": 0.94,
+      "evidence": [
+        "surface=tinted",
+        "density=airy",
+        "corner=pill"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Split-pane workspace"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "typography_mood=editorial"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.94,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=airy"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.94)",
+        "dashboard x4",
+        "primitive=dashboard cards"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.94,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.94)",
+        "editorial x6",
+        "primitive=rich text editor"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.94,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "layout=landing-narrative (0.94)",
+        "hero x2",
+        "landing x4",
+        "pricing x1",
+        "testimonial x1",
+        "cta x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "workspace-shell",
+      "label": "Workspace shell",
+      "family": "navigation",
+      "confidence": 0.94,
+      "suggested_components": [
+        "app-shell",
+        "sidebar-nav",
+        "workspace-switcher",
+        "breadcrumb",
+        "context-panel"
+      ],
+      "supports_primitives": [
+        "workspace navigation"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.94)",
+        "workspace x2",
+        "navigation x1",
+        "primitive=workspace navigation"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.87,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.94)",
+        "data x1",
+        "grid x1",
+        "primitive=data tables"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "conversation-sidecar",
+      "label": "Conversation sidecar",
+      "family": "overlay",
+      "confidence": 0.52,
+      "suggested_components": [
+        "chat-panel",
+        "message-thread",
+        "message-composer",
+        "context-drawer"
+      ],
+      "supports_primitives": [
+        "chat and messaging"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.94)"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Dashboard grid",
+    "recommended_direction": [
+      "layout는 Dashboard grid 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 editorial 축 유지",
+      "density는 airy 기준으로 primitive spacing 조정",
+      "palette temperature는 warm 쪽을 우선"
+    ],
+    "avoidance": [
+      "glassmorphism-heavy surfaces",
+      "high-saturation neon UI",
+      "playful candy gradients"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "Signal Desk",
+    "system_name": "Signal System",
+    "brand_keywords": [
+      "calm",
+      "precise",
+      "editorial",
+      "trustworthy"
+    ],
+    "anti_keywords": [
+      "generic",
+      "noisy",
+      "overdecorated",
+      "playful"
+    ],
+    "visual_keywords": [
+      "structured whitespace",
+      "measured contrast",
+      "text-first hierarchy"
+    ],
+    "interaction_keywords": [
+      "predictable states",
+      "low-noise motion",
+      "deliberate emphasis"
+    ],
+    "product_primitives": [
+      "workspace navigation",
+      "rich text editor",
+      "command palette",
+      "dashboard cards",
+      "data tables",
+      "hero section",
+      "feature grid",
+      "social proof",
+      "testimonial",
+      "faq accordion",
+      "landing cta section",
+      "site footer",
+      "site header",
+      "pricing and plans"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "valid": true,
+  "errors": [],
+  "warnings": [
+    "visual_reference.sources is empty"
+  ]
+}

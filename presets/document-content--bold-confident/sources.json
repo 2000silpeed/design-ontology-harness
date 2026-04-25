@@ -1,0 +1,44 @@
+{
+  "preset_id": "document-content--bold-confident",
+  "source_project": "broadside",
+  "seeds": [
+    {
+      "url": "https://www.theatlantic.com",
+      "kind": "visual-reference",
+      "title": "The Atlantic",
+      "notes": "bold editorial feature + magazine cover references"
+    },
+    {
+      "url": "https://www.newyorker.com",
+      "kind": "visual-reference",
+      "title": "The New Yorker",
+      "notes": "editorial magazine issue references"
+    },
+    {
+      "url": "https://www.nytimes.com",
+      "kind": "visual-reference",
+      "title": "NY Times Magazine",
+      "notes": "magazine feature spread references"
+    },
+    {
+      "url": "https://www.vice.com",
+      "kind": "visual-reference",
+      "title": "Vice",
+      "notes": "bold opinion long-form references"
+    },
+    {
+      "url": "https://pitchfork.com",
+      "kind": "visual-reference",
+      "title": "Pitchfork",
+      "notes": "opinion / review feature references"
+    },
+    {
+      "url": "https://www.theguardian.com",
+      "kind": "visual-reference",
+      "title": "The Guardian",
+      "notes": "long read + opinion references"
+    }
+  ],
+  "pretendard_font_license": "SIL OFL 1.1",
+  "created_at": "2026-04-21T12:34:59Z"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "marketing-landing--editorial-warm",
+  "schema_version": "1.0.0",
+  "preset_api_version": "1.0.0",
+  "generated_by_harness_version": "0.1.0",
+  "preview_version": "1.0.0",
+  "adapter_compatibility": {
+    "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+    "raw-css-variables": ">=0.1.0 <1.0.0",
+    "vite-tailwind": ">=0.1.0 <1.0.0"
+  },
+  "source_project": "loom",
+  "content_hash": "sha256:82085510760f8f5a53816eb5b69aaec1272af3195cdeb64bdfc91f47325b5ad1",
+  "app_mode": "marketing-landing",
+  "brand_tone": "editorial-warm",
+  "color_modes": [
+    "light",
+    "dark"
+  ],
+  "default_color_mode": "light",
+  "tags": [
+    "publishing",
+    "editorial",
+    "reading-heavy",
+    "ko"
+  ],
+  "locale_pairings": {
+    "ko": {
+      "heading_font": "Pretendard",
+      "body_font": "Pretendard",
+      "mono_font": "JetBrains Mono",
+      "notes": "독립 뉴스레터 editorial-warm 마케팅 랜딩 — 한국어 hero-headline / subheadline / featured-issue-title / pricing-description / testimonial-body / issue-archive-title / faq keep-all line-height 1.6–1.7 (reading-first), page-title / section-header 는 Pretendard 700 letter-spacing 0, price number / issue 번호 / 구독자 수 / publication 날짜 는 mono 영문 고정 tabular-nums"
+    }
+  },
+  "owner": "@bob-external",
+  "tier": "P3",
+  "generated_at": "2026-04-21T12:34:59Z",
+  "description": "독립 뉴스레터·매거진 발행인용 editorial-warm 톤 마케팅 랜딩 — hero + featured issue + issue archive + subscribe pricing + testimonial + author profile + faq + cta, warm ochre + rust + wheat palette, reading-first, 한국어 1급"
+}

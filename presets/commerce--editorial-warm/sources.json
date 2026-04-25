@@ -1,0 +1,26 @@
+{
+  "preset_id": "commerce--editorial-warm",
+  "source_project": "colorfit",
+  "seeds": [
+    {
+      "url": "https://www.musinsa.com",
+      "kind": "visual-reference",
+      "title": "Musinsa",
+      "notes": "KR fashion commerce, editorial tone"
+    },
+    {
+      "url": "https://www.29cm.co.kr",
+      "kind": "visual-reference",
+      "title": "29CM",
+      "notes": "KR editorial fashion commerce, curated boutique UX"
+    },
+    {
+      "url": "https://www.ssense.com",
+      "kind": "visual-reference",
+      "title": "SSENSE",
+      "notes": "global editorial fashion commerce references"
+    }
+  ],
+  "pretendard_font_license": "SIL OFL 1.1",
+  "created_at": "2026-04-21T12:34:59Z"
+}

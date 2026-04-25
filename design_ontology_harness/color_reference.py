@@ -1527,8 +1527,8 @@ def _rgb_hex(rgb: tuple[int, int, int]) -> str:
 def _hsl_to_hex(hue: float, sat: float, lightness: float) -> str:
     h = (hue % 360) / 360
     s = max(0.0, min(1.0, sat))
-    l = max(0.0, min(1.0, lightness))
-    r, g, b = colorsys.hls_to_rgb(h, l, s)
+    normalized_lightness = max(0.0, min(1.0, lightness))
+    r, g, b = colorsys.hls_to_rgb(h, normalized_lightness, s)
     return _rgb_hex((r * 255, g * 255, b * 255))
 
 
@@ -1538,8 +1538,8 @@ def _shift_hex(hex_value: str | None, *, dl: float = 0.0, ds: float = 0.0) -> st
     if not rgb:
         return None
     r, g, b = rgb
-    h, l, s = colorsys.rgb_to_hls(r / 255, g / 255, b / 255)
-    new_l = max(0.0, min(1.0, l + dl))
+    h, lightness, s = colorsys.rgb_to_hls(r / 255, g / 255, b / 255)
+    new_l = max(0.0, min(1.0, lightness + dl))
     new_s = max(0.0, min(1.0, s + ds))
     nr, ng, nb = colorsys.hls_to_rgb(h, new_l, new_s)
     return _rgb_hex((nr * 255, ng * 255, nb * 255))
@@ -1605,7 +1605,6 @@ def build_component_color_sets(semantic_roles: dict[str, dict]) -> dict[str, dic
 
     brand_primary = _hex("brand_primary")
     brand_accent = _hex("brand_accent")
-    surface_tint = _hex("surface_tint")
     surface = _hex("surface") or "#FFFFFF"
     canvas = _hex("canvas") or "#F7F8FA"
     ink = _hex("ink") or "#111111"
@@ -1618,7 +1617,6 @@ def build_component_color_sets(semantic_roles: dict[str, dict]) -> dict[str, dic
 
     primary_on_light = _is_dark(brand_primary)
     primary_text = "#FFFFFF" if primary_on_light else ink
-    accent_text = "#FFFFFF" if _is_dark(brand_accent) else ink
 
     sets: dict[str, dict[str, str]] = {}
 

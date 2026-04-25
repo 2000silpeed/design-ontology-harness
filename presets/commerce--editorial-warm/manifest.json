@@ -1,0 +1,36 @@
+{
+  "id": "commerce--editorial-warm",
+  "schema_version": "1.0.0",
+  "preset_api_version": "1.0.0",
+  "generated_by_harness_version": "0.1.0",
+  "preview_version": "1.0.0",
+  "adapter_compatibility": {
+    "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+    "raw-css-variables": ">=0.1.0 <1.0.0",
+    "vite-tailwind": ">=0.1.0 <1.0.0"
+  },
+  "source_project": "colorfit",
+  "content_hash": "sha256:67c594aae0b314f3520decefb3c84a7a93eb311b8578bda7e86948056080d629",
+  "app_mode": "commerce",
+  "brand_tone": "editorial-warm",
+  "color_modes": [
+    "light"
+  ],
+  "default_color_mode": "light",
+  "tags": [
+    "fashion",
+    "mobile-first",
+    "ko"
+  ],
+  "locale_pairings": {
+    "ko": {
+      "heading_font": "Pretendard",
+      "body_font": "Pretendard",
+      "notes": "mobile-first fashion commerce, 한국어 UI"
+    }
+  },
+  "owner": "maintainer",
+  "tier": "P0",
+  "generated_at": "2026-04-21T12:34:59Z",
+  "description": "퍼스널컬러 기반 모바일 패션 커머스 — 에디토리얼 웜 톤, 코디/가격 비교 UX"
+}

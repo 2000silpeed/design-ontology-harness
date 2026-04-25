@@ -104,6 +104,14 @@
 - **배색**: `#FAF7F2` `#D8D8D8` `#B7C3A5` `#E5CBB0` `#A3B9D2` `#B08672`
 - **출처**: [1]
 
+### Rose Quartz
+- **HEX**: #F7CAC9
+- **CMYK**: C 0%, M 18%, Y 19%, K 3%
+- **톤/무드**: 고명도, 저채도, 살구빛이 섞인 파스텔 핑크 / 부드러움, 친근함, 따뜻함, 크래프트, 달콤한 소비자 감성
+- **활용**: 팬톤 2016 올해의 색상 Rose Quartz 로 선정된 핑크 톤. 연어빛 웜 베이스에 순수한 공기감이 섞여 있으며 D2C 컨슈머 스낵 · 유아용품 · 웰니스 푸드 등 playful-soft commerce 에서 primary 팔레트 로 적합. Blush 보다 살짝 코랄기가 돌아 친근함을 강조.
+- **배색**: `#FFEBCD` `#E9967A` `#B0E0E6` `#3F3F3F` `#F5DEB3` `#D9D9D9`
+- **출처**: [1]
+
 ## Pantone Trend Reds
 
 ### Marsala
@@ -234,6 +242,14 @@
 - **배색**: `#FFFFFF` `#C7E9CF` `#E3C9A8` `#F7A589` `#A9C4D8` `#CFC6BA`
 - **출처**: [2, 3]
 
+### Dark Salmon
+- **HEX**: #E9967A
+- **CMYK**: C 0%, M 36%, Y 48%, K 9%
+- **톤/무드**: 중명도, 중채도, 테라코타 기가 섞인 웜 살몬 톤 / 따뜻함, 크래프트, 친근함, 세련된 노스탤지어
+- **활용**: CSS 표준 색상 이름 "Dark Salmon" 에 해당하는 Pastel/Natural Orange 경계의 웜 톤. Salmon 보다 한 단계 깊이와 테라코타 기가 돌아 craft D2C 상품 패키지 · bestseller ribbon · discount pill · gentle-toast 성공 등 consumer commerce accent 로 적합. Pastel Pink primary 와 합쳐 warm pastel commerce playful-soft 톤을 완성.
+- **배색**: `#F7CAC9` `#FFEBCD` `#3F3F3F` `#F5F5F5` `#D7C4A3` `#FAF8F2`
+- **출처**: [2]
+
 ## Pantone Trend Oranges
 
 ### Living Coral
@@ -355,6 +371,14 @@
 - **활용**: 버터를 머랭처럼 부드럽게 푼 듯한 따뜻한 옐로 베이스 계열. 화이트보다 포근하고 베이지보다 크리미한 중간 지점을 형성함. 그래픽 분야에서 소프트 미니멀리즘의 대표 색으로 사용됨.
 - **배색**: `#C4B8A2` `#D5A48E` `#B9A873` `#A7BBCF` `#D39C7D` `#3D3D3D`
 - **출처**: [3, 4]
+
+### Blanched Almond
+- **HEX**: #FFEBCD
+- **CMYK**: C 0%, M 8%, Y 20%, K 0%
+- **톤/무드**: 고명도, 저채도, 크리미한 아이보리-크림 톤 / 포근함, 자연스러움, 부드러움, 크래프트
+- **활용**: CSS 표준 색상 "Blanched Almond" 에 해당하는 화이트 근접 크림 계열. Cornsilk 보다 옐로기가 적고 Wheat 보다 명도가 높아 화이트에 가장 가까운 웜 surface tone. D2C craft commerce cart drawer · empty state · promo banner · bottom sheet handle 등 surface_tint 로 사용 시 피로감 없이 따뜻함 전달. Rose Quartz + Dark Salmon 팔레트와 자연스러운 warm pastel 삼각 구성을 이룸.
+- **배색**: `#F7CAC9` `#E9967A` `#F5F5F5` `#3F3F3F` `#D7C4A3` `#FAF8F2`
+- **출처**: [3]
 
 ## Pantone Trend Yellows
 

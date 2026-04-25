@@ -1,0 +1,480 @@
+{
+  "mode": "local-images",
+  "query": [
+    "stratechery subscribe landing",
+    "ghost publisher hero pricing",
+    "every newsletter landing",
+    "substack top publisher landing",
+    "the verge newsletter hub"
+  ],
+  "preferred_count": 8,
+  "weights": {
+    "layout": 0.3,
+    "component_shape": 0.3,
+    "color_balance": 0.2,
+    "typography_mood": 0.1,
+    "surface_style": 0.1
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "Stratechery / Ghost publisher / Every / Substack top publisher / The Verge newsletter 계열 editorial 랜딩 참조",
+    "editorial-warm 톤: warm ochre + rust + wheat 로 reading-first 감성 유지, 밀도는 medium (hero + features + pricing + testimonial + faq + cta)",
+    "이미지 힌트는 advisory — 최종 컴포넌트 구조는 spec + KB 우선"
+  ],
+  "must_include": [
+    "warm editorial hero with serif-ish headline + ochre highlight",
+    "featured issue strip with cover + date + author avatar",
+    "pricing table with monthly-yearly toggle + single highlighted tier",
+    "testimonial carousel with warm quote mark + author portrait",
+    "issue archive grid with soft warm cards",
+    "faq accordion with calm tone",
+    "cta banner at footer with rust accent"
+  ],
+  "avoid_patterns": [
+    "bold saturated sports hero",
+    "streetwear drop countdown",
+    "fintech dense data-table",
+    "SRE dark monitoring console",
+    "playful pastel d2c product grid",
+    "glassmorphism",
+    "corporate navy enterprise checkout"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "airy",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x4",
+        "landing x4",
+        "hero x6",
+        "calm x4"
+      ],
+      "candidates": [
+        {
+          "value": "airy",
+          "score": 32.0
+        },
+        {
+          "value": "dense",
+          "score": 17.0
+        },
+        {
+          "value": "balanced",
+          "score": 1.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.94,
+      "evidence": [
+        "warm x8",
+        "editorial x4",
+        "cream x2",
+        "soft x1"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 17.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "editorial",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x4",
+        "magazine x1",
+        "serif x3"
+      ],
+      "candidates": [
+        {
+          "value": "editorial",
+          "score": 20.0
+        },
+        {
+          "value": "utilitarian",
+          "score": 9.0
+        },
+        {
+          "value": "playful",
+          "score": 6.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "medium",
+      "confidence": 0.5,
+      "evidence": [
+        "card x5"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.94,
+      "evidence": [
+        "table x4",
+        "grid x2",
+        "data x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x4",
+        "magazine x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "landing-narrative",
+      "label": "Narrative landing flow",
+      "confidence": 0.94,
+      "evidence": [
+        "landing x4",
+        "hero x6",
+        "pricing x7",
+        "testimonial x5",
+        "cta x5",
+        "faq x3"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.92,
+      "evidence": [
+        "dashboard x1",
+        "table x4",
+        "monitoring x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. 중간 반경으로 제품 UI 절제 유지.",
+      "confidence": 0.94,
+      "evidence": [
+        "surface=tinted",
+        "density=airy",
+        "corner=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "navigation은 정보 구조를 안정적으로 고정하고 시각적 장식보다 위치 신호를 우선한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Data review surface"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "typography_mood=editorial"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.94,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=airy"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.94)",
+        "layout=dashboard-grid (0.92)",
+        "table x4",
+        "data x1",
+        "grid x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.94,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.94)",
+        "editorial x4",
+        "magazine x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.94,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "layout=landing-narrative (0.94)",
+        "hero x6",
+        "landing x4",
+        "pricing x7",
+        "testimonial x5",
+        "cta x5"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.67,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.92)",
+        "dashboard x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Data review surface",
+    "recommended_direction": [
+      "layout는 Data review surface 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 editorial 축 유지",
+      "density는 airy 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "bold saturated sports hero",
+      "streetwear drop countdown",
+      "fintech dense data-table",
+      "SRE dark monitoring console",
+      "playful pastel d2c product grid",
+      "glassmorphism",
+      "corporate navy enterprise checkout"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "Loom",
+    "system_name": "Loom System",
+    "brand_keywords": [
+      "marketing-landing",
+      "editorial",
+      "newsletter",
+      "publisher",
+      "warm",
+      "calm",
+      "reading-first",
+      "serif-ish",
+      "ochre",
+      "rust",
+      "wheat",
+      "cream",
+      "issue-archive",
+      "subscribe"
+    ],
+    "anti_keywords": [
+      "bold-saturated",
+      "streetwear-drop",
+      "fintech-dense",
+      "playful-pastel",
+      "dashboard-only",
+      "corporate-navy",
+      "magazine-cover-heavy-illustration"
+    ],
+    "visual_keywords": [
+      "warm neutral backdrop",
+      "ochre-yellow primary emphasis",
+      "rust copper accent link",
+      "wheat cream surface tint",
+      "serif-ish heading pairing",
+      "reading-first hero",
+      "issue card archive strip",
+      "calm pricing table",
+      "author portrait circle",
+      "warm testimonial block"
+    ],
+    "interaction_keywords": [
+      "calm hover fade",
+      "sticky header subtle",
+      "issue card reveal",
+      "subscribe cta focus-ring",
+      "pricing toggle monthly-yearly",
+      "testimonial carousel gentle",
+      "author hovercard",
+      "archive scroll infinite"
+    ],
+    "product_primitives": [
+      "hero section",
+      "featured issue card",
+      "issue archive strip",
+      "pricing table",
+      "pricing toggle",
+      "subscribe cta",
+      "email capture input",
+      "testimonial card",
+      "author profile card",
+      "site header",
+      "site footer",
+      "newsletter preview",
+      "social proof logo strip",
+      "faq accordion",
+      "cta banner"
+    ]
+  }
+}

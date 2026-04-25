@@ -1,0 +1,38 @@
+{
+  "id": "conversation-copilot--editorial-warm",
+  "schema_version": "1.0.0",
+  "preset_api_version": "1.0.0",
+  "generated_by_harness_version": "0.1.0",
+  "preview_version": "1.0.0",
+  "adapter_compatibility": {
+    "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+    "raw-css-variables": ">=0.1.0 <1.0.0",
+    "vite-tailwind": ">=0.1.0 <1.0.0"
+  },
+  "source_project": "quill",
+  "content_hash": "sha256:f103645688d0882311c337ef399b4be9c05a516ebe684b8fd4e8c254dbd3aac9",
+  "app_mode": "conversation-copilot",
+  "brand_tone": "editorial-warm",
+  "color_modes": [
+    "light",
+    "dark"
+  ],
+  "default_color_mode": "light",
+  "tags": [
+    "writing",
+    "editorial",
+    "ko"
+  ],
+  "locale_pairings": {
+    "ko": {
+      "heading_font": "Pretendard",
+      "body_font": "Pretendard",
+      "mono_font": "JetBrains Mono",
+      "notes": "editorial-warm writing copilot — 한국어 chat message / artifact paragraph block keep-all line-height 1.6–1.7 (reading-first), citation footnote number / revision timestamp / tone slider value 는 mono 영문 고정, tabular-nums"
+    }
+  },
+  "owner": "maintainer",
+  "tier": "P2",
+  "generated_at": "2026-04-21T12:34:59Z",
+  "description": "writing/editorial AI copilot — editorial-warm 톤, chat·prompt·artifact(draft)·thread·composer, 차분한 warm neutral + serif-ish pairing, 한국어 1급"
+}

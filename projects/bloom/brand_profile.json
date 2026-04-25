@@ -1,0 +1,282 @@
+{
+  "brand_name": "Bloom",
+  "system_name": "Bloom System",
+  "product_summary": "친근한 소셜 피드 · 스레드 · 프레즌스 · 알림 — playful-soft 톤 커뮤니티 앱",
+  "audiences": [
+    "친구/이웃과 가볍게 근황을 나누는 일반 사용자",
+    "팬덤·취미 커뮤니티에서 글·이미지·코멘트를 주고받는 크리에이터",
+    "관심사 기반 마이크로 커뮤니티 운영자"
+  ],
+  "brand_keywords": [
+    "community-feed",
+    "social",
+    "feed",
+    "thread",
+    "presence",
+    "notification",
+    "friendly",
+    "rounded",
+    "playful",
+    "pastel"
+  ],
+  "anti_keywords": [
+    "corporate",
+    "enterprise",
+    "sharp",
+    "dense",
+    "monochrome",
+    "utilitarian",
+    "minimal-tech",
+    "magazine-serif",
+    "industrial"
+  ],
+  "tone_of_voice": [
+    "friendly",
+    "warm",
+    "approachable",
+    "light-hearted",
+    "conversational"
+  ],
+  "visual_keywords": [
+    "rounded corners",
+    "pastel surfaces",
+    "soft shadows",
+    "warm accent",
+    "friendly avatar",
+    "reaction bubble",
+    "presence dot",
+    "notification badge",
+    "loose spacing",
+    "illustrated empty state"
+  ],
+  "interaction_keywords": [
+    "pull-to-refresh",
+    "optimistic reaction",
+    "quick reply",
+    "emoji picker",
+    "presence indicator",
+    "follow toggle",
+    "notification center",
+    "swipe archive",
+    "mention autocomplete",
+    "soft dialog"
+  ],
+  "platforms": [
+    "web",
+    "mobile-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "feed item",
+    "post card",
+    "thread view",
+    "reply composer",
+    "comment thread",
+    "reaction bar",
+    "follow button",
+    "presence indicator",
+    "notification center",
+    "notification item",
+    "avatar cluster",
+    "timeline stream",
+    "mention highlight",
+    "tag pill",
+    "share sheet",
+    "empty-feed illustration",
+    "gentle toast",
+    "soft dialog"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "feed",
+      "thread",
+      "notification",
+      "social",
+      "community"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "magazine-only",
+      "enterprise-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Pastel Oranges",
+      "Pastel Reds",
+      "Pastel Greens",
+      "Pastel Yellows"
+    ],
+    "palette_roles": {
+      "primary": "Coral Blush",
+      "accent": "Mint Green",
+      "surface_tint": "Cornsilk"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "warm",
+      "contrast": "soft",
+      "diversity": "balanced",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "친근",
+        "포근",
+        "귀여움",
+        "부드러움",
+        "명랑"
+      ],
+      "avoid_moods": [
+        "차가움",
+        "대담",
+        "공격적",
+        "엄격"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Coral Blush 를 primary 로 — 따뜻한 파스텔, 친근/명랑 톤 1급",
+      "Mint Green accent — reaction/presence dot 쿨 파스텔 보색",
+      "Cornsilk 는 surface_tint — 크리미 웜 배경, 장시간 피드 열람 피로감 최소화",
+      "light mode 가 기본 — 친근 소셜 피드 관례, dark 는 옵션으로 제공",
+      "minimal-tech / corporate-trust 와 정반대 방향 — warm + rounded + pastel"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Nunito",
+      "weights": [
+        500,
+        600,
+        700,
+        800
+      ],
+      "notes": "rounded sans, playful-soft 시각 성격 핵심 — geometric sans/serif 금지"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "UI 본문·피드 카드 공용, Nunito 와 어울리는 중립 sans"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "notes": "코드 인라인 정도로 최소 사용 — reaction count·timestamp 는 tabular-nums"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한글 1급 — 피드/스레드 본문, line-height 1.7 keep-all, 이모지 혼용"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "threads social feed",
+      "bluesky timeline",
+      "mastodon community feed",
+      "tumblr playful feed"
+    ],
+    "sources": [],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.3,
+      "component_shape": 0.3,
+      "color_balance": 0.2,
+      "typography_mood": 0.1,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "feed item with avatar",
+      "reaction bar with emoji",
+      "notification center with badge",
+      "presence dot on avatar",
+      "rounded post card",
+      "soft pastel surface"
+    ],
+    "avoid_patterns": [
+      "dense data table",
+      "alert-first severity grid",
+      "magazine serif hero",
+      "corporate navy surfaces",
+      "glassmorphism"
+    ],
+    "notes": [
+      "Threads / Bluesky / Mastodon / Tumblr 스타일 친근한 소셜 피드 참조",
+      "editorial-warm 의 매거진/reading-heavy 방향 금지",
+      "minimal-tech 의 monochrome + 무채색 방향 금지",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://www.threads.net",
+      "kind": "visual-reference",
+      "title": "Threads",
+      "notes": "soft social feed + reply composer"
+    },
+    {
+      "url": "https://bsky.app",
+      "kind": "visual-reference",
+      "title": "Bluesky",
+      "notes": "timeline + thread UI references"
+    },
+    {
+      "url": "https://joinmastodon.org",
+      "kind": "visual-reference",
+      "title": "Mastodon",
+      "notes": "federated feed + presence references"
+    },
+    {
+      "url": "https://www.are.na",
+      "kind": "visual-reference",
+      "title": "Are.na",
+      "notes": "soft curated community feed references"
+    },
+    {
+      "url": "https://www.tumblr.com",
+      "kind": "visual-reference",
+      "title": "Tumblr",
+      "notes": "playful social feed references"
+    }
+  ]
+}

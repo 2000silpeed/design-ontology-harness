@@ -1,0 +1,298 @@
+{
+  "brand_name": "Mercer",
+  "system_name": "Mercer System",
+  "product_summary": "금융·보험 기업의 고객 상담 AI 챗봇 builder — conversation-copilot--corporate-trust 톤 enterprise chat + prompt + compliance-artifact(draft) + audit-trail + policy-check + thread · workspace, 신뢰감 있는 super-sonic blue primary + copper accent + powder blue surface, 규제·감사 맥락 한국어 1급",
+  "audiences": [
+    "금융·보험 고객 상담팀 — 규제 내 AI 상담 응답을 검토·배포하는 operations 담당자",
+    "컴플라이언스 · 감사 담당자 — AI 상담 응답의 policy-check / audit-trail / retention 기록이 명확해야 하는 규제 대응 팀",
+    "엔터프라이즈 IT/플랫폼팀 — 금융·보험 도메인 AI 챗봇을 사내 툴체인 / SSO / DLP 와 연결해 배포하는 IT 관리자"
+  ],
+  "brand_keywords": [
+    "conversation-copilot",
+    "enterprise-chatbot",
+    "corporate-trust",
+    "finance",
+    "insurance",
+    "compliance",
+    "audit",
+    "regulatory",
+    "policy-check",
+    "super-sonic-blue",
+    "copper",
+    "powder-blue",
+    "calm-enterprise",
+    "reliable"
+  ],
+  "anti_keywords": [
+    "playful-pastel",
+    "streetwear-drop",
+    "editorial-warm-serif",
+    "bold-saturated-marketing",
+    "consumer-d2c-commerce",
+    "social-feed-casual",
+    "magazine-cover-heavy"
+  ],
+  "tone_of_voice": [
+    "calm",
+    "precise",
+    "trustworthy",
+    "professional",
+    "reassuring",
+    "compliant"
+  ],
+  "visual_keywords": [
+    "calm enterprise surface",
+    "super-sonic blue primary conversation",
+    "copper accent indicator",
+    "powder blue soft surface tint",
+    "neutral chat bubbles",
+    "compliance sidebar panel",
+    "audit trail timeline",
+    "policy check badge",
+    "enterprise workspace header"
+  ],
+  "interaction_keywords": [
+    "calm streaming cursor",
+    "policy-check inline badge reveal",
+    "audit-trail side panel expand",
+    "compliance warning modal",
+    "enterprise toast",
+    "keyboard-friendly chat",
+    "sso login redirect",
+    "reviewer handoff"
+  ],
+  "platforms": [
+    "web",
+    "desktop-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "workspace header",
+    "project switcher",
+    "thread list sidebar",
+    "thread item",
+    "chat message",
+    "ai message",
+    "user message",
+    "prompt composer",
+    "streaming cursor",
+    "regenerate button",
+    "stop generation button",
+    "compliance-artifact panel",
+    "audit-trail timeline",
+    "policy-check badge",
+    "compliance warning modal",
+    "citation footnote",
+    "source reference card",
+    "reviewer assignment chip",
+    "data retention indicator",
+    "empty conversation state"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "chat",
+      "copilot",
+      "assistant",
+      "enterprise",
+      "compliance",
+      "audit",
+      "policy",
+      "finance",
+      "insurance",
+      "regulatory"
+    ],
+    "avoid_sources_containing": [
+      "playful-only",
+      "streetwear-only",
+      "consumer-commerce-only",
+      "editorial-magazine-only",
+      "social-feed-only",
+      "dashboard-metric-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Pantone Trend Blues",
+      "Standard Blues",
+      "Standard Oranges",
+      "Pastel Blues"
+    ],
+    "palette_roles": {
+      "primary": "Super Sonic",
+      "accent": "Copper",
+      "surface_tint": "Powder Blue"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "cool",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "신뢰",
+        "차분",
+        "전문성",
+        "정돈",
+        "엔터프라이즈",
+        "안정감",
+        "규제"
+      ],
+      "avoid_moods": [
+        "대담",
+        "친근-귀여움",
+        "형광",
+        "대비-강한-색",
+        "랜딩-감성",
+        "네온"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Super Sonic #0071A8 primary — bright enterprise blue, prompt-composer send-button / AI message accent / policy-check badge / workspace header primary",
+      "Copper #B87333 accent — warm enterprise copper, audit-trail step / reviewer-assignment chip / compliance warning subtle indicator / citation link",
+      "Powder Blue #B0E0E6 surface_tint — soft enterprise blue wash, thread sidebar surface / compliance-artifact panel tint / empty state",
+      "light mode 기본 — 금융·보험 엔터프라이즈 관례 (신뢰·정돈), dark 옵션 제공 (deep navy + 채도 낮춘 Super Sonic / Copper + Powder Blue 대체는 Misty Blue deep variant)",
+      "HEX 겹침 현황: beacon (marketing-landing--minimal-tech) 의 surface_tint Powder Blue #B0E0E6 와 1 role 겹침 — marketing-landing 과 conversation-copilot 의 app_mode 축 분기 + minimal-tech 와 corporate-trust 의 brand_tone 축 분기로 제품 구조/감성 완전 차별화 (SaaS 랜딩 hero-pricing vs enterprise chat workspace)",
+      "ledger (dashboard--corporate-trust) 와 corporate-trust 톤 공유하지만 primary/accent/surface_tint 전부 다름 — Prussian Blue/Bronze Gold/Ice Blue 의 dashboard fintech 운영 톤 vs Super Sonic/Copper/Powder Blue 의 conversation copilot enterprise 톤",
+      "glacier (conversation-copilot--minimal-tech) 와 같은 conversation-copilot app_mode 이지만 primary/accent/surface_tint 전부 다름 — Navy Blue/Ochre/Sky Blue neutral AI workspace vs Super Sonic/Copper/Powder Blue enterprise compliance tone",
+      "quill (conversation-copilot--editorial-warm) 와도 HEX 겹침 0 — warm Marsala/Moss Green/Flax editorial writing vs enterprise Super Sonic/Copper/Powder Blue compliance"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Inter",
+      "weights": [
+        500,
+        600,
+        700
+      ],
+      "notes": "enterprise neutral sans — workspace-header / thread-title / policy-check 라벨 / compliance-artifact title, 규제 맥락에서 serif 는 지양"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "chat-message body / compliance-artifact paragraph / audit-trail description 공용 본문, line-height 1.5–1.6 (enterprise reading)"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "notes": "policy-id / audit timestamp / citation footnote 번호 / record id — tabular-nums 영문 고정, 감사 기록 가독성 최우선"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한글 1급 — chat-message / compliance-artifact paragraph / audit-trail description / policy-check label / citation footnote keep-all line-height 1.5–1.6 (enterprise), workspace-header / thread-title 는 Pretendard 700 letter-spacing 0, policy-id / audit timestamp / record id 는 mono 영문 고정 tabular-nums"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "chatgpt enterprise admin console",
+      "anthropic claude enterprise workspace",
+      "stripe dialog documentation",
+      "salesforce einstein assistant",
+      "intercom fin ai copilot"
+    ],
+    "sources": [],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.3,
+      "component_shape": 0.3,
+      "color_balance": 0.2,
+      "typography_mood": 0.1,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "enterprise chat workspace with thread list sidebar + message stream + prompt composer",
+      "compliance-artifact side panel with policy-check badge + citation footnote",
+      "audit-trail timeline with reviewer assignment + timestamp + policy id",
+      "policy-check inline badge on AI message",
+      "compliance warning modal with copper accent",
+      "workspace header with project switcher + SSO indicator",
+      "empty conversation state with warm copper illustration"
+    ],
+    "avoid_patterns": [
+      "playful pastel consumer chat",
+      "streetwear drop hero",
+      "editorial magazine cover",
+      "d2c product grid",
+      "glassmorphism",
+      "social feed casual chat",
+      "marketing landing pricing-focused"
+    ],
+    "notes": [
+      "ChatGPT Enterprise / Anthropic Claude Enterprise / Stripe Dialog docs / Salesforce Einstein / Intercom Fin 계열 enterprise AI copilot 참조",
+      "corporate-trust 톤: Super Sonic + Copper + Powder Blue 로 enterprise 신뢰·정돈 감성 유지, 밀도는 medium-high (compliance 보조 패널 + audit trail)",
+      "이미지 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://openai.com/chatgpt/enterprise",
+      "kind": "design-system",
+      "title": "ChatGPT Enterprise",
+      "notes": "enterprise AI copilot — workspace / thread / compliance / admin console 참조"
+    },
+    {
+      "url": "https://www.anthropic.com/enterprise",
+      "kind": "design-system",
+      "title": "Anthropic Claude for Enterprise",
+      "notes": "enterprise AI copilot — compliance / admin / SSO / retention 가이드 참조"
+    },
+    {
+      "url": "https://stripe.com/docs/dialog",
+      "kind": "reference-docs",
+      "title": "Stripe Dialog",
+      "notes": "enterprise 대화 UI — compliance-friendly chat + 규제 맥락 artifact 참조"
+    },
+    {
+      "url": "https://www.salesforce.com/products/einstein/overview/",
+      "kind": "design-system",
+      "title": "Salesforce Einstein",
+      "notes": "CRM enterprise AI assistant — audit-trail / policy-check / reviewer handoff 참조"
+    },
+    {
+      "url": "https://www.intercom.com/fin",
+      "kind": "design-system",
+      "title": "Intercom Fin",
+      "notes": "enterprise customer support AI — citation footnote / source reference / compliance-artifact 참조"
+    }
+  ]
+}

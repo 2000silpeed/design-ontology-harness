@@ -1,0 +1,30 @@
+{
+  "id": "nextjs-tailwind-shadcn",
+  "version": "0.1.0",
+  "supported_preset_api": ">=1.0.0 <2.0.0",
+  "runtime": "python",
+  "entrypoint": "design_ontology_harness.adapters.nextjs_tailwind_shadcn:NextjsTailwindShadcnAdapter",
+  "outputs": [
+    "tailwind.config.ts",
+    "app/globals.css",
+    "components.json",
+    "design-system/",
+    "public/fonts/ (locale=ko only)",
+    "scripts/fetch-pretendard.mjs (locale=ko only)"
+  ],
+  "merge_policy": {
+    "tailwind.config.ts": "managed-block",
+    "app/globals.css": "managed-block",
+    "components.json": "deep-merge",
+    "design-system/": "overwrite",
+    "public/fonts/": "overwrite",
+    "_fallback": ".ds-proposed"
+  },
+  "detect_signals": {
+    "package.json:next": 0.4,
+    "package.json:tailwindcss": 0.2,
+    "package.json:@radix-ui/class-variance-authority": 0.1,
+    "tailwind.config.*": 0.15,
+    "components.json": 0.15
+  }
+}

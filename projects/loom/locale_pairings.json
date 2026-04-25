@@ -1,0 +1,8 @@
+{
+  "ko": {
+    "heading_font": "Pretendard",
+    "body_font": "Pretendard",
+    "mono_font": "JetBrains Mono",
+    "notes": "독립 뉴스레터 editorial-warm 마케팅 랜딩 — 한국어 hero-headline / subheadline / featured-issue-title / pricing-description / testimonial-body / issue-archive-title / faq keep-all line-height 1.6–1.7 (reading-first), page-title / section-header 는 Pretendard 700 letter-spacing 0, price number / issue 번호 / 구독자 수 / publication 날짜 는 mono 영문 고정 tabular-nums"
+  }
+}

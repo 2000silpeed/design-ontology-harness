@@ -1,0 +1,2629 @@
+{
+  "brand_name": "Lattice-Dash",
+  "system_name": "Lattice-Dash System",
+  "product_summary": "B2C 스타트업 운영 대시보드 — bold-confident 톤 vivid admin console, activation · retention · cohort · referral 지표를 impact typography 로 한 화면에 모은 운영팀 어드민, 한국어 1급",
+  "positioning": {
+    "audiences": [
+      "B2C 스타트업 운영팀 (그로스/프로덕트 매니저) — activation funnel / cohort retention / A/B 결과 주시",
+      "스타트업 CEO/파운더 — 주간 MAU/DAU/ARPU impact KPI 확인 + 투자자 리포트",
+      "커뮤니티/지원 리드 — 유저 이슈 티켓 · 알람 · incident 운영 큐"
+    ],
+    "brand_keywords": [
+      "dashboard",
+      "admin",
+      "console",
+      "startup",
+      "saas",
+      "b2c",
+      "growth",
+      "activation",
+      "retention",
+      "cohort",
+      "referral",
+      "bold",
+      "vivid",
+      "energetic",
+      "high-contrast",
+      "impact"
+    ],
+    "anti_keywords": [
+      "editorial-warm",
+      "magazine-serif",
+      "minimal-only",
+      "playful-pastel",
+      "corporate-conservative",
+      "document-heavy",
+      "commerce-checkout"
+    ],
+    "tone_of_voice": [
+      "confident",
+      "energetic",
+      "direct",
+      "data-forward",
+      "youthful"
+    ],
+    "platforms": [
+      "web",
+      "desktop"
+    ],
+    "accessibility_targets": [
+      "WCAG 2.2 AA"
+    ]
+  },
+  "principles": [
+    {
+      "keyword": "dashboard",
+      "name": "Dashboard",
+      "rule": "`dashboard`를 시각적 선택과 인터랙션 선택의 기본 기준으로 삼습니다.",
+      "implications": [
+        "dashboard와 충돌하는 컴포넌트 변형은 만들지 않기",
+        "dashboard를 토큰 네이밍과 문서화 기준에 반영하기"
+      ]
+    },
+    {
+      "keyword": "admin",
+      "name": "Admin",
+      "rule": "`admin`를 시각적 선택과 인터랙션 선택의 기본 기준으로 삼습니다.",
+      "implications": [
+        "admin와 충돌하는 컴포넌트 변형은 만들지 않기",
+        "admin를 토큰 네이밍과 문서화 기준에 반영하기"
+      ]
+    },
+    {
+      "keyword": "console",
+      "name": "Console",
+      "rule": "`console`를 시각적 선택과 인터랙션 선택의 기본 기준으로 삼습니다.",
+      "implications": [
+        "console와 충돌하는 컴포넌트 변형은 만들지 않기",
+        "console를 토큰 네이밍과 문서화 기준에 반영하기"
+      ]
+    },
+    {
+      "keyword": "startup",
+      "name": "Startup",
+      "rule": "`startup`를 시각적 선택과 인터랙션 선택의 기본 기준으로 삼습니다.",
+      "implications": [
+        "startup와 충돌하는 컴포넌트 변형은 만들지 않기",
+        "startup를 토큰 네이밍과 문서화 기준에 반영하기"
+      ]
+    }
+  ],
+  "reference_strategy": {
+    "seed_article": "https://carbondesignsystem.com",
+    "top_sources_by_concept_coverage": [
+      {
+        "source_label": "Primer",
+        "covered_concepts": [
+          "accessibility",
+          "brand",
+          "color",
+          "component",
+          "content",
+          "design_system",
+          "design_token",
+          "foundation",
+          "iconography",
+          "layout",
+          "motion",
+          "pattern",
+          "spacing",
+          "style_guide",
+          "typography"
+        ]
+      },
+      {
+        "source_label": "Carbon Design System",
+        "covered_concepts": [
+          "accessibility",
+          "brand",
+          "color",
+          "component",
+          "content",
+          "design_system",
+          "design_token",
+          "foundation",
+          "iconography",
+          "layout",
+          "pattern",
+          "spacing",
+          "typography"
+        ]
+      }
+    ],
+    "rule": "레퍼런스는 그대로 복제하지 않고, 원칙과 구조만 가져와 브랜드 아이덴티티에 맞게 재구성합니다."
+  },
+  "token_strategy": {
+    "color": {
+      "goal": "브랜드 개성을 드러내되 UI 전체를 지배하지 않는 팔레트",
+      "rules": [
+        "brand color는 1개의 primary accent를 중심으로 설계",
+        "semantic color는 brand color와 분리해서 유지",
+        "contrast ratio는 접근성 목표를 우선",
+        "지원하는 theme 모드마다 semantic surface/text/border 쌍을 함께 정의",
+        "하드코딩 색상보다 semantic token 적용을 우선"
+      ]
+    },
+    "typography": {
+      "goal": "정보 구조와 브랜드 톤을 동시에 전달하는 타입 시스템",
+      "rules": [
+        "heading/body/caption 역할을 토큰으로 고정",
+        "텍스트 길이가 긴 화면에서 리듬이 무너지지 않도록 line-height를 계층별로 정의",
+        "편집형 제품이면 typography scale을 먼저 확정"
+      ],
+      "signal": false
+    },
+    "spacing": {
+      "goal": "밀도와 여백의 성격을 제품 전반에서 일관되게 유지",
+      "rules": [
+        "4pt 또는 8pt 기반 scale을 정하고 예외 사용을 제한",
+        "컴포넌트 내부 spacing과 레이아웃 spacing을 분리"
+      ]
+    },
+    "motion": {
+      "goal": "상태 변화를 설명하는 수준의 모션만 허용",
+      "rules": [
+        "transition duration/easing을 토큰화",
+        "주의 환기용 모션과 구조적 모션을 구분"
+      ],
+      "brand_signal": [
+        "keyboard-first",
+        "command palette",
+        "sticky filter bar",
+        "hover-emphasis row",
+        "activation funnel drill",
+        "cohort retention hover",
+        "referral share action",
+        "impact toast",
+        "saturated primary CTA"
+      ]
+    },
+    "visual_keywords": [
+      "high-contrast headline",
+      "vivid ultra violet primary",
+      "illuminating yellow accent",
+      "saturated KPI card",
+      "dense data table",
+      "impact metric typography",
+      "youthful startup",
+      "admin-first bold",
+      "activation funnel visual",
+      "cohort matrix heat-scale"
+    ]
+  },
+  "component_strategy": {
+    "product_primitives": [
+      "sidebar navigation",
+      "workspace switcher",
+      "data table",
+      "kpi card",
+      "filter chip",
+      "command palette",
+      "activity feed",
+      "activation funnel",
+      "referral widget",
+      "cohort matrix",
+      "retention chart",
+      "conversion funnel",
+      "experiment panel",
+      "user list",
+      "ticket queue",
+      "alert list",
+      "segment filter",
+      "goal tracker",
+      "settings panel"
+    ],
+    "required_component_families": [
+      "button",
+      "input",
+      "navigation",
+      "feedback",
+      "overlay"
+    ],
+    "rules": [
+      "primitive 단위로 책임을 먼저 정의하고 컴포넌트는 그 위에 매핑",
+      "variant proliferation을 막기 위해 상태와 강조 레벨을 먼저 표준화",
+      "브랜드 표현은 surface, emphasis, typography에서 주고 구조는 안정적으로 유지",
+      "기존 기능 진입점은 유지한 채 내부 구현과 시각 언어부터 교체",
+      "전체 셸을 한 번에 다시 그리기보다 feature surface 단위로 순차 적용"
+    ],
+    "concept_alignment": [
+      "accessibility",
+      "color",
+      "component",
+      "content",
+      "design_system",
+      "iconography",
+      "layout",
+      "pattern"
+    ]
+  },
+  "color_reference": {
+    "title": "REFERENCE X Vol.1 - Color Reference",
+    "source_path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "families": [
+      "Deep Blues",
+      "Deep Greens",
+      "Deep Oranges",
+      "Deep Reds",
+      "Deep Violets",
+      "Deep Yellows",
+      "Natural Blues",
+      "Natural Greens",
+      "Natural Oranges",
+      "Natural Reds",
+      "Natural Violets",
+      "Natural Yellows",
+      "Pantone Trend Blues",
+      "Pantone Trend Greens",
+      "Pantone Trend Oranges",
+      "Pantone Trend Reds",
+      "Pantone Trend Violets",
+      "Pantone Trend Yellows",
+      "Pastel Blues",
+      "Pastel Greens",
+      "Pastel Oranges",
+      "Pastel Reds",
+      "Pastel Violets",
+      "Pastel Yellows",
+      "Standard Blues",
+      "Standard Greens",
+      "Standard Oranges",
+      "Standard Reds",
+      "Standard Violets",
+      "Standard Yellows"
+    ],
+    "selected_colors": [
+      {
+        "name": "Grenadine",
+        "family": "Pantone Trend Reds",
+        "hex": "#DC4C46",
+        "cmyk": "C 13%, M 82%, Y 70%, K 3%",
+        "mood": "밝고 따뜻한 레드 오렌지 계열, 중채도 이상의 밝은 톤 / 활력, 열정, 관능, 현대적",
+        "usage": "과일 그레나딘 시럽의 붉은빛에서 유래된 컬러로 즉각적인 시각적 임팩트를 지님. 오렌지와 레드의 경계에서 밝고 따뜻한 인상이 형성되어 패션, 디지털 브랜드 등에서 주목성 포인트로 활용됨.",
+        "pairings": [
+          "#FFFFFF",
+          "#2F2F2F",
+          "#E8D9CA",
+          "#2E8A87",
+          "#C9A44B",
+          "#D1D1D1"
+        ]
+      },
+      {
+        "name": "Scarlet",
+        "family": "Standard Reds",
+        "hex": "#FF2400",
+        "cmyk": "C 0%, M 91%, Y 96%, K 0%",
+        "mood": "강렬한 주황빛 레드 계열, 고채도와 고명도의 따뜻한 톤 / 활기, 생동감, 열정, 역동성, 주목성",
+        "usage": "퓨어 레드보다 따뜻하고 오렌지에 가까운 색으로 에너지가 강하고 시각적 임팩트가 큼. 긍정적이고 낙천적인 인상을 주며 브랜드, 패션, 스포츠 디자인에서 활력 강조용으로 사용됨.",
+        "pairings": [
+          "#FFFFFF",
+          "#1C2A44",
+          "#F4E1C1",
+          "#3B3B3B",
+          "#C7E8D1",
+          "#D4AF37"
+        ]
+      },
+      {
+        "name": "Pure Red",
+        "family": "Standard Reds",
+        "hex": "#FF0000",
+        "cmyk": "C 0%, M 95%, Y 96%, K 0%",
+        "mood": "순수 원색 레드 계열, 고채도와 중명도의 강렬한 톤 / 열정, 에너지, 주목성, 상징적, 강렬함",
+        "usage": "모든 컬러 체계의 중심축이자 원색 중 가장 상징적인 색. 디지털 환경의 UI 포인트 컬러, 경고, 알림 등에 사용되며 브랜딩에서 강한 메시지나 행동 유도(CTA)에 적합함.",
+        "pairings": [
+          "#FFFFFF",
+          "#000000",
+          "#F5E3C3",
+          "#1A2E47",
+          "#BDBDBD"
+        ]
+      }
+    ],
+    "palette_roles": {
+      "primary": {
+        "name": "Ultra Violet",
+        "family": "Pantone Trend Violets",
+        "hex": "#5F4B8B",
+        "cmyk": "C 76%, M 79%, Y 15%, K 3%",
+        "mood": "중명도, 중고채도, 파란빛이 섞인 깊고 복합적인 퍼플 / 창의적, 신비감, 미래적, 실험적",
+        "usage": "2018년 팬톤 올해의 컬러. 영감과 비전을 상징하는 퍼플 스펙트럼의 중심축. 블루와 레드의 중간에 있는 컬러이기 때문에 이성(blue)과 감성(red)의 조화를 의미. 사고의 확장과 감정의 심화 부분을 동시에 담음.",
+        "pairings": [
+          "#C5C5C5",
+          "#F7CAC9",
+          "#1C1F4A",
+          "#BCA7E0",
+          "#FF6F61",
+          "#F5F5F5"
+        ]
+      },
+      "accent": {
+        "name": "Illuminating",
+        "family": "Pantone Trend Yellows",
+        "hex": "#F5DF4D",
+        "cmyk": "C 11%, M 9%, Y 76%, K 0%",
+        "mood": "고명도, 중채도, 선명하면서 부드러운 라이트 옐로 톤 / 긍정적, 활기찬, 낙관적, 희망적인, 감각적인",
+        "usage": "팬톤이 2021년 올해의 색상으로 선정한 컬러로 희망과 회복력을 상징함. 불확실한 시대 속 빛과 에너지를 상징하는 색으로 주목받음. 차분한 그레이나 크리미 베이지 조합으로 감각적인 느낌 표현.",
+        "pairings": [
+          "#939597",
+          "#C7B199",
+          "#A3C7E5",
+          "#F6F1E7",
+          "#474747",
+          "#F0846A"
+        ]
+      },
+      "surface_tint": {
+        "name": "Creamsicle",
+        "family": "Pastel Oranges",
+        "hex": "#FFD7A0",
+        "cmyk": "C 2%, M 19%, Y 40%, K 0%",
+        "mood": "고명도, 저채도, 크리미하고 부드러운 오렌지 계열 / 부드러움, 경쾌함, 청량함, 달콤함",
+        "usage": "바닐라 크림과 오렌지를 섞은 듯한 따뜻한 파스텔 톤. 밝고 가벼운 인상으로 시각적 피로도가 적으며 젊고 생동감 있는 이미지에 적합함. 코랄 블러시와 마찬가지로 패션 및 뷰티 분야에서 자주 활용됨.",
+        "pairings": [
+          "#FFFFFF",
+          "#C7E9CF",
+          "#E3C9A8",
+          "#F7A589",
+          "#A9C4D8",
+          "#CFC6BA"
+        ]
+      }
+    },
+    "preferred_families": [
+      "Pantone Trend Violets",
+      "Pantone Trend Yellows",
+      "Pastel Oranges"
+    ],
+    "selection_mode": "manual",
+    "strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "mixed",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "tinted",
+      "prefer_moods": [
+        "대담",
+        "에너제틱",
+        "임팩트",
+        "고대비",
+        "주목성",
+        "젊은",
+        "스타트업"
+      ],
+      "avoid_moods": [
+        "차분한 editorial",
+        "달콤함",
+        "부드러움",
+        "보수적",
+        "미니멀 only"
+      ]
+    },
+    "expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "active_palette": {
+      "selection_mode": "manual",
+      "roles": {
+        "primary": {
+          "name": "Ultra Violet",
+          "family": "Pantone Trend Violets",
+          "hex": "#5F4B8B",
+          "cmyk": "C 76%, M 79%, Y 15%, K 3%",
+          "mood": "중명도, 중고채도, 파란빛이 섞인 깊고 복합적인 퍼플 / 창의적, 신비감, 미래적, 실험적",
+          "usage": "2018년 팬톤 올해의 컬러. 영감과 비전을 상징하는 퍼플 스펙트럼의 중심축. 블루와 레드의 중간에 있는 컬러이기 때문에 이성(blue)과 감성(red)의 조화를 의미. 사고의 확장과 감정의 심화 부분을 동시에 담음.",
+          "pairings": [
+            "#C5C5C5",
+            "#F7CAC9",
+            "#1C1F4A",
+            "#BCA7E0",
+            "#FF6F61",
+            "#F5F5F5"
+          ]
+        },
+        "accent": {
+          "name": "Illuminating",
+          "family": "Pantone Trend Yellows",
+          "hex": "#F5DF4D",
+          "cmyk": "C 11%, M 9%, Y 76%, K 0%",
+          "mood": "고명도, 중채도, 선명하면서 부드러운 라이트 옐로 톤 / 긍정적, 활기찬, 낙관적, 희망적인, 감각적인",
+          "usage": "팬톤이 2021년 올해의 색상으로 선정한 컬러로 희망과 회복력을 상징함. 불확실한 시대 속 빛과 에너지를 상징하는 색으로 주목받음. 차분한 그레이나 크리미 베이지 조합으로 감각적인 느낌 표현.",
+          "pairings": [
+            "#939597",
+            "#C7B199",
+            "#A3C7E5",
+            "#F6F1E7",
+            "#474747",
+            "#F0846A"
+          ]
+        },
+        "surface_tint": {
+          "name": "Creamsicle",
+          "family": "Pastel Oranges",
+          "hex": "#FFD7A0",
+          "cmyk": "C 2%, M 19%, Y 40%, K 0%",
+          "mood": "고명도, 저채도, 크리미하고 부드러운 오렌지 계열 / 부드러움, 경쾌함, 청량함, 달콤함",
+          "usage": "바닐라 크림과 오렌지를 섞은 듯한 따뜻한 파스텔 톤. 밝고 가벼운 인상으로 시각적 피로도가 적으며 젊고 생동감 있는 이미지에 적합함. 코랄 블러시와 마찬가지로 패션 및 뷰티 분야에서 자주 활용됨.",
+          "pairings": [
+            "#FFFFFF",
+            "#C7E9CF",
+            "#E3C9A8",
+            "#F7A589",
+            "#A9C4D8",
+            "#CFC6BA"
+          ]
+        }
+      },
+      "selected_colors": [
+        {
+          "name": "Grenadine",
+          "family": "Pantone Trend Reds",
+          "hex": "#DC4C46",
+          "cmyk": "C 13%, M 82%, Y 70%, K 3%",
+          "mood": "밝고 따뜻한 레드 오렌지 계열, 중채도 이상의 밝은 톤 / 활력, 열정, 관능, 현대적",
+          "usage": "과일 그레나딘 시럽의 붉은빛에서 유래된 컬러로 즉각적인 시각적 임팩트를 지님. 오렌지와 레드의 경계에서 밝고 따뜻한 인상이 형성되어 패션, 디지털 브랜드 등에서 주목성 포인트로 활용됨.",
+          "pairings": [
+            "#FFFFFF",
+            "#2F2F2F",
+            "#E8D9CA",
+            "#2E8A87",
+            "#C9A44B",
+            "#D1D1D1"
+          ]
+        },
+        {
+          "name": "Scarlet",
+          "family": "Standard Reds",
+          "hex": "#FF2400",
+          "cmyk": "C 0%, M 91%, Y 96%, K 0%",
+          "mood": "강렬한 주황빛 레드 계열, 고채도와 고명도의 따뜻한 톤 / 활기, 생동감, 열정, 역동성, 주목성",
+          "usage": "퓨어 레드보다 따뜻하고 오렌지에 가까운 색으로 에너지가 강하고 시각적 임팩트가 큼. 긍정적이고 낙천적인 인상을 주며 브랜드, 패션, 스포츠 디자인에서 활력 강조용으로 사용됨.",
+          "pairings": [
+            "#FFFFFF",
+            "#1C2A44",
+            "#F4E1C1",
+            "#3B3B3B",
+            "#C7E8D1",
+            "#D4AF37"
+          ]
+        },
+        {
+          "name": "Pure Red",
+          "family": "Standard Reds",
+          "hex": "#FF0000",
+          "cmyk": "C 0%, M 95%, Y 96%, K 0%",
+          "mood": "순수 원색 레드 계열, 고채도와 중명도의 강렬한 톤 / 열정, 에너지, 주목성, 상징적, 강렬함",
+          "usage": "모든 컬러 체계의 중심축이자 원색 중 가장 상징적인 색. 디지털 환경의 UI 포인트 컬러, 경고, 알림 등에 사용되며 브랜딩에서 강한 메시지나 행동 유도(CTA)에 적합함.",
+          "pairings": [
+            "#FFFFFF",
+            "#000000",
+            "#F5E3C3",
+            "#1A2E47",
+            "#BDBDBD"
+          ]
+        }
+      ],
+      "candidate_id": null
+    },
+    "palette_candidates": [
+      {
+        "id": "signature-1",
+        "label": "Signature",
+        "score": 59.43,
+        "roles": {
+          "primary": {
+            "name": "Grenadine",
+            "family": "Pantone Trend Reds",
+            "hex": "#DC4C46",
+            "cmyk": "C 13%, M 82%, Y 70%, K 3%",
+            "mood": "밝고 따뜻한 레드 오렌지 계열, 중채도 이상의 밝은 톤 / 활력, 열정, 관능, 현대적",
+            "usage": "과일 그레나딘 시럽의 붉은빛에서 유래된 컬러로 즉각적인 시각적 임팩트를 지님. 오렌지와 레드의 경계에서 밝고 따뜻한 인상이 형성되어 패션, 디지털 브랜드 등에서 주목성 포인트로 활용됨.",
+            "pairings": [
+              "#FFFFFF",
+              "#2F2F2F",
+              "#E8D9CA",
+              "#2E8A87",
+              "#C9A44B",
+              "#D1D1D1"
+            ]
+          },
+          "accent": {
+            "name": "Scarlet",
+            "family": "Standard Reds",
+            "hex": "#FF2400",
+            "cmyk": "C 0%, M 91%, Y 96%, K 0%",
+            "mood": "강렬한 주황빛 레드 계열, 고채도와 고명도의 따뜻한 톤 / 활기, 생동감, 열정, 역동성, 주목성",
+            "usage": "퓨어 레드보다 따뜻하고 오렌지에 가까운 색으로 에너지가 강하고 시각적 임팩트가 큼. 긍정적이고 낙천적인 인상을 주며 브랜드, 패션, 스포츠 디자인에서 활력 강조용으로 사용됨.",
+            "pairings": [
+              "#FFFFFF",
+              "#1C2A44",
+              "#F4E1C1",
+              "#3B3B3B",
+              "#C7E8D1",
+              "#D4AF37"
+            ]
+          },
+          "surface_tint": {
+            "name": "Pure Red",
+            "family": "Standard Reds",
+            "hex": "#FF0000",
+            "cmyk": "C 0%, M 95%, Y 96%, K 0%",
+            "mood": "순수 원색 레드 계열, 고채도와 중명도의 강렬한 톤 / 열정, 에너지, 주목성, 상징적, 강렬함",
+            "usage": "모든 컬러 체계의 중심축이자 원색 중 가장 상징적인 색. 디지털 환경의 UI 포인트 컬러, 경고, 알림 등에 사용되며 브랜딩에서 강한 메시지나 행동 유도(CTA)에 적합함.",
+            "pairings": [
+              "#FFFFFF",
+              "#000000",
+              "#F5E3C3",
+              "#1A2E47",
+              "#BDBDBD"
+            ]
+          }
+        },
+        "rationale": [
+          "Grenadine matches brand tone keywords.",
+          "Scarlet matches brand tone keywords.",
+          "Pure Red matches brand tone keywords."
+        ],
+        "strategy_snapshot": {
+          "temperature": "mixed",
+          "contrast": "balanced",
+          "diversity": "balanced",
+          "surface_style": "tinted"
+        }
+      }
+    ],
+    "expanded_palette": {
+      "search_strategy": {
+        "sources": [
+          "seed pairings",
+          "brand keywords",
+          "family tone",
+          "hue compatibility",
+          "related families"
+        ],
+        "supporting_color_count": 10,
+        "combination_count": 3,
+        "seed_roles": {
+          "primary": {
+            "name": "Ultra Violet",
+            "hex": "#5F4B8B",
+            "family": "Pantone Trend Violets"
+          },
+          "accent": {
+            "name": "Illuminating",
+            "hex": "#F5DF4D",
+            "family": "Pantone Trend Yellows"
+          },
+          "surface_tint": {
+            "name": "Creamsicle",
+            "hex": "#FFD7A0",
+            "family": "Pastel Oranges"
+          }
+        },
+        "preferred_families": [
+          "Pantone Trend Violets",
+          "Pantone Trend Yellows",
+          "Pastel Oranges"
+        ]
+      },
+      "supporting_colors": [
+        {
+          "name": "Scarlet",
+          "family": "Standard Reds",
+          "hex": "#FF2400",
+          "cmyk": "C 0%, M 91%, Y 96%, K 0%",
+          "mood": "강렬한 주황빛 레드 계열, 고채도와 고명도의 따뜻한 톤 / 활기, 생동감, 열정, 역동성, 주목성",
+          "usage": "퓨어 레드보다 따뜻하고 오렌지에 가까운 색으로 에너지가 강하고 시각적 임팩트가 큼. 긍정적이고 낙천적인 인상을 주며 브랜드, 패션, 스포츠 디자인에서 활력 강조용으로 사용됨.",
+          "pairings": [
+            "#FFFFFF",
+            "#1C2A44",
+            "#F4E1C1",
+            "#3B3B3B",
+            "#C7E8D1",
+            "#D4AF37"
+          ],
+          "source_type": "reference-color",
+          "search_score": 21.45,
+          "search_reasons": [
+            "Scarlet reinforces the brand mood signals."
+          ]
+        },
+        {
+          "name": "Pure Red",
+          "family": "Standard Reds",
+          "hex": "#FF0000",
+          "cmyk": "C 0%, M 95%, Y 96%, K 0%",
+          "mood": "순수 원색 레드 계열, 고채도와 중명도의 강렬한 톤 / 열정, 에너지, 주목성, 상징적, 강렬함",
+          "usage": "모든 컬러 체계의 중심축이자 원색 중 가장 상징적인 색. 디지털 환경의 UI 포인트 컬러, 경고, 알림 등에 사용되며 브랜딩에서 강한 메시지나 행동 유도(CTA)에 적합함.",
+          "pairings": [
+            "#FFFFFF",
+            "#000000",
+            "#F5E3C3",
+            "#1A2E47",
+            "#BDBDBD"
+          ],
+          "source_type": "reference-color",
+          "search_score": 17.45,
+          "search_reasons": [
+            "Pure Red reinforces the brand mood signals."
+          ]
+        },
+        {
+          "name": "Living Coral",
+          "family": "Pantone Trend Oranges",
+          "hex": "#FF6F61",
+          "cmyk": "C 0%, M 69%, Y 56%, K 0%",
+          "mood": "중명도, 중채도, 선명한 코랄 계열의 오렌지 톤 / 생동감, 따뜻함, 낙관적",
+          "usage": "디지털 기술과 소셜 미디어가 일상에 자리 잡으며 느끼는 피로감에 대한 반작용으로 정의됨. 분홍빛과 주황빛이 공존하며 생명력과 교감의 이미지를 전달. 바다 산호에서 영감을 받아 자연과 기술이 공존하는 감성을 표현.",
+          "pairings": [
+            "#E8D4C5",
+            "#A8E3D2",
+            "#D6C5B2",
+            "#F9F5EF",
+            "#5078A0",
+            "#A8A77D"
+          ],
+          "source_type": "pairing-reference",
+          "source_seed_names": [
+            "Ultra Violet"
+          ],
+          "search_score": 11.9,
+          "search_reasons": [
+            "Living Coral reinforces the brand mood signals.",
+            "Living Coral comes from the seed pairing references.",
+            "Living Coral is explicitly paired with Ultra Violet."
+          ]
+        },
+        {
+          "name": "Persimmon",
+          "family": "Natural Oranges",
+          "hex": "#EC5800",
+          "cmyk": "C 6%, M 76%, Y 100%, K 0%",
+          "mood": "명도, 고채도, 오렌지와 레드 사이의 진한 웜톤 / 생동감, 따뜻함, 안정감, 자연의 활기",
+          "usage": "감의 껍질빛에서 유래된 오렌지 레드 톤. 오렌지의 활력과 레드의 깊이를 동시에 지님. 가을, 전통, 핸드크래프트 계열의 색조와 조화로움이 높음.",
+          "pairings": [
+            "#DCC9B6",
+            "#C49E72",
+            "#8A8653",
+            "#2B3A4B",
+            "#F4EEDF",
+            "#5A3825"
+          ],
+          "source_type": "reference-color",
+          "search_score": 11.45,
+          "search_reasons": [
+            "Persimmon reinforces the brand mood signals."
+          ]
+        },
+        {
+          "name": "Pure Orange",
+          "family": "Standard Oranges",
+          "hex": "#FFA500",
+          "cmyk": "C 0%, M 42%, Y 94%, K 0%",
+          "mood": "순수 오렌지 계열, 고채도 중명도 / 활력, 낙관, 따뜻함, 개방감",
+          "usage": "빨간 계열의 에너지와 노란 계열의 낙관이 만난 밸런스 톤. 채도가 높아 주목성이 매우 강함. 대면적 사용 시 피로감을 줄 수 있어 비율 조절이 필요함.",
+          "pairings": [
+            "#14213D",
+            "#138A8A",
+            "#B3B3B3",
+            "#FFF6E5",
+            "#6A7DA8",
+            "#2E6B4E"
+          ],
+          "source_type": "reference-color",
+          "search_score": 11.45,
+          "search_reasons": [
+            "Pure Orange reinforces the brand mood signals."
+          ]
+        },
+        {
+          "name": "Pairing #CFC6BA",
+          "family": "Derived Pairing",
+          "hex": "#CFC6BA",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Creamsicle.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Creamsicle"
+          ],
+          "search_score": 10.7,
+          "search_reasons": [
+            "Pairing #CFC6BA reinforces the brand mood signals.",
+            "Pairing #CFC6BA comes from the seed pairing references.",
+            "Pairing #CFC6BA is explicitly paired with Creamsicle.",
+            "Pairing #CFC6BA can act as a neutral support color."
+          ]
+        },
+        {
+          "name": "Pairing #F6F1E7",
+          "family": "Derived Pairing",
+          "hex": "#F6F1E7",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Illuminating.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Illuminating"
+          ],
+          "search_score": 9.6,
+          "search_reasons": [
+            "Pairing #F6F1E7 reinforces the brand mood signals.",
+            "Pairing #F6F1E7 comes from the seed pairing references.",
+            "Pairing #F6F1E7 is explicitly paired with Illuminating."
+          ]
+        },
+        {
+          "name": "Pairing #E3C9A8",
+          "family": "Derived Pairing",
+          "hex": "#E3C9A8",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Creamsicle.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Creamsicle"
+          ],
+          "search_score": 9.5,
+          "search_reasons": [
+            "Pairing #E3C9A8 reinforces the brand mood signals.",
+            "Pairing #E3C9A8 comes from the seed pairing references.",
+            "Pairing #E3C9A8 is explicitly paired with Creamsicle."
+          ]
+        },
+        {
+          "name": "Pairing #F7A589",
+          "family": "Derived Pairing",
+          "hex": "#F7A589",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Creamsicle.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Creamsicle"
+          ],
+          "search_score": 9.5,
+          "search_reasons": [
+            "Pairing #F7A589 reinforces the brand mood signals.",
+            "Pairing #F7A589 comes from the seed pairing references.",
+            "Pairing #F7A589 is explicitly paired with Creamsicle."
+          ]
+        },
+        {
+          "name": "Pairing #F7CAC9",
+          "family": "Derived Pairing",
+          "hex": "#F7CAC9",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Ultra Violet.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Ultra Violet"
+          ],
+          "search_score": 9.5,
+          "search_reasons": [
+            "Pairing #F7CAC9 reinforces the brand mood signals.",
+            "Pairing #F7CAC9 comes from the seed pairing references.",
+            "Pairing #F7CAC9 is explicitly paired with Ultra Violet."
+          ]
+        }
+      ],
+      "semantic_roles": {
+        "brand_primary": {
+          "name": "Ultra Violet",
+          "family": "Pantone Trend Violets",
+          "hex": "#5F4B8B",
+          "cmyk": "C 76%, M 79%, Y 15%, K 3%",
+          "mood": "중명도, 중고채도, 파란빛이 섞인 깊고 복합적인 퍼플 / 창의적, 신비감, 미래적, 실험적",
+          "usage": "2018년 팬톤 올해의 컬러. 영감과 비전을 상징하는 퍼플 스펙트럼의 중심축. 블루와 레드의 중간에 있는 컬러이기 때문에 이성(blue)과 감성(red)의 조화를 의미. 사고의 확장과 감정의 심화 부분을 동시에 담음.",
+          "pairings": [
+            "#C5C5C5",
+            "#F7CAC9",
+            "#1C1F4A",
+            "#BCA7E0",
+            "#FF6F61",
+            "#F5F5F5"
+          ]
+        },
+        "brand_accent": {
+          "name": "Illuminating",
+          "family": "Pantone Trend Yellows",
+          "hex": "#F5DF4D",
+          "cmyk": "C 11%, M 9%, Y 76%, K 0%",
+          "mood": "고명도, 중채도, 선명하면서 부드러운 라이트 옐로 톤 / 긍정적, 활기찬, 낙관적, 희망적인, 감각적인",
+          "usage": "팬톤이 2021년 올해의 색상으로 선정한 컬러로 희망과 회복력을 상징함. 불확실한 시대 속 빛과 에너지를 상징하는 색으로 주목받음. 차분한 그레이나 크리미 베이지 조합으로 감각적인 느낌 표현.",
+          "pairings": [
+            "#939597",
+            "#C7B199",
+            "#A3C7E5",
+            "#F6F1E7",
+            "#474747",
+            "#F0846A"
+          ]
+        },
+        "surface_tint": {
+          "name": "Creamsicle",
+          "family": "Pastel Oranges",
+          "hex": "#FFD7A0",
+          "cmyk": "C 2%, M 19%, Y 40%, K 0%",
+          "mood": "고명도, 저채도, 크리미하고 부드러운 오렌지 계열 / 부드러움, 경쾌함, 청량함, 달콤함",
+          "usage": "바닐라 크림과 오렌지를 섞은 듯한 따뜻한 파스텔 톤. 밝고 가벼운 인상으로 시각적 피로도가 적으며 젊고 생동감 있는 이미지에 적합함. 코랄 블러시와 마찬가지로 패션 및 뷰티 분야에서 자주 활용됨.",
+          "pairings": [
+            "#FFFFFF",
+            "#C7E9CF",
+            "#E3C9A8",
+            "#F7A589",
+            "#A9C4D8",
+            "#CFC6BA"
+          ]
+        },
+        "canvas": {
+          "name": "Canvas White",
+          "family": "Generated Fallback",
+          "hex": "#F7F8FA",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "surface": {
+          "name": "Paper",
+          "family": "Generated Fallback",
+          "hex": "#FFFFFF",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "surface_muted": {
+          "name": "Surface Muted",
+          "family": "Generated Fallback",
+          "hex": "#EEF1F6",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "surface_elevated": {
+          "name": "Paper",
+          "family": "Generated Fallback",
+          "hex": "#FFFFFF",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "border": {
+          "name": "Pairing #CFC6BA",
+          "family": "Derived Pairing",
+          "hex": "#CFC6BA",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Creamsicle.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Creamsicle"
+          ],
+          "search_score": 10.7,
+          "search_reasons": [
+            "Pairing #CFC6BA reinforces the brand mood signals.",
+            "Pairing #CFC6BA comes from the seed pairing references.",
+            "Pairing #CFC6BA is explicitly paired with Creamsicle.",
+            "Pairing #CFC6BA can act as a neutral support color."
+          ]
+        },
+        "border_strong": {
+          "name": "Pairing #CFC6BA",
+          "family": "Derived Pairing",
+          "hex": "#CFC6BA",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Creamsicle.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Creamsicle"
+          ],
+          "search_score": 10.7,
+          "search_reasons": [
+            "Pairing #CFC6BA reinforces the brand mood signals.",
+            "Pairing #CFC6BA comes from the seed pairing references.",
+            "Pairing #CFC6BA is explicitly paired with Creamsicle.",
+            "Pairing #CFC6BA can act as a neutral support color."
+          ]
+        },
+        "ink": {
+          "name": "Ink",
+          "family": "Generated Fallback",
+          "hex": "#111111",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "ink_muted": {
+          "name": "Ultra Violet",
+          "family": "Pantone Trend Violets",
+          "hex": "#5F4B8B",
+          "cmyk": "C 76%, M 79%, Y 15%, K 3%",
+          "mood": "중명도, 중고채도, 파란빛이 섞인 깊고 복합적인 퍼플 / 창의적, 신비감, 미래적, 실험적",
+          "usage": "2018년 팬톤 올해의 컬러. 영감과 비전을 상징하는 퍼플 스펙트럼의 중심축. 블루와 레드의 중간에 있는 컬러이기 때문에 이성(blue)과 감성(red)의 조화를 의미. 사고의 확장과 감정의 심화 부분을 동시에 담음.",
+          "pairings": [
+            "#C5C5C5",
+            "#F7CAC9",
+            "#1C1F4A",
+            "#BCA7E0",
+            "#FF6F61",
+            "#F5F5F5"
+          ],
+          "source_type": "active-role:primary"
+        },
+        "ink_subtle": {
+          "name": "Subtle Ink",
+          "family": "Generated Fallback",
+          "hex": "#6B7280",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "ink_inverse": {
+          "name": "Ink Inverse",
+          "family": "Generated Fallback",
+          "hex": "#FFFFFF",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "primary_support": {
+          "name": "Scarlet",
+          "family": "Standard Reds",
+          "hex": "#FF2400",
+          "cmyk": "C 0%, M 91%, Y 96%, K 0%",
+          "mood": "강렬한 주황빛 레드 계열, 고채도와 고명도의 따뜻한 톤 / 활기, 생동감, 열정, 역동성, 주목성",
+          "usage": "퓨어 레드보다 따뜻하고 오렌지에 가까운 색으로 에너지가 강하고 시각적 임팩트가 큼. 긍정적이고 낙천적인 인상을 주며 브랜드, 패션, 스포츠 디자인에서 활력 강조용으로 사용됨.",
+          "pairings": [
+            "#FFFFFF",
+            "#1C2A44",
+            "#F4E1C1",
+            "#3B3B3B",
+            "#C7E8D1",
+            "#D4AF37"
+          ],
+          "source_type": "reference-color",
+          "search_score": 21.45,
+          "search_reasons": [
+            "Scarlet reinforces the brand mood signals."
+          ]
+        },
+        "accent_support": {
+          "name": "Illuminating",
+          "family": "Pantone Trend Yellows",
+          "hex": "#F5DF4D",
+          "cmyk": "C 11%, M 9%, Y 76%, K 0%",
+          "mood": "고명도, 중채도, 선명하면서 부드러운 라이트 옐로 톤 / 긍정적, 활기찬, 낙관적, 희망적인, 감각적인",
+          "usage": "팬톤이 2021년 올해의 색상으로 선정한 컬러로 희망과 회복력을 상징함. 불확실한 시대 속 빛과 에너지를 상징하는 색으로 주목받음. 차분한 그레이나 크리미 베이지 조합으로 감각적인 느낌 표현.",
+          "pairings": [
+            "#939597",
+            "#C7B199",
+            "#A3C7E5",
+            "#F6F1E7",
+            "#474747",
+            "#F0846A"
+          ]
+        },
+        "info": {
+          "name": "Info",
+          "family": "Generated Fallback",
+          "hex": "#4A6B8A",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "success": {
+          "name": "Success",
+          "family": "Generated Fallback",
+          "hex": "#4A7C59",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "warning": {
+          "name": "Illuminating",
+          "family": "Pantone Trend Yellows",
+          "hex": "#F5DF4D",
+          "cmyk": "C 11%, M 9%, Y 76%, K 0%",
+          "mood": "고명도, 중채도, 선명하면서 부드러운 라이트 옐로 톤 / 긍정적, 활기찬, 낙관적, 희망적인, 감각적인",
+          "usage": "팬톤이 2021년 올해의 색상으로 선정한 컬러로 희망과 회복력을 상징함. 불확실한 시대 속 빛과 에너지를 상징하는 색으로 주목받음. 차분한 그레이나 크리미 베이지 조합으로 감각적인 느낌 표현.",
+          "pairings": [
+            "#939597",
+            "#C7B199",
+            "#A3C7E5",
+            "#F6F1E7",
+            "#474747",
+            "#F0846A"
+          ]
+        },
+        "danger": {
+          "name": "Ultra Violet",
+          "family": "Pantone Trend Violets",
+          "hex": "#5F4B8B",
+          "cmyk": "C 76%, M 79%, Y 15%, K 3%",
+          "mood": "중명도, 중고채도, 파란빛이 섞인 깊고 복합적인 퍼플 / 창의적, 신비감, 미래적, 실험적",
+          "usage": "2018년 팬톤 올해의 컬러. 영감과 비전을 상징하는 퍼플 스펙트럼의 중심축. 블루와 레드의 중간에 있는 컬러이기 때문에 이성(blue)과 감성(red)의 조화를 의미. 사고의 확장과 감정의 심화 부분을 동시에 담음.",
+          "pairings": [
+            "#C5C5C5",
+            "#F7CAC9",
+            "#1C1F4A",
+            "#BCA7E0",
+            "#FF6F61",
+            "#F5F5F5"
+          ]
+        },
+        "link": {
+          "name": "Ultra Violet",
+          "family": "Pantone Trend Violets",
+          "hex": "#5F4B8B",
+          "cmyk": "C 76%, M 79%, Y 15%, K 3%",
+          "mood": "중명도, 중고채도, 파란빛이 섞인 깊고 복합적인 퍼플 / 창의적, 신비감, 미래적, 실험적",
+          "usage": "2018년 팬톤 올해의 컬러. 영감과 비전을 상징하는 퍼플 스펙트럼의 중심축. 블루와 레드의 중간에 있는 컬러이기 때문에 이성(blue)과 감성(red)의 조화를 의미. 사고의 확장과 감정의 심화 부분을 동시에 담음.",
+          "pairings": [
+            "#C5C5C5",
+            "#F7CAC9",
+            "#1C1F4A",
+            "#BCA7E0",
+            "#FF6F61",
+            "#F5F5F5"
+          ]
+        },
+        "link_hover": {
+          "name": "Link Hover",
+          "family": "Generated Fallback",
+          "hex": "#4D3D70",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        }
+      },
+      "component_sets": {
+        "button_primary": {
+          "surface_default": "#5F4B8B",
+          "surface_hover": "#514077",
+          "surface_active": "#48396A",
+          "surface_disabled": "#BAB3CE",
+          "text_default": "#FFFFFF",
+          "text_disabled": "#FBFCFC",
+          "border_default": "#5F4B8B",
+          "focus_ring": "#5F4B8B"
+        },
+        "button_secondary": {
+          "surface_default": "#FFFFFF",
+          "surface_hover": "#F1F1F1",
+          "surface_active": "#E7E7E7",
+          "surface_disabled": "#F7F8FA",
+          "text_default": "#111111",
+          "text_disabled": "#909091",
+          "border_default": "#BEB2A2",
+          "border_hover": "#AE9E8A",
+          "focus_ring": "#5F4B8B"
+        },
+        "button_ghost": {
+          "surface_default": "transparent",
+          "surface_hover": "#F3F3F3",
+          "surface_active": "#EAEAEA",
+          "surface_disabled": "transparent",
+          "text_default": "#5F4B8B",
+          "text_hover": "#111111",
+          "text_disabled": "#B3AAC8",
+          "border_default": "transparent",
+          "focus_ring": "#5F4B8B"
+        },
+        "button_danger": {
+          "surface_default": "#5F4B8B",
+          "surface_hover": "#514077",
+          "surface_active": "#48396A",
+          "text_default": "#FFFFFF",
+          "border_default": "#5F4B8B",
+          "focus_ring": "#5F4B8B"
+        },
+        "input": {
+          "surface_default": "#FFFFFF",
+          "surface_filled": "#FFFFFF",
+          "surface_disabled": "#F7F8FA",
+          "text_default": "#111111",
+          "text_placeholder": "#9C90B7",
+          "text_disabled": "#B3AAC8",
+          "border_default": "#CFC6BA",
+          "border_hover": "#BAAD9C",
+          "border_focus": "#5F4B8B",
+          "border_error": "#5F4B8B",
+          "border_disabled": "#D9D2C9"
+        },
+        "card": {
+          "surface_default": "#FFFFFF",
+          "surface_hover": "#FAFAFA",
+          "surface_muted": "#F7F8FA",
+          "border_default": "#CFC6BA",
+          "border_hover": "#BAAD9C",
+          "border_focus": "#5F4B8B"
+        },
+        "nav_link": {
+          "text_default": "#5F4B8B",
+          "text_hover": "#111111",
+          "text_active": "#5F4B8B",
+          "surface_hover": "#F5F5F5",
+          "indicator": "#F5DF4D"
+        },
+        "link": {
+          "text_default": "#5F4B8B",
+          "text_hover": "#48396A",
+          "text_visited": "#5B5568"
+        },
+        "feedback_info": {
+          "surface": "#E9EDF1",
+          "text": "#4A6B8A",
+          "border": "#7E95AC",
+          "icon": "#4A6B8A"
+        },
+        "feedback_success": {
+          "surface": "#E9EFEB",
+          "text": "#4A7C59",
+          "border": "#7EA189",
+          "icon": "#4A7C59"
+        },
+        "feedback_warning": {
+          "surface": "#FEFBEA",
+          "text": "#F5DF4D",
+          "border": "#F6E681",
+          "icon": "#F5DF4D"
+        },
+        "feedback_danger": {
+          "surface": "#ECE9F1",
+          "text": "#5F4B8B",
+          "border": "#8D7FAC",
+          "icon": "#5F4B8B"
+        }
+      },
+      "combination_lists": [
+        {
+          "id": "seed-core",
+          "label": "Seed Core",
+          "purpose": "기본 테마를 이루는 핵심 색",
+          "colors": [
+            {
+              "role": "primary",
+              "name": "Ultra Violet",
+              "hex": "#5F4B8B",
+              "family": "Pantone Trend Violets",
+              "source_type": null
+            },
+            {
+              "role": "accent",
+              "name": "Illuminating",
+              "hex": "#F5DF4D",
+              "family": "Pantone Trend Yellows",
+              "source_type": null
+            },
+            {
+              "role": "surface_tint",
+              "name": "Creamsicle",
+              "hex": "#FFD7A0",
+              "family": "Pastel Oranges",
+              "source_type": null
+            }
+          ]
+        },
+        {
+          "id": "surface-system",
+          "label": "Surface System",
+          "purpose": "배경, 패널, 텍스트, 보더에 쓰는 기본 조합",
+          "colors": [
+            {
+              "role": "canvas",
+              "name": "Canvas White",
+              "hex": "#F7F8FA",
+              "family": "Generated Fallback",
+              "source_type": "generated-fallback"
+            },
+            {
+              "role": "surface",
+              "name": "Paper",
+              "hex": "#FFFFFF",
+              "family": "Generated Fallback",
+              "source_type": "generated-fallback"
+            },
+            {
+              "role": "surface_tint",
+              "name": "Creamsicle",
+              "hex": "#FFD7A0",
+              "family": "Pastel Oranges",
+              "source_type": null
+            },
+            {
+              "role": "border",
+              "name": "Pairing #CFC6BA",
+              "hex": "#CFC6BA",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            },
+            {
+              "role": "ink",
+              "name": "Ink",
+              "hex": "#111111",
+              "family": "Generated Fallback",
+              "source_type": "generated-fallback"
+            },
+            {
+              "role": "ink_muted",
+              "name": "Ultra Violet",
+              "hex": "#5F4B8B",
+              "family": "Pantone Trend Violets",
+              "source_type": "active-role:primary"
+            }
+          ]
+        },
+        {
+          "id": "support-spectrum",
+          "label": "Support Spectrum",
+          "purpose": "보조 하이라이트, 차트, 2차 액션에 쓰는 확장 리스트",
+          "colors": [
+            {
+              "role": "support",
+              "name": "Scarlet",
+              "hex": "#FF2400",
+              "family": "Standard Reds",
+              "source_type": "reference-color"
+            },
+            {
+              "role": "support",
+              "name": "Pure Red",
+              "hex": "#FF0000",
+              "family": "Standard Reds",
+              "source_type": "reference-color"
+            },
+            {
+              "role": "support",
+              "name": "Living Coral",
+              "hex": "#FF6F61",
+              "family": "Pantone Trend Oranges",
+              "source_type": "pairing-reference"
+            },
+            {
+              "role": "support",
+              "name": "Persimmon",
+              "hex": "#EC5800",
+              "family": "Natural Oranges",
+              "source_type": "reference-color"
+            },
+            {
+              "role": "support",
+              "name": "Pure Orange",
+              "hex": "#FFA500",
+              "family": "Standard Oranges",
+              "source_type": "reference-color"
+            },
+            {
+              "role": "support",
+              "name": "Pairing #CFC6BA",
+              "hex": "#CFC6BA",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            }
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "Ultra Violet #5F4B8B primary — 2018 Pantone, vivid deep purple, sidebar-nav active / primary-button / activation-funnel active stage / cohort heat-scale 최고단계 / command palette focus / KPI delta 강조",
+      "Illuminating #F5DF4D accent — 2021 Pantone, vivid yellow, activation callout / referral-widget share CTA / goal-tracker complete / experiment-panel winner / impact toast 성공",
+      "Creamsicle #FFD7A0 surface_tint — warm cream surface, KPI card 보조 surface / empty-state illustration / filter-chip soft group bg, admin dense row 에는 near-white 기본 surface 유지",
+      "light mode 가 기본 — B2C startup admin 관례, dark 옵션 제공 (deep cool neutral surface + tuned Ultra Violet/Illuminating 채도 낮춤)",
+      "기존 15종 프리셋 HEX 와 겹침 0 — Ultra Violet/Illuminating/Creamsicle 조합",
+      "bold-confident 3종 (premier-league #E90052/#00FF85/#FFD700, drop #BD2E4A/#6C3BAA/#F3E5AB, broadside #0F4C81/#CC142F/#F2552C) 와 전면 차별화 — 'startup admin purple' 정체성"
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "retool admin console",
+      "appsmith internal tool",
+      "stripe radar dashboard",
+      "posthog activation funnel",
+      "plausible analytics dashboard",
+      "mixpanel cohort matrix"
+    ],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.35,
+      "component_shape": 0.25,
+      "color_balance": 0.15,
+      "typography_mood": 0.15,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "notes": [
+      "Retool / Appsmith / Stripe Radar / PostHog / Plausible / Mixpanel 계열 B2C startup admin 참조",
+      "bold-confident 톤: vivid Ultra Violet primary + Illuminating yellow accent + warm Creamsicle surface, 데이터 dense 유지",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "must_include": [
+      "sidebar-nav + data-table + kpi-card dashboard shell",
+      "activation funnel with 4–6 stages",
+      "cohort retention matrix heat-scale",
+      "referral widget with share CTA",
+      "filter-chip + segment filter bar",
+      "vivid saturated primary CTA on admin table row"
+    ],
+    "avoid_patterns": [
+      "magazine hero cover story",
+      "commerce product detail",
+      "pastel playful feed",
+      "corporate navy blueprint",
+      "long-form reading article",
+      "landing hero CTA-only"
+    ],
+    "sources": [],
+    "images": [],
+    "selected_images": [],
+    "duplicate_groups": [],
+    "similar_groups": [],
+    "coverage": {
+      "source_count": 0,
+      "resolved_source_count": 0,
+      "image_count": 0,
+      "selected_image_count": 0,
+      "format_counts": {},
+      "orientation_counts": {},
+      "aspect_ratio_buckets": {}
+    },
+    "visual_motifs": {
+      "density": {
+        "value": "dense",
+        "confidence": 0.94,
+        "evidence": [
+          "dashboard x4",
+          "table x4",
+          "analytics x1"
+        ],
+        "candidates": [
+          {
+            "value": "dense",
+            "score": 26.0
+          },
+          {
+            "value": "airy",
+            "score": 8.0
+          },
+          {
+            "value": "balanced",
+            "score": 2.0
+          }
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Derived from selected image signals plus query and brand context."
+        }
+      },
+      "surface_style": {
+        "value": "tinted",
+        "confidence": 0.37,
+        "evidence": [
+          "warm x2",
+          "editorial x1"
+        ],
+        "candidates": [
+          {
+            "value": "tinted",
+            "score": 3.0
+          },
+          {
+            "value": "flat",
+            "score": 2.0
+          }
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Derived from selected image signals plus query and brand context."
+        }
+      },
+      "typography_mood": {
+        "value": "utilitarian",
+        "confidence": 0.94,
+        "evidence": [
+          "dashboard x4",
+          "admin x5",
+          "table x4"
+        ],
+        "candidates": [
+          {
+            "value": "utilitarian",
+            "score": 26.0
+          },
+          {
+            "value": "editorial",
+            "score": 12.0
+          },
+          {
+            "value": "playful",
+            "score": 6.0
+          }
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Derived from selected image signals plus query and brand context."
+        }
+      },
+      "corner_style": {
+        "value": "medium",
+        "confidence": 0.39,
+        "evidence": [
+          "card x3"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Derived from selected image geometry and supporting signal terms."
+        }
+      },
+      "color_balance": {
+        "observed": false,
+        "temperature": "unknown",
+        "contrast_profile": "unknown",
+        "neutral_bias": "unknown",
+        "dominant": [],
+        "supporting": [],
+        "provenance": {
+          "level": "unverified",
+          "detail": "No reliable pixel-color sample was available from the current selection."
+        }
+      },
+      "image_selection": {
+        "selected_image_count": 0,
+        "available_image_count": 0,
+        "provenance": {
+          "level": "unverified",
+          "detail": "No local image files were available for selection."
+        }
+      }
+    },
+    "layout_cues": [
+      {
+        "id": "dashboard-grid",
+        "label": "Dashboard grid",
+        "confidence": 0.94,
+        "evidence": [
+          "dashboard x4",
+          "analytics x1",
+          "metric x1",
+          "kpi x3",
+          "chart x1",
+          "table x4"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Layout cue inferred from selected image signals and reference context."
+        }
+      },
+      {
+        "id": "data-review-surface",
+        "label": "Data review surface",
+        "confidence": 0.94,
+        "evidence": [
+          "table x4",
+          "data x3",
+          "filter x5"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Layout cue inferred from selected image signals and reference context."
+        }
+      },
+      {
+        "id": "editorial-feed",
+        "label": "Editorial feed",
+        "confidence": 0.94,
+        "evidence": [
+          "editorial x1",
+          "article x1",
+          "feed x2",
+          "story x1",
+          "magazine x2"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Layout cue inferred from selected image signals and reference context."
+        }
+      },
+      {
+        "id": "landing-narrative",
+        "label": "Narrative landing flow",
+        "confidence": 0.94,
+        "evidence": [
+          "landing x1",
+          "hero x2",
+          "cta x4"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Layout cue inferred from selected image signals and reference context."
+        }
+      }
+    ],
+    "component_style_hints": {
+      "cards": {
+        "direction": "low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.",
+        "confidence": 0.94,
+        "evidence": [
+          "surface=tinted",
+          "density=dense",
+          "corner=medium"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        }
+      },
+      "navigation": {
+        "direction": "navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.",
+        "confidence": 0.94,
+        "evidence": [
+          "Dashboard grid"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        }
+      },
+      "typography": {
+        "direction": "정보 밀도에 맞춰 type scale 차이를 줄이고 table/list label의 정렬 정확도를 우선한다.",
+        "confidence": 0.94,
+        "evidence": [
+          "typography_mood=utilitarian"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        }
+      },
+      "data_display": {
+        "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+        "confidence": 0.94,
+        "evidence": [
+          "layout=dashboard-grid",
+          "density=dense"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        }
+      }
+    },
+    "candidate_component_archetypes": [
+      {
+        "id": "dashboard-insight-module",
+        "label": "Dashboard insight module",
+        "family": "data-display",
+        "confidence": 0.94,
+        "suggested_components": [
+          "stat-card",
+          "insight-card",
+          "chart-panel",
+          "section-header",
+          "filter-chip"
+        ],
+        "supports_primitives": [
+          "dashboard cards",
+          "charts and visualization"
+        ],
+        "evidence": [
+          "layout=dashboard-grid (0.94)",
+          "dashboard x4",
+          "analytics x1",
+          "metric x1",
+          "kpi x3",
+          "chart x1"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        }
+      },
+      {
+        "id": "data-review-table",
+        "label": "Data review table",
+        "family": "data-display",
+        "confidence": 0.94,
+        "suggested_components": [
+          "data-table",
+          "column-header",
+          "row-actions",
+          "filter-toolbar",
+          "pagination"
+        ],
+        "supports_primitives": [
+          "data tables",
+          "search and filter"
+        ],
+        "evidence": [
+          "layout=data-review-surface (0.94)",
+          "layout=dashboard-grid (0.94)",
+          "table x4",
+          "data x3",
+          "filter x5"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        }
+      },
+      {
+        "id": "editorial-content-block",
+        "label": "Editorial content block",
+        "family": "editorial",
+        "confidence": 0.94,
+        "suggested_components": [
+          "content-card",
+          "featured-story-card",
+          "section-header",
+          "content-meta",
+          "byline-row"
+        ],
+        "supports_primitives": [
+          "rich text editor"
+        ],
+        "evidence": [
+          "layout=editorial-feed (0.94)",
+          "editorial x1",
+          "article x1",
+          "story x1",
+          "magazine x2"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        }
+      },
+      {
+        "id": "marketing-hero-stack",
+        "label": "Marketing hero stack",
+        "family": "marketing",
+        "confidence": 0.94,
+        "suggested_components": [
+          "hero-section",
+          "hero-headline",
+          "hero-visual",
+          "cta-button-group",
+          "trust-strip"
+        ],
+        "supports_primitives": [
+          "hero section",
+          "pricing and plans",
+          "social proof"
+        ],
+        "evidence": [
+          "layout=landing-narrative (0.94)",
+          "hero x2",
+          "landing x1",
+          "cta x4"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        }
+      },
+      {
+        "id": "workspace-shell",
+        "label": "Workspace shell",
+        "family": "navigation",
+        "confidence": 0.94,
+        "suggested_components": [
+          "app-shell",
+          "sidebar-nav",
+          "workspace-switcher",
+          "breadcrumb",
+          "context-panel"
+        ],
+        "supports_primitives": [
+          "workspace navigation"
+        ],
+        "evidence": [
+          "workspace x1",
+          "sidebar x2",
+          "navigation x1",
+          "panel x2",
+          "shell x1"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        }
+      }
+    ],
+    "reference_mood_summary": {
+      "top_layout": "Dashboard grid",
+      "recommended_direction": [
+        "layout는 Dashboard grid 기준으로 정리",
+        "surface language는 tinted 성향 우선",
+        "typography mood는 utilitarian 축 유지",
+        "density는 dense 기준으로 primitive spacing 조정",
+        "palette temperature는 unknown 쪽을 우선"
+      ],
+      "avoidance": [
+        "magazine hero cover story",
+        "commerce product detail",
+        "pastel playful feed",
+        "corporate navy blueprint",
+        "long-form reading article",
+        "landing hero CTA-only"
+      ],
+      "component_focus": [
+        "cards",
+        "data_display",
+        "navigation",
+        "typography"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+      }
+    },
+    "brand_context": {
+      "brand_name": "Lattice-Dash",
+      "system_name": "Lattice-Dash System",
+      "brand_keywords": [
+        "dashboard",
+        "admin",
+        "console",
+        "startup",
+        "saas",
+        "b2c",
+        "growth",
+        "activation",
+        "retention",
+        "cohort",
+        "referral",
+        "bold",
+        "vivid",
+        "energetic",
+        "high-contrast",
+        "impact"
+      ],
+      "anti_keywords": [
+        "editorial-warm",
+        "magazine-serif",
+        "minimal-only",
+        "playful-pastel",
+        "corporate-conservative",
+        "document-heavy",
+        "commerce-checkout"
+      ],
+      "visual_keywords": [
+        "high-contrast headline",
+        "vivid ultra violet primary",
+        "illuminating yellow accent",
+        "saturated KPI card",
+        "dense data table",
+        "impact metric typography",
+        "youthful startup",
+        "admin-first bold",
+        "activation funnel visual",
+        "cohort matrix heat-scale"
+      ],
+      "interaction_keywords": [
+        "keyboard-first",
+        "command palette",
+        "sticky filter bar",
+        "hover-emphasis row",
+        "activation funnel drill",
+        "cohort retention hover",
+        "referral share action",
+        "impact toast",
+        "saturated primary CTA"
+      ],
+      "product_primitives": [
+        "sidebar navigation",
+        "workspace switcher",
+        "data table",
+        "kpi card",
+        "filter chip",
+        "command palette",
+        "activity feed",
+        "activation funnel",
+        "referral widget",
+        "cohort matrix",
+        "retention chart",
+        "conversion funnel",
+        "experiment panel",
+        "user list",
+        "ticket queue",
+        "alert list",
+        "segment filter",
+        "goal tracker",
+        "settings panel"
+      ]
+    }
+  },
+  "visual_reference_issues": [
+    "visual_reference.sources is empty"
+  ],
+  "visual_language": {
+    "density": {
+      "value": "dense",
+      "confidence": 0.94,
+      "evidence": [
+        "dashboard x4",
+        "table x4",
+        "analytics x1"
+      ],
+      "candidates": [
+        {
+          "value": "dense",
+          "score": 26.0
+        },
+        {
+          "value": "airy",
+          "score": 8.0
+        },
+        {
+          "value": "balanced",
+          "score": 2.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.37,
+      "evidence": [
+        "warm x2",
+        "editorial x1"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 3.0
+        },
+        {
+          "value": "flat",
+          "score": 2.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "utilitarian",
+      "confidence": 0.94,
+      "evidence": [
+        "dashboard x4",
+        "admin x5",
+        "table x4"
+      ],
+      "candidates": [
+        {
+          "value": "utilitarian",
+          "score": 26.0
+        },
+        {
+          "value": "editorial",
+          "score": 12.0
+        },
+        {
+          "value": "playful",
+          "score": 6.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "medium",
+      "confidence": 0.39,
+      "evidence": [
+        "card x3"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.94,
+      "evidence": [
+        "dashboard x4",
+        "analytics x1",
+        "metric x1",
+        "kpi x3",
+        "chart x1",
+        "table x4"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.94,
+      "evidence": [
+        "table x4",
+        "data x3",
+        "filter x5"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x1",
+        "article x1",
+        "feed x2",
+        "story x1",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "landing-narrative",
+      "label": "Narrative landing flow",
+      "confidence": 0.94,
+      "evidence": [
+        "landing x1",
+        "hero x2",
+        "cta x4"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.",
+      "confidence": 0.94,
+      "evidence": [
+        "surface=tinted",
+        "density=dense",
+        "corner=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Dashboard grid"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "정보 밀도에 맞춰 type scale 차이를 줄이고 table/list label의 정렬 정확도를 우선한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "typography_mood=utilitarian"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.94,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=dense"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.94)",
+        "dashboard x4",
+        "analytics x1",
+        "metric x1",
+        "kpi x3",
+        "chart x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.94)",
+        "layout=dashboard-grid (0.94)",
+        "table x4",
+        "data x3",
+        "filter x5"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.94,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.94)",
+        "editorial x1",
+        "article x1",
+        "story x1",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.94,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "layout=landing-narrative (0.94)",
+        "hero x2",
+        "landing x1",
+        "cta x4"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "workspace-shell",
+      "label": "Workspace shell",
+      "family": "navigation",
+      "confidence": 0.94,
+      "suggested_components": [
+        "app-shell",
+        "sidebar-nav",
+        "workspace-switcher",
+        "breadcrumb",
+        "context-panel"
+      ],
+      "supports_primitives": [
+        "workspace navigation"
+      ],
+      "evidence": [
+        "workspace x1",
+        "sidebar x2",
+        "navigation x1",
+        "panel x2",
+        "shell x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Dashboard grid",
+    "recommended_direction": [
+      "layout는 Dashboard grid 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 utilitarian 축 유지",
+      "density는 dense 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "magazine hero cover story",
+      "commerce product detail",
+      "pastel playful feed",
+      "corporate navy blueprint",
+      "long-form reading article",
+      "landing hero CTA-only"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "font_system": {
+    "heading": {
+      "name": "Spoqa Han Sans Neo",
+      "family": "geometric-sans",
+      "personality": [
+        "clean",
+        "precise",
+        "geometric"
+      ],
+      "weight_range": "100-700",
+      "variable": false,
+      "source": "GitHub (spoqa/spoqa-han-sans)",
+      "note": "스포카에서 만든 한글 산세리프. Source Sans Pro 기반. 깔끔한 데이터 UI에 적합."
+    },
+    "body": {
+      "name": "Spoqa Han Sans Neo",
+      "family": "geometric-sans",
+      "personality": [
+        "clean",
+        "precise",
+        "geometric"
+      ],
+      "weight_range": "100-700",
+      "variable": false,
+      "source": "GitHub (spoqa/spoqa-han-sans)",
+      "note": "스포카에서 만든 한글 산세리프. Source Sans Pro 기반. 깔끔한 데이터 UI에 적합."
+    },
+    "korean": {
+      "name": "Spoqa Han Sans Neo",
+      "family": "geometric-sans",
+      "personality": [
+        "clean",
+        "precise",
+        "geometric"
+      ],
+      "weight_range": "100-700",
+      "variable": false,
+      "source": "GitHub (spoqa/spoqa-han-sans)",
+      "note": "스포카에서 만든 한글 산세리프. Source Sans Pro 기반. 깔끔한 데이터 UI에 적합."
+    },
+    "korean_rationale": {
+      "primary_is_korean": true,
+      "font": "Spoqa Han Sans Neo",
+      "reason": "Pretendard 이전 시대의 한글 UI 표준. 요기요, 여기어때 등에서 사용. 깔끔하지만 weight 범위와 Variable 미지원이 아쉬움. 신규 프로젝트에서는 Pretendard 추천.",
+      "glyph_width": "중간-좁음",
+      "small_size_limit": "13px까지 가독성 유지",
+      "best_for_kr": [
+        "SaaS",
+        "데이터 대시보드",
+        "깔끔한 UI"
+      ],
+      "avoid_for_kr": [
+        "장문 본문 — line-height 여유 부족",
+        "감성적 브랜딩"
+      ],
+      "latin_pair": "Source Sans 3 (같은 Source 계열)"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "family": "monospace",
+      "personality": [
+        "precise",
+        "technical",
+        "developer"
+      ],
+      "weight_range": "100-800",
+      "variable": true,
+      "source": "Google Fonts",
+      "note": "개발자 도구의 사실상 표준 모노스페이스. 리거처 지원."
+    },
+    "type_scale": {
+      "base": 14,
+      "scale_ratio": 1.2,
+      "sizes": {
+        "xs": 11,
+        "sm": 12,
+        "md": 14,
+        "lg": 17,
+        "xl": 20,
+        "2xl": 24,
+        "3xl": 29
+      },
+      "line_heights": {
+        "tight": 1.25,
+        "normal": 1.4,
+        "comfortable": 1.5,
+        "relaxed": 1.6
+      },
+      "best_for": [
+        "dashboard",
+        "data-heavy",
+        "mobile"
+      ]
+    },
+    "line_height_preset": "tight",
+    "product_type_detected": "dashboard",
+    "needs_korean": true,
+    "pairing_source": "auto-scored",
+    "strategy": [
+      "단일 서체(Spoqa Han Sans Neo)로 weight 대비 위계 — 일관성 우선",
+      "한글 서체: Spoqa Han Sans Neo — 라틴과 x-height/weight 조화",
+      "모노스페이스: JetBrains Mono — 코드/데이터 영역 전용"
+    ],
+    "loading": {
+      "fonts": [
+        {
+          "font": "Spoqa Han Sans Neo",
+          "weights": "400;500;600",
+          "priority": "preload"
+        },
+        {
+          "font": "JetBrains Mono",
+          "weights": "400;500",
+          "priority": "lazy"
+        }
+      ],
+      "fallback_strategy": "system-ui → font swap",
+      "display": "swap",
+      "subset": "latin,korean",
+      "note": "본문 서체를 preload, 모노스페이스는 lazy load. font-display: swap으로 FOUT 최소화."
+    },
+    "pitfall_warnings": [],
+    "letter_spacing": {
+      "heading_tracking": {
+        "xl": "-0.01em",
+        "2xl": "-0.01em",
+        "3xl": "-0.01em"
+      },
+      "note": "큰 헤딩에 negative tracking 적용. 미적용 시 글자가 풀어진 느낌."
+    },
+    "script_guardrails": {
+      "primary_script": "korean",
+      "headline_font": {
+        "name": "Spoqa Han Sans Neo",
+        "line_height": "1.2-1.3",
+        "letter_spacing": "-0.02em",
+        "note": "조밀한 UI에서는 tracking 보정이 유효하지만 장문 본문용으로는 여유가 적다."
+      },
+      "body_font": {
+        "name": "Spoqa Han Sans Neo",
+        "line_height": "1.5-1.6",
+        "ui_label_line_height": "1.4-1.5",
+        "letter_spacing": "0em",
+        "note": "조밀한 UI에서는 tracking 보정이 유효하지만 장문 본문용으로는 여유가 적다."
+      },
+      "wrap": {
+        "headline": {
+          "word_break": "keep-all",
+          "overflow_wrap": "normal",
+          "text_wrap": "balance"
+        },
+        "body": {
+          "word_break": "keep-all",
+          "overflow_wrap": "normal"
+        },
+        "avoid": [
+          "forced <br /> before breakpoint QA",
+          "English-first ch heuristics without real Korean copy review"
+        ]
+      },
+      "scale": {
+        "headline_start": "default-scale",
+        "guidance": "기본 스케일을 사용할 수 있지만 한글 문장 기준으로 실제 wrap을 먼저 검증한다."
+      },
+      "warnings": [
+        "장문 본문 — line-height 여유 부족",
+        "감성적 브랜딩",
+        "장문 본문 — line-height 여유 부족",
+        "감성적 브랜딩"
+      ],
+      "rules": [
+        "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
+        "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
+        "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다."
+      ]
+    }
+  },
+  "css_extraction": null,
+  "governance": {
+    "source_of_truth": [
+      "brand profile",
+      "design tokens",
+      "component specs",
+      "usage rules",
+      "existing product surfaces and task flows"
+    ],
+    "change_policy": [
+      "새 컴포넌트보다 기존 primitive 확장을 우선",
+      "예외 케이스는 variant로 흡수 가능한지 먼저 검토",
+      "브랜드 키워드와 anti-keyword를 위반하면 추가하지 않음"
+    ],
+    "implementation_guardrails": [
+      "기존 핵심 화면, 진입점, 작업 흐름은 명시적 승인 없이 제거하거나 숨기지 않음",
+      "전면 셸 리라이트보다 토큰 -> primitive -> feature surface 순서의 점진적 롤아웃을 우선",
+      "새 시각 규칙은 지원 대상 테마와 breakpoint 전체에서 먼저 검증",
+      "기존 데이터 밀도와 업무 완료 경로를 유지한 상태에서 시각 품질을 높이는 방향을 우선",
+      "기능 위치 변경, 정보 구조 변경, 패널 제거는 별도의 migration plan이 있을 때만 수행",
+      "아이콘 자리에 이모지(🎨 ✅ 🔥 등)를 넣지 않음 — SVG 아이콘 또는 아이콘 라이브러리만 사용",
+      "컴포넌트는 component_specs.md의 anatomy/states/token binding을 그대로 따라 완전히 구현",
+      "'TODO 컴포넌트', '임시 버튼', '플레이스홀더 카드' 같은 반쪽 구현을 남기지 않음"
+    ],
+    "ai_synthesis_principles": [
+      {
+        "id": "no_fabricated_hex",
+        "rule": "hex를 만들지 않는다",
+        "detail": "AI는 색상 hex 값을 임의로 생성하지 않는다. 반드시 color_reference, CSS 추출, 브랜드 가이드 등 실증 소스에서 가져온 값만 사용한다."
+      },
+      {
+        "id": "no_fabricated_token_names",
+        "rule": "토큰명을 만들지 않는다",
+        "detail": "AI는 토큰 이름을 임의로 발명하지 않는다. 네이밍 패턴(core/semantic/component 레이어 규칙)은 정의하되, 구체적 토큰명은 실제 컴포넌트와 역할에서 도출한다."
+      },
+      {
+        "id": "interpretation_over_facts_only",
+        "rule": "팩트 위에 해석만",
+        "detail": "AI는 수집된 레퍼런스, 프로필, 온톨로지 증거 위에 해석과 구조화만 수행한다. 증거 없는 추론, 존재하지 않는 패턴 서술, 가상의 사용 사례 생성을 금지한다."
+      },
+      {
+        "id": "no_emoji_as_ui",
+        "rule": "이모지를 UI 요소로 쓰지 않는다",
+        "detail": "AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 반드시 SVG 아이콘 컴포넌트를 직접 구현하거나, 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)를 import해서 사용한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다. 이 규칙은 AI가 UI를 만들 때 가장 자주 저지르는 실수이므로 엄격히 적용한다."
+      },
+      {
+        "id": "implement_components_directly",
+        "rule": "컴포넌트를 직접 구현한다",
+        "detail": "AI는 '임시 버튼', '플레이스홀더 카드', 'TODO 컴포넌트' 같은 반쪽 구현을 남기지 않는다. system_spec.md의 Component Strategy와 component_specs.md에 정의된 구조(anatomy), 상태(states), 토큰 바인딩, 접근성 규칙을 그대로 따라 완전한 컴포넌트를 구현한다. 기존 라이브러리 컴포넌트를 그냥 import해서 쓰는 대신, 디자인 시스템 토큰으로 스타일을 명시적으로 바인딩한다."
+      }
+    ]
+  },
+  "ontology_targets": [
+    {
+      "concept_id": "component",
+      "count": 121
+    },
+    {
+      "concept_id": "design_system",
+      "count": 68
+    },
+    {
+      "concept_id": "layout",
+      "count": 42
+    },
+    {
+      "concept_id": "content",
+      "count": 36
+    },
+    {
+      "concept_id": "accessibility",
+      "count": 35
+    },
+    {
+      "concept_id": "color",
+      "count": 35
+    },
+    {
+      "concept_id": "pattern",
+      "count": 35
+    },
+    {
+      "concept_id": "iconography",
+      "count": 30
+    }
+  ],
+  "benchmark": {
+    "matched_systems": [
+      {
+        "id": "atlassian",
+        "name": "Atlassian Design System",
+        "category": "productivity",
+        "keywords": [
+          "trustworthy",
+          "bold",
+          "accessible"
+        ],
+        "color_strategy": "blue accent with semantic states",
+        "notable": [
+          "enterprise-scale",
+          "accessibility guidelines",
+          "brand evolution"
+        ]
+      },
+      {
+        "id": "spotify",
+        "name": "Spotify Encore",
+        "category": "entertainment",
+        "keywords": [
+          "bold",
+          "expressive",
+          "editorial"
+        ],
+        "color_strategy": "green accent on dark with album art colors",
+        "notable": [
+          "music-driven",
+          "album art integration",
+          "bold typography"
+        ]
+      },
+      {
+        "id": "uber",
+        "name": "Uber Base Web",
+        "category": "transport",
+        "keywords": [
+          "precise",
+          "accessible",
+          "bold"
+        ],
+        "color_strategy": "black primary with minimal accent",
+        "notable": [
+          "open source",
+          "override-friendly",
+          "map integration patterns"
+        ]
+      },
+      {
+        "id": "discord",
+        "name": "Discord",
+        "category": "communication",
+        "keywords": [
+          "playful",
+          "bold",
+          "fast"
+        ],
+        "color_strategy": "blurple accent on dark with vibrant status colors",
+        "notable": [
+          "gaming community",
+          "real-time voice/video",
+          "custom emoji system"
+        ]
+      },
+      {
+        "id": "wise",
+        "name": "Wise (TransferWise) Neptune",
+        "category": "fintech",
+        "keywords": [
+          "trustworthy",
+          "calm",
+          "bold"
+        ],
+        "color_strategy": "green accent with bright illustrations",
+        "notable": [
+          "trust-first",
+          "currency display patterns",
+          "global localization"
+        ]
+      }
+    ],
+    "total_benchmark_count": 35,
+    "common_typography_in_matches": {
+      "Inter": 1,
+      "Spotify Mix": 1,
+      "Uber Move": 1,
+      "gg sans": 1,
+      "Wise Sans": 1
+    },
+    "color_strategy_patterns": [
+      "blue accent with semantic states",
+      "green accent on dark with album art colors",
+      "black primary with minimal accent",
+      "blurple accent on dark with vibrant status colors",
+      "green accent with bright illustrations"
+    ],
+    "industry_keywords": [
+      "accessible",
+      "bold",
+      "calm",
+      "composable",
+      "editorial",
+      "expressive",
+      "fast",
+      "flexible",
+      "friendly",
+      "inclusive",
+      "minimal",
+      "playful",
+      "precise",
+      "refined",
+      "systematic",
+      "trustworthy",
+      "warm"
+    ]
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "brand_name": "Pulse",
+  "system_name": "Pulse System",
+  "product_summary": "실시간 observability 콘솔 — metric/log/trace/alert 를 한 화면에서 운영하는 SRE/DevOps 운영 도구",
+  "audiences": [
+    "SRE / 인프라 엔지니어",
+    "DevOps / 플랫폼 엔지니어",
+    "온콜 엔지니어 / 인시던트 커맨더"
+  ],
+  "brand_keywords": [
+    "sre",
+    "devops",
+    "observability",
+    "monitoring",
+    "realtime",
+    "operations",
+    "alerting",
+    "metric",
+    "incident"
+  ],
+  "anti_keywords": [
+    "playful",
+    "decorative",
+    "marketing-heavy",
+    "skeuomorphic",
+    "ornamental"
+  ],
+  "tone_of_voice": [
+    "precise",
+    "operational",
+    "matter-of-fact",
+    "calm-under-pressure"
+  ],
+  "visual_keywords": [
+    "dense chart grid",
+    "status board",
+    "high-density table",
+    "alert-first hierarchy",
+    "cool neutral surfaces",
+    "hairline borders",
+    "monochrome + single accent",
+    "numeric emphasis"
+  ],
+  "interaction_keywords": [
+    "keyboard-first",
+    "live-update",
+    "drilldown",
+    "zoom/pan time range",
+    "saved views",
+    "quick mute/ack",
+    "severity-routed focus"
+  ],
+  "platforms": [
+    "web",
+    "desktop"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "chart grid",
+    "sparkline",
+    "kpi card",
+    "alert list",
+    "severity badge",
+    "metric table",
+    "time range picker",
+    "status board",
+    "incident timeline",
+    "sidebar navigation",
+    "search filter chrome",
+    "log viewer",
+    "trace flamegraph",
+    "threshold editor"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "design token",
+      "data density",
+      "table",
+      "chart",
+      "alert"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "marketing-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Deep Blues",
+      "Standard Blues",
+      "Natural Blues",
+      "Pastel Blues"
+    ],
+    "palette_roles": {
+      "primary": "Azure Blue",
+      "accent": "Emerald Green",
+      "surface_tint": "Ice Blue"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "cool",
+      "contrast": "balanced",
+      "diversity": "narrow",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "정제됨",
+        "청량함",
+        "명료함",
+        "신뢰"
+      ],
+      "avoid_moods": [
+        "달콤함",
+        "귀여움",
+        "화려함",
+        "대담함"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Azure Blue 를 primary 로 — 실시간 강조/라이브 상태 신호",
+      "Emerald Green 액센트로 성공/healthy 상태 긍정 시그널",
+      "Ice Blue 는 surface_tint — 장시간 관찰하는 데이터 캔버스 피로감 최소화",
+      "dark mode 가 기본 — 온콜/야간 운영 환경, Grafana/Datadog 관례",
+      "semantic(success/warning/danger/info) 별도 role — severity 는 색 + 라벨 이중"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Inter",
+      "weights": [
+        500,
+        600,
+        700
+      ],
+      "notes": "geometric sans, 숫자/영문 가독성"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500
+      ],
+      "notes": "UI 라벨/본문 공용"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "notes": "metric 값, log line, trace id — mono 비중 매우 높음"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한글 1급 — UI/본문, 숫자는 tabular-nums"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "grafana dashboard dark",
+      "datadog monitoring console",
+      "honeycomb observability traces",
+      "prometheus alert list"
+    ],
+    "sources": [],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.4,
+      "component_shape": 0.25,
+      "color_balance": 0.15,
+      "typography_mood": 0.1,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "dense chart grid",
+      "alert list with severity badges",
+      "metric table",
+      "status board",
+      "time range picker"
+    ],
+    "avoid_patterns": [
+      "glassmorphism",
+      "gradient-heavy surfaces",
+      "playful illustrations"
+    ],
+    "notes": [
+      "Grafana/Datadog/Honeycomb 스타일 realtime 운영 콘솔 참조",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://grafana.com",
+      "kind": "design-system",
+      "title": "Grafana",
+      "notes": "observability dashboard + alert timeline references"
+    },
+    {
+      "url": "https://www.datadoghq.com",
+      "kind": "design-system",
+      "title": "Datadog",
+      "notes": "SRE observability console references"
+    },
+    {
+      "url": "https://www.honeycomb.io",
+      "kind": "design-system",
+      "title": "Honeycomb",
+      "notes": "distributed tracing UI references"
+    },
+    {
+      "url": "https://prometheus.io",
+      "kind": "design-system",
+      "title": "Prometheus",
+      "notes": "metric query + alert rule references"
+    }
+  ]
+}

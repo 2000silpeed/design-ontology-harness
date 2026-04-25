@@ -1,0 +1,38 @@
+{
+  "id": "dashboard--editorial-warm",
+  "schema_version": "1.0.0",
+  "preset_api_version": "1.0.0",
+  "generated_by_harness_version": "0.1.0",
+  "preview_version": "1.0.0",
+  "adapter_compatibility": {
+    "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+    "raw-css-variables": ">=0.1.0 <1.0.0",
+    "vite-tailwind": ">=0.1.0 <1.0.0"
+  },
+  "source_project": "curator",
+  "content_hash": "sha256:a4f76a372ba0f966cf3913b0a056a14eb3e5b665e855b6c94b19ff96b8affbf1",
+  "app_mode": "dashboard",
+  "brand_tone": "editorial-warm",
+  "color_modes": [
+    "light",
+    "dark"
+  ],
+  "default_color_mode": "light",
+  "tags": [
+    "editorial",
+    "publishing",
+    "ko"
+  ],
+  "locale_pairings": {
+    "ko": {
+      "heading_font": "Pretendard",
+      "body_font": "Pretendard",
+      "mono_font": "JetBrains Mono",
+      "notes": "editorial-warm 운영/큐레이션 대시보드 — 한국어 data-table cell / kpi-card 라벨 / filter-chip / curation-queue row / contributor-roster cell keep-all line-height 1.5–1.6 (dashboard dense 유지), workspace-header / section-header 는 Pretendard 700 letter-spacing 0 line-height 1.4–1.5, editorial-analytics-kpi / reading-analytics-kpi / editorial-calendar date / row id / issue-number / pagination 은 mono 영문 고정 tabular-nums, 한글 article-preview-pane drawer 진입 시 line-height 1.6–1.7 (editorial long-form reading)"
+    }
+  },
+  "owner": "maintainer",
+  "tier": "P2",
+  "generated_at": "2026-04-21T12:34:59Z",
+  "description": "editorial-warm 운영/큐레이션 대시보드 — sidebar-nav · data-table · kpi-card · filter-chip · editorial-calendar · curation-queue · publishing-pipeline, warm neutral + serif heading + muted accent, 한국어 1급"
+}

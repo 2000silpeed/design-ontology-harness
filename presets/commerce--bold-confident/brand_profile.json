@@ -1,0 +1,310 @@
+{
+  "brand_name": "Drop",
+  "system_name": "Drop System",
+  "product_summary": "젊은 B2C commerce — bold-confident 톤 드롭 · 제품 그리드 · 제품 상세 · 장바구니 · 체크아웃, high-contrast saturated, impact typography, 한국어 1급",
+  "audiences": [
+    "스트리트웨어/스니커 드롭을 기다리는 젊은 소비자 (Gen Z, 밀레니얼)",
+    "게이밍/e스포츠 머천다이즈를 구매하는 팬",
+    "bold beauty · 스포츠 굿즈 · 한정판 컬렉션을 탐색하는 모바일 쇼핑 사용자"
+  ],
+  "brand_keywords": [
+    "commerce",
+    "ecommerce",
+    "shop",
+    "store",
+    "product-grid",
+    "product-detail",
+    "cart",
+    "checkout",
+    "drop",
+    "merchandise",
+    "streetwear",
+    "bold",
+    "energetic",
+    "high-contrast"
+  ],
+  "anti_keywords": [
+    "editorial-warm",
+    "magazine-serif",
+    "minimal",
+    "playful-pastel",
+    "corporate-conservative",
+    "dashboard-heavy",
+    "document-heavy"
+  ],
+  "tone_of_voice": [
+    "confident",
+    "energetic",
+    "direct",
+    "hype",
+    "street"
+  ],
+  "visual_keywords": [
+    "saturated primary hero",
+    "high-contrast headline",
+    "dense product grid",
+    "large product hero image",
+    "impact typography",
+    "purple accent callout",
+    "full-bleed drop banner",
+    "bold price tag",
+    "countdown timer chip"
+  ],
+  "interaction_keywords": [
+    "add-to-cart animation",
+    "quick-view modal",
+    "size selector chip",
+    "wishlist toggle heart",
+    "drop countdown timer",
+    "quantity stepper",
+    "cart drawer slide-in",
+    "checkout step progress",
+    "promo code input flash",
+    "hero scroll-snap banner"
+  ],
+  "platforms": [
+    "web",
+    "mobile-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "product card",
+    "product grid",
+    "product detail",
+    "product gallery",
+    "image thumbnail",
+    "variant selector",
+    "size selector",
+    "color swatch selector",
+    "add-to-cart button",
+    "quick-view modal",
+    "wishlist toggle",
+    "drop banner",
+    "countdown timer",
+    "price tag",
+    "original price strikethrough",
+    "discount badge",
+    "cart drawer",
+    "cart item",
+    "cart summary",
+    "checkout step",
+    "address form",
+    "payment form",
+    "promo code input",
+    "order summary",
+    "empty cart state",
+    "search bar",
+    "filter sidebar",
+    "sort dropdown",
+    "pagination",
+    "breadcrumb",
+    "category pill",
+    "hero banner",
+    "site header",
+    "site footer"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "design token",
+      "commerce",
+      "product",
+      "cart",
+      "checkout"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "magazine-only",
+      "document-heavy",
+      "dashboard-only",
+      "ornamental-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Standard Reds",
+      "Cobalt Violet",
+      "Buttercream"
+    ],
+    "palette_roles": {
+      "primary": "Crimson",
+      "accent": "Royal Purple",
+      "surface_tint": "Buttercream"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "warm",
+      "contrast": "high",
+      "diversity": "wide",
+      "surface_style": "grounded",
+      "prefer_moods": [
+        "대담",
+        "강렬",
+        "에너제틱",
+        "임팩트",
+        "고대비",
+        "주목성"
+      ],
+      "avoid_moods": [
+        "차분",
+        "중립",
+        "미니멀",
+        "따뜻한 editorial",
+        "달콤함",
+        "부드러움"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Crimson #BD2E4A primary — saturated blood red, drop banner / add-to-cart / price tag / sale badge 전면 사용, premier-league #E90052 와 톤 명확히 차별화 (darker wine red)",
+      "Royal Purple #6C3BAA accent — bold vivid purple, split-complement pop, countdown timer / drop label / wishlist heart / secondary CTA 강조, 기존 purple HEX (Cobalt Violet #804AA8, Iris Violet #5A4FCF) 와 겹침 없음",
+      "Buttercream #F3E5AB surface_tint — warm cream hero surface, saturated primaries 포용, bloom 의 cornsilk #FFF8DC 와 다른 더 yellow-leaning cream",
+      "light mode 가 기본 — 상품 사진 기반 commerce 관례, dark 옵션 제공 (깊은 neutral black + tuned Crimson/Purple 채도 낮춤)",
+      "기존 11종 프리셋 HEX 와 겹침 0 — Crimson/Royal Purple/Buttercream 조합",
+      "premier-league bold-confident 의 #E90052/#00FF85/#FFD700 팔레트 회피 — commerce 는 streetwear/drop 정체성으로 차별화"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Space Grotesk",
+      "weights": [
+        500,
+        600,
+        700
+      ],
+      "notes": "geometric sans with impact, drop banner / hero headline / product title / price tag — serif 금지"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "product description / cart item / checkout step / filter label 본문 공용, line-height 1.4–1.5 (commerce dense)"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "price / original price / discount percent / countdown timer / quantity / order total — tabular-nums 영문 고정"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한글 1급 — product title / drop banner copy / filter label / empty cart copy, line-height 1.4–1.5 keep-all"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "nike streetwear drop commerce",
+      "supreme product grid",
+      "kith product detail bold",
+      "ssense checkout flow",
+      "musinsa mobile commerce",
+      "29cm product detail bold"
+    ],
+    "sources": [],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.3,
+      "component_shape": 0.2,
+      "color_balance": 0.2,
+      "typography_mood": 0.2,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "full-bleed drop hero banner with countdown",
+      "dense product grid 2x3 or 3x4",
+      "product detail with gallery + variant/size selector + price + add-to-cart",
+      "cart drawer slide-in with cart items and summary",
+      "checkout step progress with address/payment forms"
+    ],
+    "avoid_patterns": [
+      "warm editorial magazine hero",
+      "minimal saas landing",
+      "pastel playful feed",
+      "dense dashboard chrome",
+      "long-form reading article"
+    ],
+    "notes": [
+      "Nike / Supreme / Kith / Ssense / Musinsa / 29cm 계열 bold streetwear/drop commerce 참조",
+      "bold-confident 톤: saturated primary + high-contrast headline + impact typography + full-bleed banner + dense product grid",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://www.nike.com",
+      "kind": "visual-reference",
+      "title": "Nike",
+      "notes": "bold streetwear commerce references"
+    },
+    {
+      "url": "https://www.supremenewyork.com",
+      "kind": "visual-reference",
+      "title": "Supreme",
+      "notes": "drop commerce + lookbook references"
+    },
+    {
+      "url": "https://kith.com",
+      "kind": "visual-reference",
+      "title": "Kith",
+      "notes": "bold product detail + drop banner references"
+    },
+    {
+      "url": "https://www.ssense.com",
+      "kind": "visual-reference",
+      "title": "SSENSE",
+      "notes": "commerce checkout flow references"
+    },
+    {
+      "url": "https://www.musinsa.com",
+      "kind": "visual-reference",
+      "title": "Musinsa",
+      "notes": "KR streetwear commerce references"
+    },
+    {
+      "url": "https://www.29cm.co.kr",
+      "kind": "visual-reference",
+      "title": "29CM",
+      "notes": "KR bold product detail references"
+    }
+  ]
+}

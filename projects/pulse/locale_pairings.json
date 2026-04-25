@@ -1,0 +1,8 @@
+{
+  "ko": {
+    "heading_font": "Pretendard",
+    "body_font": "Pretendard",
+    "mono_font": "JetBrains Mono",
+    "notes": "SRE/DevOps 실시간 observability 콘솔 — 한국어 UI, metric/log/trace 는 mono 영문 고정, 숫자 tabular-nums"
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/design-ontology-harness/preset-manifest.schema.json",
+  "title": "Preset Manifest",
+  "description": "Per-preset manifest. 4 version fields are first-class contract (schema_version, preset_api_version, generated_by_harness_version, preview_version).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "schema_version",
+    "preset_api_version",
+    "generated_by_harness_version",
+    "preview_version",
+    "adapter_compatibility",
+    "source_project",
+    "content_hash",
+    "app_mode",
+    "brand_tone",
+    "color_modes",
+    "default_color_mode",
+    "tags",
+    "owner",
+    "tier",
+    "generated_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(dashboard|document-content|marketing-landing|commerce|conversation-copilot|canvas-tool|community-feed|monitoring-ops)--(minimal-tech|editorial-warm|bold-confident|playful-soft|corporate-trust)$"
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Internal artifact schema (token_schema.json, component_specs.json structure)."
+    },
+    "preset_api_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Plugin consumer contract. Plugin plugin.json declares supported range."
+    },
+    "generated_by_harness_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Python core (design-ontology-harness) version at build time."
+    },
+    "preview_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Preview artifact format (text preview template / screenshot layout)."
+    },
+    "adapter_compatibility": {
+      "type": "object",
+      "description": "Adapter id → semver range.",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "source_project": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Project name under projects/ used as source."
+    },
+    "source_commit": {
+      "type": "string",
+      "description": "Git short commit of harness at build time (optional)."
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "description": "sha256 over the preset's artifact tree (excluding manifest.json itself)."
+    },
+    "app_mode": {
+      "type": "string",
+      "enum": [
+        "dashboard",
+        "document-content",
+        "marketing-landing",
+        "commerce",
+        "conversation-copilot",
+        "canvas-tool",
+        "community-feed",
+        "monitoring-ops"
+      ]
+    },
+    "brand_tone": {
+      "type": "string",
+      "enum": [
+        "minimal-tech",
+        "editorial-warm",
+        "bold-confident",
+        "playful-soft",
+        "corporate-trust"
+      ]
+    },
+    "color_modes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": { "type": "string", "enum": ["light", "dark"] }
+    },
+    "default_color_mode": {
+      "type": "string",
+      "enum": ["light", "dark"]
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "locale_pairings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["heading_font", "body_font"],
+        "properties": {
+          "heading_font": { "type": "string", "minLength": 1 },
+          "body_font": { "type": "string", "minLength": 1 },
+          "font_asset_path": { "type": "string" }
+        }
+      }
+    },
+    "owner": { "type": "string", "minLength": 1 },
+    "tier": { "type": "string", "enum": ["P0", "P1", "P2", "P3"] },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "promoted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO8601 timestamp recorded by promote_preset when tier is bumped."
+    },
+    "promoted_from": {
+      "type": "string",
+      "enum": ["P0", "P1", "P2", "P3"],
+      "description": "Previous tier recorded by promote_preset."
+    },
+    "deprecated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO8601 timestamp recorded by deprecate_preset when the preset is retired."
+    },
+    "deprecation_reason": {
+      "type": "string",
+      "description": "One of zero_hits | version_lag | snapshot_drift | owner_abandoned | manual, or 'manual:<free-text>'.",
+      "pattern": "^(zero_hits|version_lag|snapshot_drift|owner_abandoned|manual(:.+)?)$"
+    },
+    "deprecated_replacement": {
+      "type": "string",
+      "description": "Optional replacement preset_id (matcher uses it as a hint).",
+      "pattern": "^(dashboard|document-content|marketing-landing|commerce|conversation-copilot|canvas-tool|community-feed|monitoring-ops)--(minimal-tech|editorial-warm|bold-confident|playful-soft|corporate-trust)$"
+    },
+    "description": { "type": "string" }
+  }
+}

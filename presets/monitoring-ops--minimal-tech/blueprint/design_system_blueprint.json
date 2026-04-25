@@ -1,0 +1,2396 @@
+{
+  "brand_name": "Pulse",
+  "system_name": "Pulse System",
+  "product_summary": "실시간 observability 콘솔 — metric/log/trace/alert 를 한 화면에서 운영하는 SRE/DevOps 운영 도구",
+  "positioning": {
+    "audiences": [
+      "SRE / 인프라 엔지니어",
+      "DevOps / 플랫폼 엔지니어",
+      "온콜 엔지니어 / 인시던트 커맨더"
+    ],
+    "brand_keywords": [
+      "sre",
+      "devops",
+      "observability",
+      "monitoring",
+      "realtime",
+      "operations",
+      "alerting",
+      "metric",
+      "incident"
+    ],
+    "anti_keywords": [
+      "playful",
+      "decorative",
+      "marketing-heavy",
+      "skeuomorphic",
+      "ornamental"
+    ],
+    "tone_of_voice": [
+      "precise",
+      "operational",
+      "matter-of-fact",
+      "calm-under-pressure"
+    ],
+    "platforms": [
+      "web",
+      "desktop"
+    ],
+    "accessibility_targets": [
+      "WCAG 2.2 AA"
+    ]
+  },
+  "principles": [
+    {
+      "keyword": "sre",
+      "name": "Sre",
+      "rule": "`sre`를 시각적 선택과 인터랙션 선택의 기본 기준으로 삼습니다.",
+      "implications": [
+        "sre와 충돌하는 컴포넌트 변형은 만들지 않기",
+        "sre를 토큰 네이밍과 문서화 기준에 반영하기"
+      ]
+    },
+    {
+      "keyword": "devops",
+      "name": "Devops",
+      "rule": "`devops`를 시각적 선택과 인터랙션 선택의 기본 기준으로 삼습니다.",
+      "implications": [
+        "devops와 충돌하는 컴포넌트 변형은 만들지 않기",
+        "devops를 토큰 네이밍과 문서화 기준에 반영하기"
+      ]
+    },
+    {
+      "keyword": "observability",
+      "name": "Observability",
+      "rule": "`observability`를 시각적 선택과 인터랙션 선택의 기본 기준으로 삼습니다.",
+      "implications": [
+        "observability와 충돌하는 컴포넌트 변형은 만들지 않기",
+        "observability를 토큰 네이밍과 문서화 기준에 반영하기"
+      ]
+    },
+    {
+      "keyword": "monitoring",
+      "name": "Monitoring",
+      "rule": "`monitoring`를 시각적 선택과 인터랙션 선택의 기본 기준으로 삼습니다.",
+      "implications": [
+        "monitoring와 충돌하는 컴포넌트 변형은 만들지 않기",
+        "monitoring를 토큰 네이밍과 문서화 기준에 반영하기"
+      ]
+    }
+  ],
+  "reference_strategy": {
+    "seed_article": "https://carbondesignsystem.com",
+    "top_sources_by_concept_coverage": [
+      {
+        "source_label": "Primer",
+        "covered_concepts": [
+          "accessibility",
+          "brand",
+          "color",
+          "component",
+          "content",
+          "design_system",
+          "design_token",
+          "foundation",
+          "iconography",
+          "layout",
+          "motion",
+          "pattern",
+          "spacing",
+          "style_guide",
+          "typography"
+        ]
+      },
+      {
+        "source_label": "Carbon Design System",
+        "covered_concepts": [
+          "accessibility",
+          "brand",
+          "color",
+          "component",
+          "content",
+          "design_system",
+          "design_token",
+          "foundation",
+          "iconography",
+          "layout",
+          "pattern",
+          "spacing",
+          "typography"
+        ]
+      }
+    ],
+    "rule": "레퍼런스는 그대로 복제하지 않고, 원칙과 구조만 가져와 브랜드 아이덴티티에 맞게 재구성합니다."
+  },
+  "token_strategy": {
+    "color": {
+      "goal": "브랜드 개성을 드러내되 UI 전체를 지배하지 않는 팔레트",
+      "rules": [
+        "brand color는 1개의 primary accent를 중심으로 설계",
+        "semantic color는 brand color와 분리해서 유지",
+        "contrast ratio는 접근성 목표를 우선",
+        "지원하는 theme 모드마다 semantic surface/text/border 쌍을 함께 정의",
+        "하드코딩 색상보다 semantic token 적용을 우선"
+      ]
+    },
+    "typography": {
+      "goal": "정보 구조와 브랜드 톤을 동시에 전달하는 타입 시스템",
+      "rules": [
+        "heading/body/caption 역할을 토큰으로 고정",
+        "텍스트 길이가 긴 화면에서 리듬이 무너지지 않도록 line-height를 계층별로 정의",
+        "편집형 제품이면 typography scale을 먼저 확정"
+      ],
+      "signal": false
+    },
+    "spacing": {
+      "goal": "밀도와 여백의 성격을 제품 전반에서 일관되게 유지",
+      "rules": [
+        "4pt 또는 8pt 기반 scale을 정하고 예외 사용을 제한",
+        "컴포넌트 내부 spacing과 레이아웃 spacing을 분리"
+      ]
+    },
+    "motion": {
+      "goal": "상태 변화를 설명하는 수준의 모션만 허용",
+      "rules": [
+        "transition duration/easing을 토큰화",
+        "주의 환기용 모션과 구조적 모션을 구분"
+      ],
+      "brand_signal": [
+        "keyboard-first",
+        "live-update",
+        "drilldown",
+        "zoom/pan time range",
+        "saved views",
+        "quick mute/ack",
+        "severity-routed focus"
+      ]
+    },
+    "visual_keywords": [
+      "dense chart grid",
+      "status board",
+      "high-density table",
+      "alert-first hierarchy",
+      "cool neutral surfaces",
+      "hairline borders",
+      "monochrome + single accent",
+      "numeric emphasis"
+    ]
+  },
+  "component_strategy": {
+    "product_primitives": [
+      "chart grid",
+      "sparkline",
+      "kpi card",
+      "alert list",
+      "severity badge",
+      "metric table",
+      "time range picker",
+      "status board",
+      "incident timeline",
+      "sidebar navigation",
+      "search filter chrome",
+      "log viewer",
+      "trace flamegraph",
+      "threshold editor"
+    ],
+    "required_component_families": [
+      "button",
+      "input",
+      "navigation",
+      "feedback",
+      "overlay"
+    ],
+    "rules": [
+      "primitive 단위로 책임을 먼저 정의하고 컴포넌트는 그 위에 매핑",
+      "variant proliferation을 막기 위해 상태와 강조 레벨을 먼저 표준화",
+      "브랜드 표현은 surface, emphasis, typography에서 주고 구조는 안정적으로 유지",
+      "기존 기능 진입점은 유지한 채 내부 구현과 시각 언어부터 교체",
+      "전체 셸을 한 번에 다시 그리기보다 feature surface 단위로 순차 적용"
+    ],
+    "concept_alignment": [
+      "accessibility",
+      "color",
+      "component",
+      "content",
+      "design_system",
+      "iconography",
+      "layout",
+      "pattern"
+    ]
+  },
+  "color_reference": {
+    "title": "REFERENCE X Vol.1 - Color Reference",
+    "source_path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "families": [
+      "Deep Blues",
+      "Deep Greens",
+      "Deep Oranges",
+      "Deep Reds",
+      "Deep Violets",
+      "Deep Yellows",
+      "Natural Blues",
+      "Natural Greens",
+      "Natural Oranges",
+      "Natural Reds",
+      "Natural Violets",
+      "Natural Yellows",
+      "Pantone Trend Blues",
+      "Pantone Trend Greens",
+      "Pantone Trend Oranges",
+      "Pantone Trend Reds",
+      "Pantone Trend Violets",
+      "Pantone Trend Yellows",
+      "Pastel Blues",
+      "Pastel Greens",
+      "Pastel Oranges",
+      "Pastel Reds",
+      "Pastel Violets",
+      "Pastel Yellows",
+      "Standard Blues",
+      "Standard Greens",
+      "Standard Oranges",
+      "Standard Reds",
+      "Standard Violets",
+      "Standard Yellows"
+    ],
+    "selected_colors": [
+      {
+        "name": "Kelly Green",
+        "family": "Standard Greens",
+        "hex": "#4CBB17",
+        "cmyk": "C 68%, M 0%, Y 100%, K 0%",
+        "mood": "고명도, 고채도, 전통적인 순녹색 계열 / 활력, 생동감, 긍정성, 에너지, 명료함",
+        "usage": "자연의 순수한 녹색을 직접적으로 표현한 표준 톤. 다양한 산업 분야에 쓰이며 신뢰와 역동성을 함께 전달함. 자연친화적 브랜딩이나 젊은 소비자 타깃 브랜드에 적합함.",
+        "pairings": [
+          "#FFFFFF",
+          "#1C2E4A",
+          "#FFD6B0",
+          "#3E3E3E",
+          "#F6D64A",
+          "#C8B49A"
+        ]
+      },
+      {
+        "name": "Cerulean",
+        "family": "Standard Blues",
+        "hex": "#2A52BE",
+        "cmyk": "C 89%, M 71%, Y 0%, K 0%",
+        "mood": "중명도, 중채도, 스탠다드한 청색 계열 / 안정감, 명료함, 신뢰, 여유, 시각적 청량감",
+        "usage": "하늘이 맑게 갠 순간의 짙은 푸른색에서 유래. 자연광 아래에서 탁하지 않고 균형감 있는 톤을 유지함. 그래픽, 패션, 공간 디자인 등에서 '신뢰와 안정'의 상징으로 자주 쓰임. 과도한 감정선을 배제한 객관적 색상.",
+        "pairings": [
+          "#D9D9D9",
+          "#F7F5EB",
+          "#A9BFA1",
+          "#D7C4A3",
+          "#FFFFFF",
+          "#FFB59E"
+        ]
+      },
+      {
+        "name": "Sky Blue",
+        "family": "Natural Blues",
+        "hex": "#87CEEB",
+        "cmyk": "C 49%, M 5%, Y 7%, K 0%",
+        "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음",
+        "usage": "대기 중 산란광의 자연스러운 푸른빛을 재현한 색. 자연광에서의 개방감을 시각적으로 구현함. UI/UX에서는 피로감 없는 인터페이스 컬러로 활용됨. 화이트, 우드 톤과 함께 사용 시 정서적 안정감을 극대화함.",
+        "pairings": [
+          "#F5F5F5",
+          "#E6DBB8",
+          "#333333",
+          "#D8A7A7",
+          "#B6E3C1",
+          "#CFC7B5"
+        ]
+      }
+    ],
+    "palette_roles": {
+      "primary": {
+        "name": "Azure Blue",
+        "family": "Standard Blues",
+        "hex": "#007FFF",
+        "cmyk": "C 81%, M 51%, Y 0%, K 0%",
+        "mood": "고명도, 고채도, 쿨톤의 청량한 블루 / 개방감, 에너지, 명료함, 신선함, 혁신",
+        "usage": "지중해의 청명한 하늘에서 유래한 퓨어 블루. 가장 이상적인 하늘색으로 평가됨. 웹/앱 UI 디자인에서 버튼, 하이라이트 등 사용자 주목 포인트 컬러로 쓰이며 열린 사고와 테크놀로지를 상징함.",
+        "pairings": [
+          "#D9CBB3",
+          "#444C57",
+          "#FEE440",
+          "#BCE0EE",
+          "#FFFFFF",
+          "#F45B69"
+        ]
+      },
+      "accent": {
+        "name": "Emerald Green",
+        "family": "Standard Greens",
+        "hex": "#50C878",
+        "cmyk": "C 66%, M 0%, Y 69%, K 0%",
+        "mood": "중명도, 중채도의 대중적인 청록 계열 / 고급스러움, 생명력, 세련된 안정감, 청량한 자연성",
+        "usage": "보석 '에메랄드'에서 유래한 클래식 그린 톤. 뛰어난 중명도 녹색 컬러로 신뢰와 활력을 상징하며 자연, 테크놀로지, 모던 디자인에 두루 쓰임. 프리미엄 감성 브랜딩에 자주 등장함.",
+        "pairings": [
+          "#F8F8F4",
+          "#3C3C3C",
+          "#C5A100",
+          "#1A2E45",
+          "#E5B9B5",
+          "#D9C6A5"
+        ]
+      },
+      "surface_tint": {
+        "name": "Ice Blue",
+        "family": "Pastel Blues",
+        "hex": "#D6EAF8",
+        "cmyk": "C 18%, M 3%, Y 2%, K 0%",
+        "mood": "고명도, 저채도, 밝고 청량한 블루 계열 / 정제됨, 청결함, 섬세함, 평온, 투명",
+        "usage": "차가운 공기와 투명한 얼음빛을 연상시키는 밝은 블루 톤. 화이트와 블루의 경계선에서 공간의 깊이와 여백감을 강조함. 청결한 이미지를 전달할 때 유용하며 감정 밀도가 낮아 객관적이고 중립적인 활용도가 높음.",
+        "pairings": [
+          "#FFFFFF",
+          "#3E3E3E",
+          "#D9C8A9",
+          "#2E4E68",
+          "#F6D5D6",
+          "#C0C0C0"
+        ]
+      }
+    },
+    "preferred_families": [
+      "Deep Blues",
+      "Standard Blues",
+      "Natural Blues",
+      "Pastel Blues"
+    ],
+    "selection_mode": "manual",
+    "strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "mixed",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "tinted",
+      "prefer_moods": [
+        "정제됨",
+        "청량함",
+        "명료함",
+        "신뢰"
+      ],
+      "avoid_moods": [
+        "달콤함",
+        "귀여움",
+        "화려함",
+        "대담함"
+      ]
+    },
+    "expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "active_palette": {
+      "selection_mode": "manual",
+      "roles": {
+        "primary": {
+          "name": "Azure Blue",
+          "family": "Standard Blues",
+          "hex": "#007FFF",
+          "cmyk": "C 81%, M 51%, Y 0%, K 0%",
+          "mood": "고명도, 고채도, 쿨톤의 청량한 블루 / 개방감, 에너지, 명료함, 신선함, 혁신",
+          "usage": "지중해의 청명한 하늘에서 유래한 퓨어 블루. 가장 이상적인 하늘색으로 평가됨. 웹/앱 UI 디자인에서 버튼, 하이라이트 등 사용자 주목 포인트 컬러로 쓰이며 열린 사고와 테크놀로지를 상징함.",
+          "pairings": [
+            "#D9CBB3",
+            "#444C57",
+            "#FEE440",
+            "#BCE0EE",
+            "#FFFFFF",
+            "#F45B69"
+          ]
+        },
+        "accent": {
+          "name": "Emerald Green",
+          "family": "Standard Greens",
+          "hex": "#50C878",
+          "cmyk": "C 66%, M 0%, Y 69%, K 0%",
+          "mood": "중명도, 중채도의 대중적인 청록 계열 / 고급스러움, 생명력, 세련된 안정감, 청량한 자연성",
+          "usage": "보석 '에메랄드'에서 유래한 클래식 그린 톤. 뛰어난 중명도 녹색 컬러로 신뢰와 활력을 상징하며 자연, 테크놀로지, 모던 디자인에 두루 쓰임. 프리미엄 감성 브랜딩에 자주 등장함.",
+          "pairings": [
+            "#F8F8F4",
+            "#3C3C3C",
+            "#C5A100",
+            "#1A2E45",
+            "#E5B9B5",
+            "#D9C6A5"
+          ]
+        },
+        "surface_tint": {
+          "name": "Ice Blue",
+          "family": "Pastel Blues",
+          "hex": "#D6EAF8",
+          "cmyk": "C 18%, M 3%, Y 2%, K 0%",
+          "mood": "고명도, 저채도, 밝고 청량한 블루 계열 / 정제됨, 청결함, 섬세함, 평온, 투명",
+          "usage": "차가운 공기와 투명한 얼음빛을 연상시키는 밝은 블루 톤. 화이트와 블루의 경계선에서 공간의 깊이와 여백감을 강조함. 청결한 이미지를 전달할 때 유용하며 감정 밀도가 낮아 객관적이고 중립적인 활용도가 높음.",
+          "pairings": [
+            "#FFFFFF",
+            "#3E3E3E",
+            "#D9C8A9",
+            "#2E4E68",
+            "#F6D5D6",
+            "#C0C0C0"
+          ]
+        }
+      },
+      "selected_colors": [
+        {
+          "name": "Kelly Green",
+          "family": "Standard Greens",
+          "hex": "#4CBB17",
+          "cmyk": "C 68%, M 0%, Y 100%, K 0%",
+          "mood": "고명도, 고채도, 전통적인 순녹색 계열 / 활력, 생동감, 긍정성, 에너지, 명료함",
+          "usage": "자연의 순수한 녹색을 직접적으로 표현한 표준 톤. 다양한 산업 분야에 쓰이며 신뢰와 역동성을 함께 전달함. 자연친화적 브랜딩이나 젊은 소비자 타깃 브랜드에 적합함.",
+          "pairings": [
+            "#FFFFFF",
+            "#1C2E4A",
+            "#FFD6B0",
+            "#3E3E3E",
+            "#F6D64A",
+            "#C8B49A"
+          ]
+        },
+        {
+          "name": "Cerulean",
+          "family": "Standard Blues",
+          "hex": "#2A52BE",
+          "cmyk": "C 89%, M 71%, Y 0%, K 0%",
+          "mood": "중명도, 중채도, 스탠다드한 청색 계열 / 안정감, 명료함, 신뢰, 여유, 시각적 청량감",
+          "usage": "하늘이 맑게 갠 순간의 짙은 푸른색에서 유래. 자연광 아래에서 탁하지 않고 균형감 있는 톤을 유지함. 그래픽, 패션, 공간 디자인 등에서 '신뢰와 안정'의 상징으로 자주 쓰임. 과도한 감정선을 배제한 객관적 색상.",
+          "pairings": [
+            "#D9D9D9",
+            "#F7F5EB",
+            "#A9BFA1",
+            "#D7C4A3",
+            "#FFFFFF",
+            "#FFB59E"
+          ]
+        },
+        {
+          "name": "Sky Blue",
+          "family": "Natural Blues",
+          "hex": "#87CEEB",
+          "cmyk": "C 49%, M 5%, Y 7%, K 0%",
+          "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음",
+          "usage": "대기 중 산란광의 자연스러운 푸른빛을 재현한 색. 자연광에서의 개방감을 시각적으로 구현함. UI/UX에서는 피로감 없는 인터페이스 컬러로 활용됨. 화이트, 우드 톤과 함께 사용 시 정서적 안정감을 극대화함.",
+          "pairings": [
+            "#F5F5F5",
+            "#E6DBB8",
+            "#333333",
+            "#D8A7A7",
+            "#B6E3C1",
+            "#CFC7B5"
+          ]
+        }
+      ],
+      "candidate_id": null
+    },
+    "palette_candidates": [
+      {
+        "id": "signature-1",
+        "label": "Signature",
+        "score": 30.49,
+        "roles": {
+          "primary": {
+            "name": "Kelly Green",
+            "family": "Standard Greens",
+            "hex": "#4CBB17",
+            "cmyk": "C 68%, M 0%, Y 100%, K 0%",
+            "mood": "고명도, 고채도, 전통적인 순녹색 계열 / 활력, 생동감, 긍정성, 에너지, 명료함",
+            "usage": "자연의 순수한 녹색을 직접적으로 표현한 표준 톤. 다양한 산업 분야에 쓰이며 신뢰와 역동성을 함께 전달함. 자연친화적 브랜딩이나 젊은 소비자 타깃 브랜드에 적합함.",
+            "pairings": [
+              "#FFFFFF",
+              "#1C2E4A",
+              "#FFD6B0",
+              "#3E3E3E",
+              "#F6D64A",
+              "#C8B49A"
+            ]
+          },
+          "accent": {
+            "name": "Cerulean",
+            "family": "Standard Blues",
+            "hex": "#2A52BE",
+            "cmyk": "C 89%, M 71%, Y 0%, K 0%",
+            "mood": "중명도, 중채도, 스탠다드한 청색 계열 / 안정감, 명료함, 신뢰, 여유, 시각적 청량감",
+            "usage": "하늘이 맑게 갠 순간의 짙은 푸른색에서 유래. 자연광 아래에서 탁하지 않고 균형감 있는 톤을 유지함. 그래픽, 패션, 공간 디자인 등에서 '신뢰와 안정'의 상징으로 자주 쓰임. 과도한 감정선을 배제한 객관적 색상.",
+            "pairings": [
+              "#D9D9D9",
+              "#F7F5EB",
+              "#A9BFA1",
+              "#D7C4A3",
+              "#FFFFFF",
+              "#FFB59E"
+            ]
+          },
+          "surface_tint": {
+            "name": "Sky Blue",
+            "family": "Natural Blues",
+            "hex": "#87CEEB",
+            "cmyk": "C 49%, M 5%, Y 7%, K 0%",
+            "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음",
+            "usage": "대기 중 산란광의 자연스러운 푸른빛을 재현한 색. 자연광에서의 개방감을 시각적으로 구현함. UI/UX에서는 피로감 없는 인터페이스 컬러로 활용됨. 화이트, 우드 톤과 함께 사용 시 정서적 안정감을 극대화함.",
+            "pairings": [
+              "#F5F5F5",
+              "#E6DBB8",
+              "#333333",
+              "#D8A7A7",
+              "#B6E3C1",
+              "#CFC7B5"
+            ]
+          }
+        },
+        "rationale": [
+          "Kelly Green matches preferred mood '명료함'.",
+          "Cerulean is inside preferred families.",
+          "Sky Blue is inside preferred families."
+        ],
+        "strategy_snapshot": {
+          "temperature": "mixed",
+          "contrast": "balanced",
+          "diversity": "balanced",
+          "surface_style": "tinted"
+        }
+      },
+      {
+        "id": "soft-spread-2",
+        "label": "Soft Spread",
+        "score": 29.59,
+        "roles": {
+          "primary": {
+            "name": "Cerulean",
+            "family": "Standard Blues",
+            "hex": "#2A52BE",
+            "cmyk": "C 89%, M 71%, Y 0%, K 0%",
+            "mood": "중명도, 중채도, 스탠다드한 청색 계열 / 안정감, 명료함, 신뢰, 여유, 시각적 청량감",
+            "usage": "하늘이 맑게 갠 순간의 짙은 푸른색에서 유래. 자연광 아래에서 탁하지 않고 균형감 있는 톤을 유지함. 그래픽, 패션, 공간 디자인 등에서 '신뢰와 안정'의 상징으로 자주 쓰임. 과도한 감정선을 배제한 객관적 색상.",
+            "pairings": [
+              "#D9D9D9",
+              "#F7F5EB",
+              "#A9BFA1",
+              "#D7C4A3",
+              "#FFFFFF",
+              "#FFB59E"
+            ]
+          },
+          "accent": {
+            "name": "Sky Blue",
+            "family": "Natural Blues",
+            "hex": "#87CEEB",
+            "cmyk": "C 49%, M 5%, Y 7%, K 0%",
+            "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음",
+            "usage": "대기 중 산란광의 자연스러운 푸른빛을 재현한 색. 자연광에서의 개방감을 시각적으로 구현함. UI/UX에서는 피로감 없는 인터페이스 컬러로 활용됨. 화이트, 우드 톤과 함께 사용 시 정서적 안정감을 극대화함.",
+            "pairings": [
+              "#F5F5F5",
+              "#E6DBB8",
+              "#333333",
+              "#D8A7A7",
+              "#B6E3C1",
+              "#CFC7B5"
+            ]
+          },
+          "surface_tint": {
+            "name": "Ice Blue",
+            "family": "Pastel Blues",
+            "hex": "#D6EAF8",
+            "cmyk": "C 18%, M 3%, Y 2%, K 0%",
+            "mood": "고명도, 저채도, 밝고 청량한 블루 계열 / 정제됨, 청결함, 섬세함, 평온, 투명",
+            "usage": "차가운 공기와 투명한 얼음빛을 연상시키는 밝은 블루 톤. 화이트와 블루의 경계선에서 공간의 깊이와 여백감을 강조함. 청결한 이미지를 전달할 때 유용하며 감정 밀도가 낮아 객관적이고 중립적인 활용도가 높음.",
+            "pairings": [
+              "#FFFFFF",
+              "#3E3E3E",
+              "#D9C8A9",
+              "#2E4E68",
+              "#F6D5D6",
+              "#C0C0C0"
+            ]
+          }
+        },
+        "rationale": [
+          "Cerulean is inside preferred families.",
+          "Sky Blue is inside preferred families.",
+          "Ice Blue is inside preferred families."
+        ],
+        "strategy_snapshot": {
+          "temperature": "mixed",
+          "contrast": "soft",
+          "diversity": "balanced",
+          "surface_style": "airy"
+        }
+      }
+    ],
+    "expanded_palette": {
+      "search_strategy": {
+        "sources": [
+          "seed pairings",
+          "brand keywords",
+          "family tone",
+          "hue compatibility",
+          "related families"
+        ],
+        "supporting_color_count": 10,
+        "combination_count": 3,
+        "seed_roles": {
+          "primary": {
+            "name": "Azure Blue",
+            "hex": "#007FFF",
+            "family": "Standard Blues"
+          },
+          "accent": {
+            "name": "Emerald Green",
+            "hex": "#50C878",
+            "family": "Standard Greens"
+          },
+          "surface_tint": {
+            "name": "Ice Blue",
+            "hex": "#D6EAF8",
+            "family": "Pastel Blues"
+          }
+        },
+        "preferred_families": [
+          "Deep Blues",
+          "Standard Blues",
+          "Natural Blues",
+          "Pastel Blues"
+        ]
+      },
+      "supporting_colors": [
+        {
+          "name": "Pairing #FFFFFF",
+          "family": "Derived Pairing",
+          "hex": "#FFFFFF",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Azure Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Azure Blue",
+            "Ice Blue"
+          ],
+          "search_score": 8.4,
+          "search_reasons": [
+            "Pairing #FFFFFF comes from the seed pairing references.",
+            "Pairing #FFFFFF is explicitly paired with Azure Blue, Ice Blue."
+          ]
+        },
+        {
+          "name": "Pairing #444C57",
+          "family": "Derived Pairing",
+          "hex": "#444C57",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Azure Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Azure Blue"
+          ],
+          "search_score": 8.25,
+          "search_reasons": [
+            "Pairing #444C57 comes from the seed pairing references.",
+            "Pairing #444C57 is explicitly paired with Azure Blue.",
+            "Pairing #444C57 can act as a neutral support color."
+          ]
+        },
+        {
+          "name": "Pairing #BCE0EE",
+          "family": "Derived Pairing",
+          "hex": "#BCE0EE",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Azure Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Azure Blue"
+          ],
+          "search_score": 7.85,
+          "search_reasons": [
+            "Pairing #BCE0EE comes from the seed pairing references.",
+            "Pairing #BCE0EE is explicitly paired with Azure Blue."
+          ]
+        },
+        {
+          "name": "Pairing #C0C0C0",
+          "family": "Derived Pairing",
+          "hex": "#C0C0C0",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Ice Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Ice Blue"
+          ],
+          "search_score": 7.25,
+          "search_reasons": [
+            "Pairing #C0C0C0 comes from the seed pairing references.",
+            "Pairing #C0C0C0 is explicitly paired with Ice Blue.",
+            "Pairing #C0C0C0 can act as a neutral support color."
+          ]
+        },
+        {
+          "name": "Pairing #1A2E45",
+          "family": "Derived Pairing",
+          "hex": "#1A2E45",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Emerald Green.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Emerald Green"
+          ],
+          "search_score": 7.05,
+          "search_reasons": [
+            "Pairing #1A2E45 comes from the seed pairing references.",
+            "Pairing #1A2E45 is explicitly paired with Emerald Green."
+          ]
+        },
+        {
+          "name": "Pairing #2E4E68",
+          "family": "Derived Pairing",
+          "hex": "#2E4E68",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Ice Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Ice Blue"
+          ],
+          "search_score": 7.05,
+          "search_reasons": [
+            "Pairing #2E4E68 comes from the seed pairing references.",
+            "Pairing #2E4E68 is explicitly paired with Ice Blue."
+          ]
+        },
+        {
+          "name": "Pairing #3C3C3C",
+          "family": "Derived Pairing",
+          "hex": "#3C3C3C",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Emerald Green.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Emerald Green"
+          ],
+          "search_score": 6.45,
+          "search_reasons": [
+            "Pairing #3C3C3C comes from the seed pairing references.",
+            "Pairing #3C3C3C is explicitly paired with Emerald Green.",
+            "Pairing #3C3C3C can act as a neutral support color."
+          ]
+        },
+        {
+          "name": "Pairing #3E3E3E",
+          "family": "Derived Pairing",
+          "hex": "#3E3E3E",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Ice Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Ice Blue"
+          ],
+          "search_score": 6.45,
+          "search_reasons": [
+            "Pairing #3E3E3E comes from the seed pairing references.",
+            "Pairing #3E3E3E is explicitly paired with Ice Blue.",
+            "Pairing #3E3E3E can act as a neutral support color."
+          ]
+        },
+        {
+          "name": "Pairing #F8F8F4",
+          "family": "Derived Pairing",
+          "hex": "#F8F8F4",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Emerald Green.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Emerald Green"
+          ],
+          "search_score": 6.45,
+          "search_reasons": [
+            "Pairing #F8F8F4 comes from the seed pairing references.",
+            "Pairing #F8F8F4 is explicitly paired with Emerald Green."
+          ]
+        },
+        {
+          "name": "Pairing #D9C6A5",
+          "family": "Derived Pairing",
+          "hex": "#D9C6A5",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Emerald Green.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Emerald Green"
+          ],
+          "search_score": 6.35,
+          "search_reasons": [
+            "Pairing #D9C6A5 comes from the seed pairing references.",
+            "Pairing #D9C6A5 is explicitly paired with Emerald Green."
+          ]
+        }
+      ],
+      "semantic_roles": {
+        "brand_primary": {
+          "name": "Azure Blue",
+          "family": "Standard Blues",
+          "hex": "#007FFF",
+          "cmyk": "C 81%, M 51%, Y 0%, K 0%",
+          "mood": "고명도, 고채도, 쿨톤의 청량한 블루 / 개방감, 에너지, 명료함, 신선함, 혁신",
+          "usage": "지중해의 청명한 하늘에서 유래한 퓨어 블루. 가장 이상적인 하늘색으로 평가됨. 웹/앱 UI 디자인에서 버튼, 하이라이트 등 사용자 주목 포인트 컬러로 쓰이며 열린 사고와 테크놀로지를 상징함.",
+          "pairings": [
+            "#D9CBB3",
+            "#444C57",
+            "#FEE440",
+            "#BCE0EE",
+            "#FFFFFF",
+            "#F45B69"
+          ]
+        },
+        "brand_accent": {
+          "name": "Emerald Green",
+          "family": "Standard Greens",
+          "hex": "#50C878",
+          "cmyk": "C 66%, M 0%, Y 69%, K 0%",
+          "mood": "중명도, 중채도의 대중적인 청록 계열 / 고급스러움, 생명력, 세련된 안정감, 청량한 자연성",
+          "usage": "보석 '에메랄드'에서 유래한 클래식 그린 톤. 뛰어난 중명도 녹색 컬러로 신뢰와 활력을 상징하며 자연, 테크놀로지, 모던 디자인에 두루 쓰임. 프리미엄 감성 브랜딩에 자주 등장함.",
+          "pairings": [
+            "#F8F8F4",
+            "#3C3C3C",
+            "#C5A100",
+            "#1A2E45",
+            "#E5B9B5",
+            "#D9C6A5"
+          ]
+        },
+        "surface_tint": {
+          "name": "Ice Blue",
+          "family": "Pastel Blues",
+          "hex": "#D6EAF8",
+          "cmyk": "C 18%, M 3%, Y 2%, K 0%",
+          "mood": "고명도, 저채도, 밝고 청량한 블루 계열 / 정제됨, 청결함, 섬세함, 평온, 투명",
+          "usage": "차가운 공기와 투명한 얼음빛을 연상시키는 밝은 블루 톤. 화이트와 블루의 경계선에서 공간의 깊이와 여백감을 강조함. 청결한 이미지를 전달할 때 유용하며 감정 밀도가 낮아 객관적이고 중립적인 활용도가 높음.",
+          "pairings": [
+            "#FFFFFF",
+            "#3E3E3E",
+            "#D9C8A9",
+            "#2E4E68",
+            "#F6D5D6",
+            "#C0C0C0"
+          ]
+        },
+        "canvas": {
+          "name": "Pairing #FFFFFF",
+          "family": "Derived Pairing",
+          "hex": "#FFFFFF",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Azure Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Azure Blue",
+            "Ice Blue"
+          ],
+          "search_score": 8.4,
+          "search_reasons": [
+            "Pairing #FFFFFF comes from the seed pairing references.",
+            "Pairing #FFFFFF is explicitly paired with Azure Blue, Ice Blue."
+          ]
+        },
+        "surface": {
+          "name": "Pairing #FFFFFF",
+          "family": "Derived Pairing",
+          "hex": "#FFFFFF",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Azure Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Azure Blue",
+            "Ice Blue"
+          ],
+          "search_score": 8.4,
+          "search_reasons": [
+            "Pairing #FFFFFF comes from the seed pairing references.",
+            "Pairing #FFFFFF is explicitly paired with Azure Blue, Ice Blue."
+          ]
+        },
+        "surface_muted": {
+          "name": "Surface Muted",
+          "family": "Generated Fallback",
+          "hex": "#EEF1F6",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "surface_elevated": {
+          "name": "Pairing #FFFFFF",
+          "family": "Derived Pairing",
+          "hex": "#FFFFFF",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Azure Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Azure Blue",
+            "Ice Blue"
+          ],
+          "search_score": 8.4,
+          "search_reasons": [
+            "Pairing #FFFFFF comes from the seed pairing references.",
+            "Pairing #FFFFFF is explicitly paired with Azure Blue, Ice Blue."
+          ]
+        },
+        "border": {
+          "name": "Border Neutral",
+          "family": "Generated Fallback",
+          "hex": "#D6DDE6",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "border_strong": {
+          "name": "Pairing #C0C0C0",
+          "family": "Derived Pairing",
+          "hex": "#C0C0C0",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Ice Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Ice Blue"
+          ],
+          "search_score": 7.25,
+          "search_reasons": [
+            "Pairing #C0C0C0 comes from the seed pairing references.",
+            "Pairing #C0C0C0 is explicitly paired with Ice Blue.",
+            "Pairing #C0C0C0 can act as a neutral support color."
+          ]
+        },
+        "ink": {
+          "name": "Pairing #1A2E45",
+          "family": "Derived Pairing",
+          "hex": "#1A2E45",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Emerald Green.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Emerald Green"
+          ],
+          "search_score": 7.05,
+          "search_reasons": [
+            "Pairing #1A2E45 comes from the seed pairing references.",
+            "Pairing #1A2E45 is explicitly paired with Emerald Green."
+          ]
+        },
+        "ink_muted": {
+          "name": "Pairing #444C57",
+          "family": "Derived Pairing",
+          "hex": "#444C57",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Azure Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Azure Blue"
+          ],
+          "search_score": 8.25,
+          "search_reasons": [
+            "Pairing #444C57 comes from the seed pairing references.",
+            "Pairing #444C57 is explicitly paired with Azure Blue.",
+            "Pairing #444C57 can act as a neutral support color."
+          ]
+        },
+        "ink_subtle": {
+          "name": "Subtle Ink",
+          "family": "Generated Fallback",
+          "hex": "#6B7280",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "ink_inverse": {
+          "name": "Ink Inverse",
+          "family": "Generated Fallback",
+          "hex": "#FFFFFF",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "primary_support": {
+          "name": "Pairing #444C57",
+          "family": "Derived Pairing",
+          "hex": "#444C57",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Azure Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Azure Blue"
+          ],
+          "search_score": 8.25,
+          "search_reasons": [
+            "Pairing #444C57 comes from the seed pairing references.",
+            "Pairing #444C57 is explicitly paired with Azure Blue.",
+            "Pairing #444C57 can act as a neutral support color."
+          ]
+        },
+        "accent_support": {
+          "name": "Emerald Green",
+          "family": "Standard Greens",
+          "hex": "#50C878",
+          "cmyk": "C 66%, M 0%, Y 69%, K 0%",
+          "mood": "중명도, 중채도의 대중적인 청록 계열 / 고급스러움, 생명력, 세련된 안정감, 청량한 자연성",
+          "usage": "보석 '에메랄드'에서 유래한 클래식 그린 톤. 뛰어난 중명도 녹색 컬러로 신뢰와 활력을 상징하며 자연, 테크놀로지, 모던 디자인에 두루 쓰임. 프리미엄 감성 브랜딩에 자주 등장함.",
+          "pairings": [
+            "#F8F8F4",
+            "#3C3C3C",
+            "#C5A100",
+            "#1A2E45",
+            "#E5B9B5",
+            "#D9C6A5"
+          ]
+        },
+        "info": {
+          "name": "Pairing #444C57",
+          "family": "Derived Pairing",
+          "hex": "#444C57",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Azure Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Azure Blue"
+          ],
+          "search_score": 8.25,
+          "search_reasons": [
+            "Pairing #444C57 comes from the seed pairing references.",
+            "Pairing #444C57 is explicitly paired with Azure Blue.",
+            "Pairing #444C57 can act as a neutral support color."
+          ]
+        },
+        "success": {
+          "name": "Emerald Green",
+          "family": "Standard Greens",
+          "hex": "#50C878",
+          "cmyk": "C 66%, M 0%, Y 69%, K 0%",
+          "mood": "중명도, 중채도의 대중적인 청록 계열 / 고급스러움, 생명력, 세련된 안정감, 청량한 자연성",
+          "usage": "보석 '에메랄드'에서 유래한 클래식 그린 톤. 뛰어난 중명도 녹색 컬러로 신뢰와 활력을 상징하며 자연, 테크놀로지, 모던 디자인에 두루 쓰임. 프리미엄 감성 브랜딩에 자주 등장함.",
+          "pairings": [
+            "#F8F8F4",
+            "#3C3C3C",
+            "#C5A100",
+            "#1A2E45",
+            "#E5B9B5",
+            "#D9C6A5"
+          ],
+          "source_type": "active-role:accent"
+        },
+        "warning": {
+          "name": "Pairing #F8F8F4",
+          "family": "Derived Pairing",
+          "hex": "#F8F8F4",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Emerald Green.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Emerald Green"
+          ],
+          "search_score": 6.45,
+          "search_reasons": [
+            "Pairing #F8F8F4 comes from the seed pairing references.",
+            "Pairing #F8F8F4 is explicitly paired with Emerald Green."
+          ]
+        },
+        "danger": {
+          "name": "Danger",
+          "family": "Generated Fallback",
+          "hex": "#8B2252",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "link": {
+          "name": "Azure Blue",
+          "family": "Standard Blues",
+          "hex": "#007FFF",
+          "cmyk": "C 81%, M 51%, Y 0%, K 0%",
+          "mood": "고명도, 고채도, 쿨톤의 청량한 블루 / 개방감, 에너지, 명료함, 신선함, 혁신",
+          "usage": "지중해의 청명한 하늘에서 유래한 퓨어 블루. 가장 이상적인 하늘색으로 평가됨. 웹/앱 UI 디자인에서 버튼, 하이라이트 등 사용자 주목 포인트 컬러로 쓰이며 열린 사고와 테크놀로지를 상징함.",
+          "pairings": [
+            "#D9CBB3",
+            "#444C57",
+            "#FEE440",
+            "#BCE0EE",
+            "#FFFFFF",
+            "#F45B69"
+          ]
+        },
+        "link_hover": {
+          "name": "Link Hover",
+          "family": "Generated Fallback",
+          "hex": "#006BD6",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        }
+      },
+      "component_sets": {
+        "button_primary": {
+          "surface_default": "#007FFF",
+          "surface_hover": "#0070E0",
+          "surface_active": "#0066CC",
+          "surface_disabled": "#99CCFF",
+          "text_default": "#FFFFFF",
+          "text_disabled": "#FFFFFF",
+          "border_default": "#007FFF",
+          "focus_ring": "#007FFF"
+        },
+        "button_secondary": {
+          "surface_default": "#FFFFFF",
+          "surface_hover": "#F1F2F4",
+          "surface_active": "#E8EAEC",
+          "surface_disabled": "#FFFFFF",
+          "text_default": "#1A2E45",
+          "text_disabled": "#98A1AB",
+          "border_default": "#BDC8D7",
+          "border_hover": "#A3B3C7",
+          "focus_ring": "#007FFF"
+        },
+        "button_ghost": {
+          "surface_default": "transparent",
+          "surface_hover": "#F4F5F6",
+          "surface_active": "#EAECEE",
+          "surface_disabled": "transparent",
+          "text_default": "#444C57",
+          "text_hover": "#1A2E45",
+          "text_disabled": "#ABAEB3",
+          "border_default": "transparent",
+          "focus_ring": "#007FFF"
+        },
+        "button_danger": {
+          "surface_default": "#8B2252",
+          "surface_hover": "#721C43",
+          "surface_active": "#62183A",
+          "text_default": "#FFFFFF",
+          "border_default": "#8B2252",
+          "focus_ring": "#8B2252"
+        },
+        "input": {
+          "surface_default": "#FFFFFF",
+          "surface_filled": "#FFFFFF",
+          "surface_disabled": "#FFFFFF",
+          "text_default": "#1A2E45",
+          "text_placeholder": "#8F949A",
+          "text_disabled": "#ABAEB3",
+          "border_default": "#D6DDE6",
+          "border_hover": "#B6C3D3",
+          "border_focus": "#007FFF",
+          "border_error": "#8B2252",
+          "border_disabled": "#E6EAF0"
+        },
+        "card": {
+          "surface_default": "#FFFFFF",
+          "surface_hover": "#FAFBFB",
+          "surface_muted": "#FFFFFF",
+          "border_default": "#D6DDE6",
+          "border_hover": "#B6C3D3",
+          "border_focus": "#007FFF"
+        },
+        "nav_link": {
+          "text_default": "#444C57",
+          "text_hover": "#1A2E45",
+          "text_active": "#007FFF",
+          "surface_hover": "#F6F7F8",
+          "indicator": "#50C878"
+        },
+        "link": {
+          "text_default": "#007FFF",
+          "text_hover": "#0066CC",
+          "text_visited": "#1772CF"
+        },
+        "feedback_info": {
+          "surface": "#E9EAEB",
+          "text": "#444C57",
+          "border": "#7C8289",
+          "icon": "#444C57"
+        },
+        "feedback_success": {
+          "surface": "#EAF8EF",
+          "text": "#50C878",
+          "border": "#84D8A0",
+          "icon": "#50C878"
+        },
+        "feedback_warning": {
+          "surface": "#FEFEFE",
+          "text": "#F8F8F4",
+          "border": "#FAFAF7",
+          "icon": "#F8F8F4"
+        },
+        "feedback_danger": {
+          "surface": "#F1E4EA",
+          "text": "#8B2252",
+          "border": "#AE6486",
+          "icon": "#8B2252"
+        }
+      },
+      "combination_lists": [
+        {
+          "id": "seed-core",
+          "label": "Seed Core",
+          "purpose": "기본 테마를 이루는 핵심 색",
+          "colors": [
+            {
+              "role": "primary",
+              "name": "Azure Blue",
+              "hex": "#007FFF",
+              "family": "Standard Blues",
+              "source_type": null
+            },
+            {
+              "role": "accent",
+              "name": "Emerald Green",
+              "hex": "#50C878",
+              "family": "Standard Greens",
+              "source_type": null
+            },
+            {
+              "role": "surface_tint",
+              "name": "Ice Blue",
+              "hex": "#D6EAF8",
+              "family": "Pastel Blues",
+              "source_type": null
+            }
+          ]
+        },
+        {
+          "id": "surface-system",
+          "label": "Surface System",
+          "purpose": "배경, 패널, 텍스트, 보더에 쓰는 기본 조합",
+          "colors": [
+            {
+              "role": "canvas",
+              "name": "Pairing #FFFFFF",
+              "hex": "#FFFFFF",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            },
+            {
+              "role": "surface",
+              "name": "Pairing #FFFFFF",
+              "hex": "#FFFFFF",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            },
+            {
+              "role": "surface_tint",
+              "name": "Ice Blue",
+              "hex": "#D6EAF8",
+              "family": "Pastel Blues",
+              "source_type": null
+            },
+            {
+              "role": "border",
+              "name": "Border Neutral",
+              "hex": "#D6DDE6",
+              "family": "Generated Fallback",
+              "source_type": "generated-fallback"
+            },
+            {
+              "role": "ink",
+              "name": "Pairing #1A2E45",
+              "hex": "#1A2E45",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            },
+            {
+              "role": "ink_muted",
+              "name": "Pairing #444C57",
+              "hex": "#444C57",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            }
+          ]
+        },
+        {
+          "id": "support-spectrum",
+          "label": "Support Spectrum",
+          "purpose": "보조 하이라이트, 차트, 2차 액션에 쓰는 확장 리스트",
+          "colors": [
+            {
+              "role": "support",
+              "name": "Pairing #FFFFFF",
+              "hex": "#FFFFFF",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            },
+            {
+              "role": "support",
+              "name": "Pairing #444C57",
+              "hex": "#444C57",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            },
+            {
+              "role": "support",
+              "name": "Pairing #BCE0EE",
+              "hex": "#BCE0EE",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            },
+            {
+              "role": "support",
+              "name": "Pairing #C0C0C0",
+              "hex": "#C0C0C0",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            },
+            {
+              "role": "support",
+              "name": "Pairing #1A2E45",
+              "hex": "#1A2E45",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            },
+            {
+              "role": "support",
+              "name": "Pairing #2E4E68",
+              "hex": "#2E4E68",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            }
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "Azure Blue 를 primary 로 — 실시간 강조/라이브 상태 신호",
+      "Emerald Green 액센트로 성공/healthy 상태 긍정 시그널",
+      "Ice Blue 는 surface_tint — 장시간 관찰하는 데이터 캔버스 피로감 최소화",
+      "dark mode 가 기본 — 온콜/야간 운영 환경, Grafana/Datadog 관례",
+      "semantic(success/warning/danger/info) 별도 role — severity 는 색 + 라벨 이중"
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "grafana dashboard dark",
+      "datadog monitoring console",
+      "honeycomb observability traces",
+      "prometheus alert list"
+    ],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.4,
+      "component_shape": 0.25,
+      "color_balance": 0.15,
+      "typography_mood": 0.1,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "notes": [
+      "Grafana/Datadog/Honeycomb 스타일 realtime 운영 콘솔 참조",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "must_include": [
+      "dense chart grid",
+      "alert list with severity badges",
+      "metric table",
+      "status board",
+      "time range picker"
+    ],
+    "avoid_patterns": [
+      "glassmorphism",
+      "gradient-heavy surfaces",
+      "playful illustrations"
+    ],
+    "sources": [],
+    "images": [],
+    "selected_images": [],
+    "duplicate_groups": [],
+    "similar_groups": [],
+    "coverage": {
+      "source_count": 0,
+      "resolved_source_count": 0,
+      "image_count": 0,
+      "selected_image_count": 0,
+      "format_counts": {},
+      "orientation_counts": {},
+      "aspect_ratio_buckets": {}
+    },
+    "visual_motifs": {
+      "density": {
+        "value": "dense",
+        "confidence": 0.94,
+        "evidence": [
+          "dashboard x1",
+          "table x3",
+          "monitoring x2"
+        ],
+        "candidates": [
+          {
+            "value": "dense",
+            "score": 16.0
+          }
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Derived from selected image signals plus query and brand context."
+        }
+      },
+      "surface_style": {
+        "value": "flat",
+        "confidence": 0.24,
+        "evidence": [
+          "fallback=flat"
+        ],
+        "candidates": [],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Derived from selected image signals plus query and brand context."
+        }
+      },
+      "typography_mood": {
+        "value": "playful",
+        "confidence": 0.49,
+        "evidence": [
+          "playful x2"
+        ],
+        "candidates": [
+          {
+            "value": "playful",
+            "score": 6.0
+          },
+          {
+            "value": "utilitarian",
+            "score": 6.0
+          }
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Derived from selected image signals plus query and brand context."
+        }
+      },
+      "corner_style": {
+        "value": "medium",
+        "confidence": 0.29,
+        "evidence": [
+          "card x1"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Derived from selected image geometry and supporting signal terms."
+        }
+      },
+      "color_balance": {
+        "observed": false,
+        "temperature": "unknown",
+        "contrast_profile": "unknown",
+        "neutral_bias": "unknown",
+        "dominant": [],
+        "supporting": [],
+        "provenance": {
+          "level": "unverified",
+          "detail": "No reliable pixel-color sample was available from the current selection."
+        }
+      },
+      "image_selection": {
+        "selected_image_count": 0,
+        "available_image_count": 0,
+        "provenance": {
+          "level": "unverified",
+          "detail": "No local image files were available for selection."
+        }
+      }
+    },
+    "layout_cues": [
+      {
+        "id": "dashboard-grid",
+        "label": "Dashboard grid",
+        "confidence": 0.94,
+        "evidence": [
+          "dashboard x1",
+          "metric x3",
+          "kpi x1",
+          "chart x3",
+          "table x3",
+          "monitoring x2"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Layout cue inferred from selected image signals and reference context."
+        }
+      },
+      {
+        "id": "data-review-surface",
+        "label": "Data review surface",
+        "confidence": 0.94,
+        "evidence": [
+          "table x3",
+          "grid x3",
+          "log x1",
+          "filter x1",
+          "timeline x1"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Layout cue inferred from selected image signals and reference context."
+        }
+      },
+      {
+        "id": "split-pane-workspace",
+        "label": "Split-pane workspace",
+        "confidence": 0.7,
+        "evidence": [
+          "sidebar x1",
+          "editor x1",
+          "navigation x1",
+          "dashboard x1"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Layout cue inferred from selected image signals and reference context."
+        }
+      },
+      {
+        "id": "landing-narrative",
+        "label": "Narrative landing flow",
+        "confidence": 0.35,
+        "evidence": [
+          "marketing x1"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Layout cue inferred from selected image signals and reference context."
+        }
+      }
+    ],
+    "component_style_hints": {
+      "cards": {
+        "direction": "flat card planes를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.",
+        "confidence": 0.94,
+        "evidence": [
+          "surface=flat",
+          "density=dense",
+          "corner=medium"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        }
+      },
+      "navigation": {
+        "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
+        "confidence": 0.7,
+        "evidence": [
+          "Split-pane workspace"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        }
+      },
+      "typography": {
+        "direction": "표현력은 허용하되 제품 UI에서는 heading 수와 accent를 엄격히 제한한다.",
+        "confidence": 0.49,
+        "evidence": [
+          "typography_mood=playful"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        }
+      },
+      "data_display": {
+        "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+        "confidence": 0.94,
+        "evidence": [
+          "layout=dashboard-grid",
+          "density=dense"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        }
+      }
+    },
+    "candidate_component_archetypes": [
+      {
+        "id": "dashboard-insight-module",
+        "label": "Dashboard insight module",
+        "family": "data-display",
+        "confidence": 0.94,
+        "suggested_components": [
+          "stat-card",
+          "insight-card",
+          "chart-panel",
+          "section-header",
+          "filter-chip"
+        ],
+        "supports_primitives": [
+          "dashboard cards",
+          "charts and visualization"
+        ],
+        "evidence": [
+          "layout=dashboard-grid (0.94)",
+          "dashboard x1",
+          "metric x3",
+          "kpi x1",
+          "chart x3"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        }
+      },
+      {
+        "id": "data-review-table",
+        "label": "Data review table",
+        "family": "data-display",
+        "confidence": 0.94,
+        "suggested_components": [
+          "data-table",
+          "column-header",
+          "row-actions",
+          "filter-toolbar",
+          "pagination"
+        ],
+        "supports_primitives": [
+          "data tables",
+          "search and filter"
+        ],
+        "evidence": [
+          "layout=data-review-surface (0.94)",
+          "layout=dashboard-grid (0.94)",
+          "table x3",
+          "grid x3",
+          "log x1",
+          "filter x1"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        }
+      },
+      {
+        "id": "workspace-shell",
+        "label": "Workspace shell",
+        "family": "navigation",
+        "confidence": 0.75,
+        "suggested_components": [
+          "app-shell",
+          "sidebar-nav",
+          "workspace-switcher",
+          "breadcrumb",
+          "context-panel"
+        ],
+        "supports_primitives": [
+          "workspace navigation"
+        ],
+        "evidence": [
+          "layout=split-pane-workspace (0.7)",
+          "sidebar x1",
+          "navigation x1"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        }
+      }
+    ],
+    "reference_mood_summary": {
+      "top_layout": "Dashboard grid",
+      "recommended_direction": [
+        "layout는 Dashboard grid 기준으로 정리",
+        "surface language는 flat 성향 우선",
+        "typography mood는 playful 축 유지",
+        "density는 dense 기준으로 primitive spacing 조정",
+        "palette temperature는 unknown 쪽을 우선"
+      ],
+      "avoidance": [
+        "glassmorphism",
+        "gradient-heavy surfaces",
+        "playful illustrations"
+      ],
+      "component_focus": [
+        "cards",
+        "data_display",
+        "navigation",
+        "typography"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+      }
+    },
+    "brand_context": {
+      "brand_name": "Pulse",
+      "system_name": "Pulse System",
+      "brand_keywords": [
+        "sre",
+        "devops",
+        "observability",
+        "monitoring",
+        "realtime",
+        "operations",
+        "alerting",
+        "metric",
+        "incident"
+      ],
+      "anti_keywords": [
+        "playful",
+        "decorative",
+        "marketing-heavy",
+        "skeuomorphic",
+        "ornamental"
+      ],
+      "visual_keywords": [
+        "dense chart grid",
+        "status board",
+        "high-density table",
+        "alert-first hierarchy",
+        "cool neutral surfaces",
+        "hairline borders",
+        "monochrome + single accent",
+        "numeric emphasis"
+      ],
+      "interaction_keywords": [
+        "keyboard-first",
+        "live-update",
+        "drilldown",
+        "zoom/pan time range",
+        "saved views",
+        "quick mute/ack",
+        "severity-routed focus"
+      ],
+      "product_primitives": [
+        "chart grid",
+        "sparkline",
+        "kpi card",
+        "alert list",
+        "severity badge",
+        "metric table",
+        "time range picker",
+        "status board",
+        "incident timeline",
+        "sidebar navigation",
+        "search filter chrome",
+        "log viewer",
+        "trace flamegraph",
+        "threshold editor"
+      ]
+    }
+  },
+  "visual_reference_issues": [
+    "visual_reference.sources is empty"
+  ],
+  "visual_language": {
+    "density": {
+      "value": "dense",
+      "confidence": 0.94,
+      "evidence": [
+        "dashboard x1",
+        "table x3",
+        "monitoring x2"
+      ],
+      "candidates": [
+        {
+          "value": "dense",
+          "score": 16.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "flat",
+      "confidence": 0.24,
+      "evidence": [
+        "fallback=flat"
+      ],
+      "candidates": [],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "playful",
+      "confidence": 0.49,
+      "evidence": [
+        "playful x2"
+      ],
+      "candidates": [
+        {
+          "value": "playful",
+          "score": 6.0
+        },
+        {
+          "value": "utilitarian",
+          "score": 6.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "medium",
+      "confidence": 0.29,
+      "evidence": [
+        "card x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.94,
+      "evidence": [
+        "dashboard x1",
+        "metric x3",
+        "kpi x1",
+        "chart x3",
+        "table x3",
+        "monitoring x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.94,
+      "evidence": [
+        "table x3",
+        "grid x3",
+        "log x1",
+        "filter x1",
+        "timeline x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "split-pane-workspace",
+      "label": "Split-pane workspace",
+      "confidence": 0.7,
+      "evidence": [
+        "sidebar x1",
+        "editor x1",
+        "navigation x1",
+        "dashboard x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "landing-narrative",
+      "label": "Narrative landing flow",
+      "confidence": 0.35,
+      "evidence": [
+        "marketing x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "flat card planes를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.",
+      "confidence": 0.94,
+      "evidence": [
+        "surface=flat",
+        "density=dense",
+        "corner=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
+      "confidence": 0.7,
+      "evidence": [
+        "Split-pane workspace"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "표현력은 허용하되 제품 UI에서는 heading 수와 accent를 엄격히 제한한다.",
+      "confidence": 0.49,
+      "evidence": [
+        "typography_mood=playful"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.94,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=dense"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.94)",
+        "dashboard x1",
+        "metric x3",
+        "kpi x1",
+        "chart x3"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.94)",
+        "layout=dashboard-grid (0.94)",
+        "table x3",
+        "grid x3",
+        "log x1",
+        "filter x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "workspace-shell",
+      "label": "Workspace shell",
+      "family": "navigation",
+      "confidence": 0.75,
+      "suggested_components": [
+        "app-shell",
+        "sidebar-nav",
+        "workspace-switcher",
+        "breadcrumb",
+        "context-panel"
+      ],
+      "supports_primitives": [
+        "workspace navigation"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.7)",
+        "sidebar x1",
+        "navigation x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Dashboard grid",
+    "recommended_direction": [
+      "layout는 Dashboard grid 기준으로 정리",
+      "surface language는 flat 성향 우선",
+      "typography mood는 playful 축 유지",
+      "density는 dense 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "glassmorphism",
+      "gradient-heavy surfaces",
+      "playful illustrations"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "font_system": {
+    "heading": {
+      "name": "Spoqa Han Sans Neo",
+      "family": "geometric-sans",
+      "personality": [
+        "clean",
+        "precise",
+        "geometric"
+      ],
+      "weight_range": "100-700",
+      "variable": false,
+      "source": "GitHub (spoqa/spoqa-han-sans)",
+      "note": "스포카에서 만든 한글 산세리프. Source Sans Pro 기반. 깔끔한 데이터 UI에 적합."
+    },
+    "body": {
+      "name": "Spoqa Han Sans Neo",
+      "family": "geometric-sans",
+      "personality": [
+        "clean",
+        "precise",
+        "geometric"
+      ],
+      "weight_range": "100-700",
+      "variable": false,
+      "source": "GitHub (spoqa/spoqa-han-sans)",
+      "note": "스포카에서 만든 한글 산세리프. Source Sans Pro 기반. 깔끔한 데이터 UI에 적합."
+    },
+    "korean": {
+      "name": "Spoqa Han Sans Neo",
+      "family": "geometric-sans",
+      "personality": [
+        "clean",
+        "precise",
+        "geometric"
+      ],
+      "weight_range": "100-700",
+      "variable": false,
+      "source": "GitHub (spoqa/spoqa-han-sans)",
+      "note": "스포카에서 만든 한글 산세리프. Source Sans Pro 기반. 깔끔한 데이터 UI에 적합."
+    },
+    "korean_rationale": {
+      "primary_is_korean": true,
+      "font": "Spoqa Han Sans Neo",
+      "reason": "Pretendard 이전 시대의 한글 UI 표준. 요기요, 여기어때 등에서 사용. 깔끔하지만 weight 범위와 Variable 미지원이 아쉬움. 신규 프로젝트에서는 Pretendard 추천.",
+      "glyph_width": "중간-좁음",
+      "small_size_limit": "13px까지 가독성 유지",
+      "best_for_kr": [
+        "SaaS",
+        "데이터 대시보드",
+        "깔끔한 UI"
+      ],
+      "avoid_for_kr": [
+        "장문 본문 — line-height 여유 부족",
+        "감성적 브랜딩"
+      ],
+      "latin_pair": "Source Sans 3 (같은 Source 계열)"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "family": "monospace",
+      "personality": [
+        "precise",
+        "technical",
+        "developer"
+      ],
+      "weight_range": "100-800",
+      "variable": true,
+      "source": "Google Fonts",
+      "note": "개발자 도구의 사실상 표준 모노스페이스. 리거처 지원."
+    },
+    "type_scale": {
+      "base": 14,
+      "scale_ratio": 1.2,
+      "sizes": {
+        "xs": 11,
+        "sm": 12,
+        "md": 14,
+        "lg": 17,
+        "xl": 20,
+        "2xl": 24,
+        "3xl": 29
+      },
+      "line_heights": {
+        "tight": 1.25,
+        "normal": 1.4,
+        "comfortable": 1.5,
+        "relaxed": 1.6
+      },
+      "best_for": [
+        "dashboard",
+        "data-heavy",
+        "mobile"
+      ]
+    },
+    "line_height_preset": "normal",
+    "product_type_detected": "dashboard",
+    "needs_korean": true,
+    "pairing_source": "auto-scored",
+    "strategy": [
+      "단일 서체(Spoqa Han Sans Neo)로 weight 대비 위계 — 일관성 우선",
+      "한글 서체: Spoqa Han Sans Neo — 라틴과 x-height/weight 조화",
+      "모노스페이스: JetBrains Mono — 코드/데이터 영역 전용"
+    ],
+    "loading": {
+      "fonts": [
+        {
+          "font": "Spoqa Han Sans Neo",
+          "weights": "400;500;600",
+          "priority": "preload"
+        },
+        {
+          "font": "JetBrains Mono",
+          "weights": "400;500",
+          "priority": "lazy"
+        }
+      ],
+      "fallback_strategy": "system-ui → font swap",
+      "display": "swap",
+      "subset": "latin,korean",
+      "note": "본문 서체를 preload, 모노스페이스는 lazy load. font-display: swap으로 FOUT 최소화."
+    },
+    "pitfall_warnings": [],
+    "letter_spacing": {
+      "heading_tracking": {
+        "xl": "-0.01em",
+        "2xl": "-0.01em",
+        "3xl": "-0.01em"
+      },
+      "note": "큰 헤딩에 negative tracking 적용. 미적용 시 글자가 풀어진 느낌."
+    },
+    "script_guardrails": {
+      "primary_script": "korean",
+      "headline_font": {
+        "name": "Spoqa Han Sans Neo",
+        "line_height": "1.2-1.3",
+        "letter_spacing": "-0.02em",
+        "note": "조밀한 UI에서는 tracking 보정이 유효하지만 장문 본문용으로는 여유가 적다."
+      },
+      "body_font": {
+        "name": "Spoqa Han Sans Neo",
+        "line_height": "1.5-1.6",
+        "ui_label_line_height": "1.4-1.5",
+        "letter_spacing": "0em",
+        "note": "조밀한 UI에서는 tracking 보정이 유효하지만 장문 본문용으로는 여유가 적다."
+      },
+      "wrap": {
+        "headline": {
+          "word_break": "keep-all",
+          "overflow_wrap": "normal",
+          "text_wrap": "balance"
+        },
+        "body": {
+          "word_break": "keep-all",
+          "overflow_wrap": "normal"
+        },
+        "avoid": [
+          "forced <br /> before breakpoint QA",
+          "English-first ch heuristics without real Korean copy review"
+        ]
+      },
+      "scale": {
+        "headline_start": "default-scale",
+        "guidance": "기본 스케일을 사용할 수 있지만 한글 문장 기준으로 실제 wrap을 먼저 검증한다."
+      },
+      "warnings": [
+        "장문 본문 — line-height 여유 부족",
+        "감성적 브랜딩",
+        "장문 본문 — line-height 여유 부족",
+        "감성적 브랜딩"
+      ],
+      "rules": [
+        "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
+        "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
+        "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다."
+      ]
+    }
+  },
+  "css_extraction": null,
+  "governance": {
+    "source_of_truth": [
+      "brand profile",
+      "design tokens",
+      "component specs",
+      "usage rules",
+      "existing product surfaces and task flows"
+    ],
+    "change_policy": [
+      "새 컴포넌트보다 기존 primitive 확장을 우선",
+      "예외 케이스는 variant로 흡수 가능한지 먼저 검토",
+      "브랜드 키워드와 anti-keyword를 위반하면 추가하지 않음"
+    ],
+    "implementation_guardrails": [
+      "기존 핵심 화면, 진입점, 작업 흐름은 명시적 승인 없이 제거하거나 숨기지 않음",
+      "전면 셸 리라이트보다 토큰 -> primitive -> feature surface 순서의 점진적 롤아웃을 우선",
+      "새 시각 규칙은 지원 대상 테마와 breakpoint 전체에서 먼저 검증",
+      "기존 데이터 밀도와 업무 완료 경로를 유지한 상태에서 시각 품질을 높이는 방향을 우선",
+      "기능 위치 변경, 정보 구조 변경, 패널 제거는 별도의 migration plan이 있을 때만 수행",
+      "아이콘 자리에 이모지(🎨 ✅ 🔥 등)를 넣지 않음 — SVG 아이콘 또는 아이콘 라이브러리만 사용",
+      "컴포넌트는 component_specs.md의 anatomy/states/token binding을 그대로 따라 완전히 구현",
+      "'TODO 컴포넌트', '임시 버튼', '플레이스홀더 카드' 같은 반쪽 구현을 남기지 않음"
+    ],
+    "ai_synthesis_principles": [
+      {
+        "id": "no_fabricated_hex",
+        "rule": "hex를 만들지 않는다",
+        "detail": "AI는 색상 hex 값을 임의로 생성하지 않는다. 반드시 color_reference, CSS 추출, 브랜드 가이드 등 실증 소스에서 가져온 값만 사용한다."
+      },
+      {
+        "id": "no_fabricated_token_names",
+        "rule": "토큰명을 만들지 않는다",
+        "detail": "AI는 토큰 이름을 임의로 발명하지 않는다. 네이밍 패턴(core/semantic/component 레이어 규칙)은 정의하되, 구체적 토큰명은 실제 컴포넌트와 역할에서 도출한다."
+      },
+      {
+        "id": "interpretation_over_facts_only",
+        "rule": "팩트 위에 해석만",
+        "detail": "AI는 수집된 레퍼런스, 프로필, 온톨로지 증거 위에 해석과 구조화만 수행한다. 증거 없는 추론, 존재하지 않는 패턴 서술, 가상의 사용 사례 생성을 금지한다."
+      },
+      {
+        "id": "no_emoji_as_ui",
+        "rule": "이모지를 UI 요소로 쓰지 않는다",
+        "detail": "AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 반드시 SVG 아이콘 컴포넌트를 직접 구현하거나, 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)를 import해서 사용한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다. 이 규칙은 AI가 UI를 만들 때 가장 자주 저지르는 실수이므로 엄격히 적용한다."
+      },
+      {
+        "id": "implement_components_directly",
+        "rule": "컴포넌트를 직접 구현한다",
+        "detail": "AI는 '임시 버튼', '플레이스홀더 카드', 'TODO 컴포넌트' 같은 반쪽 구현을 남기지 않는다. system_spec.md의 Component Strategy와 component_specs.md에 정의된 구조(anatomy), 상태(states), 토큰 바인딩, 접근성 규칙을 그대로 따라 완전한 컴포넌트를 구현한다. 기존 라이브러리 컴포넌트를 그냥 import해서 쓰는 대신, 디자인 시스템 토큰으로 스타일을 명시적으로 바인딩한다."
+      }
+    ]
+  },
+  "ontology_targets": [
+    {
+      "concept_id": "component",
+      "count": 121
+    },
+    {
+      "concept_id": "design_system",
+      "count": 68
+    },
+    {
+      "concept_id": "layout",
+      "count": 42
+    },
+    {
+      "concept_id": "content",
+      "count": 36
+    },
+    {
+      "concept_id": "accessibility",
+      "count": 35
+    },
+    {
+      "concept_id": "color",
+      "count": 35
+    },
+    {
+      "concept_id": "pattern",
+      "count": 35
+    },
+    {
+      "concept_id": "iconography",
+      "count": 30
+    }
+  ],
+  "benchmark": {
+    "matched_systems": [],
+    "total_benchmark_count": 35,
+    "common_typography_in_matches": {},
+    "color_strategy_patterns": [],
+    "industry_keywords": [
+      "accessible",
+      "bold",
+      "calm",
+      "composable",
+      "editorial",
+      "expressive",
+      "fast",
+      "flexible",
+      "friendly",
+      "inclusive",
+      "minimal",
+      "playful",
+      "precise",
+      "refined",
+      "systematic",
+      "trustworthy",
+      "warm"
+    ]
+  }
+}

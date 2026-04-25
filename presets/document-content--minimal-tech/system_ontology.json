@@ -1,0 +1,8090 @@
+{
+  "node_types": [
+    "Brand",
+    "Principle",
+    "ColorPalette",
+    "ColorToken",
+    "ColorMode",
+    "FontFamily",
+    "TypeScaleEntry",
+    "SpacingToken",
+    "RadiusToken",
+    "MotionToken",
+    "ElevationToken",
+    "ComponentFamily",
+    "Component",
+    "ComponentState",
+    "LayoutPattern",
+    "InteractionPattern",
+    "AccessibilityRule",
+    "ProductPrimitive",
+    "SourceReference",
+    "BenchmarkSystem"
+  ],
+  "edge_types": [
+    "expresses",
+    "constrains",
+    "belongs_to_palette",
+    "derived_from",
+    "overrides_in_mode",
+    "contrast_pair",
+    "pairs_with",
+    "uses_font",
+    "member_of_family",
+    "has_state",
+    "uses_token",
+    "state_modifies_token",
+    "uses_type_scale",
+    "supports",
+    "implements",
+    "composed_of",
+    "requires",
+    "inspired_by",
+    "similar_to",
+    "references_font",
+    "governs",
+    "defines",
+    "applies_to",
+    "maps_to_tier"
+  ],
+  "nodes": [
+    {
+      "id": "brand:lattice",
+      "type": "Brand",
+      "label": "Lattice"
+    },
+    {
+      "id": "principle:reference-docs",
+      "type": "Principle",
+      "label": "Reference-Docs"
+    },
+    {
+      "id": "principle:api-docs",
+      "type": "Principle",
+      "label": "Api-Docs"
+    },
+    {
+      "id": "principle:developer-docs",
+      "type": "Principle",
+      "label": "Developer-Docs"
+    },
+    {
+      "id": "principle:technical-writing",
+      "type": "Principle",
+      "label": "Technical-Writing"
+    },
+    {
+      "id": "spacing:0",
+      "type": "SpacingToken",
+      "label": "0"
+    },
+    {
+      "id": "spacing:2",
+      "type": "SpacingToken",
+      "label": "2"
+    },
+    {
+      "id": "spacing:4",
+      "type": "SpacingToken",
+      "label": "4"
+    },
+    {
+      "id": "spacing:8",
+      "type": "SpacingToken",
+      "label": "8"
+    },
+    {
+      "id": "spacing:12",
+      "type": "SpacingToken",
+      "label": "12"
+    },
+    {
+      "id": "spacing:16",
+      "type": "SpacingToken",
+      "label": "16"
+    },
+    {
+      "id": "spacing:24",
+      "type": "SpacingToken",
+      "label": "24"
+    },
+    {
+      "id": "spacing:32",
+      "type": "SpacingToken",
+      "label": "32"
+    },
+    {
+      "id": "spacing:48",
+      "type": "SpacingToken",
+      "label": "48"
+    },
+    {
+      "id": "spacing:64",
+      "type": "SpacingToken",
+      "label": "64"
+    },
+    {
+      "id": "spacing:96",
+      "type": "SpacingToken",
+      "label": "96"
+    },
+    {
+      "id": "radius:none",
+      "type": "RadiusToken",
+      "label": "none"
+    },
+    {
+      "id": "radius:sm",
+      "type": "RadiusToken",
+      "label": "sm"
+    },
+    {
+      "id": "radius:md",
+      "type": "RadiusToken",
+      "label": "md"
+    },
+    {
+      "id": "radius:lg",
+      "type": "RadiusToken",
+      "label": "lg"
+    },
+    {
+      "id": "radius:xl",
+      "type": "RadiusToken",
+      "label": "xl"
+    },
+    {
+      "id": "radius:pill",
+      "type": "RadiusToken",
+      "label": "pill"
+    },
+    {
+      "id": "family:button",
+      "type": "ComponentFamily",
+      "label": "button",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:button-default",
+      "type": "ComponentState",
+      "label": "button/default"
+    },
+    {
+      "id": "state:button-hover",
+      "type": "ComponentState",
+      "label": "button/hover"
+    },
+    {
+      "id": "state:button-active",
+      "type": "ComponentState",
+      "label": "button/active"
+    },
+    {
+      "id": "state:button-disabled",
+      "type": "ComponentState",
+      "label": "button/disabled"
+    },
+    {
+      "id": "state:button-loading",
+      "type": "ComponentState",
+      "label": "button/loading"
+    },
+    {
+      "id": "component:primary-button",
+      "type": "Component",
+      "label": "primary-button"
+    },
+    {
+      "id": "component:secondary-button",
+      "type": "Component",
+      "label": "secondary-button"
+    },
+    {
+      "id": "component:ghost-button",
+      "type": "Component",
+      "label": "ghost-button"
+    },
+    {
+      "id": "component:icon-button",
+      "type": "Component",
+      "label": "icon-button"
+    },
+    {
+      "id": "component:cta-button",
+      "type": "Component",
+      "label": "cta-button"
+    },
+    {
+      "id": "component:link-button",
+      "type": "Component",
+      "label": "link-button"
+    },
+    {
+      "id": "component:copy-code-button",
+      "type": "Component",
+      "label": "copy-code-button"
+    },
+    {
+      "id": "component:form-actions",
+      "type": "Component",
+      "label": "form-actions"
+    },
+    {
+      "id": "component:hero-cta-group",
+      "type": "Component",
+      "label": "hero-cta-group"
+    },
+    {
+      "id": "family:data-display",
+      "type": "ComponentFamily",
+      "label": "data-display",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:data-display-default",
+      "type": "ComponentState",
+      "label": "data-display/default"
+    },
+    {
+      "id": "state:data-display-sorted",
+      "type": "ComponentState",
+      "label": "data-display/sorted"
+    },
+    {
+      "id": "state:data-display-filtered",
+      "type": "ComponentState",
+      "label": "data-display/filtered"
+    },
+    {
+      "id": "state:data-display-empty",
+      "type": "ComponentState",
+      "label": "data-display/empty"
+    },
+    {
+      "id": "component:data-table",
+      "type": "Component",
+      "label": "data-table"
+    },
+    {
+      "id": "component:column-header",
+      "type": "Component",
+      "label": "column-header"
+    },
+    {
+      "id": "component:row-actions",
+      "type": "Component",
+      "label": "row-actions"
+    },
+    {
+      "id": "component:search-results",
+      "type": "Component",
+      "label": "search-results"
+    },
+    {
+      "id": "component:kanban-board",
+      "type": "Component",
+      "label": "kanban-board"
+    },
+    {
+      "id": "component:kanban-column",
+      "type": "Component",
+      "label": "kanban-column"
+    },
+    {
+      "id": "component:kanban-card",
+      "type": "Component",
+      "label": "kanban-card"
+    },
+    {
+      "id": "component:stat-card",
+      "type": "Component",
+      "label": "stat-card"
+    },
+    {
+      "id": "component:insight-card",
+      "type": "Component",
+      "label": "insight-card"
+    },
+    {
+      "id": "component:activity-card",
+      "type": "Component",
+      "label": "activity-card"
+    },
+    {
+      "id": "component:section-header",
+      "type": "Component",
+      "label": "section-header"
+    },
+    {
+      "id": "component:tag",
+      "type": "Component",
+      "label": "tag"
+    },
+    {
+      "id": "component:chat-message",
+      "type": "Component",
+      "label": "chat-message"
+    },
+    {
+      "id": "component:chat-thread",
+      "type": "Component",
+      "label": "chat-thread"
+    },
+    {
+      "id": "component:comment-thread",
+      "type": "Component",
+      "label": "comment-thread"
+    },
+    {
+      "id": "component:filter-toolbar",
+      "type": "Component",
+      "label": "filter-toolbar"
+    },
+    {
+      "id": "component:chart-panel",
+      "type": "Component",
+      "label": "chart-panel"
+    },
+    {
+      "id": "family:editorial",
+      "type": "ComponentFamily",
+      "label": "editorial",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:editorial-default",
+      "type": "ComponentState",
+      "label": "editorial/default"
+    },
+    {
+      "id": "state:editorial-selected",
+      "type": "ComponentState",
+      "label": "editorial/selected"
+    },
+    {
+      "id": "state:editorial-editing",
+      "type": "ComponentState",
+      "label": "editorial/editing"
+    },
+    {
+      "id": "component:editor-canvas",
+      "type": "Component",
+      "label": "editor-canvas"
+    },
+    {
+      "id": "component:editor-toolbar",
+      "type": "Component",
+      "label": "editor-toolbar"
+    },
+    {
+      "id": "component:inline-format-menu",
+      "type": "Component",
+      "label": "inline-format-menu"
+    },
+    {
+      "id": "component:slash-command-menu",
+      "type": "Component",
+      "label": "slash-command-menu"
+    },
+    {
+      "id": "component:block-controls",
+      "type": "Component",
+      "label": "block-controls"
+    },
+    {
+      "id": "component:content-card",
+      "type": "Component",
+      "label": "content-card"
+    },
+    {
+      "id": "component:featured-story-card",
+      "type": "Component",
+      "label": "featured-story-card"
+    },
+    {
+      "id": "component:content-meta",
+      "type": "Component",
+      "label": "content-meta"
+    },
+    {
+      "id": "component:byline-row",
+      "type": "Component",
+      "label": "byline-row"
+    },
+    {
+      "id": "family:feedback",
+      "type": "ComponentFamily",
+      "label": "feedback",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:feedback-info",
+      "type": "ComponentState",
+      "label": "feedback/info"
+    },
+    {
+      "id": "state:feedback-success",
+      "type": "ComponentState",
+      "label": "feedback/success"
+    },
+    {
+      "id": "state:feedback-warning",
+      "type": "ComponentState",
+      "label": "feedback/warning"
+    },
+    {
+      "id": "state:feedback-danger",
+      "type": "ComponentState",
+      "label": "feedback/danger"
+    },
+    {
+      "id": "component:inline-alert",
+      "type": "Component",
+      "label": "inline-alert"
+    },
+    {
+      "id": "component:empty-state",
+      "type": "Component",
+      "label": "empty-state"
+    },
+    {
+      "id": "component:toast",
+      "type": "Component",
+      "label": "toast"
+    },
+    {
+      "id": "component:banner",
+      "type": "Component",
+      "label": "banner"
+    },
+    {
+      "id": "component:status-badge",
+      "type": "Component",
+      "label": "status-badge"
+    },
+    {
+      "id": "component:step-progress",
+      "type": "Component",
+      "label": "step-progress"
+    },
+    {
+      "id": "component:shortcut-hint",
+      "type": "Component",
+      "label": "shortcut-hint"
+    },
+    {
+      "id": "family:input",
+      "type": "ComponentFamily",
+      "label": "input",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:input-default",
+      "type": "ComponentState",
+      "label": "input/default"
+    },
+    {
+      "id": "state:input-focus",
+      "type": "ComponentState",
+      "label": "input/focus"
+    },
+    {
+      "id": "state:input-error",
+      "type": "ComponentState",
+      "label": "input/error"
+    },
+    {
+      "id": "state:input-disabled",
+      "type": "ComponentState",
+      "label": "input/disabled"
+    },
+    {
+      "id": "component:text-field",
+      "type": "Component",
+      "label": "text-field"
+    },
+    {
+      "id": "component:search-field",
+      "type": "Component",
+      "label": "search-field"
+    },
+    {
+      "id": "component:segmented-control",
+      "type": "Component",
+      "label": "segmented-control"
+    },
+    {
+      "id": "component:filter-chip",
+      "type": "Component",
+      "label": "filter-chip"
+    },
+    {
+      "id": "component:filter-panel",
+      "type": "Component",
+      "label": "filter-panel"
+    },
+    {
+      "id": "component:textarea",
+      "type": "Component",
+      "label": "textarea"
+    },
+    {
+      "id": "component:select",
+      "type": "Component",
+      "label": "select"
+    },
+    {
+      "id": "component:checkbox",
+      "type": "Component",
+      "label": "checkbox"
+    },
+    {
+      "id": "component:radio-group",
+      "type": "Component",
+      "label": "radio-group"
+    },
+    {
+      "id": "component:form-section",
+      "type": "Component",
+      "label": "form-section"
+    },
+    {
+      "id": "component:chip",
+      "type": "Component",
+      "label": "chip"
+    },
+    {
+      "id": "component:chat-input",
+      "type": "Component",
+      "label": "chat-input"
+    },
+    {
+      "id": "component:comment-input",
+      "type": "Component",
+      "label": "comment-input"
+    },
+    {
+      "id": "family:marketing",
+      "type": "ComponentFamily",
+      "label": "marketing",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:marketing-default",
+      "type": "ComponentState",
+      "label": "marketing/default"
+    },
+    {
+      "id": "state:marketing-hover",
+      "type": "ComponentState",
+      "label": "marketing/hover"
+    },
+    {
+      "id": "state:marketing-in-view",
+      "type": "ComponentState",
+      "label": "marketing/in-view"
+    },
+    {
+      "id": "component:hero-container",
+      "type": "Component",
+      "label": "hero-container"
+    },
+    {
+      "id": "component:hero-eyebrow",
+      "type": "Component",
+      "label": "hero-eyebrow"
+    },
+    {
+      "id": "component:hero-headline",
+      "type": "Component",
+      "label": "hero-headline"
+    },
+    {
+      "id": "component:hero-subheadline",
+      "type": "Component",
+      "label": "hero-subheadline"
+    },
+    {
+      "id": "component:hero-visual",
+      "type": "Component",
+      "label": "hero-visual"
+    },
+    {
+      "id": "component:hero-trust-strip",
+      "type": "Component",
+      "label": "hero-trust-strip"
+    },
+    {
+      "id": "family:navigation",
+      "type": "ComponentFamily",
+      "label": "navigation",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:navigation-default",
+      "type": "ComponentState",
+      "label": "navigation/default"
+    },
+    {
+      "id": "state:navigation-active",
+      "type": "ComponentState",
+      "label": "navigation/active"
+    },
+    {
+      "id": "state:navigation-hover",
+      "type": "ComponentState",
+      "label": "navigation/hover"
+    },
+    {
+      "id": "state:navigation-collapsed",
+      "type": "ComponentState",
+      "label": "navigation/collapsed"
+    },
+    {
+      "id": "component:mobile-topbar",
+      "type": "Component",
+      "label": "mobile-topbar"
+    },
+    {
+      "id": "component:mobile-tab-bar",
+      "type": "Component",
+      "label": "mobile-tab-bar"
+    },
+    {
+      "id": "component:back-button",
+      "type": "Component",
+      "label": "back-button"
+    },
+    {
+      "id": "component:section-tabs",
+      "type": "Component",
+      "label": "section-tabs"
+    },
+    {
+      "id": "component:prev-next-pager",
+      "type": "Component",
+      "label": "prev-next-pager"
+    },
+    {
+      "id": "component:version-switcher",
+      "type": "Component",
+      "label": "version-switcher"
+    },
+    {
+      "id": "component:pagination",
+      "type": "Component",
+      "label": "pagination"
+    },
+    {
+      "id": "component:app-shell",
+      "type": "Component",
+      "label": "app-shell"
+    },
+    {
+      "id": "component:sidebar-nav",
+      "type": "Component",
+      "label": "sidebar-nav"
+    },
+    {
+      "id": "component:topbar",
+      "type": "Component",
+      "label": "topbar"
+    },
+    {
+      "id": "component:breadcrumb",
+      "type": "Component",
+      "label": "breadcrumb"
+    },
+    {
+      "id": "component:tab-bar",
+      "type": "Component",
+      "label": "tab-bar"
+    },
+    {
+      "id": "component:wizard-layout",
+      "type": "Component",
+      "label": "wizard-layout"
+    },
+    {
+      "id": "component:workspace-switcher",
+      "type": "Component",
+      "label": "workspace-switcher"
+    },
+    {
+      "id": "component:context-panel",
+      "type": "Component",
+      "label": "context-panel"
+    },
+    {
+      "id": "family:document",
+      "type": "ComponentFamily",
+      "label": "document",
+      "meta": {
+        "priority": "medium"
+      }
+    },
+    {
+      "id": "state:document-default",
+      "type": "ComponentState",
+      "label": "document/default"
+    },
+    {
+      "id": "component:article-body",
+      "type": "Component",
+      "label": "article-body"
+    },
+    {
+      "id": "component:table-of-contents",
+      "type": "Component",
+      "label": "table-of-contents"
+    },
+    {
+      "id": "component:heading-anchor",
+      "type": "Component",
+      "label": "heading-anchor"
+    },
+    {
+      "id": "component:prose-block",
+      "type": "Component",
+      "label": "prose-block"
+    },
+    {
+      "id": "component:reading-pane",
+      "type": "Component",
+      "label": "reading-pane"
+    },
+    {
+      "id": "component:footnote",
+      "type": "Component",
+      "label": "footnote"
+    },
+    {
+      "id": "component:link-card",
+      "type": "Component",
+      "label": "link-card"
+    },
+    {
+      "id": "component:api-reference-table",
+      "type": "Component",
+      "label": "api-reference-table"
+    },
+    {
+      "id": "component:parameter-table",
+      "type": "Component",
+      "label": "parameter-table"
+    },
+    {
+      "id": "component:code-block",
+      "type": "Component",
+      "label": "code-block"
+    },
+    {
+      "id": "component:inline-code",
+      "type": "Component",
+      "label": "inline-code"
+    },
+    {
+      "id": "component:language-tab",
+      "type": "Component",
+      "label": "language-tab"
+    },
+    {
+      "id": "component:callout",
+      "type": "Component",
+      "label": "callout"
+    },
+    {
+      "id": "component:admonition-block",
+      "type": "Component",
+      "label": "admonition-block"
+    },
+    {
+      "id": "family:overlay",
+      "type": "ComponentFamily",
+      "label": "overlay",
+      "meta": {
+        "priority": "medium"
+      }
+    },
+    {
+      "id": "state:overlay-closed",
+      "type": "ComponentState",
+      "label": "overlay/closed"
+    },
+    {
+      "id": "state:overlay-opening",
+      "type": "ComponentState",
+      "label": "overlay/opening"
+    },
+    {
+      "id": "state:overlay-open",
+      "type": "ComponentState",
+      "label": "overlay/open"
+    },
+    {
+      "id": "component:bottom-sheet",
+      "type": "Component",
+      "label": "bottom-sheet"
+    },
+    {
+      "id": "component:modal-dialog",
+      "type": "Component",
+      "label": "modal-dialog"
+    },
+    {
+      "id": "component:autocomplete",
+      "type": "Component",
+      "label": "autocomplete"
+    },
+    {
+      "id": "component:confirm-dialog",
+      "type": "Component",
+      "label": "confirm-dialog"
+    },
+    {
+      "id": "component:tooltip-guide",
+      "type": "Component",
+      "label": "tooltip-guide"
+    },
+    {
+      "id": "component:command-palette",
+      "type": "Component",
+      "label": "command-palette"
+    },
+    {
+      "id": "component:command-result-item",
+      "type": "Component",
+      "label": "command-result-item"
+    },
+    {
+      "id": "component:mention-popup",
+      "type": "Component",
+      "label": "mention-popup"
+    },
+    {
+      "id": "primitive:baseline",
+      "type": "ProductPrimitive",
+      "label": "baseline"
+    },
+    {
+      "id": "primitive:reference-documentation",
+      "type": "ProductPrimitive",
+      "label": "reference documentation"
+    },
+    {
+      "id": "primitive:api-reference",
+      "type": "ProductPrimitive",
+      "label": "api reference"
+    },
+    {
+      "id": "primitive:data-tables",
+      "type": "ProductPrimitive",
+      "label": "data tables"
+    },
+    {
+      "id": "primitive:code-documentation",
+      "type": "ProductPrimitive",
+      "label": "code documentation"
+    },
+    {
+      "id": "primitive:callout-and-admonition",
+      "type": "ProductPrimitive",
+      "label": "callout and admonition"
+    },
+    {
+      "id": "primitive:search-and-filter",
+      "type": "ProductPrimitive",
+      "label": "search and filter"
+    },
+    {
+      "id": "primitive:workspace-navigation",
+      "type": "ProductPrimitive",
+      "label": "workspace navigation"
+    },
+    {
+      "id": "primitive:forms",
+      "type": "ProductPrimitive",
+      "label": "forms"
+    },
+    {
+      "id": "primitive:kanban-and-board",
+      "type": "ProductPrimitive",
+      "label": "kanban and board"
+    },
+    {
+      "id": "primitive:notifications",
+      "type": "ProductPrimitive",
+      "label": "notifications"
+    },
+    {
+      "id": "primitive:rich-text-editor",
+      "type": "ProductPrimitive",
+      "label": "rich text editor"
+    },
+    {
+      "id": "primitive:dashboard-cards",
+      "type": "ProductPrimitive",
+      "label": "dashboard cards"
+    },
+    {
+      "id": "primitive:tags-and-labels",
+      "type": "ProductPrimitive",
+      "label": "tags and labels"
+    },
+    {
+      "id": "primitive:modal-and-dialog",
+      "type": "ProductPrimitive",
+      "label": "modal and dialog"
+    },
+    {
+      "id": "primitive:onboarding-and-stepper",
+      "type": "ProductPrimitive",
+      "label": "onboarding and stepper"
+    },
+    {
+      "id": "primitive:chat-and-messaging",
+      "type": "ProductPrimitive",
+      "label": "chat and messaging"
+    },
+    {
+      "id": "primitive:command-palette",
+      "type": "ProductPrimitive",
+      "label": "command palette"
+    },
+    {
+      "id": "primitive:comments-and-discussion",
+      "type": "ProductPrimitive",
+      "label": "comments and discussion"
+    },
+    {
+      "id": "primitive:hero-section",
+      "type": "ProductPrimitive",
+      "label": "hero section"
+    },
+    {
+      "id": "palette:standard-blues",
+      "type": "ColorPalette",
+      "label": "Standard Blues"
+    },
+    {
+      "id": "color:cerulean",
+      "type": "ColorToken",
+      "label": "Cerulean",
+      "meta": {
+        "hex": "#2A52BE",
+        "tier": "core",
+        "mood": "중명도, 중채도, 스탠다드한 청색 계열 / 안정감, 명료함, 신뢰, 여유, 시각적 청량감"
+      }
+    },
+    {
+      "id": "palette:standard-oranges",
+      "type": "ColorPalette",
+      "label": "Standard Oranges"
+    },
+    {
+      "id": "color:ochre",
+      "type": "ColorToken",
+      "label": "Ochre",
+      "meta": {
+        "hex": "#CC7722",
+        "tier": "core",
+        "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성"
+      }
+    },
+    {
+      "id": "palette:natural-blues",
+      "type": "ColorPalette",
+      "label": "Natural Blues"
+    },
+    {
+      "id": "color:sky-blue",
+      "type": "ColorToken",
+      "label": "Sky Blue",
+      "meta": {
+        "hex": "#87CEEB",
+        "tier": "core",
+        "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음"
+      }
+    },
+    {
+      "id": "color:iris-violet",
+      "type": "ColorToken",
+      "label": "Iris Violet",
+      "meta": {
+        "hex": "#5A4FCF",
+        "tier": "semantic",
+        "role": "primary"
+      }
+    },
+    {
+      "id": "color:lavender-mist",
+      "type": "ColorToken",
+      "label": "Lavender Mist",
+      "meta": {
+        "hex": "#E6E6FA",
+        "tier": "semantic",
+        "role": "surface_tint"
+      }
+    },
+    {
+      "id": "color:canvas-white",
+      "type": "ColorToken",
+      "label": "Canvas White",
+      "meta": {
+        "hex": "#F7F8FA",
+        "tier": "semantic",
+        "role": "canvas"
+      }
+    },
+    {
+      "id": "color:paper",
+      "type": "ColorToken",
+      "label": "Paper",
+      "meta": {
+        "hex": "#FFFFFF",
+        "tier": "semantic",
+        "role": "surface"
+      }
+    },
+    {
+      "id": "color:surface-muted",
+      "type": "ColorToken",
+      "label": "Surface Muted",
+      "meta": {
+        "hex": "#EEF1F6",
+        "tier": "semantic",
+        "role": "surface_muted"
+      }
+    },
+    {
+      "id": "color:pairing--d8d8d8",
+      "type": "ColorToken",
+      "label": "Pairing #D8D8D8",
+      "meta": {
+        "hex": "#D8D8D8",
+        "tier": "semantic",
+        "role": "border"
+      }
+    },
+    {
+      "id": "color:pairing--c0c0c0",
+      "type": "ColorToken",
+      "label": "Pairing #C0C0C0",
+      "meta": {
+        "hex": "#C0C0C0",
+        "tier": "semantic",
+        "role": "border_strong"
+      }
+    },
+    {
+      "id": "color:pairing--333333",
+      "type": "ColorToken",
+      "label": "Pairing #333333",
+      "meta": {
+        "hex": "#333333",
+        "tier": "semantic",
+        "role": "ink"
+      }
+    },
+    {
+      "id": "color:muted-ink",
+      "type": "ColorToken",
+      "label": "Muted Ink",
+      "meta": {
+        "hex": "#4B5563",
+        "tier": "semantic",
+        "role": "ink_muted"
+      }
+    },
+    {
+      "id": "color:subtle-ink",
+      "type": "ColorToken",
+      "label": "Subtle Ink",
+      "meta": {
+        "hex": "#6B7280",
+        "tier": "semantic",
+        "role": "ink_subtle"
+      }
+    },
+    {
+      "id": "color:ink-inverse",
+      "type": "ColorToken",
+      "label": "Ink Inverse",
+      "meta": {
+        "hex": "#FFFFFF",
+        "tier": "semantic",
+        "role": "ink_inverse"
+      }
+    },
+    {
+      "id": "color:pairing--cab7e1",
+      "type": "ColorToken",
+      "label": "Pairing #CAB7E1",
+      "meta": {
+        "hex": "#CAB7E1",
+        "tier": "semantic",
+        "role": "primary_support"
+      }
+    },
+    {
+      "id": "color:pairing--c7daf0",
+      "type": "ColorToken",
+      "label": "Pairing #C7DAF0",
+      "meta": {
+        "hex": "#C7DAF0",
+        "tier": "semantic",
+        "role": "accent_support"
+      }
+    },
+    {
+      "id": "color:success",
+      "type": "ColorToken",
+      "label": "Success",
+      "meta": {
+        "hex": "#4A7C59",
+        "tier": "semantic",
+        "role": "success"
+      }
+    },
+    {
+      "id": "color:pairing--f7f5eb",
+      "type": "ColorToken",
+      "label": "Pairing #F7F5EB",
+      "meta": {
+        "hex": "#F7F5EB",
+        "tier": "semantic",
+        "role": "warning"
+      }
+    },
+    {
+      "id": "color:danger",
+      "type": "ColorToken",
+      "label": "Danger",
+      "meta": {
+        "hex": "#8B2252",
+        "tier": "semantic",
+        "role": "danger"
+      }
+    },
+    {
+      "id": "color:link-hover",
+      "type": "ColorToken",
+      "label": "Link Hover",
+      "meta": {
+        "hex": "#4135C1",
+        "tier": "semantic",
+        "role": "link_hover"
+      }
+    },
+    {
+      "id": "palette:derived-pairing",
+      "type": "ColorPalette",
+      "label": "Derived Pairing"
+    },
+    {
+      "id": "color:pairing--d7cbef",
+      "type": "ColorToken",
+      "label": "Pairing #D7CBEF",
+      "meta": {
+        "hex": "#D7CBEF",
+        "tier": "supporting"
+      }
+    },
+    {
+      "id": "color:pairing--d9d9d9",
+      "type": "ColorToken",
+      "label": "Pairing #D9D9D9",
+      "meta": {
+        "hex": "#D9D9D9",
+        "tier": "supporting"
+      }
+    },
+    {
+      "id": "color:lavender-violet",
+      "type": "ColorToken",
+      "label": "Lavender Violet",
+      "meta": {
+        "hex": "#967BB6",
+        "tier": "supporting"
+      }
+    },
+    {
+      "id": "palette:natural-violets",
+      "type": "ColorPalette",
+      "label": "Natural Violets"
+    },
+    {
+      "id": "color:pairing--444444",
+      "type": "ColorToken",
+      "label": "Pairing #444444",
+      "meta": {
+        "hex": "#444444",
+        "tier": "supporting"
+      }
+    },
+    {
+      "id": "font:spoqa-han-sans-neo",
+      "type": "FontFamily",
+      "label": "Spoqa Han Sans Neo",
+      "meta": {
+        "role": "heading",
+        "family_type": "geometric-sans",
+        "weight_range": "100-700",
+        "variable": false,
+        "source": "GitHub (spoqa/spoqa-han-sans)"
+      }
+    },
+    {
+      "id": "font:jetbrains-mono",
+      "type": "FontFamily",
+      "label": "JetBrains Mono",
+      "meta": {
+        "role": "mono",
+        "family_type": "monospace",
+        "weight_range": "100-800",
+        "variable": true,
+        "source": "Google Fonts"
+      }
+    },
+    {
+      "id": "pattern:layout-article-body",
+      "type": "LayoutPattern",
+      "label": "article body"
+    },
+    {
+      "id": "pattern:layout-table-of-contents",
+      "type": "LayoutPattern",
+      "label": "table of contents"
+    },
+    {
+      "id": "pattern:layout-heading-anchor",
+      "type": "LayoutPattern",
+      "label": "heading anchor"
+    },
+    {
+      "id": "pattern:layout-code-block",
+      "type": "LayoutPattern",
+      "label": "code block"
+    },
+    {
+      "id": "pattern:layout-inline-code",
+      "type": "LayoutPattern",
+      "label": "inline code"
+    },
+    {
+      "id": "pattern:layout-api-reference-table",
+      "type": "LayoutPattern",
+      "label": "api reference table"
+    },
+    {
+      "id": "pattern:layout-parameter-table",
+      "type": "LayoutPattern",
+      "label": "parameter table"
+    },
+    {
+      "id": "pattern:layout-callout",
+      "type": "LayoutPattern",
+      "label": "callout"
+    },
+    {
+      "id": "pattern:layout-admonition",
+      "type": "LayoutPattern",
+      "label": "admonition"
+    },
+    {
+      "id": "pattern:layout-version-switcher",
+      "type": "LayoutPattern",
+      "label": "version switcher"
+    },
+    {
+      "id": "pattern:layout-breadcrumbs",
+      "type": "LayoutPattern",
+      "label": "breadcrumbs"
+    },
+    {
+      "id": "pattern:layout-prev-next-pager",
+      "type": "LayoutPattern",
+      "label": "prev-next pager"
+    },
+    {
+      "id": "pattern:layout-footnote",
+      "type": "LayoutPattern",
+      "label": "footnote"
+    },
+    {
+      "id": "pattern:layout-link-card",
+      "type": "LayoutPattern",
+      "label": "link card"
+    },
+    {
+      "id": "pattern:layout-sidebar-nav",
+      "type": "LayoutPattern",
+      "label": "sidebar nav"
+    },
+    {
+      "id": "pattern:layout-language-tab",
+      "type": "LayoutPattern",
+      "label": "language tab"
+    },
+    {
+      "id": "pattern:layout-reading-pane",
+      "type": "LayoutPattern",
+      "label": "reading pane"
+    },
+    {
+      "id": "pattern:layout-prose-block",
+      "type": "LayoutPattern",
+      "label": "prose block"
+    },
+    {
+      "id": "pattern:layout-workspace-navigation",
+      "type": "LayoutPattern",
+      "label": "workspace navigation"
+    },
+    {
+      "id": "pattern:layout-dashboard-cards",
+      "type": "LayoutPattern",
+      "label": "dashboard cards"
+    },
+    {
+      "id": "pattern:layout-data-tables",
+      "type": "LayoutPattern",
+      "label": "data tables"
+    },
+    {
+      "id": "pattern:interaction-search-chrome",
+      "type": "InteractionPattern",
+      "label": "search chrome"
+    },
+    {
+      "id": "pattern:interaction-command-palette",
+      "type": "InteractionPattern",
+      "label": "command palette"
+    },
+    {
+      "id": "pattern:interaction-forms",
+      "type": "InteractionPattern",
+      "label": "forms"
+    },
+    {
+      "id": "pattern:interaction-notifications",
+      "type": "InteractionPattern",
+      "label": "notifications"
+    },
+    {
+      "id": "color:ink",
+      "type": "ColorToken",
+      "label": "Ink",
+      "meta": {
+        "hex": "#111111",
+        "tier": "baseline",
+        "role": "ink"
+      }
+    },
+    {
+      "id": "a11y:contrast-aa",
+      "type": "AccessibilityRule",
+      "label": "Color contrast AA (4.5:1 text, 3:1 UI)"
+    },
+    {
+      "id": "a11y:keyboard-nav",
+      "type": "AccessibilityRule",
+      "label": "Full keyboard navigation"
+    },
+    {
+      "id": "a11y:label-association",
+      "type": "AccessibilityRule",
+      "label": "Input label association"
+    },
+    {
+      "id": "a11y:focus-visible",
+      "type": "AccessibilityRule",
+      "label": "Visible focus indicator"
+    },
+    {
+      "id": "a11y:motion-reduce",
+      "type": "AccessibilityRule",
+      "label": "Reduced motion support"
+    },
+    {
+      "id": "a11y:screen-reader",
+      "type": "AccessibilityRule",
+      "label": "Screen reader compatibility"
+    },
+    {
+      "id": "a11y:touch-target",
+      "type": "AccessibilityRule",
+      "label": "Touch target 44x44 minimum"
+    },
+    {
+      "id": "a11y:aria-landmarks",
+      "type": "AccessibilityRule",
+      "label": "ARIA landmarks and roles"
+    },
+    {
+      "id": "benchmark:stripe",
+      "type": "BenchmarkSystem",
+      "label": "Stripe",
+      "meta": {
+        "url": "https://stripe.com",
+        "category": "fintech",
+        "color_strategy": "neutral-dominant with purple accent"
+      }
+    },
+    {
+      "id": "benchmark:vercel",
+      "type": "BenchmarkSystem",
+      "label": "Vercel / Geist",
+      "meta": {
+        "url": "https://vercel.com/geist",
+        "category": "devtool",
+        "color_strategy": "monochrome with blue accent"
+      }
+    },
+    {
+      "id": "benchmark:linear",
+      "type": "BenchmarkSystem",
+      "label": "Linear",
+      "meta": {
+        "url": "https://linear.app",
+        "category": "productivity",
+        "color_strategy": "dark with gradient accents"
+      }
+    },
+    {
+      "id": "benchmark:github-primer",
+      "type": "BenchmarkSystem",
+      "label": "GitHub Primer",
+      "meta": {
+        "url": "https://primer.style",
+        "category": "devtool",
+        "color_strategy": "semantic color scales with theme modes"
+      }
+    },
+    {
+      "id": "benchmark:shopify-polaris",
+      "type": "BenchmarkSystem",
+      "label": "Shopify Polaris",
+      "meta": {
+        "url": "https://polaris.shopify.com",
+        "category": "commerce",
+        "color_strategy": "green accent with warm neutrals"
+      }
+    },
+    {
+      "id": "benchmark:atlassian",
+      "type": "BenchmarkSystem",
+      "label": "Atlassian Design System",
+      "meta": {
+        "url": "https://atlassian.design",
+        "category": "productivity",
+        "color_strategy": "blue accent with semantic states"
+      }
+    },
+    {
+      "id": "benchmark:figma",
+      "type": "BenchmarkSystem",
+      "label": "Figma UI2",
+      "meta": {
+        "url": "https://figma.com",
+        "category": "creative-tool",
+        "color_strategy": "dark UI with colorful accents"
+      }
+    },
+    {
+      "id": "benchmark:notion",
+      "type": "BenchmarkSystem",
+      "label": "Notion",
+      "meta": {
+        "url": "https://notion.so",
+        "category": "productivity",
+        "color_strategy": "minimal with soft pastels"
+      }
+    },
+    {
+      "id": "benchmark:slack",
+      "type": "BenchmarkSystem",
+      "label": "Slack",
+      "meta": {
+        "url": "https://slack.com",
+        "category": "communication",
+        "color_strategy": "aubergine brand with semantic states"
+      }
+    },
+    {
+      "id": "benchmark:material-design",
+      "type": "BenchmarkSystem",
+      "label": "Google Material Design 3",
+      "meta": {
+        "url": "https://m3.material.io",
+        "category": "platform",
+        "color_strategy": "dynamic color from seed with tonal palettes"
+      }
+    },
+    {
+      "id": "benchmark:apple-hig",
+      "type": "BenchmarkSystem",
+      "label": "Apple Human Interface Guidelines",
+      "meta": {
+        "url": "https://developer.apple.com/design",
+        "category": "platform",
+        "color_strategy": "system semantic colors with vibrancy"
+      }
+    },
+    {
+      "id": "benchmark:spotify",
+      "type": "BenchmarkSystem",
+      "label": "Spotify Encore",
+      "meta": {
+        "url": "https://spotify.design",
+        "category": "entertainment",
+        "color_strategy": "green accent on dark with album art colors"
+      }
+    },
+    {
+      "id": "benchmark:airbnb",
+      "type": "BenchmarkSystem",
+      "label": "Airbnb DLS",
+      "meta": {
+        "url": "https://airbnb.design",
+        "category": "marketplace",
+        "color_strategy": "rausch red accent with warm neutrals"
+      }
+    },
+    {
+      "id": "benchmark:uber",
+      "type": "BenchmarkSystem",
+      "label": "Uber Base Web",
+      "meta": {
+        "url": "https://baseweb.design",
+        "category": "transport",
+        "color_strategy": "black primary with minimal accent"
+      }
+    },
+    {
+      "id": "benchmark:twilio-paste",
+      "type": "BenchmarkSystem",
+      "label": "Twilio Paste",
+      "meta": {
+        "url": "https://paste.twilio.design",
+        "category": "devtool",
+        "color_strategy": "red accent with comprehensive semantic scale"
+      }
+    },
+    {
+      "id": "benchmark:ibm-carbon",
+      "type": "BenchmarkSystem",
+      "label": "IBM Carbon",
+      "meta": {
+        "url": "https://carbondesignsystem.com",
+        "category": "enterprise",
+        "color_strategy": "blue accent with gray palette and semantic states"
+      }
+    },
+    {
+      "id": "benchmark:ant-design",
+      "type": "BenchmarkSystem",
+      "label": "Ant Design",
+      "meta": {
+        "url": "https://ant.design",
+        "category": "enterprise",
+        "color_strategy": "blue accent with functional color system"
+      }
+    },
+    {
+      "id": "benchmark:chakra",
+      "type": "BenchmarkSystem",
+      "label": "Chakra UI",
+      "meta": {
+        "url": "https://chakra-ui.com",
+        "category": "component-library",
+        "color_strategy": "teal accent with comprehensive color scales"
+      }
+    },
+    {
+      "id": "benchmark:radix",
+      "type": "BenchmarkSystem",
+      "label": "Radix UI + Themes",
+      "meta": {
+        "url": "https://radix-ui.com",
+        "category": "component-library",
+        "color_strategy": "12-step color scales with automatic contrast"
+      }
+    },
+    {
+      "id": "benchmark:discord",
+      "type": "BenchmarkSystem",
+      "label": "Discord",
+      "meta": {
+        "url": "https://discord.com",
+        "category": "communication",
+        "color_strategy": "blurple accent on dark with vibrant status colors"
+      }
+    },
+    {
+      "id": "benchmark:tailwind",
+      "type": "BenchmarkSystem",
+      "label": "Tailwind UI / Catalyst",
+      "meta": {
+        "url": "https://tailwindui.com",
+        "category": "component-library",
+        "color_strategy": "configurable palette with semantic intent"
+      }
+    },
+    {
+      "id": "benchmark:adobe-spectrum",
+      "type": "BenchmarkSystem",
+      "label": "Adobe Spectrum",
+      "meta": {
+        "url": "https://spectrum.adobe.com",
+        "category": "creative-tool",
+        "color_strategy": "gray spectrum with blue accent and express variants"
+      }
+    },
+    {
+      "id": "benchmark:microsoft-fluent",
+      "type": "BenchmarkSystem",
+      "label": "Microsoft Fluent 2",
+      "meta": {
+        "url": "https://fluent2.microsoft.design",
+        "category": "platform",
+        "color_strategy": "brand blue with tint/shade system and high contrast mode"
+      }
+    },
+    {
+      "id": "benchmark:hashicorp-helios",
+      "type": "BenchmarkSystem",
+      "label": "HashiCorp Helios",
+      "meta": {
+        "url": "https://helios.hashicorp.design",
+        "category": "devtool",
+        "color_strategy": "multi-product brand colors with shared semantic layer"
+      }
+    },
+    {
+      "id": "benchmark:gitlab-pajamas",
+      "type": "BenchmarkSystem",
+      "label": "GitLab Pajamas",
+      "meta": {
+        "url": "https://design.gitlab.com",
+        "category": "devtool",
+        "color_strategy": "purple/orange brand with semantic layer"
+      }
+    },
+    {
+      "id": "benchmark:wise",
+      "type": "BenchmarkSystem",
+      "label": "Wise (TransferWise) Neptune",
+      "meta": {
+        "url": "https://wise.com",
+        "category": "fintech",
+        "color_strategy": "green accent with bright illustrations"
+      }
+    },
+    {
+      "id": "benchmark:revolut",
+      "type": "BenchmarkSystem",
+      "label": "Revolut",
+      "meta": {
+        "url": "https://revolut.com",
+        "category": "fintech",
+        "color_strategy": "dark base with vibrant gradients"
+      }
+    },
+    {
+      "id": "benchmark:resend",
+      "type": "BenchmarkSystem",
+      "label": "Resend",
+      "meta": {
+        "url": "https://resend.com",
+        "category": "devtool",
+        "color_strategy": "monochrome with minimal accent"
+      }
+    },
+    {
+      "id": "benchmark:cal-com",
+      "type": "BenchmarkSystem",
+      "label": "Cal.com",
+      "meta": {
+        "url": "https://cal.com",
+        "category": "productivity",
+        "color_strategy": "neutral base with scheduling-specific semantic colors"
+      }
+    },
+    {
+      "id": "benchmark:supabase",
+      "type": "BenchmarkSystem",
+      "label": "Supabase",
+      "meta": {
+        "url": "https://supabase.com",
+        "category": "devtool",
+        "color_strategy": "green accent on dark with code-centric palette"
+      }
+    },
+    {
+      "id": "benchmark:planetscale",
+      "type": "BenchmarkSystem",
+      "label": "PlanetScale",
+      "meta": {
+        "url": "https://planetscale.com",
+        "category": "devtool",
+        "color_strategy": "orange accent on monochrome base"
+      }
+    },
+    {
+      "id": "benchmark:arc-browser",
+      "type": "BenchmarkSystem",
+      "label": "Arc Browser (The Browser Company)",
+      "meta": {
+        "url": "https://arc.net",
+        "category": "browser",
+        "color_strategy": "user-customizable tint with gradient system"
+      }
+    },
+    {
+      "id": "benchmark:raycast",
+      "type": "BenchmarkSystem",
+      "label": "Raycast",
+      "meta": {
+        "url": "https://raycast.com",
+        "category": "productivity",
+        "color_strategy": "dark base with extension-scoped colors"
+      }
+    },
+    {
+      "id": "benchmark:lemon-squeezy",
+      "type": "BenchmarkSystem",
+      "label": "Lemon Squeezy",
+      "meta": {
+        "url": "https://lemonsqueezy.com",
+        "category": "commerce",
+        "color_strategy": "yellow/lemon accent with warm gradients"
+      }
+    },
+    {
+      "id": "benchmark:toss",
+      "type": "BenchmarkSystem",
+      "label": "Toss (비바리퍼블리카)",
+      "meta": {
+        "url": "https://toss.im",
+        "category": "fintech",
+        "color_strategy": "blue accent with conservative semantic palette"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "type": "expresses",
+      "source": "brand:lattice",
+      "target": "principle:reference-docs"
+    },
+    {
+      "type": "expresses",
+      "source": "brand:lattice",
+      "target": "principle:api-docs"
+    },
+    {
+      "type": "expresses",
+      "source": "brand:lattice",
+      "target": "principle:developer-docs"
+    },
+    {
+      "type": "expresses",
+      "source": "brand:lattice",
+      "target": "principle:technical-writing"
+    },
+    {
+      "type": "has_state",
+      "source": "family:button",
+      "target": "state:button-default"
+    },
+    {
+      "type": "has_state",
+      "source": "family:button",
+      "target": "state:button-hover"
+    },
+    {
+      "type": "has_state",
+      "source": "family:button",
+      "target": "state:button-active"
+    },
+    {
+      "type": "has_state",
+      "source": "family:button",
+      "target": "state:button-disabled"
+    },
+    {
+      "type": "has_state",
+      "source": "family:button",
+      "target": "state:button-loading"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:primary-button",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:secondary-button",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:ghost-button",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:icon-button",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:cta-button",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:link-button",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:copy-code-button",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:form-actions",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:hero-cta-group",
+      "target": "family:button"
+    },
+    {
+      "type": "has_state",
+      "source": "family:data-display",
+      "target": "state:data-display-default"
+    },
+    {
+      "type": "has_state",
+      "source": "family:data-display",
+      "target": "state:data-display-sorted"
+    },
+    {
+      "type": "has_state",
+      "source": "family:data-display",
+      "target": "state:data-display-filtered"
+    },
+    {
+      "type": "has_state",
+      "source": "family:data-display",
+      "target": "state:data-display-empty"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:data-table",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:column-header",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:row-actions",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:search-results",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:kanban-board",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:kanban-column",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:kanban-card",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:stat-card",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:insight-card",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:activity-card",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:section-header",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:tag",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:chat-message",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:chat-thread",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:comment-thread",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:filter-toolbar",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:chart-panel",
+      "target": "family:data-display"
+    },
+    {
+      "type": "has_state",
+      "source": "family:editorial",
+      "target": "state:editorial-default"
+    },
+    {
+      "type": "has_state",
+      "source": "family:editorial",
+      "target": "state:editorial-selected"
+    },
+    {
+      "type": "has_state",
+      "source": "family:editorial",
+      "target": "state:editorial-editing"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:editor-canvas",
+      "target": "family:editorial"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:editor-toolbar",
+      "target": "family:editorial"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:inline-format-menu",
+      "target": "family:editorial"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:slash-command-menu",
+      "target": "family:editorial"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:block-controls",
+      "target": "family:editorial"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:content-card",
+      "target": "family:editorial"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:featured-story-card",
+      "target": "family:editorial"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:content-meta",
+      "target": "family:editorial"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:byline-row",
+      "target": "family:editorial"
+    },
+    {
+      "type": "has_state",
+      "source": "family:feedback",
+      "target": "state:feedback-info"
+    },
+    {
+      "type": "has_state",
+      "source": "family:feedback",
+      "target": "state:feedback-success"
+    },
+    {
+      "type": "has_state",
+      "source": "family:feedback",
+      "target": "state:feedback-warning"
+    },
+    {
+      "type": "has_state",
+      "source": "family:feedback",
+      "target": "state:feedback-danger"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:inline-alert",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:empty-state",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:toast",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:banner",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:status-badge",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:step-progress",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:shortcut-hint",
+      "target": "family:feedback"
+    },
+    {
+      "type": "has_state",
+      "source": "family:input",
+      "target": "state:input-default"
+    },
+    {
+      "type": "has_state",
+      "source": "family:input",
+      "target": "state:input-focus"
+    },
+    {
+      "type": "has_state",
+      "source": "family:input",
+      "target": "state:input-error"
+    },
+    {
+      "type": "has_state",
+      "source": "family:input",
+      "target": "state:input-disabled"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:text-field",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:search-field",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:segmented-control",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:filter-chip",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:filter-panel",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:textarea",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:select",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:checkbox",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:radio-group",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:form-section",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:chip",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:chat-input",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:comment-input",
+      "target": "family:input"
+    },
+    {
+      "type": "has_state",
+      "source": "family:marketing",
+      "target": "state:marketing-default"
+    },
+    {
+      "type": "has_state",
+      "source": "family:marketing",
+      "target": "state:marketing-hover"
+    },
+    {
+      "type": "has_state",
+      "source": "family:marketing",
+      "target": "state:marketing-in-view"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:hero-container",
+      "target": "family:marketing"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:hero-eyebrow",
+      "target": "family:marketing"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:hero-headline",
+      "target": "family:marketing"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:hero-subheadline",
+      "target": "family:marketing"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:hero-visual",
+      "target": "family:marketing"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:hero-trust-strip",
+      "target": "family:marketing"
+    },
+    {
+      "type": "has_state",
+      "source": "family:navigation",
+      "target": "state:navigation-default"
+    },
+    {
+      "type": "has_state",
+      "source": "family:navigation",
+      "target": "state:navigation-active"
+    },
+    {
+      "type": "has_state",
+      "source": "family:navigation",
+      "target": "state:navigation-hover"
+    },
+    {
+      "type": "has_state",
+      "source": "family:navigation",
+      "target": "state:navigation-collapsed"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:mobile-topbar",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:mobile-tab-bar",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:back-button",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:section-tabs",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:prev-next-pager",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:version-switcher",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:pagination",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:app-shell",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:sidebar-nav",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:topbar",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:breadcrumb",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:tab-bar",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:wizard-layout",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:workspace-switcher",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:context-panel",
+      "target": "family:navigation"
+    },
+    {
+      "type": "has_state",
+      "source": "family:document",
+      "target": "state:document-default"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:article-body",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:table-of-contents",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:heading-anchor",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:prose-block",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:reading-pane",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:footnote",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:link-card",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:api-reference-table",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:parameter-table",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:code-block",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:inline-code",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:language-tab",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:callout",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:admonition-block",
+      "target": "family:document"
+    },
+    {
+      "type": "has_state",
+      "source": "family:overlay",
+      "target": "state:overlay-closed"
+    },
+    {
+      "type": "has_state",
+      "source": "family:overlay",
+      "target": "state:overlay-opening"
+    },
+    {
+      "type": "has_state",
+      "source": "family:overlay",
+      "target": "state:overlay-open"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:bottom-sheet",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:modal-dialog",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:autocomplete",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:confirm-dialog",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:tooltip-guide",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:command-palette",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:command-result-item",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:mention-popup",
+      "target": "family:overlay"
+    },
+    {
+      "type": "supports",
+      "source": "component:link-button",
+      "target": "primitive:baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:article-body",
+      "target": "primitive:reference-documentation"
+    },
+    {
+      "type": "supports",
+      "source": "component:table-of-contents",
+      "target": "primitive:reference-documentation"
+    },
+    {
+      "type": "supports",
+      "source": "component:heading-anchor",
+      "target": "primitive:reference-documentation"
+    },
+    {
+      "type": "supports",
+      "source": "component:prose-block",
+      "target": "primitive:reference-documentation"
+    },
+    {
+      "type": "supports",
+      "source": "component:reading-pane",
+      "target": "primitive:reference-documentation"
+    },
+    {
+      "type": "supports",
+      "source": "component:footnote",
+      "target": "primitive:reference-documentation"
+    },
+    {
+      "type": "supports",
+      "source": "component:prev-next-pager",
+      "target": "primitive:reference-documentation"
+    },
+    {
+      "type": "supports",
+      "source": "component:link-card",
+      "target": "primitive:reference-documentation"
+    },
+    {
+      "type": "supports",
+      "source": "component:api-reference-table",
+      "target": "primitive:api-reference"
+    },
+    {
+      "type": "supports",
+      "source": "component:parameter-table",
+      "target": "primitive:api-reference"
+    },
+    {
+      "type": "supports",
+      "source": "component:version-switcher",
+      "target": "primitive:api-reference"
+    },
+    {
+      "type": "supports",
+      "source": "component:data-table",
+      "target": "primitive:data-tables"
+    },
+    {
+      "type": "supports",
+      "source": "component:column-header",
+      "target": "primitive:data-tables"
+    },
+    {
+      "type": "supports",
+      "source": "component:row-actions",
+      "target": "primitive:data-tables"
+    },
+    {
+      "type": "supports",
+      "source": "component:pagination",
+      "target": "primitive:data-tables"
+    },
+    {
+      "type": "supports",
+      "source": "component:filter-chip",
+      "target": "primitive:data-tables"
+    },
+    {
+      "type": "supports",
+      "source": "component:code-block",
+      "target": "primitive:code-documentation"
+    },
+    {
+      "type": "supports",
+      "source": "component:inline-code",
+      "target": "primitive:code-documentation"
+    },
+    {
+      "type": "supports",
+      "source": "component:language-tab",
+      "target": "primitive:code-documentation"
+    },
+    {
+      "type": "supports",
+      "source": "component:copy-code-button",
+      "target": "primitive:code-documentation"
+    },
+    {
+      "type": "supports",
+      "source": "component:callout",
+      "target": "primitive:callout-and-admonition"
+    },
+    {
+      "type": "supports",
+      "source": "component:admonition-block",
+      "target": "primitive:callout-and-admonition"
+    },
+    {
+      "type": "supports",
+      "source": "component:search-results",
+      "target": "primitive:search-and-filter"
+    },
+    {
+      "type": "supports",
+      "source": "component:filter-panel",
+      "target": "primitive:search-and-filter"
+    },
+    {
+      "type": "supports",
+      "source": "component:autocomplete",
+      "target": "primitive:search-and-filter"
+    },
+    {
+      "type": "supports",
+      "source": "component:app-shell",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:sidebar-nav",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:topbar",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:breadcrumb",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:tab-bar",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:textarea",
+      "target": "primitive:forms"
+    },
+    {
+      "type": "supports",
+      "source": "component:select",
+      "target": "primitive:forms"
+    },
+    {
+      "type": "supports",
+      "source": "component:checkbox",
+      "target": "primitive:forms"
+    },
+    {
+      "type": "supports",
+      "source": "component:radio-group",
+      "target": "primitive:forms"
+    },
+    {
+      "type": "supports",
+      "source": "component:form-section",
+      "target": "primitive:forms"
+    },
+    {
+      "type": "supports",
+      "source": "component:form-actions",
+      "target": "primitive:forms"
+    },
+    {
+      "type": "supports",
+      "source": "component:kanban-board",
+      "target": "primitive:kanban-and-board"
+    },
+    {
+      "type": "supports",
+      "source": "component:kanban-column",
+      "target": "primitive:kanban-and-board"
+    },
+    {
+      "type": "supports",
+      "source": "component:kanban-card",
+      "target": "primitive:kanban-and-board"
+    },
+    {
+      "type": "supports",
+      "source": "component:banner",
+      "target": "primitive:notifications"
+    },
+    {
+      "type": "supports",
+      "source": "component:editor-canvas",
+      "target": "primitive:rich-text-editor"
+    },
+    {
+      "type": "supports",
+      "source": "component:editor-toolbar",
+      "target": "primitive:rich-text-editor"
+    },
+    {
+      "type": "supports",
+      "source": "component:inline-format-menu",
+      "target": "primitive:rich-text-editor"
+    },
+    {
+      "type": "supports",
+      "source": "component:slash-command-menu",
+      "target": "primitive:rich-text-editor"
+    },
+    {
+      "type": "supports",
+      "source": "component:block-controls",
+      "target": "primitive:rich-text-editor"
+    },
+    {
+      "type": "supports",
+      "source": "component:stat-card",
+      "target": "primitive:dashboard-cards"
+    },
+    {
+      "type": "supports",
+      "source": "component:insight-card",
+      "target": "primitive:dashboard-cards"
+    },
+    {
+      "type": "supports",
+      "source": "component:activity-card",
+      "target": "primitive:dashboard-cards"
+    },
+    {
+      "type": "supports",
+      "source": "component:section-header",
+      "target": "primitive:dashboard-cards"
+    },
+    {
+      "type": "supports",
+      "source": "component:tag",
+      "target": "primitive:tags-and-labels"
+    },
+    {
+      "type": "supports",
+      "source": "component:status-badge",
+      "target": "primitive:tags-and-labels"
+    },
+    {
+      "type": "supports",
+      "source": "component:chip",
+      "target": "primitive:tags-and-labels"
+    },
+    {
+      "type": "supports",
+      "source": "component:confirm-dialog",
+      "target": "primitive:modal-and-dialog"
+    },
+    {
+      "type": "supports",
+      "source": "component:step-progress",
+      "target": "primitive:onboarding-and-stepper"
+    },
+    {
+      "type": "supports",
+      "source": "component:wizard-layout",
+      "target": "primitive:onboarding-and-stepper"
+    },
+    {
+      "type": "supports",
+      "source": "component:tooltip-guide",
+      "target": "primitive:onboarding-and-stepper"
+    },
+    {
+      "type": "supports",
+      "source": "component:chat-message",
+      "target": "primitive:chat-and-messaging"
+    },
+    {
+      "type": "supports",
+      "source": "component:chat-input",
+      "target": "primitive:chat-and-messaging"
+    },
+    {
+      "type": "supports",
+      "source": "component:chat-thread",
+      "target": "primitive:chat-and-messaging"
+    },
+    {
+      "type": "supports",
+      "source": "component:command-palette",
+      "target": "primitive:command-palette"
+    },
+    {
+      "type": "supports",
+      "source": "component:command-result-item",
+      "target": "primitive:command-palette"
+    },
+    {
+      "type": "supports",
+      "source": "component:shortcut-hint",
+      "target": "primitive:command-palette"
+    },
+    {
+      "type": "supports",
+      "source": "component:comment-thread",
+      "target": "primitive:comments-and-discussion"
+    },
+    {
+      "type": "supports",
+      "source": "component:comment-input",
+      "target": "primitive:comments-and-discussion"
+    },
+    {
+      "type": "supports",
+      "source": "component:mention-popup",
+      "target": "primitive:comments-and-discussion"
+    },
+    {
+      "type": "supports",
+      "source": "component:hero-container",
+      "target": "primitive:hero-section"
+    },
+    {
+      "type": "supports",
+      "source": "component:hero-eyebrow",
+      "target": "primitive:hero-section"
+    },
+    {
+      "type": "supports",
+      "source": "component:hero-headline",
+      "target": "primitive:hero-section"
+    },
+    {
+      "type": "supports",
+      "source": "component:hero-subheadline",
+      "target": "primitive:hero-section"
+    },
+    {
+      "type": "supports",
+      "source": "component:hero-cta-group",
+      "target": "primitive:hero-section"
+    },
+    {
+      "type": "supports",
+      "source": "component:hero-visual",
+      "target": "primitive:hero-section"
+    },
+    {
+      "type": "supports",
+      "source": "component:hero-trust-strip",
+      "target": "primitive:hero-section"
+    },
+    {
+      "type": "supports",
+      "source": "component:filter-toolbar",
+      "target": "primitive:data-tables"
+    },
+    {
+      "type": "supports",
+      "source": "component:content-card",
+      "target": "primitive:rich-text-editor"
+    },
+    {
+      "type": "supports",
+      "source": "component:featured-story-card",
+      "target": "primitive:rich-text-editor"
+    },
+    {
+      "type": "supports",
+      "source": "component:content-meta",
+      "target": "primitive:rich-text-editor"
+    },
+    {
+      "type": "supports",
+      "source": "component:byline-row",
+      "target": "primitive:rich-text-editor"
+    },
+    {
+      "type": "supports",
+      "source": "component:workspace-switcher",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:context-panel",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:chart-panel",
+      "target": "primitive:dashboard-cards"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:cerulean",
+      "target": "palette:standard-blues"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:ochre",
+      "target": "palette:standard-oranges"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:sky-blue",
+      "target": "palette:natural-blues"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--cab7e1",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--d7cbef",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--c0c0c0",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--d8d8d8",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--d9d9d9",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:lavender-violet",
+      "target": "palette:natural-violets"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--c7daf0",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--333333",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--444444",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--f7f5eb",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:app-shell"
+    },
+    {
+      "type": "implements",
+      "source": "component:app-shell",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:sidebar-nav"
+    },
+    {
+      "type": "implements",
+      "source": "component:sidebar-nav",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:topbar"
+    },
+    {
+      "type": "implements",
+      "source": "component:topbar",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:breadcrumb"
+    },
+    {
+      "type": "implements",
+      "source": "component:breadcrumb",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:workspace-switcher"
+    },
+    {
+      "type": "implements",
+      "source": "component:workspace-switcher",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:tab-bar"
+    },
+    {
+      "type": "implements",
+      "source": "component:tab-bar",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:context-panel"
+    },
+    {
+      "type": "implements",
+      "source": "component:context-panel",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-dashboard-cards",
+      "target": "component:stat-card"
+    },
+    {
+      "type": "implements",
+      "source": "component:stat-card",
+      "target": "pattern:layout-dashboard-cards"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-dashboard-cards",
+      "target": "component:insight-card"
+    },
+    {
+      "type": "implements",
+      "source": "component:insight-card",
+      "target": "pattern:layout-dashboard-cards"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-dashboard-cards",
+      "target": "component:activity-card"
+    },
+    {
+      "type": "implements",
+      "source": "component:activity-card",
+      "target": "pattern:layout-dashboard-cards"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-dashboard-cards",
+      "target": "component:section-header"
+    },
+    {
+      "type": "implements",
+      "source": "component:section-header",
+      "target": "pattern:layout-dashboard-cards"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-dashboard-cards",
+      "target": "component:chart-panel"
+    },
+    {
+      "type": "implements",
+      "source": "component:chart-panel",
+      "target": "pattern:layout-dashboard-cards"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-data-tables",
+      "target": "component:data-table"
+    },
+    {
+      "type": "implements",
+      "source": "component:data-table",
+      "target": "pattern:layout-data-tables"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-data-tables",
+      "target": "component:column-header"
+    },
+    {
+      "type": "implements",
+      "source": "component:column-header",
+      "target": "pattern:layout-data-tables"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-data-tables",
+      "target": "component:filter-chip"
+    },
+    {
+      "type": "implements",
+      "source": "component:filter-chip",
+      "target": "pattern:layout-data-tables"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-data-tables",
+      "target": "component:row-actions"
+    },
+    {
+      "type": "implements",
+      "source": "component:row-actions",
+      "target": "pattern:layout-data-tables"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-data-tables",
+      "target": "component:pagination"
+    },
+    {
+      "type": "implements",
+      "source": "component:pagination",
+      "target": "pattern:layout-data-tables"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-data-tables",
+      "target": "component:filter-toolbar"
+    },
+    {
+      "type": "implements",
+      "source": "component:filter-toolbar",
+      "target": "pattern:layout-data-tables"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-command-palette",
+      "target": "component:command-palette"
+    },
+    {
+      "type": "implements",
+      "source": "component:command-palette",
+      "target": "pattern:interaction-command-palette"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-command-palette",
+      "target": "component:command-result-item"
+    },
+    {
+      "type": "implements",
+      "source": "component:command-result-item",
+      "target": "pattern:interaction-command-palette"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-command-palette",
+      "target": "component:shortcut-hint"
+    },
+    {
+      "type": "implements",
+      "source": "component:shortcut-hint",
+      "target": "pattern:interaction-command-palette"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:text-field"
+    },
+    {
+      "type": "implements",
+      "source": "component:text-field",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:select"
+    },
+    {
+      "type": "implements",
+      "source": "component:select",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:checkbox"
+    },
+    {
+      "type": "implements",
+      "source": "component:checkbox",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:textarea"
+    },
+    {
+      "type": "implements",
+      "source": "component:textarea",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:form-section"
+    },
+    {
+      "type": "implements",
+      "source": "component:form-section",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:radio-group"
+    },
+    {
+      "type": "implements",
+      "source": "component:radio-group",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:form-actions"
+    },
+    {
+      "type": "implements",
+      "source": "component:form-actions",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-notifications",
+      "target": "component:toast"
+    },
+    {
+      "type": "implements",
+      "source": "component:toast",
+      "target": "pattern:interaction-notifications"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-notifications",
+      "target": "component:inline-alert"
+    },
+    {
+      "type": "implements",
+      "source": "component:inline-alert",
+      "target": "pattern:interaction-notifications"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-notifications",
+      "target": "component:empty-state"
+    },
+    {
+      "type": "implements",
+      "source": "component:empty-state",
+      "target": "pattern:interaction-notifications"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-notifications",
+      "target": "component:banner"
+    },
+    {
+      "type": "implements",
+      "source": "component:banner",
+      "target": "pattern:interaction-notifications"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:primary-button",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:primary-button",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:primary-button",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:primary-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:primary-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:primary-button",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:secondary-button",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:secondary-button",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:secondary-button",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:secondary-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:secondary-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:secondary-button",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:ghost-button",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:ghost-button",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:ghost-button",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:ghost-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:ghost-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:ghost-button",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:icon-button",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:icon-button",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:icon-button",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:icon-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:icon-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:icon-button",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:cta-button",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:cta-button",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:cta-button",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:cta-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:cta-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:cta-button",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-topbar",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-topbar",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-topbar",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-topbar",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-topbar",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:mobile-topbar",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-tab-bar",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-tab-bar",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-tab-bar",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-tab-bar",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-tab-bar",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:mobile-tab-bar",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:back-button",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:back-button",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:back-button",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:back-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:back-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:back-button",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-tabs",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-tabs",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-tabs",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-tabs",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-tabs",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:section-tabs",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inline-alert",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inline-alert",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inline-alert",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:inline-alert",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:empty-state",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:empty-state",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:empty-state",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:empty-state",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:toast",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:toast",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:toast",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:toast",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:bottom-sheet",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:bottom-sheet",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:bottom-sheet",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:bottom-sheet",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:bottom-sheet",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:bottom-sheet",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:modal-dialog",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:modal-dialog",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:modal-dialog",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:modal-dialog",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:modal-dialog",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:modal-dialog",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:text-field",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:text-field",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:text-field",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:text-field",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:text-field",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:text-field",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:search-field",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:segmented-control",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:segmented-control",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:segmented-control",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:segmented-control",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:segmented-control",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:segmented-control",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:link-button",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:link-button",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:link-button",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:link-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:link-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:link-button",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:article-body",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:article-body",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:article-body",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:article-body",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:table-of-contents",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:table-of-contents",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:table-of-contents",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:table-of-contents",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:heading-anchor",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:heading-anchor",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:heading-anchor",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:heading-anchor",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:prose-block",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:prose-block",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:prose-block",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:prose-block",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:reading-pane",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:reading-pane",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:reading-pane",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:reading-pane",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:footnote",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:footnote",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:footnote",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:footnote",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:prev-next-pager",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:prev-next-pager",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:prev-next-pager",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:prev-next-pager",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:prev-next-pager",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:prev-next-pager",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:link-card",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:link-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:link-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:link-card",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:api-reference-table",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:api-reference-table",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:api-reference-table",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:api-reference-table",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:parameter-table",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:parameter-table",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:parameter-table",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:parameter-table",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:version-switcher",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:version-switcher",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:version-switcher",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:version-switcher",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:version-switcher",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:version-switcher",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:data-table",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:data-table",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:data-table",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:data-table",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:column-header",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:column-header",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:column-header",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:column-header",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:row-actions",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:row-actions",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:row-actions",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:row-actions",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:pagination",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-chip",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-chip",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-chip",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-chip",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-chip",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:filter-chip",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:code-block",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:code-block",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:code-block",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:code-block",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inline-code",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inline-code",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inline-code",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:inline-code",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:language-tab",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:language-tab",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:language-tab",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:language-tab",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:copy-code-button",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:copy-code-button",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:copy-code-button",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:copy-code-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:copy-code-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:copy-code-button",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:callout",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:callout",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:callout",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:callout",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:admonition-block",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:admonition-block",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:admonition-block",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:admonition-block",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-results",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-results",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-results",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:search-results",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-panel",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-panel",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-panel",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-panel",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-panel",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:filter-panel",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:autocomplete",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:autocomplete",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:autocomplete",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:autocomplete",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:autocomplete",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:autocomplete",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:app-shell",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:app-shell",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:app-shell",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:app-shell",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:app-shell",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:app-shell",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:sidebar-nav",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:sidebar-nav",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:sidebar-nav",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:sidebar-nav",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:sidebar-nav",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:sidebar-nav",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:topbar",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:topbar",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:topbar",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:topbar",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:topbar",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:topbar",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumb",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumb",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumb",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumb",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumb",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:breadcrumb",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tab-bar",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tab-bar",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tab-bar",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tab-bar",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tab-bar",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:tab-bar",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:textarea",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:textarea",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:textarea",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:textarea",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:textarea",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:textarea",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:select",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:select",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:select",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:select",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:select",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:select",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:checkbox",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:checkbox",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:checkbox",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:checkbox",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:checkbox",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:checkbox",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:radio-group",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:radio-group",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:radio-group",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:radio-group",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:radio-group",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:radio-group",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-section",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-section",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-section",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-section",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-section",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:form-section",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-actions",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-actions",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-actions",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-actions",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-actions",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:form-actions",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-board",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-board",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-board",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:kanban-board",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-column",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-column",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-column",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:kanban-column",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-card",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:kanban-card",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:banner",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:banner",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:banner",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:banner",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:editor-canvas",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:editor-canvas",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:editor-canvas",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:editor-canvas",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:editor-toolbar",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:editor-toolbar",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:editor-toolbar",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:editor-toolbar",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inline-format-menu",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inline-format-menu",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inline-format-menu",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:inline-format-menu",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:slash-command-menu",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:slash-command-menu",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:slash-command-menu",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:slash-command-menu",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:block-controls",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:block-controls",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:block-controls",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:block-controls",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:stat-card",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:stat-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:stat-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:stat-card",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:insight-card",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:insight-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:insight-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:insight-card",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:activity-card",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:activity-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:activity-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:activity-card",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-header",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-header",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-header",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:section-header",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tag",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tag",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tag",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:tag",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-badge",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-badge",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-badge",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:status-badge",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chip",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chip",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chip",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chip",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chip",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:chip",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:confirm-dialog",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:confirm-dialog",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:confirm-dialog",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:confirm-dialog",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:confirm-dialog",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:confirm-dialog",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:step-progress",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:step-progress",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:step-progress",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:step-progress",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:wizard-layout",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:wizard-layout",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:wizard-layout",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:wizard-layout",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:wizard-layout",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:wizard-layout",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip-guide",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip-guide",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip-guide",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip-guide",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip-guide",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:tooltip-guide",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-message",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-message",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-message",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:chat-message",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-input",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-input",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-input",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-input",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-input",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:chat-input",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-thread",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-thread",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-thread",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:chat-thread",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:command-palette",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:command-palette",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:command-palette",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:command-palette",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:command-palette",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:command-palette",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:command-result-item",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:command-result-item",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:command-result-item",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:command-result-item",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:command-result-item",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:command-result-item",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:shortcut-hint",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:shortcut-hint",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:shortcut-hint",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:shortcut-hint",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:comment-thread",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:comment-thread",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:comment-thread",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:comment-thread",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:comment-input",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:comment-input",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:comment-input",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:comment-input",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:comment-input",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:comment-input",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mention-popup",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mention-popup",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mention-popup",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mention-popup",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mention-popup",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:mention-popup",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-container",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-container",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-container",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:hero-container",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-eyebrow",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-eyebrow",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-eyebrow",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:hero-eyebrow",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-headline",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-headline",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-headline",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:hero-headline",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-subheadline",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-subheadline",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-subheadline",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:hero-subheadline",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-cta-group",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-cta-group",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-cta-group",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-cta-group",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-cta-group",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:hero-cta-group",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-visual",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-visual",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-visual",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:hero-visual",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-trust-strip",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-trust-strip",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:hero-trust-strip",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:hero-trust-strip",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-toolbar",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-toolbar",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-toolbar",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:filter-toolbar",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:content-card",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:content-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:content-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:content-card",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:featured-story-card",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:featured-story-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:featured-story-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:featured-story-card",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:content-meta",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:content-meta",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:content-meta",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:content-meta",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:byline-row",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:byline-row",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:byline-row",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:byline-row",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:workspace-switcher",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:workspace-switcher",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:workspace-switcher",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:workspace-switcher",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:workspace-switcher",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:workspace-switcher",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "color:iris-violet",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "color:cerulean",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:context-panel",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-panel",
+      "target": "color:lavender-mist",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-panel",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-panel",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:chart-panel",
+      "target": "font:spoqa-han-sans-neo"
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:iris-violet",
+      "target": "color:paper",
+      "meta": {
+        "ratio": 6.08,
+        "level": "AA"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:iris-violet",
+      "target": "color:ink",
+      "meta": {
+        "ratio": 3.11,
+        "level": "AA-large"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:cerulean",
+      "target": "color:paper",
+      "meta": {
+        "ratio": 6.89,
+        "level": "AA"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:cerulean",
+      "target": "color:ink",
+      "meta": {
+        "ratio": 2.74,
+        "level": "fail"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:lavender-mist",
+      "target": "color:paper",
+      "meta": {
+        "ratio": 1.23,
+        "level": "fail"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:lavender-mist",
+      "target": "color:ink",
+      "meta": {
+        "ratio": 15.34,
+        "level": "AAA"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:iris-violet",
+      "target": "color:cerulean",
+      "meta": {
+        "ratio": 1.13,
+        "level": "fail"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:iris-violet",
+      "target": "color:lavender-mist",
+      "meta": {
+        "ratio": 4.94,
+        "level": "AA"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:cerulean",
+      "target": "color:lavender-mist",
+      "meta": {
+        "ratio": 5.6,
+        "level": "AA"
+      }
+    },
+    {
+      "type": "requires",
+      "source": "family:button",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:button",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:button",
+      "target": "a11y:keyboard-nav"
+    },
+    {
+      "type": "requires",
+      "source": "family:data-display",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:data-display",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:editorial",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:editorial",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:feedback",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:feedback",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:input",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:input",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:input",
+      "target": "a11y:keyboard-nav"
+    },
+    {
+      "type": "requires",
+      "source": "family:input",
+      "target": "a11y:label-association"
+    },
+    {
+      "type": "requires",
+      "source": "family:marketing",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:marketing",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:navigation",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:navigation",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:navigation",
+      "target": "a11y:keyboard-nav"
+    },
+    {
+      "type": "requires",
+      "source": "family:document",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:document",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:overlay",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:overlay",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:overlay",
+      "target": "a11y:keyboard-nav"
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:stripe",
+      "meta": {
+        "shared_keywords": [
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:vercel",
+      "meta": {
+        "shared_keywords": [
+          "minimal",
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:linear",
+      "meta": {
+        "shared_keywords": [
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "references_font",
+      "source": "benchmark:linear",
+      "target": "font:jetbrains-mono"
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:figma",
+      "meta": {
+        "shared_keywords": [
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:apple-hig",
+      "meta": {
+        "shared_keywords": [
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:uber",
+      "meta": {
+        "shared_keywords": [
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:ibm-carbon",
+      "meta": {
+        "shared_keywords": [
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:ant-design",
+      "meta": {
+        "shared_keywords": [
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:radix",
+      "meta": {
+        "shared_keywords": [
+          "minimal"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:tailwind",
+      "meta": {
+        "shared_keywords": [
+          "minimal"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "shared_keywords": [
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "shared_keywords": [
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "references_font",
+      "source": "benchmark:gitlab-pajamas",
+      "target": "font:jetbrains-mono"
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:revolut",
+      "meta": {
+        "shared_keywords": [
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:resend",
+      "meta": {
+        "shared_keywords": [
+          "minimal",
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "shared_keywords": [
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "references_font",
+      "source": "benchmark:planetscale",
+      "target": "font:jetbrains-mono"
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:raycast",
+      "meta": {
+        "shared_keywords": [
+          "minimal",
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "references_font",
+      "source": "benchmark:raycast",
+      "target": "font:jetbrains-mono"
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:lattice",
+      "target": "benchmark:toss",
+      "meta": {
+        "shared_keywords": [
+          "precise"
+        ]
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:linear",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:apple-hig",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:ibm-carbon",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:ant-design",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:wise",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:vercel",
+      "target": "benchmark:linear",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:vercel",
+      "target": "benchmark:revolut",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:vercel",
+      "target": "benchmark:resend",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:vercel",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:vercel",
+      "target": "benchmark:raycast",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:linear",
+      "target": "benchmark:revolut",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:linear",
+      "target": "benchmark:resend",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:linear",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:linear",
+      "target": "benchmark:raycast",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:linear",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:atlassian",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:slack",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:material-design",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:twilio-paste",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:ibm-carbon",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:ant-design",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:shopify-polaris",
+      "target": "benchmark:airbnb",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:slack",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:uber",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:twilio-paste",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:wise",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:supabase",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:figma",
+      "target": "benchmark:uber",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:figma",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:twilio-paste",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
+      "target": "benchmark:twilio-paste",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:apple-hig",
+      "target": "benchmark:ibm-carbon",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:apple-hig",
+      "target": "benchmark:ant-design",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:apple-hig",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:apple-hig",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:apple-hig",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:spotify",
+      "target": "benchmark:arc-browser",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:uber",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:uber",
+      "target": "benchmark:revolut",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:uber",
+      "target": "benchmark:supabase",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:uber",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:ibm-carbon",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:ant-design",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:ant-design",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:chakra",
+      "target": "benchmark:radix",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:chakra",
+      "target": "benchmark:tailwind",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:radix",
+      "target": "benchmark:tailwind",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:discord",
+      "target": "benchmark:revolut",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:discord",
+      "target": "benchmark:supabase",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:discord",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:discord",
+      "target": "benchmark:arc-browser",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:discord",
+      "target": "benchmark:lemon-squeezy",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:hashicorp-helios",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:hashicorp-helios",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:gitlab-pajamas",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:wise",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:wise",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:revolut",
+      "target": "benchmark:resend",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:revolut",
+      "target": "benchmark:supabase",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:revolut",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:revolut",
+      "target": "benchmark:raycast",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:resend",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:resend",
+      "target": "benchmark:raycast",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:cal-com",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:supabase",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:planetscale",
+      "target": "benchmark:raycast",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:arc-browser",
+      "target": "benchmark:lemon-squeezy",
+      "meta": {
+        "jaccard": 0.5
+      }
+    }
+  ],
+  "stats": {
+    "node_count": 280,
+    "edge_count": 935,
+    "nodes_by_type": {
+      "Brand": 1,
+      "Principle": 4,
+      "SpacingToken": 11,
+      "RadiusToken": 6,
+      "ComponentFamily": 9,
+      "ComponentState": 31,
+      "Component": 98,
+      "ProductPrimitive": 20,
+      "ColorPalette": 5,
+      "ColorToken": 25,
+      "FontFamily": 2,
+      "LayoutPattern": 21,
+      "InteractionPattern": 4,
+      "AccessibilityRule": 8,
+      "BenchmarkSystem": 35
+    }
+  }
+}

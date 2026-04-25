@@ -1,0 +1,292 @@
+{
+  "brand_name": "Atelier",
+  "system_name": "Atelier System",
+  "product_summary": "크리에이티브 팀을 위한 minimal-tech 톤 캔버스 · 레이어 · 인스펙터 도구 — keyboard-first, 픽셀 정밀, 한국어 1급",
+  "audiences": [
+    "프로덕트 디자이너 / UI 디자이너",
+    "디자인 시스템 메인테이너 / 디자인 엔지니어",
+    "프로토타이퍼 / 인터랙션 디자이너"
+  ],
+  "brand_keywords": [
+    "canvas-tool",
+    "creative",
+    "canvas",
+    "layer",
+    "inspector",
+    "toolbar",
+    "design-tool",
+    "vector",
+    "prototyping",
+    "whiteboard",
+    "minimal",
+    "precise"
+  ],
+  "anti_keywords": [
+    "playful",
+    "pastel",
+    "decorative",
+    "magazine-serif",
+    "marketing-heavy",
+    "cute",
+    "ornamental",
+    "dashboard-heavy",
+    "warm-editorial"
+  ],
+  "tone_of_voice": [
+    "precise",
+    "neutral",
+    "matter-of-fact",
+    "keyboard-first",
+    "pixel-precise"
+  ],
+  "visual_keywords": [
+    "neutral canvas surface",
+    "hairline borders",
+    "monochrome + single accent",
+    "thin inspector panels",
+    "dense layer tree",
+    "snap guide",
+    "ruler chrome",
+    "keyboard-first toolbar",
+    "pixel-precise grid",
+    "selection handle",
+    "minimap"
+  ],
+  "interaction_keywords": [
+    "keyboard-first (⌘ shortcut grid)",
+    "layer drag reorder",
+    "inspector number input with scrub",
+    "snap to grid / guide",
+    "zoom and pan canvas",
+    "multi-select drag handle",
+    "undo redo stack",
+    "quick duplicate (⌥-drag)",
+    "contextual toolbar",
+    "asset drag-to-canvas"
+  ],
+  "platforms": [
+    "web",
+    "desktop"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "canvas workspace",
+    "layer panel",
+    "layer item",
+    "layer thumbnail",
+    "inspector panel",
+    "property row",
+    "toolbar",
+    "toolbar group",
+    "contextual toolbar",
+    "ruler",
+    "snap guide",
+    "grid overlay",
+    "selection handle",
+    "zoom control",
+    "minimap",
+    "keyboard shortcut cheatsheet",
+    "command palette",
+    "asset library",
+    "export panel"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "design token",
+      "canvas",
+      "inspector",
+      "layer",
+      "toolbar"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "marketing-only",
+      "magazine-only",
+      "social-feed-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Standard Violets",
+      "Pastel Blues",
+      "Standard Yellows"
+    ],
+    "palette_roles": {
+      "primary": "Cobalt Violet",
+      "accent": "Amber",
+      "surface_tint": "Misty Blue"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "cool",
+      "contrast": "balanced",
+      "diversity": "narrow",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "정제됨",
+        "명료함",
+        "중립",
+        "기술적",
+        "예술적"
+      ],
+      "avoid_moods": [
+        "따뜻함",
+        "달콤함",
+        "귀여움",
+        "화려함"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Cobalt Violet 를 primary 로 — 차분/예술적 cool purple, blue 비율 높아 minimal-tech 정체성 유지",
+      "Amber accent — Figma-esque single vivid accent, snap guide / selection handle / active toolbar group 강조",
+      "Misty Blue 는 surface_tint — 보라 섞인 뉴트럴 블루, ruler / grid overlay / property row 차분 surface",
+      "light mode 가 기본 — Figma/tldraw 관례, dark 는 옵션으로 제공",
+      "기존 minimal-tech 4종 (Navy / Azure / Iris Violet / Bronze) 과 HEX 겹침 회피 — Cobalt Violet + Amber + Misty Blue 조합"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Inter",
+      "weights": [
+        500,
+        600,
+        700
+      ],
+      "notes": "geometric sans, 캔버스 도구 chrome 의 정밀한 라벨 — serif 금지"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500
+      ],
+      "notes": "inspector / layer panel 라벨, property row 본문 공용"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "shortcut 키 / 숫자 input / property row 의 px·% 값에 필수, tabular-nums"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한글 1급 — layer name / asset name / 한글 라벨, line-height 1.6 keep-all"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "figma canvas inspector layer panel",
+      "framer canvas tool",
+      "excalidraw whiteboard",
+      "tldraw canvas",
+      "rive editor",
+      "spline 3d editor"
+    ],
+    "sources": [],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.35,
+      "component_shape": 0.25,
+      "color_balance": 0.15,
+      "typography_mood": 0.15,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "canvas workspace with toolbar",
+      "layer panel with thumbnails",
+      "inspector with property rows",
+      "ruler and snap guide",
+      "selection handle on canvas",
+      "keyboard shortcut cheatsheet"
+    ],
+    "avoid_patterns": [
+      "magazine serif hero",
+      "playful pastel illustration",
+      "marketing landing copy",
+      "dense data dashboard",
+      "social feed timeline"
+    ],
+    "notes": [
+      "Figma / Framer / Excalidraw / tldraw / Rive / Spline 스타일 캔버스 도구 chrome 참조",
+      "minimal-tech 톤: hairline borders + 무채색 surface + monochrome + single accent",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://www.figma.com",
+      "kind": "design-system",
+      "title": "Figma",
+      "notes": "canvas + inspector + layer panel references"
+    },
+    {
+      "url": "https://www.framer.com",
+      "kind": "design-system",
+      "title": "Framer",
+      "notes": "canvas editor + toolbar references"
+    },
+    {
+      "url": "https://excalidraw.com",
+      "kind": "visual-reference",
+      "title": "Excalidraw",
+      "notes": "playful canvas tool references"
+    },
+    {
+      "url": "https://www.tldraw.com",
+      "kind": "visual-reference",
+      "title": "tldraw",
+      "notes": "minimal canvas editor references"
+    },
+    {
+      "url": "https://rive.app",
+      "kind": "visual-reference",
+      "title": "Rive",
+      "notes": "animation canvas references"
+    },
+    {
+      "url": "https://spline.design",
+      "kind": "visual-reference",
+      "title": "Spline",
+      "notes": "3D canvas inspector references"
+    }
+  ]
+}

@@ -1,0 +1,1219 @@
+{
+  "families": [
+    {
+      "family": "button",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "hover",
+        "active",
+        "disabled",
+        "loading"
+      ],
+      "components": [
+        "primary-button",
+        "secondary-button",
+        "ghost-button",
+        "icon-button",
+        "cta-button",
+        "link-button",
+        "form-actions"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "data-display",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "sorted",
+        "filtered",
+        "empty"
+      ],
+      "components": [
+        "stat-card",
+        "insight-card",
+        "activity-card",
+        "section-header",
+        "chart-container",
+        "chart-legend",
+        "data-table",
+        "column-header",
+        "row-actions",
+        "tag",
+        "kanban-board",
+        "kanban-column",
+        "kanban-card",
+        "search-results",
+        "calendar-grid",
+        "comment-thread",
+        "chart-panel",
+        "filter-toolbar"
+      ],
+      "visual_reference_signals": [
+        {
+          "id": "dashboard-insight-module",
+          "label": "Dashboard insight module",
+          "confidence": 0.94,
+          "evidence": [
+            "layout=dashboard-grid (0.94)",
+            "dashboard x1",
+            "metric x3",
+            "kpi x1",
+            "chart x3"
+          ]
+        },
+        {
+          "id": "data-review-table",
+          "label": "Data review table",
+          "confidence": 0.94,
+          "evidence": [
+            "layout=data-review-surface (0.94)",
+            "layout=dashboard-grid (0.94)",
+            "table x3",
+            "grid x3",
+            "log x1",
+            "filter x1"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "editorial",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "selected",
+        "editing"
+      ],
+      "components": [
+        "editor-canvas",
+        "editor-toolbar",
+        "inline-format-menu",
+        "slash-command-menu",
+        "block-controls"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "feedback",
+      "priority": "high",
+      "required_states": [
+        "info",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "components": [
+        "inline-alert",
+        "empty-state",
+        "toast",
+        "banner",
+        "status-badge",
+        "step-progress"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "input",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "focus",
+        "error",
+        "disabled"
+      ],
+      "components": [
+        "text-field",
+        "search-field",
+        "segmented-control",
+        "filter-chip",
+        "chip",
+        "textarea",
+        "select",
+        "checkbox",
+        "radio-group",
+        "form-section",
+        "filter-panel",
+        "date-picker",
+        "time-picker",
+        "date-range-picker",
+        "comment-input"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "navigation",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "active",
+        "hover",
+        "collapsed"
+      ],
+      "components": [
+        "mobile-topbar",
+        "mobile-tab-bar",
+        "back-button",
+        "section-tabs",
+        "pagination",
+        "app-shell",
+        "sidebar-nav",
+        "topbar",
+        "breadcrumb",
+        "tab-bar",
+        "wizard-layout",
+        "workspace-switcher",
+        "context-panel"
+      ],
+      "visual_reference_signals": [
+        {
+          "id": "workspace-shell",
+          "label": "Workspace shell",
+          "confidence": 0.75,
+          "evidence": [
+            "layout=split-pane-workspace (0.7)",
+            "sidebar x1",
+            "navigation x1"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "overlay",
+      "priority": "medium",
+      "required_states": [
+        "closed",
+        "opening",
+        "open"
+      ],
+      "components": [
+        "bottom-sheet",
+        "modal-dialog",
+        "chart-tooltip",
+        "autocomplete",
+        "mention-popup",
+        "confirm-dialog",
+        "tooltip-guide"
+      ],
+      "visual_reference_signals": []
+    }
+  ],
+  "components": [
+    {
+      "name": "primary-button",
+      "family": "button",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "secondary-button",
+      "family": "button",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "ghost-button",
+      "family": "button",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "icon-button",
+      "family": "button",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "cta-button",
+      "family": "button",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "mobile-topbar",
+      "family": "navigation",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "mobile-tab-bar",
+      "family": "navigation",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "back-button",
+      "family": "navigation",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "section-tabs",
+      "family": "navigation",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "inline-alert",
+      "family": "feedback",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "empty-state",
+      "family": "feedback",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "toast",
+      "family": "feedback",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "bottom-sheet",
+      "family": "overlay",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "modal-dialog",
+      "family": "overlay",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "text-field",
+      "family": "input",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "search-field",
+      "family": "input",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "segmented-control",
+      "family": "input",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "link-button",
+      "family": "button",
+      "supports_primitive": "baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "stat-card",
+      "family": "data-display",
+      "supports_primitive": "dashboard cards",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "insight-card",
+      "family": "data-display",
+      "supports_primitive": "dashboard cards",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "activity-card",
+      "family": "data-display",
+      "supports_primitive": "dashboard cards",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "section-header",
+      "family": "data-display",
+      "supports_primitive": "dashboard cards",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "banner",
+      "family": "feedback",
+      "supports_primitive": "notifications",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chart-container",
+      "family": "data-display",
+      "supports_primitive": "charts and visualization",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chart-tooltip",
+      "family": "overlay",
+      "supports_primitive": "charts and visualization",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chart-legend",
+      "family": "data-display",
+      "supports_primitive": "charts and visualization",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "data-table",
+      "family": "data-display",
+      "supports_primitive": "data tables",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "column-header",
+      "family": "data-display",
+      "supports_primitive": "data tables",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "row-actions",
+      "family": "data-display",
+      "supports_primitive": "data tables",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "pagination",
+      "family": "navigation",
+      "supports_primitive": "data tables",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "filter-chip",
+      "family": "input",
+      "supports_primitive": "data tables",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tag",
+      "family": "data-display",
+      "supports_primitive": "tags and labels",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "status-badge",
+      "family": "feedback",
+      "supports_primitive": "tags and labels",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chip",
+      "family": "input",
+      "supports_primitive": "tags and labels",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "kanban-board",
+      "family": "data-display",
+      "supports_primitive": "kanban and board",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "kanban-column",
+      "family": "data-display",
+      "supports_primitive": "kanban and board",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "kanban-card",
+      "family": "data-display",
+      "supports_primitive": "kanban and board",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "textarea",
+      "family": "input",
+      "supports_primitive": "forms",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "select",
+      "family": "input",
+      "supports_primitive": "forms",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "checkbox",
+      "family": "input",
+      "supports_primitive": "forms",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "radio-group",
+      "family": "input",
+      "supports_primitive": "forms",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "form-section",
+      "family": "input",
+      "supports_primitive": "forms",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "form-actions",
+      "family": "button",
+      "supports_primitive": "forms",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "app-shell",
+      "family": "navigation",
+      "supports_primitive": "workspace navigation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "sidebar-nav",
+      "family": "navigation",
+      "supports_primitive": "workspace navigation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "topbar",
+      "family": "navigation",
+      "supports_primitive": "workspace navigation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "family": "navigation",
+      "supports_primitive": "workspace navigation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tab-bar",
+      "family": "navigation",
+      "supports_primitive": "workspace navigation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "search-results",
+      "family": "data-display",
+      "supports_primitive": "search and filter",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "filter-panel",
+      "family": "input",
+      "supports_primitive": "search and filter",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "autocomplete",
+      "family": "overlay",
+      "supports_primitive": "search and filter",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "date-picker",
+      "family": "input",
+      "supports_primitive": "calendar and dates",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "calendar-grid",
+      "family": "data-display",
+      "supports_primitive": "calendar and dates",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "time-picker",
+      "family": "input",
+      "supports_primitive": "calendar and dates",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "date-range-picker",
+      "family": "input",
+      "supports_primitive": "calendar and dates",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "editor-canvas",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "editor-toolbar",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "inline-format-menu",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "slash-command-menu",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "block-controls",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "comment-thread",
+      "family": "data-display",
+      "supports_primitive": "comments and discussion",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "comment-input",
+      "family": "input",
+      "supports_primitive": "comments and discussion",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "mention-popup",
+      "family": "overlay",
+      "supports_primitive": "comments and discussion",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "confirm-dialog",
+      "family": "overlay",
+      "supports_primitive": "modal and dialog",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "step-progress",
+      "family": "feedback",
+      "supports_primitive": "onboarding and stepper",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "wizard-layout",
+      "family": "navigation",
+      "supports_primitive": "onboarding and stepper",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tooltip-guide",
+      "family": "overlay",
+      "supports_primitive": "onboarding and stepper",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chart-panel",
+      "family": "data-display",
+      "supports_primitive": "dashboard cards",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "dashboard-insight-module",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "filter-toolbar",
+      "family": "data-display",
+      "supports_primitive": "data tables",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "data-review-table",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "workspace-switcher",
+      "family": "navigation",
+      "supports_primitive": "workspace navigation",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "workspace-shell",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "context-panel",
+      "family": "navigation",
+      "supports_primitive": "workspace navigation",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "workspace-shell",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    }
+  ],
+  "candidate_component_archetypes": [
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.94)",
+        "dashboard x1",
+        "metric x3",
+        "kpi x1",
+        "chart x3"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.94)",
+        "layout=dashboard-grid (0.94)",
+        "table x3",
+        "grid x3",
+        "log x1",
+        "filter x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "workspace-shell",
+      "label": "Workspace shell",
+      "family": "navigation",
+      "confidence": 0.75,
+      "suggested_components": [
+        "app-shell",
+        "sidebar-nav",
+        "workspace-switcher",
+        "breadcrumb",
+        "context-panel"
+      ],
+      "supports_primitives": [
+        "workspace navigation"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.7)",
+        "sidebar x1",
+        "navigation x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "valid": true,
+  "errors": [],
+  "warnings": [
+    "[pitfall#3-rebrand] Cerulean vs Sky Blue (blue): lightness diff 27, saturation diff 8 — possible rebrand remnant",
+    "visual_reference.sources is empty"
+  ]
+}

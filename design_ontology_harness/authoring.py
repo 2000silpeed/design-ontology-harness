@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 from .models import DocumentRecord, ReferenceLink
@@ -685,7 +684,7 @@ def build_system_spec_markdown(
         (
             f"- **{family['family']}**: {', '.join(family.get('components', [])[:8]) or 'TBD'}"
             + (
-                f" / visual signals: "
+                " / visual signals: "
                 + ", ".join(
                     f"{signal.get('label')} ({signal.get('confidence')})"
                     for signal in family.get("visual_reference_signals", [])[:2]
@@ -1181,14 +1180,13 @@ def _build_quick_start_section(
     token_schema: dict,
     color_reference: dict | None,
 ) -> str:
-    brand_name = brand_profile.get("brand_name", "Brand")
     system_name = brand_profile.get("system_name", "Design System")
     lines = [
         f"이 문서는 **{system_name}**의 디자인 시스템 사양입니다.",
         "",
         "### 시작하기",
         "",
-        f"1. **토큰 적용**: Drop-in CSS(아래 섹션 16)의 CSS 변수를 프로젝트에 복사합니다.",
+        "1. **토큰 적용**: Drop-in CSS(아래 섹션 16)의 CSS 변수를 프로젝트에 복사합니다.",
         "2. **컬러 세팅**: Color Reference(섹션 6)의 semantic role을 기준으로 surface/text/border를 잡습니다.",
         "3. **타이포 세팅**: Token Strategy(섹션 5)의 font family와 type scale을 적용합니다.",
         "4. **시각 방향 확인**: Visual Reference Signals(섹션 7)에서 density/surface/layout cue를 먼저 확인합니다.",
@@ -1370,7 +1368,7 @@ def _build_css_extraction_section(css_extraction: dict | None) -> str:
         total = var_info.get("total_vars", 0)
         resolved = var_info.get("resolved_count", 0)
         unresolved = var_info.get("unresolved_count", 0)
-        lines.append(f"### Variable Resolution\n")
+        lines.append("### Variable Resolution\n")
         lines.append(f"- 전체 CSS 변수: **{total}**개")
         lines.append(f"- 해결됨: **{resolved}**개 ({round(resolved / total * 100) if total else 0}%)")
         lines.append(f"- 미해결: **{unresolved}**개")
@@ -1378,7 +1376,7 @@ def _build_css_extraction_section(css_extraction: dict | None) -> str:
     brand_info = css_extraction.get("brand_colors", {})
     summary = brand_info.get("summary", {})
     if summary:
-        lines.append(f"\n### Brand Color Candidates\n")
+        lines.append("\n### Brand Color Candidates\n")
         lines.append(f"- 후보 수: **{summary.get('total_candidates', 0)}**개")
         by_role = summary.get("by_role", {}) or {}
         if by_role:
@@ -1389,7 +1387,7 @@ def _build_css_extraction_section(css_extraction: dict | None) -> str:
     typo_info = css_extraction.get("typography", {})
     stats = typo_info.get("stats", {})
     if stats:
-        lines.append(f"\n### Typography Extraction\n")
+        lines.append("\n### Typography Extraction\n")
         lines.append(f"- 스케일 항목: **{stats.get('scale_entries', 0)}**개")
         lines.append(f"- 고유 폰트 패밀리: **{stats.get('unique_families', 0)}**개")
         lines.append(f"- 고유 weight 수: **{stats.get('unique_weights', 0)}**개")
@@ -1397,7 +1395,7 @@ def _build_css_extraction_section(css_extraction: dict | None) -> str:
     alias_info = css_extraction.get("alias_layer", {})
     alias_stats = alias_info.get("stats", {})
     if alias_stats:
-        lines.append(f"\n### Alias Layer\n")
+        lines.append("\n### Alias Layer\n")
         lines.append(f"- 전체 토큰: **{alias_stats.get('total', 0)}**개")
         tiers = alias_stats.get("by_tier", {}) or {}
         if tiers:

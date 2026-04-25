@@ -1,0 +1,179 @@
+{
+  "brand_name": "Orbit",
+  "system_name": "Orbit System",
+  "product_summary": "SaaS 팀을 위한 미니멀 테크 운영 대시보드 — 프로젝트/이슈/KPI/문서를 고밀도로 엮는 관리자 도구",
+  "audiences": [
+    "SaaS 프로덕트 매니저",
+    "엔지니어링 리드",
+    "운영/고객 성공 담당자"
+  ],
+  "brand_keywords": [
+    "clean",
+    "precise",
+    "neutral",
+    "technical"
+  ],
+  "anti_keywords": [
+    "decorative",
+    "playful",
+    "skeuomorphic",
+    "noisy"
+  ],
+  "tone_of_voice": [
+    "clear",
+    "concise",
+    "matter-of-fact"
+  ],
+  "visual_keywords": [
+    "monochrome neutral",
+    "restrained accent",
+    "dense information hierarchy",
+    "flat surfaces",
+    "hairline borders"
+  ],
+  "interaction_keywords": [
+    "keyboard-first",
+    "command palette",
+    "predictable states",
+    "low-noise motion",
+    "dense data filtering"
+  ],
+  "platforms": [
+    "web",
+    "desktop"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "sidebar navigation",
+    "workspace switcher",
+    "project issue table",
+    "kpi card grid",
+    "filter chrome",
+    "command palette",
+    "inline status menu",
+    "activity feed",
+    "member roster",
+    "settings panel"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "design token",
+      "data density"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "marketing-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Cool Grays",
+      "Standard Blues",
+      "Deep Blues",
+      "Natural Blues"
+    ],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "cool",
+      "contrast": "balanced",
+      "diversity": "narrow",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "신뢰감",
+        "정제됨",
+        "차분함"
+      ],
+      "avoid_moods": [
+        "달콤함",
+        "귀여움",
+        "화려함"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "무채색 계열을 기본 surface로, 제한된 blue accent 1종으로 운용",
+      "dark mode를 1급 지원 (데이터 집약 환경)",
+      "semantic feedback(success/warn/danger/info)은 별도 role"
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "minimal saas dashboard",
+      "linear.app data table",
+      "notion command palette",
+      "height.app issue list"
+    ],
+    "sources": [],
+    "preferred_count": 10,
+    "weights": {
+      "layout": 0.35,
+      "component_shape": 0.25,
+      "color_balance": 0.15,
+      "typography_mood": 0.15,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "dense data table",
+      "2-level sidebar",
+      "keyboard-first affordances"
+    ],
+    "avoid_patterns": [
+      "glassmorphism",
+      "gradient-heavy surfaces",
+      "ornamental typography"
+    ],
+    "notes": [
+      "Linear/Height/Notion 스타일 미니멀 테크 참조",
+      "이미지 기반 힌트는 표현 계층에만 사용하고 구조는 spec + KB로 유지"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://linear.app",
+      "kind": "design-system",
+      "title": "Linear",
+      "notes": "minimal SaaS admin references (sidebar, command palette, kanban)"
+    },
+    {
+      "url": "https://height.app",
+      "kind": "design-system",
+      "title": "Height",
+      "notes": "issue tracker / dashboard density references"
+    },
+    {
+      "url": "https://www.notion.so",
+      "kind": "design-system",
+      "title": "Notion",
+      "notes": "workspace navigation + database UI references"
+    }
+  ]
+}

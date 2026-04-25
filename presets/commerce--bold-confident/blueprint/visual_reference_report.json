@@ -1,0 +1,492 @@
+{
+  "mode": "local-images",
+  "query": [
+    "nike streetwear drop commerce",
+    "supreme product grid",
+    "kith product detail bold",
+    "ssense checkout flow",
+    "musinsa mobile commerce",
+    "29cm product detail bold"
+  ],
+  "preferred_count": 8,
+  "weights": {
+    "layout": 0.3,
+    "component_shape": 0.2,
+    "color_balance": 0.2,
+    "typography_mood": 0.2,
+    "surface_style": 0.1
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "Nike / Supreme / Kith / Ssense / Musinsa / 29cm 계열 bold streetwear/drop commerce 참조",
+    "bold-confident 톤: saturated primary + high-contrast headline + impact typography + full-bleed banner + dense product grid",
+    "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+  ],
+  "must_include": [
+    "full-bleed drop hero banner with countdown",
+    "dense product grid 2x3 or 3x4",
+    "product detail with gallery + variant/size selector + price + add-to-cart",
+    "cart drawer slide-in with cart items and summary",
+    "checkout step progress with address/payment forms"
+  ],
+  "avoid_patterns": [
+    "warm editorial magazine hero",
+    "minimal saas landing",
+    "pastel playful feed",
+    "dense dashboard chrome",
+    "long-form reading article"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "airy",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x2",
+        "landing x1",
+        "hero x6"
+      ],
+      "candidates": [
+        {
+          "value": "airy",
+          "score": 18.0
+        },
+        {
+          "value": "balanced",
+          "score": 14.0
+        },
+        {
+          "value": "dense",
+          "score": 6.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "flat",
+      "confidence": 0.41,
+      "evidence": [
+        "minimal x2"
+      ],
+      "candidates": [
+        {
+          "value": "flat",
+          "score": 4.0
+        },
+        {
+          "value": "tinted",
+          "score": 4.0
+        },
+        {
+          "value": "elevated",
+          "score": 2.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "editorial",
+      "confidence": 0.9,
+      "evidence": [
+        "editorial x2",
+        "article x1",
+        "magazine x2",
+        "serif x1"
+      ],
+      "candidates": [
+        {
+          "value": "editorial",
+          "score": 14.0
+        },
+        {
+          "value": "playful",
+          "score": 6.0
+        },
+        {
+          "value": "utilitarian",
+          "score": 6.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "pill",
+      "confidence": 0.43,
+      "evidence": [
+        "pill x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x2",
+        "article x1",
+        "feed x1",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "landing-narrative",
+      "label": "Narrative landing flow",
+      "confidence": 0.94,
+      "evidence": [
+        "landing x1",
+        "hero x6"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.92,
+      "evidence": [
+        "grid x6",
+        "filter x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.56,
+      "evidence": [
+        "dashboard x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "flat card planes를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. pill-like actions만 제한적으로 허용.",
+      "confidence": 0.94,
+      "evidence": [
+        "surface=flat",
+        "density=airy",
+        "corner=pill"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "navigation은 정보 구조를 안정적으로 고정하고 시각적 장식보다 위치 신호를 우선한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Editorial feed"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다.",
+      "confidence": 0.9,
+      "evidence": [
+        "typography_mood=editorial"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.94,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=airy"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.92)",
+        "layout=dashboard-grid (0.56)",
+        "grid x6",
+        "filter x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.94,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.94)",
+        "editorial x2",
+        "article x1",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.94,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "layout=landing-narrative (0.94)",
+        "hero x6",
+        "landing x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.71,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.56)",
+        "dashboard x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Editorial feed",
+    "recommended_direction": [
+      "layout는 Editorial feed 기준으로 정리",
+      "surface language는 flat 성향 우선",
+      "typography mood는 editorial 축 유지",
+      "density는 airy 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "warm editorial magazine hero",
+      "minimal saas landing",
+      "pastel playful feed",
+      "dense dashboard chrome",
+      "long-form reading article"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "Drop",
+    "system_name": "Drop System",
+    "brand_keywords": [
+      "commerce",
+      "ecommerce",
+      "shop",
+      "store",
+      "product-grid",
+      "product-detail",
+      "cart",
+      "checkout",
+      "drop",
+      "merchandise",
+      "streetwear",
+      "bold",
+      "energetic",
+      "high-contrast"
+    ],
+    "anti_keywords": [
+      "editorial-warm",
+      "magazine-serif",
+      "minimal",
+      "playful-pastel",
+      "corporate-conservative",
+      "dashboard-heavy",
+      "document-heavy"
+    ],
+    "visual_keywords": [
+      "saturated primary hero",
+      "high-contrast headline",
+      "dense product grid",
+      "large product hero image",
+      "impact typography",
+      "purple accent callout",
+      "full-bleed drop banner",
+      "bold price tag",
+      "countdown timer chip"
+    ],
+    "interaction_keywords": [
+      "add-to-cart animation",
+      "quick-view modal",
+      "size selector chip",
+      "wishlist toggle heart",
+      "drop countdown timer",
+      "quantity stepper",
+      "cart drawer slide-in",
+      "checkout step progress",
+      "promo code input flash",
+      "hero scroll-snap banner"
+    ],
+    "product_primitives": [
+      "product card",
+      "product grid",
+      "product detail",
+      "product gallery",
+      "image thumbnail",
+      "variant selector",
+      "size selector",
+      "color swatch selector",
+      "add-to-cart button",
+      "quick-view modal",
+      "wishlist toggle",
+      "drop banner",
+      "countdown timer",
+      "price tag",
+      "original price strikethrough",
+      "discount badge",
+      "cart drawer",
+      "cart item",
+      "cart summary",
+      "checkout step",
+      "address form",
+      "payment form",
+      "promo code input",
+      "order summary",
+      "empty cart state",
+      "search bar",
+      "filter sidebar",
+      "sort dropdown",
+      "pagination",
+      "breadcrumb",
+      "category pill",
+      "hero banner",
+      "site header",
+      "site footer"
+    ]
+  }
+}

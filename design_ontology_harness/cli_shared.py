@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import httpx
+
 from .crawler import CrawlConfig, RobotsCache, crawl_reference
 from .css_pipeline import run_css_extraction
 from .ontology import build_ontology_outputs
@@ -62,7 +64,7 @@ def run_pipeline(
     err_count = len(all_documents) - ok_count
     print(f"  크롤링 완료: 성공 {ok_count}건 / 실패 {err_count}건")
     if crawl_errors:
-        print(f"  실패한 소스:")
+        print("  실패한 소스:")
         for label, count, errors in crawl_errors:
             print(f"    - {label[:50]}: {count}건 에러")
             for error in errors[:2]:
@@ -102,9 +104,9 @@ def run_pipeline(
             typo_info = css_result["typography"]["stats"]
             print(f"  CSS 추출: {css_file_count}개 파일 | var {var_info['resolved_count']}/{var_info['total_vars']}개 | 브랜드색 {brand_info['total_candidates']}개 | 타이포 {typo_info['scale_entries']}개")
         else:
-            print(f"  CSS 추출: CSS 파일은 수집됐지만 내용이 비어 있음")
+            print("  CSS 추출: CSS 파일은 수집됐지만 내용이 비어 있음")
     else:
-        print(f"  CSS 추출: CSS 파일 없음 (크롤 시 <link rel=stylesheet> 미발견)")
+        print("  CSS 추출: CSS 파일 없음 (크롤 시 <link rel=stylesheet> 미발견)")
 
     if brand_profile_path:
         brand_profile = load_brand_profile(brand_profile_path)

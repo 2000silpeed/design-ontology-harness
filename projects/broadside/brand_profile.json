@@ -1,0 +1,307 @@
+{
+  "brand_name": "Broadside",
+  "system_name": "Broadside System",
+  "product_summary": "bold-confident 톤 magazine/opinion long-form reading — masthead · issue-header · cover-story · feature-article · pull-quote · drop-cap · article · table-of-contents · reading-pane · archive-index · manifesto-section, saturated primary + high-contrast + impact typography, 한국어 1급",
+  "audiences": [
+    "정치·사회 opinion 저널을 탐독하는 독자 (The Atlantic / New Yorker 성향)",
+    "bold 컬처/음악/영화 리뷰 매거진 reader (Pitchfork / Vice 성향)",
+    "declaration/manifesto 단일호 zine 구독자 (Gen Z 젊은 에디토리얼)"
+  ],
+  "brand_keywords": [
+    "document-content",
+    "magazine",
+    "editorial-feature",
+    "opinion",
+    "manifesto",
+    "long-form",
+    "article",
+    "feature-story",
+    "pull-quote",
+    "masthead",
+    "bold",
+    "energetic",
+    "high-contrast",
+    "impact",
+    "zine"
+  ],
+  "anti_keywords": [
+    "minimal-tech",
+    "editorial-warm",
+    "playful-pastel",
+    "corporate-conservative",
+    "dashboard-heavy",
+    "commerce-heavy",
+    "streetwear-drop",
+    "reading-calm",
+    "muted"
+  ],
+  "tone_of_voice": [
+    "confident",
+    "energetic",
+    "opinionated",
+    "impactful",
+    "declarative"
+  ],
+  "visual_keywords": [
+    "saturated primary masthead",
+    "high-contrast cover",
+    "impact headline typography",
+    "oversized kicker eyebrow",
+    "full-bleed feature spread",
+    "bold pull-quote block",
+    "chunky divider rule",
+    "editorial number-heavy TOC",
+    "opinionated long-form spread"
+  ],
+  "interaction_keywords": [
+    "bold entry hero reveal",
+    "sticky masthead scroll",
+    "pull-quote magnification",
+    "section jump TOC",
+    "feature scroll-snap",
+    "impact cover transition",
+    "reading progress bar",
+    "footnote flash highlight",
+    "masthead focus ring bold",
+    "bold share overlay"
+  ],
+  "platforms": [
+    "web",
+    "desktop-web",
+    "tablet-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "masthead",
+    "issue-header",
+    "issue-number",
+    "kicker-eyebrow",
+    "feature-article",
+    "cover-story",
+    "opening-spread",
+    "article-body",
+    "pull-quote",
+    "byline",
+    "credit-line",
+    "drop-cap",
+    "section-break",
+    "callout",
+    "table-of-contents",
+    "heading-anchor",
+    "footnote",
+    "reading-pane",
+    "prose-block",
+    "article-gallery",
+    "subscription-callout",
+    "manifesto-section",
+    "opinion-byline",
+    "feature-grid-index",
+    "archive-index",
+    "issue-archive",
+    "reading-progress-bar"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "design token",
+      "article",
+      "magazine",
+      "editorial",
+      "opinion"
+    ],
+    "avoid_sources_containing": [
+      "dashboard-only",
+      "commerce-only",
+      "streetwear-only",
+      "pastel-only",
+      "muted-editorial-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Pantone Trend Blues",
+      "Pantone Trend Reds",
+      "Pantone Trend Oranges"
+    ],
+    "palette_roles": {
+      "primary": "Classic Blue",
+      "accent": "Goji Berry",
+      "surface_tint": "Flame"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "balanced",
+      "contrast": "high",
+      "diversity": "wide",
+      "surface_style": "grounded",
+      "prefer_moods": [
+        "대담",
+        "강렬",
+        "임팩트",
+        "에너제틱",
+        "고대비",
+        "주목성"
+      ],
+      "avoid_moods": [
+        "차분",
+        "부드러움",
+        "중립",
+        "미니멀",
+        "따뜻한 editorial"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Classic Blue #0F4C81 primary — Pantone 2020 trend color, deep saturated editorial magazine blue, masthead / cover-story hero / feature-article headline impact 라인, 기존 13종 core palette 와 HEX 겹침 0 (signal-desk 의 info role 에만 등장하므로 core-role 간 충돌 없음)",
+      "Goji Berry #CC142F accent — Pantone Trend 선명한 구기자 적색, pull-quote vertical rule / opinion-byline accent / manifesto-section fill / subscription-callout CTA 강조, drop Crimson #BD2E4A 와 다른 depth, premier-league Vivid Pink #E90052 와 완전 차별화",
+      "Flame #F2552C surface_tint — Pantone Trend 밝은 불꽃 오렌지 surface pop, kicker-eyebrow / issue-number chip / section-break ornament / footnote flash 에 한정 사용, bloom Coral Blush #F88379 및 Buttercream #F3E5AB 과 다른 true orange 계열",
+      "light mode 가 기본 — magazine cover spread 관례, dark 옵션 제공 (deep cool black surface + tuned Electric Blue/Goji Berry 채도 낮춤, paragraph prose 는 near-white contrast)",
+      "기존 13종 프리셋 HEX 와 겹침 0 — Electric Blue/Goji Berry/Flame 조합",
+      "document-content 는 editorial-warm (Ochre/Terracotta/Wheat) + minimal-tech (Iris Violet/Cerulean/Lavender) 2종 이미 존재 — Broadside 는 saturated primary + high-contrast impact 로 세 번째 톤 축 완성",
+      "bold-confident 는 marketing-landing (premier-league Pink/Green/Gold) + commerce (drop Crimson/Royal Purple/Buttercream) 이미 2종 존재 — Broadside 는 Electric Blue-중심 neon magazine cover 감성으로 톤 3종째 차별화"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Playfair Display",
+      "weights": [
+        400,
+        700,
+        900
+      ],
+      "notes": "bold-confident magazine display serif — masthead / cover-story headline / feature-article h1, Vogue·NYTimes Magazine 계열 bold cover 감성, Lora (signal-desk) 및 Source Serif Pro (quill) 와 차별화"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "article-body / prose-block / paragraph / outline 본문 공용, line-height 1.5–1.7 (long-form reading-first)"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "issue-number / credit-line / byline attribution / citation footnote number / reading-progress % — tabular-nums 영문 고정"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        700,
+        900
+      ],
+      "notes": "한글 1급 — article-body / pull-quote / outline / subscription-callout, line-height 1.5–1.7 keep-all (long-form reading-first), masthead/heading 은 Pretendard 900 letter-spacing tight"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "the atlantic magazine feature cover",
+      "new yorker magazine issue cover",
+      "vice long-form opinion",
+      "pitchfork music review feature",
+      "nytimes magazine feature spread",
+      "guardian long read opinion"
+    ],
+    "sources": [],
+    "preferred_count": 6,
+    "weights": {
+      "layout": 0.3,
+      "component_shape": 0.2,
+      "color_balance": 0.2,
+      "typography_mood": 0.2,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "issue cover with masthead + issue number + cover-story hero + kicker-eyebrow",
+      "feature article opening spread with drop cap + pull-quote + byline + section-break",
+      "opinion/manifesto section with opinion-byline + bold callout + reading-progress-bar",
+      "table-of-contents / feature-grid-index number-heavy tile + kicker + title + byline",
+      "archive index with issue thumbnail + issue-number + publish date"
+    ],
+    "avoid_patterns": [
+      "saturated commerce hero",
+      "calm editorial-warm magazine (Lora serif warm)",
+      "minimal developer docs reference",
+      "playful pastel feed",
+      "streetwear drop banner"
+    ],
+    "notes": [
+      "The Atlantic / New Yorker / NY Times Magazine / Vice / Pitchfork / Guardian Long Read 계열 bold magazine/opinion long-form 참조",
+      "bold-confident 톤: saturated primary masthead + high-contrast cover + impact headline typography + oversized kicker eyebrow + full-bleed feature spread + bold pull-quote + chunky divider rule",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://www.theatlantic.com",
+      "kind": "visual-reference",
+      "title": "The Atlantic",
+      "notes": "bold editorial feature + magazine cover references"
+    },
+    {
+      "url": "https://www.newyorker.com",
+      "kind": "visual-reference",
+      "title": "The New Yorker",
+      "notes": "editorial magazine issue references"
+    },
+    {
+      "url": "https://www.nytimes.com",
+      "kind": "visual-reference",
+      "title": "NY Times Magazine",
+      "notes": "magazine feature spread references"
+    },
+    {
+      "url": "https://www.vice.com",
+      "kind": "visual-reference",
+      "title": "Vice",
+      "notes": "bold opinion long-form references"
+    },
+    {
+      "url": "https://pitchfork.com",
+      "kind": "visual-reference",
+      "title": "Pitchfork",
+      "notes": "opinion / review feature references"
+    },
+    {
+      "url": "https://www.theguardian.com",
+      "kind": "visual-reference",
+      "title": "The Guardian",
+      "notes": "long read + opinion references"
+    }
+  ]
+}

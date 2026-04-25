@@ -49,6 +49,7 @@ def scaffold_project(
             "prioritize_sources_containing": ["components", "typography", "accessibility"],
             "avoid_sources_containing": ["brand-only"],
         },
+        "seeds": [],
     }
 
     if DEFAULT_COLOR_REFERENCE_PATH.exists():

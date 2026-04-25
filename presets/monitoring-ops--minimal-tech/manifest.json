@@ -1,0 +1,37 @@
+{
+  "id": "monitoring-ops--minimal-tech",
+  "schema_version": "1.0.0",
+  "preset_api_version": "1.0.0",
+  "generated_by_harness_version": "0.1.0",
+  "preview_version": "1.0.0",
+  "adapter_compatibility": {
+    "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+    "raw-css-variables": ">=0.1.0 <1.0.0",
+    "vite-tailwind": ">=0.1.0 <1.0.0"
+  },
+  "source_project": "pulse",
+  "content_hash": "sha256:1406a192fc5d3e211259839180edc77f1babe6501d2e8619a441e27c0dcfc327",
+  "app_mode": "monitoring-ops",
+  "brand_tone": "minimal-tech",
+  "color_modes": [
+    "light",
+    "dark"
+  ],
+  "default_color_mode": "dark",
+  "tags": [
+    "devtools",
+    "ko"
+  ],
+  "locale_pairings": {
+    "ko": {
+      "heading_font": "Pretendard",
+      "body_font": "Pretendard",
+      "mono_font": "JetBrains Mono",
+      "notes": "SRE/DevOps 실시간 observability 콘솔 — 한국어 UI, metric/log/trace 는 mono 영문 고정, 숫자 tabular-nums"
+    }
+  },
+  "owner": "maintainer",
+  "tier": "P1",
+  "generated_at": "2026-04-21T12:34:59Z",
+  "description": "SRE/DevOps 실시간 observability 콘솔 — metric/alert/trace, 다크 기본, 한국어 1급"
+}

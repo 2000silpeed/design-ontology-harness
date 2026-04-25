@@ -1,0 +1,44 @@
+{
+  "preset_id": "canvas-tool--minimal-tech",
+  "source_project": "atelier",
+  "seeds": [
+    {
+      "url": "https://www.figma.com",
+      "kind": "design-system",
+      "title": "Figma",
+      "notes": "canvas + inspector + layer panel references"
+    },
+    {
+      "url": "https://www.framer.com",
+      "kind": "design-system",
+      "title": "Framer",
+      "notes": "canvas editor + toolbar references"
+    },
+    {
+      "url": "https://excalidraw.com",
+      "kind": "visual-reference",
+      "title": "Excalidraw",
+      "notes": "playful canvas tool references"
+    },
+    {
+      "url": "https://www.tldraw.com",
+      "kind": "visual-reference",
+      "title": "tldraw",
+      "notes": "minimal canvas editor references"
+    },
+    {
+      "url": "https://rive.app",
+      "kind": "visual-reference",
+      "title": "Rive",
+      "notes": "animation canvas references"
+    },
+    {
+      "url": "https://spline.design",
+      "kind": "visual-reference",
+      "title": "Spline",
+      "notes": "3D canvas inspector references"
+    }
+  ],
+  "pretendard_font_license": "SIL OFL 1.1",
+  "created_at": "2026-04-21T12:34:59Z"
+}

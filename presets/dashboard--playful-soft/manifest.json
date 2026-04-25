@@ -1,0 +1,38 @@
+{
+  "id": "dashboard--playful-soft",
+  "schema_version": "1.0.0",
+  "preset_api_version": "1.0.0",
+  "generated_by_harness_version": "0.1.0",
+  "preview_version": "1.0.0",
+  "adapter_compatibility": {
+    "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+    "raw-css-variables": ">=0.1.0 <1.0.0",
+    "vite-tailwind": ">=0.1.0 <1.0.0"
+  },
+  "source_project": "meadow",
+  "content_hash": "sha256:8c1e331607095b507c4e6255edb18025c2e835ff89fb56df9c0b54a90241b27b",
+  "app_mode": "dashboard",
+  "brand_tone": "playful-soft",
+  "color_modes": [
+    "light",
+    "dark"
+  ],
+  "default_color_mode": "light",
+  "tags": [
+    "wellness",
+    "consumer",
+    "ko"
+  ],
+  "locale_pairings": {
+    "ko": {
+      "heading_font": "Pretendard",
+      "body_font": "Pretendard",
+      "mono_font": "JetBrains Mono",
+      "notes": "consumer wellness admin playful-soft — 한국어 data-table cell / habit-calendar / wellness-score / mood-check / streak-indicator / insight-card keep-all line-height 1.5–1.6 (dashboard soft), 지표 숫자 (streak days / score / mood avg / session minutes) 는 mono 영문 tabular-nums 고정, rounded soft 모든 컴포넌트 radius 12–16"
+    }
+  },
+  "owner": "@maintainer-dogfood",
+  "tier": "P3",
+  "generated_at": "2026-04-21T12:34:59Z",
+  "description": "consumer wellness/habit admin — playful-soft 톤 pastel 팔레트, 한국어 1급"
+}

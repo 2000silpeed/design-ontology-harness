@@ -1,0 +1,2419 @@
+{
+  "families": [
+    {
+      "family": "button",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "hover",
+        "active",
+        "disabled",
+        "loading"
+      ],
+      "components": [
+        "primary-button",
+        "secondary-button",
+        "ghost-button",
+        "icon-button",
+        "cta-button",
+        "link-button",
+        "hero-cta-group",
+        "form-actions",
+        "follow-button"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "data-display",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "sorted",
+        "filtered",
+        "empty"
+      ],
+      "components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "pricing-card",
+        "feature-comparison",
+        "tag",
+        "chart-container",
+        "chart-legend",
+        "kanban-board",
+        "kanban-column",
+        "kanban-card",
+        "search-results",
+        "stat-card",
+        "insight-card",
+        "activity-card",
+        "section-header",
+        "comment-thread",
+        "chat-message",
+        "chat-thread",
+        "tag-pill",
+        "filter-toolbar",
+        "chart-panel"
+      ],
+      "visual_reference_signals": [
+        {
+          "id": "data-review-table",
+          "label": "Data review table",
+          "confidence": 0.94,
+          "evidence": [
+            "layout=data-review-surface (0.77)",
+            "layout=dashboard-grid (0.61)",
+            "table x2",
+            "grid x2"
+          ]
+        },
+        {
+          "id": "dashboard-insight-module",
+          "label": "Dashboard insight module",
+          "confidence": 0.57,
+          "evidence": [
+            "layout=dashboard-grid (0.61)",
+            "dashboard x1"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "editorial",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "selected",
+        "editing"
+      ],
+      "components": [
+        "editor-canvas",
+        "editor-toolbar",
+        "inline-format-menu",
+        "slash-command-menu",
+        "block-controls",
+        "content-card",
+        "featured-story-card",
+        "content-meta",
+        "byline-row"
+      ],
+      "visual_reference_signals": [
+        {
+          "id": "editorial-content-block",
+          "label": "Editorial content block",
+          "confidence": 0.94,
+          "evidence": [
+            "layout=editorial-feed (0.94)",
+            "editorial x4",
+            "article x5",
+            "content x1",
+            "story x3",
+            "magazine x7"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "feedback",
+      "priority": "high",
+      "required_states": [
+        "info",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "components": [
+        "inline-alert",
+        "empty-state",
+        "toast",
+        "reading-progress-bar",
+        "upgrade-banner",
+        "step-progress",
+        "status-badge",
+        "banner",
+        "empty-feed-illustration",
+        "gentle-toast"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "input",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "focus",
+        "error",
+        "disabled"
+      ],
+      "components": [
+        "text-field",
+        "search-field",
+        "segmented-control",
+        "filter-chip",
+        "chip",
+        "textarea",
+        "select",
+        "checkbox",
+        "radio-group",
+        "form-section",
+        "tone-slider",
+        "filter-panel",
+        "comment-input",
+        "chat-input",
+        "reply-composer"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "marketing",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "hover",
+        "in-view"
+      ],
+      "components": [
+        "hero-container",
+        "hero-eyebrow",
+        "hero-headline",
+        "hero-subheadline",
+        "hero-visual",
+        "hero-trust-strip",
+        "feature-section",
+        "feature-grid",
+        "feature-card",
+        "feature-icon",
+        "feature-title",
+        "feature-description",
+        "logo-cloud",
+        "customer-logo",
+        "metric-highlight",
+        "press-quote",
+        "hero-section",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "visual_reference_signals": [
+        {
+          "id": "marketing-hero-stack",
+          "label": "Marketing hero stack",
+          "confidence": 0.9,
+          "evidence": [
+            "layout=landing-narrative (0.71)",
+            "hero x3"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "navigation",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "active",
+        "hover",
+        "collapsed"
+      ],
+      "components": [
+        "mobile-topbar",
+        "mobile-tab-bar",
+        "back-button",
+        "section-tabs",
+        "prev-next-pager",
+        "pagination",
+        "wizard-layout",
+        "app-shell",
+        "sidebar-nav",
+        "topbar",
+        "breadcrumb",
+        "tab-bar",
+        "version-switcher"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "copilot-artifact",
+      "priority": "medium",
+      "required_states": [
+        "default"
+      ],
+      "components": [
+        "message-artifact",
+        "artifact-preview-panel",
+        "draft-document",
+        "outline-sidebar",
+        "revision-timeline",
+        "reading-mode-toggle",
+        "citation-footnote",
+        "quote-block",
+        "paragraph-block"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "document",
+      "priority": "medium",
+      "required_states": [
+        "default"
+      ],
+      "components": [
+        "article-body",
+        "table-of-contents",
+        "heading-anchor",
+        "prose-block",
+        "reading-pane",
+        "footnote",
+        "link-card",
+        "callout",
+        "admonition-block",
+        "api-reference-table",
+        "parameter-table"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "magazine",
+      "priority": "medium",
+      "required_states": [
+        "default"
+      ],
+      "components": [
+        "masthead",
+        "issue-header",
+        "issue-number",
+        "cover-story",
+        "opening-spread",
+        "feature-article",
+        "kicker-eyebrow",
+        "pull-quote",
+        "drop-cap",
+        "section-break",
+        "article-gallery",
+        "subscription-callout",
+        "opinion-byline",
+        "manifesto-section",
+        "feature-grid-index",
+        "archive-index",
+        "issue-archive",
+        "credit-line"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "overlay",
+      "priority": "medium",
+      "required_states": [
+        "closed",
+        "opening",
+        "open"
+      ],
+      "components": [
+        "bottom-sheet",
+        "modal-dialog",
+        "tooltip-guide",
+        "confirm-dialog",
+        "chart-tooltip",
+        "autocomplete",
+        "mention-popup",
+        "share-sheet",
+        "soft-dialog"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "social",
+      "priority": "medium",
+      "required_states": [
+        "default"
+      ],
+      "components": [
+        "feed-item",
+        "post-card",
+        "thread-view",
+        "reaction-bar",
+        "timeline-stream",
+        "avatar-cluster"
+      ],
+      "visual_reference_signals": []
+    }
+  ],
+  "components": [
+    {
+      "name": "primary-button",
+      "family": "button",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "secondary-button",
+      "family": "button",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "ghost-button",
+      "family": "button",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "icon-button",
+      "family": "button",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "cta-button",
+      "family": "button",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "mobile-topbar",
+      "family": "navigation",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "mobile-tab-bar",
+      "family": "navigation",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "back-button",
+      "family": "navigation",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "section-tabs",
+      "family": "navigation",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "inline-alert",
+      "family": "feedback",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "empty-state",
+      "family": "feedback",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "toast",
+      "family": "feedback",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "bottom-sheet",
+      "family": "overlay",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "modal-dialog",
+      "family": "overlay",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "text-field",
+      "family": "input",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "search-field",
+      "family": "input",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "segmented-control",
+      "family": "input",
+      "supports_primitive": "system baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "link-button",
+      "family": "button",
+      "supports_primitive": "baseline",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "masthead",
+      "family": "magazine",
+      "supports_primitive": "bold editorial magazine",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "issue-header",
+      "family": "magazine",
+      "supports_primitive": "bold editorial magazine",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "issue-number",
+      "family": "magazine",
+      "supports_primitive": "bold editorial magazine",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "cover-story",
+      "family": "magazine",
+      "supports_primitive": "bold editorial magazine",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "opening-spread",
+      "family": "magazine",
+      "supports_primitive": "bold editorial magazine",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "feature-article",
+      "family": "magazine",
+      "supports_primitive": "bold editorial magazine",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "kicker-eyebrow",
+      "family": "magazine",
+      "supports_primitive": "bold editorial magazine",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "pull-quote",
+      "family": "magazine",
+      "supports_primitive": "bold editorial magazine",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "drop-cap",
+      "family": "magazine",
+      "supports_primitive": "bold editorial magazine",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "section-break",
+      "family": "magazine",
+      "supports_primitive": "bold editorial magazine",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "article-gallery",
+      "family": "magazine",
+      "supports_primitive": "bold editorial magazine",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "subscription-callout",
+      "family": "magazine",
+      "supports_primitive": "bold editorial magazine",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "article-body",
+      "family": "document",
+      "supports_primitive": "reference documentation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "table-of-contents",
+      "family": "document",
+      "supports_primitive": "reference documentation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "heading-anchor",
+      "family": "document",
+      "supports_primitive": "reference documentation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "prose-block",
+      "family": "document",
+      "supports_primitive": "reference documentation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "reading-pane",
+      "family": "document",
+      "supports_primitive": "reference documentation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "footnote",
+      "family": "document",
+      "supports_primitive": "reference documentation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "prev-next-pager",
+      "family": "navigation",
+      "supports_primitive": "reference documentation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "link-card",
+      "family": "document",
+      "supports_primitive": "reference documentation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "opinion-byline",
+      "family": "magazine",
+      "supports_primitive": "opinion long-form",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "manifesto-section",
+      "family": "magazine",
+      "supports_primitive": "opinion long-form",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "feature-grid-index",
+      "family": "magazine",
+      "supports_primitive": "opinion long-form",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "archive-index",
+      "family": "magazine",
+      "supports_primitive": "opinion long-form",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "issue-archive",
+      "family": "magazine",
+      "supports_primitive": "opinion long-form",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "reading-progress-bar",
+      "family": "feedback",
+      "supports_primitive": "opinion long-form",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "credit-line",
+      "family": "magazine",
+      "supports_primitive": "opinion long-form",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "data-table",
+      "family": "data-display",
+      "supports_primitive": "data tables",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "column-header",
+      "family": "data-display",
+      "supports_primitive": "data tables",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "row-actions",
+      "family": "data-display",
+      "supports_primitive": "data tables",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "pagination",
+      "family": "navigation",
+      "supports_primitive": "data tables",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "filter-chip",
+      "family": "input",
+      "supports_primitive": "data tables",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "hero-container",
+      "family": "marketing",
+      "supports_primitive": "hero section",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "hero-eyebrow",
+      "family": "marketing",
+      "supports_primitive": "hero section",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "hero-headline",
+      "family": "marketing",
+      "supports_primitive": "hero section",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "hero-subheadline",
+      "family": "marketing",
+      "supports_primitive": "hero section",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "hero-cta-group",
+      "family": "button",
+      "supports_primitive": "hero section",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "hero-visual",
+      "family": "marketing",
+      "supports_primitive": "hero section",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "hero-trust-strip",
+      "family": "marketing",
+      "supports_primitive": "hero section",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "pricing-card",
+      "family": "data-display",
+      "supports_primitive": "pricing and plans",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "feature-comparison",
+      "family": "data-display",
+      "supports_primitive": "pricing and plans",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "upgrade-banner",
+      "family": "feedback",
+      "supports_primitive": "pricing and plans",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "step-progress",
+      "family": "feedback",
+      "supports_primitive": "onboarding and stepper",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "wizard-layout",
+      "family": "navigation",
+      "supports_primitive": "onboarding and stepper",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tooltip-guide",
+      "family": "overlay",
+      "supports_primitive": "onboarding and stepper",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tag",
+      "family": "data-display",
+      "supports_primitive": "tags and labels",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "status-badge",
+      "family": "feedback",
+      "supports_primitive": "tags and labels",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chip",
+      "family": "input",
+      "supports_primitive": "tags and labels",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "editor-canvas",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "editor-toolbar",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "inline-format-menu",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "slash-command-menu",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "block-controls",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "callout",
+      "family": "document",
+      "supports_primitive": "callout and admonition",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "admonition-block",
+      "family": "document",
+      "supports_primitive": "callout and admonition",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "confirm-dialog",
+      "family": "overlay",
+      "supports_primitive": "modal and dialog",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "textarea",
+      "family": "input",
+      "supports_primitive": "forms",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "select",
+      "family": "input",
+      "supports_primitive": "forms",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "checkbox",
+      "family": "input",
+      "supports_primitive": "forms",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "radio-group",
+      "family": "input",
+      "supports_primitive": "forms",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "form-section",
+      "family": "input",
+      "supports_primitive": "forms",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "form-actions",
+      "family": "button",
+      "supports_primitive": "forms",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chart-container",
+      "family": "data-display",
+      "supports_primitive": "charts and visualization",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chart-tooltip",
+      "family": "overlay",
+      "supports_primitive": "charts and visualization",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chart-legend",
+      "family": "data-display",
+      "supports_primitive": "charts and visualization",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "kanban-board",
+      "family": "data-display",
+      "supports_primitive": "kanban and board",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "kanban-column",
+      "family": "data-display",
+      "supports_primitive": "kanban and board",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "kanban-card",
+      "family": "data-display",
+      "supports_primitive": "kanban and board",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "message-artifact",
+      "family": "copilot-artifact",
+      "supports_primitive": "writing artifact",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "artifact-preview-panel",
+      "family": "copilot-artifact",
+      "supports_primitive": "writing artifact",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "draft-document",
+      "family": "copilot-artifact",
+      "supports_primitive": "writing artifact",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "outline-sidebar",
+      "family": "copilot-artifact",
+      "supports_primitive": "writing artifact",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "revision-timeline",
+      "family": "copilot-artifact",
+      "supports_primitive": "writing artifact",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tone-slider",
+      "family": "input",
+      "supports_primitive": "writing artifact",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "reading-mode-toggle",
+      "family": "copilot-artifact",
+      "supports_primitive": "writing artifact",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "citation-footnote",
+      "family": "copilot-artifact",
+      "supports_primitive": "writing artifact",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "quote-block",
+      "family": "copilot-artifact",
+      "supports_primitive": "writing artifact",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "paragraph-block",
+      "family": "copilot-artifact",
+      "supports_primitive": "writing artifact",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "search-results",
+      "family": "data-display",
+      "supports_primitive": "search and filter",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "filter-panel",
+      "family": "input",
+      "supports_primitive": "search and filter",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "autocomplete",
+      "family": "overlay",
+      "supports_primitive": "search and filter",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "banner",
+      "family": "feedback",
+      "supports_primitive": "notifications",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "stat-card",
+      "family": "data-display",
+      "supports_primitive": "dashboard cards",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "insight-card",
+      "family": "data-display",
+      "supports_primitive": "dashboard cards",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "activity-card",
+      "family": "data-display",
+      "supports_primitive": "dashboard cards",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "section-header",
+      "family": "data-display",
+      "supports_primitive": "dashboard cards",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "app-shell",
+      "family": "navigation",
+      "supports_primitive": "workspace navigation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "sidebar-nav",
+      "family": "navigation",
+      "supports_primitive": "workspace navigation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "topbar",
+      "family": "navigation",
+      "supports_primitive": "workspace navigation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "family": "navigation",
+      "supports_primitive": "workspace navigation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tab-bar",
+      "family": "navigation",
+      "supports_primitive": "workspace navigation",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "comment-thread",
+      "family": "data-display",
+      "supports_primitive": "comments and discussion",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "comment-input",
+      "family": "input",
+      "supports_primitive": "comments and discussion",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "mention-popup",
+      "family": "overlay",
+      "supports_primitive": "comments and discussion",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chat-message",
+      "family": "data-display",
+      "supports_primitive": "chat and messaging",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chat-input",
+      "family": "input",
+      "supports_primitive": "chat and messaging",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chat-thread",
+      "family": "data-display",
+      "supports_primitive": "chat and messaging",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "feature-section",
+      "family": "marketing",
+      "supports_primitive": "feature grid",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "feature-grid",
+      "family": "marketing",
+      "supports_primitive": "feature grid",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "feature-card",
+      "family": "marketing",
+      "supports_primitive": "feature grid",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "feature-icon",
+      "family": "marketing",
+      "supports_primitive": "feature grid",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "feature-title",
+      "family": "marketing",
+      "supports_primitive": "feature grid",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "feature-description",
+      "family": "marketing",
+      "supports_primitive": "feature grid",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "feed-item",
+      "family": "social",
+      "supports_primitive": "community feed",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "post-card",
+      "family": "social",
+      "supports_primitive": "community feed",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "thread-view",
+      "family": "social",
+      "supports_primitive": "community feed",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "reply-composer",
+      "family": "input",
+      "supports_primitive": "community feed",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "reaction-bar",
+      "family": "social",
+      "supports_primitive": "community feed",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "follow-button",
+      "family": "button",
+      "supports_primitive": "community feed",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "timeline-stream",
+      "family": "social",
+      "supports_primitive": "community feed",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "avatar-cluster",
+      "family": "social",
+      "supports_primitive": "community feed",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tag-pill",
+      "family": "data-display",
+      "supports_primitive": "community feed",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "share-sheet",
+      "family": "overlay",
+      "supports_primitive": "community feed",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "empty-feed-illustration",
+      "family": "feedback",
+      "supports_primitive": "community feed",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "gentle-toast",
+      "family": "feedback",
+      "supports_primitive": "community feed",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "soft-dialog",
+      "family": "overlay",
+      "supports_primitive": "community feed",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "logo-cloud",
+      "family": "marketing",
+      "supports_primitive": "social proof",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "customer-logo",
+      "family": "marketing",
+      "supports_primitive": "social proof",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "metric-highlight",
+      "family": "marketing",
+      "supports_primitive": "social proof",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "press-quote",
+      "family": "marketing",
+      "supports_primitive": "social proof",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "api-reference-table",
+      "family": "document",
+      "supports_primitive": "api reference",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "parameter-table",
+      "family": "document",
+      "supports_primitive": "api reference",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "version-switcher",
+      "family": "navigation",
+      "supports_primitive": "api reference",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "filter-toolbar",
+      "family": "data-display",
+      "supports_primitive": "data tables",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "data-review-table",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "content-card",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "editorial-content-block",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "featured-story-card",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "editorial-content-block",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "content-meta",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "editorial-content-block",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "byline-row",
+      "family": "editorial",
+      "supports_primitive": "rich text editor",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "editorial-content-block",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "hero-section",
+      "family": "marketing",
+      "supports_primitive": "hero section",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "marketing-hero-stack",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "cta-button-group",
+      "family": "marketing",
+      "supports_primitive": "hero section",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "marketing-hero-stack",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "trust-strip",
+      "family": "marketing",
+      "supports_primitive": "hero section",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "marketing-hero-stack",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chart-panel",
+      "family": "data-display",
+      "supports_primitive": "dashboard cards",
+      "status": "candidate-from-visual-reference",
+      "source": "visual-reference",
+      "archetype": "dashboard-insight-module",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    }
+  ],
+  "candidate_component_archetypes": [
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.77)",
+        "layout=dashboard-grid (0.61)",
+        "table x2",
+        "grid x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.94,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.94)",
+        "editorial x4",
+        "article x5",
+        "content x1",
+        "story x3",
+        "magazine x7"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.9,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "layout=landing-narrative (0.71)",
+        "hero x3"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.57,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.61)",
+        "dashboard x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ]
+}

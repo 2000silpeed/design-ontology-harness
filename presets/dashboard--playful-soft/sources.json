@@ -1,0 +1,44 @@
+{
+  "preset_id": "dashboard--playful-soft",
+  "source_project": "meadow",
+  "seeds": [
+    {
+      "url": "https://cal.com",
+      "kind": "design-system",
+      "title": "Cal.com",
+      "notes": "booking scheduling admin references (soft sidebar / booking calendar / gentle dialog)"
+    },
+    {
+      "url": "https://www.notion.so",
+      "kind": "design-system",
+      "title": "Notion",
+      "notes": "database + habit tracker UI references (soft surface / rounded card)"
+    },
+    {
+      "url": "https://flo.health",
+      "kind": "visual-reference",
+      "title": "Flo",
+      "notes": "wellness health tracker references (mood check / cycle calendar / streak indicator)"
+    },
+    {
+      "url": "https://www.finchapp.com",
+      "kind": "visual-reference",
+      "title": "Finch",
+      "notes": "self-care pet gamification references (habit streak / goal tracker / gentle nudge)"
+    },
+    {
+      "url": "https://www.calm.com",
+      "kind": "visual-reference",
+      "title": "Calm",
+      "notes": "meditation / sleep admin references (session tracker / mindful insight / soft toast)"
+    },
+    {
+      "url": "https://www.headspace.com",
+      "kind": "visual-reference",
+      "title": "Headspace",
+      "notes": "mindfulness dashboard references (wellness score / session minutes / habit calendar)"
+    }
+  ],
+  "pretendard_font_license": "SIL OFL 1.1",
+  "created_at": "2026-04-21T12:34:59Z"
+}

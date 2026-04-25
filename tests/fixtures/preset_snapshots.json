@@ -1,0 +1,22 @@
+{
+  "canvas-tool--minimal-tech": "sha256:3521c6f271e368de9aff692150c54697d6585884364ee8ccc16fed15bc58d9b2",
+  "commerce--bold-confident": "sha256:d5ca51823ac8798aaf3476c088c4f270ee348df7fe38da548e00e088517a177b",
+  "commerce--editorial-warm": "sha256:67c594aae0b314f3520decefb3c84a7a93eb311b8578bda7e86948056080d629",
+  "commerce--playful-soft": "sha256:385876cab052ea2af32b158695a94eadaa157818850afd57a24db5d08c2fc18b",
+  "community-feed--playful-soft": "sha256:50f47cfd3e8ba0615461f3a1fd784ea128fda92a7fbbf1051c6b5430b34a4e19",
+  "conversation-copilot--corporate-trust": "sha256:7187e2ae7895b5ed4183538b1e207c6ffa8dab5e368415736d8533aea5f94e6e",
+  "conversation-copilot--editorial-warm": "sha256:f103645688d0882311c337ef399b4be9c05a516ebe684b8fd4e8c254dbd3aac9",
+  "conversation-copilot--minimal-tech": "sha256:fa6330e030cbfaaaf586b62278eb8f04a5ebc5a5548ebda3a1eb4d0ccd2b77ee",
+  "dashboard--bold-confident": "sha256:f75cdb8976d7323672ef26dff5730eb50dea16d639d0c923b33e95923a86a1ad",
+  "dashboard--corporate-trust": "sha256:9c2956a12a8b3c40a73de832523cad402049fc1f4ce25eb1defc56d663bf9dac",
+  "dashboard--editorial-warm": "sha256:a4f76a372ba0f966cf3913b0a056a14eb3e5b665e855b6c94b19ff96b8affbf1",
+  "dashboard--minimal-tech": "sha256:9b2088120c80d5303538b8455c0a910dd7d03965b2a9ece70065d98c229b9a41",
+  "dashboard--playful-soft": "sha256:8c1e331607095b507c4e6255edb18025c2e835ff89fb56df9c0b54a90241b27b",
+  "document-content--bold-confident": "sha256:0d9c96caabd2e43f7ad16f15bddfcac20230808f570fe0bda12d3c233f553a00",
+  "document-content--editorial-warm": "sha256:cc129a73546fafdbd458fa2ffd63428d1b7d65b1df3fa92a73421914fa8f4eff",
+  "document-content--minimal-tech": "sha256:51eca5931b60ea9db55b0550118fd3d4a13904c12fd6e33b90aeb7287feaeeb0",
+  "marketing-landing--bold-confident": "sha256:d514b5f0effb43fe9c2a62b44594d311b9cd4e9c1dade92603f34eadbb18e057",
+  "marketing-landing--editorial-warm": "sha256:82085510760f8f5a53816eb5b69aaec1272af3195cdeb64bdfc91f47325b5ad1",
+  "marketing-landing--minimal-tech": "sha256:4f1dea112e7f37cfce6fe0b6d66a6cf0a5277ff848a15b9bf0046eee1e03bf8e",
+  "monitoring-ops--minimal-tech": "sha256:1406a192fc5d3e211259839180edc77f1babe6501d2e8619a441e27c0dcfc327"
+}

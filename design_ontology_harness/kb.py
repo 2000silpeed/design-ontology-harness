@@ -4,8 +4,10 @@ import json
 from pathlib import Path
 from urllib.parse import urlparse
 
+import httpx
+
 from .css_pipeline import run_css_extraction
-from .models import DocumentRecord, ReferenceLink, SeedArticle, utc_now_iso
+from .models import DocumentRecord, ReferenceLink, utc_now_iso
 from .ontology import build_ontology_outputs
 from .utils import ensure_dir, slugify, write_json, write_jsonl
 
@@ -120,7 +122,7 @@ def _merge_css_extraction(kb_dir: Path, seeds_dir: Path) -> None:
                 continue
 
     if not all_css_parts:
-        print(f"  [kb] CSS 병합 건너뜀: 수집된 CSS 파일이 없습니다")
+        print("  [kb] CSS 병합 건너뜀: 수집된 CSS 파일이 없습니다")
         return
 
     all_css = "\n".join(all_css_parts)

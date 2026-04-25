@@ -1,0 +1,17 @@
+{
+  "$schema": "../schemas/preset_compatibility.schema.json",
+  "current_preset_api_version": "1.0.0",
+  "supported_preset_api_range": ">=1.0.0 <2.0.0",
+  "entries": [
+    {
+      "preset_api_version": "1.0.0",
+      "deprecated": false,
+      "notes": "Initial contract. Axes: app_mode(8) + brand_tone(5) + color_modes + tags. Manifest version fields frozen.",
+      "adapter_ranges": {
+        "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+        "raw-css-variables": ">=0.1.0 <1.0.0",
+        "vite-tailwind": ">=0.1.0 <1.0.0"
+      }
+    }
+  ]
+}

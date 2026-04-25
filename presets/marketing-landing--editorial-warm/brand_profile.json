@@ -1,0 +1,294 @@
+{
+  "brand_name": "Loom",
+  "system_name": "Loom System",
+  "product_summary": "독립 뉴스레터·매거진 발행인을 위한 editorial-warm 톤 마케팅 랜딩 — hero + featured issue + subscribe pricing + social proof testimonial + author profile + cta, warm ochre deep + rust copper accent + cream wheat surface, reading-first 랜딩, 한국어 1급",
+  "audiences": [
+    "독립 뉴스레터 발행인 — 본인 문체와 잘 맞는 editorial-warm 랜딩을 1일 만에 셋업하고 싶은 1인 저자",
+    "독립 매거진·퍼블리셔 — 발행 주기 issue pipeline + 구독 pricing + archive 가 랜딩에서 한눈에 보이길 원하는 소규모 편집팀",
+    "뉴스레터 구독 전환 최적화 담당 — hero copy / pricing table / social proof / issue archive 전환 스토리를 명확히 배치하고 싶은 growth 담당자"
+  ],
+  "brand_keywords": [
+    "marketing-landing",
+    "editorial",
+    "newsletter",
+    "publisher",
+    "warm",
+    "calm",
+    "reading-first",
+    "serif-ish",
+    "ochre",
+    "rust",
+    "wheat",
+    "cream",
+    "issue-archive",
+    "subscribe"
+  ],
+  "anti_keywords": [
+    "bold-saturated",
+    "streetwear-drop",
+    "fintech-dense",
+    "playful-pastel",
+    "dashboard-only",
+    "corporate-navy",
+    "magazine-cover-heavy-illustration"
+  ],
+  "tone_of_voice": [
+    "calm",
+    "warm",
+    "thoughtful",
+    "literary",
+    "sincere",
+    "inviting"
+  ],
+  "visual_keywords": [
+    "warm neutral backdrop",
+    "ochre-yellow primary emphasis",
+    "rust copper accent link",
+    "wheat cream surface tint",
+    "serif-ish heading pairing",
+    "reading-first hero",
+    "issue card archive strip",
+    "calm pricing table",
+    "author portrait circle",
+    "warm testimonial block"
+  ],
+  "interaction_keywords": [
+    "calm hover fade",
+    "sticky header subtle",
+    "issue card reveal",
+    "subscribe cta focus-ring",
+    "pricing toggle monthly-yearly",
+    "testimonial carousel gentle",
+    "author hovercard",
+    "archive scroll infinite"
+  ],
+  "platforms": [
+    "web",
+    "mobile-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "hero section",
+    "featured issue card",
+    "issue archive strip",
+    "pricing table",
+    "pricing toggle",
+    "subscribe cta",
+    "email capture input",
+    "testimonial card",
+    "author profile card",
+    "site header",
+    "site footer",
+    "newsletter preview",
+    "social proof logo strip",
+    "faq accordion",
+    "cta banner"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "marketing landing",
+      "pricing",
+      "hero",
+      "testimonial",
+      "editorial",
+      "newsletter",
+      "publisher",
+      "subscribe",
+      "ghost",
+      "substack",
+      "reading"
+    ],
+    "avoid_sources_containing": [
+      "dashboard-only",
+      "fintech-only",
+      "streetwear-only",
+      "playful-pastel-only",
+      "ops-console-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Standard Yellows",
+      "Pastel Yellows",
+      "Standard Oranges",
+      "Pastel Oranges"
+    ],
+    "palette_roles": {
+      "primary": "Ochre Yellow",
+      "accent": "Rust",
+      "surface_tint": "Wheat"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "warm",
+      "contrast": "soft",
+      "diversity": "balanced",
+      "surface_style": "soft-tint",
+      "prefer_moods": [
+        "차분",
+        "따뜻",
+        "리터러리",
+        "묵직",
+        "에디토리얼",
+        "빈티지",
+        "종이느낌"
+      ],
+      "avoid_moods": [
+        "차가움",
+        "대담",
+        "공격적",
+        "고대비",
+        "형광",
+        "네온"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Ochre Yellow #CB9D06 primary — warm deep mustard yellow, subscribe-cta / pricing-highlight-tier / hero-keyword 강조 / link underline",
+      "Rust #B7410E accent — warm copper-brown deep, testimonial quote mark / pricing secondary badge / author-role chip / issue-count counter",
+      "Wheat #F5DEB3 surface_tint — warm cream near-white, hero soft band / pricing column hover / testimonial card / issue card",
+      "light mode 기본 — 독립 뉴스레터·매거진 랜딩 관례 (reading-first 톤), dark 옵션 제공 (warm deep neutral + 채도 낮춘 Ochre/Rust + Wheat 대체는 Bronze Gold deep variant 로 대비 유지)",
+      "HEX 겹침 현황: signal-desk (document-content--editorial-warm) 의 surface_tint Wheat #F5DEB3 와 1 role 겹침 — editorial-warm 4 종 중 serif-paper 공통 톤을 공유하되 primary/accent 에서 Ochre Yellow/Rust 로 완전 차별화. document-content 와 marketing-landing 의 app_mode 축 분기로 랜딩 hero + pricing 중심 카드 구성으로 다름. 기존 editorial-warm 3 종 (colorfit / quill / curator) 과는 HEX 겹침 0.",
+      "quill (conversation-copilot--editorial-warm) #964F4C/#8A9A5B/#EEDC82 와 primary/accent/surface_tint 전부 다름 — warm deep wine-moss-paper vs ochre-rust-wheat",
+      "curator (dashboard--editorial-warm) #614051/#FADA5E/#F9C0C4 와 전부 다름 — aubergine-naples-blush vs ochre-rust-wheat",
+      "colorfit (commerce--editorial-warm) legacy 팔레트 mirror 미등록 — HEX 겹침 검증 대상 아님"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Fraunces",
+      "weights": [
+        500,
+        600,
+        700
+      ],
+      "notes": "editorial serif-ish variable — hero-headline / featured-issue-title / pricing-tier-title / testimonial-quote, reading 감성의 대비 요소"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "hero subheadline / pricing description / testimonial body / feature copy, line-height 1.6 reading-first"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "notes": "price number / issue number / subscriber count / date stamp — tabular-nums 영문 고정"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한글 1급 — hero headline / subheadline / pricing / testimonial / issue-archive / faq keep-all line-height 1.6–1.7 (reading-first), section-header 는 Pretendard 700 letter-spacing 0, price / issue 번호 / 구독자 수는 mono 영문 tabular-nums"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "stratechery subscribe landing",
+      "ghost publisher hero pricing",
+      "every newsletter landing",
+      "substack top publisher landing",
+      "the verge newsletter hub"
+    ],
+    "sources": [],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.3,
+      "component_shape": 0.3,
+      "color_balance": 0.2,
+      "typography_mood": 0.1,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "warm editorial hero with serif-ish headline + ochre highlight",
+      "featured issue strip with cover + date + author avatar",
+      "pricing table with monthly-yearly toggle + single highlighted tier",
+      "testimonial carousel with warm quote mark + author portrait",
+      "issue archive grid with soft warm cards",
+      "faq accordion with calm tone",
+      "cta banner at footer with rust accent"
+    ],
+    "avoid_patterns": [
+      "bold saturated sports hero",
+      "streetwear drop countdown",
+      "fintech dense data-table",
+      "SRE dark monitoring console",
+      "playful pastel d2c product grid",
+      "glassmorphism",
+      "corporate navy enterprise checkout"
+    ],
+    "notes": [
+      "Stratechery / Ghost publisher / Every / Substack top publisher / The Verge newsletter 계열 editorial 랜딩 참조",
+      "editorial-warm 톤: warm ochre + rust + wheat 로 reading-first 감성 유지, 밀도는 medium (hero + features + pricing + testimonial + faq + cta)",
+      "이미지 힌트는 advisory — 최종 컴포넌트 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://stratechery.com",
+      "kind": "article",
+      "title": "Stratechery",
+      "notes": "독립 뉴스레터 대표 사례 — 차분한 editorial 랜딩 + 단일 강조 pricing tier + reading-first 레이아웃"
+    },
+    {
+      "url": "https://ghost.org",
+      "kind": "design-system",
+      "title": "Ghost",
+      "notes": "독립 퍼블리셔 CMS — warm editorial 랜딩 + pricing + newsletter preview + author profile"
+    },
+    {
+      "url": "https://every.to",
+      "kind": "article",
+      "title": "Every",
+      "notes": "멀티 저자 뉴스레터 콜렉티브 — warm editorial hero + featured issue archive strip + pricing"
+    },
+    {
+      "url": "https://substack.com",
+      "kind": "article",
+      "title": "Substack",
+      "notes": "뉴스레터 플랫폼 — subscribe cta + publisher discovery + pricing 모델 참조 (Loom 은 1인 중심으로 축소)"
+    },
+    {
+      "url": "https://www.theverge.com/newsletters",
+      "kind": "article",
+      "title": "The Verge Newsletters",
+      "notes": "대형 매체의 뉴스레터 허브 — issue card + category chip + subscribe form 패턴 참조"
+    }
+  ]
+}
