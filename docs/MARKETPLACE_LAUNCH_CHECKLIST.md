@@ -41,10 +41,11 @@
 
 **스크립트 점검**:
 ```bash
-test -f /Users/sungwoon/ai-projects/design-ontology-plugin/LICENSE
-test -f /Users/sungwoon/ai-projects/design-ontology-plugin/LICENSE-FONTS
-grep -q "MIT" /Users/sungwoon/ai-projects/design-ontology-plugin/LICENSE
-grep -q "SIL Open Font License" /Users/sungwoon/ai-projects/design-ontology-plugin/LICENSE-FONTS
+PLUGIN_REPO=${PLUGIN_REPO:-../design-ontology-plugin}
+test -f "$PLUGIN_REPO/LICENSE"
+test -f "$PLUGIN_REPO/LICENSE-FONTS"
+grep -q "MIT" "$PLUGIN_REPO/LICENSE"
+grep -q "SIL Open Font License" "$PLUGIN_REPO/LICENSE-FONTS"
 ```
 
 ## 2. Plugin README 3 분 Quick Start 로컬 재검증
@@ -86,8 +87,9 @@ grep -q "SIL Open Font License" /Users/sungwoon/ai-projects/design-ontology-plug
 
 **스크립트 점검**:
 ```bash
-grep -c "^#### " /Users/sungwoon/ai-projects/design-ontology-plugin/docs/CATALOG.md   # 기대값 ≥ 20
-grep -c "Core HEX" /Users/sungwoon/ai-projects/design-ontology-plugin/docs/CATALOG.md # 기대값 ≥ 18 (color_reference 설정된 것만)
+PLUGIN_REPO=${PLUGIN_REPO:-../design-ontology-plugin}
+grep -c "^#### " "$PLUGIN_REPO/docs/CATALOG.md"   # 기대값 ≥ 20
+grep -c "Core HEX" "$PLUGIN_REPO/docs/CATALOG.md" # 기대값 ≥ 18 (color_reference 설정된 것만)
 ```
 
 ## 7. DEMO_SCRIPTS.md 6 시나리오 (3 한국어 + 3 영문) 재검증

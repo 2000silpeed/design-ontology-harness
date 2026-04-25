@@ -125,7 +125,7 @@
 > 상태: 로컬 scaffold 완료 (2026-04-18). GitHub 공개 레포 생성/푸시는 사용자 승인 대기.
 
 - [x] **9-1. 신규 레포 `design-ontology-plugin` 생성**
-  - 로컬 경로: `/Users/sungwoon/ai-projects/design-ontology-plugin/`
+  - 로컬 경로 예시: `../design-ontology-plugin/`
   - MIT + SIL OFL(폰트) 라이선스
   - 초기 구조: `.claude-plugin/`, `skills/`, `agents/`, `presets/`, `adapters/{base,nextjs-tailwind-shadcn}/`, `scripts/`, `docs/`, `.github/workflows/`, `README.md`, `LICENSE`, `LICENSE-FONTS`, `.gitignore`
   - 지원 `preset_api_version` range를 `plugin.json`에 기록 (`>=1.0.0 <2.0.0`)
@@ -144,7 +144,7 @@
 
 - [x] **9-5. 프리셋 sync 스크립트 (harness → plugin)**
   - 기존: `scripts/sync-plugin-presets.sh` (Phase 7-7 산출물)
-  - 드라이런 리허설 검증: `./scripts/sync-plugin-presets.sh --plugin-repo /Users/sungwoon/ai-projects/design-ontology-plugin --dry-run` → `compatibility OK (5 preset manifests)` 통과
+  - 드라이런 리허설 검증: `./scripts/sync-plugin-presets.sh --plugin-repo ../design-ontology-plugin --dry-run` → `compatibility OK (5 preset manifests)` 통과
 
 - [x] **9-6. harness CI sync 훅**
   - `.github/workflows/sync-plugin.yml`
@@ -535,7 +535,7 @@ Phase 15 (라이프사이클 정책 운영, 지속)
 | 2026-04-18 | 코덱스 consult 리뷰 수행 (295K tokens) | done |
 | 2026-04-18 | **v2 전면 반영**: 버전 계약 Phase 7 승격, MVP 어댑터 1개로 축소, 프리뷰 텍스트 우선, 축 재설계(app_mode 8 + tone 5 + color_mode + tags), 매칭 coarse bucket, Phase 10/12 분할, 라이프사이클 정책 신설 | done |
 | 2026-04-18 | **Phase 7 완료**: 스키마 3종(matrix/manifest/compatibility), matrix.json 축 정의, keywords 사전, preset_builder/validator, semver_range 유틸, sync 스크립트, CLI 3종(build-preset/validate-presets/rebuild-all-presets) | done |
-| 2026-04-18 | **Phase 9 로컬 scaffold 완료**: `/Users/sungwoon/ai-projects/design-ontology-plugin/` 로컬 레포 + `.claude-plugin/plugin.json`·`marketplace.json` + 스킬 4종·에이전트 4종 이식(프리셋 계약 확인 섹션 포함) + harness/plugin 양쪽 CI 워크플로우 + `docs/PLUGIN_LOCAL_DEV.md` + `docs/LOCAL_DEV.md`. sync dry-run(5 manifest) OK. GitHub 공개 레포 생성은 승인 대기. | done |
+| 2026-04-18 | **Phase 9 로컬 scaffold 완료**: `../design-ontology-plugin/` 로컬 레포 + `.claude-plugin/plugin.json`·`marketplace.json` + 스킬 4종·에이전트 4종 이식(프리셋 계약 확인 섹션 포함) + harness/plugin 양쪽 CI 워크플로우 + `docs/PLUGIN_LOCAL_DEV.md` + `docs/LOCAL_DEV.md`. sync dry-run(5 manifest) OK. GitHub 공개 레포 생성은 승인 대기. | done |
 | 2026-04-18 | **Phase 11 MVP alpha 완료**: 매칭 엔진(`preset_matcher/engine.py`, raw_score + 3-bucket) + 설치 오케스트레이터(`preset_installer.py`, INSTALLED.json + idempotent re-install) + customize ops(`customize_ops.py`) + CLI 3종(`match-preset`/`install-preset`/`customize-preset`). 플러그인 `/design-start`·`/design-customize` 스킬 이식 + plugin.json 등록. 테스트 52 passed(기존 26 + 11-5 26). `/tmp/install-smoke`에 dashboard--minimal-tech 설치 round-trip OK. | done |
 | 2026-04-18 | **Phase 10B 완료**: `raw-css-variables` 어댑터 (design-system/tokens.css + fonts.css[ko] + Pretendard 스캐폴드 + README) 추가 + 레지스트리 등록. `design_system_mirror_ops()` 를 base.py 로 공통화해 Next/Raw 어댑터 공유. `tests/test_adapter_raw_css.py` 14 케이스 추가, 전체 66 passed. `/tmp/raw-css-smoke` 설치 스모크 OK (noop + --force 재적용 확인, user repo 최상위 파일 0건). | done |
 | 2026-04-18 | **Phase 12A-2 완료**: `preview_linter.py` (E001–E008 / W001–W003, stdlib only) + `lint-previews` CLI + `validate-presets --include-preview-lint` 선택 플래그. P0 5종 errors=[] / warnings=[] 통과. 합성 fixture 기반 `tests/test_preview_linter.py` 16 케이스 (룰별 + CLI round-trip) 추가, 전체 97 passed (기존 81 + 신규 16). | done |

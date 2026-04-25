@@ -13,7 +13,6 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
@@ -21,7 +20,6 @@ if str(REPO_ROOT) not in sys.path:
 
 from design_ontology_harness import catalog_health
 from design_ontology_harness.preset_ops import (
-    deprecate_preset,
     find_prune_eligible,
     format_prune_report,
     prune_preset,

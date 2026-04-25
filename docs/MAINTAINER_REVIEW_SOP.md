@@ -167,12 +167,13 @@ uv run design-ontology catalog-health
 uv run --with pytest pytest tests/test_preset_snapshots.py --update-snapshots
 
 # 8) plugin 레포 CATALOG.md 재생성
+PLUGIN_REPO=${PLUGIN_REPO:-../design-ontology-plugin}
 python3 scripts/build-catalog.py \
-  --output /Users/sungwoon/ai-projects/design-ontology-plugin/docs/CATALOG.md
+  --output "$PLUGIN_REPO/docs/CATALOG.md"
 
 # 9) plugin 레포 compatibility 재확인
 python3 scripts/check-plugin-compatibility.py \
-  --plugin-repo /Users/sungwoon/ai-projects/design-ontology-plugin
+  --plugin-repo "$PLUGIN_REPO"
 ```
 
 - [ ] rebuild-all N/N OK

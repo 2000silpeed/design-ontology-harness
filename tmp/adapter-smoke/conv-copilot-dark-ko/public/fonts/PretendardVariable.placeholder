@@ -1,5 +1,0 @@
-# Pretendard Variable placeholder
-# Run `node scripts/fetch-pretendard.mjs` (or the bundled install hook)
-# to populate this file. The woff2 binary itself is NOT committed to
-# the harness/plugin repo to respect distribution preferences; it is
-# fetched at install-time under SIL Open Font License 1.1.

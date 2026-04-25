@@ -127,7 +127,7 @@ uv run design-ontology build-kb \
   --seeds-file seeds/professional-design-systems.txt
 ```
 
-설명은 [docs/SEED_PACKS.md](/Users/sungwoon/Documents/designSystem/docs/SEED_PACKS.md)에서 볼 수 있습니다.
+설명은 [docs/SEED_PACKS.md](./docs/SEED_PACKS.md)에서 볼 수 있습니다.
 
 ### 3단계: 프로젝트 만들기
 
@@ -297,7 +297,7 @@ uv run design-ontology run-project --project-dir projects/my-app
 - `build/visuals/pinterest_candidate_manifest.json`
 - `build/visuals/pinterest_selection_manifest.json`
 
-Pinterest-assisted 운영 상세는 [docs/PINTEREST_ASSISTED_WORKFLOW.md](/Users/sungwoon/Documents/designSystem/docs/PINTEREST_ASSISTED_WORKFLOW.md)에서 볼 수 있습니다.
+Pinterest-assisted 운영 상세는 [docs/PINTEREST_ASSISTED_WORKFLOW.md](./docs/PINTEREST_ASSISTED_WORKFLOW.md)에서 볼 수 있습니다.
 
 ## 색상 자동 결정
 
