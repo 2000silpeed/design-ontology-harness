@@ -150,7 +150,7 @@
   - `.github/workflows/sync-plugin.yml`
   - `main` push 또는 수동 실행 시: 플러그인 레포 clone → `check-plugin-compatibility.py` 게이트 → 통과하면 `scripts/sync-plugin-presets.sh` 실행 → PR 생성 (gh 필요)
   - 필요 시크릿: `PLUGIN_REPO_TOKEN` (미구성 시 compatibility check만 수행하고 sync 단계 skip)
-  - 필요 변수: `PLUGIN_REPO` (기본: `design-ontology/design-ontology-plugin`)
+  - 필요 변수: `PLUGIN_REPO` (기본: `2000silpeed/design-ontology-plugin`)
 
 - [x] **9-7. plugin 레포 자체 validator**
   - `design-ontology-plugin/.github/workflows/validate.yml`
@@ -392,7 +392,7 @@
   - `.claude-plugin/marketplace.json` status: `pre-alpha` → **`alpha`**
   - categories 확장 (5종: design-systems, frontend, ui, tokens, internationalization)
   - keywords 확장 (7 → 22, app_mode 8종 + brand_tone 5종 전부 포함)
-  - source.repository 기본값 설정 (`design-ontology/design-ontology-plugin`)
+  - source.repository 기본값 설정 (`2000silpeed/design-ontology-plugin`)
   - summary/description 에 "20 curated presets" / P0/P1/P2/P3 수치 반영
   - 실제 github public + `/plugin marketplace add` 실행은 사용자 승인 대기
 

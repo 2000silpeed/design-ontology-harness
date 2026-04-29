@@ -2,7 +2,7 @@
 
 > **대상**: `design-ontology-plugin` 을 Claude Code 공개 마켓플레이스에 `alpha` → `beta`/`stable` 로 승격하기 전 통과해야 하는 15 항목.
 > **발간**: 2026-04-21 (Phase 13-11-C-4 리허설) · 실제 공개 전 메인테이너 수동 재확인 필수.
-> **기반**: [`PLUGIN_PLAN.md`](./PLUGIN_PLAN.md) §12 완료 정의 · [`docs/RELEASE.md`](https://github.com/design-ontology/design-ontology-plugin/blob/main/docs/RELEASE.md)
+> **기반**: [`PLUGIN_PLAN.md`](./PLUGIN_PLAN.md) §12 완료 정의 · [`docs/RELEASE.md`](https://github.com/2000silpeed/design-ontology-plugin/blob/main/docs/RELEASE.md)
 > **공개 전제**: Phase 13-11-C 시점 harness `0.1.0` + plugin `0.1.0` + 20 presets (P0×5 · P1×5 · P2×5 · P3×5) + validate.yml + release.yml 전부 green.
 
 ---
@@ -61,7 +61,7 @@ grep -q "SIL Open Font License" "$PLUGIN_REPO/LICENSE-FONTS"
 ## 3. validate.yml workflow 최근 30 일 main green
 
 - [x] `.github/workflows/validate.yml` 2 job (`validate-presets` + `community-preset-check`) 존재
-- [ ] 최근 30 일 main 브랜치 모든 커밋에서 green — `gh run list --repo design-ontology/design-ontology-plugin --branch main --limit 30`
+- [ ] 최근 30 일 main 브랜치 모든 커밋에서 green — `gh run list --repo 2000silpeed/design-ontology-plugin --branch main --limit 30`
 - [ ] 실패 run 이 있었다면 사유 기록 + 재run 기록
 
 **실행 시점**: 공개 즉시. 로컬 패키지는 검증 완료, public run history 는 GitHub 레포 공개 후 확인.
@@ -171,7 +171,7 @@ D-3: 항목 10 (CoC) + 11 (SLA) 문서 추가 PR 머지
 D-2: 항목 14 (보안 스캔) + 항목 9 (issue template preset_id 동기화)
 D-1: 항목 2 (Quick Start 로컬 재검증) + 항목 7 (DEMO_SCRIPTS 재검증)
 D-0: 항목 5 (version 3-way) 재확인 → git tag v0.1.0 → release.yml 자동 실행
-     → marketplace 에 `/plugin marketplace add github:design-ontology/design-ontology-plugin` 공식 안내
+     → marketplace 에 `/plugin marketplace add github:2000silpeed/design-ontology-plugin` 공식 안내
 D+1~7: 항목 15 (후폭풍 triage) 매일 1 회
 D+7: 1 주 회고 + 항목 12 (alpha → beta) 결정
 ```

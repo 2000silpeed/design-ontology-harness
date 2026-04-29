@@ -2,11 +2,11 @@
 
 다른 회사의 디자인 시스템을 참고해서, **우리 브랜드에 맞는 디자인 시스템 설계도**를 자동으로 만들고, 그 설계도를 기반으로 **AI가 만든 UI를 프로 수준으로 재구성**해주는 도구입니다.
 
-> **그냥 프리셋을 쓰고 싶다면 →** [`design-ontology-plugin`](https://github.com/design-ontology/design-ontology-plugin) 레포로 가세요. 20종 프리셋 카탈로그 + `/design-start` 4단계 질문 UX + Next·raw-CSS 어댑터가 `/plugin install design-ontology` 한 줄로 설치됩니다.
+> **그냥 프리셋을 쓰고 싶다면 →** [`design-ontology-plugin`](https://github.com/2000silpeed/design-ontology-plugin) 레포로 가세요. 20종 프리셋 카탈로그 + `/design-start` 4단계 질문 UX + Next·raw-CSS 어댑터가 `/plugin install design-ontology` 한 줄로 설치됩니다.
 >
 > 이 harness 레포는 **프리셋 생성기**이자 **공급원**입니다. 프리셋을 새로 만들거나, 커스터마이징하거나, 내부적으로 KB·블루프린트 파이프라인을 돌리려는 고급 사용자·메인테이너를 위한 문서입니다.
 >
-> **피드백·이슈는 plugin 레포 이슈 트래커로** ([preset-feedback / new-preset / bug-report 템플릿](https://github.com/design-ontology/design-ontology-plugin/issues/new/choose)). 새 P3 프리셋 기여는 [`docs/CONTRIBUTING_PRESETS.md`](./docs/CONTRIBUTING_PRESETS.md).
+> **피드백·이슈는 plugin 레포 이슈 트래커로** ([preset-feedback / new-preset / bug-report 템플릿](https://github.com/2000silpeed/design-ontology-plugin/issues/new/choose)). 새 P3 프리셋 기여는 [`docs/CONTRIBUTING_PRESETS.md`](./docs/CONTRIBUTING_PRESETS.md).
 
 ## 플러그인 vs 하네스 — 언제 어느 쪽?
 
@@ -661,13 +661,13 @@ graph TB
 
 ## 플러그인 배포 (Phase 7~14)
 
-이 harness 는 20종 프리셋을 찍어 [`design-ontology-plugin`](https://github.com/design-ontology/design-ontology-plugin) 공개 레포로 자동 싱크합니다. 최종 사용자는 `/plugin install design-ontology` 한 줄로 프리셋·스킬·에이전트·어댑터를 얻습니다.
+이 harness 는 20종 프리셋을 찍어 [`design-ontology-plugin`](https://github.com/2000silpeed/design-ontology-plugin) 공개 레포로 자동 싱크합니다. 최종 사용자는 `/plugin install design-ontology` 한 줄로 프리셋·스킬·에이전트·어댑터를 얻습니다.
 
 > **Pretendard 서체 / SIL OFL 1.1** — 플러그인은 Pretendard Variable 을 **런타임 fetch** 방식으로 주입합니다 (`scripts/fetch-pretendard.mjs`). woff2 바이너리는 harness/plugin 레포 어디에도 번들되지 않고, OFL 고지(`LICENSE-FONTS`) 와 함께 설치 시점에 다운로드됩니다. 재배포 시 이 고지를 유지해야 합니다 (OFL §2).
 
 ### 프리셋 카탈로그 요약 (2026-04-29 현재 20종)
 
-자동 생성된 카드 + 축 매트릭스 + Core HEX 스와치는 [`design-ontology-plugin/docs/CATALOG.md`](https://github.com/design-ontology/design-ontology-plugin/blob/main/docs/CATALOG.md) 에서 확인하세요. Harness 쪽에서는 `python3 scripts/build-catalog.py --output <path>` 로 언제든 재생성.
+자동 생성된 카드 + 축 매트릭스 + Core HEX 스와치는 [`design-ontology-plugin/docs/CATALOG.md`](https://github.com/2000silpeed/design-ontology-plugin/blob/main/docs/CATALOG.md) 에서 확인하세요. Harness 쪽에서는 `python3 scripts/build-catalog.py --output <path>` 로 언제든 재생성.
 
 axis matrix (app_mode × brand_tone):
 

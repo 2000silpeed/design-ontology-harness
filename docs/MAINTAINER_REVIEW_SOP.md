@@ -33,7 +33,7 @@ PR 도착
 ### a. PR 접수 직후 자동 체크 확인 (≤ 30초)
 
 ```bash
-gh pr view <PR#> --repo design-ontology/design-ontology-plugin --json statusCheckRollup
+gh pr view <PR#> --repo 2000silpeed/design-ontology-plugin --json statusCheckRollup
 ```
 
 **체크리스트**

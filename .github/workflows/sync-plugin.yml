@@ -38,7 +38,7 @@ jobs:
       - name: Clone plugin repo
         id: clone
         env:
-          PLUGIN_REPO: ${{ vars.PLUGIN_REPO || 'design-ontology/design-ontology-plugin' }}
+          PLUGIN_REPO: ${{ vars.PLUGIN_REPO || '2000silpeed/design-ontology-plugin' }}
           PLUGIN_TOKEN: ${{ secrets.PLUGIN_REPO_TOKEN }}
         run: |
           set -euo pipefail
@@ -73,7 +73,7 @@ jobs:
 
       - name: Clone plugin repo
         env:
-          PLUGIN_REPO: ${{ vars.PLUGIN_REPO || 'design-ontology/design-ontology-plugin' }}
+          PLUGIN_REPO: ${{ vars.PLUGIN_REPO || '2000silpeed/design-ontology-plugin' }}
           PLUGIN_TOKEN: ${{ secrets.PLUGIN_REPO_TOKEN }}
         run: |
           set -euo pipefail
