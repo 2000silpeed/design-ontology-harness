@@ -1,0 +1,6608 @@
+{
+  "node_types": [
+    "Brand",
+    "Principle",
+    "ColorPalette",
+    "ColorToken",
+    "ColorMode",
+    "FontFamily",
+    "TypeScaleEntry",
+    "SpacingToken",
+    "RadiusToken",
+    "MotionToken",
+    "ElevationToken",
+    "ComponentFamily",
+    "Component",
+    "ComponentState",
+    "LayoutPattern",
+    "InteractionPattern",
+    "AccessibilityRule",
+    "ProductPrimitive",
+    "SourceReference",
+    "BenchmarkSystem"
+  ],
+  "edge_types": [
+    "expresses",
+    "constrains",
+    "belongs_to_palette",
+    "derived_from",
+    "overrides_in_mode",
+    "contrast_pair",
+    "pairs_with",
+    "uses_font",
+    "member_of_family",
+    "has_state",
+    "uses_token",
+    "state_modifies_token",
+    "uses_type_scale",
+    "supports",
+    "implements",
+    "composed_of",
+    "requires",
+    "inspired_by",
+    "similar_to",
+    "references_font",
+    "governs",
+    "defines",
+    "applies_to",
+    "maps_to_tier"
+  ],
+  "nodes": [
+    {
+      "id": "brand:ledger",
+      "type": "Brand",
+      "label": "Ledger"
+    },
+    {
+      "id": "principle:corporate",
+      "type": "Principle",
+      "label": "Corporate"
+    },
+    {
+      "id": "principle:trust",
+      "type": "Principle",
+      "label": "Trust"
+    },
+    {
+      "id": "principle:fintech",
+      "type": "Principle",
+      "label": "Fintech"
+    },
+    {
+      "id": "principle:financial",
+      "type": "Principle",
+      "label": "Financial"
+    },
+    {
+      "id": "spacing:0",
+      "type": "SpacingToken",
+      "label": "0"
+    },
+    {
+      "id": "spacing:2",
+      "type": "SpacingToken",
+      "label": "2"
+    },
+    {
+      "id": "spacing:4",
+      "type": "SpacingToken",
+      "label": "4"
+    },
+    {
+      "id": "spacing:8",
+      "type": "SpacingToken",
+      "label": "8"
+    },
+    {
+      "id": "spacing:12",
+      "type": "SpacingToken",
+      "label": "12"
+    },
+    {
+      "id": "spacing:16",
+      "type": "SpacingToken",
+      "label": "16"
+    },
+    {
+      "id": "spacing:24",
+      "type": "SpacingToken",
+      "label": "24"
+    },
+    {
+      "id": "spacing:32",
+      "type": "SpacingToken",
+      "label": "32"
+    },
+    {
+      "id": "spacing:48",
+      "type": "SpacingToken",
+      "label": "48"
+    },
+    {
+      "id": "spacing:64",
+      "type": "SpacingToken",
+      "label": "64"
+    },
+    {
+      "id": "spacing:96",
+      "type": "SpacingToken",
+      "label": "96"
+    },
+    {
+      "id": "radius:none",
+      "type": "RadiusToken",
+      "label": "none"
+    },
+    {
+      "id": "radius:sm",
+      "type": "RadiusToken",
+      "label": "sm"
+    },
+    {
+      "id": "radius:md",
+      "type": "RadiusToken",
+      "label": "md"
+    },
+    {
+      "id": "radius:lg",
+      "type": "RadiusToken",
+      "label": "lg"
+    },
+    {
+      "id": "radius:xl",
+      "type": "RadiusToken",
+      "label": "xl"
+    },
+    {
+      "id": "radius:pill",
+      "type": "RadiusToken",
+      "label": "pill"
+    },
+    {
+      "id": "family:button",
+      "type": "ComponentFamily",
+      "label": "button",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:button-default",
+      "type": "ComponentState",
+      "label": "button/default"
+    },
+    {
+      "id": "state:button-hover",
+      "type": "ComponentState",
+      "label": "button/hover"
+    },
+    {
+      "id": "state:button-active",
+      "type": "ComponentState",
+      "label": "button/active"
+    },
+    {
+      "id": "state:button-disabled",
+      "type": "ComponentState",
+      "label": "button/disabled"
+    },
+    {
+      "id": "state:button-loading",
+      "type": "ComponentState",
+      "label": "button/loading"
+    },
+    {
+      "id": "component:primary-button",
+      "type": "Component",
+      "label": "primary-button"
+    },
+    {
+      "id": "component:secondary-button",
+      "type": "Component",
+      "label": "secondary-button"
+    },
+    {
+      "id": "component:ghost-button",
+      "type": "Component",
+      "label": "ghost-button"
+    },
+    {
+      "id": "component:icon-button",
+      "type": "Component",
+      "label": "icon-button"
+    },
+    {
+      "id": "component:cta-button",
+      "type": "Component",
+      "label": "cta-button"
+    },
+    {
+      "id": "component:link-button",
+      "type": "Component",
+      "label": "link-button"
+    },
+    {
+      "id": "component:form-actions",
+      "type": "Component",
+      "label": "form-actions"
+    },
+    {
+      "id": "family:data-display",
+      "type": "ComponentFamily",
+      "label": "data-display",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:data-display-default",
+      "type": "ComponentState",
+      "label": "data-display/default"
+    },
+    {
+      "id": "state:data-display-sorted",
+      "type": "ComponentState",
+      "label": "data-display/sorted"
+    },
+    {
+      "id": "state:data-display-filtered",
+      "type": "ComponentState",
+      "label": "data-display/filtered"
+    },
+    {
+      "id": "state:data-display-empty",
+      "type": "ComponentState",
+      "label": "data-display/empty"
+    },
+    {
+      "id": "component:data-table",
+      "type": "Component",
+      "label": "data-table"
+    },
+    {
+      "id": "component:column-header",
+      "type": "Component",
+      "label": "column-header"
+    },
+    {
+      "id": "component:row-actions",
+      "type": "Component",
+      "label": "row-actions"
+    },
+    {
+      "id": "component:stat-card",
+      "type": "Component",
+      "label": "stat-card"
+    },
+    {
+      "id": "component:insight-card",
+      "type": "Component",
+      "label": "insight-card"
+    },
+    {
+      "id": "component:activity-card",
+      "type": "Component",
+      "label": "activity-card"
+    },
+    {
+      "id": "component:section-header",
+      "type": "Component",
+      "label": "section-header"
+    },
+    {
+      "id": "component:kanban-board",
+      "type": "Component",
+      "label": "kanban-board"
+    },
+    {
+      "id": "component:kanban-column",
+      "type": "Component",
+      "label": "kanban-column"
+    },
+    {
+      "id": "component:kanban-card",
+      "type": "Component",
+      "label": "kanban-card"
+    },
+    {
+      "id": "component:tag",
+      "type": "Component",
+      "label": "tag"
+    },
+    {
+      "id": "component:calendar-grid",
+      "type": "Component",
+      "label": "calendar-grid"
+    },
+    {
+      "id": "component:avatar",
+      "type": "Component",
+      "label": "avatar"
+    },
+    {
+      "id": "component:profile-card",
+      "type": "Component",
+      "label": "profile-card"
+    },
+    {
+      "id": "component:search-results",
+      "type": "Component",
+      "label": "search-results"
+    },
+    {
+      "id": "component:file-preview",
+      "type": "Component",
+      "label": "file-preview"
+    },
+    {
+      "id": "component:chart-container",
+      "type": "Component",
+      "label": "chart-container"
+    },
+    {
+      "id": "component:chart-legend",
+      "type": "Component",
+      "label": "chart-legend"
+    },
+    {
+      "id": "component:chart-panel",
+      "type": "Component",
+      "label": "chart-panel"
+    },
+    {
+      "id": "component:filter-toolbar",
+      "type": "Component",
+      "label": "filter-toolbar"
+    },
+    {
+      "id": "family:feedback",
+      "type": "ComponentFamily",
+      "label": "feedback",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:feedback-info",
+      "type": "ComponentState",
+      "label": "feedback/info"
+    },
+    {
+      "id": "state:feedback-success",
+      "type": "ComponentState",
+      "label": "feedback/success"
+    },
+    {
+      "id": "state:feedback-warning",
+      "type": "ComponentState",
+      "label": "feedback/warning"
+    },
+    {
+      "id": "state:feedback-danger",
+      "type": "ComponentState",
+      "label": "feedback/danger"
+    },
+    {
+      "id": "component:inline-alert",
+      "type": "Component",
+      "label": "inline-alert"
+    },
+    {
+      "id": "component:empty-state",
+      "type": "Component",
+      "label": "empty-state"
+    },
+    {
+      "id": "component:toast",
+      "type": "Component",
+      "label": "toast"
+    },
+    {
+      "id": "component:banner",
+      "type": "Component",
+      "label": "banner"
+    },
+    {
+      "id": "component:status-badge",
+      "type": "Component",
+      "label": "status-badge"
+    },
+    {
+      "id": "component:upload-progress",
+      "type": "Component",
+      "label": "upload-progress"
+    },
+    {
+      "id": "component:step-progress",
+      "type": "Component",
+      "label": "step-progress"
+    },
+    {
+      "id": "family:input",
+      "type": "ComponentFamily",
+      "label": "input",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:input-default",
+      "type": "ComponentState",
+      "label": "input/default"
+    },
+    {
+      "id": "state:input-focus",
+      "type": "ComponentState",
+      "label": "input/focus"
+    },
+    {
+      "id": "state:input-error",
+      "type": "ComponentState",
+      "label": "input/error"
+    },
+    {
+      "id": "state:input-disabled",
+      "type": "ComponentState",
+      "label": "input/disabled"
+    },
+    {
+      "id": "component:text-field",
+      "type": "Component",
+      "label": "text-field"
+    },
+    {
+      "id": "component:search-field",
+      "type": "Component",
+      "label": "search-field"
+    },
+    {
+      "id": "component:segmented-control",
+      "type": "Component",
+      "label": "segmented-control"
+    },
+    {
+      "id": "component:filter-chip",
+      "type": "Component",
+      "label": "filter-chip"
+    },
+    {
+      "id": "component:chip",
+      "type": "Component",
+      "label": "chip"
+    },
+    {
+      "id": "component:textarea",
+      "type": "Component",
+      "label": "textarea"
+    },
+    {
+      "id": "component:select",
+      "type": "Component",
+      "label": "select"
+    },
+    {
+      "id": "component:checkbox",
+      "type": "Component",
+      "label": "checkbox"
+    },
+    {
+      "id": "component:radio-group",
+      "type": "Component",
+      "label": "radio-group"
+    },
+    {
+      "id": "component:form-section",
+      "type": "Component",
+      "label": "form-section"
+    },
+    {
+      "id": "component:date-picker",
+      "type": "Component",
+      "label": "date-picker"
+    },
+    {
+      "id": "component:time-picker",
+      "type": "Component",
+      "label": "time-picker"
+    },
+    {
+      "id": "component:date-range-picker",
+      "type": "Component",
+      "label": "date-range-picker"
+    },
+    {
+      "id": "component:filter-panel",
+      "type": "Component",
+      "label": "filter-panel"
+    },
+    {
+      "id": "component:upload-dropzone",
+      "type": "Component",
+      "label": "upload-dropzone"
+    },
+    {
+      "id": "family:navigation",
+      "type": "ComponentFamily",
+      "label": "navigation",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:navigation-default",
+      "type": "ComponentState",
+      "label": "navigation/default"
+    },
+    {
+      "id": "state:navigation-active",
+      "type": "ComponentState",
+      "label": "navigation/active"
+    },
+    {
+      "id": "state:navigation-hover",
+      "type": "ComponentState",
+      "label": "navigation/hover"
+    },
+    {
+      "id": "state:navigation-collapsed",
+      "type": "ComponentState",
+      "label": "navigation/collapsed"
+    },
+    {
+      "id": "component:mobile-topbar",
+      "type": "Component",
+      "label": "mobile-topbar"
+    },
+    {
+      "id": "component:mobile-tab-bar",
+      "type": "Component",
+      "label": "mobile-tab-bar"
+    },
+    {
+      "id": "component:back-button",
+      "type": "Component",
+      "label": "back-button"
+    },
+    {
+      "id": "component:section-tabs",
+      "type": "Component",
+      "label": "section-tabs"
+    },
+    {
+      "id": "component:pagination",
+      "type": "Component",
+      "label": "pagination"
+    },
+    {
+      "id": "component:app-shell",
+      "type": "Component",
+      "label": "app-shell"
+    },
+    {
+      "id": "component:sidebar-nav",
+      "type": "Component",
+      "label": "sidebar-nav"
+    },
+    {
+      "id": "component:topbar",
+      "type": "Component",
+      "label": "topbar"
+    },
+    {
+      "id": "component:breadcrumb",
+      "type": "Component",
+      "label": "breadcrumb"
+    },
+    {
+      "id": "component:tab-bar",
+      "type": "Component",
+      "label": "tab-bar"
+    },
+    {
+      "id": "component:wizard-layout",
+      "type": "Component",
+      "label": "wizard-layout"
+    },
+    {
+      "id": "component:workspace-switcher",
+      "type": "Component",
+      "label": "workspace-switcher"
+    },
+    {
+      "id": "component:context-panel",
+      "type": "Component",
+      "label": "context-panel"
+    },
+    {
+      "id": "family:overlay",
+      "type": "ComponentFamily",
+      "label": "overlay",
+      "meta": {
+        "priority": "medium"
+      }
+    },
+    {
+      "id": "state:overlay-closed",
+      "type": "ComponentState",
+      "label": "overlay/closed"
+    },
+    {
+      "id": "state:overlay-opening",
+      "type": "ComponentState",
+      "label": "overlay/opening"
+    },
+    {
+      "id": "state:overlay-open",
+      "type": "ComponentState",
+      "label": "overlay/open"
+    },
+    {
+      "id": "component:bottom-sheet",
+      "type": "Component",
+      "label": "bottom-sheet"
+    },
+    {
+      "id": "component:modal-dialog",
+      "type": "Component",
+      "label": "modal-dialog"
+    },
+    {
+      "id": "component:user-menu",
+      "type": "Component",
+      "label": "user-menu"
+    },
+    {
+      "id": "component:autocomplete",
+      "type": "Component",
+      "label": "autocomplete"
+    },
+    {
+      "id": "component:chart-tooltip",
+      "type": "Component",
+      "label": "chart-tooltip"
+    },
+    {
+      "id": "component:confirm-dialog",
+      "type": "Component",
+      "label": "confirm-dialog"
+    },
+    {
+      "id": "component:tooltip-guide",
+      "type": "Component",
+      "label": "tooltip-guide"
+    },
+    {
+      "id": "component:chat-panel",
+      "type": "Component",
+      "label": "chat-panel"
+    },
+    {
+      "id": "component:message-thread",
+      "type": "Component",
+      "label": "message-thread"
+    },
+    {
+      "id": "component:message-composer",
+      "type": "Component",
+      "label": "message-composer"
+    },
+    {
+      "id": "component:context-drawer",
+      "type": "Component",
+      "label": "context-drawer"
+    },
+    {
+      "id": "primitive:baseline",
+      "type": "ProductPrimitive",
+      "label": "baseline"
+    },
+    {
+      "id": "primitive:data-tables",
+      "type": "ProductPrimitive",
+      "label": "data tables"
+    },
+    {
+      "id": "primitive:notifications",
+      "type": "ProductPrimitive",
+      "label": "notifications"
+    },
+    {
+      "id": "primitive:workspace-navigation",
+      "type": "ProductPrimitive",
+      "label": "workspace navigation"
+    },
+    {
+      "id": "primitive:dashboard-cards",
+      "type": "ProductPrimitive",
+      "label": "dashboard cards"
+    },
+    {
+      "id": "primitive:kanban-and-board",
+      "type": "ProductPrimitive",
+      "label": "kanban and board"
+    },
+    {
+      "id": "primitive:tags-and-labels",
+      "type": "ProductPrimitive",
+      "label": "tags and labels"
+    },
+    {
+      "id": "primitive:forms",
+      "type": "ProductPrimitive",
+      "label": "forms"
+    },
+    {
+      "id": "primitive:calendar-and-dates",
+      "type": "ProductPrimitive",
+      "label": "calendar and dates"
+    },
+    {
+      "id": "primitive:user-profile-and-avatar",
+      "type": "ProductPrimitive",
+      "label": "user profile and avatar"
+    },
+    {
+      "id": "primitive:search-and-filter",
+      "type": "ProductPrimitive",
+      "label": "search and filter"
+    },
+    {
+      "id": "primitive:file-upload",
+      "type": "ProductPrimitive",
+      "label": "file upload"
+    },
+    {
+      "id": "primitive:charts-and-visualization",
+      "type": "ProductPrimitive",
+      "label": "charts and visualization"
+    },
+    {
+      "id": "primitive:modal-and-dialog",
+      "type": "ProductPrimitive",
+      "label": "modal and dialog"
+    },
+    {
+      "id": "primitive:onboarding-and-stepper",
+      "type": "ProductPrimitive",
+      "label": "onboarding and stepper"
+    },
+    {
+      "id": "primitive:chat-and-messaging",
+      "type": "ProductPrimitive",
+      "label": "chat and messaging"
+    },
+    {
+      "id": "palette:deep-blues",
+      "type": "ColorPalette",
+      "label": "Deep Blues"
+    },
+    {
+      "id": "color:navy-blue",
+      "type": "ColorToken",
+      "label": "Navy Blue",
+      "meta": {
+        "hex": "#000080",
+        "tier": "core",
+        "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함"
+      }
+    },
+    {
+      "id": "palette:pantone-trend-blues",
+      "type": "ColorPalette",
+      "label": "Pantone Trend Blues"
+    },
+    {
+      "id": "color:classic-blue",
+      "type": "ColorToken",
+      "label": "Classic Blue",
+      "meta": {
+        "hex": "#0F4C81",
+        "tier": "core",
+        "mood": "중명도, 중채도, 클래식한 딥 블루 톤 / 신뢰, 평온함, 지성, 안정감"
+      }
+    },
+    {
+      "id": "palette:pastel-blues",
+      "type": "ColorPalette",
+      "label": "Pastel Blues"
+    },
+    {
+      "id": "color:misty-blue",
+      "type": "ColorToken",
+      "label": "Misty Blue",
+      "meta": {
+        "hex": "#B5C7EB",
+        "tier": "core",
+        "mood": "중명도, 저채도, 보라색이 섞인 뉴트럴 블루 톤 / 차분함, 사색적, 몽환적, 잔잔함, 감정의 여운"
+      }
+    },
+    {
+      "id": "color:prussian-blue",
+      "type": "ColorToken",
+      "label": "Prussian Blue",
+      "meta": {
+        "hex": "#003153",
+        "tier": "semantic",
+        "role": "primary"
+      }
+    },
+    {
+      "id": "color:bronze-gold",
+      "type": "ColorToken",
+      "label": "Bronze Gold",
+      "meta": {
+        "hex": "#A97132",
+        "tier": "semantic",
+        "role": "accent"
+      }
+    },
+    {
+      "id": "color:ice-blue",
+      "type": "ColorToken",
+      "label": "Ice Blue",
+      "meta": {
+        "hex": "#D6EAF8",
+        "tier": "semantic",
+        "role": "surface_tint"
+      }
+    },
+    {
+      "id": "color:canvas-white",
+      "type": "ColorToken",
+      "label": "Canvas White",
+      "meta": {
+        "hex": "#F7F8FA",
+        "tier": "semantic",
+        "role": "canvas"
+      }
+    },
+    {
+      "id": "color:paper",
+      "type": "ColorToken",
+      "label": "Paper",
+      "meta": {
+        "hex": "#FFFFFF",
+        "tier": "semantic",
+        "role": "surface"
+      }
+    },
+    {
+      "id": "color:surface-muted",
+      "type": "ColorToken",
+      "label": "Surface Muted",
+      "meta": {
+        "hex": "#EEF1F6",
+        "tier": "semantic",
+        "role": "surface_muted"
+      }
+    },
+    {
+      "id": "color:border-neutral",
+      "type": "ColorToken",
+      "label": "Border Neutral",
+      "meta": {
+        "hex": "#D6DDE6",
+        "tier": "semantic",
+        "role": "border"
+      }
+    },
+    {
+      "id": "color:pairing--b8cbd0",
+      "type": "ColorToken",
+      "label": "Pairing #B8CBD0",
+      "meta": {
+        "hex": "#B8CBD0",
+        "tier": "semantic",
+        "role": "border_strong"
+      }
+    },
+    {
+      "id": "color:pairing--1c2e4a",
+      "type": "ColorToken",
+      "label": "Pairing #1C2E4A",
+      "meta": {
+        "hex": "#1C2E4A",
+        "tier": "semantic",
+        "role": "ink"
+      }
+    },
+    {
+      "id": "color:muted-ink",
+      "type": "ColorToken",
+      "label": "Muted Ink",
+      "meta": {
+        "hex": "#4B5563",
+        "tier": "semantic",
+        "role": "ink_muted"
+      }
+    },
+    {
+      "id": "color:pairing--8a8e80",
+      "type": "ColorToken",
+      "label": "Pairing #8A8E80",
+      "meta": {
+        "hex": "#8A8E80",
+        "tier": "semantic",
+        "role": "ink_subtle"
+      }
+    },
+    {
+      "id": "color:ink-inverse",
+      "type": "ColorToken",
+      "label": "Ink Inverse",
+      "meta": {
+        "hex": "#FFFFFF",
+        "tier": "semantic",
+        "role": "ink_inverse"
+      }
+    },
+    {
+      "id": "color:pairing--f5f3e7",
+      "type": "ColorToken",
+      "label": "Pairing #F5F3E7",
+      "meta": {
+        "hex": "#F5F3E7",
+        "tier": "semantic",
+        "role": "accent_support"
+      }
+    },
+    {
+      "id": "color:success",
+      "type": "ColorToken",
+      "label": "Success",
+      "meta": {
+        "hex": "#4A7C59",
+        "tier": "semantic",
+        "role": "success"
+      }
+    },
+    {
+      "id": "color:pairing--d4a6a6",
+      "type": "ColorToken",
+      "label": "Pairing #D4A6A6",
+      "meta": {
+        "hex": "#D4A6A6",
+        "tier": "semantic",
+        "role": "danger"
+      }
+    },
+    {
+      "id": "color:link-hover",
+      "type": "ColorToken",
+      "label": "Link Hover",
+      "meta": {
+        "hex": "#00192A",
+        "tier": "semantic",
+        "role": "link_hover"
+      }
+    },
+    {
+      "id": "palette:derived-pairing",
+      "type": "ColorPalette",
+      "label": "Derived Pairing"
+    },
+    {
+      "id": "color:pairing--2e4e68",
+      "type": "ColorToken",
+      "label": "Pairing #2E4E68",
+      "meta": {
+        "hex": "#2E4E68",
+        "tier": "supporting"
+      }
+    },
+    {
+      "id": "color:pairing--c0c0c0",
+      "type": "ColorToken",
+      "label": "Pairing #C0C0C0",
+      "meta": {
+        "hex": "#C0C0C0",
+        "tier": "supporting"
+      }
+    },
+    {
+      "id": "color:pairing--3e3e3e",
+      "type": "ColorToken",
+      "label": "Pairing #3E3E3E",
+      "meta": {
+        "hex": "#3E3E3E",
+        "tier": "supporting"
+      }
+    },
+    {
+      "id": "color:pairing--4a4a4a",
+      "type": "ColorToken",
+      "label": "Pairing #4A4A4A",
+      "meta": {
+        "hex": "#4A4A4A",
+        "tier": "supporting"
+      }
+    },
+    {
+      "id": "color:pairing--f4f0e6",
+      "type": "ColorToken",
+      "label": "Pairing #F4F0E6",
+      "meta": {
+        "hex": "#F4F0E6",
+        "tier": "supporting"
+      }
+    },
+    {
+      "id": "font:pretendard",
+      "type": "FontFamily",
+      "label": "Pretendard",
+      "meta": {
+        "role": "heading",
+        "family_type": "humanist-sans",
+        "weight_range": "100-900",
+        "variable": true,
+        "source": "GitHub (cactus/pretendard)"
+      }
+    },
+    {
+      "id": "font:ibm-plex-mono",
+      "type": "FontFamily",
+      "label": "IBM Plex Mono",
+      "meta": {
+        "role": "mono",
+        "family_type": "monospace",
+        "weight_range": "100-700",
+        "variable": false,
+        "source": "Google Fonts"
+      }
+    },
+    {
+      "id": "pattern:layout-sidebar-navigation",
+      "type": "LayoutPattern",
+      "label": "sidebar navigation"
+    },
+    {
+      "id": "pattern:layout-workspace-switcher",
+      "type": "LayoutPattern",
+      "label": "workspace switcher"
+    },
+    {
+      "id": "pattern:layout-transactions-table",
+      "type": "LayoutPattern",
+      "label": "transactions table"
+    },
+    {
+      "id": "pattern:layout-balance-kpi-card",
+      "type": "LayoutPattern",
+      "label": "balance kpi card"
+    },
+    {
+      "id": "pattern:layout-compliance-banner",
+      "type": "LayoutPattern",
+      "label": "compliance banner"
+    },
+    {
+      "id": "pattern:layout-alert-list",
+      "type": "LayoutPattern",
+      "label": "alert list"
+    },
+    {
+      "id": "pattern:layout-audit-timeline",
+      "type": "LayoutPattern",
+      "label": "audit timeline"
+    },
+    {
+      "id": "pattern:layout-status-badge",
+      "type": "LayoutPattern",
+      "label": "status badge"
+    },
+    {
+      "id": "pattern:layout-date-range-picker",
+      "type": "LayoutPattern",
+      "label": "date range picker"
+    },
+    {
+      "id": "pattern:layout-member-roster",
+      "type": "LayoutPattern",
+      "label": "member roster"
+    },
+    {
+      "id": "pattern:layout-settings-panel",
+      "type": "LayoutPattern",
+      "label": "settings panel"
+    },
+    {
+      "id": "pattern:layout-workspace-navigation",
+      "type": "LayoutPattern",
+      "label": "workspace navigation"
+    },
+    {
+      "id": "pattern:layout-dashboard-cards",
+      "type": "LayoutPattern",
+      "label": "dashboard cards"
+    },
+    {
+      "id": "pattern:layout-data-tables",
+      "type": "LayoutPattern",
+      "label": "data tables"
+    },
+    {
+      "id": "pattern:interaction-filter-chrome",
+      "type": "InteractionPattern",
+      "label": "filter chrome"
+    },
+    {
+      "id": "pattern:interaction-command-palette",
+      "type": "InteractionPattern",
+      "label": "command palette"
+    },
+    {
+      "id": "pattern:interaction-forms",
+      "type": "InteractionPattern",
+      "label": "forms"
+    },
+    {
+      "id": "pattern:interaction-notifications",
+      "type": "InteractionPattern",
+      "label": "notifications"
+    },
+    {
+      "id": "color:ink",
+      "type": "ColorToken",
+      "label": "Ink",
+      "meta": {
+        "hex": "#111111",
+        "tier": "baseline",
+        "role": "ink"
+      }
+    },
+    {
+      "id": "a11y:contrast-aa",
+      "type": "AccessibilityRule",
+      "label": "Color contrast AA (4.5:1 text, 3:1 UI)"
+    },
+    {
+      "id": "a11y:keyboard-nav",
+      "type": "AccessibilityRule",
+      "label": "Full keyboard navigation"
+    },
+    {
+      "id": "a11y:label-association",
+      "type": "AccessibilityRule",
+      "label": "Input label association"
+    },
+    {
+      "id": "a11y:focus-visible",
+      "type": "AccessibilityRule",
+      "label": "Visible focus indicator"
+    },
+    {
+      "id": "a11y:motion-reduce",
+      "type": "AccessibilityRule",
+      "label": "Reduced motion support"
+    },
+    {
+      "id": "a11y:screen-reader",
+      "type": "AccessibilityRule",
+      "label": "Screen reader compatibility"
+    },
+    {
+      "id": "a11y:touch-target",
+      "type": "AccessibilityRule",
+      "label": "Touch target 44x44 minimum"
+    },
+    {
+      "id": "a11y:aria-landmarks",
+      "type": "AccessibilityRule",
+      "label": "ARIA landmarks and roles"
+    },
+    {
+      "id": "benchmark:stripe",
+      "type": "BenchmarkSystem",
+      "label": "Stripe",
+      "meta": {
+        "url": "https://stripe.com",
+        "category": "fintech",
+        "color_strategy": "neutral-dominant with purple accent"
+      }
+    },
+    {
+      "id": "benchmark:vercel",
+      "type": "BenchmarkSystem",
+      "label": "Vercel / Geist",
+      "meta": {
+        "url": "https://vercel.com/geist",
+        "category": "devtool",
+        "color_strategy": "monochrome with blue accent"
+      }
+    },
+    {
+      "id": "benchmark:linear",
+      "type": "BenchmarkSystem",
+      "label": "Linear",
+      "meta": {
+        "url": "https://linear.app",
+        "category": "productivity",
+        "color_strategy": "dark with gradient accents"
+      }
+    },
+    {
+      "id": "benchmark:github-primer",
+      "type": "BenchmarkSystem",
+      "label": "GitHub Primer",
+      "meta": {
+        "url": "https://primer.style",
+        "category": "devtool",
+        "color_strategy": "semantic color scales with theme modes"
+      }
+    },
+    {
+      "id": "benchmark:shopify-polaris",
+      "type": "BenchmarkSystem",
+      "label": "Shopify Polaris",
+      "meta": {
+        "url": "https://polaris.shopify.com",
+        "category": "commerce",
+        "color_strategy": "green accent with warm neutrals"
+      }
+    },
+    {
+      "id": "benchmark:atlassian",
+      "type": "BenchmarkSystem",
+      "label": "Atlassian Design System",
+      "meta": {
+        "url": "https://atlassian.design",
+        "category": "productivity",
+        "color_strategy": "blue accent with semantic states"
+      }
+    },
+    {
+      "id": "benchmark:figma",
+      "type": "BenchmarkSystem",
+      "label": "Figma UI2",
+      "meta": {
+        "url": "https://figma.com",
+        "category": "creative-tool",
+        "color_strategy": "dark UI with colorful accents"
+      }
+    },
+    {
+      "id": "benchmark:notion",
+      "type": "BenchmarkSystem",
+      "label": "Notion",
+      "meta": {
+        "url": "https://notion.so",
+        "category": "productivity",
+        "color_strategy": "minimal with soft pastels"
+      }
+    },
+    {
+      "id": "benchmark:slack",
+      "type": "BenchmarkSystem",
+      "label": "Slack",
+      "meta": {
+        "url": "https://slack.com",
+        "category": "communication",
+        "color_strategy": "aubergine brand with semantic states"
+      }
+    },
+    {
+      "id": "benchmark:material-design",
+      "type": "BenchmarkSystem",
+      "label": "Google Material Design 3",
+      "meta": {
+        "url": "https://m3.material.io",
+        "category": "platform",
+        "color_strategy": "dynamic color from seed with tonal palettes"
+      }
+    },
+    {
+      "id": "benchmark:apple-hig",
+      "type": "BenchmarkSystem",
+      "label": "Apple Human Interface Guidelines",
+      "meta": {
+        "url": "https://developer.apple.com/design",
+        "category": "platform",
+        "color_strategy": "system semantic colors with vibrancy"
+      }
+    },
+    {
+      "id": "benchmark:spotify",
+      "type": "BenchmarkSystem",
+      "label": "Spotify Encore",
+      "meta": {
+        "url": "https://spotify.design",
+        "category": "entertainment",
+        "color_strategy": "green accent on dark with album art colors"
+      }
+    },
+    {
+      "id": "benchmark:airbnb",
+      "type": "BenchmarkSystem",
+      "label": "Airbnb DLS",
+      "meta": {
+        "url": "https://airbnb.design",
+        "category": "marketplace",
+        "color_strategy": "rausch red accent with warm neutrals"
+      }
+    },
+    {
+      "id": "benchmark:uber",
+      "type": "BenchmarkSystem",
+      "label": "Uber Base Web",
+      "meta": {
+        "url": "https://baseweb.design",
+        "category": "transport",
+        "color_strategy": "black primary with minimal accent"
+      }
+    },
+    {
+      "id": "benchmark:twilio-paste",
+      "type": "BenchmarkSystem",
+      "label": "Twilio Paste",
+      "meta": {
+        "url": "https://paste.twilio.design",
+        "category": "devtool",
+        "color_strategy": "red accent with comprehensive semantic scale"
+      }
+    },
+    {
+      "id": "benchmark:ibm-carbon",
+      "type": "BenchmarkSystem",
+      "label": "IBM Carbon",
+      "meta": {
+        "url": "https://carbondesignsystem.com",
+        "category": "enterprise",
+        "color_strategy": "blue accent with gray palette and semantic states"
+      }
+    },
+    {
+      "id": "benchmark:ant-design",
+      "type": "BenchmarkSystem",
+      "label": "Ant Design",
+      "meta": {
+        "url": "https://ant.design",
+        "category": "enterprise",
+        "color_strategy": "blue accent with functional color system"
+      }
+    },
+    {
+      "id": "benchmark:chakra",
+      "type": "BenchmarkSystem",
+      "label": "Chakra UI",
+      "meta": {
+        "url": "https://chakra-ui.com",
+        "category": "component-library",
+        "color_strategy": "teal accent with comprehensive color scales"
+      }
+    },
+    {
+      "id": "benchmark:radix",
+      "type": "BenchmarkSystem",
+      "label": "Radix UI + Themes",
+      "meta": {
+        "url": "https://radix-ui.com",
+        "category": "component-library",
+        "color_strategy": "12-step color scales with automatic contrast"
+      }
+    },
+    {
+      "id": "benchmark:discord",
+      "type": "BenchmarkSystem",
+      "label": "Discord",
+      "meta": {
+        "url": "https://discord.com",
+        "category": "communication",
+        "color_strategy": "blurple accent on dark with vibrant status colors"
+      }
+    },
+    {
+      "id": "benchmark:tailwind",
+      "type": "BenchmarkSystem",
+      "label": "Tailwind UI / Catalyst",
+      "meta": {
+        "url": "https://tailwindui.com",
+        "category": "component-library",
+        "color_strategy": "configurable palette with semantic intent"
+      }
+    },
+    {
+      "id": "benchmark:adobe-spectrum",
+      "type": "BenchmarkSystem",
+      "label": "Adobe Spectrum",
+      "meta": {
+        "url": "https://spectrum.adobe.com",
+        "category": "creative-tool",
+        "color_strategy": "gray spectrum with blue accent and express variants"
+      }
+    },
+    {
+      "id": "benchmark:microsoft-fluent",
+      "type": "BenchmarkSystem",
+      "label": "Microsoft Fluent 2",
+      "meta": {
+        "url": "https://fluent2.microsoft.design",
+        "category": "platform",
+        "color_strategy": "brand blue with tint/shade system and high contrast mode"
+      }
+    },
+    {
+      "id": "benchmark:hashicorp-helios",
+      "type": "BenchmarkSystem",
+      "label": "HashiCorp Helios",
+      "meta": {
+        "url": "https://helios.hashicorp.design",
+        "category": "devtool",
+        "color_strategy": "multi-product brand colors with shared semantic layer"
+      }
+    },
+    {
+      "id": "benchmark:gitlab-pajamas",
+      "type": "BenchmarkSystem",
+      "label": "GitLab Pajamas",
+      "meta": {
+        "url": "https://design.gitlab.com",
+        "category": "devtool",
+        "color_strategy": "purple/orange brand with semantic layer"
+      }
+    },
+    {
+      "id": "benchmark:wise",
+      "type": "BenchmarkSystem",
+      "label": "Wise (TransferWise) Neptune",
+      "meta": {
+        "url": "https://wise.com",
+        "category": "fintech",
+        "color_strategy": "green accent with bright illustrations"
+      }
+    },
+    {
+      "id": "benchmark:revolut",
+      "type": "BenchmarkSystem",
+      "label": "Revolut",
+      "meta": {
+        "url": "https://revolut.com",
+        "category": "fintech",
+        "color_strategy": "dark base with vibrant gradients"
+      }
+    },
+    {
+      "id": "benchmark:resend",
+      "type": "BenchmarkSystem",
+      "label": "Resend",
+      "meta": {
+        "url": "https://resend.com",
+        "category": "devtool",
+        "color_strategy": "monochrome with minimal accent"
+      }
+    },
+    {
+      "id": "benchmark:cal-com",
+      "type": "BenchmarkSystem",
+      "label": "Cal.com",
+      "meta": {
+        "url": "https://cal.com",
+        "category": "productivity",
+        "color_strategy": "neutral base with scheduling-specific semantic colors"
+      }
+    },
+    {
+      "id": "benchmark:supabase",
+      "type": "BenchmarkSystem",
+      "label": "Supabase",
+      "meta": {
+        "url": "https://supabase.com",
+        "category": "devtool",
+        "color_strategy": "green accent on dark with code-centric palette"
+      }
+    },
+    {
+      "id": "benchmark:planetscale",
+      "type": "BenchmarkSystem",
+      "label": "PlanetScale",
+      "meta": {
+        "url": "https://planetscale.com",
+        "category": "devtool",
+        "color_strategy": "orange accent on monochrome base"
+      }
+    },
+    {
+      "id": "benchmark:arc-browser",
+      "type": "BenchmarkSystem",
+      "label": "Arc Browser (The Browser Company)",
+      "meta": {
+        "url": "https://arc.net",
+        "category": "browser",
+        "color_strategy": "user-customizable tint with gradient system"
+      }
+    },
+    {
+      "id": "benchmark:raycast",
+      "type": "BenchmarkSystem",
+      "label": "Raycast",
+      "meta": {
+        "url": "https://raycast.com",
+        "category": "productivity",
+        "color_strategy": "dark base with extension-scoped colors"
+      }
+    },
+    {
+      "id": "benchmark:lemon-squeezy",
+      "type": "BenchmarkSystem",
+      "label": "Lemon Squeezy",
+      "meta": {
+        "url": "https://lemonsqueezy.com",
+        "category": "commerce",
+        "color_strategy": "yellow/lemon accent with warm gradients"
+      }
+    },
+    {
+      "id": "benchmark:toss",
+      "type": "BenchmarkSystem",
+      "label": "Toss (비바리퍼블리카)",
+      "meta": {
+        "url": "https://toss.im",
+        "category": "fintech",
+        "color_strategy": "blue accent with conservative semantic palette"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "type": "expresses",
+      "source": "brand:ledger",
+      "target": "principle:corporate"
+    },
+    {
+      "type": "expresses",
+      "source": "brand:ledger",
+      "target": "principle:trust"
+    },
+    {
+      "type": "expresses",
+      "source": "brand:ledger",
+      "target": "principle:fintech"
+    },
+    {
+      "type": "expresses",
+      "source": "brand:ledger",
+      "target": "principle:financial"
+    },
+    {
+      "type": "has_state",
+      "source": "family:button",
+      "target": "state:button-default"
+    },
+    {
+      "type": "has_state",
+      "source": "family:button",
+      "target": "state:button-hover"
+    },
+    {
+      "type": "has_state",
+      "source": "family:button",
+      "target": "state:button-active"
+    },
+    {
+      "type": "has_state",
+      "source": "family:button",
+      "target": "state:button-disabled"
+    },
+    {
+      "type": "has_state",
+      "source": "family:button",
+      "target": "state:button-loading"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:primary-button",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:secondary-button",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:ghost-button",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:icon-button",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:cta-button",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:link-button",
+      "target": "family:button"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:form-actions",
+      "target": "family:button"
+    },
+    {
+      "type": "has_state",
+      "source": "family:data-display",
+      "target": "state:data-display-default"
+    },
+    {
+      "type": "has_state",
+      "source": "family:data-display",
+      "target": "state:data-display-sorted"
+    },
+    {
+      "type": "has_state",
+      "source": "family:data-display",
+      "target": "state:data-display-filtered"
+    },
+    {
+      "type": "has_state",
+      "source": "family:data-display",
+      "target": "state:data-display-empty"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:data-table",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:column-header",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:row-actions",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:stat-card",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:insight-card",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:activity-card",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:section-header",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:kanban-board",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:kanban-column",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:kanban-card",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:tag",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:calendar-grid",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:avatar",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:profile-card",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:search-results",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:file-preview",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:chart-container",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:chart-legend",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:chart-panel",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:filter-toolbar",
+      "target": "family:data-display"
+    },
+    {
+      "type": "has_state",
+      "source": "family:feedback",
+      "target": "state:feedback-info"
+    },
+    {
+      "type": "has_state",
+      "source": "family:feedback",
+      "target": "state:feedback-success"
+    },
+    {
+      "type": "has_state",
+      "source": "family:feedback",
+      "target": "state:feedback-warning"
+    },
+    {
+      "type": "has_state",
+      "source": "family:feedback",
+      "target": "state:feedback-danger"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:inline-alert",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:empty-state",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:toast",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:banner",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:status-badge",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:upload-progress",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:step-progress",
+      "target": "family:feedback"
+    },
+    {
+      "type": "has_state",
+      "source": "family:input",
+      "target": "state:input-default"
+    },
+    {
+      "type": "has_state",
+      "source": "family:input",
+      "target": "state:input-focus"
+    },
+    {
+      "type": "has_state",
+      "source": "family:input",
+      "target": "state:input-error"
+    },
+    {
+      "type": "has_state",
+      "source": "family:input",
+      "target": "state:input-disabled"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:text-field",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:search-field",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:segmented-control",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:filter-chip",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:chip",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:textarea",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:select",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:checkbox",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:radio-group",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:form-section",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:date-picker",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:time-picker",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:date-range-picker",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:filter-panel",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:upload-dropzone",
+      "target": "family:input"
+    },
+    {
+      "type": "has_state",
+      "source": "family:navigation",
+      "target": "state:navigation-default"
+    },
+    {
+      "type": "has_state",
+      "source": "family:navigation",
+      "target": "state:navigation-active"
+    },
+    {
+      "type": "has_state",
+      "source": "family:navigation",
+      "target": "state:navigation-hover"
+    },
+    {
+      "type": "has_state",
+      "source": "family:navigation",
+      "target": "state:navigation-collapsed"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:mobile-topbar",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:mobile-tab-bar",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:back-button",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:section-tabs",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:pagination",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:app-shell",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:sidebar-nav",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:topbar",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:breadcrumb",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:tab-bar",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:wizard-layout",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:workspace-switcher",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:context-panel",
+      "target": "family:navigation"
+    },
+    {
+      "type": "has_state",
+      "source": "family:overlay",
+      "target": "state:overlay-closed"
+    },
+    {
+      "type": "has_state",
+      "source": "family:overlay",
+      "target": "state:overlay-opening"
+    },
+    {
+      "type": "has_state",
+      "source": "family:overlay",
+      "target": "state:overlay-open"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:bottom-sheet",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:modal-dialog",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:user-menu",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:autocomplete",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:chart-tooltip",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:confirm-dialog",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:tooltip-guide",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:chat-panel",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:message-thread",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:message-composer",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:context-drawer",
+      "target": "family:overlay"
+    },
+    {
+      "type": "supports",
+      "source": "component:link-button",
+      "target": "primitive:baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:data-table",
+      "target": "primitive:data-tables"
+    },
+    {
+      "type": "supports",
+      "source": "component:column-header",
+      "target": "primitive:data-tables"
+    },
+    {
+      "type": "supports",
+      "source": "component:row-actions",
+      "target": "primitive:data-tables"
+    },
+    {
+      "type": "supports",
+      "source": "component:pagination",
+      "target": "primitive:data-tables"
+    },
+    {
+      "type": "supports",
+      "source": "component:filter-chip",
+      "target": "primitive:data-tables"
+    },
+    {
+      "type": "supports",
+      "source": "component:banner",
+      "target": "primitive:notifications"
+    },
+    {
+      "type": "supports",
+      "source": "component:app-shell",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:sidebar-nav",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:topbar",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:breadcrumb",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:tab-bar",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:stat-card",
+      "target": "primitive:dashboard-cards"
+    },
+    {
+      "type": "supports",
+      "source": "component:insight-card",
+      "target": "primitive:dashboard-cards"
+    },
+    {
+      "type": "supports",
+      "source": "component:activity-card",
+      "target": "primitive:dashboard-cards"
+    },
+    {
+      "type": "supports",
+      "source": "component:section-header",
+      "target": "primitive:dashboard-cards"
+    },
+    {
+      "type": "supports",
+      "source": "component:kanban-board",
+      "target": "primitive:kanban-and-board"
+    },
+    {
+      "type": "supports",
+      "source": "component:kanban-column",
+      "target": "primitive:kanban-and-board"
+    },
+    {
+      "type": "supports",
+      "source": "component:kanban-card",
+      "target": "primitive:kanban-and-board"
+    },
+    {
+      "type": "supports",
+      "source": "component:tag",
+      "target": "primitive:tags-and-labels"
+    },
+    {
+      "type": "supports",
+      "source": "component:status-badge",
+      "target": "primitive:tags-and-labels"
+    },
+    {
+      "type": "supports",
+      "source": "component:chip",
+      "target": "primitive:tags-and-labels"
+    },
+    {
+      "type": "supports",
+      "source": "component:textarea",
+      "target": "primitive:forms"
+    },
+    {
+      "type": "supports",
+      "source": "component:select",
+      "target": "primitive:forms"
+    },
+    {
+      "type": "supports",
+      "source": "component:checkbox",
+      "target": "primitive:forms"
+    },
+    {
+      "type": "supports",
+      "source": "component:radio-group",
+      "target": "primitive:forms"
+    },
+    {
+      "type": "supports",
+      "source": "component:form-section",
+      "target": "primitive:forms"
+    },
+    {
+      "type": "supports",
+      "source": "component:form-actions",
+      "target": "primitive:forms"
+    },
+    {
+      "type": "supports",
+      "source": "component:date-picker",
+      "target": "primitive:calendar-and-dates"
+    },
+    {
+      "type": "supports",
+      "source": "component:calendar-grid",
+      "target": "primitive:calendar-and-dates"
+    },
+    {
+      "type": "supports",
+      "source": "component:time-picker",
+      "target": "primitive:calendar-and-dates"
+    },
+    {
+      "type": "supports",
+      "source": "component:date-range-picker",
+      "target": "primitive:calendar-and-dates"
+    },
+    {
+      "type": "supports",
+      "source": "component:avatar",
+      "target": "primitive:user-profile-and-avatar"
+    },
+    {
+      "type": "supports",
+      "source": "component:user-menu",
+      "target": "primitive:user-profile-and-avatar"
+    },
+    {
+      "type": "supports",
+      "source": "component:profile-card",
+      "target": "primitive:user-profile-and-avatar"
+    },
+    {
+      "type": "supports",
+      "source": "component:search-results",
+      "target": "primitive:search-and-filter"
+    },
+    {
+      "type": "supports",
+      "source": "component:filter-panel",
+      "target": "primitive:search-and-filter"
+    },
+    {
+      "type": "supports",
+      "source": "component:autocomplete",
+      "target": "primitive:search-and-filter"
+    },
+    {
+      "type": "supports",
+      "source": "component:upload-dropzone",
+      "target": "primitive:file-upload"
+    },
+    {
+      "type": "supports",
+      "source": "component:file-preview",
+      "target": "primitive:file-upload"
+    },
+    {
+      "type": "supports",
+      "source": "component:upload-progress",
+      "target": "primitive:file-upload"
+    },
+    {
+      "type": "supports",
+      "source": "component:chart-container",
+      "target": "primitive:charts-and-visualization"
+    },
+    {
+      "type": "supports",
+      "source": "component:chart-tooltip",
+      "target": "primitive:charts-and-visualization"
+    },
+    {
+      "type": "supports",
+      "source": "component:chart-legend",
+      "target": "primitive:charts-and-visualization"
+    },
+    {
+      "type": "supports",
+      "source": "component:confirm-dialog",
+      "target": "primitive:modal-and-dialog"
+    },
+    {
+      "type": "supports",
+      "source": "component:step-progress",
+      "target": "primitive:onboarding-and-stepper"
+    },
+    {
+      "type": "supports",
+      "source": "component:wizard-layout",
+      "target": "primitive:onboarding-and-stepper"
+    },
+    {
+      "type": "supports",
+      "source": "component:tooltip-guide",
+      "target": "primitive:onboarding-and-stepper"
+    },
+    {
+      "type": "supports",
+      "source": "component:chart-panel",
+      "target": "primitive:dashboard-cards"
+    },
+    {
+      "type": "supports",
+      "source": "component:filter-toolbar",
+      "target": "primitive:data-tables"
+    },
+    {
+      "type": "supports",
+      "source": "component:workspace-switcher",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:context-panel",
+      "target": "primitive:workspace-navigation"
+    },
+    {
+      "type": "supports",
+      "source": "component:chat-panel",
+      "target": "primitive:chat-and-messaging"
+    },
+    {
+      "type": "supports",
+      "source": "component:message-thread",
+      "target": "primitive:chat-and-messaging"
+    },
+    {
+      "type": "supports",
+      "source": "component:message-composer",
+      "target": "primitive:chat-and-messaging"
+    },
+    {
+      "type": "supports",
+      "source": "component:context-drawer",
+      "target": "primitive:chat-and-messaging"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:navy-blue",
+      "target": "palette:deep-blues"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:classic-blue",
+      "target": "palette:pantone-trend-blues"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:misty-blue",
+      "target": "palette:pastel-blues"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--b8cbd0",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--1c2e4a",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--2e4e68",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--f5f3e7",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--c0c0c0",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--3e3e3e",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--4a4a4a",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--8a8e80",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--f4f0e6",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "belongs_to_palette",
+      "source": "color:pairing--d4a6a6",
+      "target": "palette:derived-pairing"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:app-shell"
+    },
+    {
+      "type": "implements",
+      "source": "component:app-shell",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:sidebar-nav"
+    },
+    {
+      "type": "implements",
+      "source": "component:sidebar-nav",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:topbar"
+    },
+    {
+      "type": "implements",
+      "source": "component:topbar",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:breadcrumb"
+    },
+    {
+      "type": "implements",
+      "source": "component:breadcrumb",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:workspace-switcher"
+    },
+    {
+      "type": "implements",
+      "source": "component:workspace-switcher",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:tab-bar"
+    },
+    {
+      "type": "implements",
+      "source": "component:tab-bar",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-workspace-navigation",
+      "target": "component:context-panel"
+    },
+    {
+      "type": "implements",
+      "source": "component:context-panel",
+      "target": "pattern:layout-workspace-navigation"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-dashboard-cards",
+      "target": "component:stat-card"
+    },
+    {
+      "type": "implements",
+      "source": "component:stat-card",
+      "target": "pattern:layout-dashboard-cards"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-dashboard-cards",
+      "target": "component:insight-card"
+    },
+    {
+      "type": "implements",
+      "source": "component:insight-card",
+      "target": "pattern:layout-dashboard-cards"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-dashboard-cards",
+      "target": "component:activity-card"
+    },
+    {
+      "type": "implements",
+      "source": "component:activity-card",
+      "target": "pattern:layout-dashboard-cards"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-dashboard-cards",
+      "target": "component:section-header"
+    },
+    {
+      "type": "implements",
+      "source": "component:section-header",
+      "target": "pattern:layout-dashboard-cards"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-dashboard-cards",
+      "target": "component:chart-panel"
+    },
+    {
+      "type": "implements",
+      "source": "component:chart-panel",
+      "target": "pattern:layout-dashboard-cards"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-data-tables",
+      "target": "component:data-table"
+    },
+    {
+      "type": "implements",
+      "source": "component:data-table",
+      "target": "pattern:layout-data-tables"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-data-tables",
+      "target": "component:column-header"
+    },
+    {
+      "type": "implements",
+      "source": "component:column-header",
+      "target": "pattern:layout-data-tables"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-data-tables",
+      "target": "component:filter-chip"
+    },
+    {
+      "type": "implements",
+      "source": "component:filter-chip",
+      "target": "pattern:layout-data-tables"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-data-tables",
+      "target": "component:row-actions"
+    },
+    {
+      "type": "implements",
+      "source": "component:row-actions",
+      "target": "pattern:layout-data-tables"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-data-tables",
+      "target": "component:pagination"
+    },
+    {
+      "type": "implements",
+      "source": "component:pagination",
+      "target": "pattern:layout-data-tables"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-data-tables",
+      "target": "component:filter-toolbar"
+    },
+    {
+      "type": "implements",
+      "source": "component:filter-toolbar",
+      "target": "pattern:layout-data-tables"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:text-field"
+    },
+    {
+      "type": "implements",
+      "source": "component:text-field",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:select"
+    },
+    {
+      "type": "implements",
+      "source": "component:select",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:checkbox"
+    },
+    {
+      "type": "implements",
+      "source": "component:checkbox",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:textarea"
+    },
+    {
+      "type": "implements",
+      "source": "component:textarea",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:form-section"
+    },
+    {
+      "type": "implements",
+      "source": "component:form-section",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:radio-group"
+    },
+    {
+      "type": "implements",
+      "source": "component:radio-group",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-forms",
+      "target": "component:form-actions"
+    },
+    {
+      "type": "implements",
+      "source": "component:form-actions",
+      "target": "pattern:interaction-forms"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-notifications",
+      "target": "component:toast"
+    },
+    {
+      "type": "implements",
+      "source": "component:toast",
+      "target": "pattern:interaction-notifications"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-notifications",
+      "target": "component:inline-alert"
+    },
+    {
+      "type": "implements",
+      "source": "component:inline-alert",
+      "target": "pattern:interaction-notifications"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-notifications",
+      "target": "component:empty-state"
+    },
+    {
+      "type": "implements",
+      "source": "component:empty-state",
+      "target": "pattern:interaction-notifications"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-notifications",
+      "target": "component:banner"
+    },
+    {
+      "type": "implements",
+      "source": "component:banner",
+      "target": "pattern:interaction-notifications"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:primary-button",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:primary-button",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:primary-button",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:primary-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:primary-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:primary-button",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:secondary-button",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:secondary-button",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:secondary-button",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:secondary-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:secondary-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:secondary-button",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:ghost-button",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:ghost-button",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:ghost-button",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:ghost-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:ghost-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:ghost-button",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:icon-button",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:icon-button",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:icon-button",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:icon-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:icon-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:icon-button",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:cta-button",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:cta-button",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:cta-button",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:cta-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:cta-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:cta-button",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-topbar",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-topbar",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-topbar",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-topbar",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-topbar",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:mobile-topbar",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-tab-bar",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-tab-bar",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-tab-bar",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-tab-bar",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:mobile-tab-bar",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:mobile-tab-bar",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:back-button",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:back-button",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:back-button",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:back-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:back-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:back-button",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-tabs",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-tabs",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-tabs",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-tabs",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-tabs",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:section-tabs",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inline-alert",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inline-alert",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inline-alert",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:inline-alert",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:empty-state",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:empty-state",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:empty-state",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:empty-state",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:toast",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:toast",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:toast",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:toast",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:bottom-sheet",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:bottom-sheet",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:bottom-sheet",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:bottom-sheet",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:bottom-sheet",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:bottom-sheet",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:modal-dialog",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:modal-dialog",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:modal-dialog",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:modal-dialog",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:modal-dialog",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:modal-dialog",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:text-field",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:text-field",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:text-field",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:text-field",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:text-field",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:text-field",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:search-field",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:segmented-control",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:segmented-control",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:segmented-control",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:segmented-control",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:segmented-control",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:segmented-control",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:link-button",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:link-button",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:link-button",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:link-button",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:link-button",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:link-button",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:data-table",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:data-table",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:data-table",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:data-table",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:column-header",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:column-header",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:column-header",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:column-header",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:row-actions",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:row-actions",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:row-actions",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:row-actions",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:pagination",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-chip",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-chip",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-chip",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-chip",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-chip",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:filter-chip",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:banner",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:banner",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:banner",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:banner",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:app-shell",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:app-shell",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:app-shell",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:app-shell",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:app-shell",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:app-shell",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:sidebar-nav",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:sidebar-nav",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:sidebar-nav",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:sidebar-nav",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:sidebar-nav",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:sidebar-nav",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:topbar",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:topbar",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:topbar",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:topbar",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:topbar",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:topbar",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumb",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumb",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumb",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumb",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumb",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:breadcrumb",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tab-bar",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tab-bar",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tab-bar",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tab-bar",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tab-bar",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:tab-bar",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:stat-card",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:stat-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:stat-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:stat-card",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:insight-card",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:insight-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:insight-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:insight-card",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:activity-card",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:activity-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:activity-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:activity-card",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-header",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-header",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-header",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:section-header",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-board",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-board",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-board",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:kanban-board",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-column",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-column",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-column",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:kanban-column",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-card",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:kanban-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:kanban-card",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tag",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tag",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tag",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:tag",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-badge",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-badge",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-badge",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:status-badge",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chip",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chip",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chip",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chip",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chip",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:chip",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:textarea",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:textarea",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:textarea",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:textarea",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:textarea",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:textarea",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:select",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:select",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:select",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:select",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:select",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:select",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:checkbox",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:checkbox",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:checkbox",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:checkbox",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:checkbox",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:checkbox",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:radio-group",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:radio-group",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:radio-group",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:radio-group",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:radio-group",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:radio-group",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-section",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-section",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-section",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-section",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-section",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:form-section",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-actions",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-actions",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-actions",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-actions",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:form-actions",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:form-actions",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:date-picker",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:date-picker",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:date-picker",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:date-picker",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:date-picker",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:date-picker",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:calendar-grid",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:calendar-grid",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:calendar-grid",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:calendar-grid",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:time-picker",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:time-picker",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:time-picker",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:time-picker",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:time-picker",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:time-picker",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:date-range-picker",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:date-range-picker",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:date-range-picker",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:date-range-picker",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:date-range-picker",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:date-range-picker",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:avatar",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:avatar",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:avatar",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:avatar",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:user-menu",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:user-menu",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:user-menu",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:user-menu",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:user-menu",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:user-menu",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:profile-card",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:profile-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:profile-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:profile-card",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-results",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-results",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-results",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:search-results",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-panel",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-panel",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-panel",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-panel",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-panel",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:filter-panel",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:autocomplete",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:autocomplete",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:autocomplete",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:autocomplete",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:autocomplete",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:autocomplete",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:upload-dropzone",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:upload-dropzone",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:upload-dropzone",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:upload-dropzone",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:upload-dropzone",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:upload-dropzone",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:file-preview",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:file-preview",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:file-preview",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:file-preview",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:upload-progress",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:upload-progress",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:upload-progress",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:upload-progress",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-container",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-container",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-container",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:chart-container",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-tooltip",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-tooltip",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-tooltip",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-tooltip",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-tooltip",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:chart-tooltip",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-legend",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-legend",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-legend",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:chart-legend",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:confirm-dialog",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:confirm-dialog",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:confirm-dialog",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:confirm-dialog",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:confirm-dialog",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:confirm-dialog",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:step-progress",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:step-progress",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:step-progress",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:step-progress",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:wizard-layout",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:wizard-layout",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:wizard-layout",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:wizard-layout",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:wizard-layout",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:wizard-layout",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip-guide",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip-guide",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip-guide",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip-guide",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip-guide",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:tooltip-guide",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-panel",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-panel",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chart-panel",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:chart-panel",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-toolbar",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-toolbar",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:filter-toolbar",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:filter-toolbar",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:workspace-switcher",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:workspace-switcher",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:workspace-switcher",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:workspace-switcher",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:workspace-switcher",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:workspace-switcher",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-panel",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:context-panel",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-panel",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-panel",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-panel",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-panel",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:chat-panel",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:chat-panel",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:message-thread",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:message-thread",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:message-thread",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:message-thread",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:message-thread",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:message-thread",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:message-composer",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:message-composer",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:message-composer",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:message-composer",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:message-composer",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:message-composer",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-drawer",
+      "target": "color:prussian-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-drawer",
+      "target": "color:bronze-gold",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-drawer",
+      "target": "color:ice-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-drawer",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:context-drawer",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:context-drawer",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:prussian-blue",
+      "target": "color:paper",
+      "meta": {
+        "ratio": 13.43,
+        "level": "AAA"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:prussian-blue",
+      "target": "color:ink",
+      "meta": {
+        "ratio": 1.41,
+        "level": "fail"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:bronze-gold",
+      "target": "color:paper",
+      "meta": {
+        "ratio": 4.12,
+        "level": "AA-large"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:bronze-gold",
+      "target": "color:ink",
+      "meta": {
+        "ratio": 4.58,
+        "level": "AA"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:ice-blue",
+      "target": "color:paper",
+      "meta": {
+        "ratio": 1.24,
+        "level": "fail"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:ice-blue",
+      "target": "color:ink",
+      "meta": {
+        "ratio": 15.27,
+        "level": "AAA"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:prussian-blue",
+      "target": "color:bronze-gold",
+      "meta": {
+        "ratio": 3.26,
+        "level": "AA-large"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:prussian-blue",
+      "target": "color:ice-blue",
+      "meta": {
+        "ratio": 10.86,
+        "level": "AAA"
+      }
+    },
+    {
+      "type": "contrast_pair",
+      "source": "color:bronze-gold",
+      "target": "color:ice-blue",
+      "meta": {
+        "ratio": 3.33,
+        "level": "AA-large"
+      }
+    },
+    {
+      "type": "requires",
+      "source": "family:button",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:button",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:button",
+      "target": "a11y:keyboard-nav"
+    },
+    {
+      "type": "requires",
+      "source": "family:data-display",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:data-display",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:feedback",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:feedback",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:input",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:input",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:input",
+      "target": "a11y:keyboard-nav"
+    },
+    {
+      "type": "requires",
+      "source": "family:input",
+      "target": "a11y:label-association"
+    },
+    {
+      "type": "requires",
+      "source": "family:navigation",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:navigation",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:navigation",
+      "target": "a11y:keyboard-nav"
+    },
+    {
+      "type": "requires",
+      "source": "family:overlay",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:overlay",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:overlay",
+      "target": "a11y:keyboard-nav"
+    },
+    {
+      "type": "references_font",
+      "source": "benchmark:shopify-polaris",
+      "target": "font:ibm-plex-mono"
+    },
+    {
+      "type": "references_font",
+      "source": "benchmark:ibm-carbon",
+      "target": "font:ibm-plex-mono"
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:linear",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:apple-hig",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:ibm-carbon",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:ant-design",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:wise",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:vercel",
+      "target": "benchmark:linear",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:vercel",
+      "target": "benchmark:revolut",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:vercel",
+      "target": "benchmark:resend",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:vercel",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:vercel",
+      "target": "benchmark:raycast",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:linear",
+      "target": "benchmark:revolut",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:linear",
+      "target": "benchmark:resend",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:linear",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:linear",
+      "target": "benchmark:raycast",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:linear",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:atlassian",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:slack",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:material-design",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:twilio-paste",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:ibm-carbon",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:ant-design",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:shopify-polaris",
+      "target": "benchmark:airbnb",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:slack",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:uber",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:twilio-paste",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:wise",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:supabase",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:figma",
+      "target": "benchmark:uber",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:figma",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:twilio-paste",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
+      "target": "benchmark:twilio-paste",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:apple-hig",
+      "target": "benchmark:ibm-carbon",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:apple-hig",
+      "target": "benchmark:ant-design",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:apple-hig",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:apple-hig",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:apple-hig",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:spotify",
+      "target": "benchmark:arc-browser",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:uber",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:uber",
+      "target": "benchmark:revolut",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:uber",
+      "target": "benchmark:supabase",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:uber",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:ibm-carbon",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:ant-design",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:ant-design",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:chakra",
+      "target": "benchmark:radix",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:chakra",
+      "target": "benchmark:tailwind",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:radix",
+      "target": "benchmark:tailwind",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:discord",
+      "target": "benchmark:revolut",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:discord",
+      "target": "benchmark:supabase",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:discord",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:discord",
+      "target": "benchmark:arc-browser",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:discord",
+      "target": "benchmark:lemon-squeezy",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:hashicorp-helios",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:hashicorp-helios",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:gitlab-pajamas",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:wise",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:wise",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:revolut",
+      "target": "benchmark:resend",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:revolut",
+      "target": "benchmark:supabase",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:revolut",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:revolut",
+      "target": "benchmark:raycast",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:resend",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:resend",
+      "target": "benchmark:raycast",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:cal-com",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:supabase",
+      "target": "benchmark:planetscale",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:planetscale",
+      "target": "benchmark:raycast",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:arc-browser",
+      "target": "benchmark:lemon-squeezy",
+      "meta": {
+        "jaccard": 0.5
+      }
+    }
+  ],
+  "stats": {
+    "node_count": 233,
+    "edge_count": 749,
+    "nodes_by_type": {
+      "Brand": 1,
+      "Principle": 4,
+      "SpacingToken": 11,
+      "RadiusToken": 6,
+      "ComponentFamily": 6,
+      "ComponentState": 24,
+      "Component": 73,
+      "ProductPrimitive": 16,
+      "ColorPalette": 4,
+      "ColorToken": 25,
+      "FontFamily": 2,
+      "LayoutPattern": 14,
+      "InteractionPattern": 4,
+      "AccessibilityRule": 8,
+      "BenchmarkSystem": 35
+    }
+  }
+}

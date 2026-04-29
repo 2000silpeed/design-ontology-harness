@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from .utils import ensure_dir, write_json
+from .utils import ensure_dir
 
 
 def scaffold_agent_pack(

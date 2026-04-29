@@ -1,0 +1,325 @@
+{
+  "brand_name": "Curator",
+  "system_name": "Curator System",
+  "product_summary": "editorial-warm 톤 editorial/publishing 운영 대시보드 — sidebar-nav · topbar · data-table · kpi-card · filter-chip · curation-queue · editorial-calendar · publishing-pipeline · contributor-roster, warm neutral surface + serif heading + muted accent + reading-first calm chrome, 한국어 1급",
+  "audiences": [
+    "매거진/뉴스룸 에디터 (이슈/피처/오피니언 큐레이션, 피어 리뷰, 발행 스케줄)",
+    "출판사 편집장/편집자 (연간/분기 호 플래닝, 기고자 로스터, 편집 파이프라인)",
+    "Content Studio 운영자 (메일 매거진·블로그 큐레이션, 리딩 애널리틱스)"
+  ],
+  "brand_keywords": [
+    "dashboard",
+    "admin",
+    "console",
+    "editorial",
+    "publishing",
+    "curation",
+    "newsroom",
+    "magazine-admin",
+    "content-studio",
+    "editor-dashboard",
+    "warm",
+    "serif",
+    "calm",
+    "reading-first",
+    "muted"
+  ],
+  "anti_keywords": [
+    "minimal-tech",
+    "bold-confident",
+    "saturated",
+    "playful-pastel",
+    "corporate-conservative",
+    "streetwear",
+    "high-contrast",
+    "neon",
+    "fintech-heavy"
+  ],
+  "tone_of_voice": [
+    "calm",
+    "thoughtful",
+    "editorial",
+    "warm",
+    "measured"
+  ],
+  "visual_keywords": [
+    "warm neutral sidebar",
+    "serif heading pair",
+    "muted editorial accent",
+    "reading-first data table",
+    "calm kpi card",
+    "soft cream surface",
+    "restrained editorial chrome",
+    "muted warm divider",
+    "long-form article preview drawer"
+  ],
+  "interaction_keywords": [
+    "calm row hover",
+    "gentle filter chip toggle",
+    "slow fade drawer",
+    "warm focus ring",
+    "muted mention chip",
+    "soft toast",
+    "restrained sort indicator",
+    "editorial reading drawer transition",
+    "curation queue drag",
+    "schedule cell focus glow"
+  ],
+  "platforms": [
+    "web",
+    "desktop-web",
+    "tablet-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "sidebar-nav",
+    "topbar",
+    "workspace-header",
+    "breadcrumb",
+    "data-table",
+    "column-header",
+    "row-actions",
+    "pagination",
+    "filter-sidebar",
+    "filter-chip",
+    "sort-dropdown",
+    "search-field",
+    "kpi-card",
+    "stat-card",
+    "insight-card",
+    "activity-card",
+    "section-header",
+    "tag",
+    "status-badge",
+    "chip",
+    "comment-thread",
+    "avatar",
+    "user-menu",
+    "profile-card",
+    "date-picker",
+    "modal-dialog",
+    "toast",
+    "empty-state",
+    "primary-button",
+    "secondary-button",
+    "ghost-button",
+    "icon-button",
+    "curation-queue",
+    "editorial-calendar",
+    "draft-status-pill",
+    "publishing-pipeline",
+    "issue-planner",
+    "contributor-roster",
+    "article-preview-pane",
+    "editorial-analytics-kpi",
+    "reading-analytics-kpi",
+    "archive-shelf",
+    "tag-taxonomy-manager"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "design token",
+      "table",
+      "dashboard",
+      "editor",
+      "article",
+      "editorial",
+      "publishing"
+    ],
+    "avoid_sources_containing": [
+      "streetwear",
+      "pastel-only",
+      "fintech-only",
+      "bold-magazine-only",
+      "saturated-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Deep Violets",
+      "Pastel Yellows",
+      "Pastel Reds"
+    ],
+    "palette_roles": {
+      "primary": "Aubergine",
+      "accent": "Naples Yellow",
+      "surface_tint": "Blush"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "warm",
+      "contrast": "balanced",
+      "diversity": "narrow",
+      "surface_style": "grounded",
+      "prefer_moods": [
+        "차분",
+        "따뜻함",
+        "사려 깊음",
+        "editorial",
+        "고요함",
+        "중후"
+      ],
+      "avoid_moods": [
+        "대담",
+        "강렬",
+        "미니멀",
+        "차가움",
+        "고대비",
+        "네온"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Aubergine #614051 primary — 가지 껍질 유래 deep warm violet-brown, boutique newsroom / 출판사 editorial admin chrome 의 masthead · sidebar · primary CTA, signal-desk Ochre (#CC7722) / quill Marsala (#964F4C) 와 HEX 겹침 0, purple-forward editorial 정체성",
+      "Naples Yellow #FADA5E accent — 르네상스 회화 안료 유래 creamy warm yellow, editorial-calendar schedule highlight / kpi-card trend indicator / draft-status-pill 강조, quill Flax (#EEDC82) 와 다른 deeper saturated 변형",
+      "Blush #F9C0C4 surface_tint — 홍조 연상 연한 pink cream, workspace surface / article-preview-pane drawer 배경 / filter-chip resting state, signal-desk Wheat (#F5DEB3) / drop Buttercream (#F3E5AB) / colorfit 등과 완전히 다른 pastel red 계열",
+      "light mode 가 기본 — editorial 큐레이션 대시보드 관례 (원고 드래프트 + reading 톤), dark 옵션 제공 (tuned Aubergine deep surface + Naples Yellow muted + Blush desaturated)",
+      "기존 14종 프리셋 HEX 와 겹침 0 — Aubergine/Naples Yellow/Blush 조합",
+      "editorial-warm 는 document-content (signal-desk Ochre/Terracotta/Wheat) + commerce (colorfit) + conversation-copilot (quill Marsala/Moss/Flax) 3종에 이미 등장 — curator 는 dashboard 첫 editorial-warm 이므로 purple-forward palette 로 편집장 / 출판사 / 매거진 운영 색 스토리 확립"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "EB Garamond",
+      "weights": [
+        400,
+        600,
+        700
+      ],
+      "notes": "classic book-feel editorial serif heading — masthead / issue-header / section-header / article-preview-pane heading, Lora (signal-desk) / Source Serif Pro (quill) / Playfair Display (broadside) 와 차별화, 출판 editorial 전통 서체"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "dashboard 본문 공용 — data-table cell / kpi-card label / filter-chip / comment-thread / editorial-analytics, line-height 1.5–1.6 (dashboard dense 유지)"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "notes": "editorial-analytics-kpi 숫자 / reading-analytics-kpi 숫자 / editorial-calendar 날짜 / draft-status-pill timestamp / row-actions id — tabular-nums 영문 고정"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한글 1급 — data-table cell / kpi-card label / filter-chip / curation-queue row / contributor-roster cell line-height 1.5–1.6 keep-all (dashboard dense 유지), article-preview-pane drawer 진입 시 line-height 1.6–1.7 (editorial long-form reading), heading 은 Pretendard 700 letter-spacing 0"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "ghost editorial dashboard curation",
+      "substack writer dashboard publishing",
+      "medium creator dashboard editorial analytics",
+      "notion editorial calendar publishing pipeline",
+      "readwise reading analytics dashboard",
+      "buttondown newsletter editorial dashboard"
+    ],
+    "sources": [],
+    "preferred_count": 6,
+    "weights": {
+      "layout": 0.35,
+      "component_shape": 0.25,
+      "color_balance": 0.15,
+      "typography_mood": 0.15,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "editorial dashboard home — warm neutral sidebar-nav + topbar + kpi-card row + activity-card + curation-queue preview",
+      "curation queue with filter-sidebar + sort-dropdown + data-table + draft-status-pill + contributor avatar",
+      "editorial calendar grid with schedule cells + issue-planner preview + publishing-pipeline stage entry",
+      "contributor roster data-table + profile-card drawer + tag-taxonomy-manager",
+      "editorial analytics kpi-card + reading-analytics trend + archive-shelf filter"
+    ],
+    "avoid_patterns": [
+      "saturated commerce hero",
+      "bold magazine cover",
+      "fintech navy dashboard (corporate-trust dense)",
+      "neon dark developer dashboard (minimal-tech)",
+      "playful pastel feed",
+      "streetwear drop banner"
+    ],
+    "notes": [
+      "Ghost / Substack / Medium / Readwise / Notion / Buttondown 계열 editorial/publishing 큐레이션 dashboard 참조",
+      "editorial-warm 톤: warm neutral sidebar · serif heading pair · muted editorial accent · reading-first data table · calm kpi card · soft cream surface · restrained editorial chrome · long-form article preview drawer",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://ghost.org",
+      "kind": "design-system",
+      "title": "Ghost",
+      "notes": "editorial publishing dashboard references"
+    },
+    {
+      "url": "https://substack.com",
+      "kind": "visual-reference",
+      "title": "Substack Writer",
+      "notes": "newsletter writer dashboard references"
+    },
+    {
+      "url": "https://medium.com",
+      "kind": "visual-reference",
+      "title": "Medium",
+      "notes": "editorial analytics + curation references"
+    },
+    {
+      "url": "https://readwise.io",
+      "kind": "visual-reference",
+      "title": "Readwise",
+      "notes": "reading analytics + archive references"
+    },
+    {
+      "url": "https://www.notion.so",
+      "kind": "design-system",
+      "title": "Notion Editorial",
+      "notes": "editorial calendar + publishing pipeline references"
+    },
+    {
+      "url": "https://buttondown.com",
+      "kind": "visual-reference",
+      "title": "Buttondown",
+      "notes": "newsletter editorial dashboard references"
+    }
+  ]
+}

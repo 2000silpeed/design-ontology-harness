@@ -1,0 +1,38 @@
+{
+  "preset_id": "commerce--playful-soft",
+  "source_project": "orchard",
+  "seeds": [
+    {
+      "url": "https://drinkolipop.com",
+      "kind": "visual-reference",
+      "title": "Olipop",
+      "notes": "D2C 프리바이오틱 소다 — warm pastel 상품 그리드 + rounded product card + gentle CTA, playful-soft commerce 핵심 참조"
+    },
+    {
+      "url": "https://magicspoon.com",
+      "kind": "visual-reference",
+      "title": "Magic Spoon",
+      "notes": "D2C 시리얼 — rounded product detail + variant chip + 친근 copy + emoji-friendly review 섹션"
+    },
+    {
+      "url": "https://drinkpoppi.com",
+      "kind": "visual-reference",
+      "title": "Poppi",
+      "notes": "D2C 프리바이오틱 소다 — warm pastel packaging + rounded subscription toggle + gentle quantity stepper"
+    },
+    {
+      "url": "https://graza.co",
+      "kind": "visual-reference",
+      "title": "Graza",
+      "notes": "craft D2C olive oil — warm pastel commerce card + friendly product copy + soft checkout flow"
+    },
+    {
+      "url": "https://www.caraway.com",
+      "kind": "visual-reference",
+      "title": "Caraway",
+      "notes": "warm pastel cookware craft D2C — rounded product grid + soft variant chip + gentle add-to-cart"
+    }
+  ],
+  "pretendard_font_license": "SIL OFL 1.1",
+  "created_at": "2026-04-21T12:34:59Z"
+}

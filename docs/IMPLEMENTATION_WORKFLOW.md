@@ -108,7 +108,7 @@ uv run design-ontology analyze-visuals \
 - `build/visuals/layout_cues.json`
 - `build/visuals/component_style_hints.json`
 
-세부 운영 규칙과 manifest 구조는 [docs/PINTEREST_ASSISTED_WORKFLOW.md](/Users/sungwoon/Documents/designSystem/docs/PINTEREST_ASSISTED_WORKFLOW.md)를 참고합니다.
+세부 운영 규칙과 manifest 구조는 [docs/PINTEREST_ASSISTED_WORKFLOW.md](./PINTEREST_ASSISTED_WORKFLOW.md)를 참고합니다.
 
 ### 5. 프로젝트 산출물 생성
 

@@ -1,0 +1,9 @@
+{
+  "valid": true,
+  "errors": [],
+  "warnings": [
+    "[pitfall#3-rebrand] Grenadine vs Scarlet (red): lightness diff 7, saturation diff 32 — possible rebrand remnant",
+    "[pitfall#3-rebrand] Grenadine vs Pure Red (red): lightness diff 7, saturation diff 32 — possible rebrand remnant",
+    "visual_reference.sources is empty"
+  ]
+}

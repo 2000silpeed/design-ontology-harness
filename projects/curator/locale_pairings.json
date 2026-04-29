@@ -1,0 +1,8 @@
+{
+  "ko": {
+    "heading_font": "Pretendard",
+    "body_font": "Pretendard",
+    "mono_font": "JetBrains Mono",
+    "notes": "editorial-warm 운영/큐레이션 대시보드 — 한국어 data-table cell / kpi-card 라벨 / filter-chip / curation-queue row / contributor-roster cell keep-all line-height 1.5–1.6 (dashboard dense 유지), workspace-header / section-header 는 Pretendard 700 letter-spacing 0 line-height 1.4–1.5, editorial-analytics-kpi / reading-analytics-kpi / editorial-calendar date / row id / issue-number / pagination 은 mono 영문 고정 tabular-nums, 한글 article-preview-pane drawer 진입 시 line-height 1.6–1.7 (editorial long-form reading)"
+  }
+}

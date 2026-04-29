@@ -15,7 +15,24 @@ from .models import DocumentRecord, ReferenceLink
 from .pinterest_capture import capture_pinterest_candidates
 from .scaffold import load_project, resolve_kb_dir, scaffold_project
 from .pinterest_assist import build_pinterest_assist_bundle
-from .spec_analyzer import analyze_spec, analyze_spec_file, build_component_list, detected_to_primitives
+from .preset_builder import BuildRequest, PRESETS_ROOT, build_preset
+from .preset_matcher.engine import MatchQuery, format_results, match_presets
+from .preset_ops import (
+    build_sources_for_all,
+    build_sources_json,
+    format_deprecate_report,
+    format_promote_report,
+    format_prune_report,
+    format_rebuild_report,
+    format_sources_result,
+    deprecate_preset,
+    find_prune_eligible,
+    promote_preset,
+    prune_preset,
+    rebuild_all,
+)
+from .preset_validator import format_report as format_preset_report, validate_all
+from .spec_analyzer import analyze_spec_file, build_component_list, detected_to_primitives
 from .synthesis import build_blueprint, load_brand_profile
 from .utils import ensure_dir, write_json, write_jsonl
 from .visual_queries import generate_visual_queries
@@ -154,6 +171,288 @@ def build_parser() -> argparse.ArgumentParser:
     bench_parser.add_argument("--brand-profile", default=None, help="Optional brand profile JSON to auto-extract keywords")
     bench_parser.add_argument("--output-dir", default=None, help="Optional directory to save benchmark report")
 
+    build_preset_parser = subparsers.add_parser(
+        "build-preset",
+        help="Promote a project's build/system output into presets/<id>/ with manifest + preview",
+    )
+    build_preset_parser.add_argument("--project", required=True, help="Path to project directory (e.g. projects/signal-desk)")
+    build_preset_parser.add_argument("--preset-id", required=True, help="{app_mode}--{brand_tone}")
+    build_preset_parser.add_argument(
+        "--color-modes",
+        default="light,dark",
+        help="Comma-separated: subset of light,dark",
+    )
+    build_preset_parser.add_argument("--default-color-mode", default="light", choices=["light", "dark"])
+    build_preset_parser.add_argument("--tags", default="", help="Comma-separated tags")
+    build_preset_parser.add_argument("--owner", required=True, help="Preset owner (maintainer handle)")
+    build_preset_parser.add_argument("--tier", default="P0", choices=["P0", "P1", "P2", "P3"])
+    build_preset_parser.add_argument("--description", default=None)
+    build_preset_parser.add_argument("--source-commit", default=None)
+    build_preset_parser.add_argument("--locale-pairings", default=None, help="Path to a JSON file with locale_pairings")
+
+    validate_preset_parser = subparsers.add_parser(
+        "validate-presets",
+        help="Validate presets/ against version contract + structural invariants",
+    )
+    validate_preset_parser.add_argument("--presets-dir", default=None, help="Override presets/ root")
+    validate_preset_parser.add_argument(
+        "--include-preview-lint",
+        action="store_true",
+        help="Also run preview.md linter (Phase 12A-2). Errors join exit-code gate.",
+    )
+
+    lint_preview_parser = subparsers.add_parser(
+        "lint-previews",
+        help="Lint preset preview.md files for PLAN §9.3 template compliance",
+    )
+    lint_preview_parser.add_argument("--presets-dir", default=None, help="Override presets/ root")
+    lint_preview_parser.add_argument(
+        "--preset-id",
+        default=None,
+        help="Lint a single preset (default: all presets under presets/)",
+    )
+
+    rebuild_parser = subparsers.add_parser(
+        "rebuild-all-presets",
+        help="Walk matrix.json and rebuild every preset from its source_project",
+    )
+    rebuild_parser.add_argument("--projects-root", default="projects", help="Root directory containing source projects")
+
+    match_parser = subparsers.add_parser(
+        "match-preset",
+        help="Rank presets against user signals (question answers or free text)",
+    )
+    match_parser.add_argument("--app-mode", default=None, help="One of 8 app_modes (dashboard, ...)")
+    match_parser.add_argument("--brand-tone", default=None, help="One of 5 brand_tones (minimal-tech, ...)")
+    match_parser.add_argument(
+        "--color-mode",
+        default=None,
+        choices=["light", "dark", "both", None],
+        help="Requested color mode (light, dark, both)",
+    )
+    match_parser.add_argument("--tags", default="", help="Comma-separated tags (ko, saas, ai, ...)")
+    match_parser.add_argument("--stack", default=None, help="Optional target stack (e.g. nextjs-tailwind-shadcn)")
+    match_parser.add_argument("--locale", default=None, help="Optional locale (ko, en)")
+    match_parser.add_argument("--free-text", default=None, help="Natural-language description")
+    match_parser.add_argument("--top", type=int, default=3, help="Return top-N results (default 3)")
+    match_parser.add_argument("--json", action="store_true", help="Emit JSON for scripting")
+    match_parser.add_argument(
+        "--include-deprecated",
+        action="store_true",
+        help="Include deprecated presets in results (default: hidden)",
+    )
+
+    install_parser = subparsers.add_parser(
+        "install-preset",
+        help="Render a preset via an adapter into a target repo + record INSTALLED.json",
+    )
+    install_parser.add_argument("--preset-id", required=True)
+    install_parser.add_argument("--target-repo", required=True, help="Target repo directory")
+    install_parser.add_argument(
+        "--adapter",
+        default="nextjs-tailwind-shadcn",
+        help="Adapter id (default: nextjs-tailwind-shadcn)",
+    )
+    install_parser.add_argument("--color-mode", default=None, help="light | dark (defaults to preset default_color_mode)")
+    install_parser.add_argument("--locale", default="en", help="Locale for font pairing (ko/en)")
+    install_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Re-apply even if content_hash matches existing INSTALLED.json",
+    )
+    install_parser.add_argument("--json", action="store_true", help="Emit JSON summary")
+
+    eval_parser = subparsers.add_parser(
+        "eval-matcher",
+        help="Run labeled queries and report top-1 accuracy + confusion matrix",
+    )
+    eval_parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Also list every miss (expected vs predicted)",
+    )
+    eval_parser.add_argument(
+        "--threshold",
+        type=float,
+        default=0.85,
+        help="Minimum top-1 accuracy; exit non-zero if below (default 0.85)",
+    )
+
+    health_parser = subparsers.add_parser(
+        "catalog-health",
+        help="Aggregate catalog metrics (tier coverage, drift, deprecation candidates)",
+    )
+    health_parser.add_argument(
+        "--presets-dir",
+        default=None,
+        help="Override presets/ root (default: harness repo presets/)",
+    )
+    health_parser.add_argument(
+        "--metrics-dir",
+        default=None,
+        help="Override metrics root (default: <presets-dir>/.metrics)",
+    )
+    health_parser.add_argument(
+        "--snapshot-fixture",
+        default=None,
+        help="Override snapshot fixture path (default: tests/fixtures/preset_snapshots.json)",
+    )
+    health_parser.add_argument(
+        "--output",
+        default=None,
+        help="Override CATALOG_HEALTH.md output path (default: <presets-dir>/CATALOG_HEALTH.md). Use '-' to skip writing.",
+    )
+    health_parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Emit full report as JSON to stdout instead of summary.",
+    )
+
+    promote_parser = subparsers.add_parser(
+        "promote-preset",
+        help="Bump a preset's tier after running 5 lifecycle gates (Phase 15-2)",
+    )
+    promote_parser.add_argument("preset_id", help="Preset id to promote")
+    promote_parser.add_argument(
+        "--target",
+        default=None,
+        choices=["P0", "P1", "P2"],
+        help="Target tier (default: one step up from current).",
+    )
+    promote_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Run all gates but do not mutate manifest/matrix",
+    )
+    promote_parser.add_argument(
+        "--projects-root",
+        default="projects",
+        help="Root directory for source projects (reserved for future rebuild integration)",
+    )
+    promote_parser.add_argument(
+        "--presets-dir",
+        default=None,
+        help="Override presets/ root",
+    )
+
+    deprecate_parser = subparsers.add_parser(
+        "deprecate-preset",
+        help="Mark a preset deprecated on its manifest (Phase 15-3)",
+    )
+    deprecate_parser.add_argument("preset_id", help="Preset id to deprecate")
+    deprecate_parser.add_argument(
+        "--reason",
+        required=True,
+        help=(
+            "One of zero_hits | version_lag | snapshot_drift | owner_abandoned | manual, "
+            "or 'manual:<free text>'"
+        ),
+    )
+    deprecate_parser.add_argument(
+        "--replacement",
+        default=None,
+        help="Optional replacement preset_id (surfaced in matcher rationale)",
+    )
+    deprecate_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Allow updating an already-deprecated preset's reason/replacement",
+    )
+    deprecate_parser.add_argument(
+        "--presets-dir",
+        default=None,
+        help="Override presets/ root",
+    )
+
+    prune_parser = subparsers.add_parser(
+        "prune-preset",
+        help="Physically remove a deprecated preset after safety gates (Phase 15-4)",
+    )
+    prune_parser.add_argument(
+        "preset_id",
+        nargs="?",
+        default=None,
+        help="Preset id to prune (omit with --all)",
+    )
+    prune_parser.add_argument(
+        "--confirm",
+        action="store_true",
+        help="Required for actual deletion (pruning is irreversible)",
+    )
+    prune_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Run gates only, do not delete anything (default when --confirm absent)",
+    )
+    prune_parser.add_argument(
+        "--all",
+        dest="all_eligible",
+        action="store_true",
+        help="Prune every catalog_health.prune_eligible preset (dry-run by default)",
+    )
+    prune_parser.add_argument(
+        "--min-age-days",
+        type=int,
+        default=None,
+        help="Override minimum deprecated_at age (days). Default 90.",
+    )
+    prune_parser.add_argument(
+        "--presets-dir",
+        default=None,
+        help="Override presets/ root",
+    )
+    prune_parser.add_argument(
+        "--metrics-dir",
+        default=None,
+        help="Override metrics root (default: <presets-dir>/.metrics)",
+    )
+    prune_parser.add_argument(
+        "--snapshot-fixture",
+        default=None,
+        help="Override snapshot fixture path",
+    )
+
+    sources_parser = subparsers.add_parser(
+        "build-sources",
+        help="Generate presets/<id>/sources.json from project KB seeds (Phase 15-9)",
+    )
+    sources_parser.add_argument(
+        "--preset-id",
+        default=None,
+        help="Single preset id. Omit together with --all to process every catalog entry.",
+    )
+    sources_parser.add_argument(
+        "--all",
+        dest="all_presets",
+        action="store_true",
+        help="Build sources.json for every preset in matrix.json",
+    )
+    sources_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite existing sources.json",
+    )
+    sources_parser.add_argument(
+        "--presets-dir",
+        default=None,
+        help="Override presets/ root",
+    )
+    sources_parser.add_argument(
+        "--projects-root",
+        default="projects",
+        help="Root directory for source projects",
+    )
+
+    customize_parser = subparsers.add_parser(
+        "customize-preset",
+        help="Copy a preset under projects/<name>/ for brand_profile editing + re-synthesis",
+    )
+    customize_parser.add_argument("--preset-id", required=True)
+    customize_parser.add_argument("--project-name", default=None, help="Directory name under projects/ (default: derived from preset-id)")
+    customize_parser.add_argument("--projects-root", default="projects", help="Root for project copies")
+    customize_parser.add_argument("--force", action="store_true", help="Overwrite existing projects/<name>/")
+    customize_parser.add_argument("--json", action="store_true", help="Emit JSON summary")
+
     return parser
 
 
@@ -161,6 +460,305 @@ def main() -> None:
     args = build_parser().parse_args()
     raw_output = getattr(args, "output_dir", None)
     output_dir = ensure_dir(Path(raw_output)) if raw_output else None
+
+    if args.command == "build-preset":
+        color_modes = [m.strip() for m in args.color_modes.split(",") if m.strip()]
+        tags = [t.strip() for t in args.tags.split(",") if t.strip()]
+        locale_pairings = None
+        if args.locale_pairings:
+            locale_pairings = json.loads(Path(args.locale_pairings).read_text(encoding="utf-8"))
+        request = BuildRequest(
+            project_dir=Path(args.project),
+            preset_id=args.preset_id,
+            color_modes=color_modes,
+            default_color_mode=args.default_color_mode,
+            tags=tags,
+            owner=args.owner,
+            tier=args.tier,
+            description=args.description,
+            source_commit=args.source_commit,
+            locale_pairings=locale_pairings,
+        )
+        manifest = build_preset(request)
+        print(f"[build-preset] 프리셋 빌드 완료: presets/{manifest['id']}/")
+        print(f"  -> preset_api_version={manifest['preset_api_version']}")
+        print(f"  -> content_hash={manifest['content_hash']}")
+        return
+
+    if args.command == "validate-presets":
+        presets_dir = Path(args.presets_dir) if args.presets_dir else None
+        report = validate_all(presets_dir)
+        print(format_preset_report(report))
+        preview_ok = True
+        if getattr(args, "include_preview_lint", False):
+            from .preview_linter import format_reports as format_preview_reports, lint_all_previews
+
+            root = presets_dir or PRESETS_ROOT
+            preview_reports = lint_all_previews(root)
+            print()
+            print("Preview lint:")
+            print(format_preview_reports(preview_reports))
+            preview_ok = all(r.ok for r in preview_reports)
+        if not report.ok or not preview_ok:
+            raise SystemExit(1)
+        return
+
+    if args.command == "lint-previews":
+        from .preview_linter import (
+            format_report as format_preview_report,
+            format_reports as format_preview_reports,
+            lint_all_previews,
+            lint_preview,
+        )
+
+        root = Path(args.presets_dir) if args.presets_dir else PRESETS_ROOT
+        if args.preset_id:
+            preset_dir = root / args.preset_id
+            if not preset_dir.is_dir():
+                raise SystemExit(f"preset not found: {preset_dir}")
+            preview_report = lint_preview(preset_dir)
+            print(format_preview_report(preview_report))
+            if not preview_report.ok:
+                raise SystemExit(1)
+            return
+        reports = lint_all_previews(root)
+        print(format_preview_reports(reports))
+        if any(not r.ok for r in reports):
+            raise SystemExit(1)
+        return
+
+    if args.command == "rebuild-all-presets":
+        projects_root = Path(args.projects_root)
+        if not projects_root.is_dir():
+            raise SystemExit(f"projects-root not a directory: {projects_root}")
+        report = rebuild_all(projects_root)
+        print(format_rebuild_report(report))
+        if not report.ok:
+            raise SystemExit(1)
+        return
+
+    if args.command == "match-preset":
+        tags = [t.strip() for t in (args.tags or "").split(",") if t.strip()]
+        query = MatchQuery(
+            app_mode=args.app_mode,
+            brand_tone=args.brand_tone,
+            color_mode=args.color_mode,
+            tags=tags,
+            stack=args.stack,
+            locale=args.locale,
+            free_text=args.free_text,
+        )
+        results = match_presets(
+            query,
+            top_k=args.top,
+            include_deprecated=bool(getattr(args, "include_deprecated", False)),
+        )
+        if args.json:
+            payload = {
+                "query": {
+                    "app_mode": query.app_mode,
+                    "brand_tone": query.brand_tone,
+                    "color_mode": query.color_mode,
+                    "tags": query.tags,
+                    "stack": query.stack,
+                    "locale": query.locale,
+                    "free_text": query.free_text,
+                },
+                "results": [r.to_dict() for r in results],
+                "fallback": bool(results) and all(r.bucket == "Low" for r in results),
+            }
+            print(json.dumps(payload, ensure_ascii=False, indent=2))
+        else:
+            print(format_results(results))
+        return
+
+    if args.command == "install-preset":
+        from .preset_installer import InstallRequest, install_preset
+
+        request = InstallRequest(
+            preset_id=args.preset_id,
+            target_repo=Path(args.target_repo),
+            adapter_id=args.adapter,
+            color_mode=args.color_mode,
+            locale=args.locale,
+            force=args.force,
+        )
+        outcome = install_preset(request)
+        if args.json:
+            print(json.dumps(outcome.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(outcome.format_human())
+        return
+
+    if args.command == "eval-matcher":
+        from .preset_matcher.eval import format_eval, run_eval
+
+        result = run_eval()
+        print(format_eval(result, verbose=args.verbose))
+        if result.accuracy < args.threshold:
+            raise SystemExit(1)
+        return
+
+    if args.command == "catalog-health":
+        from .catalog_health import compute_health, format_markdown, format_summary
+
+        presets_root = Path(args.presets_dir) if args.presets_dir else None
+        metrics_dir = Path(args.metrics_dir) if args.metrics_dir else None
+        snapshot_fixture = Path(args.snapshot_fixture) if args.snapshot_fixture else None
+        report = compute_health(
+            presets_root=presets_root,
+            metrics_dir=metrics_dir,
+            snapshot_fixture_path=snapshot_fixture,
+        )
+        if args.json:
+            print(json.dumps(report, ensure_ascii=False, indent=2))
+        else:
+            print(format_summary(report))
+
+        if args.output != "-":
+            if args.output:
+                output_path = Path(args.output)
+            else:
+                root = presets_root or PRESETS_ROOT
+                output_path = root / "CATALOG_HEALTH.md"
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            output_path.write_text(format_markdown(report), encoding="utf-8")
+            if not args.json:
+                print(f"  -> {output_path}")
+        return
+
+    if args.command == "promote-preset":
+        presets_dir = Path(args.presets_dir) if args.presets_dir else None
+        report = promote_preset(
+            args.preset_id,
+            target_tier=args.target,
+            dry_run=args.dry_run,
+            projects_root=Path(args.projects_root) if args.projects_root else None,
+            presets_root=presets_dir,
+        )
+        print(format_promote_report(report))
+        if not report.ok:
+            raise SystemExit(1)
+        return
+
+    if args.command == "deprecate-preset":
+        presets_dir = Path(args.presets_dir) if args.presets_dir else None
+        report = deprecate_preset(
+            args.preset_id,
+            reason=args.reason,
+            replacement=args.replacement,
+            force=args.force,
+            presets_root=presets_dir,
+        )
+        print(format_deprecate_report(report))
+        if not report.ok:
+            raise SystemExit(1)
+        return
+
+    if args.command == "prune-preset":
+        presets_dir = Path(args.presets_dir) if args.presets_dir else None
+        metrics_dir = Path(args.metrics_dir) if args.metrics_dir else None
+        snapshot_fixture = Path(args.snapshot_fixture) if args.snapshot_fixture else None
+        kwargs: dict = {
+            "presets_root": presets_dir,
+            "metrics_dir": metrics_dir,
+            "snapshot_fixture_path": snapshot_fixture,
+        }
+        if args.min_age_days is not None:
+            kwargs["min_deprecated_age_days"] = args.min_age_days
+
+        dry_run = args.dry_run or not args.confirm
+        targets: list[str]
+        if args.all_eligible:
+            find_kwargs: dict = {
+                "presets_root": presets_dir,
+                "metrics_dir": metrics_dir,
+            }
+            if args.min_age_days is not None:
+                find_kwargs["min_deprecated_age_days"] = args.min_age_days
+            targets = find_prune_eligible(**find_kwargs)
+            if not targets:
+                print("[prune-preset] 조건을 충족하는 프리셋 없음 — 종료")
+                return
+            print(f"[prune-preset] --all 대상 {len(targets)}건: {', '.join(targets)}")
+        elif args.preset_id:
+            targets = [args.preset_id]
+        else:
+            raise SystemExit("preset_id 또는 --all 플래그가 필요합니다.")
+
+        any_failed = False
+        for preset_id in targets:
+            report = prune_preset(
+                preset_id,
+                confirm=args.confirm,
+                dry_run=dry_run,
+                **kwargs,
+            )
+            print(format_prune_report(report))
+            if not report.ok:
+                any_failed = True
+        if any_failed:
+            raise SystemExit(1)
+        return
+
+    if args.command == "build-sources":
+        presets_dir = Path(args.presets_dir) if args.presets_dir else None
+        projects_root = Path(args.projects_root)
+        if args.all_presets:
+            results = build_sources_for_all(
+                presets_root=presets_dir,
+                projects_root=projects_root,
+                force=args.force,
+            )
+        elif args.preset_id:
+            results = [
+                build_sources_json(
+                    args.preset_id,
+                    presets_root=presets_dir,
+                    projects_root=projects_root,
+                    force=args.force,
+                )
+            ]
+        else:
+            raise SystemExit("--preset-id 또는 --all 플래그가 필요합니다.")
+        written = 0
+        skipped = 0
+        warned = 0
+        errored = 0
+        for result in results:
+            print(format_sources_result(result))
+            if result.written_path:
+                written += 1
+            if result.skipped:
+                skipped += 1
+            if result.warnings:
+                warned += 1
+            if result.reason and not result.skipped:
+                errored += 1
+        print(
+            f"\n[build-sources] 요약: {len(results)}종 처리 / "
+            f"작성 {written}종 · skip {skipped}종 · warn {warned}종 · error {errored}종"
+        )
+        if errored:
+            raise SystemExit(1)
+        return
+
+    if args.command == "customize-preset":
+        from .customize_ops import CustomizeRequest, copy_preset_for_customization
+
+        outcome = copy_preset_for_customization(
+            CustomizeRequest(
+                preset_id=args.preset_id,
+                project_name=args.project_name,
+                projects_root=Path(args.projects_root),
+                force=args.force,
+            )
+        )
+        if args.json:
+            print(json.dumps(outcome.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(outcome.format_human())
+        return
 
     if args.command == "benchmark":
         keywords = list(args.keywords)
@@ -265,7 +863,7 @@ def main() -> None:
             documents=documents,
         )
         write_component_specs(output_dir, specs_data)
-        print(f"[build-components] 컴포넌트 스펙 생성 완료:")
+        print("[build-components] 컴포넌트 스펙 생성 완료:")
         print(f"  -> {output_dir}/components/component_specs.md")
         print(f"  -> {output_dir}/components/component_specs.json")
         return
@@ -304,7 +902,7 @@ def main() -> None:
             f"surface {(motifs.get('surface_style') or {}).get('value', 'n/a')} | "
             f"layout {top_layout}"
         )
-        print(f"  -> visual_reference_report.json, visual_motifs.json, layout_cues.json 저장")
+        print("  -> visual_reference_report.json, visual_motifs.json, layout_cues.json 저장")
         if issues:
             print("  -> 이슈:")
             for issue in issues[:5]:
@@ -563,7 +1161,7 @@ def main() -> None:
             force=args.force,
         )
         print(f"[init] 프로젝트 생성 완료: {result['project_dir']}")
-        print(f"  -> brand_profile.json 을 열어 브랜드 정보를 입력하세요.")
+        print("  -> brand_profile.json 을 열어 브랜드 정보를 입력하세요.")
         return
 
     if args.command == "init-agent-pack":
@@ -626,14 +1224,14 @@ def main() -> None:
                     f"타이포 {typo_info.get('scale_entries', 0)}개"
                 )
         else:
-            print(f"  CSS 추출 (KB): 없음 — KB를 재빌드하면 자동 수집됩니다")
+            print("  CSS 추출 (KB): 없음 — KB를 재빌드하면 자동 수집됩니다")
         print(f"  폰트 결정: {', '.join([role for role in ['heading', 'body', 'mono'] if brand_profile.get('_resolved_font_system', {}).get(role)])}")
         color_ref = brand_profile.get('_resolved_color_reference')
         if color_ref:
             active_roles = color_ref.get('palette_roles', {})
             print(f"  색상 결정: {len(active_roles)}개 role 활성화")
         else:
-            print(f"  색상 결정: 실행 안 됨 (brand_profile.color_reference가 설정되지 않음)")
+            print("  색상 결정: 실행 안 됨 (brand_profile.color_reference가 설정되지 않음)")
         visual_ref = brand_profile.get('_resolved_visual_reference')
         if visual_ref:
             coverage = visual_ref.get("coverage", {})
@@ -694,7 +1292,7 @@ def main() -> None:
 
         print(f"[run-project] 시스템 산출물 생성 완료: {output_dir}/blueprint/")
         print(f"  -> 레퍼런스: {len(references)}개 | 문서: {len(documents)}개")
-        print(f"  -> system_spec.md 를 확인하세요.")
+        print("  -> system_spec.md 를 확인하세요.")
         return
 
     import httpx
@@ -782,7 +1380,7 @@ def _warn_placeholder_profile(profile: dict) -> None:
                 break
     if found:
         print(f"[warning] brand_profile.json에 아직 기본값이 남아 있는 항목: {', '.join(found)}")
-        print(f"  -> 실제 브랜드 정보를 입력해야 의미 있는 산출물이 나옵니다.")
+        print("  -> 실제 브랜드 정보를 입력해야 의미 있는 산출물이 나옵니다.")
 
 
 def _resolve_brand_profile_target(

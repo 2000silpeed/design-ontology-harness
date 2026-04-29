@@ -1,0 +1,38 @@
+{
+  "preset_id": "conversation-copilot--corporate-trust",
+  "source_project": "mercer",
+  "seeds": [
+    {
+      "url": "https://openai.com/chatgpt/enterprise",
+      "kind": "design-system",
+      "title": "ChatGPT Enterprise",
+      "notes": "enterprise AI copilot — workspace / thread / compliance / admin console 참조"
+    },
+    {
+      "url": "https://www.anthropic.com/enterprise",
+      "kind": "design-system",
+      "title": "Anthropic Claude for Enterprise",
+      "notes": "enterprise AI copilot — compliance / admin / SSO / retention 가이드 참조"
+    },
+    {
+      "url": "https://stripe.com/docs/dialog",
+      "kind": "reference-docs",
+      "title": "Stripe Dialog",
+      "notes": "enterprise 대화 UI — compliance-friendly chat + 규제 맥락 artifact 참조"
+    },
+    {
+      "url": "https://www.salesforce.com/products/einstein/overview",
+      "kind": "design-system",
+      "title": "Salesforce Einstein",
+      "notes": "CRM enterprise AI assistant — audit-trail / policy-check / reviewer handoff 참조"
+    },
+    {
+      "url": "https://www.intercom.com/fin",
+      "kind": "design-system",
+      "title": "Intercom Fin",
+      "notes": "enterprise customer support AI — citation footnote / source reference / compliance-artifact 참조"
+    }
+  ],
+  "pretendard_font_license": "SIL OFL 1.1",
+  "created_at": "2026-04-21T12:34:59Z"
+}

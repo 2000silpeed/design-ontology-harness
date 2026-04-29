@@ -1,0 +1,1004 @@
+{
+  "naming": {
+    "core": "{category}.{role}.{scale}",
+    "semantic": "{category}.{intent}.{state}",
+    "component": "{component}.{slot}.{property}",
+    "rule": "네이밍 패턴만 정의하고 구체적 토큰명은 실제 컴포넌트·역할에서 도출 — 임의 토큰명 생성 금지"
+  },
+  "layers": [
+    {
+      "name": "core",
+      "purpose": "브랜드에 종속되지 않는 수치와 원재료 토큰",
+      "categories": [
+        "color",
+        "spacing",
+        "radius",
+        "typography",
+        "motion",
+        "elevation"
+      ]
+    },
+    {
+      "name": "semantic",
+      "purpose": "역할 중심 토큰",
+      "categories": [
+        "surface",
+        "text",
+        "border",
+        "focus",
+        "feedback"
+      ]
+    },
+    {
+      "name": "component",
+      "purpose": "컴포넌트 슬롯별 적용 토큰",
+      "categories": [
+        "button",
+        "input",
+        "navigation",
+        "overlay",
+        "editor"
+      ]
+    }
+  ],
+  "categories": {
+    "color": {
+      "core_groups": [
+        "neutral",
+        "accent",
+        "success",
+        "warning",
+        "danger",
+        "info"
+      ],
+      "scale": [
+        0,
+        50,
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900,
+        1000
+      ],
+      "rules": [
+        "accent는 최대 1개의 주 계열로 시작",
+        "semantic feedback은 accent와 분리",
+        "text/surface 조합은 접근성 기준을 우선",
+        "hex 값은 color_reference·CSS 추출·브랜드 가이드에서만 가져오고 임의 생성 금지"
+      ],
+      "reference_palette": {
+        "source_title": "REFERENCE X Vol.1 - Color Reference",
+        "source_path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+        "preferred_families": [
+          "Standard Violets",
+          "Deep Violets",
+          "Natural Violets",
+          "Pastel Violets"
+        ],
+        "selection_mode": "manual",
+        "strategy": {
+          "mode": "brand-guided",
+          "candidate_count": 3,
+          "active_candidate": 1,
+          "temperature": "mixed",
+          "contrast": "balanced",
+          "diversity": "balanced",
+          "surface_style": "tinted",
+          "prefer_moods": [
+            "정제됨",
+            "명료함",
+            "신뢰",
+            "지적"
+          ],
+          "avoid_moods": [
+            "달콤함",
+            "화려함",
+            "따뜻함",
+            "귀여움"
+          ]
+        },
+        "expansion": {
+          "enabled": true,
+          "supporting_color_count": 10,
+          "combination_count": 3,
+          "prefer_pairings": true,
+          "prefer_related_families": true
+        },
+        "selected_colors": [
+          {
+            "name": "Cerulean",
+            "family": "Standard Blues",
+            "hex": "#2A52BE",
+            "mood": "중명도, 중채도, 스탠다드한 청색 계열 / 안정감, 명료함, 신뢰, 여유, 시각적 청량감",
+            "pairings": [
+              "#D9D9D9",
+              "#F7F5EB",
+              "#A9BFA1",
+              "#D7C4A3",
+              "#FFFFFF",
+              "#FFB59E"
+            ]
+          },
+          {
+            "name": "Ochre",
+            "family": "Standard Oranges",
+            "hex": "#CC7722",
+            "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성",
+            "pairings": [
+              "#1C2E4A",
+              "#4C7A77",
+              "#D7B899",
+              "#F3E9DA",
+              "#6E7B8B",
+              "#B6B995"
+            ]
+          },
+          {
+            "name": "Sky Blue",
+            "family": "Natural Blues",
+            "hex": "#87CEEB",
+            "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음",
+            "pairings": [
+              "#F5F5F5",
+              "#E6DBB8",
+              "#333333",
+              "#D8A7A7",
+              "#B6E3C1",
+              "#CFC7B5"
+            ]
+          }
+        ],
+        "palette_roles": {
+          "primary": {
+            "name": "Iris Violet",
+            "family": "Natural Violets",
+            "hex": "#5A4FCF",
+            "mood": "중명도, 고채도, 쿨 퍼플 톤 / 신선함, 예술적, 정제된 생동감, 상징적 존재감",
+            "pairings": [
+              "#D8D8D8",
+              "#CAB7E1",
+              "#FFF5E5",
+              "#333333",
+              "#5C8A6B",
+              "#E8C2AF"
+            ]
+          },
+          "accent": {
+            "name": "Cerulean",
+            "family": "Standard Blues",
+            "hex": "#2A52BE",
+            "mood": "중명도, 중채도, 스탠다드한 청색 계열 / 안정감, 명료함, 신뢰, 여유, 시각적 청량감",
+            "pairings": [
+              "#D9D9D9",
+              "#F7F5EB",
+              "#A9BFA1",
+              "#D7C4A3",
+              "#FFFFFF",
+              "#FFB59E"
+            ]
+          },
+          "surface_tint": {
+            "name": "Lavender Mist",
+            "family": "Pastel Violets",
+            "hex": "#E6E6FA",
+            "mood": "고명도, 저채도, 쿨톤의 파스텔 계열 퍼플 / 청명함, 정화, 몽환, 세련된 차분함",
+            "pairings": [
+              "#F7F6F0",
+              "#C0C0C0",
+              "#C7DAF0",
+              "#F5D7DC",
+              "#444444",
+              "#D7CBEF"
+            ]
+          }
+        },
+        "active_palette": {
+          "candidate_id": null,
+          "selection_mode": "manual",
+          "roles": {
+            "primary": {
+              "name": "Iris Violet",
+              "family": "Natural Violets",
+              "hex": "#5A4FCF",
+              "mood": "중명도, 고채도, 쿨 퍼플 톤 / 신선함, 예술적, 정제된 생동감, 상징적 존재감"
+            },
+            "accent": {
+              "name": "Cerulean",
+              "family": "Standard Blues",
+              "hex": "#2A52BE",
+              "mood": "중명도, 중채도, 스탠다드한 청색 계열 / 안정감, 명료함, 신뢰, 여유, 시각적 청량감"
+            },
+            "surface_tint": {
+              "name": "Lavender Mist",
+              "family": "Pastel Violets",
+              "hex": "#E6E6FA",
+              "mood": "고명도, 저채도, 쿨톤의 파스텔 계열 퍼플 / 청명함, 정화, 몽환, 세련된 차분함"
+            }
+          }
+        },
+        "palette_candidates": [
+          {
+            "id": "signature-1",
+            "label": "Signature",
+            "score": 33.23,
+            "rationale": [
+              "Cerulean matches brand tone keywords.",
+              "Ochre matches brand tone keywords.",
+              "Sky Blue matches brand tone keywords."
+            ],
+            "strategy_snapshot": {
+              "temperature": "mixed",
+              "contrast": "balanced",
+              "diversity": "balanced",
+              "surface_style": "tinted"
+            },
+            "roles": {
+              "primary": {
+                "name": "Cerulean",
+                "family": "Standard Blues",
+                "hex": "#2A52BE",
+                "mood": "중명도, 중채도, 스탠다드한 청색 계열 / 안정감, 명료함, 신뢰, 여유, 시각적 청량감"
+              },
+              "accent": {
+                "name": "Ochre",
+                "family": "Standard Oranges",
+                "hex": "#CC7722",
+                "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성"
+              },
+              "surface_tint": {
+                "name": "Sky Blue",
+                "family": "Natural Blues",
+                "hex": "#87CEEB",
+                "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음"
+              }
+            }
+          },
+          {
+            "id": "soft-spread-2",
+            "label": "Soft Spread",
+            "score": 33.43,
+            "rationale": [
+              "Ochre matches brand tone keywords.",
+              "Cerulean matches brand tone keywords.",
+              "Misty Blue matches brand tone keywords."
+            ],
+            "strategy_snapshot": {
+              "temperature": "mixed",
+              "contrast": "soft",
+              "diversity": "balanced",
+              "surface_style": "airy"
+            },
+            "roles": {
+              "primary": {
+                "name": "Ochre",
+                "family": "Standard Oranges",
+                "hex": "#CC7722",
+                "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성"
+              },
+              "accent": {
+                "name": "Cerulean",
+                "family": "Standard Blues",
+                "hex": "#2A52BE",
+                "mood": "중명도, 중채도, 스탠다드한 청색 계열 / 안정감, 명료함, 신뢰, 여유, 시각적 청량감"
+              },
+              "surface_tint": {
+                "name": "Misty Blue",
+                "family": "Pastel Blues",
+                "hex": "#B5C7EB",
+                "mood": "중명도, 저채도, 보라색이 섞인 뉴트럴 블루 톤 / 차분함, 사색적, 몽환적, 잔잔함, 감정의 여운"
+              }
+            }
+          }
+        ],
+        "expanded_palette": {
+          "search_strategy": {
+            "sources": [
+              "seed pairings",
+              "brand keywords",
+              "family tone",
+              "hue compatibility",
+              "related families"
+            ],
+            "supporting_color_count": 10,
+            "combination_count": 3,
+            "seed_roles": {
+              "primary": {
+                "name": "Iris Violet",
+                "hex": "#5A4FCF",
+                "family": "Natural Violets"
+              },
+              "accent": {
+                "name": "Cerulean",
+                "hex": "#2A52BE",
+                "family": "Standard Blues"
+              },
+              "surface_tint": {
+                "name": "Lavender Mist",
+                "hex": "#E6E6FA",
+                "family": "Pastel Violets"
+              }
+            },
+            "preferred_families": [
+              "Standard Violets",
+              "Deep Violets",
+              "Natural Violets",
+              "Pastel Violets"
+            ]
+          },
+          "supporting_colors": [
+            {
+              "name": "Pairing #CAB7E1",
+              "family": "Derived Pairing",
+              "hex": "#CAB7E1",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Iris Violet"
+              ],
+              "search_score": 8.65,
+              "search_reasons": [
+                "Pairing #CAB7E1 comes from the seed pairing references.",
+                "Pairing #CAB7E1 is explicitly paired with Iris Violet."
+              ]
+            },
+            {
+              "name": "Pairing #D7CBEF",
+              "family": "Derived Pairing",
+              "hex": "#D7CBEF",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Lavender Mist"
+              ],
+              "search_score": 8.65,
+              "search_reasons": [
+                "Pairing #D7CBEF comes from the seed pairing references.",
+                "Pairing #D7CBEF is explicitly paired with Lavender Mist."
+              ]
+            },
+            {
+              "name": "Pairing #C0C0C0",
+              "family": "Derived Pairing",
+              "hex": "#C0C0C0",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Lavender Mist"
+              ],
+              "search_score": 7.25,
+              "search_reasons": [
+                "Pairing #C0C0C0 comes from the seed pairing references.",
+                "Pairing #C0C0C0 is explicitly paired with Lavender Mist.",
+                "Pairing #C0C0C0 can act as a neutral support color."
+              ]
+            },
+            {
+              "name": "Pairing #D8D8D8",
+              "family": "Derived Pairing",
+              "hex": "#D8D8D8",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Iris Violet"
+              ],
+              "search_score": 7.25,
+              "search_reasons": [
+                "Pairing #D8D8D8 comes from the seed pairing references.",
+                "Pairing #D8D8D8 is explicitly paired with Iris Violet.",
+                "Pairing #D8D8D8 can act as a neutral support color."
+              ]
+            },
+            {
+              "name": "Pairing #D9D9D9",
+              "family": "Derived Pairing",
+              "hex": "#D9D9D9",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Cerulean"
+              ],
+              "search_score": 7.25,
+              "search_reasons": [
+                "Pairing #D9D9D9 comes from the seed pairing references.",
+                "Pairing #D9D9D9 is explicitly paired with Cerulean.",
+                "Pairing #D9D9D9 can act as a neutral support color."
+              ]
+            },
+            {
+              "name": "Lavender Violet",
+              "family": "Natural Violets",
+              "hex": "#967BB6",
+              "mood": "고명도, 중저채도, 베이직 퍼플 계열 / 부드러움, 평온함, 세련, 낭만, 안정감",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 7.1,
+              "search_reasons": [
+                "Lavender Violet stays inside the preferred families.",
+                "Lavender Violet reinforces the brand mood signals."
+              ]
+            },
+            {
+              "name": "Pairing #C7DAF0",
+              "family": "Derived Pairing",
+              "hex": "#C7DAF0",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Lavender Mist"
+              ],
+              "search_score": 6.7,
+              "search_reasons": [
+                "Pairing #C7DAF0 comes from the seed pairing references.",
+                "Pairing #C7DAF0 is explicitly paired with Lavender Mist."
+              ]
+            },
+            {
+              "name": "Pairing #333333",
+              "family": "Derived Pairing",
+              "hex": "#333333",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Iris Violet"
+              ],
+              "search_score": 6.45,
+              "search_reasons": [
+                "Pairing #333333 comes from the seed pairing references.",
+                "Pairing #333333 is explicitly paired with Iris Violet.",
+                "Pairing #333333 can act as a neutral support color."
+              ]
+            },
+            {
+              "name": "Pairing #444444",
+              "family": "Derived Pairing",
+              "hex": "#444444",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Lavender Mist"
+              ],
+              "search_score": 6.45,
+              "search_reasons": [
+                "Pairing #444444 comes from the seed pairing references.",
+                "Pairing #444444 is explicitly paired with Lavender Mist.",
+                "Pairing #444444 can act as a neutral support color."
+              ]
+            },
+            {
+              "name": "Pairing #F7F5EB",
+              "family": "Derived Pairing",
+              "hex": "#F7F5EB",
+              "mood": "Seed pairing support",
+              "source_type": "pairing-swatch",
+              "source_seed_names": [
+                "Cerulean"
+              ],
+              "search_score": 6.45,
+              "search_reasons": [
+                "Pairing #F7F5EB comes from the seed pairing references.",
+                "Pairing #F7F5EB is explicitly paired with Cerulean."
+              ]
+            }
+          ],
+          "semantic_roles": {
+            "brand_primary": {
+              "name": "Iris Violet",
+              "family": "Natural Violets",
+              "hex": "#5A4FCF",
+              "source_type": null
+            },
+            "brand_accent": {
+              "name": "Cerulean",
+              "family": "Standard Blues",
+              "hex": "#2A52BE",
+              "source_type": null
+            },
+            "surface_tint": {
+              "name": "Lavender Mist",
+              "family": "Pastel Violets",
+              "hex": "#E6E6FA",
+              "source_type": null
+            },
+            "canvas": {
+              "name": "Canvas White",
+              "family": "Generated Fallback",
+              "hex": "#F7F8FA",
+              "source_type": "generated-fallback"
+            },
+            "surface": {
+              "name": "Paper",
+              "family": "Generated Fallback",
+              "hex": "#FFFFFF",
+              "source_type": "generated-fallback"
+            },
+            "surface_muted": {
+              "name": "Surface Muted",
+              "family": "Generated Fallback",
+              "hex": "#EEF1F6",
+              "source_type": "generated-fallback"
+            },
+            "surface_elevated": {
+              "name": "Paper",
+              "family": "Generated Fallback",
+              "hex": "#FFFFFF",
+              "source_type": "generated-fallback"
+            },
+            "border": {
+              "name": "Pairing #D8D8D8",
+              "family": "Derived Pairing",
+              "hex": "#D8D8D8",
+              "source_type": "pairing-swatch"
+            },
+            "border_strong": {
+              "name": "Pairing #C0C0C0",
+              "family": "Derived Pairing",
+              "hex": "#C0C0C0",
+              "source_type": "pairing-swatch"
+            },
+            "ink": {
+              "name": "Pairing #333333",
+              "family": "Derived Pairing",
+              "hex": "#333333",
+              "source_type": "pairing-swatch"
+            },
+            "ink_muted": {
+              "name": "Muted Ink",
+              "family": "Generated Fallback",
+              "hex": "#4B5563",
+              "source_type": "generated-fallback"
+            },
+            "ink_subtle": {
+              "name": "Subtle Ink",
+              "family": "Generated Fallback",
+              "hex": "#6B7280",
+              "source_type": "generated-fallback"
+            },
+            "ink_inverse": {
+              "name": "Ink Inverse",
+              "family": "Generated Fallback",
+              "hex": "#FFFFFF",
+              "source_type": "generated-fallback"
+            },
+            "primary_support": {
+              "name": "Pairing #CAB7E1",
+              "family": "Derived Pairing",
+              "hex": "#CAB7E1",
+              "source_type": "pairing-swatch"
+            },
+            "accent_support": {
+              "name": "Pairing #C7DAF0",
+              "family": "Derived Pairing",
+              "hex": "#C7DAF0",
+              "source_type": "pairing-swatch"
+            },
+            "info": {
+              "name": "Pairing #CAB7E1",
+              "family": "Derived Pairing",
+              "hex": "#CAB7E1",
+              "source_type": "pairing-swatch"
+            },
+            "success": {
+              "name": "Success",
+              "family": "Generated Fallback",
+              "hex": "#4A7C59",
+              "source_type": "generated-fallback"
+            },
+            "warning": {
+              "name": "Pairing #F7F5EB",
+              "family": "Derived Pairing",
+              "hex": "#F7F5EB",
+              "source_type": "pairing-swatch"
+            },
+            "danger": {
+              "name": "Danger",
+              "family": "Generated Fallback",
+              "hex": "#8B2252",
+              "source_type": "generated-fallback"
+            },
+            "link": {
+              "name": "Iris Violet",
+              "family": "Natural Violets",
+              "hex": "#5A4FCF",
+              "source_type": null
+            },
+            "link_hover": {
+              "name": "Link Hover",
+              "family": "Generated Fallback",
+              "hex": "#4135C1",
+              "source_type": "generated-fallback"
+            }
+          },
+          "combination_lists": [
+            {
+              "id": "seed-core",
+              "label": "Seed Core",
+              "purpose": "기본 테마를 이루는 핵심 색",
+              "colors": [
+                {
+                  "role": "primary",
+                  "name": "Iris Violet",
+                  "hex": "#5A4FCF",
+                  "family": "Natural Violets",
+                  "source_type": null
+                },
+                {
+                  "role": "accent",
+                  "name": "Cerulean",
+                  "hex": "#2A52BE",
+                  "family": "Standard Blues",
+                  "source_type": null
+                },
+                {
+                  "role": "surface_tint",
+                  "name": "Lavender Mist",
+                  "hex": "#E6E6FA",
+                  "family": "Pastel Violets",
+                  "source_type": null
+                }
+              ]
+            },
+            {
+              "id": "surface-system",
+              "label": "Surface System",
+              "purpose": "배경, 패널, 텍스트, 보더에 쓰는 기본 조합",
+              "colors": [
+                {
+                  "role": "canvas",
+                  "name": "Canvas White",
+                  "hex": "#F7F8FA",
+                  "family": "Generated Fallback",
+                  "source_type": "generated-fallback"
+                },
+                {
+                  "role": "surface",
+                  "name": "Paper",
+                  "hex": "#FFFFFF",
+                  "family": "Generated Fallback",
+                  "source_type": "generated-fallback"
+                },
+                {
+                  "role": "surface_tint",
+                  "name": "Lavender Mist",
+                  "hex": "#E6E6FA",
+                  "family": "Pastel Violets",
+                  "source_type": null
+                },
+                {
+                  "role": "border",
+                  "name": "Pairing #D8D8D8",
+                  "hex": "#D8D8D8",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "ink",
+                  "name": "Pairing #333333",
+                  "hex": "#333333",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "ink_muted",
+                  "name": "Muted Ink",
+                  "hex": "#4B5563",
+                  "family": "Generated Fallback",
+                  "source_type": "generated-fallback"
+                }
+              ]
+            },
+            {
+              "id": "support-spectrum",
+              "label": "Support Spectrum",
+              "purpose": "보조 하이라이트, 차트, 2차 액션에 쓰는 확장 리스트",
+              "colors": [
+                {
+                  "role": "support",
+                  "name": "Pairing #CAB7E1",
+                  "hex": "#CAB7E1",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "support",
+                  "name": "Pairing #D7CBEF",
+                  "hex": "#D7CBEF",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "support",
+                  "name": "Pairing #C0C0C0",
+                  "hex": "#C0C0C0",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "support",
+                  "name": "Pairing #D8D8D8",
+                  "hex": "#D8D8D8",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "support",
+                  "name": "Pairing #D9D9D9",
+                  "hex": "#D9D9D9",
+                  "family": "Derived Pairing",
+                  "source_type": "pairing-swatch"
+                },
+                {
+                  "role": "support",
+                  "name": "Lavender Violet",
+                  "hex": "#967BB6",
+                  "family": "Natural Violets",
+                  "source_type": "reference-color"
+                }
+              ]
+            }
+          ]
+        },
+        "rules": [
+          "컬러 레퍼런스의 mood와 pairings를 semantic token 설계의 출발점으로 사용",
+          "chosen palette는 semantic roles로 번역하고 raw reference color를 그대로 남용하지 않기",
+          "seed color만 쓰지 말고 expanded palette에서 surface/text/border/support 역할까지 확장하기",
+          "surface/text/border 대비는 레퍼런스보다 접근성 기준을 우선"
+        ]
+      },
+      "visual_balance": {
+        "observed": false,
+        "temperature": "unknown",
+        "contrast_profile": "unknown",
+        "neutral_bias": "unknown"
+      }
+    },
+    "typography": {
+      "families": [
+        "brand",
+        "text",
+        "mono"
+      ],
+      "size_scale": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "2xl",
+        "3xl",
+        "4xl"
+      ],
+      "rules": [
+        "display는 마케팅/영웅 구역으로 제한",
+        "text는 제품 본문과 UI 라벨의 기본",
+        "mono는 데이터와 shortcut hint에 제한",
+        "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
+        "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
+        "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다."
+      ],
+      "recommended_fonts": {
+        "heading": "Spoqa Han Sans Neo",
+        "body": "Spoqa Han Sans Neo",
+        "mono": "JetBrains Mono",
+        "korean": "Spoqa Han Sans Neo"
+      },
+      "heading_note": "스포카에서 만든 한글 산세리프. Source Sans Pro 기반. 깔끔한 데이터 UI에 적합.",
+      "body_note": "스포카에서 만든 한글 산세리프. Source Sans Pro 기반. 깔끔한 데이터 UI에 적합.",
+      "product_type": "developer-tool",
+      "pairing_source": "auto-scored",
+      "line_height_preset": "normal",
+      "strategy": [
+        "단일 서체(Spoqa Han Sans Neo)로 weight 대비 위계 — 일관성 우선",
+        "한글 서체: Spoqa Han Sans Neo — 라틴과 x-height/weight 조화",
+        "모노스페이스: JetBrains Mono — 코드/데이터 영역 전용",
+        "precise 키워드 → tight letter-spacing, tabular figures 권장"
+      ],
+      "loading": {
+        "fonts": [
+          {
+            "font": "Spoqa Han Sans Neo",
+            "weights": "400;500;600",
+            "priority": "preload"
+          },
+          {
+            "font": "JetBrains Mono",
+            "weights": "400;500",
+            "priority": "lazy"
+          }
+        ],
+        "fallback_strategy": "system-ui → font swap",
+        "display": "swap",
+        "subset": "latin,korean",
+        "note": "본문 서체를 preload, 모노스페이스는 lazy load. font-display: swap으로 FOUT 최소화."
+      },
+      "korean_rationale": {
+        "primary_is_korean": true,
+        "font": "Spoqa Han Sans Neo",
+        "reason": "Pretendard 이전 시대의 한글 UI 표준. 요기요, 여기어때 등에서 사용. 깔끔하지만 weight 범위와 Variable 미지원이 아쉬움. 신규 프로젝트에서는 Pretendard 추천.",
+        "glyph_width": "중간-좁음",
+        "small_size_limit": "13px까지 가독성 유지",
+        "best_for_kr": [
+          "SaaS",
+          "데이터 대시보드",
+          "깔끔한 UI"
+        ],
+        "avoid_for_kr": [
+          "장문 본문 — line-height 여유 부족",
+          "감성적 브랜딩"
+        ],
+        "latin_pair": "Source Sans 3 (같은 Source 계열)"
+      },
+      "pitfall_warnings": [],
+      "letter_spacing": {
+        "heading_tracking": {
+          "xl": "-0.015em",
+          "2xl": "-0.02em",
+          "3xl": "-0.02em"
+        },
+        "note": "큰 헤딩에 negative tracking 적용. 미적용 시 글자가 풀어진 느낌."
+      },
+      "script_guardrails": {
+        "primary_script": "korean",
+        "headline_font": {
+          "name": "Spoqa Han Sans Neo",
+          "line_height": "1.2-1.3",
+          "letter_spacing": "-0.02em",
+          "note": "조밀한 UI에서는 tracking 보정이 유효하지만 장문 본문용으로는 여유가 적다."
+        },
+        "body_font": {
+          "name": "Spoqa Han Sans Neo",
+          "line_height": "1.5-1.6",
+          "ui_label_line_height": "1.4-1.5",
+          "letter_spacing": "0em",
+          "note": "조밀한 UI에서는 tracking 보정이 유효하지만 장문 본문용으로는 여유가 적다."
+        },
+        "wrap": {
+          "headline": {
+            "word_break": "keep-all",
+            "overflow_wrap": "normal",
+            "text_wrap": "balance"
+          },
+          "body": {
+            "word_break": "keep-all",
+            "overflow_wrap": "normal"
+          },
+          "avoid": [
+            "forced <br /> before breakpoint QA",
+            "English-first ch heuristics without real Korean copy review"
+          ]
+        },
+        "scale": {
+          "headline_start": "default-scale",
+          "guidance": "기본 스케일을 사용할 수 있지만 한글 문장 기준으로 실제 wrap을 먼저 검증한다."
+        },
+        "warnings": [
+          "장문 본문 — line-height 여유 부족",
+          "감성적 브랜딩",
+          "장문 본문 — line-height 여유 부족",
+          "감성적 브랜딩"
+        ],
+        "rules": [
+          "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
+          "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
+          "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다."
+        ]
+      },
+      "type_scale": {
+        "base_size": 15,
+        "scale_ratio": 1.25,
+        "sizes": {
+          "xs": 12,
+          "sm": 13,
+          "md": 15,
+          "lg": 19,
+          "xl": 24,
+          "2xl": 30,
+          "3xl": 37
+        },
+        "line_heights": {
+          "tight": 1.25,
+          "normal": 1.45,
+          "comfortable": 1.55,
+          "relaxed": 1.65
+        }
+      }
+    },
+    "spacing": {
+      "scale": [
+        0,
+        2,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        48,
+        64,
+        96
+      ],
+      "density_modes": [
+        "default",
+        "dense"
+      ],
+      "visual_density_bias": "dense"
+    },
+    "radius": {
+      "scale": [
+        "none",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "pill"
+      ],
+      "rule": "라운딩은 브랜드 성격을 드러내지만 컴포넌트 계층별로 제한적으로 사용",
+      "visual_corner_bias": "medium"
+    },
+    "motion": {
+      "durations_ms": [
+        0,
+        80,
+        120,
+        180,
+        240,
+        320
+      ],
+      "easing_tokens": [
+        "standard",
+        "enter",
+        "exit",
+        "emphasized"
+      ],
+      "rule": "모션은 상태 설명용이며 과장된 장식 효과는 금지"
+    },
+    "elevation": {
+      "levels": [
+        "flat",
+        "raised",
+        "overlay",
+        "modal"
+      ],
+      "rule": "그림자보다 layer 의미가 먼저 드러나야 함",
+      "visual_surface_bias": "tinted"
+    }
+  },
+  "brand_alignment": {
+    "visual_keywords": [
+      "cool neutral surfaces",
+      "hairline borders",
+      "monochrome + single accent",
+      "code-first hierarchy",
+      "dense toc sidebar",
+      "generous reading measure",
+      "inline code emphasis",
+      "syntax-highlight palette",
+      "anchor-linked headings",
+      "mono-first table chrome"
+    ],
+    "interaction_keywords": [
+      "search-first (⌘K)",
+      "anchor-linked headings",
+      "copy-code inline",
+      "version switcher",
+      "edit-on-github",
+      "keyboard next/prev",
+      "sidebar collapse",
+      "language tab switch",
+      "prev/next pager",
+      "breadcrumb trail"
+    ],
+    "system_name": "Lattice System",
+    "visual_reference_hints": {
+      "density_bias": "dense",
+      "surface_style": "tinted",
+      "corner_style": "medium",
+      "typography_mood": "editorial",
+      "top_layout_cue": "data-review-surface"
+    }
+  }
+}

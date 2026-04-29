@@ -1,0 +1,32 @@
+{
+  "preset_id": "document-content--editorial-warm",
+  "source_project": "signal-desk",
+  "seeds": [
+    {
+      "url": "https://ghost.org/design",
+      "kind": "design-system",
+      "title": "Ghost Design",
+      "notes": "editorial CMS / newsroom layout references"
+    },
+    {
+      "url": "https://medium.design",
+      "kind": "design-system",
+      "title": "Medium Design",
+      "notes": "long-form reading flow + typography references"
+    },
+    {
+      "url": "https://www.nytimes.com/spotlight/design",
+      "kind": "article",
+      "title": "NYT Design Spotlight",
+      "notes": "editorial design system write-ups"
+    },
+    {
+      "url": "https://www.readwise.io",
+      "kind": "visual-reference",
+      "title": "Readwise",
+      "notes": "reading-heavy dashboard + split-pane flow"
+    }
+  ],
+  "pretendard_font_license": "SIL OFL 1.1",
+  "created_at": "2026-04-21T12:34:59Z"
+}

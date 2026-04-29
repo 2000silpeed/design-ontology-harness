@@ -1,0 +1,8 @@
+{
+  "ko": {
+    "heading_font": "Pretendard",
+    "body_font": "Pretendard",
+    "mono_font": "JetBrains Mono",
+    "notes": "크리에이티브 캔버스 도구 — 한국어 UI, shortcut/숫자 input 은 mono 영문 고정, 숫자 tabular-nums, line-height 1.6 keep-all"
+  }
+}

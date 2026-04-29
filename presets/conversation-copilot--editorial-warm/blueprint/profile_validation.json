@@ -1,0 +1,8 @@
+{
+  "valid": true,
+  "errors": [],
+  "warnings": [
+    "[pitfall#3-rebrand] Chili Oil vs Apricot (orange): lightness diff 35, saturation diff 54 — possible rebrand remnant",
+    "visual_reference.sources is empty"
+  ]
+}

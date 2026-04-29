@@ -1,0 +1,292 @@
+{
+  "brand_name": "Beacon",
+  "system_name": "Beacon System",
+  "product_summary": "B2B/SaaS 팀을 위한 minimal-tech 톤 마케팅 랜딩 — hero · feature grid · pricing · social proof · testimonial · faq · cta · site header/footer, 한국어 1급",
+  "audiences": [
+    "B2B/SaaS 프로덕트 팀 — 성장/마케팅 엔지니어",
+    "개발자 도구 회사 마케터 — devtools 랜딩 제작",
+    "스타트업 초기 마케팅 리드 — 투명하고 정직한 전환 페이지"
+  ],
+  "brand_keywords": [
+    "marketing-landing",
+    "landing",
+    "saas-landing",
+    "hero",
+    "pricing",
+    "feature-grid",
+    "social-proof",
+    "testimonial",
+    "faq",
+    "cta-section",
+    "site-footer",
+    "site-header",
+    "minimal",
+    "precise"
+  ],
+  "anti_keywords": [
+    "bold-confident",
+    "saturated",
+    "magazine-serif",
+    "playful",
+    "decorative",
+    "ornamental",
+    "dashboard-heavy",
+    "warm-editorial"
+  ],
+  "tone_of_voice": [
+    "clean",
+    "neutral",
+    "precise",
+    "trustworthy",
+    "restrained"
+  ],
+  "visual_keywords": [
+    "neutral hero surface",
+    "hairline borders",
+    "monochrome + restrained accent",
+    "thin pricing card",
+    "compact feature grid",
+    "logo cloud trust strip",
+    "muted testimonial card",
+    "geometric sans hierarchy",
+    "low-contrast section divider"
+  ],
+  "interaction_keywords": [
+    "sticky site header on scroll",
+    "anchor scroll to section",
+    "pricing toggle (monthly/yearly)",
+    "faq accordion expand",
+    "scroll-snap section",
+    "cta button focus highlight",
+    "logo marquee subtle motion",
+    "hover-only secondary CTA"
+  ],
+  "platforms": [
+    "web",
+    "mobile-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "hero container",
+    "hero headline",
+    "hero subheadline",
+    "hero CTA group",
+    "hero visual",
+    "hero trust strip",
+    "feature section",
+    "feature grid",
+    "feature card",
+    "feature icon",
+    "social proof logo cloud",
+    "customer logo",
+    "metric highlight",
+    "testimonial section",
+    "testimonial card",
+    "pricing card",
+    "feature comparison",
+    "upgrade banner",
+    "FAQ section",
+    "FAQ item",
+    "CTA section",
+    "CTA headline",
+    "site header",
+    "site nav",
+    "site footer",
+    "footer column",
+    "footer legal"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "design token",
+      "marketing",
+      "landing",
+      "pricing",
+      "hero"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "magazine-only",
+      "social-feed-only",
+      "ornamental-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Pantone Trend Blues",
+      "Pastel Blues",
+      "Standard Yellows"
+    ],
+    "palette_roles": {
+      "primary": "Teal Blue",
+      "accent": "Goldenrod",
+      "surface_tint": "Powder Blue"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "cool",
+      "contrast": "balanced",
+      "diversity": "narrow",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "정제됨",
+        "명료함",
+        "신뢰",
+        "기술적",
+        "신선함"
+      ],
+      "avoid_moods": [
+        "대담",
+        "강렬",
+        "달콤함",
+        "귀여움"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Teal Blue primary — cool 계열, minimal-tech 정체성 유지, hero CTA 및 site-header 링크 hover 강조",
+      "Goldenrod accent — restrained warm gold, primary CTA button · pricing featured plan · metric highlight 숫자 강조",
+      "Powder Blue surface_tint — 부드러운 파스텔 cool, neutral hero surface / section divider / logo cloud 배경",
+      "light mode 가 기본 — 마케팅 랜딩 관례, dark 옵션 제공",
+      "기존 minimal-tech 5종 (Navy / Azure / Iris Violet / Cobalt Violet / Prussian Blue) 과 HEX 겹침 회피 — Teal Blue + Goldenrod + Powder Blue 조합"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Inter",
+      "weights": [
+        500,
+        600,
+        700
+      ],
+      "notes": "geometric sans, hero headline / feature title / pricing plan name — serif 금지"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500
+      ],
+      "notes": "hero subheadline / feature description / testimonial quote / faq answer 본문 공용"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "pricing 숫자 · metric highlight · 가격/할인/지표 수치에 tabular-nums, 영문 고정"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한글 1급 — hero / feature / pricing / testimonial 본문, line-height 1.5–1.6 keep-all"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "linear landing hero",
+      "vercel landing marketing",
+      "stripe pricing page",
+      "railway landing",
+      "supabase landing",
+      "saas devtools landing minimal"
+    ],
+    "sources": [],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.35,
+      "component_shape": 0.2,
+      "color_balance": 0.15,
+      "typography_mood": 0.2,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "hero section with headline + subhead + CTA group",
+      "feature grid with icons",
+      "pricing cards with monthly/yearly toggle",
+      "logo cloud social proof strip",
+      "testimonial card",
+      "faq accordion",
+      "site footer with columns"
+    ],
+    "avoid_patterns": [
+      "magazine serif hero",
+      "playful pastel illustration",
+      "saturated sports banner",
+      "dense dashboard chrome",
+      "social feed timeline"
+    ],
+    "notes": [
+      "Linear / Vercel / Stripe / Railway / Supabase 스타일 B2B/SaaS minimal landing 참조",
+      "minimal-tech 톤: hairline borders + 무채색 surface + monochrome + restrained gold accent",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://linear.app",
+      "kind": "design-system",
+      "title": "Linear Marketing",
+      "notes": "minimal SaaS landing + pricing references"
+    },
+    {
+      "url": "https://vercel.com",
+      "kind": "design-system",
+      "title": "Vercel Marketing",
+      "notes": "devtools landing references"
+    },
+    {
+      "url": "https://stripe.com",
+      "kind": "design-system",
+      "title": "Stripe Marketing",
+      "notes": "developer-first marketing hero + pricing"
+    },
+    {
+      "url": "https://railway.app",
+      "kind": "visual-reference",
+      "title": "Railway",
+      "notes": "minimal devtools landing references"
+    },
+    {
+      "url": "https://supabase.com",
+      "kind": "visual-reference",
+      "title": "Supabase",
+      "notes": "developer landing + feature grid references"
+    }
+  ]
+}

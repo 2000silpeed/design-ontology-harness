@@ -1,0 +1,441 @@
+{
+  "mode": "local-images",
+  "query": [
+    "threads social feed",
+    "bluesky timeline",
+    "mastodon community feed",
+    "tumblr playful feed"
+  ],
+  "preferred_count": 8,
+  "weights": {
+    "layout": 0.3,
+    "component_shape": 0.3,
+    "color_balance": 0.2,
+    "typography_mood": 0.1,
+    "surface_style": 0.1
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "Threads / Bluesky / Mastodon / Tumblr 스타일 친근한 소셜 피드 참조",
+    "editorial-warm 의 매거진/reading-heavy 방향 금지",
+    "minimal-tech 의 monochrome + 무채색 방향 금지",
+    "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+  ],
+  "must_include": [
+    "feed item with avatar",
+    "reaction bar with emoji",
+    "notification center with badge",
+    "presence dot on avatar",
+    "rounded post card",
+    "soft pastel surface"
+  ],
+  "avoid_patterns": [
+    "dense data table",
+    "alert-first severity grid",
+    "magazine serif hero",
+    "corporate navy surfaces",
+    "glassmorphism"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "airy",
+      "confidence": 0.45,
+      "evidence": [
+        "editorial x1",
+        "hero x1"
+      ],
+      "candidates": [
+        {
+          "value": "airy",
+          "score": 4.0
+        },
+        {
+          "value": "dense",
+          "score": 3.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.54,
+      "evidence": [
+        "warm x2",
+        "editorial x1",
+        "soft x4"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 7.0
+        },
+        {
+          "value": "flat",
+          "score": 6.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "editorial",
+      "confidence": 0.71,
+      "evidence": [
+        "editorial x1",
+        "magazine x2",
+        "serif x2"
+      ],
+      "candidates": [
+        {
+          "value": "editorial",
+          "score": 11.0
+        },
+        {
+          "value": "playful",
+          "score": 8.0
+        },
+        {
+          "value": "utilitarian",
+          "score": 3.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "round",
+      "confidence": 0.94,
+      "evidence": [
+        "rounded x3",
+        "soft x4"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x1",
+        "feed x8",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.71,
+      "evidence": [
+        "table x1",
+        "grid x1",
+        "data x1",
+        "timeline x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "conversation-panel",
+      "label": "Conversation side panel",
+      "confidence": 0.56,
+      "evidence": [
+        "thread x3"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "landing-narrative",
+      "label": "Narrative landing flow",
+      "confidence": 0.4,
+      "evidence": [
+        "hero x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. soft round corner를 기본값으로 유지.",
+      "confidence": 0.54,
+      "evidence": [
+        "surface=tinted",
+        "density=airy",
+        "corner=round"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "navigation은 정보 구조를 안정적으로 고정하고 시각적 장식보다 위치 신호를 우선한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Editorial feed"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다.",
+      "confidence": 0.71,
+      "evidence": [
+        "typography_mood=editorial"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.52,
+      "evidence": [
+        "layout=data-review-surface",
+        "density=airy"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.94,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.94)",
+        "editorial x1",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.8,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.71)",
+        "table x1",
+        "data x1",
+        "grid x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.51,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "layout=landing-narrative (0.4)",
+        "hero x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Editorial feed",
+    "recommended_direction": [
+      "layout는 Editorial feed 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 editorial 축 유지",
+      "density는 airy 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "dense data table",
+      "alert-first severity grid",
+      "magazine serif hero",
+      "corporate navy surfaces",
+      "glassmorphism"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "Bloom",
+    "system_name": "Bloom System",
+    "brand_keywords": [
+      "community-feed",
+      "social",
+      "feed",
+      "thread",
+      "presence",
+      "notification",
+      "friendly",
+      "rounded",
+      "playful",
+      "pastel"
+    ],
+    "anti_keywords": [
+      "corporate",
+      "enterprise",
+      "sharp",
+      "dense",
+      "monochrome",
+      "utilitarian",
+      "minimal-tech",
+      "magazine-serif",
+      "industrial"
+    ],
+    "visual_keywords": [
+      "rounded corners",
+      "pastel surfaces",
+      "soft shadows",
+      "warm accent",
+      "friendly avatar",
+      "reaction bubble",
+      "presence dot",
+      "notification badge",
+      "loose spacing",
+      "illustrated empty state"
+    ],
+    "interaction_keywords": [
+      "pull-to-refresh",
+      "optimistic reaction",
+      "quick reply",
+      "emoji picker",
+      "presence indicator",
+      "follow toggle",
+      "notification center",
+      "swipe archive",
+      "mention autocomplete",
+      "soft dialog"
+    ],
+    "product_primitives": [
+      "feed item",
+      "post card",
+      "thread view",
+      "reply composer",
+      "comment thread",
+      "reaction bar",
+      "follow button",
+      "presence indicator",
+      "notification center",
+      "notification item",
+      "avatar cluster",
+      "timeline stream",
+      "mention highlight",
+      "tag pill",
+      "share sheet",
+      "empty-feed illustration",
+      "gentle toast",
+      "soft dialog"
+    ]
+  }
+}

@@ -4,6 +4,7 @@ import re
 from typing import Iterable
 from urllib.parse import urlparse
 
+import httpx
 from bs4 import BeautifulSoup
 
 from .models import ReferenceLink, SeedArticle, utc_now_iso
@@ -91,7 +92,6 @@ def _build_direct_reference_seed(
     category: str,
     published_at: str | None,
 ) -> SeedArticle:
-    parsed = urlparse(url)
     fallback_title = _label_from_url(url)
     reference_title = clean_text(title or fallback_title)
     return SeedArticle(

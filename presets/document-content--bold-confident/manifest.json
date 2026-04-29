@@ -1,0 +1,38 @@
+{
+  "id": "document-content--bold-confident",
+  "schema_version": "1.0.0",
+  "preset_api_version": "1.0.0",
+  "generated_by_harness_version": "0.1.0",
+  "preview_version": "1.0.0",
+  "adapter_compatibility": {
+    "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+    "raw-css-variables": ">=0.1.0 <1.0.0",
+    "vite-tailwind": ">=0.1.0 <1.0.0"
+  },
+  "source_project": "broadside",
+  "content_hash": "sha256:0d9c96caabd2e43f7ad16f15bddfcac20230808f570fe0bda12d3c233f553a00",
+  "app_mode": "document-content",
+  "brand_tone": "bold-confident",
+  "color_modes": [
+    "light",
+    "dark"
+  ],
+  "default_color_mode": "light",
+  "tags": [
+    "magazine",
+    "opinion",
+    "ko"
+  ],
+  "locale_pairings": {
+    "ko": {
+      "heading_font": "Pretendard",
+      "body_font": "Pretendard",
+      "mono_font": "JetBrains Mono",
+      "notes": "bold-confident magazine/opinion long-form — 한국어 article-body / prose-block / paragraph-block keep-all line-height 1.6–1.7 (reading-first), masthead / cover headline / pull-quote 는 Pretendard 900 letter-spacing tight line-height 1.4–1.5, issue-number / credit-line / footnote number / reading-progress 는 mono 영문 tabular-nums 고정"
+    }
+  },
+  "owner": "maintainer",
+  "tier": "P2",
+  "generated_at": "2026-04-21T12:34:59Z",
+  "description": "bold-confident magazine/opinion long-form — saturated primary + high-contrast + impact typography, article · TOC · pull-quote · masthead, 한국어 1급"
+}

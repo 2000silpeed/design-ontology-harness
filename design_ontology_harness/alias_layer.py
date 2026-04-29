@@ -221,7 +221,9 @@ def build_alias_map(classified: dict[str, dict], resolved: dict[str, dict]) -> d
 
     layer_summary: dict[str, dict] = {}
     for layer in ("core", "semantic", "component"):
-        tiers_in_layer = [t for t, l in SCHEMA_LAYER_MAP.items() if l == layer]
+        tiers_in_layer = [
+            tier for tier, schema_layer in SCHEMA_LAYER_MAP.items() if schema_layer == layer
+        ]
         layer_summary[layer] = {
             "count": sum(tier_counts.get(t, 0) for t in tiers_in_layer),
             "tiers": {t: tier_counts.get(t, 0) for t in tiers_in_layer if tier_counts.get(t, 0)},

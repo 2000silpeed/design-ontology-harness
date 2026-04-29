@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import colorsys
 import hashlib
-import imghdr
 import re
 import struct
 from collections import Counter, defaultdict
@@ -52,6 +51,14 @@ MIME_BY_EXTENSION = {
     ".gif": "image/gif",
     ".bmp": "image/bmp",
 }
+
+RASTER_MIME_SIGNATURES = (
+    (b"\x89PNG\r\n\x1a\n", "image/png"),
+    (b"\xff\xd8\xff", "image/jpeg"),
+    (b"GIF87a", "image/gif"),
+    (b"GIF89a", "image/gif"),
+    (b"BM", "image/bmp"),
+)
 
 WEIGHT_KEYS = (
     "layout",
@@ -1577,18 +1584,29 @@ def _extract_svg_features(path: Path) -> dict:
 
 def _read_image_metadata(path: Path) -> dict:
     width, height = _read_image_dimensions(path)
-    mime_type = MIME_BY_EXTENSION.get(path.suffix.lower())
-    detected = imghdr.what(path)
-    if detected == "jpeg":
-        mime_type = "image/jpeg"
-    elif detected:
-        mime_type = f"image/{detected}"
-
     return {
         "width": width,
         "height": height,
-        "mime_type": mime_type,
+        "mime_type": _detect_image_mime_type(path),
     }
+
+
+def _detect_image_mime_type(path: Path) -> str | None:
+    suffix = path.suffix.lower()
+    if suffix == ".svg":
+        return "image/svg+xml"
+
+    try:
+        header = path.read_bytes()[:16]
+    except OSError:
+        return MIME_BY_EXTENSION.get(suffix)
+
+    for signature, mime_type in RASTER_MIME_SIGNATURES:
+        if header.startswith(signature):
+            return mime_type
+    if header[:4] == b"RIFF" and header[8:12] == b"WEBP":
+        return "image/webp"
+    return MIME_BY_EXTENSION.get(suffix)
 
 
 def _read_image_dimensions(path: Path) -> tuple[int | None, int | None]:

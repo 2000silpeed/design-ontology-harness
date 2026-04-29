@@ -1,0 +1,39 @@
+{
+  "id": "commerce--playful-soft",
+  "schema_version": "1.0.0",
+  "preset_api_version": "1.0.0",
+  "generated_by_harness_version": "0.1.0",
+  "preview_version": "1.0.0",
+  "adapter_compatibility": {
+    "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+    "raw-css-variables": ">=0.1.0 <1.0.0",
+    "vite-tailwind": ">=0.1.0 <1.0.0"
+  },
+  "source_project": "orchard",
+  "content_hash": "sha256:385876cab052ea2af32b158695a94eadaa157818850afd57a24db5d08c2fc18b",
+  "app_mode": "commerce",
+  "brand_tone": "playful-soft",
+  "color_modes": [
+    "light",
+    "dark"
+  ],
+  "default_color_mode": "light",
+  "tags": [
+    "consumer",
+    "d2c",
+    "craft",
+    "ko"
+  ],
+  "locale_pairings": {
+    "ko": {
+      "heading_font": "Pretendard",
+      "body_font": "Pretendard",
+      "mono_font": "JetBrains Mono",
+      "notes": "consumer D2C craft commerce playful-soft — 한국어 product-title / product-description / review / cart-line / checkout-label / gift-message / filter-chip keep-all line-height 1.5–1.6, page-title / section-header 는 Pretendard 700 letter-spacing 0, price / discount / quantity / order-number / shipping-eta 는 mono 영문 고정 tabular-nums, rounded soft 모든 컴포넌트 radius 12–16"
+    }
+  },
+  "owner": "@alice-external",
+  "tier": "P3",
+  "generated_at": "2026-04-21T12:34:59Z",
+  "description": "friendly D2C craft snack commerce — playful-soft 톤 warm pastel consumer commerce, product-grid · rounded product-card · variant-chip · gentle add-to-cart · cart-drawer · soft checkout, 한국어 1급"
+}

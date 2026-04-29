@@ -1,0 +1,8 @@
+{
+  "ko": {
+    "heading_font": "Pretendard",
+    "body_font": "Pretendard",
+    "mono_font": "JetBrains Mono",
+    "notes": "B2C 스타트업 운영 대시보드 bold-confident — 한국어 data-table cell / activation-funnel 라벨 / cohort-matrix row / referral-widget / filter-chip keep-all line-height 1.4–1.5 (dashboard dense), 지표 숫자 (MAU / DAU / retention / activation / conversion / ARPU) 는 mono 영문 tabular-nums 고정, vivid purple/yellow 위 텍스트는 대비 4.5:1 화이트 가독"
+  }
+}

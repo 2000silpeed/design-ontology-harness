@@ -1,0 +1,37 @@
+{
+  "id": "dashboard--minimal-tech",
+  "schema_version": "1.0.0",
+  "preset_api_version": "1.0.0",
+  "generated_by_harness_version": "0.1.0",
+  "preview_version": "1.0.0",
+  "adapter_compatibility": {
+    "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+    "raw-css-variables": ">=0.1.0 <1.0.0",
+    "vite-tailwind": ">=0.1.0 <1.0.0"
+  },
+  "source_project": "orbit",
+  "content_hash": "sha256:9b2088120c80d5303538b8455c0a910dd7d03965b2a9ece70065d98c229b9a41",
+  "app_mode": "dashboard",
+  "brand_tone": "minimal-tech",
+  "color_modes": [
+    "light",
+    "dark"
+  ],
+  "default_color_mode": "light",
+  "tags": [
+    "saas",
+    "ko"
+  ],
+  "locale_pairings": {
+    "ko": {
+      "heading_font": "Pretendard",
+      "body_font": "Pretendard",
+      "mono_font": "JetBrains Mono",
+      "notes": "SaaS 관리자 대시보드 — 한국어 UI 1급, Pretendard Variable 번들"
+    }
+  },
+  "owner": "maintainer",
+  "tier": "P0",
+  "generated_at": "2026-04-21T12:34:59Z",
+  "description": "SaaS 팀을 위한 미니멀 테크 운영 대시보드 — 데이터 테이블·KPI·command palette 중심, 한국어 1급"
+}

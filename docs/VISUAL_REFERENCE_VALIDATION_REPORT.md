@@ -34,8 +34,8 @@ python -m design_ontology_harness.cli generate-visual-queries \
 
 로컬 visual reference는 각 프로젝트에 추가한 SVG reference 세트를 사용했다.
 
-- `signal-desk`: [editorial-dashboard-split-pane.svg](/Users/sungwoon/Documents/designSystem/projects/signal-desk/references/visual/editorial-dashboard-split-pane.svg), [landing-hero-serif-trust-strip.svg](/Users/sungwoon/Documents/designSystem/projects/signal-desk/references/visual/landing-hero-serif-trust-strip.svg)
-- `glacier`: [ops-dashboard-verified-grid.svg](/Users/sungwoon/Documents/designSystem/projects/glacier/references/visual/ops-dashboard-verified-grid.svg), [audit-log-dense-table.svg](/Users/sungwoon/Documents/designSystem/projects/glacier/references/visual/audit-log-dense-table.svg)
+- `signal-desk`: [editorial-dashboard-split-pane.svg](../projects/signal-desk/references/visual/editorial-dashboard-split-pane.svg), [landing-hero-serif-trust-strip.svg](../projects/signal-desk/references/visual/landing-hero-serif-trust-strip.svg)
+- `glacier`: [ops-dashboard-verified-grid.svg](../projects/glacier/references/visual/ops-dashboard-verified-grid.svg), [audit-log-dense-table.svg](../projects/glacier/references/visual/audit-log-dense-table.svg)
 
 ## 결과 요약
 

@@ -1,0 +1,300 @@
+{
+  "brand_name": "Lattice-Dash",
+  "system_name": "Lattice-Dash System",
+  "product_summary": "B2C 스타트업 운영 대시보드 — bold-confident 톤 vivid admin console, activation · retention · cohort · referral 지표를 impact typography 로 한 화면에 모은 운영팀 어드민, 한국어 1급",
+  "audiences": [
+    "B2C 스타트업 운영팀 (그로스/프로덕트 매니저) — activation funnel / cohort retention / A/B 결과 주시",
+    "스타트업 CEO/파운더 — 주간 MAU/DAU/ARPU impact KPI 확인 + 투자자 리포트",
+    "커뮤니티/지원 리드 — 유저 이슈 티켓 · 알람 · incident 운영 큐"
+  ],
+  "brand_keywords": [
+    "dashboard",
+    "admin",
+    "console",
+    "startup",
+    "saas",
+    "b2c",
+    "growth",
+    "activation",
+    "retention",
+    "cohort",
+    "referral",
+    "bold",
+    "vivid",
+    "energetic",
+    "high-contrast",
+    "impact"
+  ],
+  "anti_keywords": [
+    "editorial-warm",
+    "magazine-serif",
+    "minimal-only",
+    "playful-pastel",
+    "corporate-conservative",
+    "document-heavy",
+    "commerce-checkout"
+  ],
+  "tone_of_voice": [
+    "confident",
+    "energetic",
+    "direct",
+    "data-forward",
+    "youthful"
+  ],
+  "visual_keywords": [
+    "high-contrast headline",
+    "vivid ultra violet primary",
+    "illuminating yellow accent",
+    "saturated KPI card",
+    "dense data table",
+    "impact metric typography",
+    "youthful startup",
+    "admin-first bold",
+    "activation funnel visual",
+    "cohort matrix heat-scale"
+  ],
+  "interaction_keywords": [
+    "keyboard-first",
+    "command palette",
+    "sticky filter bar",
+    "hover-emphasis row",
+    "activation funnel drill",
+    "cohort retention hover",
+    "referral share action",
+    "impact toast",
+    "saturated primary CTA"
+  ],
+  "platforms": [
+    "web",
+    "desktop"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "sidebar navigation",
+    "workspace switcher",
+    "data table",
+    "kpi card",
+    "filter chip",
+    "command palette",
+    "activity feed",
+    "activation funnel",
+    "referral widget",
+    "cohort matrix",
+    "retention chart",
+    "conversion funnel",
+    "experiment panel",
+    "user list",
+    "ticket queue",
+    "alert list",
+    "segment filter",
+    "goal tracker",
+    "settings panel"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "design token",
+      "data density",
+      "dashboard",
+      "admin",
+      "analytics",
+      "growth"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "marketing-only",
+      "magazine-only",
+      "commerce-checkout",
+      "long-form-reading"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Pantone Trend Violets",
+      "Pantone Trend Yellows",
+      "Pastel Oranges"
+    ],
+    "palette_roles": {
+      "primary": "Ultra Violet",
+      "accent": "Illuminating",
+      "surface_tint": "Creamsicle"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "balanced",
+      "contrast": "high",
+      "diversity": "wide",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "대담",
+        "에너제틱",
+        "임팩트",
+        "고대비",
+        "주목성",
+        "젊은",
+        "스타트업"
+      ],
+      "avoid_moods": [
+        "차분한 editorial",
+        "달콤함",
+        "부드러움",
+        "보수적",
+        "미니멀 only"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Ultra Violet #5F4B8B primary — 2018 Pantone, vivid deep purple, sidebar-nav active / primary-button / activation-funnel active stage / cohort heat-scale 최고단계 / command palette focus / KPI delta 강조",
+      "Illuminating #F5DF4D accent — 2021 Pantone, vivid yellow, activation callout / referral-widget share CTA / goal-tracker complete / experiment-panel winner / impact toast 성공",
+      "Creamsicle #FFD7A0 surface_tint — warm cream surface, KPI card 보조 surface / empty-state illustration / filter-chip soft group bg, admin dense row 에는 near-white 기본 surface 유지",
+      "light mode 가 기본 — B2C startup admin 관례, dark 옵션 제공 (deep cool neutral surface + tuned Ultra Violet/Illuminating 채도 낮춤)",
+      "기존 15종 프리셋 HEX 와 겹침 0 — Ultra Violet/Illuminating/Creamsicle 조합",
+      "bold-confident 3종 (premier-league #E90052/#00FF85/#FFD700, drop #BD2E4A/#6C3BAA/#F3E5AB, broadside #0F4C81/#CC142F/#F2552C) 와 전면 차별화 — 'startup admin purple' 정체성"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Space Grotesk",
+      "weights": [
+        500,
+        600,
+        700
+      ],
+      "notes": "geometric sans with impact, workspace header / KPI metric headline / activation-funnel stage label / cohort-matrix header — serif 금지"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "dense data table cell / filter chip / ticket row / referral copy 공용, line-height 1.4–1.5 (dashboard dense)"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "MAU/DAU/activation%/retention%/ARPU/conversion%/row-id/timestamp — tabular-nums 영문 고정, KPI delta 숫자도 mono 정렬"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한글 1급 — data-table cell / kpi-card 라벨 / activation-funnel 라벨 / referral-widget / filter-chip, line-height 1.4–1.5 keep-all, workspace-header 는 Pretendard 700 letter-spacing -1%"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "retool admin console",
+      "appsmith internal tool",
+      "stripe radar dashboard",
+      "posthog activation funnel",
+      "plausible analytics dashboard",
+      "mixpanel cohort matrix"
+    ],
+    "sources": [],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.35,
+      "component_shape": 0.25,
+      "color_balance": 0.15,
+      "typography_mood": 0.15,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "sidebar-nav + data-table + kpi-card dashboard shell",
+      "activation funnel with 4–6 stages",
+      "cohort retention matrix heat-scale",
+      "referral widget with share CTA",
+      "filter-chip + segment filter bar",
+      "vivid saturated primary CTA on admin table row"
+    ],
+    "avoid_patterns": [
+      "magazine hero cover story",
+      "commerce product detail",
+      "pastel playful feed",
+      "corporate navy blueprint",
+      "long-form reading article",
+      "landing hero CTA-only"
+    ],
+    "notes": [
+      "Retool / Appsmith / Stripe Radar / PostHog / Plausible / Mixpanel 계열 B2C startup admin 참조",
+      "bold-confident 톤: vivid Ultra Violet primary + Illuminating yellow accent + warm Creamsicle surface, 데이터 dense 유지",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://retool.com",
+      "kind": "design-system",
+      "title": "Retool",
+      "notes": "internal tool admin console references (data-table · filter · KPI)"
+    },
+    {
+      "url": "https://www.appsmith.com",
+      "kind": "design-system",
+      "title": "Appsmith",
+      "notes": "open-source admin builder references (sidebar-nav · query list)"
+    },
+    {
+      "url": "https://stripe.com/radar",
+      "kind": "design-system",
+      "title": "Stripe Radar",
+      "notes": "fraud admin dashboard references (alert list · ticket queue · data-table)"
+    },
+    {
+      "url": "https://posthog.com",
+      "kind": "design-system",
+      "title": "PostHog",
+      "notes": "product analytics references (activation funnel · cohort matrix · retention)"
+    },
+    {
+      "url": "https://plausible.io",
+      "kind": "design-system",
+      "title": "Plausible",
+      "notes": "lightweight analytics admin references (KPI · segment filter)"
+    },
+    {
+      "url": "https://mixpanel.com",
+      "kind": "design-system",
+      "title": "Mixpanel",
+      "notes": "cohort retention matrix + funnel references"
+    }
+  ]
+}

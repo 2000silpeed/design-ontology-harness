@@ -1,0 +1,139 @@
+{
+  "version": "1.0.0",
+  "notes": "Patterns are pipe-separated regex alternatives, case-insensitive. Korean + English. Used by Phase 11-2 matching engine.",
+  "app_mode": {
+    "dashboard": [
+      "대시보드", "관리자", "어드민", "콘솔", "운영 콘솔",
+      "퍼블리싱", "큐레이션", "뉴스룸", "편집부", "편집자 대시보드", "편집 운영",
+      "스타트업 어드민", "스타트업 대시보드", "그로스 admin", "그로스 대시보드", "activation 대시보드",
+      "웰니스 대시보드", "habit 대시보드", "습관 대시보드", "consumer admin", "consumer 대시보드",
+      "dashboard", "admin", "console", "backoffice",
+      "publishing", "newsroom", "curation", "editor dashboard", "editor-dashboard",
+      "editorial admin", "editorial-admin", "publishing dashboard",
+      "startup admin", "startup dashboard", "growth admin", "growth dashboard",
+      "activation dashboard", "retention dashboard", "cohort dashboard",
+      "wellness dashboard", "habit dashboard", "habit admin", "habit tracker admin",
+      "consumer admin", "consumer dashboard", "b2c admin", "b2c dashboard"
+    ],
+    "document-content": [
+      "문서", "블로그", "매거진", "아티클", "레퍼런스", "위키", "가이드",
+      "오피니언", "매니페스토", "선언", "롱폼", "에디토리얼", "지인",
+      "docs", "documentation", "article", "blog", "reading", "magazine", "reference", "wiki",
+      "editorial", "opinion", "zine", "long-form", "longform", "manifesto"
+    ],
+    "marketing-landing": [
+      "랜딩", "홈페이지", "마케팅", "프로모션", "퍼블리셔",
+      "뉴스레터 랜딩", "뉴스레터 홈페이지", "퍼블리셔 랜딩", "퍼블리셔 홈페이지",
+      "구독 랜딩", "pricing 페이지", "pricing 랜딩",
+      "landing", "marketing", "homepage", "promo", "promotion", "publisher",
+      "newsletter landing", "publisher landing", "newsletter homepage",
+      "publisher hub", "subscribe landing", "subscribe page", "pricing page",
+      "pricing landing", "publisher site", "publication landing", "issue archive landing"
+    ],
+    "commerce": [
+      "커머스", "쇼핑", "쇼핑몰", "스토어", "결제", "장바구니",
+      "크래프트 쇼핑", "d2c 커머스", "컨슈머 커머스", "소비자 커머스",
+      "스낵 쇼핑몰", "웰니스 푸드 커머스", "구독 커머스", "기프팅 커머스",
+      "commerce", "shop", "store", "ecommerce", "cart", "checkout",
+      "d2c commerce", "craft commerce", "consumer commerce",
+      "snack shop", "wellness food commerce", "subscription commerce",
+      "gifting commerce"
+    ],
+    "conversation-copilot": [
+      "챗봇", "채팅", "대화", "코파일럿", "어시스턴트", "ai 도우미",
+      "글쓰기", "에세이", "뉴스레터 작성", "저널 writing", "writing 코파일럿", "writing copilot",
+      "엔터프라이즈 챗봇", "금융 챗봇", "보험 챗봇", "규제 챗봇", "컴플라이언스 챗봇",
+      "chat", "chatbot", "copilot", "assistant", "prompt",
+      "writing", "essay", "newsletter drafting", "drafting", "drafts",
+      "enterprise chatbot", "enterprise copilot", "compliance chatbot",
+      "finance chatbot", "insurance chatbot", "regulatory chatbot", "audit chatbot"
+    ],
+    "canvas-tool": [
+      "캔버스", "에디터", "피그마", "디자인 도구", "크리에이티브",
+      "canvas", "editor", "figma-like", "creative", "drawing", "whiteboard"
+    ],
+    "community-feed": [
+      "피드", "커뮤니티", "소셜", "쓰레드", "타임라인", "팔로우",
+      "feed", "community", "social", "thread", "timeline", "follow"
+    ],
+    "monitoring-ops": [
+      "모니터링", "운영", "알람", "경보", "옵저버빌리티", "SRE", "인시던트", "온콜",
+      "monitoring", "ops", "alert", "observability", "metrics", "sre",
+      "grafana", "datadog", "prometheus", "incident", "on-call", "oncall"
+    ]
+  },
+  "brand_tone": {
+    "minimal-tech": [
+      "미니멀", "심플", "깔끔", "중립",
+      "minimal", "clean", "neutral", "precise", "utilitarian"
+    ],
+    "editorial-warm": [
+      "에디토리얼", "세리프", "차분", "잡지",
+      "editorial", "serif", "calm", "warm"
+    ],
+    "bold-confident": [
+      "대담", "강렬", "임팩트",
+      "bold", "strong", "confident", "energetic", "high-contrast"
+    ],
+    "playful-soft": [
+      "친근", "귀여", "부드러운", "말랑",
+      "playful", "friendly", "rounded", "soft", "cute"
+    ],
+    "corporate-trust": [
+      "기업", "신뢰", "보수", "전문", "엔터프라이즈", "규제", "감사", "컴플라이언스",
+      "corporate", "trust", "trustworthy", "conservative", "professional",
+      "enterprise", "regulatory", "compliance", "audit", "regulated"
+    ]
+  },
+  "color_mode": {
+    "dark": ["다크", "어두운", "나이트", "블랙", "dark", "night", "black"],
+    "light": ["라이트", "밝은", "화이트", "light", "white", "bright"]
+  },
+  "tags": {
+    "fintech": ["핀테크", "금융", "결제", "송금", "은행", "투자", "fintech", "finance", "payment", "banking"],
+    "ai": ["ai", "인공지능", "gpt", "llm", "생성형"],
+    "sports": ["스포츠", "리그", "축구", "야구", "sports", "league", "soccer", "baseball"],
+    "fashion": ["패션", "의류", "브랜드", "fashion", "apparel"],
+    "devtools": ["개발자 도구", "devtools", "developer tools", "api", "sdk"],
+    "reading-heavy": ["긴글", "장문", "리딩", "reading", "long-form"],
+    "reference-docs": ["레퍼런스 문서", "api docs", "reference docs"],
+    "mobile-first": ["모바일", "mobile", "mobile-first"],
+    "saas": ["saas", "서비스형", "구독", "subscription"],
+    "startup": ["스타트업", "초기기업", "startup", "early-stage"],
+    "growth": ["그로스", "성장", "growth", "activation", "retention", "활성화", "리텐션"],
+    "cohort": ["코호트", "cohort", "cohort retention"],
+    "referral": ["레퍼럴", "추천", "referral", "k-factor", "viral"],
+    "consumer": ["컨슈머", "소비자", "c2c", "b2c", "consumer"],
+    "wellness": ["웰니스", "wellness", "건강", "well-being", "wellbeing"],
+    "habit": ["습관", "루틴", "habit", "routine"],
+    "tracking": ["트래킹", "추적", "tracking", "tracker"],
+    "mindful": ["마음챙김", "명상", "mindful", "mindfulness", "meditation"],
+    "d2c": ["d2c", "direct-to-consumer", "direct to consumer"],
+    "craft": ["크래프트", "수공예", "craft", "handcrafted", "artisanal"],
+    "snack": ["스낵", "간식", "snack", "healthy snack"],
+    "subscription": ["정기구독", "정기 배송", "subscription", "recurring"],
+    "gift": ["기프팅", "선물", "gift", "gifting"],
+    "creative": ["크리에이티브", "창작", "creative"],
+    "writing": ["글쓰기", "writing", "essay", "drafting"],
+    "publisher": ["퍼블리셔", "publisher", "publication", "뉴스레터 publisher", "publisher hub", "뉴스레터 publication"],
+    "enterprise": ["엔터프라이즈", "enterprise", "대기업", "기업용", "enterprise-grade"],
+    "compliance": ["컴플라이언스", "compliance", "규제", "regulatory", "감사", "audit", "정책", "policy-check"],
+    "editorial": ["에디토리얼", "editorial", "magazine"],
+    "magazine": ["매거진", "잡지", "이슈", "magazine", "issue"],
+    "publishing": ["출판", "퍼블리싱", "퍼블리싱 대시보드", "publishing", "pub"],
+    "opinion": ["오피니언", "선언", "매니페스토", "opinion", "op-ed", "manifesto"],
+    "social": ["소셜", "social", "sns", "피드", "feed"],
+    "community": ["커뮤니티", "community", "쓰레드", "thread"],
+    "ko": ["한글", "한국어", "국문", "korean", "ko"],
+    "en": ["영문", "english", "en"],
+    "dense": ["고밀도", "밀도 높은", "dense"],
+    "airy": ["여백", "여유", "airy", "spacious"]
+  },
+  "anti_keywords": {
+    "minimal-tech": ["playful", "cute", "귀여", "친근"],
+    "playful-soft": ["corporate", "기업", "보수"],
+    "bold-confident": ["subtle", "차분", "calm", "muted"],
+    "editorial-warm": ["bold", "대담", "energetic"],
+    "corporate-trust": ["playful", "친근", "bold"]
+  }
+}

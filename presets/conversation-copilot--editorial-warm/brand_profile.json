@@ -1,0 +1,303 @@
+{
+  "brand_name": "Quill",
+  "system_name": "Quill System",
+  "product_summary": "editorial-warm 톤 writing/reading AI copilot — chat · prompt · artifact(draft) · thread · composer, 차분한 warm neutral + serif-ish pairing, reading-first editorial canvas, 한국어 1급",
+  "audiences": [
+    "에세이 / 뉴스레터 / 블로그 글쓰기 작가 (차분한 writing partner 필요)",
+    "저널 / 독서 노트 / 북 리뷰를 기록하는 reading-first 사용자",
+    "매거진 / 에디토리얼 에디터 (AI 드래프트 편집 + 아티팩트 리뷰)"
+  ],
+  "brand_keywords": [
+    "conversation-copilot",
+    "copilot",
+    "assistant",
+    "chat",
+    "prompt",
+    "thread",
+    "artifact",
+    "writing-assistant",
+    "editorial-copilot",
+    "essay-draft",
+    "newsletter-draft",
+    "calm",
+    "warm",
+    "editorial",
+    "serif"
+  ],
+  "anti_keywords": [
+    "minimal-tech",
+    "bold-confident",
+    "saturated",
+    "playful-pastel",
+    "dashboard-heavy",
+    "commerce-heavy",
+    "streetwear",
+    "high-contrast",
+    "neon"
+  ],
+  "tone_of_voice": [
+    "calm",
+    "thoughtful",
+    "editorial",
+    "warm",
+    "measured"
+  ],
+  "visual_keywords": [
+    "warm neutral surface",
+    "serif heading pair",
+    "muted editorial accent",
+    "reading-first layout",
+    "calm writing canvas",
+    "soft cream surface",
+    "muted warm divider",
+    "restrained bibliographic chrome",
+    "long-form artifact preview"
+  ],
+  "interaction_keywords": [
+    "calm streaming cursor",
+    "gentle prompt composer",
+    "writing artifact side panel",
+    "draft revision timeline",
+    "outline collapse toggle",
+    "citation footnote hover",
+    "reading-mode toggle",
+    "slow fade transition",
+    "warm focus ring",
+    "muted mention chip"
+  ],
+  "platforms": [
+    "web",
+    "desktop-web",
+    "tablet-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "chat message",
+    "chat thread",
+    "assistant message",
+    "user message",
+    "prompt composer",
+    "streaming cursor",
+    "typing indicator",
+    "inline citation",
+    "message artifact",
+    "artifact preview panel",
+    "draft document",
+    "outline sidebar",
+    "heading anchor",
+    "revision timeline",
+    "tone slider",
+    "reading-mode toggle",
+    "citation footnote",
+    "quote block",
+    "paragraph block",
+    "mention chip",
+    "suggestion card",
+    "thread header",
+    "new thread button",
+    "regenerate button",
+    "stop-generation button",
+    "empty conversation state"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "design token",
+      "writing",
+      "editor",
+      "article",
+      "reading"
+    ],
+    "avoid_sources_containing": [
+      "dashboard-only",
+      "commerce-only",
+      "streetwear",
+      "pastel-only",
+      "saturated-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Pantone Trend Reds",
+      "Natural Greens",
+      "Natural Yellows"
+    ],
+    "palette_roles": {
+      "primary": "Marsala",
+      "accent": "Moss Green",
+      "surface_tint": "Flax"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "warm",
+      "contrast": "balanced",
+      "diversity": "narrow",
+      "surface_style": "grounded",
+      "prefer_moods": [
+        "차분",
+        "따뜻함",
+        "사려 깊음",
+        "editorial",
+        "고요함"
+      ],
+      "avoid_moods": [
+        "대담",
+        "강렬",
+        "미니멀",
+        "차가움",
+        "고대비"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Marsala #964F4C primary — 와인-브라운 중후 editorial primary, 성숙/안정/클래식 무드, 기존 12종 HEX 겹침 0 (signal-desk editorial-warm Ochre #CC7722 / Terracotta #E2725B 와 정반대의 deep warm wine red)",
+      "Moss Green #8A9A5B accent — 자연 빈티지 muted sage, calm reading-first 강조 accent (Celadon #ACE1AF / Emerald #4A7C59 / Mint #98FF98 과 겹침 0, writing-artifact/citation 강조에 적합)",
+      "Flax #EEDC82 surface_tint — 광택 없는 건조한 종이 질감 베이지-옐로, editorial writing canvas 와 reading-first 레이아웃의 base surface (Wheat #F5DEB3 / Buttercream #F3E5AB / Cornsilk #FFF8DC 와 겹침 0)",
+      "light mode 가 기본 — reading-first editorial 관례, dark 옵션 제공 (deep warm brown surface + tuned Marsala/Moss 채도 낮춤)",
+      "기존 12종 프리셋 HEX 와 겹침 0 — Marsala/Moss Green/Flax 조합",
+      "document-content--editorial-warm (signal-desk) 와 commerce--editorial-warm (colorfit) 와 톤만 공유 — HEX 는 완전 차별화, conversation-copilot 어휘로 매칭 축 분리"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Source Serif Pro",
+      "weights": [
+        400,
+        600,
+        700
+      ],
+      "notes": "editorial serif heading — Lora (signal-desk) 와 차별화, 드래프트 아티팩트 제목 / 스레드 헤더 / 아티클 heading, calm editorial pairing"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "prompt composer / chat message body / artifact prose 본문 공용, line-height 1.6–1.7 (reading-first)"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "notes": "inline code / citation footnote number / tone slider value / revision timestamp — tabular-nums 영문 고정"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한글 1급 — chat message / artifact body / outline sidebar / citation text, line-height 1.6–1.7 keep-all (editorial long-form)"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "lex page writing copilot",
+      "jasper ai editor calm",
+      "sudowrite writing assistant",
+      "notion ai writing panel",
+      "ulysses writing app editorial",
+      "substack editor warm"
+    ],
+    "sources": [],
+    "preferred_count": 6,
+    "weights": {
+      "layout": 0.3,
+      "component_shape": 0.2,
+      "color_balance": 0.2,
+      "typography_mood": 0.2,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "three-pane writing copilot (thread list + conversation + artifact preview panel)",
+      "prompt composer with streaming cursor + suggestion card",
+      "writing artifact preview panel with outline sidebar + heading anchor + revision timeline",
+      "citation footnote hover state + inline citation chip",
+      "tone slider + reading-mode toggle on artifact header"
+    ],
+    "avoid_patterns": [
+      "saturated commerce hero",
+      "neon bold dashboard",
+      "playful pastel feed",
+      "dense chart monitoring canvas",
+      "streetwear drop banner"
+    ],
+    "notes": [
+      "Lex / Jasper / Sudowrite / Notion AI / Ulysses / Substack 계열 calm editorial writing copilot 참조",
+      "editorial-warm 톤: warm neutral surface + serif heading pair + muted accent + reading-first layout + long-form artifact preview",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://lex.page",
+      "kind": "design-system",
+      "title": "Lex",
+      "notes": "AI writing copilot references"
+    },
+    {
+      "url": "https://www.jasper.ai",
+      "kind": "visual-reference",
+      "title": "Jasper",
+      "notes": "calm editorial AI writing references"
+    },
+    {
+      "url": "https://www.sudowrite.com",
+      "kind": "visual-reference",
+      "title": "Sudowrite",
+      "notes": "writing assistant + thread UI references"
+    },
+    {
+      "url": "https://www.notion.so",
+      "kind": "design-system",
+      "title": "Notion AI",
+      "notes": "inline AI writing panel references"
+    },
+    {
+      "url": "https://ulysses.app",
+      "kind": "visual-reference",
+      "title": "Ulysses",
+      "notes": "editorial warm writing workspace references"
+    },
+    {
+      "url": "https://substack.com",
+      "kind": "visual-reference",
+      "title": "Substack",
+      "notes": "newsletter editor + publishing references"
+    }
+  ]
+}

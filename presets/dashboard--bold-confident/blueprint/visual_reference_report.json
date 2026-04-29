@@ -1,0 +1,520 @@
+{
+  "mode": "local-images",
+  "query": [
+    "retool admin console",
+    "appsmith internal tool",
+    "stripe radar dashboard",
+    "posthog activation funnel",
+    "plausible analytics dashboard",
+    "mixpanel cohort matrix"
+  ],
+  "preferred_count": 8,
+  "weights": {
+    "layout": 0.35,
+    "component_shape": 0.25,
+    "color_balance": 0.15,
+    "typography_mood": 0.15,
+    "surface_style": 0.1
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "Retool / Appsmith / Stripe Radar / PostHog / Plausible / Mixpanel 계열 B2C startup admin 참조",
+    "bold-confident 톤: vivid Ultra Violet primary + Illuminating yellow accent + warm Creamsicle surface, 데이터 dense 유지",
+    "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+  ],
+  "must_include": [
+    "sidebar-nav + data-table + kpi-card dashboard shell",
+    "activation funnel with 4–6 stages",
+    "cohort retention matrix heat-scale",
+    "referral widget with share CTA",
+    "filter-chip + segment filter bar",
+    "vivid saturated primary CTA on admin table row"
+  ],
+  "avoid_patterns": [
+    "magazine hero cover story",
+    "commerce product detail",
+    "pastel playful feed",
+    "corporate navy blueprint",
+    "long-form reading article",
+    "landing hero CTA-only"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "dense",
+      "confidence": 0.94,
+      "evidence": [
+        "dashboard x4",
+        "table x4",
+        "analytics x1"
+      ],
+      "candidates": [
+        {
+          "value": "dense",
+          "score": 26.0
+        },
+        {
+          "value": "airy",
+          "score": 8.0
+        },
+        {
+          "value": "balanced",
+          "score": 2.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.37,
+      "evidence": [
+        "warm x2",
+        "editorial x1"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 3.0
+        },
+        {
+          "value": "flat",
+          "score": 2.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "utilitarian",
+      "confidence": 0.94,
+      "evidence": [
+        "dashboard x4",
+        "admin x5",
+        "table x4"
+      ],
+      "candidates": [
+        {
+          "value": "utilitarian",
+          "score": 26.0
+        },
+        {
+          "value": "editorial",
+          "score": 12.0
+        },
+        {
+          "value": "playful",
+          "score": 6.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "medium",
+      "confidence": 0.39,
+      "evidence": [
+        "card x3"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.94,
+      "evidence": [
+        "dashboard x4",
+        "analytics x1",
+        "metric x1",
+        "kpi x3",
+        "chart x1",
+        "table x4"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.94,
+      "evidence": [
+        "table x4",
+        "data x3",
+        "filter x5"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x1",
+        "article x1",
+        "feed x2",
+        "story x1",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "landing-narrative",
+      "label": "Narrative landing flow",
+      "confidence": 0.94,
+      "evidence": [
+        "landing x1",
+        "hero x2",
+        "cta x4"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.",
+      "confidence": 0.94,
+      "evidence": [
+        "surface=tinted",
+        "density=dense",
+        "corner=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Dashboard grid"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "정보 밀도에 맞춰 type scale 차이를 줄이고 table/list label의 정렬 정확도를 우선한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "typography_mood=utilitarian"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.94,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=dense"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.94)",
+        "dashboard x4",
+        "analytics x1",
+        "metric x1",
+        "kpi x3",
+        "chart x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.94)",
+        "layout=dashboard-grid (0.94)",
+        "table x4",
+        "data x3",
+        "filter x5"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.94,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.94)",
+        "editorial x1",
+        "article x1",
+        "story x1",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.94,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "layout=landing-narrative (0.94)",
+        "hero x2",
+        "landing x1",
+        "cta x4"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "workspace-shell",
+      "label": "Workspace shell",
+      "family": "navigation",
+      "confidence": 0.94,
+      "suggested_components": [
+        "app-shell",
+        "sidebar-nav",
+        "workspace-switcher",
+        "breadcrumb",
+        "context-panel"
+      ],
+      "supports_primitives": [
+        "workspace navigation"
+      ],
+      "evidence": [
+        "workspace x1",
+        "sidebar x2",
+        "navigation x1",
+        "panel x2",
+        "shell x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Dashboard grid",
+    "recommended_direction": [
+      "layout는 Dashboard grid 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 utilitarian 축 유지",
+      "density는 dense 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "magazine hero cover story",
+      "commerce product detail",
+      "pastel playful feed",
+      "corporate navy blueprint",
+      "long-form reading article",
+      "landing hero CTA-only"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "Lattice-Dash",
+    "system_name": "Lattice-Dash System",
+    "brand_keywords": [
+      "dashboard",
+      "admin",
+      "console",
+      "startup",
+      "saas",
+      "b2c",
+      "growth",
+      "activation",
+      "retention",
+      "cohort",
+      "referral",
+      "bold",
+      "vivid",
+      "energetic",
+      "high-contrast",
+      "impact"
+    ],
+    "anti_keywords": [
+      "editorial-warm",
+      "magazine-serif",
+      "minimal-only",
+      "playful-pastel",
+      "corporate-conservative",
+      "document-heavy",
+      "commerce-checkout"
+    ],
+    "visual_keywords": [
+      "high-contrast headline",
+      "vivid ultra violet primary",
+      "illuminating yellow accent",
+      "saturated KPI card",
+      "dense data table",
+      "impact metric typography",
+      "youthful startup",
+      "admin-first bold",
+      "activation funnel visual",
+      "cohort matrix heat-scale"
+    ],
+    "interaction_keywords": [
+      "keyboard-first",
+      "command palette",
+      "sticky filter bar",
+      "hover-emphasis row",
+      "activation funnel drill",
+      "cohort retention hover",
+      "referral share action",
+      "impact toast",
+      "saturated primary CTA"
+    ],
+    "product_primitives": [
+      "sidebar navigation",
+      "workspace switcher",
+      "data table",
+      "kpi card",
+      "filter chip",
+      "command palette",
+      "activity feed",
+      "activation funnel",
+      "referral widget",
+      "cohort matrix",
+      "retention chart",
+      "conversion funnel",
+      "experiment panel",
+      "user list",
+      "ticket queue",
+      "alert list",
+      "segment filter",
+      "goal tracker",
+      "settings panel"
+    ]
+  }
+}

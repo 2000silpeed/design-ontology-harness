@@ -1,0 +1,694 @@
+{
+  "$schema": "../schemas/preset_matrix.schema.json",
+  "matrix_version": "1.0.0",
+  "app_modes": [
+    {
+      "id": "dashboard",
+      "label": "대시보드/관리자",
+      "representative_ux": [
+        "sidebar",
+        "data-table",
+        "kpi-card",
+        "filter-chrome"
+      ]
+    },
+    {
+      "id": "document-content",
+      "label": "문서/콘텐츠/레퍼런스",
+      "representative_ux": [
+        "reading-flow",
+        "toc",
+        "article",
+        "long-form"
+      ]
+    },
+    {
+      "id": "marketing-landing",
+      "label": "마케팅/랜딩",
+      "representative_ux": [
+        "hero",
+        "pricing",
+        "social-proof",
+        "cta"
+      ]
+    },
+    {
+      "id": "commerce",
+      "label": "커머스/쇼핑",
+      "representative_ux": [
+        "product-grid",
+        "product-detail",
+        "cart",
+        "checkout"
+      ]
+    },
+    {
+      "id": "conversation-copilot",
+      "label": "대화형/코파일럿",
+      "representative_ux": [
+        "chat",
+        "prompt",
+        "artifact",
+        "thread"
+      ]
+    },
+    {
+      "id": "canvas-tool",
+      "label": "캔버스/크리에이티브 도구",
+      "representative_ux": [
+        "canvas",
+        "layer-panel",
+        "inspector"
+      ]
+    },
+    {
+      "id": "community-feed",
+      "label": "소셜/피드",
+      "representative_ux": [
+        "feed",
+        "thread",
+        "presence",
+        "notifications"
+      ]
+    },
+    {
+      "id": "monitoring-ops",
+      "label": "모니터링/운영",
+      "representative_ux": [
+        "chart-grid",
+        "alert-list",
+        "dense-table",
+        "status"
+      ]
+    }
+  ],
+  "brand_tones": [
+    {
+      "id": "minimal-tech",
+      "label": "미니멀 테크",
+      "keywords": [
+        "clean",
+        "neutral",
+        "precise",
+        "미니멀"
+      ],
+      "palette_bias": "무채색 + 제한된 accent"
+    },
+    {
+      "id": "editorial-warm",
+      "label": "에디토리얼 웜",
+      "keywords": [
+        "serif",
+        "calm",
+        "editorial",
+        "warm",
+        "차분"
+      ],
+      "palette_bias": "warm neutral + muted accent"
+    },
+    {
+      "id": "bold-confident",
+      "label": "대담한",
+      "keywords": [
+        "high-contrast",
+        "energetic",
+        "bold",
+        "대담"
+      ],
+      "palette_bias": "saturated primary"
+    },
+    {
+      "id": "playful-soft",
+      "label": "플레이풀 소프트",
+      "keywords": [
+        "rounded",
+        "friendly",
+        "playful",
+        "친근"
+      ],
+      "palette_bias": "pastel + rounded"
+    },
+    {
+      "id": "corporate-trust",
+      "label": "기업/신뢰",
+      "keywords": [
+        "conservative",
+        "trustworthy",
+        "corporate",
+        "신뢰"
+      ],
+      "palette_bias": "navy/deep blue"
+    }
+  ],
+  "color_modes": [
+    "light",
+    "dark",
+    "both"
+  ],
+  "presets": [
+    {
+      "id": "canvas-tool--minimal-tech",
+      "app_mode": "canvas-tool",
+      "brand_tone": "minimal-tech",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "creative",
+        "ko"
+      ],
+      "description": "크리에이티브 팀을 위한 minimal-tech 톤 캔버스 · 레이어 · 인스펙터 도구 — keyboard-first, 한국어 1급",
+      "source_project": "atelier",
+      "owner": "maintainer",
+      "preview_path": "presets/canvas-tool--minimal-tech/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "크리에이티브 캔버스 도구 — 한국어 UI, shortcut/숫자 input 은 mono 영문 고정, 숫자 tabular-nums, line-height 1.6 keep-all"
+        }
+      },
+      "tier": "P1"
+    },
+    {
+      "id": "commerce--bold-confident",
+      "app_mode": "commerce",
+      "brand_tone": "bold-confident",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "ecommerce",
+        "streetwear",
+        "ko"
+      ],
+      "description": "젊은 B2C 커머스 — bold-confident 톤 드롭·제품 그리드·장바구니·체크아웃, 한국어 1급",
+      "source_project": "drop",
+      "owner": "maintainer",
+      "preview_path": "presets/commerce--bold-confident/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "젊은 B2C commerce bold-confident — 한국어 product title / drop banner / cart item keep-all line-height 1.4–1.5, price / discount / quantity / countdown 숫자 tabular-nums 영문 고정"
+        }
+      },
+      "tier": "P2"
+    },
+    {
+      "id": "commerce--editorial-warm",
+      "app_mode": "commerce",
+      "brand_tone": "editorial-warm",
+      "color_modes": [
+        "light"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "fashion",
+        "mobile-first",
+        "ko"
+      ],
+      "description": "퍼스널컬러 기반 모바일 패션 커머스 — 에디토리얼 웜 톤, 코디/가격 비교 UX",
+      "source_project": "colorfit",
+      "owner": "maintainer",
+      "preview_path": "presets/commerce--editorial-warm/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "notes": "mobile-first fashion commerce, 한국어 UI"
+        }
+      },
+      "tier": "P0"
+    },
+    {
+      "id": "commerce--playful-soft",
+      "app_mode": "commerce",
+      "brand_tone": "playful-soft",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "consumer",
+        "d2c",
+        "craft",
+        "ko"
+      ],
+      "description": "friendly D2C craft snack commerce — playful-soft 톤 warm pastel consumer commerce, product-grid · rounded product-card · variant-chip · gentle add-to-cart · cart-drawer · soft checkout, 한국어 1급",
+      "source_project": "orchard",
+      "owner": "@alice-external",
+      "preview_path": "presets/commerce--playful-soft/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "consumer D2C craft commerce playful-soft — 한국어 product-title / product-description / review / cart-line / checkout-label / gift-message / filter-chip keep-all line-height 1.5–1.6, page-title / section-header 는 Pretendard 700 letter-spacing 0, price / discount / quantity / order-number / shipping-eta 는 mono 영문 고정 tabular-nums, rounded soft 모든 컴포넌트 radius 12–16"
+        }
+      },
+      "tier": "P3"
+    },
+    {
+      "id": "community-feed--playful-soft",
+      "app_mode": "community-feed",
+      "brand_tone": "playful-soft",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "social",
+        "community",
+        "ko"
+      ],
+      "description": "친근한 소셜 피드 · 스레드 · 프레즌스 · 알림 — playful-soft 톤, 한국어 1급",
+      "source_project": "bloom",
+      "owner": "maintainer",
+      "preview_path": "presets/community-feed--playful-soft/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "친근한 소셜 피드 — 한국어 UI, 이모지 혼용, 숫자 tabular-nums, line-height 1.7 keep-all"
+        }
+      },
+      "tier": "P1"
+    },
+    {
+      "id": "conversation-copilot--corporate-trust",
+      "app_mode": "conversation-copilot",
+      "brand_tone": "corporate-trust",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "fintech",
+        "enterprise",
+        "compliance",
+        "ko"
+      ],
+      "description": "금융·보험 enterprise AI 챗봇 builder — conversation-copilot--corporate-trust 톤, workspace + thread + chat + compliance-artifact + audit-trail + policy-check + citation, super-sonic blue + copper + powder blue palette, 규제·감사 맥락 한국어 1급",
+      "source_project": "mercer",
+      "owner": "@carol-external",
+      "preview_path": "presets/conversation-copilot--corporate-trust/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "금융·보험 enterprise AI 챗봇 corporate-trust — 한국어 chat-message / compliance-artifact paragraph / audit-trail description / policy-check label / citation footnote keep-all line-height 1.5–1.6 (enterprise), workspace-header / thread-title / project-switcher / section-header 는 Pretendard 700 letter-spacing 0, policy-id / audit timestamp / record-id / compliance-version / reviewer-id 는 mono 영문 고정 tabular-nums, 규제·감사 맥락에서 serif 지양"
+        }
+      },
+      "tier": "P3"
+    },
+    {
+      "id": "conversation-copilot--editorial-warm",
+      "app_mode": "conversation-copilot",
+      "brand_tone": "editorial-warm",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "writing",
+        "editorial",
+        "ko"
+      ],
+      "description": "writing/editorial AI copilot — editorial-warm 톤, chat·prompt·artifact(draft)·thread·composer, 차분한 warm neutral + serif-ish pairing, 한국어 1급",
+      "source_project": "quill",
+      "owner": "maintainer",
+      "preview_path": "presets/conversation-copilot--editorial-warm/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "editorial-warm writing copilot — 한국어 chat message / artifact paragraph block keep-all line-height 1.6–1.7 (reading-first), citation footnote number / revision timestamp / tone slider value 는 mono 영문 고정, tabular-nums"
+        }
+      },
+      "tier": "P2"
+    },
+    {
+      "id": "conversation-copilot--minimal-tech",
+      "app_mode": "conversation-copilot",
+      "brand_tone": "minimal-tech",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "ai",
+        "ko"
+      ],
+      "description": "AI 코파일럿/대화형 워크스페이스 — 미니멀 테크 톤, chat + artifact + thread",
+      "source_project": "glacier",
+      "owner": "maintainer",
+      "preview_path": "presets/conversation-copilot--minimal-tech/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "notes": "AI copilot 대화/아티팩트 흐름, 한국어 1급 지원"
+        }
+      },
+      "tier": "P0"
+    },
+    {
+      "id": "dashboard--bold-confident",
+      "app_mode": "dashboard",
+      "brand_tone": "bold-confident",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "saas",
+        "startup",
+        "ko"
+      ],
+      "description": "B2C 스타트업 운영 대시보드 — bold-confident 톤 vivid 팔레트, 한국어 1급",
+      "source_project": "lattice-dash",
+      "owner": "@maintainer-dogfood",
+      "preview_path": "presets/dashboard--bold-confident/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "B2C 스타트업 운영 대시보드 bold-confident — 한국어 data-table cell / activation-funnel 라벨 / cohort-matrix row / referral-widget / filter-chip keep-all line-height 1.4–1.5 (dashboard dense), 지표 숫자 (MAU / DAU / retention / activation / conversion / ARPU) 는 mono 영문 tabular-nums 고정, vivid purple/yellow 위 텍스트는 대비 4.5:1 화이트 가독"
+        }
+      },
+      "tier": "P3"
+    },
+    {
+      "id": "dashboard--corporate-trust",
+      "app_mode": "dashboard",
+      "brand_tone": "corporate-trust",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "fintech",
+        "ko"
+      ],
+      "description": "기업·금융팀을 위한 corporate-trust 톤 핀테크 운영 대시보드 — 거래/잔고/컴플라이언스 콘솔, 한국어 1급",
+      "source_project": "ledger",
+      "owner": "maintainer",
+      "preview_path": "presets/dashboard--corporate-trust/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "fintech 운영 대시보드 — 한국어 UI 1급, 숫자 가독성은 tabular-nums 로 보조"
+        }
+      },
+      "tier": "P1"
+    },
+    {
+      "id": "dashboard--editorial-warm",
+      "app_mode": "dashboard",
+      "brand_tone": "editorial-warm",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "editorial",
+        "publishing",
+        "ko"
+      ],
+      "description": "editorial-warm 운영/큐레이션 대시보드 — sidebar-nav · data-table · kpi-card · filter-chip · editorial-calendar · curation-queue · publishing-pipeline, warm neutral + serif heading + muted accent, 한국어 1급",
+      "source_project": "curator",
+      "owner": "maintainer",
+      "preview_path": "presets/dashboard--editorial-warm/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "editorial-warm 운영/큐레이션 대시보드 — 한국어 data-table cell / kpi-card 라벨 / filter-chip / curation-queue row / contributor-roster cell keep-all line-height 1.5–1.6 (dashboard dense 유지), workspace-header / section-header 는 Pretendard 700 letter-spacing 0 line-height 1.4–1.5, editorial-analytics-kpi / reading-analytics-kpi / editorial-calendar date / row id / issue-number / pagination 은 mono 영문 고정 tabular-nums, 한글 article-preview-pane drawer 진입 시 line-height 1.6–1.7 (editorial long-form reading)"
+        }
+      },
+      "tier": "P2"
+    },
+    {
+      "id": "dashboard--minimal-tech",
+      "app_mode": "dashboard",
+      "brand_tone": "minimal-tech",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "saas",
+        "ko"
+      ],
+      "description": "SaaS 팀을 위한 미니멀 테크 운영 대시보드 — 데이터 테이블·KPI·command palette 중심, 한국어 1급",
+      "source_project": "orbit",
+      "owner": "maintainer",
+      "preview_path": "presets/dashboard--minimal-tech/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "SaaS 관리자 대시보드 — 한국어 UI 1급, Pretendard Variable 번들"
+        }
+      },
+      "tier": "P0"
+    },
+    {
+      "id": "dashboard--playful-soft",
+      "app_mode": "dashboard",
+      "brand_tone": "playful-soft",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "wellness",
+        "consumer",
+        "ko"
+      ],
+      "description": "consumer wellness/habit admin — playful-soft 톤 pastel 팔레트, 한국어 1급",
+      "source_project": "meadow",
+      "owner": "@maintainer-dogfood",
+      "preview_path": "presets/dashboard--playful-soft/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "consumer wellness admin playful-soft — 한국어 data-table cell / habit-calendar / wellness-score / mood-check / streak-indicator / insight-card keep-all line-height 1.5–1.6 (dashboard soft), 지표 숫자 (streak days / score / mood avg / session minutes) 는 mono 영문 tabular-nums 고정, rounded soft 모든 컴포넌트 radius 12–16"
+        }
+      },
+      "tier": "P3"
+    },
+    {
+      "id": "document-content--bold-confident",
+      "app_mode": "document-content",
+      "brand_tone": "bold-confident",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "magazine",
+        "opinion",
+        "ko"
+      ],
+      "description": "bold-confident magazine/opinion long-form — saturated primary + high-contrast + impact typography, article · TOC · pull-quote · masthead, 한국어 1급",
+      "source_project": "broadside",
+      "owner": "maintainer",
+      "preview_path": "presets/document-content--bold-confident/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "bold-confident magazine/opinion long-form — 한국어 article-body / prose-block / paragraph-block keep-all line-height 1.6–1.7 (reading-first), masthead / cover headline / pull-quote 는 Pretendard 900 letter-spacing tight line-height 1.4–1.5, issue-number / credit-line / footnote number / reading-progress 는 mono 영문 tabular-nums 고정"
+        }
+      },
+      "tier": "P2"
+    },
+    {
+      "id": "document-content--editorial-warm",
+      "app_mode": "document-content",
+      "brand_tone": "editorial-warm",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "reading-heavy",
+        "ko"
+      ],
+      "description": "작은 팀·제작자용 에디토리얼 워크스페이스 — 문서/콘텐츠 reading flow, split-pane, warm serif 페어링",
+      "source_project": "signal-desk",
+      "owner": "maintainer",
+      "preview_path": "presets/document-content--editorial-warm/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Lora",
+          "notes": "editorial long-form — heading Pretendard, body Lora serif for reading comfort"
+        }
+      },
+      "tier": "P0"
+    },
+    {
+      "id": "document-content--minimal-tech",
+      "app_mode": "document-content",
+      "brand_tone": "minimal-tech",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "reference-docs",
+        "devtools",
+        "ko"
+      ],
+      "description": "개발자용 API 레퍼런스 · 기술 문서 — TOC + article + code block + callout, 한국어 1급",
+      "source_project": "lattice",
+      "owner": "maintainer",
+      "preview_path": "presets/document-content--minimal-tech/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "개발자 API 레퍼런스 · 기술 문서 — 한국어 본문 가독성(line-height 1.8, keep-all), code block 은 mono 영문 고정"
+        }
+      },
+      "tier": "P1"
+    },
+    {
+      "id": "marketing-landing--bold-confident",
+      "app_mode": "marketing-landing",
+      "brand_tone": "bold-confident",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "sports"
+      ],
+      "description": "프리미어리그 팬 허브 — 대담한 고대비 랜딩/마케팅, 팀·경기 시각 임팩트",
+      "source_project": "premier-league",
+      "owner": "maintainer",
+      "preview_path": "presets/marketing-landing--bold-confident/preview.md",
+      "locale_pairings": {},
+      "tier": "P0"
+    },
+    {
+      "id": "marketing-landing--editorial-warm",
+      "app_mode": "marketing-landing",
+      "brand_tone": "editorial-warm",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "publishing",
+        "editorial",
+        "reading-heavy",
+        "ko"
+      ],
+      "description": "독립 뉴스레터·매거진 발행인용 editorial-warm 톤 마케팅 랜딩 — hero + featured issue + issue archive + subscribe pricing + testimonial + author profile + faq + cta, warm ochre + rust + wheat palette, reading-first, 한국어 1급",
+      "source_project": "loom",
+      "owner": "@bob-external",
+      "preview_path": "presets/marketing-landing--editorial-warm/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "독립 뉴스레터 editorial-warm 마케팅 랜딩 — 한국어 hero-headline / subheadline / featured-issue-title / pricing-description / testimonial-body / issue-archive-title / faq keep-all line-height 1.6–1.7 (reading-first), page-title / section-header 는 Pretendard 700 letter-spacing 0, price number / issue 번호 / 구독자 수 / publication 날짜 는 mono 영문 고정 tabular-nums"
+        }
+      },
+      "tier": "P3"
+    },
+    {
+      "id": "marketing-landing--minimal-tech",
+      "app_mode": "marketing-landing",
+      "brand_tone": "minimal-tech",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "saas",
+        "devtools",
+        "ko"
+      ],
+      "description": "B2B/SaaS 팀을 위한 minimal-tech 톤 마케팅 랜딩 — hero·feature·pricing·social proof·testimonial·faq·cta, 한국어 1급",
+      "source_project": "beacon",
+      "owner": "maintainer",
+      "preview_path": "presets/marketing-landing--minimal-tech/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "B2B/SaaS minimal-tech 랜딩 — 한국어 hero/feature/pricing/testimonial/faq/cta keep-all line-height 1.5–1.6, 가격 숫자 tabular-nums 영문 고정"
+        }
+      },
+      "tier": "P2"
+    },
+    {
+      "id": "monitoring-ops--minimal-tech",
+      "app_mode": "monitoring-ops",
+      "brand_tone": "minimal-tech",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "dark",
+      "tags": [
+        "devtools",
+        "ko"
+      ],
+      "description": "SRE/DevOps 실시간 observability 콘솔 — metric/alert/trace, 다크 기본, 한국어 1급",
+      "source_project": "pulse",
+      "owner": "maintainer",
+      "preview_path": "presets/monitoring-ops--minimal-tech/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "SRE/DevOps 실시간 observability 콘솔 — 한국어 UI, metric/log/trace 는 mono 영문 고정, 숫자 tabular-nums"
+        }
+      },
+      "tier": "P1"
+    }
+  ]
+}

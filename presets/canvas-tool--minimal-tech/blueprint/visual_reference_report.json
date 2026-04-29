@@ -1,0 +1,529 @@
+{
+  "mode": "local-images",
+  "query": [
+    "figma canvas inspector layer panel",
+    "framer canvas tool",
+    "excalidraw whiteboard",
+    "tldraw canvas",
+    "rive editor",
+    "spline 3d editor"
+  ],
+  "preferred_count": 8,
+  "weights": {
+    "layout": 0.35,
+    "component_shape": 0.25,
+    "color_balance": 0.15,
+    "typography_mood": 0.15,
+    "surface_style": 0.1
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "Figma / Framer / Excalidraw / tldraw / Rive / Spline 스타일 캔버스 도구 chrome 참조",
+    "minimal-tech 톤: hairline borders + 무채색 surface + monochrome + single accent",
+    "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+  ],
+  "must_include": [
+    "canvas workspace with toolbar",
+    "layer panel with thumbnails",
+    "inspector with property rows",
+    "ruler and snap guide",
+    "selection handle on canvas",
+    "keyboard shortcut cheatsheet"
+  ],
+  "avoid_patterns": [
+    "magazine serif hero",
+    "playful pastel illustration",
+    "marketing landing copy",
+    "dense data dashboard",
+    "social feed timeline"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "dense",
+      "confidence": 0.68,
+      "evidence": [
+        "dashboard x2",
+        "control x1"
+      ],
+      "candidates": [
+        {
+          "value": "dense",
+          "score": 8.0
+        },
+        {
+          "value": "airy",
+          "score": 6.0
+        },
+        {
+          "value": "balanced",
+          "score": 2.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "flat",
+      "confidence": 0.41,
+      "evidence": [
+        "minimal x2"
+      ],
+      "candidates": [
+        {
+          "value": "flat",
+          "score": 4.0
+        },
+        {
+          "value": "elevated",
+          "score": 2.0
+        },
+        {
+          "value": "tinted",
+          "score": 2.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "editorial",
+      "confidence": 0.73,
+      "evidence": [
+        "editorial x1",
+        "magazine x2",
+        "serif x2"
+      ],
+      "candidates": [
+        {
+          "value": "editorial",
+          "score": 11.0
+        },
+        {
+          "value": "utilitarian",
+          "score": 8.0
+        },
+        {
+          "value": "playful",
+          "score": 6.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "medium",
+      "confidence": 0.24,
+      "evidence": [
+        "fallback=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "split-pane-workspace",
+      "label": "Split-pane workspace",
+      "confidence": 0.94,
+      "evidence": [
+        "workspace x2",
+        "panel x5",
+        "editor x2",
+        "command x1",
+        "dashboard x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.85,
+      "evidence": [
+        "grid x4",
+        "data x1",
+        "timeline x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "landing-narrative",
+      "label": "Narrative landing flow",
+      "confidence": 0.79,
+      "evidence": [
+        "landing x1",
+        "hero x1",
+        "marketing x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.73,
+      "evidence": [
+        "editorial x1",
+        "feed x1",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "flat card planes를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.",
+      "confidence": 0.68,
+      "evidence": [
+        "surface=flat",
+        "density=dense",
+        "corner=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Split-pane workspace"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다.",
+      "confidence": 0.73,
+      "evidence": [
+        "typography_mood=editorial"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.68,
+      "evidence": [
+        "layout=data-review-surface",
+        "density=dense"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.85)",
+        "data x1",
+        "grid x4"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.94,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "layout=landing-narrative (0.79)",
+        "hero x1",
+        "landing x1",
+        "marketing x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "workspace-shell",
+      "label": "Workspace shell",
+      "family": "navigation",
+      "confidence": 0.94,
+      "suggested_components": [
+        "app-shell",
+        "sidebar-nav",
+        "workspace-switcher",
+        "breadcrumb",
+        "context-panel"
+      ],
+      "supports_primitives": [
+        "workspace navigation"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.94)",
+        "workspace x2",
+        "panel x5"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.91,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.73)",
+        "editorial x1",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "conversation-sidecar",
+      "label": "Conversation sidecar",
+      "family": "overlay",
+      "confidence": 0.77,
+      "suggested_components": [
+        "chat-panel",
+        "message-thread",
+        "message-composer",
+        "context-drawer"
+      ],
+      "supports_primitives": [
+        "chat and messaging"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.94)",
+        "panel x5"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.61,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "dashboard x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Split-pane workspace",
+    "recommended_direction": [
+      "layout는 Split-pane workspace 기준으로 정리",
+      "surface language는 flat 성향 우선",
+      "typography mood는 editorial 축 유지",
+      "density는 dense 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "magazine serif hero",
+      "playful pastel illustration",
+      "marketing landing copy",
+      "dense data dashboard",
+      "social feed timeline"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "Atelier",
+    "system_name": "Atelier System",
+    "brand_keywords": [
+      "canvas-tool",
+      "creative",
+      "canvas",
+      "layer",
+      "inspector",
+      "toolbar",
+      "design-tool",
+      "vector",
+      "prototyping",
+      "whiteboard",
+      "minimal",
+      "precise"
+    ],
+    "anti_keywords": [
+      "playful",
+      "pastel",
+      "decorative",
+      "magazine-serif",
+      "marketing-heavy",
+      "cute",
+      "ornamental",
+      "dashboard-heavy",
+      "warm-editorial"
+    ],
+    "visual_keywords": [
+      "neutral canvas surface",
+      "hairline borders",
+      "monochrome + single accent",
+      "thin inspector panels",
+      "dense layer tree",
+      "snap guide",
+      "ruler chrome",
+      "keyboard-first toolbar",
+      "pixel-precise grid",
+      "selection handle",
+      "minimap"
+    ],
+    "interaction_keywords": [
+      "keyboard-first (⌘ shortcut grid)",
+      "layer drag reorder",
+      "inspector number input with scrub",
+      "snap to grid / guide",
+      "zoom and pan canvas",
+      "multi-select drag handle",
+      "undo redo stack",
+      "quick duplicate (⌥-drag)",
+      "contextual toolbar",
+      "asset drag-to-canvas"
+    ],
+    "product_primitives": [
+      "canvas workspace",
+      "layer panel",
+      "layer item",
+      "layer thumbnail",
+      "inspector panel",
+      "property row",
+      "toolbar",
+      "toolbar group",
+      "contextual toolbar",
+      "ruler",
+      "snap guide",
+      "grid overlay",
+      "selection handle",
+      "zoom control",
+      "minimap",
+      "keyboard shortcut cheatsheet",
+      "command palette",
+      "asset library",
+      "export panel"
+    ]
+  }
+}

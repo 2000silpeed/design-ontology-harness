@@ -1,0 +1,4 @@
+https://linear.app/docs
+https://docs.stripe.com
+https://vercel.com/docs
+https://developer.mozilla.org

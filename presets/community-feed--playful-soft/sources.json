@@ -1,0 +1,38 @@
+{
+  "preset_id": "community-feed--playful-soft",
+  "source_project": "bloom",
+  "seeds": [
+    {
+      "url": "https://www.threads.net",
+      "kind": "visual-reference",
+      "title": "Threads",
+      "notes": "soft social feed + reply composer"
+    },
+    {
+      "url": "https://bsky.app",
+      "kind": "visual-reference",
+      "title": "Bluesky",
+      "notes": "timeline + thread UI references"
+    },
+    {
+      "url": "https://joinmastodon.org",
+      "kind": "visual-reference",
+      "title": "Mastodon",
+      "notes": "federated feed + presence references"
+    },
+    {
+      "url": "https://www.are.na",
+      "kind": "visual-reference",
+      "title": "Are.na",
+      "notes": "soft curated community feed references"
+    },
+    {
+      "url": "https://www.tumblr.com",
+      "kind": "visual-reference",
+      "title": "Tumblr",
+      "notes": "playful social feed references"
+    }
+  ],
+  "pretendard_font_license": "SIL OFL 1.1",
+  "created_at": "2026-04-21T12:34:59Z"
+}

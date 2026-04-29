@@ -5,7 +5,6 @@ import re
 from collections import deque
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Iterable
 from urllib.parse import urljoin, urlparse
 from urllib.robotparser import RobotFileParser
 

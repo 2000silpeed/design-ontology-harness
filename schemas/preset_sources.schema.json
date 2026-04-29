@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/design-ontology-harness/preset-sources.schema.json",
+  "title": "Preset Sources",
+  "description": "KB seed references and font license attribution for a single preset (Phase 15-9).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["preset_id", "source_project", "seeds", "pretendard_font_license", "created_at"],
+  "properties": {
+    "preset_id": {
+      "type": "string",
+      "pattern": "^(dashboard|document-content|marketing-landing|commerce|conversation-copilot|canvas-tool|community-feed|monitoring-ops)--(minimal-tech|editorial-warm|bold-confident|playful-soft|corporate-trust)$"
+    },
+    "source_project": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Project name under projects/ used as source."
+    },
+    "seeds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["url", "kind", "title"],
+        "properties": {
+          "url": {
+            "type": "string",
+            "pattern": "^https?://.+",
+            "description": "Public reference URL."
+          },
+          "kind": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Classification hint (design-system, article, brand-guide, visual-reference, reference-docs, etc.)."
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "pretendard_font_license": {
+      "type": "string",
+      "minLength": 1,
+      "description": "SIL OFL 1.1 attribution for the bundled Pretendard font."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

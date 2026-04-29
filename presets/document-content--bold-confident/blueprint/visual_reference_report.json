@@ -1,0 +1,490 @@
+{
+  "mode": "local-images",
+  "query": [
+    "the atlantic magazine feature cover",
+    "new yorker magazine issue cover",
+    "vice long-form opinion",
+    "pitchfork music review feature",
+    "nytimes magazine feature spread",
+    "guardian long read opinion"
+  ],
+  "preferred_count": 6,
+  "weights": {
+    "layout": 0.3,
+    "component_shape": 0.2,
+    "color_balance": 0.2,
+    "typography_mood": 0.2,
+    "surface_style": 0.1
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "The Atlantic / New Yorker / NY Times Magazine / Vice / Pitchfork / Guardian Long Read 계열 bold magazine/opinion long-form 참조",
+    "bold-confident 톤: saturated primary masthead + high-contrast cover + impact headline typography + oversized kicker eyebrow + full-bleed feature spread + bold pull-quote + chunky divider rule",
+    "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+  ],
+  "must_include": [
+    "issue cover with masthead + issue number + cover-story hero + kicker-eyebrow",
+    "feature article opening spread with drop cap + pull-quote + byline + section-break",
+    "opinion/manifesto section with opinion-byline + bold callout + reading-progress-bar",
+    "table-of-contents / feature-grid-index number-heavy tile + kicker + title + byline",
+    "archive index with issue thumbnail + issue-number + publish date"
+  ],
+  "avoid_patterns": [
+    "saturated commerce hero",
+    "calm editorial-warm magazine (Lora serif warm)",
+    "minimal developer docs reference",
+    "playful pastel feed",
+    "streetwear drop banner"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "airy",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x4",
+        "hero x3",
+        "calm x2"
+      ],
+      "candidates": [
+        {
+          "value": "airy",
+          "score": 16.0
+        },
+        {
+          "value": "dense",
+          "score": 9.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.54,
+      "evidence": [
+        "warm x3",
+        "editorial x4"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 7.0
+        },
+        {
+          "value": "flat",
+          "score": 4.0
+        },
+        {
+          "value": "elevated",
+          "score": 2.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "editorial",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x4",
+        "article x5",
+        "magazine x7",
+        "content x1",
+        "serif x1",
+        "story x3"
+      ],
+      "candidates": [
+        {
+          "value": "editorial",
+          "score": 43.0
+        },
+        {
+          "value": "playful",
+          "score": 6.0
+        },
+        {
+          "value": "utilitarian",
+          "score": 5.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "medium",
+      "confidence": 0.24,
+      "evidence": [
+        "fallback=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x4",
+        "article x5",
+        "content x1",
+        "feed x1",
+        "story x3",
+        "magazine x7"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.77,
+      "evidence": [
+        "table x2",
+        "grid x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "landing-narrative",
+      "label": "Narrative landing flow",
+      "confidence": 0.71,
+      "evidence": [
+        "hero x3"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.61,
+      "evidence": [
+        "dashboard x1",
+        "table x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. 중간 반경으로 제품 UI 절제 유지.",
+      "confidence": 0.94,
+      "evidence": [
+        "surface=tinted",
+        "density=airy",
+        "corner=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "navigation은 정보 구조를 안정적으로 고정하고 시각적 장식보다 위치 신호를 우선한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Editorial feed"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "typography_mood=editorial"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.94,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=airy"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.77)",
+        "layout=dashboard-grid (0.61)",
+        "table x2",
+        "grid x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.94,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.94)",
+        "editorial x4",
+        "article x5",
+        "content x1",
+        "story x3",
+        "magazine x7"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.9,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "layout=landing-narrative (0.71)",
+        "hero x3"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.57,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.61)",
+        "dashboard x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Editorial feed",
+    "recommended_direction": [
+      "layout는 Editorial feed 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 editorial 축 유지",
+      "density는 airy 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "saturated commerce hero",
+      "calm editorial-warm magazine (Lora serif warm)",
+      "minimal developer docs reference",
+      "playful pastel feed",
+      "streetwear drop banner"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "Broadside",
+    "system_name": "Broadside System",
+    "brand_keywords": [
+      "document-content",
+      "magazine",
+      "editorial-feature",
+      "opinion",
+      "manifesto",
+      "long-form",
+      "article",
+      "feature-story",
+      "pull-quote",
+      "masthead",
+      "bold",
+      "energetic",
+      "high-contrast",
+      "impact",
+      "zine"
+    ],
+    "anti_keywords": [
+      "minimal-tech",
+      "editorial-warm",
+      "playful-pastel",
+      "corporate-conservative",
+      "dashboard-heavy",
+      "commerce-heavy",
+      "streetwear-drop",
+      "reading-calm",
+      "muted"
+    ],
+    "visual_keywords": [
+      "saturated primary masthead",
+      "high-contrast cover",
+      "impact headline typography",
+      "oversized kicker eyebrow",
+      "full-bleed feature spread",
+      "bold pull-quote block",
+      "chunky divider rule",
+      "editorial number-heavy TOC",
+      "opinionated long-form spread"
+    ],
+    "interaction_keywords": [
+      "bold entry hero reveal",
+      "sticky masthead scroll",
+      "pull-quote magnification",
+      "section jump TOC",
+      "feature scroll-snap",
+      "impact cover transition",
+      "reading progress bar",
+      "footnote flash highlight",
+      "masthead focus ring bold",
+      "bold share overlay"
+    ],
+    "product_primitives": [
+      "masthead",
+      "issue-header",
+      "issue-number",
+      "kicker-eyebrow",
+      "feature-article",
+      "cover-story",
+      "opening-spread",
+      "article-body",
+      "pull-quote",
+      "byline",
+      "credit-line",
+      "drop-cap",
+      "section-break",
+      "callout",
+      "table-of-contents",
+      "heading-anchor",
+      "footnote",
+      "reading-pane",
+      "prose-block",
+      "article-gallery",
+      "subscription-callout",
+      "manifesto-section",
+      "opinion-byline",
+      "feature-grid-index",
+      "archive-index",
+      "issue-archive",
+      "reading-progress-bar"
+    ]
+  }
+}

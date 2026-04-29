@@ -1,0 +1,495 @@
+{
+  "mode": "local-images",
+  "query": [
+    "linear landing hero",
+    "vercel landing marketing",
+    "stripe pricing page",
+    "railway landing",
+    "supabase landing",
+    "saas devtools landing minimal"
+  ],
+  "preferred_count": 8,
+  "weights": {
+    "layout": 0.35,
+    "component_shape": 0.2,
+    "color_balance": 0.15,
+    "typography_mood": 0.2,
+    "surface_style": 0.1
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "Linear / Vercel / Stripe / Railway / Supabase 스타일 B2B/SaaS minimal landing 참조",
+    "minimal-tech 톤: hairline borders + 무채색 surface + monochrome + restrained gold accent",
+    "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+  ],
+  "must_include": [
+    "hero section with headline + subhead + CTA group",
+    "feature grid with icons",
+    "pricing cards with monthly/yearly toggle",
+    "logo cloud social proof strip",
+    "testimonial card",
+    "faq accordion",
+    "site footer with columns"
+  ],
+  "avoid_patterns": [
+    "magazine serif hero",
+    "playful pastel illustration",
+    "saturated sports banner",
+    "dense dashboard chrome",
+    "social feed timeline"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "airy",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x1",
+        "landing x9",
+        "hero x11"
+      ],
+      "candidates": [
+        {
+          "value": "airy",
+          "score": 42.0
+        },
+        {
+          "value": "dense",
+          "score": 6.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "flat",
+      "confidence": 0.58,
+      "evidence": [
+        "minimal x4"
+      ],
+      "candidates": [
+        {
+          "value": "flat",
+          "score": 8.0
+        },
+        {
+          "value": "tinted",
+          "score": 2.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "editorial",
+      "confidence": 0.76,
+      "evidence": [
+        "editorial x1",
+        "magazine x2",
+        "serif x2"
+      ],
+      "candidates": [
+        {
+          "value": "editorial",
+          "score": 11.0
+        },
+        {
+          "value": "playful",
+          "score": 6.0
+        },
+        {
+          "value": "utilitarian",
+          "score": 6.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "medium",
+      "confidence": 0.52,
+      "evidence": [
+        "card x6"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "landing-narrative",
+      "label": "Narrative landing flow",
+      "confidence": 0.94,
+      "evidence": [
+        "landing x9",
+        "hero x11",
+        "pricing x6",
+        "testimonial x5",
+        "cta x7",
+        "faq x5"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.73,
+      "evidence": [
+        "grid x4",
+        "timeline x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.73,
+      "evidence": [
+        "editorial x1",
+        "feed x1",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.68,
+      "evidence": [
+        "dashboard x2",
+        "metric x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "flat card planes를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. 중간 반경으로 제품 UI 절제 유지.",
+      "confidence": 0.94,
+      "evidence": [
+        "surface=flat",
+        "density=airy",
+        "corner=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "top navigation은 가볍게 유지하고 CTA와 section anchors를 분명하게 분리한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Narrative landing flow"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다.",
+      "confidence": 0.76,
+      "evidence": [
+        "typography_mood=editorial"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.94,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=airy"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "hero": {
+      "direction": "대형 hero와 trust strip, CTA cluster를 허용하되 과장된 glass/gradient 효과는 지양한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Narrative landing flow"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.73)",
+        "layout=dashboard-grid (0.68)",
+        "grid x4"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.94,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "layout=landing-narrative (0.94)",
+        "hero x11",
+        "landing x9",
+        "pricing x6",
+        "testimonial x5",
+        "cta x7"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.91,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.73)",
+        "editorial x1",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.84,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.68)",
+        "dashboard x2",
+        "metric x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Narrative landing flow",
+    "recommended_direction": [
+      "layout는 Narrative landing flow 기준으로 정리",
+      "surface language는 flat 성향 우선",
+      "typography mood는 editorial 축 유지",
+      "density는 airy 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "magazine serif hero",
+      "playful pastel illustration",
+      "saturated sports banner",
+      "dense dashboard chrome",
+      "social feed timeline"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "hero",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "Beacon",
+    "system_name": "Beacon System",
+    "brand_keywords": [
+      "marketing-landing",
+      "landing",
+      "saas-landing",
+      "hero",
+      "pricing",
+      "feature-grid",
+      "social-proof",
+      "testimonial",
+      "faq",
+      "cta-section",
+      "site-footer",
+      "site-header",
+      "minimal",
+      "precise"
+    ],
+    "anti_keywords": [
+      "bold-confident",
+      "saturated",
+      "magazine-serif",
+      "playful",
+      "decorative",
+      "ornamental",
+      "dashboard-heavy",
+      "warm-editorial"
+    ],
+    "visual_keywords": [
+      "neutral hero surface",
+      "hairline borders",
+      "monochrome + restrained accent",
+      "thin pricing card",
+      "compact feature grid",
+      "logo cloud trust strip",
+      "muted testimonial card",
+      "geometric sans hierarchy",
+      "low-contrast section divider"
+    ],
+    "interaction_keywords": [
+      "sticky site header on scroll",
+      "anchor scroll to section",
+      "pricing toggle (monthly/yearly)",
+      "faq accordion expand",
+      "scroll-snap section",
+      "cta button focus highlight",
+      "logo marquee subtle motion",
+      "hover-only secondary CTA"
+    ],
+    "product_primitives": [
+      "hero container",
+      "hero headline",
+      "hero subheadline",
+      "hero CTA group",
+      "hero visual",
+      "hero trust strip",
+      "feature section",
+      "feature grid",
+      "feature card",
+      "feature icon",
+      "social proof logo cloud",
+      "customer logo",
+      "metric highlight",
+      "testimonial section",
+      "testimonial card",
+      "pricing card",
+      "feature comparison",
+      "upgrade banner",
+      "FAQ section",
+      "FAQ item",
+      "CTA section",
+      "CTA headline",
+      "site header",
+      "site nav",
+      "site footer",
+      "footer column",
+      "footer legal"
+    ]
+  }
+}

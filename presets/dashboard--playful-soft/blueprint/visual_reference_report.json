@@ -1,0 +1,521 @@
+{
+  "mode": "local-images",
+  "query": [
+    "cal.com booking dashboard",
+    "notion habit tracker",
+    "flo wellness dashboard",
+    "finch self care dashboard",
+    "calm meditation admin",
+    "headspace session stats"
+  ],
+  "preferred_count": 8,
+  "weights": {
+    "layout": 0.3,
+    "component_shape": 0.3,
+    "color_balance": 0.2,
+    "typography_mood": 0.1,
+    "surface_style": 0.1
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "Cal.com / Notion / Flo / Finch / Calm / Headspace 계열 consumer wellness admin 참조",
+    "playful-soft 톤: warm pastel surface + rounded corner + soft shadow + gentle motion, dashboard density 는 soft (64–72px row)",
+    "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+  ],
+  "must_include": [
+    "sidebar-nav + dashboard card + kpi-card soft admin shell",
+    "habit-calendar grid (weeks × days, streak heat-scale)",
+    "wellness-score gauge or ring",
+    "mood-check quick select (emoji or color)",
+    "streak-indicator with days count",
+    "gentle-toast + soft-dialog + rounded button"
+  ],
+  "avoid_patterns": [
+    "corporate navy dense table",
+    "bold saturated hero banner",
+    "magazine editorial pull-quote",
+    "commerce product grid",
+    "SRE alert-first severity grid",
+    "glassmorphism"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "dense",
+      "confidence": 0.94,
+      "evidence": [
+        "dashboard x7",
+        "table x2"
+      ],
+      "candidates": [
+        {
+          "value": "dense",
+          "score": 27.0
+        },
+        {
+          "value": "airy",
+          "score": 7.0
+        },
+        {
+          "value": "balanced",
+          "score": 2.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.79,
+      "evidence": [
+        "warm x3",
+        "editorial x1",
+        "soft x9"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 13.0
+        },
+        {
+          "value": "elevated",
+          "score": 6.0
+        },
+        {
+          "value": "flat",
+          "score": 2.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "utilitarian",
+      "confidence": 0.94,
+      "evidence": [
+        "dashboard x7",
+        "admin x4",
+        "enterprise x1",
+        "table x2"
+      ],
+      "candidates": [
+        {
+          "value": "utilitarian",
+          "score": 33.0
+        },
+        {
+          "value": "editorial",
+          "score": 9.0
+        },
+        {
+          "value": "playful",
+          "score": 7.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "round",
+      "confidence": 0.94,
+      "evidence": [
+        "rounded x5",
+        "soft x9"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.94,
+      "evidence": [
+        "dashboard x7",
+        "kpi x2",
+        "chart x1",
+        "table x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.94,
+      "evidence": [
+        "table x2",
+        "grid x3",
+        "data x1",
+        "filter x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "split-pane-workspace",
+      "label": "Split-pane workspace",
+      "confidence": 0.94,
+      "evidence": [
+        "workspace x1",
+        "sidebar x2",
+        "panel x1",
+        "navigation x1",
+        "shell x1",
+        "dashboard x7"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.71,
+      "evidence": [
+        "editorial x1",
+        "feed x1",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. soft round corner를 기본값으로 유지.",
+      "confidence": 0.94,
+      "evidence": [
+        "surface=tinted",
+        "density=dense",
+        "corner=round"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Split-pane workspace"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "정보 밀도에 맞춰 type scale 차이를 줄이고 table/list label의 정렬 정확도를 우선한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "typography_mood=utilitarian"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.94,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=dense"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.94)",
+        "dashboard x7",
+        "kpi x2",
+        "chart x1",
+        "insight x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.94)",
+        "layout=dashboard-grid (0.94)",
+        "table x2",
+        "data x1",
+        "grid x3",
+        "filter x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "workspace-shell",
+      "label": "Workspace shell",
+      "family": "navigation",
+      "confidence": 0.94,
+      "suggested_components": [
+        "app-shell",
+        "sidebar-nav",
+        "workspace-switcher",
+        "breadcrumb",
+        "context-panel"
+      ],
+      "supports_primitives": [
+        "workspace navigation"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.94)",
+        "workspace x1",
+        "sidebar x2",
+        "navigation x1",
+        "panel x1",
+        "shell x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.8,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.71)",
+        "editorial x1",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "conversation-sidecar",
+      "label": "Conversation sidecar",
+      "family": "overlay",
+      "confidence": 0.57,
+      "suggested_components": [
+        "chat-panel",
+        "message-thread",
+        "message-composer",
+        "context-drawer"
+      ],
+      "supports_primitives": [
+        "chat and messaging"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.94)",
+        "panel x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Dashboard grid",
+    "recommended_direction": [
+      "layout는 Dashboard grid 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 utilitarian 축 유지",
+      "density는 dense 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "corporate navy dense table",
+      "bold saturated hero banner",
+      "magazine editorial pull-quote",
+      "commerce product grid",
+      "SRE alert-first severity grid",
+      "glassmorphism"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "Meadow",
+    "system_name": "Meadow System",
+    "brand_keywords": [
+      "dashboard",
+      "admin",
+      "consumer",
+      "wellness",
+      "habit",
+      "tracking",
+      "mindful",
+      "calm",
+      "soft",
+      "rounded",
+      "pastel",
+      "friendly",
+      "playful",
+      "gentle",
+      "warm"
+    ],
+    "anti_keywords": [
+      "minimal-tech-cool",
+      "corporate-navy",
+      "bold-saturated",
+      "magazine-serif",
+      "high-contrast",
+      "dense-only",
+      "enterprise-sharp"
+    ],
+    "visual_keywords": [
+      "rounded corners",
+      "pastel surfaces",
+      "soft shadow",
+      "gentle card",
+      "warm periwinkle primary",
+      "peach puff accent",
+      "mauve dreamy surface",
+      "habit streak flame",
+      "wellness score gauge",
+      "mood color gradient",
+      "illustrated empty state"
+    ],
+    "interaction_keywords": [
+      "gentle nudge",
+      "soft toast",
+      "rounded dialog",
+      "habit streak celebration",
+      "mood check quick-select",
+      "wellness score animated",
+      "swipe archive",
+      "pull-to-refresh",
+      "optimistic reaction"
+    ],
+    "product_primitives": [
+      "sidebar navigation",
+      "workspace switcher",
+      "dashboard card",
+      "kpi card",
+      "data table",
+      "filter chip",
+      "streak indicator",
+      "habit calendar",
+      "wellness score",
+      "mood check",
+      "session tracker",
+      "insight card",
+      "goal tracker",
+      "gentle toast",
+      "soft dialog",
+      "user list",
+      "cohort matrix",
+      "retention chart",
+      "activity feed",
+      "settings panel"
+    ]
+  }
+}

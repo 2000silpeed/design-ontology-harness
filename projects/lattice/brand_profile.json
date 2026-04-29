@@ -1,0 +1,270 @@
+{
+  "brand_name": "Lattice",
+  "system_name": "Lattice System",
+  "product_summary": "개발자용 API 레퍼런스 · 기술 문서 플랫폼 — TOC, article, code block, callout, API reference table 중심",
+  "audiences": [
+    "API 를 통합하는 외부 개발자",
+    "SDK/라이브러리를 학습하는 개발자",
+    "내부 플랫폼 엔지니어 / DevEx 담당"
+  ],
+  "brand_keywords": [
+    "reference-docs",
+    "api-docs",
+    "developer-docs",
+    "technical-writing",
+    "documentation",
+    "devtools",
+    "minimal",
+    "precise",
+    "reference",
+    "developer"
+  ],
+  "anti_keywords": [
+    "editorial",
+    "magazine-style",
+    "decorative",
+    "playful",
+    "marketing-heavy",
+    "ornamental",
+    "candy-pastel"
+  ],
+  "tone_of_voice": [
+    "precise",
+    "matter-of-fact",
+    "technical",
+    "clear",
+    "reference-grade"
+  ],
+  "visual_keywords": [
+    "cool neutral surfaces",
+    "hairline borders",
+    "monochrome + single accent",
+    "code-first hierarchy",
+    "dense toc sidebar",
+    "generous reading measure",
+    "inline code emphasis",
+    "syntax-highlight palette",
+    "anchor-linked headings",
+    "mono-first table chrome"
+  ],
+  "interaction_keywords": [
+    "search-first (⌘K)",
+    "anchor-linked headings",
+    "copy-code inline",
+    "version switcher",
+    "edit-on-github",
+    "keyboard next/prev",
+    "sidebar collapse",
+    "language tab switch",
+    "prev/next pager",
+    "breadcrumb trail"
+  ],
+  "platforms": [
+    "web",
+    "desktop"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "article body",
+    "table of contents",
+    "heading anchor",
+    "code block",
+    "inline code",
+    "api reference table",
+    "parameter table",
+    "callout",
+    "admonition",
+    "search chrome",
+    "version switcher",
+    "breadcrumbs",
+    "prev-next pager",
+    "footnote",
+    "link card",
+    "sidebar nav",
+    "language tab",
+    "reading pane",
+    "prose block"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "design token",
+      "documentation",
+      "code block",
+      "syntax",
+      "developer"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "marketing-only",
+      "magazine-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Standard Violets",
+      "Deep Violets",
+      "Natural Violets",
+      "Pastel Violets"
+    ],
+    "palette_roles": {
+      "primary": "Iris Violet",
+      "accent": "Cerulean",
+      "surface_tint": "Lavender Mist"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "cool",
+      "contrast": "balanced",
+      "diversity": "narrow",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "정제됨",
+        "명료함",
+        "신뢰",
+        "지적"
+      ],
+      "avoid_moods": [
+        "달콤함",
+        "화려함",
+        "따뜻함",
+        "귀여움"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Iris Violet 를 primary 로 — 지적·정제된 톤, Blue 기가 강해 명료",
+      "Cerulean accent — 링크·inline code 강조용 안정적 블루",
+      "Lavender Mist 는 surface_tint — 코드 블록 배경·callout 바탕 차분 쿨 파스텔",
+      "light mode 가 기본 — Stripe/Vercel docs 관례, dark 는 toggle 지원",
+      "editorial-warm 대조군과 정반대 방향: cool + mono-first + monochromatic"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Inter",
+      "weights": [
+        500,
+        600,
+        700
+      ],
+      "notes": "geometric sans, 영문/숫자 가독성 — editorial serif 와 명확히 반대 방향"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500
+      ],
+      "notes": "본문/레퍼런스 공용, reading measure 65–75ch"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "code block / inline code / api reference table — mono 비중 최상급"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한글 1급 — 본문/TOC/sidebar, line-height 1.7 keep-all"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "linear docs reference",
+      "stripe documentation api",
+      "vercel docs technical",
+      "mdn reference layout"
+    ],
+    "sources": [],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.35,
+      "component_shape": 0.25,
+      "color_balance": 0.15,
+      "typography_mood": 0.15,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "dense toc sidebar",
+      "article with anchor headings",
+      "code block with copy button",
+      "api reference parameter table",
+      "callout admonition"
+    ],
+    "avoid_patterns": [
+      "magazine serif hero",
+      "glassmorphism",
+      "gradient-heavy surfaces",
+      "playful illustrations"
+    ],
+    "notes": [
+      "Linear / Stripe / Vercel / MDN 스타일 개발자 문서 참조",
+      "editorial warm reading 은 피하고 reference technical 성향 고정",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://linear.app/docs",
+      "kind": "reference-docs",
+      "title": "Linear Docs",
+      "notes": "minimal developer docs reference layout"
+    },
+    {
+      "url": "https://docs.stripe.com",
+      "kind": "reference-docs",
+      "title": "Stripe Docs",
+      "notes": "API reference + callout / code block references"
+    },
+    {
+      "url": "https://vercel.com/docs",
+      "kind": "reference-docs",
+      "title": "Vercel Docs",
+      "notes": "minimal devtools docs references"
+    },
+    {
+      "url": "https://developer.mozilla.org",
+      "kind": "reference-docs",
+      "title": "MDN Web Docs",
+      "notes": "comprehensive API reference UI"
+    }
+  ]
+}

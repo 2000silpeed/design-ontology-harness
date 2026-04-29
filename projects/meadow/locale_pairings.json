@@ -1,0 +1,8 @@
+{
+  "ko": {
+    "heading_font": "Pretendard",
+    "body_font": "Pretendard",
+    "mono_font": "JetBrains Mono",
+    "notes": "consumer wellness admin playful-soft — 한국어 data-table cell / habit-calendar / wellness-score / mood-check / streak-indicator / insight-card keep-all line-height 1.5–1.6 (dashboard soft), 지표 숫자 (streak days / score / mood avg / session minutes) 는 mono 영문 tabular-nums 고정, rounded soft 모든 컴포넌트 radius 12–16"
+  }
+}

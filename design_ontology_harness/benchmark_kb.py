@@ -6,7 +6,6 @@ Stripe, Vercel, Linear 등 검증된 디자인 시스템의 핵심 특성을 정
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 from .utils import ensure_dir, write_json

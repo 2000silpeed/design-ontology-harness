@@ -1,0 +1,38 @@
+{
+  "preset_id": "marketing-landing--editorial-warm",
+  "source_project": "loom",
+  "seeds": [
+    {
+      "url": "https://stratechery.com",
+      "kind": "article",
+      "title": "Stratechery",
+      "notes": "독립 뉴스레터 대표 사례 — 차분한 editorial 랜딩 + 단일 강조 pricing tier + reading-first 레이아웃"
+    },
+    {
+      "url": "https://ghost.org",
+      "kind": "design-system",
+      "title": "Ghost",
+      "notes": "독립 퍼블리셔 CMS — warm editorial 랜딩 + pricing + newsletter preview + author profile"
+    },
+    {
+      "url": "https://every.to",
+      "kind": "article",
+      "title": "Every",
+      "notes": "멀티 저자 뉴스레터 콜렉티브 — warm editorial hero + featured issue archive strip + pricing"
+    },
+    {
+      "url": "https://substack.com",
+      "kind": "article",
+      "title": "Substack",
+      "notes": "뉴스레터 플랫폼 — subscribe cta + publisher discovery + pricing 모델 참조 (Loom 은 1인 중심으로 축소)"
+    },
+    {
+      "url": "https://www.theverge.com/newsletters",
+      "kind": "article",
+      "title": "The Verge Newsletters",
+      "notes": "대형 매체의 뉴스레터 허브 — issue card + category chip + subscribe form 패턴 참조"
+    }
+  ],
+  "pretendard_font_license": "SIL OFL 1.1",
+  "created_at": "2026-04-21T12:34:59Z"
+}

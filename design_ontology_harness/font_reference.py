@@ -9,7 +9,6 @@ Supports optional font-reference.md for curated font data.
 
 from __future__ import annotations
 
-import re
 from pathlib import Path
 
 

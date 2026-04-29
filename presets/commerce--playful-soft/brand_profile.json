@@ -1,0 +1,302 @@
+{
+  "brand_name": "Orchard",
+  "system_name": "Orchard System",
+  "product_summary": "친근한 D2C 크래프트 스낵/음료 커머스 — playful-soft 톤 warm pastel consumer commerce, 상품 그리드 · 상품 상세 · 장바구니 · 체크아웃을 rounded 카드와 gentle 인터랙션으로 엮은 모바일 친화 D2C 쇼핑 경험, 한국어 1급",
+  "audiences": [
+    "D2C 크래프트 스낵·음료 쇼핑 고객 — rounded 상품 카드 + 친근 카피 + gentle checkout 선호",
+    "기프팅·구독 박스 고객 — 정기 배송 / 구성 변경 / 선물 메시지 직관적 관리",
+    "소형 D2C 브랜드 운영자 — 작은 카탈로그 + 리뷰/이모지 반응 + 소프트 CTA 정체성"
+  ],
+  "brand_keywords": [
+    "commerce",
+    "d2c",
+    "consumer",
+    "craft",
+    "snack",
+    "wellness-food",
+    "rounded",
+    "playful",
+    "warm-pastel",
+    "friendly",
+    "emoji-friendly",
+    "gentle",
+    "soft",
+    "gift",
+    "subscription"
+  ],
+  "anti_keywords": [
+    "corporate-navy",
+    "minimal-tech-cool",
+    "bold-saturated",
+    "streetwear-high-contrast",
+    "magazine-serif",
+    "editorial-long-form",
+    "enterprise-sharp",
+    "dense-dashboard-only"
+  ],
+  "tone_of_voice": [
+    "friendly",
+    "warm",
+    "cheerful",
+    "gentle",
+    "approachable",
+    "sincere"
+  ],
+  "visual_keywords": [
+    "rounded corners",
+    "pastel surfaces",
+    "soft shadow",
+    "rounded product card",
+    "warm rose quartz primary",
+    "terracotta soft accent",
+    "blanched almond cream surface",
+    "emoji-friendly review",
+    "gentle add-to-cart pill",
+    "illustrated empty cart",
+    "craft d2c packaging warmth"
+  ],
+  "interaction_keywords": [
+    "rounded add-to-cart",
+    "gentle checkout",
+    "soft variant chip",
+    "emoji review reaction",
+    "soft toast",
+    "rounded dialog",
+    "bottom-sheet cart",
+    "pull-to-refresh feed",
+    "optimistic quantity bump",
+    "gentle empty-cart illustration"
+  ],
+  "platforms": [
+    "web",
+    "mobile-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "product grid",
+    "product card",
+    "product detail",
+    "variant chip",
+    "add-to-cart pill",
+    "quantity stepper",
+    "cart drawer",
+    "cart line-item",
+    "checkout form",
+    "shipping step",
+    "payment step",
+    "order summary",
+    "review card",
+    "emoji reaction",
+    "empty cart",
+    "gentle toast",
+    "soft dialog",
+    "bottom sheet",
+    "gift-message input",
+    "subscription toggle"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "design token",
+      "commerce",
+      "shopify",
+      "d2c",
+      "consumer",
+      "product card",
+      "checkout"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "dashboard-only",
+      "fintech-only",
+      "editorial-magazine-only",
+      "streetwear-drop-only",
+      "enterprise-saas-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Pastel Reds",
+      "Pastel Oranges",
+      "Pastel Yellows"
+    ],
+    "palette_roles": {
+      "primary": "Rose Quartz",
+      "accent": "Dark Salmon",
+      "surface_tint": "Blanched Almond"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "warm",
+      "contrast": "soft",
+      "diversity": "balanced",
+      "surface_style": "soft-tint",
+      "prefer_moods": [
+        "친근",
+        "포근",
+        "부드러움",
+        "달콤함",
+        "명랑",
+        "크래프트",
+        "따뜻한 디저트"
+      ],
+      "avoid_moods": [
+        "차가움",
+        "대담",
+        "공격적",
+        "엄격",
+        "고대비",
+        "어두움"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Rose Quartz #F7CAC9 primary — Pantone 13-1520 warm pastel pink, primary-button / variant-chip active / add-to-cart pill / cart-drawer header / subscription toggle on",
+      "Dark Salmon #E9967A accent — warm terracotta-salmon, discount-pill / gentle-toast 성공 / review heart / gift message highlight / bestseller ribbon",
+      "Blanched Almond #FFEBCD surface_tint — cream warm near-white, product-card soft hover surface / cart drawer bg tint / empty-state illustration / bottom-sheet handle area",
+      "light mode 가 기본 — D2C consumer commerce 관례, dark 옵션 제공 (warm deep neutral + 채도 낮춘 Rose Quartz/Dark Salmon + Blanched Almond soft border)",
+      "기존 17종 프리셋 HEX 와 겹침 0 — Rose Quartz #F7CAC9 / Dark Salmon #E9967A / Blanched Almond #FFEBCD 조합",
+      "bloom (community-feed--playful-soft) #F88379/#98FF98/#FFF8DC 와 전면 차별화 — playful-soft commerce 정체성은 warm pink + terracotta + cream (feed 의 coral + mint 와 대비)",
+      "meadow (dashboard--playful-soft) #8E9AF1/#FFDAB9/#E0B0FF 와 전면 차별화 — consumer wellness admin 의 violet-peach-mauve 와 다른 pink-terracotta-cream 정체성",
+      "colorfit (commerce--editorial-warm) / drop (commerce--bold-confident) 와도 HEX 겹침 0 — 동일 app_mode 내 commerce 톤 다변화"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Quicksand",
+      "weights": [
+        500,
+        600,
+        700
+      ],
+      "notes": "rounded sans, playful-soft 시각 성격 핵심 — page-title / product-title / section-header / kpi-label / add-to-cart pill, serif/geometric impact 금지"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "product description / review / cart line / checkout field / filter chip 공용 본문, line-height 1.5–1.6 (commerce soft)"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "notes": "price / discount / quantity / order number / shipping ETA — tabular-nums 영문 고정, 최소 사용"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한글 1급 — product-title / product-description / review / cart line / checkout label / filter chip, line-height 1.6 keep-all, page-title / section-header 는 Pretendard 700 letter-spacing 0"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "olipop d2c soda ecommerce",
+      "magic spoon cereal shop",
+      "poppi prebiotic soda store",
+      "graza olive oil craft d2c",
+      "caraway cookware warm pastel shop"
+    ],
+    "sources": [],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.3,
+      "component_shape": 0.3,
+      "color_balance": 0.2,
+      "typography_mood": 0.1,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "product-grid with rounded product-card + pastel surface",
+      "product-detail with variant-chip + quantity-stepper + rounded add-to-cart pill",
+      "cart-drawer with warm cream surface + gentle line-item",
+      "checkout stepper with friendly copy + soft divider",
+      "review card with emoji-reaction + rounded avatar",
+      "gentle-toast + soft-dialog + rounded button"
+    ],
+    "avoid_patterns": [
+      "streetwear drop high-contrast product grid",
+      "fashion editorial hero masthead",
+      "fintech dense data-table",
+      "SRE alert severity grid",
+      "magazine pull-quote long-form",
+      "glassmorphism",
+      "corporate navy checkout"
+    ],
+    "notes": [
+      "Olipop / Magic Spoon / Poppi / Graza / Caraway 계열 warm pastel craft D2C 참조",
+      "playful-soft 톤: warm pastel surface + rounded corner + soft shadow + gentle motion, commerce density 는 soft (모바일 친화 스크롤)",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://drinkolipop.com",
+      "kind": "visual-reference",
+      "title": "Olipop",
+      "notes": "D2C 프리바이오틱 소다 — warm pastel 상품 그리드 + rounded product card + gentle CTA, playful-soft commerce 핵심 참조"
+    },
+    {
+      "url": "https://magicspoon.com",
+      "kind": "visual-reference",
+      "title": "Magic Spoon",
+      "notes": "D2C 시리얼 — rounded product detail + variant chip + 친근 copy + emoji-friendly review 섹션"
+    },
+    {
+      "url": "https://drinkpoppi.com",
+      "kind": "visual-reference",
+      "title": "Poppi",
+      "notes": "D2C 프리바이오틱 소다 — warm pastel packaging + rounded subscription toggle + gentle quantity stepper"
+    },
+    {
+      "url": "https://graza.co",
+      "kind": "visual-reference",
+      "title": "Graza",
+      "notes": "craft D2C olive oil — warm pastel commerce card + friendly product copy + soft checkout flow"
+    },
+    {
+      "url": "https://www.caraway.com",
+      "kind": "visual-reference",
+      "title": "Caraway",
+      "notes": "warm pastel cookware craft D2C — rounded product grid + soft variant chip + gentle add-to-cart"
+    }
+  ]
+}

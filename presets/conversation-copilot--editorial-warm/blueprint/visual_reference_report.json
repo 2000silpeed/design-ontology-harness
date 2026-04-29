@@ -1,0 +1,523 @@
+{
+  "mode": "local-images",
+  "query": [
+    "lex page writing copilot",
+    "jasper ai editor calm",
+    "sudowrite writing assistant",
+    "notion ai writing panel",
+    "ulysses writing app editorial",
+    "substack editor warm"
+  ],
+  "preferred_count": 6,
+  "weights": {
+    "layout": 0.3,
+    "component_shape": 0.2,
+    "color_balance": 0.2,
+    "typography_mood": 0.2,
+    "surface_style": 0.1
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "Lex / Jasper / Sudowrite / Notion AI / Ulysses / Substack 계열 calm editorial writing copilot 참조",
+    "editorial-warm 톤: warm neutral surface + serif heading pair + muted accent + reading-first layout + long-form artifact preview",
+    "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+  ],
+  "must_include": [
+    "three-pane writing copilot (thread list + conversation + artifact preview panel)",
+    "prompt composer with streaming cursor + suggestion card",
+    "writing artifact preview panel with outline sidebar + heading anchor + revision timeline",
+    "citation footnote hover state + inline citation chip",
+    "tone slider + reading-mode toggle on artifact header"
+  ],
+  "avoid_patterns": [
+    "saturated commerce hero",
+    "neon bold dashboard",
+    "playful pastel feed",
+    "dense chart monitoring canvas",
+    "streetwear drop banner"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "airy",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x6",
+        "hero x1",
+        "calm x5"
+      ],
+      "candidates": [
+        {
+          "value": "airy",
+          "score": 19.0
+        },
+        {
+          "value": "dense",
+          "score": 8.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.92,
+      "evidence": [
+        "warm x7",
+        "editorial x6",
+        "cream x1",
+        "soft x1"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 16.0
+        },
+        {
+          "value": "outlined",
+          "score": 9.0
+        },
+        {
+          "value": "flat",
+          "score": 2.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "editorial",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x6",
+        "serif x3"
+      ],
+      "candidates": [
+        {
+          "value": "editorial",
+          "score": 24.0
+        },
+        {
+          "value": "playful",
+          "score": 6.0
+        },
+        {
+          "value": "utilitarian",
+          "score": 6.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "medium",
+      "confidence": 0.33,
+      "evidence": [
+        "card x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "conversation-panel",
+      "label": "Conversation side panel",
+      "confidence": 0.94,
+      "evidence": [
+        "chat x3",
+        "assistant x4",
+        "message x4",
+        "thread x5",
+        "prompt x4",
+        "conversation x3"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x6",
+        "feed x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "split-pane-workspace",
+      "label": "Split-pane workspace",
+      "confidence": 0.94,
+      "evidence": [
+        "sidebar x2",
+        "panel x5",
+        "editor x2",
+        "dashboard x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.77,
+      "evidence": [
+        "dashboard x2",
+        "chart x1",
+        "monitoring x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. 중간 반경으로 제품 UI 절제 유지.",
+      "confidence": 0.94,
+      "evidence": [
+        "surface=tinted",
+        "density=airy",
+        "corner=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Split-pane workspace"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "typography_mood=editorial"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.94,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=airy"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "panel": {
+      "direction": "보조 패널은 메인 표면보다 한 단계 더 조용한 tint와 명확한 section framing으로 구분한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Conversation side panel"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "conversation-sidecar",
+      "label": "Conversation sidecar",
+      "family": "overlay",
+      "confidence": 0.94,
+      "suggested_components": [
+        "chat-panel",
+        "message-thread",
+        "message-composer",
+        "context-drawer"
+      ],
+      "supports_primitives": [
+        "chat and messaging"
+      ],
+      "evidence": [
+        "layout=conversation-panel (0.94)",
+        "layout=split-pane-workspace (0.94)",
+        "chat x3",
+        "assistant x4",
+        "message x4",
+        "conversation x3"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.94,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.94)",
+        "editorial x6"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "workspace-shell",
+      "label": "Workspace shell",
+      "family": "navigation",
+      "confidence": 0.94,
+      "suggested_components": [
+        "app-shell",
+        "sidebar-nav",
+        "workspace-switcher",
+        "breadcrumb",
+        "context-panel"
+      ],
+      "supports_primitives": [
+        "workspace navigation"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.94)",
+        "sidebar x2",
+        "panel x5"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.87,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.77)",
+        "dashboard x2",
+        "chart x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.47,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.77)"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Conversation side panel",
+    "recommended_direction": [
+      "layout는 Conversation side panel 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 editorial 축 유지",
+      "density는 airy 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "saturated commerce hero",
+      "neon bold dashboard",
+      "playful pastel feed",
+      "dense chart monitoring canvas",
+      "streetwear drop banner"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "panel",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "Quill",
+    "system_name": "Quill System",
+    "brand_keywords": [
+      "conversation-copilot",
+      "copilot",
+      "assistant",
+      "chat",
+      "prompt",
+      "thread",
+      "artifact",
+      "writing-assistant",
+      "editorial-copilot",
+      "essay-draft",
+      "newsletter-draft",
+      "calm",
+      "warm",
+      "editorial",
+      "serif"
+    ],
+    "anti_keywords": [
+      "minimal-tech",
+      "bold-confident",
+      "saturated",
+      "playful-pastel",
+      "dashboard-heavy",
+      "commerce-heavy",
+      "streetwear",
+      "high-contrast",
+      "neon"
+    ],
+    "visual_keywords": [
+      "warm neutral surface",
+      "serif heading pair",
+      "muted editorial accent",
+      "reading-first layout",
+      "calm writing canvas",
+      "soft cream surface",
+      "muted warm divider",
+      "restrained bibliographic chrome",
+      "long-form artifact preview"
+    ],
+    "interaction_keywords": [
+      "calm streaming cursor",
+      "gentle prompt composer",
+      "writing artifact side panel",
+      "draft revision timeline",
+      "outline collapse toggle",
+      "citation footnote hover",
+      "reading-mode toggle",
+      "slow fade transition",
+      "warm focus ring",
+      "muted mention chip"
+    ],
+    "product_primitives": [
+      "chat message",
+      "chat thread",
+      "assistant message",
+      "user message",
+      "prompt composer",
+      "streaming cursor",
+      "typing indicator",
+      "inline citation",
+      "message artifact",
+      "artifact preview panel",
+      "draft document",
+      "outline sidebar",
+      "heading anchor",
+      "revision timeline",
+      "tone slider",
+      "reading-mode toggle",
+      "citation footnote",
+      "quote block",
+      "paragraph block",
+      "mention chip",
+      "suggestion card",
+      "thread header",
+      "new thread button",
+      "regenerate button",
+      "stop-generation button",
+      "empty conversation state"
+    ]
+  }
+}

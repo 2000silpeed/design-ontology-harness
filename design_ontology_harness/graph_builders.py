@@ -6,9 +6,6 @@ build_full_ontology_graph() orchestrates all layers into a complete graph.
 
 from __future__ import annotations
 
-import math
-import re
-from collections import Counter
 
 from .graph_schema import (
     DesignOntologyGraph,

@@ -1,0 +1,37 @@
+{
+  "id": "canvas-tool--minimal-tech",
+  "schema_version": "1.0.0",
+  "preset_api_version": "1.0.0",
+  "generated_by_harness_version": "0.1.0",
+  "preview_version": "1.0.0",
+  "adapter_compatibility": {
+    "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+    "raw-css-variables": ">=0.1.0 <1.0.0",
+    "vite-tailwind": ">=0.1.0 <1.0.0"
+  },
+  "source_project": "atelier",
+  "content_hash": "sha256:3521c6f271e368de9aff692150c54697d6585884364ee8ccc16fed15bc58d9b2",
+  "app_mode": "canvas-tool",
+  "brand_tone": "minimal-tech",
+  "color_modes": [
+    "light",
+    "dark"
+  ],
+  "default_color_mode": "light",
+  "tags": [
+    "creative",
+    "ko"
+  ],
+  "locale_pairings": {
+    "ko": {
+      "heading_font": "Pretendard",
+      "body_font": "Pretendard",
+      "mono_font": "JetBrains Mono",
+      "notes": "크리에이티브 캔버스 도구 — 한국어 UI, shortcut/숫자 input 은 mono 영문 고정, 숫자 tabular-nums, line-height 1.6 keep-all"
+    }
+  },
+  "owner": "maintainer",
+  "tier": "P1",
+  "generated_at": "2026-04-21T12:34:59Z",
+  "description": "크리에이티브 팀을 위한 minimal-tech 톤 캔버스 · 레이어 · 인스펙터 도구 — keyboard-first, 한국어 1급"
+}

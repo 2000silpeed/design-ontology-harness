@@ -1,0 +1,88 @@
+{
+  "brand_name": "ColorFit",
+  "system_name": "ColorFit System",
+  "product_summary": "퍼스널컬러 진단 결과를 실제 쇼핑과 코디 의사결정으로 연결하는 AI 패션 추천 앱",
+  "audiences": [
+    "퍼스널컬러 기반 쇼핑 결정을 돕고 싶은 사용자",
+    "코디 추천과 실제 구매 연결을 원하는 모바일 쇼핑 사용자",
+    "내 취향과 톤에 맞는 패션 큐레이션을 원하는 사용자"
+  ],
+  "brand_keywords": [
+    "editorial",
+    "precise",
+    "trustworthy",
+    "warm"
+  ],
+  "anti_keywords": [
+    "generic",
+    "noisy",
+    "clinical",
+    "cheap"
+  ],
+  "tone_of_voice": [
+    "clear",
+    "reassuring",
+    "curated",
+    "confident"
+  ],
+  "visual_keywords": [
+    "warm neutrals",
+    "serif-sans contrast",
+    "measured whitespace",
+    "fashion editorial hierarchy",
+    "tonal accent cues"
+  ],
+  "interaction_keywords": [
+    "guided decision flow",
+    "explainable scoring",
+    "low-noise motion",
+    "confidence-building comparison"
+  ],
+  "platforms": [
+    "mobile web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "personal color onboarding",
+    "recommendation feed",
+    "outfit detail and comparison",
+    "shopping price comparison",
+    "closet analysis",
+    "ai try-on"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "color",
+      "typography",
+      "content",
+      "components",
+      "accessibility"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "developer-only"
+    ]
+  },
+  "seeds": [
+    {
+      "url": "https://www.musinsa.com",
+      "kind": "visual-reference",
+      "title": "Musinsa",
+      "notes": "KR fashion commerce, editorial tone"
+    },
+    {
+      "url": "https://www.29cm.co.kr",
+      "kind": "visual-reference",
+      "title": "29CM",
+      "notes": "KR editorial fashion commerce, curated boutique UX"
+    },
+    {
+      "url": "https://www.ssense.com",
+      "kind": "visual-reference",
+      "title": "SSENSE",
+      "notes": "global editorial fashion commerce references"
+    }
+  ]
+}

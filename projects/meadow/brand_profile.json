@@ -1,0 +1,303 @@
+{
+  "brand_name": "Meadow",
+  "system_name": "Meadow System",
+  "product_summary": "consumer wellness / habit admin — playful-soft 톤 pastel dashboard, 가계부 · 건강 · 습관 · 수면 · 명상 트래킹 admin console, 한국어 1급",
+  "audiences": [
+    "consumer wellness / habit 앱 운영팀 PM — 유저 streak · 수면 · 명상 세션 · mood 지표 관찰",
+    "건강 · 웰니스 스타트업 운영자 — cohort 리텐션 + wellness score + habit-calendar 운영",
+    "가계부 · 저축 · 목표 트래킹 앱 admin — goal-tracker + streak-indicator + gentle nudge"
+  ],
+  "brand_keywords": [
+    "dashboard",
+    "admin",
+    "consumer",
+    "wellness",
+    "habit",
+    "tracking",
+    "mindful",
+    "calm",
+    "soft",
+    "rounded",
+    "pastel",
+    "friendly",
+    "playful",
+    "gentle",
+    "warm"
+  ],
+  "anti_keywords": [
+    "minimal-tech-cool",
+    "corporate-navy",
+    "bold-saturated",
+    "magazine-serif",
+    "high-contrast",
+    "dense-only",
+    "enterprise-sharp"
+  ],
+  "tone_of_voice": [
+    "friendly",
+    "warm",
+    "encouraging",
+    "gentle",
+    "approachable",
+    "mindful"
+  ],
+  "visual_keywords": [
+    "rounded corners",
+    "pastel surfaces",
+    "soft shadow",
+    "gentle card",
+    "warm periwinkle primary",
+    "peach puff accent",
+    "mauve dreamy surface",
+    "habit streak flame",
+    "wellness score gauge",
+    "mood color gradient",
+    "illustrated empty state"
+  ],
+  "interaction_keywords": [
+    "gentle nudge",
+    "soft toast",
+    "rounded dialog",
+    "habit streak celebration",
+    "mood check quick-select",
+    "wellness score animated",
+    "swipe archive",
+    "pull-to-refresh",
+    "optimistic reaction"
+  ],
+  "platforms": [
+    "web",
+    "mobile-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "sidebar navigation",
+    "workspace switcher",
+    "dashboard card",
+    "kpi card",
+    "data table",
+    "filter chip",
+    "streak indicator",
+    "habit calendar",
+    "wellness score",
+    "mood check",
+    "session tracker",
+    "insight card",
+    "goal tracker",
+    "gentle toast",
+    "soft dialog",
+    "user list",
+    "cohort matrix",
+    "retention chart",
+    "activity feed",
+    "settings panel"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "design token",
+      "dashboard",
+      "admin",
+      "wellness",
+      "habit",
+      "consumer"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "marketing-only",
+      "magazine-only",
+      "enterprise-only",
+      "bold-saturated-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Pastel Violets",
+      "Pastel Oranges",
+      "Pantone Trend Violets"
+    ],
+    "palette_roles": {
+      "primary": "Periwinkle",
+      "accent": "Peach Puff",
+      "surface_tint": "Mauve"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "warm",
+      "contrast": "soft",
+      "diversity": "balanced",
+      "surface_style": "soft-tint",
+      "prefer_moods": [
+        "친근",
+        "포근",
+        "부드러움",
+        "차분함",
+        "명랑",
+        "몽환",
+        "세련된 차분함"
+      ],
+      "avoid_moods": [
+        "차가움",
+        "대담",
+        "공격적",
+        "엄격",
+        "고대비"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Periwinkle #8E9AF1 primary — 푸른빛 웜 퍼플, sidebar-nav active / primary-button / streak-indicator / wellness-score ring / habit-calendar today cell / goal-tracker progress",
+      "Peach Puff #FFDAB9 accent — warm pastel 오렌지, mood-check happy / insight-card accent / habit-streak flame / gentle-toast 성공 / goal-tracker complete",
+      "Mauve #E0B0FF surface_tint — dreamy pastel violet-rose, dashboard card soft surface / empty-state illustration / filter-chip soft group bg / row hover",
+      "light mode 가 기본 — consumer wellness admin 관례, dark 옵션 제공 (warm deep neutral + 채도 낮춘 Periwinkle/Peach Puff + Mauve soft border)",
+      "기존 15종 프리셋 HEX 와 겹침 0 — Periwinkle/Peach Puff/Mauve 조합",
+      "bloom playful-soft (community-feed) 의 #F88379/#98FF98/#FFF8DC 와 전면 차별화 — dashboard--playful-soft 정체성은 violet-pink 몽환 + warm peach accent",
+      "minimal-tech / corporate-trust 의 cool 무채색 팔레트와 정반대 — rounded + warm pastel + soft shadow"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Nunito",
+      "weights": [
+        500,
+        600,
+        700,
+        800
+      ],
+      "notes": "rounded sans, playful-soft 시각 성격 핵심 — workspace-header / section-header / kpi-card label / insight-card title / goal-tracker label, serif/geometric 금지"
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "data-table cell / filter-chip / activity feed / mood-check 공용 본문, line-height 1.5–1.6 (dashboard soft)"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "notes": "streak days / wellness score / mood avg / session minutes / habit count / timestamp — tabular-nums 영문 고정, 최소 사용"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한글 1급 — data-table cell / habit-calendar / wellness-score / insight-card / mood-check / goal-tracker label, line-height 1.6 keep-all, workspace-header 는 Pretendard 700 letter-spacing 0"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "cal.com booking dashboard",
+      "notion habit tracker",
+      "flo wellness dashboard",
+      "finch self care dashboard",
+      "calm meditation admin",
+      "headspace session stats"
+    ],
+    "sources": [],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.3,
+      "component_shape": 0.3,
+      "color_balance": 0.2,
+      "typography_mood": 0.1,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "sidebar-nav + dashboard card + kpi-card soft admin shell",
+      "habit-calendar grid (weeks × days, streak heat-scale)",
+      "wellness-score gauge or ring",
+      "mood-check quick select (emoji or color)",
+      "streak-indicator with days count",
+      "gentle-toast + soft-dialog + rounded button"
+    ],
+    "avoid_patterns": [
+      "corporate navy dense table",
+      "bold saturated hero banner",
+      "magazine editorial pull-quote",
+      "commerce product grid",
+      "SRE alert-first severity grid",
+      "glassmorphism"
+    ],
+    "notes": [
+      "Cal.com / Notion / Flo / Finch / Calm / Headspace 계열 consumer wellness admin 참조",
+      "playful-soft 톤: warm pastel surface + rounded corner + soft shadow + gentle motion, dashboard density 는 soft (64–72px row)",
+      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": []
+    }
+  },
+  "seeds": [
+    {
+      "url": "https://cal.com",
+      "kind": "design-system",
+      "title": "Cal.com",
+      "notes": "booking scheduling admin references (soft sidebar / booking calendar / gentle dialog)"
+    },
+    {
+      "url": "https://www.notion.so",
+      "kind": "design-system",
+      "title": "Notion",
+      "notes": "database + habit tracker UI references (soft surface / rounded card)"
+    },
+    {
+      "url": "https://flo.health",
+      "kind": "visual-reference",
+      "title": "Flo",
+      "notes": "wellness health tracker references (mood check / cycle calendar / streak indicator)"
+    },
+    {
+      "url": "https://www.finchapp.com",
+      "kind": "visual-reference",
+      "title": "Finch",
+      "notes": "self-care pet gamification references (habit streak / goal tracker / gentle nudge)"
+    },
+    {
+      "url": "https://www.calm.com",
+      "kind": "visual-reference",
+      "title": "Calm",
+      "notes": "meditation / sleep admin references (session tracker / mindful insight / soft toast)"
+    },
+    {
+      "url": "https://www.headspace.com",
+      "kind": "visual-reference",
+      "title": "Headspace",
+      "notes": "mindfulness dashboard references (wellness score / session minutes / habit calendar)"
+    }
+  ]
+}
