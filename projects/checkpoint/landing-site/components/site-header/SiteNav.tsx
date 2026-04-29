@@ -9,7 +9,7 @@ export function SiteNav() {
   return (
     <nav
       aria-label="Primary"
-      className="hidden md:block"
+      className="checkpoint-desktop-nav"
       style={{
         flex: 1,
       }}
@@ -50,11 +50,19 @@ export function SiteNav() {
         ))}
       </ul>
       <style>{`
+        .checkpoint-desktop-nav {
+          display: block;
+        }
         .site-nav-link:hover {
           color: var(--color-link-hover);
           text-decoration: underline;
           text-underline-offset: 4px;
           text-decoration-thickness: 1px;
+        }
+        @media (max-width: 899px) {
+          .checkpoint-desktop-nav {
+            display: none;
+          }
         }
       `}</style>
     </nav>

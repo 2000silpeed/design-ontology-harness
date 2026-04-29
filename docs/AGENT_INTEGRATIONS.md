@@ -19,12 +19,14 @@
 - `plugins/design-system-harness/.codex-plugin/plugin.json`
 - `plugins/design-system-harness/skills/design-system-architect/SKILL.md`
 - `plugins/design-system-harness/skills/design-system-implementer/SKILL.md`
+- `plugins/design-system-harness/skills/design-system-visual-assets/SKILL.md`
 - `.agents/plugins/marketplace.json`
 
 용도:
 
 - 로컬 Codex plugin bundle
 - implementation repo에서 system artifacts를 읽는 skill 제공
+- Codex에서 이미지 생성 기능이 가능할 때 `imagine2` 모델로 브랜드에 맞는 히어로/카드/에디토리얼 이미지를 생성하고 통합하는 visual asset skill 제공
 
 ### Claude Code
 
@@ -96,7 +98,28 @@ In a frontend repo:
 
 - ask the architect skill/agent to map a new screen to component families
 - ask the implementer skill/agent to build the screen using existing tokens and primitives
+- in Codex, ask the visual asset skill to generate `imagine2` imagery for hero, empty-state, editorial, or product sections when the screen needs real visual substance
+- check `system_ontology.json` for `GeneratedVisualAsset` and `ImageGenerationModel` nodes before treating generated imagery as part of the system contract
 - if the request falls outside the current artifacts, update the harness project first instead of improvising a new system
+
+## Codex Visual Asset Workflow
+
+`design-system-visual-assets`는 화면을 더 프로페셔널하게 만들기 위한 선택적 Codex 전용 스킬입니다.
+온톨로지에는 `GeneratedVisualAsset` 슬롯과 `ImageGenerationModel`(`imagine2`) 노드가 함께 기록되어, 생성 이미지가 임시 장식이 아니라 브랜드/토큰/컴포넌트 관계에 묶인 산출물로 추적됩니다.
+
+기본 흐름:
+
+1. `design-system/system_spec.md`, `token_schema.json`, `component_inventory.json`, 가능하면 `visual_reference_report.json`을 읽습니다.
+2. Codex에서 이미지 생성 모델 선택이 가능하면 `imagine2`를 선택합니다.
+3. 브랜드 키워드, 안티 키워드, 팔레트, density/surface cue를 반영해 2-4개 후보 이미지를 만듭니다.
+4. 승인한 이미지는 `public/generated/design-system/` 같은 정적 에셋 폴더에 넣고 `manifest.json`에 prompt, model, intended slot, alt text, source artifacts를 기록합니다.
+5. 구현 코드에는 기존 프레임워크의 이미지 컴포넌트와 `alt` 텍스트, responsive crop 규칙을 적용합니다.
+
+가드레일:
+
+- 아이콘, 로고, 버튼 glyph, 상태 마커는 이미지 생성 대상이 아닙니다. SVG나 아이콘 라이브러리를 사용합니다.
+- 저작권 캐릭터, 실제 브랜드, 실제 인물, 권리가 불분명한 장소는 사용하지 않습니다.
+- 이미지 생성 도구가 없으면 생성했다고 말하지 않고 `imagine2-prompts.md` 프롬프트 팩만 남깁니다.
 
 ## Refactor Safety Expectation
 

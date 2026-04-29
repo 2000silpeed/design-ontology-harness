@@ -1,7 +1,7 @@
 export function SiteNavCta() {
   return (
     <div
-      className="hidden md:flex"
+      className="checkpoint-desktop-cta"
       style={{
         alignItems: "center",
         gap: "var(--space-12)",
@@ -56,6 +56,9 @@ export function SiteNavCta() {
         멤버십 시작
       </a>
       <style>{`
+        .checkpoint-desktop-cta {
+          display: flex;
+        }
         .site-nav-cta-ghost:hover {
           color: var(--color-text);
           background: color-mix(in srgb, var(--color-brand-accent) 12%, transparent);
@@ -63,6 +66,11 @@ export function SiteNavCta() {
         .site-nav-cta-filled:hover {
           background: #c4ff88;
           border-color: #c4ff88;
+        }
+        @media (max-width: 899px) {
+          .checkpoint-desktop-cta {
+            display: none;
+          }
         }
       `}</style>
     </div>

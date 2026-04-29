@@ -53,6 +53,7 @@ FOUNDATION_FROM_CONCEPT = {
     "content": "Content design and microcopy rules",
     "design_token": "Token layering and naming",
     "foundation": "Foundation primitives",
+    "imagery": "Generated visual assets and media policy",
 }
 
 ONTOLOGY_RELATIONS = [
@@ -64,6 +65,9 @@ ONTOLOGY_RELATIONS = [
     {"id": "supports", "from": "Component", "to": "ProductPrimitive"},
     {"id": "applies_to", "from": "AccessibilityRule", "to": "ComponentFamily"},
     {"id": "inspired_by", "from": "Brand", "to": "SourceReference"},
+    {"id": "generated_with", "from": "GeneratedVisualAsset", "to": "ImageGenerationModel"},
+    {"id": "grounded_in", "from": "GeneratedVisualAsset", "to": "Brand"},
+    {"id": "intended_for", "from": "GeneratedVisualAsset", "to": "Component"},
 ]
 
 BASELINE_FAMILY_COMPONENTS = {
@@ -612,6 +616,19 @@ def build_system_ontology(
             principle_id = f"principle:{slugify_text(principle['keyword'])}"
             edges.append({"type": "constrains", "from": principle_id, "to": token_category_id})
 
+    image_model_id = "image-model:imagine2"
+    visual_asset_id = "visual-asset:brand-aligned-raster"
+    nodes.append({"id": image_model_id, "type": "ImageGenerationModel", "label": "imagine2"})
+    nodes.append(
+        {
+            "id": visual_asset_id,
+            "type": "GeneratedVisualAsset",
+            "label": "Brand-aligned raster image",
+        }
+    )
+    edges.append({"type": "generated_with", "from": visual_asset_id, "to": image_model_id})
+    edges.append({"type": "grounded_in", "from": visual_asset_id, "to": brand_id})
+
     for family in component_inventory.get("families", []):
         family_id = f"component-family:{family['family']}"
         nodes.append({"id": family_id, "type": "ComponentFamily", "label": family["family"]})
@@ -649,6 +666,8 @@ def build_system_ontology(
             "ProductPrimitive",
             "SourceReference",
             "AccessibilityRule",
+            "GeneratedVisualAsset",
+            "ImageGenerationModel",
         ],
         "relation_types": ONTOLOGY_RELATIONS,
         "nodes": _dedupe_nodes(nodes),

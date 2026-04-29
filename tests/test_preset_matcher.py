@@ -83,6 +83,17 @@ def test_fallback_when_only_low_matches():
     )
 
 
+def test_unique_app_mode_infers_brand_tone_for_demo_query():
+    query = MatchQuery(
+        free_text="SRE observability dashboard, Grafana/Datadog style, dense tables, dark default, alert feed"
+    )
+    results = match_presets(query, top_k=3)
+
+    assert results[0].preset_id == "monitoring-ops--minimal-tech"
+    assert results[0].bucket == "High"
+    assert results[0].missing_signals == []
+
+
 def test_color_mode_filter_zeroes_unsupported():
     # commerce--editorial-warm is light-only; asking for dark should zero its score.
     query = MatchQuery(

@@ -274,6 +274,18 @@ def match_presets(
         presets = [p for p in presets if p["id"] not in deprecation_info]
 
     effective, _rationale_from_text = _effective_query(query)
+    if effective.app_mode and not effective.brand_tone:
+        inferred_tone = _infer_unique_brand_tone(effective.app_mode, presets)
+        if inferred_tone:
+            effective = MatchQuery(
+                app_mode=effective.app_mode,
+                brand_tone=inferred_tone,
+                color_mode=effective.color_mode,
+                tags=effective.tags,
+                stack=effective.stack,
+                locale=effective.locale,
+                free_text=effective.free_text,
+            )
 
     scored: list[tuple[float, dict, list[str], list[str]]] = []
     for preset in presets:
@@ -325,6 +337,22 @@ def match_presets(
             )
         )
     return results
+
+
+def _infer_unique_brand_tone(app_mode: str, presets: list[dict]) -> str | None:
+    """Infer brand_tone only when an app_mode has exactly one active tone.
+
+    This keeps broad queries such as "SRE observability dashboard" from falling
+    to a Low bucket when the catalog has a single monitoring-ops preset, while
+    preserving ambiguity for app modes with multiple tones like dashboard.
+    """
+
+    tones = {
+        preset.get("brand_tone")
+        for preset in presets
+        if preset.get("app_mode") == app_mode and preset.get("brand_tone")
+    }
+    return next(iter(tones)) if len(tones) == 1 else None
 
 
 def _load_deprecation_info(matrix_path: Path | None) -> dict[str, dict]:

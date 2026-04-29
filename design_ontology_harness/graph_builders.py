@@ -618,6 +618,159 @@ def build_benchmark_layer(graph: DesignOntologyGraph, brand_profile: dict) -> No
 
 
 # ---------------------------------------------------------------------------
+# Generated visual asset layer
+# ---------------------------------------------------------------------------
+
+
+VISUAL_ASSET_MANIFEST_PATH = "public/generated/design-system/manifest.json"
+
+VISUAL_ASSET_SLOT_RULES = [
+    {
+        "slot": "brand-aligned-raster",
+        "label": "Brand-aligned raster image",
+        "keywords": (),
+        "family_keywords": (),
+        "aspect_ratios": ["16:9", "4:3", "1:1"],
+        "usage": "Optional Codex imagery when a screen needs professional raster substance.",
+        "activation": "only when the implementation surface would benefit from generated imagery",
+    },
+    {
+        "slot": "hero-image",
+        "label": "Hero image",
+        "keywords": ("hero", "landing", "spotlight", "masthead", "feature"),
+        "family_keywords": ("marketing",),
+        "aspect_ratios": ["16:9", "3:2"],
+        "usage": "First-viewport visual signal for landing, product, or editorial hero sections.",
+        "activation": "hero, landing, product, or editorial first screen",
+    },
+    {
+        "slot": "card-thumbnail",
+        "label": "Card thumbnail",
+        "keywords": ("card", "thumbnail", "media", "product", "gallery", "case-study"),
+        "family_keywords": ("marketing", "data-display", "editorial"),
+        "aspect_ratios": ["4:3", "1:1"],
+        "usage": "Content image for product, venue, object, media, or feature cards.",
+        "activation": "card grids or repeated content surfaces need real visual content",
+    },
+    {
+        "slot": "editorial-cover",
+        "label": "Editorial cover",
+        "keywords": ("editorial", "article", "cover", "story", "case-study", "press"),
+        "family_keywords": ("editorial", "marketing"),
+        "aspect_ratios": ["4:5", "3:4"],
+        "usage": "Cover image for articles, case studies, press stories, or narrative modules.",
+        "activation": "editorial or story-led content module",
+    },
+    {
+        "slot": "empty-state-illustration",
+        "label": "Empty-state illustration",
+        "keywords": ("empty-state", "onboarding", "welcome", "blank", "no-results"),
+        "family_keywords": ("feedback",),
+        "aspect_ratios": ["4:3", "1:1"],
+        "usage": "Supportive illustration for empty states, onboarding, or no-result panels.",
+        "activation": "empty state benefits from clarification without replacing text",
+    },
+]
+
+
+def build_generated_visual_asset_layer(
+    graph: DesignOntologyGraph,
+    brand_profile: dict,
+    blueprint: dict,
+    component_inventory: dict,
+) -> None:
+    """Represent Codex/imagine2 visual generation as ontology nodes and edges."""
+    brand_name = brand_profile.get("brand_name", "Brand")
+    brand_id = f"brand:{slugify(brand_name)}"
+    model_id = "image-model:imagine2"
+
+    graph.add_node(OntologyNode(
+        id=model_id,
+        type=NodeType.ImageGenerationModel,
+        label="imagine2",
+        meta={
+            "runtime": "Codex image generation",
+            "selection_rule": "Use when Codex exposes image-generation tooling or a model selector.",
+        },
+    ))
+
+    prompt_basis = [
+        "system_spec.md",
+        "token_schema.json",
+        "component_inventory.json",
+        "components/component_specs.md",
+    ]
+    if brand_profile.get("_resolved_visual_reference") or blueprint.get("visual_reference"):
+        prompt_basis.append("visual_reference_report.json")
+
+    slot_plans = _infer_visual_asset_slots(component_inventory)
+    for rule, targets in slot_plans:
+        asset_id = f"visual-asset:{rule['slot']}"
+        graph.add_node(OntologyNode(
+            id=asset_id,
+            type=NodeType.GeneratedVisualAsset,
+            label=rule["label"],
+            meta={
+                "slot": rule["slot"],
+                "model": "imagine2",
+                "candidate_count": "2-4",
+                "manifest_path": VISUAL_ASSET_MANIFEST_PATH,
+                "prompt_basis": prompt_basis,
+                "aspect_ratios": rule["aspect_ratios"],
+                "usage": rule["usage"],
+                "activation": rule["activation"],
+                "alt_text_required": True,
+                "status": "promptable",
+            },
+        ))
+        graph.add_edge(OntologyEdge(type=EdgeType.generated_with, source=asset_id, target=model_id))
+        if graph.get_node(brand_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=asset_id, target=brand_id))
+
+        for principle in blueprint.get("principles", []):
+            principle_id = f"principle:{slugify(principle['keyword'])}"
+            if graph.get_node(principle_id):
+                graph.add_edge(OntologyEdge(type=EdgeType.constrains, source=principle_id, target=asset_id))
+
+        for target_id in targets:
+            if graph.get_node(target_id):
+                graph.add_edge(OntologyEdge(type=EdgeType.intended_for, source=asset_id, target=target_id))
+
+
+def _infer_visual_asset_slots(component_inventory: dict) -> list[tuple[dict, list[str]]]:
+    components = component_inventory.get("components", [])
+    families = component_inventory.get("families", [])
+    family_names = {
+        str(family.get("family", "")).strip().lower()
+        for family in families
+        if str(family.get("family", "")).strip()
+    }
+    plans: list[tuple[dict, list[str]]] = [(VISUAL_ASSET_SLOT_RULES[0], [])]
+
+    for rule in VISUAL_ASSET_SLOT_RULES[1:]:
+        targets: list[str] = []
+        for component in components:
+            text = " ".join(
+                str(component.get(key, ""))
+                for key in ("name", "family", "role", "supports_primitive")
+            ).lower()
+            if any(keyword in text for keyword in rule["keywords"]):
+                targets.append(f"component:{slugify(component.get('name', ''))}")
+
+        for family in families:
+            family_name = str(family.get("family", "")).strip()
+            if not family_name:
+                continue
+            if family_name.lower() in rule["family_keywords"]:
+                targets.append(f"family:{slugify(family_name)}")
+
+        if targets or any(keyword in family_names for keyword in rule["family_keywords"]):
+            plans.append((rule, sorted(set(targets))))
+
+    return plans
+
+
+# ---------------------------------------------------------------------------
 # Orchestrator
 # ---------------------------------------------------------------------------
 
@@ -643,5 +796,6 @@ def build_full_ontology_graph(
     build_contrast_audit_layer(graph, brand_profile)
     build_accessibility_layer(graph, component_inventory)
     build_benchmark_layer(graph, brand_profile)
+    build_generated_visual_asset_layer(graph, brand_profile, blueprint, component_inventory)
 
     return graph

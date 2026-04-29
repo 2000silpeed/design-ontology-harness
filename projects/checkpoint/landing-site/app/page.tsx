@@ -611,8 +611,8 @@ function HeroBoard() {
             style={{
               display: "grid",
               gap: "12px",
+              gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
             }}
-            className="md:grid-cols-3"
           >
             {[
               ["Patch Watch", "Iron Chorus Zero", "프레임 페이싱 업데이트 대기"],
@@ -1033,7 +1033,6 @@ function CompareSection() {
           >
             <div
               style={{
-                display: "grid",
                 gap: "10px",
                 padding: "0 4px 10px",
                 borderBottom: "1px solid rgba(255,255,255,0.08)",
@@ -1043,7 +1042,7 @@ function CompareSection() {
                 letterSpacing: "0em",
                 textTransform: "uppercase",
               }}
-              className="md:grid-cols-[1.45fr_0.8fr_0.75fr_1fr_1.1fr_0.9fr]"
+              className="checkpoint-compare-head"
             >
               <span>Title</span>
               <span>Price</span>
@@ -1057,13 +1056,12 @@ function CompareSection() {
               <div
                 key={row.title}
                 style={{
-                  display: "grid",
                   gap: "10px",
                   padding: "14px 4px",
                   borderBottom: "1px solid rgba(255,255,255,0.07)",
                   alignItems: "center",
                 }}
-                className="md:grid-cols-[1.45fr_0.8fr_0.75fr_1fr_1.1fr_0.9fr]"
+                className="checkpoint-compare-row"
               >
                 <div style={{ display: "grid", gap: "4px" }}>
                   <strong
@@ -1084,26 +1082,82 @@ function CompareSection() {
                     구매 판단 카드 갱신됨
                   </span>
                 </div>
-                <span style={tableCellStyle}>{row.price}</span>
-                <span style={tableCellStyle}>{row.playtime}</span>
-                <span style={tableCellStyle}>{row.performance}</span>
-                <span style={tableCellStyle}>{row.accessibility}</span>
-                <span
-                  style={{
-                    ...tableCellStyle,
-                    width: "fit-content",
-                    padding: "7px 10px",
-                    borderRadius: "999px",
-                    background: verdictBackground(row.verdict),
-                    color: verdictColor(row.verdict),
-                    border: `1px solid ${verdictBorder(row.verdict)}`,
-                  }}
-                >
-                  {row.verdict}
-                </span>
+                <div className="checkpoint-compare-cell">
+                  <span className="checkpoint-compare-label">Price</span>
+                  <span style={tableCellStyle}>{row.price}</span>
+                </div>
+                <div className="checkpoint-compare-cell">
+                  <span className="checkpoint-compare-label">Time</span>
+                  <span style={tableCellStyle}>{row.playtime}</span>
+                </div>
+                <div className="checkpoint-compare-cell">
+                  <span className="checkpoint-compare-label">Performance</span>
+                  <span style={tableCellStyle}>{row.performance}</span>
+                </div>
+                <div className="checkpoint-compare-cell">
+                  <span className="checkpoint-compare-label">Accessibility</span>
+                  <span style={tableCellStyle}>{row.accessibility}</span>
+                </div>
+                <div className="checkpoint-compare-cell">
+                  <span className="checkpoint-compare-label">Verdict</span>
+                  <span
+                    style={{
+                      ...tableCellStyle,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      width: "fit-content",
+                      padding: "7px 10px",
+                      borderRadius: "999px",
+                      background: verdictBackground(row.verdict),
+                      color: verdictColor(row.verdict),
+                      border: `1px solid ${verdictBorder(row.verdict)}`,
+                    }}
+                  >
+                    {row.verdict}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
+          <style>{`
+            .checkpoint-compare-head,
+            .checkpoint-compare-row {
+              display: grid;
+              grid-template-columns: 1.45fr 0.8fr 0.75fr 1fr 1.1fr 0.9fr;
+            }
+            .checkpoint-compare-cell {
+              display: flex;
+              align-items: center;
+              min-width: 0;
+            }
+            .checkpoint-compare-label {
+              display: none;
+            }
+            @media (max-width: 767px) {
+              .checkpoint-compare-head {
+                display: none;
+              }
+              .checkpoint-compare-row {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 12px;
+                padding: 18px 4px;
+              }
+              .checkpoint-compare-cell {
+                display: grid;
+                grid-template-columns: 12.5ch minmax(0, 1fr);
+                gap: 12px;
+                align-items: start;
+              }
+              .checkpoint-compare-label {
+                display: block;
+                color: var(--color-text-subtle);
+                font-family: var(--font-mono);
+                font-size: 11px;
+                line-height: 1.4;
+                text-transform: uppercase;
+              }
+            }
+          `}</style>
         </div>
       </div>
     </section>
@@ -1357,8 +1411,8 @@ function MembershipSection() {
                 <span
                   style={{
                     fontFamily: "var(--font-heading)",
-                    fontSize: "44px",
-                    lineHeight: 1.05,
+                    fontSize: "clamp(38px, 5vw, 44px)",
+                    lineHeight: 1.12,
                     letterSpacing: "0em",
                   }}
                 >
@@ -1593,7 +1647,7 @@ function ClosingSection() {
                 style={{
                   fontFamily: "var(--font-heading)",
                   fontSize: "var(--text-xl)",
-                  lineHeight: 1.05,
+                  lineHeight: 1.18,
                 }}
               >
                 이번 주 다이제스트에 포함되는 것

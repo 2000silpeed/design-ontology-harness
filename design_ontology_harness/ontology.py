@@ -22,6 +22,11 @@ CONCEPTS = [
     {"id": "accessibility", "label": "Accessibility", "terms": ["accessibility", "a11y", "접근성"]},
     {"id": "content", "label": "Content", "terms": ["content", "copywriting", "writing", "콘텐츠"]},
     {"id": "brand", "label": "Brand", "terms": ["brand", "branding", "브랜드", "logo"]},
+    {
+        "id": "imagery",
+        "label": "Imagery",
+        "terms": ["imagery", "visual asset", "generated image", "image generation", "illustration", "media asset"],
+    },
 ]
 
 

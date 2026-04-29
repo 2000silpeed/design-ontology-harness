@@ -114,6 +114,36 @@ def build_pattern_catalog_section(graph: DesignOntologyGraph) -> str:
     return "\n".join(lines)
 
 
+def build_generated_visual_asset_section(graph: DesignOntologyGraph) -> str:
+    assets = graph.get_nodes_by_type(NodeType.GeneratedVisualAsset)
+    if not assets:
+        return "No generated visual asset slots defined."
+
+    rows: list[str] = []
+    rows.append("| Asset Slot | Model | Intended For | Manifest |")
+    rows.append("|------------|-------|--------------|----------|")
+
+    for asset in sorted(assets, key=lambda n: n.label):
+        model = "—"
+        for edge in graph.get_edges_from(asset.id, EdgeType.generated_with):
+            node = graph.get_node(edge.target)
+            if node:
+                model = node.label
+                break
+
+        targets: list[str] = []
+        for edge in graph.get_edges_from(asset.id, EdgeType.intended_for):
+            node = graph.get_node(edge.target)
+            if node:
+                targets.append(node.label)
+
+        manifest = asset.meta.get("manifest_path", "—")
+        intended_for = ", ".join(targets[:6]) if targets else asset.meta.get("activation", "optional")
+        rows.append(f"| {asset.label} | {model} | {intended_for} | `{manifest}` |")
+
+    return "\n".join(rows)
+
+
 def build_graph_spec_sections(graph: DesignOntologyGraph) -> str:
     return f"""## 18. Component-Token Map
 
@@ -126,4 +156,8 @@ def build_graph_spec_sections(graph: DesignOntologyGraph) -> str:
 ## 20. Pattern Catalog
 
 {build_pattern_catalog_section(graph)}
+
+## 21. Generated Visual Asset Plan
+
+{build_generated_visual_asset_section(graph)}
 """

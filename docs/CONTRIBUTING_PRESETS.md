@@ -8,12 +8,12 @@
 
 ## 1. 왜 프리셋을 기여하나
 
-P0~P2 15종은 메인테이너가 큐레이팅했지만, 실제 수요는 훨씬 다양합니다. 당신이 만든 브랜드·프로젝트가
+P0~P3 20종은 메인테이너와 dogfood 기여 흐름으로 큐레이팅했지만, 실제 수요는 훨씬 다양합니다. 당신이 만든 브랜드·프로젝트가
 `app_mode × brand_tone` 조합 중 비어있는 셀을 채우면 — 다른 사용자는 4단계 질문 → `/design-start` 한 번으로
 당신과 비슷한 감각의 디자인 시스템을 설치할 수 있습니다.
 
 **기여가 가치 있는 경우**
-- 기존 15종으로 커버되지 않는 조합 (예: `commerce--playful-soft`, `dashboard--bold-confident`)
+- 기존 20종으로 커버되지 않는 조합 (예: `commerce--minimal-tech`, `marketing-landing--playful-soft`)
 - 공공 레퍼런스 기반의 재현 가능한 KB 시드
 - 최소 1개 실제 프로젝트에 사용할 예정이거나, 이미 사용 중
 
@@ -31,7 +31,7 @@ PR 제출 **전에** 모두 충족:
 - [ ] `axis` 선택 완료 — 비어있는 셀을 §4 가이드로 확인
 - [ ] `source_project` 준비 — `projects/<your-project>/` 생성 + brand_profile.json + spec.md
 - [ ] KB 시드 최소 3개 (공공 레퍼런스만, `sources.json` 에 기록)
-- [ ] 기존 15종과 HEX 3종(primary / accent / surface_tint) 2개 이상 겹침 없음
+- [ ] 기존 20종과 HEX 3종(primary / accent / surface_tint) 2개 이상 겹침 없음
 - [ ] `/design-start` 에서 자기 자신이 Top-1 로 나오는 자연어 쿼리 최소 1개 확보
 - [ ] 6개월 owner 유지 동의 (PLAN §11.3)
 
@@ -233,35 +233,33 @@ uv run design-ontology match-preset --free-text "<your natural-language query>"
 
 축 체계는 `app_mode` (8종 × 고정) × `brand_tone` (5종 × 고정) = 40 셀. `color_mode` 와 `tags` 는 속성.
 
-### 4.1 현재 18종이 채운 셀 (2026-04-20 기준)
+### 4.1 현재 20종이 채운 셀 (2026-04-29 기준)
 
 |                     | minimal-tech | editorial-warm | bold-confident | playful-soft | corporate-trust |
 |---------------------|:---:|:---:|:---:|:---:|:---:|
 | dashboard           | **P0** | **P2** | **P3** | **P3** | **P1** |
 | document-content    | **P1** | **P0** | **P2** | — | — |
-| marketing-landing   | **P2** | — | **P0** | — | — |
+| marketing-landing   | **P2** | **P3** | **P0** | — | — |
 | commerce            | — | **P0** | **P2** | **P3** | — |
-| conversation-copilot| **P0** | **P2** | — | — | — |
+| conversation-copilot| **P0** | **P2** | — | — | **P3** |
 | canvas-tool         | **P1** | — | — | — | — |
 | community-feed      | — | — | — | **P1** | — |
 | monitoring-ops      | **P1** | — | — | — | — |
 
-### 4.2 우선순위 Top-8 빈 셀 (P3 수요 예상 기반, PLAN §4.8)
+### 4.2 우선순위 Top-5 빈 셀 (P3 수요 예상 기반, PLAN §4.8)
 
 > Phase 13-11-A / 13-11-B 에서 `dashboard--bold-confident` · `dashboard--playful-soft` · `commerce--playful-soft`
-> 가 P3 로 채워지며 top-10 에서 3칸이 빠졌습니다. 최신 우선순위는 `uv run design-ontology catalog-health` 출력
+> 가 P3 로 채워졌고, Phase 14/15 launch gate 에서 `marketing-landing--editorial-warm` ·
+> `conversation-copilot--corporate-trust` 도 P3 로 채워졌습니다. 최신 우선순위는 `uv run design-ontology catalog-health` 출력
 > 의 `priority_empty_cells` 를 직접 확인하세요.
 
 | 순위 | 조합 | 쓰임새 힌트 |
 |:---:|---|---|
 | 1 | `commerce--minimal-tech` | B2B/테크 커머스 (Stripe 스타일 결제, 개발자 대상 API 상점) |
-| 2 | `marketing-landing--editorial-warm` | 에디토리얼 톤 랜딩 (뉴스레터·출판·문화재단) |
-| 3 | `marketing-landing--playful-soft` | 컨슈머 랜딩 (D2C 스낵·생활용품) |
-| 4 | `conversation-copilot--corporate-trust` | 엔터프라이즈 챗봇 (금융·보험 AI 상담) |
-| 5 | `document-content--corporate-trust` | 엔터프라이즈 docs (금융·헬스케어 규정 문서) |
-| 6 | `monitoring-ops--corporate-trust` | 엔터프라이즈 observability (규제·감사 컨텍스트) |
-| 7 | `canvas-tool--bold-confident` | 크리에이터 전용 bold 캔버스 (스트리머·밈·숏폼) |
-| 8 | `dashboard--playful-soft` 외 추가 태그 변형 | 다른 도메인 (habit/학습/가계부) — P3 tag 차별화 필요 |
+| 2 | `marketing-landing--playful-soft` | 컨슈머 랜딩 (D2C 스낵·생활용품) |
+| 3 | `document-content--corporate-trust` | 엔터프라이즈 docs (금융·헬스케어 규정 문서) |
+| 4 | `monitoring-ops--corporate-trust` | 엔터프라이즈 observability (규제·감사 컨텍스트) |
+| 5 | `canvas-tool--bold-confident` | 크리에이터 전용 bold 캔버스 (스트리머·밈·숏폼) |
 
 ### 4.3 어떤 조합을 고를지 판단 기준
 
@@ -405,8 +403,8 @@ PLAN §11.2. 아래 중 **하나라도** 해당되면 deprecated 마킹.
 
 ### 9.3 Code of Conduct
 
-이 프로젝트는 [Contributor Covenant](https://www.contributor-covenant.org/) v2.1 을 따릅니다 (CoC 문서는 별도 추가 예정).
-위반 제보는 이슈 또는 메인테이너 직접 연락.
+이 프로젝트는 [Contributor Covenant v2.1](../CODE_OF_CONDUCT.md)의 취지를 따릅니다.
+위반 제보는 플러그인 레포 이슈 트래커 또는 메인테이너 직접 연락으로 처리합니다. 민감한 제보는 공개 본문에 세부 증거를 올리지 말고 비공개 채널을 먼저 요청해주세요.
 
 ---
 

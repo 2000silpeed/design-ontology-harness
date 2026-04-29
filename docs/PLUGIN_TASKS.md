@@ -377,7 +377,7 @@
   - 상단 유도 배너: "그냥 프리셋을 쓰고 싶다면 → plugin 레포"
   - "플러그인 vs 하네스" 결정표 (6행)
   - "플러그인 배포" 섹션: 카탈로그 요약 + 메인테이너 5스텝 워크플로우 + 버전 계약 4필드 표 + sync 파이프라인 다이어그램
-  - "Phase 진행 상태" 표 (1~15, Phase 14 in progress)
+  - "Phase 진행 상태" 표 (1~15, Phase 14/15 done)
 
 - [x] **14-3. 프리셋 카탈로그 + 자동 생성 스크립트**
   - 신규 (harness): `scripts/build-catalog.py` stdlib only
@@ -385,7 +385,7 @@
     - `PreviewBlock` dataclass: summary / core_colors / semantic_colors / typography / components / cautions
     - 출력: At a glance · Filter axes 표 · app_mode × brand_tone 매트릭스 · tier 별 카드 (P0/P1/P2/P3)
     - 각 카드: preset_id · tier · app_mode · brand_tone · default_color_mode · color_modes · tags · source_project · owner · Core HEX + `⬛`/`⬜` 스와치 (luminance 기반) · Typography (heading/body/mono/korean) · locale_pairings · 대표 컴포넌트 top-3 · 추천 용도 · 주의사항 · links
-  - 신규 (plugin): `docs/CATALOG.md` 자동 생성 (15종 · 459 lines)
+  - 신규 (plugin): `docs/CATALOG.md` 자동 생성 (초기 15종 · 이후 20종으로 재생성)
   - 테스트: `tests/test_build_catalog.py` 5 케이스 (parse / swatch luminance / render / CLI)
 
 - [x] **14-4. 공개 마켓플레이스 등록 준비**
@@ -393,7 +393,7 @@
   - categories 확장 (5종: design-systems, frontend, ui, tokens, internationalization)
   - keywords 확장 (7 → 22, app_mode 8종 + brand_tone 5종 전부 포함)
   - source.repository 기본값 설정 (`design-ontology/design-ontology-plugin`)
-  - summary/description 에 "15 curated presets" / P0/P1/P2 수치 반영
+  - summary/description 에 "20 curated presets" / P0/P1/P2/P3 수치 반영
   - 실제 github public + `/plugin marketplace add` 실행은 사용자 승인 대기
 
 - [x] **14-5. 데모 시나리오 문서**
@@ -412,6 +412,13 @@
   - 신규: `docs/RELEASE.md` 릴리스 절차 + SemVer 정책 + 롤백 가이드 + 실패 모드 표
   - 실제 tag push / `gh release create` 는 사용자 수동 승인 대기 (워크플로우 파일만 작성)
 
+- [x] **14-7. 공개 직전 로컬 gate 마감**
+  - plugin README 15종 표기를 20종(P0×5/P1×5/P2×5/P3×5) 기준으로 갱신
+  - plugin `docs/CATALOG.md` 재생성 + `presets/` 로컬 scaffold 동기화
+  - `scripts/verify-demo-scripts.py` 신규 — 6개 DEMO_SCRIPTS 시나리오 Top-1/버킷 자동 검증
+  - `monitoring-ops` 단일 tone query 보강 — SRE observability demo 가 `Low` fallback 으로 떨어지지 않도록 matcher 보정
+  - 공개 GitHub run history / tag push / gh release 는 외부 실행 항목으로 분리
+
 ---
 
 ## Phase 15: 라이프사이클 정책 운영 (PLAN §11 구현)
@@ -422,7 +429,7 @@
   - 지표 (전체): tier 분포, 셀 커버리지 (8×5), priority empty cells top-10, deprecation 후보, snapshot_drift_count
   - 신규: `design_ontology_harness/catalog_health.py` (stdlib only) — `compute_health()` / `format_markdown()` / `format_summary()`
   - 신규: `presets/.metrics/{install_hits,match_hits}.json` 빈 dict scaffold + `README.md` (수동 입력, Phase 15-4 pruning 입력)
-  - 출력: `presets/CATALOG_HEALTH.md` 자동 생성 (4.7KB) — 현재 15종 / 38% coverage / 15 deprecation 후보 (전부 install·match 0 hit). version_drift 는 pyproject.toml `[project] version` 동적 로딩.
+  - 출력: `presets/CATALOG_HEALTH.md` 자동 생성 (초기 15종 기준 38% coverage / 15 deprecation 후보, 이후 20종 기준으로 재계산). version_drift 는 pyproject.toml `[project] version` 동적 로딩.
 
 - [x] **15-2. 승급 파이프라인**
   - `design_ontology_harness/preset_ops.py` — `promote_preset(preset_id, target_tier, *, dry_run, presets_root)` + 5단계 게이트 (validate-presets / lint-previews / adapter round-trip (Next + Raw) / sources.json / self-match Top-1)
@@ -470,7 +477,7 @@
 
 - [x] **15-8. 피드백 채널**
   - plugin 레포 `.github/ISSUE_TEMPLATE/` 신규 3종 (GitHub Issue Forms 스펙):
-    - `preset-feedback.yml` — preset_id dropdown 15종 + use_case / problem / expected / context_link
+    - `preset-feedback.yml` — preset_id dropdown 20종 + use_case / problem / expected / context_link
     - `new-preset-request.yml` — app_mode × brand_tone dropdown + use_case / references / ko 필요 / 본인 기여 가능
     - `bug-report.yml` — reproduction / expected / actual / env (yaml render) / logs (text render)
   - `.github/ISSUE_TEMPLATE/config.yml` — `blank_issues_enabled: false` + contact_links (CONTRIBUTING_PRESETS · Discussions placeholder)
@@ -480,10 +487,17 @@
 - [x] **15-9. 라이선스/크레딧**
   - `preset_ops.build_sources_json(preset_id, ...)` — brand_profile.seeds + visual_reference.source_references + spec.md markdown 링크 → dedup + 도메인 화이트리스트 기반 kind 추론 (`design-system` / `visual-reference` / `brand-guide` / `reference-docs` / `article`) → `presets/<id>/sources.json` 생성. `build_sources_for_all()` 일괄 헬퍼.
   - CLI: `uv run design-ontology build-sources [--preset-id <id>] [--all] [--force] [--projects-root projects]` — kind 분포 + 시드 개수 요약, 시드 < 3 일 경우 warning.
-  - 15종 프리셋 전부 sources.json 생성 (3~6 시드/건), `brand_profile.json` 에 `seeds` 필드 일괄 추가 (orbit/signal-desk/glacier/colorfit/premier-league/ledger/pulse/lattice/bloom/atelier/beacon/drop/quill/broadside/curator).
+  - 초기 15종 프리셋 전부 sources.json 생성 (3~6 시드/건), `brand_profile.json` 에 `seeds` 필드 일괄 추가 (orbit/signal-desk/glacier/colorfit/premier-league/ledger/pulse/lattice/bloom/atelier/beacon/drop/quill/broadside/curator).
   - 신규 스키마: `schemas/preset_sources.schema.json` + `preset_validator` 에서 sources.json 존재 시 필수 필드 (preset_id/source_project/seeds[]/pretendard_font_license/created_at) + 각 seed (url/kind/title 필수, url은 http(s):// 시작) 검증 추가.
   - Pretendard SIL OFL 고지 정비: `adapters/base.py._pretendard_license` 에 "재배포 시 이 고지 유지 필수 (OFL §2)" 한국어/영어 문구 추가. plugin `LICENSE-FONTS` 한국어 + 영문 병기 (재제작자 고지 · 상표권 · 번들 정책 · 재배포 체크리스트). plugin README License 섹션 한국어/영문 병기 + `scripts.sil.org/OFL` 링크. harness README "플러그인 배포" 섹션에 Pretendard 런타임 fetch + OFL §2 한 줄 추가.
   - `scripts/build-catalog.py` 에 `## KB Sources & Credits` 섹션 추가 — per-preset seed 개수/kind 분포 테이블 + aggregated URL → referenced presets 테이블 + 번들 서체 (Pretendard/Inter/JetBrains Mono) 라이선스 subsection.
+
+- [x] **15-10. 운영 launch gate 정리**
+  - 신규 `CODE_OF_CONDUCT.md` harness/plugin mirror — Contributor Covenant v2.1 취지 + 한국어 요약
+  - plugin README 에 2주 1차 반응 / 4주 리뷰 완료 SLA 추가
+  - 신규 `scripts/sync-issue-template-presets.py` — preset-feedback dropdown 을 matrix.json 20종과 동기화
+  - 신규 `scripts/security-scan-launch.py` — high-confidence secret prefix/private key block scan
+  - `docs/MARKETPLACE_LAUNCH_CHECKLIST.md` 2026-04-29 기준 갱신: 로컬 통과 12종, 외부 실행 대기 3종
 
 ---
 
@@ -529,6 +543,7 @@ Phase 15 (라이프사이클 정책 운영, 지속)
 
 | 날짜 | 태스크 | 상태 |
 |------|--------|------|
+| 2026-04-29 | **Phase 14/15 로컬 마감 완료**: Phase 14 공개 배포 gate 와 Phase 15 운영 gate 를 현 상태 기준으로 닫음. plugin README/marketplace 설명을 20 presets 기준으로 갱신, `presets/` 로컬 scaffold + CATALOG 재동기화, preset-feedback issue template 을 matrix.json 20종과 자동 동기화. 신규 스크립트 3종 `verify-demo-scripts.py` / `sync-issue-template-presets.py` / `security-scan-launch.py` 추가. DEMO_SCRIPTS 6종 Top-1 전부 High 검증, SRE observability query 는 단일 app_mode tone 추론으로 `monitoring-ops--minimal-tech` High 매칭. harness/plugin `CODE_OF_CONDUCT.md` mirror 추가, plugin README SLA(2주 1차 반응 / 4주 리뷰 완료) 명시. `MARKETPLACE_LAUNCH_CHECKLIST.md` 를 2026-04-29 기준으로 갱신해 로컬 통과 12종 / 외부 실행 대기 3종(public run history, 실제 tag/release, alpha→beta 사후 판단) 으로 분리. | done |
 | 2026-04-18 | PLUGIN_PLAN.md v1 초안 | done |
 | 2026-04-18 | PLUGIN_TASKS.md v1 초안 | done |
 | 2026-04-18 | v1 결정 반영 (30+, 별도 레포, 어댑터 A/C/B, 스크린샷, 공개, 단일 semver) | done |

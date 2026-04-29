@@ -112,6 +112,7 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
     skills_root = ensure_dir(plugin_root / "skills")
     architect_dir = ensure_dir(skills_root / "design-system-architect")
     implementer_dir = ensure_dir(skills_root / "design-system-implementer")
+    visual_assets_dir = ensure_dir(skills_root / "design-system-visual-assets")
     plugin_agents_dir = ensure_dir(plugin_root / "agents")
     marketplace_dir = ensure_dir(target_repo / ".agents" / "plugins")
 
@@ -127,6 +128,7 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
             "design-system",
             "tokens",
             "ui",
+            "imagery",
             "codex",
             "skills",
         ],
@@ -134,12 +136,13 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
         "interface": {
             "displayName": "Design System Harness",
             "shortDescription": "Apply design-system artifacts inside a real implementation repo",
-            "longDescription": "Provides Codex skills for reading design-system artifacts and implementing tokens, components, and UI changes that stay aligned with your system spec.",
+            "longDescription": "Provides Codex skills for reading design-system artifacts, implementing tokens/components, and creating brand-aligned generated imagery with imagine2 when image generation is available.",
             "developerName": "Design Ontology Harness",
             "category": "Coding",
             "capabilities": ["Interactive", "Write"],
             "defaultPrompt": [
-                "Implement UI changes using the local design-system artifacts and component inventory"
+                "Implement UI changes using the local design-system artifacts and component inventory",
+                "When a screen needs professional imagery, use the visual asset skill to generate brand-aligned images",
             ],
             "screenshots": [],
             "brandColor": "#6B7B8D",
@@ -180,6 +183,12 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
     _write_if_allowed(
         implementer_dir / "SKILL.md",
         _codex_implementer_skill(artifact_dir),
+        force=force,
+        created=created,
+    )
+    _write_if_allowed(
+        visual_assets_dir / "SKILL.md",
+        _codex_visual_asset_skill(artifact_dir),
         force=force,
         created=created,
     )
@@ -1025,10 +1034,105 @@ Read these files first when they exist:
 """
 
 
+def _codex_visual_asset_skill(artifact_dir: str) -> str:
+    return f"""---
+name: design-system-visual-assets
+description: Generate and integrate professional brand-aligned imagery for Codex implementations. Use when a screen, landing page, empty state, editorial hero, or product section needs raster imagery that matches the local design-system artifacts.
+---
+
+# Design System Visual Assets
+
+Use this skill when the implementation would look more professional with generated raster imagery instead of flat placeholder blocks, generic gradients, emoji, or stock-like decoration.
+
+## Required Inputs
+
+Read these files first when they exist:
+
+- `{artifact_dir}/system_spec.md`
+- `{artifact_dir}/token_schema.json`
+- `{artifact_dir}/component_inventory.json`
+- `{artifact_dir}/visual_reference_report.json`
+- `{artifact_dir}/components/component_specs.md`
+
+If `visual_reference_report.json` is missing, infer image direction from `system_spec.md`, brand keywords, anti-keywords, palette roles, typography mood, and product domain. State that the image direction is ungrounded by visual references.
+
+## When To Generate Images
+
+Generate imagery for:
+
+- landing or editorial heroes that need a first-viewport visual signal
+- product, venue, object, or media cards that benefit from real visual substance
+- empty states, onboarding panels, or feature sections where illustration clarifies the product
+- case-study or article covers where the system spec calls for editorial treatment
+
+Do not generate imagery for:
+
+- icons, logos, button glyphs, tabs, toggles, or status markers
+- components that should be built with CSS, SVG primitives, or an icon library
+- copyrighted characters, real brands, real people, or identifiable private locations unless the user explicitly provided licensed source material
+- purely atmospheric blurred backgrounds that do not reveal the product, state, place, or object
+
+## imagine2 Workflow
+
+When Codex exposes image-generation tooling or a model selector:
+
+1. Select `imagine2`.
+2. Generate 2-4 candidates for each major image slot.
+3. Base prompts on the artifact files, not on generic style words.
+4. Include concrete subject matter, composition, camera/illustration treatment, palette constraints, density, material language, and anti-keywords.
+5. Prefer usable aspect ratios:
+   - hero: `16:9`, `3:2`, or wide responsive crop
+   - card thumbnail: `4:3` or `1:1`
+   - editorial cover: `4:5` or `3:4`
+6. Save accepted assets under `public/generated/design-system/` when the app has a `public/` directory; otherwise use the closest existing static asset directory.
+7. Write or update `public/generated/design-system/manifest.json` with:
+   - filename
+   - model: `imagine2`
+   - prompt
+   - intended_slot
+   - source_artifacts
+   - created_at
+   - alt_text
+   - review_notes
+
+If image-generation tooling is unavailable, do not pretend an image was generated. Instead, create a ready-to-run prompt pack at `public/generated/design-system/imagine2-prompts.md` or the nearest existing docs/assets directory.
+
+## Prompt Recipe
+
+Build prompts with this structure:
+
+```text
+Professional product image for [brand/product/screen], [specific subject], [composition], [visual material], [palette from token_schema], [density and surface cues from visual_reference_report], [lighting/camera or illustration treatment], no logos, no readable copyrighted UI, no stock-photo feel, no emoji, no generic gradient background.
+```
+
+For Korean-first products, include Hangul-safe composition constraints:
+
+- leave quiet negative space where Korean headings may sit
+- avoid dense texture behind text
+- keep faces/objects away from likely text columns
+- avoid tiny embedded text inside the generated image
+
+## Integration Rules
+
+- Add generated images through the framework's normal image component when one exists.
+- Provide meaningful `alt` text for content images; use empty alt only for truly decorative images.
+- Use CSS/object-fit and art direction so the important subject remains visible on mobile and desktop.
+- Do not let images replace accessible text, data, controls, or navigation.
+- Keep palette and crop behavior aligned with tokens and responsive breakpoints.
+- Verify desktop and mobile screenshots after integration; check that images render, crop cleanly, and do not obscure text.
+
+## Output Expectations
+
+- List the generated assets and their intended slots.
+- Mention the `imagine2` prompt basis: which artifacts and brand signals were used.
+- Mention any manual review needed for licensing, realism, or content fit.
+"""
+
+
 def _codex_plugin_openai_yaml() -> str:
     return """display_name: Design System Harness
-short_description: Apply local design-system artifacts inside implementation repos
-default_prompt: Implement UI changes using the design-system artifacts in this repository
+short_description: Apply local design-system artifacts and brand imagery inside implementation repos
+default_prompt: Implement UI changes using the design-system artifacts in this repository; use imagine2-backed visual assets when the screen needs professional imagery
 """
 
 

@@ -2,7 +2,7 @@
 
 다른 회사의 디자인 시스템을 참고해서, **우리 브랜드에 맞는 디자인 시스템 설계도**를 자동으로 만들고, 그 설계도를 기반으로 **AI가 만든 UI를 프로 수준으로 재구성**해주는 도구입니다.
 
-> **그냥 프리셋을 쓰고 싶다면 →** [`design-ontology-plugin`](https://github.com/design-ontology/design-ontology-plugin) 레포로 가세요. 15종 프리셋 카탈로그 + `/design-start` 4단계 질문 UX + Next·raw-CSS 어댑터가 `/plugin install design-ontology` 한 줄로 설치됩니다.
+> **그냥 프리셋을 쓰고 싶다면 →** [`design-ontology-plugin`](https://github.com/design-ontology/design-ontology-plugin) 레포로 가세요. 20종 프리셋 카탈로그 + `/design-start` 4단계 질문 UX + Next·raw-CSS 어댑터가 `/plugin install design-ontology` 한 줄로 설치됩니다.
 >
 > 이 harness 레포는 **프리셋 생성기**이자 **공급원**입니다. 프리셋을 새로 만들거나, 커스터마이징하거나, 내부적으로 KB·블루프린트 파이프라인을 돌리려는 고급 사용자·메인테이너를 위한 문서입니다.
 >
@@ -42,13 +42,13 @@ flowchart TB
         VISUAL_PREP -->|advisory hints| SYNTH
         ANALYZE -->|컴포넌트 탐지| SYNTH
         COLOR_REF["색상 레퍼런스"] -->|팔레트 결정| SYNTH
-        SYNTH --> GRAPH["온톨로지 그래프\n20노드 × 24관계"]
+        SYNTH --> GRAPH["온톨로지 그래프\n22노드 × 27관계"]
         SYNTH --> OUTPUT["산출물"]
-        GRAPH -->|17-19섹션| OUTPUT
+        GRAPH -->|18-21섹션| OUTPUT
     end
 
     subgraph OUTPUT_DETAIL["산출물"]
-        SYS_SPEC["system_spec.md\n19섹션 설계 스펙"]
+        SYS_SPEC["system_spec.md\n21섹션 설계 스펙"]
         TOKEN["token_schema.json\n토큰 체계"]
         ONTOLOGY["system_ontology.json\n관계 그래프"]
         COMP_SPEC["component_specs.md\n컴포넌트 상세"]
@@ -232,7 +232,7 @@ uv run design-ontology run-project \
 | `blueprint/system_spec.md` | 디자인 원칙, 색상 팔레트, 서체 추천, 컴포넌트 정책 |
 | `blueprint/token_schema.json` | 색상·여백·타이포 등 토큰 계층 구조 |
 | `blueprint/component_inventory.json` | 컴포넌트 패밀리와 상태 정의 |
-| `blueprint/system_ontology.json` | 20종 노드 × 24종 관계의 온톨로지 그래프 |
+| `blueprint/system_ontology.json` | 22종 노드 × 27종 관계의 온톨로지 그래프 |
 | `components/component_specs.md` | 컴포넌트별 상세 스펙 (구조, 상태, 토큰, 접근성, 브랜드 적용) |
 | `components/component_specs.json` | 같은 내용의 JSON (에이전트용) |
 
@@ -377,6 +377,8 @@ uv run design-ontology init-agent-pack \
 | **Implement** | 자동 | 새 컴포넌트를 스펙에 맞게 구현 |
 | **Architect** | 자동 | 토큰 구조, 롤아웃 순서 계획 |
 
+Codex target을 함께 생성하면 추가로 **Visual Assets** 스킬이 포함됩니다. 이 스킬은 Codex에서 이미지 생성 기능을 사용할 수 있을 때 `imagine2` 모델로 브랜드/토큰/visual reference에 맞는 히어로, 카드, 에디토리얼 이미지를 만들고 `public/generated/design-system/manifest.json`에 prompt와 alt text를 기록하도록 안내합니다. 온톨로지에도 `GeneratedVisualAsset` / `ImageGenerationModel` 노드와 `generated_with`, `grounded_in`, `intended_for` 관계가 기록됩니다.
+
 ### Rebuild vs Refactor
 
 ```
@@ -442,9 +444,9 @@ uv run design-ontology benchmark --brand-profile brand_profile.json --output-dir
 
 합성 시 자동으로 매칭된 벤치마크 컨텍스트가 blueprint에 포함됩니다.
 
-## 산출물 19섹션 구성
+## 산출물 21섹션 구성
 
-`system_spec.md`는 아래 19개 섹션으로 구성됩니다.
+`system_spec.md`는 아래 21개 섹션으로 구성됩니다.
 
 | 번호 | 섹션 | 내용 |
 |------|------|------|
@@ -454,25 +456,27 @@ uv run design-ontology benchmark --brand-profile brand_profile.json --output-dir
 | 4 | Foundation Priorities | 온톨로지에서 도출한 기초 우선순위 |
 | 5 | Token Strategy | 토큰 계층, 타이포, 스페이싱, 서체 |
 | 6 | Color Reference | 팔레트 결정, semantic role, 확장 |
-| 7 | Component Strategy | 제품 primitive → 컴포넌트 패밀리 |
-| 8 | Implementation Guardrails | 안전한 적용을 위한 규칙 |
-| 9 | Reference Absorption Rule | 레퍼런스 활용 원칙 |
-| 10 | AI Synthesis Principles | hex 미생성, 토큰명 미생성, 팩트 기반 해석 |
-| 11 | Ontology Targets | 핵심 개념 신호 |
-| 12 | Profile Validation | 프로필 검증 결과 |
-| 13 | Quick Start | 시작 가이드, 적용 순서, 우선순위 |
-| 14 | DO / DON'T | 브랜드 키워드 기반 구체적 규칙 |
-| 15 | Drop-in CSS | 즉시 사용 가능한 `:root` CSS 변수 |
-| 16 | CSS Extraction Summary | 크롤링 CSS 분석 결과 요약 |
-| 17 | **Component-Token Map** | 컴포넌트별 사용 토큰 테이블 (그래프 기반) |
-| 18 | **Contrast Audit** | surface/text 조합별 대비 비율 + AA/AAA 판정 |
-| 19 | **Pattern Catalog** | 레이아웃/인터랙션 패턴 + 구성 컴포넌트 |
+| 7 | Visual Reference Signals | 시각 레퍼런스 기반 톤/밀도/이미지 방향 |
+| 8 | Component Strategy | 제품 primitive → 컴포넌트 패밀리 |
+| 9 | Implementation Guardrails | 안전한 적용을 위한 규칙 |
+| 10 | Reference Absorption Rule | 레퍼런스 활용 원칙 |
+| 11 | AI Synthesis Principles | hex 미생성, 토큰명 미생성, 팩트 기반 해석 |
+| 12 | Ontology Targets | 핵심 개념 신호 |
+| 13 | Profile Validation | 프로필 검증 결과 |
+| 14 | Quick Start | 시작 가이드, 적용 순서, 우선순위 |
+| 15 | DO / DON'T | 브랜드 키워드 기반 구체적 규칙 |
+| 16 | Drop-in CSS | 즉시 사용 가능한 `:root` CSS 변수 |
+| 17 | CSS Extraction Summary | 크롤링 CSS 분석 결과 요약 |
+| 18 | **Component-Token Map** | 컴포넌트별 사용 토큰 테이블 (그래프 기반) |
+| 19 | **Contrast Audit** | surface/text 조합별 대비 비율 + AA/AAA 판정 |
+| 20 | **Pattern Catalog** | 레이아웃/인터랙션 패턴 + 구성 컴포넌트 |
+| 21 | **Generated Visual Asset Plan** | imagine2 기반 생성 이미지 슬롯 + manifest/alt text 계획 |
 
 ## 온톨로지 그래프
 
-`system_ontology.json`은 단순 키워드 매칭이 아닌 **20종 노드 × 24종 관계**의 진짜 그래프입니다.
+`system_ontology.json`은 단순 키워드 매칭이 아닌 **22종 노드 × 27종 관계**의 진짜 그래프입니다.
 
-**노드 타입 (20종):**
+**노드 타입 (22종):**
 
 | 카테고리 | 노드 |
 |---------|------|
@@ -482,9 +486,9 @@ uv run design-ontology benchmark --brand-profile brand_profile.json --output-dir
 | 토큰 | SpacingToken, RadiusToken, MotionToken, ElevationToken |
 | 컴포넌트 | ComponentFamily, Component, ComponentState |
 | 패턴 | LayoutPattern, InteractionPattern |
-| 기타 | AccessibilityRule, ProductPrimitive, SourceReference, BenchmarkSystem |
+| 기타 | AccessibilityRule, ProductPrimitive, SourceReference, BenchmarkSystem, GeneratedVisualAsset, ImageGenerationModel |
 
-**엣지 타입 (24종):**
+**엣지 타입 (27종):**
 
 ```
 Brand ──expresses──▶ Principle ──constrains──▶ TokenCategory
@@ -501,6 +505,9 @@ Component ──implements──▶ InteractionPattern
 LayoutPattern ──composed_of──▶ Component
 ComponentFamily ──requires──▶ AccessibilityRule
 BenchmarkSystem ──similar_to──▶ BenchmarkSystem (Jaccard)
+GeneratedVisualAsset ──generated_with──▶ ImageGenerationModel
+GeneratedVisualAsset ──grounded_in──▶ Brand/Principle/ColorToken/SourceReference
+GeneratedVisualAsset ──intended_for──▶ Component/ComponentFamily
 ...
 ```
 
@@ -560,9 +567,9 @@ flowchart TB
 
         SYNTH --> AUTH["authoring.py"]
         AUTH --> GRAPH["graph_builders.py\n온톨로지 그래프 구축"]
-        GRAPH --> GRAPH_SEC["graph_spec_sections.py\n17-19섹션 도출"]
+        GRAPH --> GRAPH_SEC["graph_spec_sections.py\n18-21섹션 도출"]
 
-        AUTH --> SYS["system_spec.md\n(19섹션)"]
+        AUTH --> SYS["system_spec.md\n(21섹션)"]
         AUTH --> TOK["token_schema.json"]
         AUTH --> ONT_OUT["system_ontology.json\n(그래프 구조)"]
         GRAPH_SEC --> SYS
@@ -609,13 +616,13 @@ graph TB
     end
 
     subgraph GRAPH["온톨로지 그래프"]
-        SCHEMA["graph_schema.py\n20 NodeType\n24 EdgeType"]
-        BUILDERS["graph_builders.py\n7개 레이어 빌더"]
-        SECTIONS["graph_spec_sections.py\n17-19섹션 도출"]
+        SCHEMA["graph_schema.py\n22 NodeType\n27 EdgeType"]
+        BUILDERS["graph_builders.py\n11개 레이어 빌더"]
+        SECTIONS["graph_spec_sections.py\n18-21섹션 도출"]
     end
 
     subgraph OUTPUT["산출물 생성"]
-        AUTH["authoring.py\n19섹션 spec"]
+        AUTH["authoring.py\n21섹션 spec"]
         COMP_SPEC["component_specs.py\n컴포넌트 스펙"]
         AGENT["agent_packs.py\n에이전트 팩 4종"]
     end
@@ -654,11 +661,11 @@ graph TB
 
 ## 플러그인 배포 (Phase 7~14)
 
-이 harness 는 15종 프리셋을 찍어 [`design-ontology-plugin`](https://github.com/design-ontology/design-ontology-plugin) 공개 레포로 자동 싱크합니다. 최종 사용자는 `/plugin install design-ontology` 한 줄로 프리셋·스킬·에이전트·어댑터를 얻습니다.
+이 harness 는 20종 프리셋을 찍어 [`design-ontology-plugin`](https://github.com/design-ontology/design-ontology-plugin) 공개 레포로 자동 싱크합니다. 최종 사용자는 `/plugin install design-ontology` 한 줄로 프리셋·스킬·에이전트·어댑터를 얻습니다.
 
 > **Pretendard 서체 / SIL OFL 1.1** — 플러그인은 Pretendard Variable 을 **런타임 fetch** 방식으로 주입합니다 (`scripts/fetch-pretendard.mjs`). woff2 바이너리는 harness/plugin 레포 어디에도 번들되지 않고, OFL 고지(`LICENSE-FONTS`) 와 함께 설치 시점에 다운로드됩니다. 재배포 시 이 고지를 유지해야 합니다 (OFL §2).
 
-### 프리셋 카탈로그 요약 (2026-04-20 현재 15종)
+### 프리셋 카탈로그 요약 (2026-04-29 현재 20종)
 
 자동 생성된 카드 + 축 매트릭스 + Core HEX 스와치는 [`design-ontology-plugin/docs/CATALOG.md`](https://github.com/design-ontology/design-ontology-plugin/blob/main/docs/CATALOG.md) 에서 확인하세요. Harness 쪽에서는 `python3 scripts/build-catalog.py --output <path>` 로 언제든 재생성.
 
@@ -666,11 +673,11 @@ axis matrix (app_mode × brand_tone):
 
 | app_mode \ brand_tone | minimal-tech | editorial-warm | bold-confident | playful-soft | corporate-trust |
 |---|---|---|---|---|---|
-| **dashboard** | `P0` orbit | `P2` curator | — | — | `P1` ledger |
+| **dashboard** | `P0` orbit | `P2` curator | `P3` lattice-dash | `P3` meadow | `P1` ledger |
 | **document-content** | `P1` lattice | `P0` signal-desk | `P2` broadside | — | — |
-| **marketing-landing** | `P2` beacon | — | `P0` premier-league | — | — |
-| **commerce** | — | `P0` colorfit | `P2` drop | — | — |
-| **conversation-copilot** | `P0` glacier | `P2` quill | — | — | — |
+| **marketing-landing** | `P2` beacon | `P3` loom | `P0` premier-league | — | — |
+| **commerce** | — | `P0` colorfit | `P2` drop | `P3` orchard | — |
+| **conversation-copilot** | `P0` glacier | `P2` quill | — | — | `P3` mercer |
 | **canvas-tool** | `P1` atelier | — | — | — | — |
 | **community-feed** | — | — | — | `P1` bloom | — |
 | **monitoring-ops** | `P1` pulse | — | — | — | — |
@@ -678,7 +685,7 @@ axis matrix (app_mode × brand_tone):
 - P0 5종: MVP 승격 (기존 4프로젝트 + 신규 `dashboard--minimal-tech`)
 - P1 5종: fintech · observability · reference-docs · social · canvas
 - P2 5종: 톤 다변화 (각 app_mode 두번째/세번째 tone)
-- P3: 커뮤니티 기여 + 실수요 검증 후 확장 (Phase 13-11 ~ 13-12)
+- P3 5종: 커뮤니티 기여 경로 dogfood 검증 완료, 실수요에 따라 승급 후보
 
 ### 고급 사용자 / 메인테이너 워크플로우
 
@@ -754,9 +761,9 @@ harness presets/  ──(check-plugin-compatibility.py)──▶  plugin/presets
 | 12A | done | 텍스트 프리뷰 + preview_linter (E001–E008 / W001–W003) |
 | 12B | deferred | P0 선택적 스크린샷 (alpha 후) |
 | 13-1 ~ 13-10 | done | P1 + P2 누적 15종 |
-| 13-11 ~ 13-12 | pending | P3 커뮤니티 기여 경로 |
-| **14** | **in progress** | 공개 배포 — plugin/harness README · CATALOG · marketplace alpha 승격 · release 자동화 |
-| 15 | pending | 라이프사이클 정책 운영 (catalog-health · promote · deprecate) |
+| 13-11 ~ 13-12 | done | P3 커뮤니티 기여 경로 · SOP · Q2 리허설 |
+| **14** | **done** | 공개 배포 로컬 gate — README · CATALOG · marketplace alpha · release 자동화 · demo 검증 |
+| 15 | done | 라이프사이클 정책 운영 — catalog-health · promote · deprecate · prune · credits |
 
 ## 예제 프로젝트
 
@@ -777,16 +784,16 @@ design_ontology_harness/   코어 프레임워크
   typo_extractor.py        타이포그래피 스케일 추출
   alias_layer.py           시멘틱 토큰 tier 분류
   synthesis.py             블루프린트 합성
-  authoring.py             19섹션 산출물 생성
-  graph_schema.py          온톨로지 그래프 스키마 (20 NodeType, 24 EdgeType)
-  graph_builders.py        그래프 빌더 (brand/foundation/color/typo/pattern/a11y/benchmark)
-  graph_spec_sections.py   그래프 기반 spec 섹션 생성 (17-19)
+  authoring.py             21섹션 산출물 생성
+  graph_schema.py          온톨로지 그래프 스키마 (22 NodeType, 27 EdgeType)
+  graph_builders.py        그래프 빌더 (brand/foundation/color/typo/pattern/a11y/benchmark/generated visual assets)
+  graph_spec_sections.py   그래프 기반 spec 섹션 생성 (18-21)
   benchmark_kb.py          35개 실서비스 벤치마크 KB
   color_reference.py       색상 팔레트 자동 결정
   font_reference.py        서체 자동 결정 (25+ 실무 서체 DB)
   spec_analyzer.py         설계서 → UI 패턴 탐지
   component_specs.py       컴포넌트별 상세 스펙 생성
-  agent_packs.py           AI 에이전트 스킬 생성 (4종)
+  agent_packs.py           Codex / Claude Code 에이전트 스킬 생성
   ontology.py              크롤 증거 기반 개념 매칭 (문서→개념)
 schemas/                   입력 스키마
 config/                    브랜드 프로필 예시
@@ -799,7 +806,7 @@ projects/                  프로젝트 워크스페이스
 
 - 크롤링은 5-tier fallback 체인으로 대부분의 사이트를 수집합니다. Playwright tier를 사용하려면 `pip install playwright && playwright install chromium`이 필요합니다.
 - 크롤링 시 CSS를 자동으로 병렬 다운로드하고 추출 파이프라인을 실행합니다.
-- 온톨로지는 2-tier: `ontology.py`(크롤 증거 키워드 매칭) + `graph_builders.py`(20종 노드 관계 그래프). 그래프는 컬러↔컴포넌트↔패턴을 유기적으로 연결합니다.
+- 온톨로지는 2-tier: `ontology.py`(크롤 증거 키워드 매칭) + `graph_builders.py`(22종 노드 관계 그래프). 그래프는 컬러↔컴포넌트↔패턴↔생성 이미지 계획을 유기적으로 연결합니다.
 - `config/brand_profile.example.json`을 참고해 브랜드 프로필을 작성하세요.
 - 서체 결정은 Google Fonts/GitHub에서 무료로 사용 가능한 서체만 추천합니다.
 - 벤치마크 KB의 35개 시스템은 합성 품질 비교와 키워드 매칭에 활용됩니다.
