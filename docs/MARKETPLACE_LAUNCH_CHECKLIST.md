@@ -13,12 +13,12 @@
 |:---:|---|:---:|---|
 | 1 | 라이선스 MIT + OFL | ✅ | 파일 존재 확인 완료 |
 | 2 | Plugin README 3 분 Quick Start | ✅ | 20종 카탈로그 기준 로컬 문서 재검증 완료 |
-| 3 | validate.yml workflow green | ⏳ | 공개 GitHub run history 확인은 public 전환 후 |
+| 3 | validate.yml workflow green | ✅ | public repo run `25115751357` success |
 | 4 | 20 presets validate-community-preset pass | ✅ | 13-11-C-4-b 에서 일괄 실행 완료 |
 | 5 | plugin/marketplace/CHANGELOG version 정합성 | ✅ | 13-11-C-4-b 에서 자동 검증 완료 |
 | 6 | CATALOG.md 20 카드 렌더 완결 | ✅ | scripts/build-catalog.py 재생성 후 육안 확인 |
 | 7 | DEMO_SCRIPTS.md 시나리오 재검증 | ✅ | `scripts/verify-demo-scripts.py` 6/6 Top-1 High |
-| 8 | release.yml 로컬 시뮬레이션 | ⏳ | tag push/gh release 는 public 전환 후 실행 |
+| 8 | release.yml 실제 실행 | ✅ | `v0.1.0` tag push → run `25115752943` success + GitHub Release 생성 |
 | 9 | 이슈 템플릿 3종 존재 | ✅ | preset-feedback / new-preset-request / bug-report |
 | 10 | CODE_OF_CONDUCT.md 추가 | ✅ | harness/plugin 양쪽 mirror 완료 |
 | 11 | response SLA 명시 | ✅ | plugin README 2주/4주 SLA 명시 |
@@ -27,7 +27,7 @@
 | 14 | 보안 스캔 (secret 누출 · hardcoded token) | ✅ | `scripts/security-scan-launch.py` high-confidence scan 통과 |
 | 15 | 첫 1 주 후폭풍 대응 플랜 | ✅ | triage cadence + FAQ/Discussions 시작 정책 문서화 |
 
-**통과 12 종 · 외부 실행 대기 3 종**. 남은 항목은 공개 GitHub run history, 실제 tag/release 실행, alpha→beta 사후 판단처럼 로컬에서 닫을 수 없는 단계입니다.
+**통과 14 종 · 사후 판단 대기 1 종**. 공개 GitHub run history 와 `v0.1.0` tag/release 는 2026-04-29 에 실제 실행 완료했습니다. 남은 항목은 공개 1주 후 `alpha → beta` 판단입니다.
 
 ---
 
@@ -54,17 +54,17 @@ grep -q "SIL Open Font License" "$PLUGIN_REPO/LICENSE-FONTS"
 - [x] 설치 후 생성 파일 트리 (README 예시) 와 어댑터 산출물 정책 일치
 - [x] 한국어 UI 옵션 (`/design-start` 중 한글 Y) 선택 시 Pretendard fetch script + OFL notice 가 생성됨
 - [x] 로컬 path marketplace 기준으로 Quick Start 문서 재검증
-- [ ] 공개 URL 기준 신규 환경 검증 — public 전환 후 실행
+- [x] 공개 URL 기준 신규 환경 검증 — [`2000silpeed/design-ontology-plugin`](https://github.com/2000silpeed/design-ontology-plugin) public repo 접근 확인
 
 **실행 제약**: 공개 레포가 없는 현 상태에서는 로컬 path marketplace (`file:///...`) 로 대체 검증. 공개 후 URL 기반 재검증 필수.
 
 ## 3. validate.yml workflow 최근 30 일 main green
 
 - [x] `.github/workflows/validate.yml` 2 job (`validate-presets` + `community-preset-check`) 존재
-- [ ] 최근 30 일 main 브랜치 모든 커밋에서 green — `gh run list --repo 2000silpeed/design-ontology-plugin --branch main --limit 30`
-- [ ] 실패 run 이 있었다면 사유 기록 + 재run 기록
+- [x] 최근 30 일 main 브랜치 모든 커밋에서 green — `gh run list --repo 2000silpeed/design-ontology-plugin --branch main --limit 30`
+- [x] 실패 run 없음
 
-**실행 시점**: 공개 즉시. 로컬 패키지는 검증 완료, public run history 는 GitHub 레포 공개 후 확인.
+**실행 결과**: public repo [`2000silpeed/design-ontology-plugin`](https://github.com/2000silpeed/design-ontology-plugin) 생성 후 push run `25115751357` success. Node 20 deprecation annotation 만 있고 job failure 는 없음.
 
 ## 4. 20 presets 모두 validate-community-preset.py 통과
 
@@ -78,7 +78,7 @@ grep -q "SIL Open Font License" "$PLUGIN_REPO/LICENSE-FONTS"
 
 - [x] Phase 13-11-C-4-b `scripts/check-version-consistency.py` 실행 → 3-way `0.1.0` 일치
 - [x] 태그 push 전 로컬 재실행 — `scripts/check-version-consistency.py`
-- [ ] 실제 `gh release create` 직전 public 레포에서 재실행
+- [x] 실제 `gh release create` 직전 public 레포에서 재실행
 
 ## 6. docs/CATALOG.md 20 카드 렌더 완결성
 
@@ -101,14 +101,14 @@ grep -c "Core HEX" "$PLUGIN_REPO/docs/CATALOG.md" # 기대값 ≥ 18 (color_refe
 
 **실행**: `scripts/verify-demo-scripts.py --demo-path ../design-ontology-plugin/docs/DEMO_SCRIPTS.md`
 
-## 8. release.yml 로컬 시뮬레이션
+## 8. release.yml 실제 실행
 
 - [x] `.github/workflows/release.yml` 존재 + `workflow_dispatch` 지원
-- [ ] `act` 또는 로컬 `git tag v0.1.0-rc1` → push → workflow 발동 확인 (private fork/public repo 필요)
-- [ ] CHANGELOG 자동 PR 생성 경로 확인 (`release/changelog-v<version>` 브랜치 생성)
-- [ ] `gh release create` 실제 호출 시 notes 포매팅 확인
+- [x] `git tag -a v0.1.0` → push → workflow 발동 확인
+- [x] CHANGELOG 자동 PR 생성 경로 확인 — 기존 `CHANGELOG.md` 에 `v0.1.0` 이 있어 변경 없음
+- [x] `gh release create` 실제 호출 + notes 포매팅 확인
 
-**주의**: `v0.1.0` 태그 실 push 는 사용자 최종 승인 후에만 수행.
+**실행 결과**: release run `25115752943` success, GitHub Release [`v0.1.0`](https://github.com/2000silpeed/design-ontology-plugin/releases/tag/v0.1.0) 생성 완료.
 
 ## 9. 이슈 템플릿 3 종
 
@@ -182,3 +182,4 @@ D+7: 1 주 회고 + 항목 12 (alpha → beta) 결정
 |------|------|------|
 | 2026-04-21 | 1.0 | Phase 13-11-C-4 리허설 — 15 항목 초판 + 13-11-C-4-b 일부 실측 반영 (항목 4, 5, 6 completed). |
 | 2026-04-29 | 1.1 | Phase 14/15 로컬 마감 — CoC/SLA/issue-template sync/demo verify/security scan 완료, 외부 GitHub 실행 항목만 대기 상태로 분리. |
+| 2026-04-29 | 1.2 | Public plugin repo 생성, `main` push, validate workflow success, `v0.1.0` tag/release success. 남은 항목은 공개 1주 후 alpha→beta 판단 1건. |

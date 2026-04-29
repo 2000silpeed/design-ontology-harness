@@ -410,14 +410,14 @@
     - 권한: `contents: write` (기본 GITHUB_TOKEN 충분)
   - 신규: `CHANGELOG.md` v0.1.0 initial (Phase 7~13-10 누적 산출물 전부 기록)
   - 신규: `docs/RELEASE.md` 릴리스 절차 + SemVer 정책 + 롤백 가이드 + 실패 모드 표
-  - 실제 tag push / `gh release create` 는 사용자 수동 승인 대기 (워크플로우 파일만 작성)
+  - 2026-04-29 실제 `v0.1.0` tag push / `gh release create` 실행 완료 — release run `25115752943` success
 
 - [x] **14-7. 공개 직전 로컬 gate 마감**
   - plugin README 15종 표기를 20종(P0×5/P1×5/P2×5/P3×5) 기준으로 갱신
   - plugin `docs/CATALOG.md` 재생성 + `presets/` 로컬 scaffold 동기화
   - `scripts/verify-demo-scripts.py` 신규 — 6개 DEMO_SCRIPTS 시나리오 Top-1/버킷 자동 검증
   - `monitoring-ops` 단일 tone query 보강 — SRE observability demo 가 `Low` fallback 으로 떨어지지 않도록 matcher 보정
-  - 공개 GitHub run history / tag push / gh release 는 외부 실행 항목으로 분리
+  - 공개 GitHub run history / tag push / gh release 는 2026-04-29 public repo 생성 후 실제 실행 완료
 
 ---
 
@@ -497,7 +497,7 @@
   - plugin README 에 2주 1차 반응 / 4주 리뷰 완료 SLA 추가
   - 신규 `scripts/sync-issue-template-presets.py` — preset-feedback dropdown 을 matrix.json 20종과 동기화
   - 신규 `scripts/security-scan-launch.py` — high-confidence secret prefix/private key block scan
-  - `docs/MARKETPLACE_LAUNCH_CHECKLIST.md` 2026-04-29 기준 갱신: 로컬 통과 12종, 외부 실행 대기 3종
+  - `docs/MARKETPLACE_LAUNCH_CHECKLIST.md` 2026-04-29 기준 갱신: 통과 14종, 공개 1주 후 beta 판단 1종 대기
 
 ---
 
@@ -543,7 +543,8 @@ Phase 15 (라이프사이클 정책 운영, 지속)
 
 | 날짜 | 태스크 | 상태 |
 |------|--------|------|
-| 2026-04-29 | **Phase 14/15 로컬 마감 완료**: Phase 14 공개 배포 gate 와 Phase 15 운영 gate 를 현 상태 기준으로 닫음. plugin README/marketplace 설명을 20 presets 기준으로 갱신, `presets/` 로컬 scaffold + CATALOG 재동기화, preset-feedback issue template 을 matrix.json 20종과 자동 동기화. 신규 스크립트 3종 `verify-demo-scripts.py` / `sync-issue-template-presets.py` / `security-scan-launch.py` 추가. DEMO_SCRIPTS 6종 Top-1 전부 High 검증, SRE observability query 는 단일 app_mode tone 추론으로 `monitoring-ops--minimal-tech` High 매칭. harness/plugin `CODE_OF_CONDUCT.md` mirror 추가, plugin README SLA(2주 1차 반응 / 4주 리뷰 완료) 명시. `MARKETPLACE_LAUNCH_CHECKLIST.md` 를 2026-04-29 기준으로 갱신해 로컬 통과 12종 / 외부 실행 대기 3종(public run history, 실제 tag/release, alpha→beta 사후 판단) 으로 분리. | done |
+| 2026-04-29 | **Public plugin release 완료**: `2000silpeed/design-ontology-plugin` public GitHub repo 생성, plugin mirror initial commit `f79fa29` main push, `v0.1.0` annotated tag push. GitHub Actions `validate` run `25115751357` success, `release` run `25115752943` success, GitHub Release `https://github.com/2000silpeed/design-ontology-plugin/releases/tag/v0.1.0` 생성 완료. harness main 에는 Phase 14/15 마감 커밋 `321fb29` + 실제 repo URL 반영 커밋 `c8ae79d` push 완료. 남은 항목은 공개 1주 후 marketplace status `alpha → beta` 판단. | done |
+| 2026-04-29 | **Phase 14/15 로컬 마감 완료**: Phase 14 공개 배포 gate 와 Phase 15 운영 gate 를 현 상태 기준으로 닫음. plugin README/marketplace 설명을 20 presets 기준으로 갱신, `presets/` 로컬 scaffold + CATALOG 재동기화, preset-feedback issue template 을 matrix.json 20종과 자동 동기화. 신규 스크립트 3종 `verify-demo-scripts.py` / `sync-issue-template-presets.py` / `security-scan-launch.py` 추가. DEMO_SCRIPTS 6종 Top-1 전부 High 검증, SRE observability query 는 단일 app_mode tone 추론으로 `monitoring-ops--minimal-tech` High 매칭. harness/plugin `CODE_OF_CONDUCT.md` mirror 추가, plugin README SLA(2주 1차 반응 / 4주 리뷰 완료) 명시. `MARKETPLACE_LAUNCH_CHECKLIST.md` 를 로컬 통과 12종 / 외부 실행 대기 3종(public run history, 실제 tag/release, alpha→beta 사후 판단) 으로 먼저 분리했고, 이어진 public release 단계에서 앞의 2개 외부 항목을 실제 완료 처리. | done |
 | 2026-04-18 | PLUGIN_PLAN.md v1 초안 | done |
 | 2026-04-18 | PLUGIN_TASKS.md v1 초안 | done |
 | 2026-04-18 | v1 결정 반영 (30+, 별도 레포, 어댑터 A/C/B, 스크린샷, 공개, 단일 semver) | done |
