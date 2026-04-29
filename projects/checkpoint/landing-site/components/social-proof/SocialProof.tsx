@@ -48,7 +48,7 @@ export function SocialProof() {
             fontSize: "var(--text-sm)",
             fontWeight: 500,
             color: "var(--color-text-muted)",
-            letterSpacing: "0.08em",
+            letterSpacing: "0em",
             textTransform: "uppercase",
           }}
         >

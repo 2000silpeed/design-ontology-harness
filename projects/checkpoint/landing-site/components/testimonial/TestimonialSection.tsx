@@ -73,7 +73,7 @@ export function TestimonialSection() {
               fontFamily: "var(--font-mono)",
               fontSize: "var(--text-xs)",
               fontWeight: 600,
-              letterSpacing: "0.08em",
+              letterSpacing: "0em",
               textTransform: "uppercase",
               lineHeight: "var(--leading-tight)",
             }}
@@ -89,7 +89,7 @@ export function TestimonialSection() {
               lineHeight: "var(--leading-tight)",
               color: "var(--color-text)",
               fontWeight: 700,
-              letterSpacing: "-0.015em",
+              letterSpacing: "0em",
             }}
           >
             SRE와 플랫폼 팀의 신뢰

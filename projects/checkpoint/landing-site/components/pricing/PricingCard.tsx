@@ -63,7 +63,7 @@ export function PricingCard({
             fontFamily: "var(--font-body)",
             fontSize: "var(--text-xs)",
             fontWeight: 700,
-            letterSpacing: "0.04em",
+            letterSpacing: "0em",
             textTransform: "uppercase",
           }}
         >

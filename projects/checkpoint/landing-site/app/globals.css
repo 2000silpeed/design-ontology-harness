@@ -46,6 +46,16 @@
   --leading-normal: 1.5;
   --leading-comfortable: 1.65;
   --leading-relaxed: 1.78;
+  --hangul-display-line-height-safe: 1.2;
+  --hangul-display-line-height-min: 1.08;
+  --hangul-display-tracking-safe: 0em;
+  --hangul-display-tracking-min: 0em;
+  --hangul-display-tracking-max: 0em;
+  --hangul-display-word-break: keep-all;
+  --hangul-display-overflow-wrap: normal;
+  --hangul-display-text-wrap: balance;
+  --hangul-body-word-break: keep-all;
+  --hangul-body-overflow-wrap: normal;
 
   --color-brand-primary: #161d28;
   --color-brand-accent: #a6ff4d;

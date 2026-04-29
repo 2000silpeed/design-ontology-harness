@@ -25,7 +25,7 @@ export function MetricHighlight({ value, label }: MetricHighlightProps) {
           lineHeight: "var(--leading-tight)",
           color: "var(--color-text)",
           fontWeight: 600,
-          letterSpacing: "-0.01em",
+          letterSpacing: "0em",
         }}
       >
         {value}

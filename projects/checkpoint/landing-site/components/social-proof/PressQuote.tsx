@@ -37,7 +37,7 @@ export function PressQuote({ quote, source }: PressQuoteProps) {
           fontSize: "var(--text-xs)",
           color: "var(--color-text-subtle)",
           fontStyle: "normal",
-          letterSpacing: "0.06em",
+          letterSpacing: "0em",
           textTransform: "uppercase",
         }}
       >

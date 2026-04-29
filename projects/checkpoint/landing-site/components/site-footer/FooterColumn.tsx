@@ -22,7 +22,7 @@ export function FooterColumn({ title, children }: FooterColumnProps) {
           fontWeight: 700,
           color: "var(--color-text)",
           textTransform: "uppercase",
-          letterSpacing: "0.06em",
+          letterSpacing: "0em",
         }}
       >
         {title}

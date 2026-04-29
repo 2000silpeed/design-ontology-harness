@@ -19,7 +19,7 @@ export function HeroEyebrow({ children }: HeroEyebrowProps) {
         fontFamily: "var(--font-mono)",
         fontSize: "var(--text-xs)",
         fontWeight: 600,
-        letterSpacing: "0.08em",
+        letterSpacing: "0em",
         textTransform: "uppercase",
         lineHeight: "var(--leading-tight)",
       }}

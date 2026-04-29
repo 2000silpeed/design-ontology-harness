@@ -17,7 +17,7 @@ export function HeroTrustStrip({ items }: HeroTrustStripProps) {
           marginBottom: "var(--space-12)",
           fontFamily: "var(--font-mono)",
           fontSize: "var(--text-xs)",
-          letterSpacing: "0.08em",
+          letterSpacing: "0em",
           textTransform: "uppercase",
           color: "var(--color-text-subtle)",
         }}

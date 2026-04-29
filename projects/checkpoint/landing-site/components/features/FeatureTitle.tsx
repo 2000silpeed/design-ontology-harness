@@ -14,7 +14,7 @@ export function FeatureTitle({ children }: FeatureTitleProps) {
         lineHeight: "var(--leading-tight)",
         color: "var(--color-text)",
         fontWeight: 600,
-        letterSpacing: "-0.005em",
+        letterSpacing: "0em",
       }}
     >
       {children}

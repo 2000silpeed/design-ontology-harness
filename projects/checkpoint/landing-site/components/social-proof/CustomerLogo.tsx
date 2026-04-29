@@ -13,7 +13,7 @@ export function CustomerLogo({ name }: CustomerLogoProps) {
         fontFamily: "var(--font-mono)",
         fontSize: "var(--text-md)",
         color: "var(--color-text-subtle)",
-        letterSpacing: "0.02em",
+        letterSpacing: "0em",
         filter: "grayscale(1)",
         opacity: 0.85,
         transition:

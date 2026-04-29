@@ -144,7 +144,7 @@ export function FeatureComparison() {
                 fontSize: "var(--text-sm)",
                 fontWeight: 600,
                 color: "var(--color-text-muted)",
-                letterSpacing: "0.04em",
+                letterSpacing: "0em",
                 textTransform: "uppercase",
                 borderBottom: "1px solid var(--color-border)",
               }}

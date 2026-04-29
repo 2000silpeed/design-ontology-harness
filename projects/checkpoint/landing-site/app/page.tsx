@@ -151,10 +151,10 @@ const faqs = [
 ];
 
 const typeScale = {
-  hero: "clamp(2.9rem, 6vw, 5.9rem)",
-  section: "clamp(2rem, 3.2vw, 3.1rem)",
-  cardTitle: "clamp(1.25rem, 1.6vw, 1.6rem)",
-  stat: "clamp(2.05rem, 4vw, 3.25rem)",
+  hero: "40px",
+  section: "30px",
+  cardTitle: "20px",
+  stat: "34px",
 };
 
 const primaryButton: CSSProperties = {
@@ -287,7 +287,7 @@ function HeroSection() {
                 color: "var(--color-brand-accent)",
                 fontSize: "12px",
                 fontWeight: 800,
-                letterSpacing: "0.16em",
+                letterSpacing: "0em",
                 textTransform: "uppercase",
               }}
             >
@@ -299,22 +299,20 @@ function HeroSection() {
                   margin: 0,
                   fontFamily: "var(--font-heading)",
                   fontSize: typeScale.hero,
-                  lineHeight: 0.94,
-                  letterSpacing: "-0.05em",
+                  lineHeight: "var(--hangul-display-line-height-safe)",
+                  letterSpacing: "0em",
                   wordBreak: "keep-all",
                   overflowWrap: "normal",
                   textWrap: "balance",
                 }}
               >
-                살지 말지,
-                <br />
-                한 화면에서 끝내는 게임 리뷰
+                살지 말지, 한 화면에서 끝내는 게임 리뷰
               </h1>
               <p
                 style={{
                   margin: 0,
                   maxWidth: "600px",
-                  fontSize: "clamp(1rem, 1.35vw, 1.12rem)",
+                  fontSize: "16px",
                   lineHeight: 1.78,
                   color: "var(--color-text-muted)",
                   wordBreak: "keep-all",
@@ -403,7 +401,7 @@ function HeroSection() {
                   fontSize: "12px",
                   color: "var(--color-text-subtle)",
                   textTransform: "uppercase",
-                  letterSpacing: "0.14em",
+                  letterSpacing: "0em",
                 }}
               >
                 Friday Snapshot
@@ -412,9 +410,11 @@ function HeroSection() {
                 style={{
                   margin: 0,
                   fontFamily: "var(--font-heading)",
-                  fontSize: "clamp(1.2rem, 1.9vw, 1.65rem)",
-                  lineHeight: 1.28,
-                  letterSpacing: "-0.03em",
+                  fontSize: "22px",
+                  lineHeight: 1.34,
+                  letterSpacing: "0em",
+                  wordBreak: "keep-all",
+                  overflowWrap: "normal",
                 }}
               >
                 이번 주는 액션 RPG가 강했고, 전술 슈터는 아직 패치를 더 기다려야
@@ -531,7 +531,7 @@ function HeroBoard() {
                     fontSize: "12px",
                     color: "rgba(244,247,251,0.78)",
                     textTransform: "uppercase",
-                    letterSpacing: "0.12em",
+                    letterSpacing: "0em",
                   }}
                 >
                   Cover Story
@@ -539,9 +539,9 @@ function HeroBoard() {
                 <strong
                   style={{
                     fontFamily: "var(--font-heading)",
-                    fontSize: "clamp(1.5rem, 2vw, 2rem)",
-                    lineHeight: 1,
-                    letterSpacing: "-0.04em",
+                    fontSize: "28px",
+                    lineHeight: 1.12,
+                    letterSpacing: "0em",
                   }}
                 >
                   Ashfall
@@ -566,7 +566,7 @@ function HeroBoard() {
                     fontFamily: "var(--font-heading)",
                     fontSize: "30px",
                     fontWeight: 800,
-                    lineHeight: 1,
+                    lineHeight: 1.1,
                   }}
                 >
                   91
@@ -634,7 +634,7 @@ function HeroBoard() {
                   style={{
                     fontFamily: "var(--font-mono)",
                     fontSize: "11px",
-                    letterSpacing: "0.12em",
+                    letterSpacing: "0em",
                     textTransform: "uppercase",
                     color: "var(--color-text-subtle)",
                   }}
@@ -698,7 +698,7 @@ function HeroBoard() {
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: "11px",
-                  letterSpacing: "0.14em",
+                  letterSpacing: "0em",
                   textTransform: "uppercase",
                   color: "var(--color-text-subtle)",
                 }}
@@ -708,9 +708,9 @@ function HeroBoard() {
               <strong
                 style={{
                   fontFamily: "var(--font-heading)",
-                  fontSize: "clamp(1.4rem, 2vw, 1.85rem)",
-                  lineHeight: 1,
-                  letterSpacing: "-0.04em",
+                  fontSize: "24px",
+                  lineHeight: 1.16,
+                  letterSpacing: "0em",
                 }}
               >
                 {item.value}
@@ -766,7 +766,7 @@ function MetricsBand() {
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: "12px",
-                letterSpacing: "0.14em",
+                letterSpacing: "0em",
                 textTransform: "uppercase",
                 color: "var(--color-text-subtle)",
               }}
@@ -777,8 +777,8 @@ function MetricsBand() {
               style={{
                 fontFamily: "var(--font-heading)",
                 fontSize: typeScale.stat,
-                lineHeight: 0.92,
-                letterSpacing: "-0.06em",
+                lineHeight: 1.05,
+                letterSpacing: "0em",
               }}
             >
               {item.value}
@@ -870,9 +870,9 @@ function ReviewSection() {
                 <strong
                   style={{
                     fontFamily: "var(--font-heading)",
-                    fontSize: "clamp(1.4rem, 2vw, 1.8rem)",
-                    lineHeight: 0.98,
-                    letterSpacing: "-0.04em",
+                    fontSize: "24px",
+                    lineHeight: 1.14,
+                    letterSpacing: "0em",
                     color: "#f4f7fb",
                   }}
                 >
@@ -882,7 +882,7 @@ function ReviewSection() {
                   style={{
                     fontFamily: "var(--font-mono)",
                     fontSize: "11px",
-                    letterSpacing: "0.12em",
+                    letterSpacing: "0em",
                     textTransform: "uppercase",
                     color: "rgba(244,247,251,0.74)",
                   }}
@@ -1040,7 +1040,7 @@ function CompareSection() {
                 color: "var(--color-text-subtle)",
                 fontFamily: "var(--font-mono)",
                 fontSize: "11px",
-                letterSpacing: "0.12em",
+                letterSpacing: "0em",
                 textTransform: "uppercase",
               }}
               className="md:grid-cols-[1.45fr_0.8fr_0.75fr_1fr_1.1fr_0.9fr]"
@@ -1149,8 +1149,8 @@ function MethodologySection() {
               style={{
                 fontFamily: "var(--font-heading)",
                 fontSize: typeScale.cardTitle,
-                lineHeight: 1.1,
-                letterSpacing: "-0.03em",
+                lineHeight: 1.2,
+                letterSpacing: "0em",
               }}
             >
               {pillar.title}
@@ -1193,7 +1193,7 @@ function MethodologySection() {
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: "12px",
-                letterSpacing: "0.14em",
+                letterSpacing: "0em",
                 textTransform: "uppercase",
                 color: "var(--color-text-subtle)",
               }}
@@ -1203,9 +1203,11 @@ function MethodologySection() {
             <strong
               style={{
                 fontFamily: "var(--font-heading)",
-                fontSize: "clamp(1.5rem, 2.2vw, 2.15rem)",
-                lineHeight: 1.04,
-                letterSpacing: "-0.04em",
+                fontSize: "28px",
+                lineHeight: 1.2,
+                letterSpacing: "0em",
+                wordBreak: "keep-all",
+                overflowWrap: "normal",
               }}
             >
               총점은 네 가지 질문의 합계입니다.
@@ -1331,7 +1333,7 @@ function MembershipSection() {
                   style={{
                     fontFamily: "var(--font-heading)",
                     fontSize: "var(--text-xl)",
-                    lineHeight: 1.02,
+                    lineHeight: 1.16,
                   }}
                 >
                   {plan.name}
@@ -1355,9 +1357,9 @@ function MembershipSection() {
                 <span
                   style={{
                     fontFamily: "var(--font-heading)",
-                    fontSize: "clamp(2.6rem, 4vw, 3.4rem)",
-                    lineHeight: 0.9,
-                    letterSpacing: "-0.05em",
+                    fontSize: "44px",
+                    lineHeight: 1.05,
+                    letterSpacing: "0em",
                   }}
                 >
                   {plan.price}
@@ -1466,9 +1468,9 @@ function FaqSection() {
             <strong
               style={{
                 fontFamily: "var(--font-heading)",
-                fontSize: "clamp(1.3rem, 2vw, 1.6rem)",
-                lineHeight: 1.12,
-                letterSpacing: "-0.03em",
+                fontSize: "22px",
+                lineHeight: 1.24,
+                letterSpacing: "0em",
               }}
             >
               {faq.question}
@@ -1538,7 +1540,7 @@ function ClosingSection() {
                 color: "var(--color-brand-accent)",
                 fontSize: "12px",
                 fontWeight: 800,
-                letterSpacing: "0.14em",
+                letterSpacing: "0em",
                 textTransform: "uppercase",
               }}
             >
@@ -1548,16 +1550,15 @@ function ClosingSection() {
               style={{
                 margin: 0,
                 fontFamily: "var(--font-heading)",
-                fontSize: "clamp(2rem, 4vw, 3.6rem)",
-                lineHeight: 0.98,
-                letterSpacing: "-0.05em",
+                fontSize: "38px",
+                lineHeight: "var(--hangul-display-line-height-safe)",
+                letterSpacing: "0em",
                 wordBreak: "keep-all",
+                overflowWrap: "normal",
                 textWrap: "balance",
               }}
             >
-              금요일 아침,
-              <br />
-              이번 주에 살 게임만 남겨서 보냅니다.
+              금요일 아침, 이번 주에 살 게임만 남겨서 보냅니다.
             </h2>
             <p
               style={{
@@ -1663,7 +1664,7 @@ function SectionHeading({
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: "12px",
-          letterSpacing: "0.14em",
+          letterSpacing: "0em",
           textTransform: "uppercase",
           color: "var(--color-text-subtle)",
         }}
@@ -1675,8 +1676,8 @@ function SectionHeading({
           margin: 0,
           fontFamily: "var(--font-heading)",
           fontSize: typeScale.section,
-          lineHeight: 1.02,
-          letterSpacing: "-0.05em",
+          lineHeight: "var(--hangul-display-line-height-safe)",
+          letterSpacing: "0em",
           wordBreak: "keep-all",
           overflowWrap: "normal",
           textWrap: "balance",
@@ -1717,7 +1718,7 @@ function ScoreBadge({ score }: { score: number }) {
         fontFamily: "var(--font-heading)",
         fontSize: "20px",
         fontWeight: 800,
-        letterSpacing: "-0.03em",
+        letterSpacing: "0em",
       }}
     >
       {score}

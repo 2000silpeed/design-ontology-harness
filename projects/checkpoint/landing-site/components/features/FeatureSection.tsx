@@ -78,7 +78,7 @@ export function FeatureSection() {
               fontFamily: "var(--font-mono)",
               fontSize: "var(--text-xs)",
               fontWeight: 600,
-              letterSpacing: "0.08em",
+              letterSpacing: "0em",
               textTransform: "uppercase",
               lineHeight: "var(--leading-tight)",
             }}
@@ -94,7 +94,7 @@ export function FeatureSection() {
               lineHeight: "var(--leading-tight)",
               color: "var(--color-text)",
               fontWeight: 700,
-              letterSpacing: "-0.015em",
+              letterSpacing: "0em",
             }}
           >
             모든 아카이브를 검증 가능하게

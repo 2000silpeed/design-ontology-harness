@@ -12,7 +12,7 @@ export function SiteLogo() {
         fontFamily: "var(--font-heading)",
         fontSize: "var(--text-lg)",
         fontWeight: 700,
-        letterSpacing: "-0.01em",
+        letterSpacing: "0em",
       }}
       >
       <svg
