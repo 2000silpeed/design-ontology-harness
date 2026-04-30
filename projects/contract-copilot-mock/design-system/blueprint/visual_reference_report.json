@@ -1,0 +1,525 @@
+{
+  "mode": "local-images",
+  "query": [
+    "chatgpt enterprise admin console",
+    "anthropic claude enterprise workspace",
+    "stripe dialog documentation",
+    "salesforce einstein assistant",
+    "intercom fin ai copilot"
+  ],
+  "preferred_count": 8,
+  "weights": {
+    "layout": 0.3,
+    "component_shape": 0.3,
+    "color_balance": 0.2,
+    "typography_mood": 0.1,
+    "surface_style": 0.1
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "ChatGPT Enterprise / Anthropic Claude Enterprise / Stripe Dialog docs / Salesforce Einstein / Intercom Fin 계열 enterprise AI copilot 참조",
+    "corporate-trust 톤: Super Sonic + Copper + Powder Blue 로 enterprise 신뢰·정돈 감성 유지, 밀도는 medium-high (compliance 보조 패널 + audit trail)",
+    "이미지 힌트는 advisory — 구조는 spec + KB 우선"
+  ],
+  "must_include": [
+    "enterprise chat workspace with thread list sidebar + message stream + prompt composer",
+    "compliance-artifact side panel with policy-check badge + citation footnote",
+    "audit-trail timeline with reviewer assignment + timestamp + policy id",
+    "policy-check inline badge on AI message",
+    "compliance warning modal with copper accent",
+    "workspace header with project switcher + SSO indicator",
+    "empty conversation state with warm copper illustration"
+  ],
+  "avoid_patterns": [
+    "playful pastel consumer chat",
+    "streetwear drop hero",
+    "editorial magazine cover",
+    "d2c product grid",
+    "glassmorphism",
+    "social feed casual chat",
+    "marketing landing pricing-focused"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "airy",
+      "confidence": 0.82,
+      "evidence": [
+        "editorial x2",
+        "landing x1",
+        "hero x1",
+        "calm x3"
+      ],
+      "candidates": [
+        {
+          "value": "airy",
+          "score": 11.0
+        },
+        {
+          "value": "balanced",
+          "score": 6.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.45,
+      "evidence": [
+        "warm x2",
+        "editorial x2",
+        "soft x1"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 5.0
+        },
+        {
+          "value": "elevated",
+          "score": 3.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "utilitarian",
+      "confidence": 0.94,
+      "evidence": [
+        "admin x1",
+        "enterprise x12"
+      ],
+      "candidates": [
+        {
+          "value": "utilitarian",
+          "score": 26.0
+        },
+        {
+          "value": "editorial",
+          "score": 12.0
+        },
+        {
+          "value": "playful",
+          "score": 7.0
+        },
+        {
+          "value": "premium",
+          "score": 2.0
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "round",
+      "confidence": 0.34,
+      "evidence": [
+        "soft x1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "conversation-panel",
+      "label": "Conversation side panel",
+      "confidence": 0.94,
+      "evidence": [
+        "chat x6",
+        "assistant x1",
+        "message x5",
+        "thread x3",
+        "prompt x2",
+        "conversation x4"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.94,
+      "evidence": [
+        "grid x1",
+        "audit x6",
+        "data x1",
+        "timeline x3"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.94,
+      "evidence": [
+        "editorial x2",
+        "feed x2",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "split-pane-workspace",
+      "label": "Split-pane workspace",
+      "confidence": 0.94,
+      "evidence": [
+        "workspace x5",
+        "sidebar x3",
+        "panel x4"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. soft round corner를 기본값으로 유지.",
+      "confidence": 0.82,
+      "evidence": [
+        "surface=tinted",
+        "density=airy",
+        "corner=round"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Split-pane workspace"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "utilitarian hierarchy를 유지하되 중요한 heading만 선택적으로 크게 만든다.",
+      "confidence": 0.94,
+      "evidence": [
+        "typography_mood=utilitarian"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.82,
+      "evidence": [
+        "layout=data-review-surface",
+        "density=airy"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "panel": {
+      "direction": "보조 패널은 메인 표면보다 한 단계 더 조용한 tint와 명확한 section framing으로 구분한다.",
+      "confidence": 0.94,
+      "evidence": [
+        "Conversation side panel"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "conversation-sidecar",
+      "label": "Conversation sidecar",
+      "family": "overlay",
+      "confidence": 0.94,
+      "suggested_components": [
+        "chat-panel",
+        "message-thread",
+        "message-composer",
+        "context-drawer"
+      ],
+      "supports_primitives": [
+        "chat and messaging"
+      ],
+      "evidence": [
+        "layout=conversation-panel (0.94)",
+        "layout=split-pane-workspace (0.94)",
+        "chat x6",
+        "assistant x1",
+        "message x5",
+        "conversation x4"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.94,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.94)",
+        "data x1",
+        "grid x1",
+        "audit x6"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.94,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.94)",
+        "editorial x2",
+        "magazine x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "workspace-shell",
+      "label": "Workspace shell",
+      "family": "navigation",
+      "confidence": 0.94,
+      "suggested_components": [
+        "app-shell",
+        "sidebar-nav",
+        "workspace-switcher",
+        "breadcrumb",
+        "context-panel"
+      ],
+      "supports_primitives": [
+        "workspace navigation"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.94)",
+        "workspace x5",
+        "sidebar x3",
+        "panel x4"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.84,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "hero x1",
+        "landing x1",
+        "pricing x1",
+        "marketing x2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Conversation side panel",
+    "recommended_direction": [
+      "layout는 Conversation side panel 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 utilitarian 축 유지",
+      "density는 airy 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "playful pastel consumer chat",
+      "streetwear drop hero",
+      "editorial magazine cover",
+      "d2c product grid",
+      "glassmorphism",
+      "social feed casual chat",
+      "marketing landing pricing-focused"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "panel",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "Mercer",
+    "system_name": "Mercer System",
+    "brand_keywords": [
+      "conversation-copilot",
+      "enterprise-chatbot",
+      "corporate-trust",
+      "finance",
+      "insurance",
+      "compliance",
+      "audit",
+      "regulatory",
+      "policy-check",
+      "super-sonic-blue",
+      "copper",
+      "powder-blue",
+      "calm-enterprise",
+      "reliable"
+    ],
+    "anti_keywords": [
+      "playful-pastel",
+      "streetwear-drop",
+      "editorial-warm-serif",
+      "bold-saturated-marketing",
+      "consumer-d2c-commerce",
+      "social-feed-casual",
+      "magazine-cover-heavy"
+    ],
+    "visual_keywords": [
+      "calm enterprise surface",
+      "super-sonic blue primary conversation",
+      "copper accent indicator",
+      "powder blue soft surface tint",
+      "neutral chat bubbles",
+      "compliance sidebar panel",
+      "audit trail timeline",
+      "policy check badge",
+      "enterprise workspace header"
+    ],
+    "interaction_keywords": [
+      "calm streaming cursor",
+      "policy-check inline badge reveal",
+      "audit-trail side panel expand",
+      "compliance warning modal",
+      "enterprise toast",
+      "keyboard-friendly chat",
+      "sso login redirect",
+      "reviewer handoff"
+    ],
+    "product_primitives": [
+      "workspace header",
+      "project switcher",
+      "thread list sidebar",
+      "thread item",
+      "chat message",
+      "ai message",
+      "user message",
+      "prompt composer",
+      "streaming cursor",
+      "regenerate button",
+      "stop generation button",
+      "compliance-artifact panel",
+      "audit-trail timeline",
+      "policy-check badge",
+      "compliance warning modal",
+      "citation footnote",
+      "source reference card",
+      "reviewer assignment chip",
+      "data retention indicator",
+      "empty conversation state"
+    ]
+  }
+}

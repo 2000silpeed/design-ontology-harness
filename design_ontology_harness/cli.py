@@ -212,6 +212,18 @@ def build_parser() -> argparse.ArgumentParser:
         help="Lint a single preset (default: all presets under presets/)",
     )
 
+    lint_impl_parser = subparsers.add_parser(
+        "lint-implementation",
+        help="Lint an implementation repo for ontology token binding violations",
+    )
+    lint_impl_parser.add_argument("--target-repo", required=True, help="Implementation repository path")
+    lint_impl_parser.add_argument(
+        "--artifact-dir",
+        default="design-system",
+        help="Installed artifact directory to exclude from implementation linting",
+    )
+    lint_impl_parser.add_argument("--json", action="store_true", help="Emit JSON report")
+
     rebuild_parser = subparsers.add_parser(
         "rebuild-all-presets",
         help="Walk matrix.json and rebuild every preset from its source_project",
@@ -524,6 +536,18 @@ def main() -> None:
         reports = lint_all_previews(root)
         print(format_preview_reports(reports))
         if any(not r.ok for r in reports):
+            raise SystemExit(1)
+        return
+
+    if args.command == "lint-implementation":
+        from .implementation_linter import format_json, format_report, lint_implementation
+
+        report = lint_implementation(
+            Path(args.target_repo),
+            artifact_dir=args.artifact_dir,
+        )
+        print(format_json(report) if args.json else format_report(report))
+        if not report.ok:
             raise SystemExit(1)
         return
 

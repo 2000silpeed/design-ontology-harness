@@ -94,6 +94,9 @@ def _build_fonts_css(pairing: LocalePairing) -> str:
         "\n"
         ":root {\n"
         '  --ds-font-ko: "Pretendard Variable", "Pretendard", system-ui, -apple-system, sans-serif;\n'
+        "  --ds-font-heading: var(--ds-font-ko);\n"
+        "  --ds-font-body: var(--ds-font-ko);\n"
+        f'  --ds-font-mono: "{pairing.mono_font or "IBM Plex Mono"}", ui-monospace, SFMono-Regular, Menlo, monospace;\n'
         "}\n"
         "\n"
         "html[lang='ko'], [data-locale='ko'] {\n"

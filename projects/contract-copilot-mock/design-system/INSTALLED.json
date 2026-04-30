@@ -1,0 +1,19 @@
+{
+  "preset_id": "conversation-copilot--corporate-trust",
+  "preset_api_version": "1.0.0",
+  "adapter_id": "raw-css-variables",
+  "adapter_version": "0.1.0",
+  "harness_version": "0.1.0",
+  "color_mode": "light",
+  "locale": "ko",
+  "installed_at": "2026-04-30T13:10:54Z",
+  "content_hash": "sha256:7187e2ae7895b5ed4183538b1e207c6ffa8dab5e368415736d8533aea5f94e6e",
+  "proposed_files": [],
+  "counts": {
+    "created": 1,
+    "merged": 2,
+    "overwritten": 23,
+    "proposed": 0,
+    "skipped": 0
+  }
+}

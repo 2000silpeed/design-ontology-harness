@@ -731,6 +731,17 @@ def build_system_spec_markdown(
         f"- **{principle['rule']}**: {principle['detail']}"
         for principle in blueprint.get("governance", {}).get("ai_synthesis_principles", [])
     ) or "- No AI synthesis principles defined."
+    reference_scope = blueprint.get("governance", {}).get("reference_absorption_scope", {})
+    allowed_reference_lines = "\n".join(
+        f"  - {item}" for item in reference_scope.get("allowed", [])
+    ) or "  - No allowed reference scope defined."
+    denied_reference_lines = "\n".join(
+        f"  - {item}" for item in reference_scope.get("denied", [])
+    ) or "  - No denied reference scope defined."
+    reference_scope_rule = reference_scope.get(
+        "rule",
+        "References are advisory and never replace token/component/product IA authority.",
+    )
     concept_lines = "\n".join(
         f"- **{target['concept_id']}**: {target['count']}"
         for target in blueprint.get("ontology_targets", [])
@@ -805,6 +816,11 @@ def build_system_spec_markdown(
 - Analysed live reference sources: {source_count}
 - Rule: copy visuals from no single source; absorb patterns only when they reinforce brand keywords and avoid anti-keywords.
 - Use references to validate structure, accessibility, token discipline, and documentation quality.
+- Scope rule: {reference_scope_rule}
+- Allowed from references:
+{allowed_reference_lines}
+- Denied from references:
+{denied_reference_lines}
 
 ## 11. AI Synthesis Principles
 

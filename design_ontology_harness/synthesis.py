@@ -41,6 +41,27 @@ AI_SYNTHESIS_PRINCIPLES = [
     },
 ]
 
+REFERENCE_ABSORPTION_SCOPE = {
+    "allowed": [
+        "component morphology",
+        "layout density",
+        "panel/card proportions",
+        "hierarchy rhythm",
+        "interaction affordance patterns",
+    ],
+    "denied": [
+        "color palette",
+        "typography family or scale",
+        "semantic status colors",
+        "product copy",
+        "product data model",
+        "navigation labels",
+        "domain information architecture",
+        "redistributable imagery unless explicitly licensed",
+    ],
+    "rule": "Visual references are morphology inputs only; tokens, component specs, and product IA remain authoritative.",
+}
+
 KEYWORD_PRINCIPLES = {
     "calm": {
         "name": "Calm by Default",
@@ -174,6 +195,7 @@ def build_blueprint(
                 "'TODO 컴포넌트', '임시 버튼', '플레이스홀더 카드' 같은 반쪽 구현을 남기지 않음"
             ],
             "ai_synthesis_principles": AI_SYNTHESIS_PRINCIPLES,
+            "reference_absorption_scope": REFERENCE_ABSORPTION_SCOPE,
         },
         "ontology_targets": prioritized_concepts,
         "benchmark": build_benchmark_context(brand_profile),

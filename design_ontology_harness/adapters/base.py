@@ -477,6 +477,75 @@ _DS_COPY_FILES = (
 _DS_COPY_DIRS = ("blueprint", "components", "ontology")
 
 
+def implementation_contract(bundle: PresetBundle) -> str:
+    """Human + agent contract for applying references without overriding tokens.
+
+    This file is intentionally installed into every target repo. It turns the
+    ontology's advisory reference language into an implementation-time checklist
+    that Codex/Claude/humans can read before editing real UI files.
+    """
+
+    system_name = (
+        bundle.manifest.get("name")
+        or bundle.blueprint.get("system_name")
+        or bundle.id
+    )
+    return f"""# Implementation Contract
+
+Preset: `{bundle.id}`
+System: {system_name}
+
+## Authority Order
+
+1. Existing product task flow and information architecture
+2. `design-system/token_schema.json`
+3. `design-system/tokens.css` or host adapter token variables
+4. `design-system/components/component_specs.*`
+5. `design-system/system_spec.md`
+6. External visual references
+
+External references never outrank product IA, tokens, component specs, or semantic
+state rules.
+
+## Reference Absorption Scope
+
+Allowed from visual references:
+
+- component morphology
+- layout density
+- panel/card proportions
+- hierarchy rhythm
+- interaction affordance patterns
+
+Denied from visual references:
+
+- color palette
+- typography family or scale
+- semantic status colors
+- product copy
+- product data model
+- navigation labels
+- domain information architecture
+- redistributable imagery unless explicitly licensed
+
+## Token Binding Rules
+
+- Use `var(--ds-color-*)` for color, surface, border, and feedback states.
+- Use `var(--ds-font-*)` for explicit font-family declarations.
+- Use `var(--ds-radius-*)` for component radii; only fully circular affordances may use `999px`.
+- Do not hard-code hex/rgb/hsl colors in implementation files outside generated managed blocks.
+- Do not add reference-derived local palette variables such as teal/gold/slate unless they alias `--ds-*` tokens.
+
+## Preflight
+
+Run this before considering an implementation aligned:
+
+```bash
+uv run design-ontology lint-implementation --target-repo .
+```
+"""
+
+
 def design_system_mirror_ops(bundle: PresetBundle) -> list[FileOp]:
     """FileOps that mirror the preset's raw artifacts into `design-system/`.
 
@@ -485,6 +554,13 @@ def design_system_mirror_ops(bundle: PresetBundle) -> list[FileOp]:
     """
 
     ops: list[FileOp] = []
+    ops.append(
+        FileOp(
+            path="design-system/IMPLEMENTATION_CONTRACT.md",
+            content=implementation_contract(bundle),
+            action="create",
+        )
+    )
     for name in _DS_COPY_FILES:
         src = bundle.preset_dir / name
         if not src.exists():
