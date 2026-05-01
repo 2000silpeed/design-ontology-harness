@@ -63,7 +63,11 @@
         "tag-pill",
         "pricing-card",
         "feature-comparison",
-        "filter-toolbar"
+        "filter-toolbar",
+        "decision-record-card",
+        "policy-matrix",
+        "audit-timeline",
+        "risk-summary-card"
       ],
       "visual_reference_signals": [
         {
@@ -172,7 +176,8 @@
         "size-selector",
         "color-swatch-selector",
         "filter-sidebar",
-        "sort-dropdown"
+        "sort-dropdown",
+        "reviewer-assignment-picker"
       ],
       "visual_reference_signals": []
     },
@@ -274,9 +279,12 @@
     },
     {
       "family": "copilot-artifact",
-      "priority": "medium",
+      "priority": "high",
       "required_states": [
-        "default"
+        "default",
+        "loading",
+        "verified",
+        "error"
       ],
       "components": [
         "message-artifact",
@@ -287,15 +295,20 @@
         "reading-mode-toggle",
         "citation-footnote",
         "quote-block",
-        "paragraph-block"
+        "paragraph-block",
+        "citation-drawer",
+        "source-card"
       ],
       "visual_reference_signals": []
     },
     {
       "family": "copilot-chat",
-      "priority": "medium",
+      "priority": "high",
       "required_states": [
-        "default"
+        "default",
+        "loading",
+        "complete",
+        "error"
       ],
       "components": [
         "streaming-cursor",
@@ -309,9 +322,12 @@
     },
     {
       "family": "document",
-      "priority": "medium",
+      "priority": "high",
       "required_states": [
-        "default"
+        "default",
+        "selected",
+        "commenting",
+        "resolved"
       ],
       "components": [
         "article-body",
@@ -320,7 +336,9 @@
         "prose-block",
         "reading-pane",
         "footnote",
-        "link-card"
+        "link-card",
+        "diff-viewer",
+        "redline-viewer"
       ],
       "visual_reference_signals": []
     },
@@ -349,7 +367,8 @@
         "chat-panel",
         "message-thread",
         "message-composer",
-        "context-drawer"
+        "context-drawer",
+        "inspector-drawer"
       ],
       "visual_reference_signals": [
         {
@@ -380,6 +399,33 @@
         "reaction-bar",
         "timeline-stream",
         "avatar-cluster"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "layout",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "resizing",
+        "collapsed"
+      ],
+      "components": [
+        "resizable-split-pane"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "workflow",
+      "priority": "high",
+      "required_states": [
+        "pending",
+        "active",
+        "blocked",
+        "approved"
+      ],
+      "components": [
+        "approval-rail"
       ],
       "visual_reference_signals": []
     }
@@ -2626,6 +2672,463 @@
         "accessibility",
         "dos and donts"
       ]
+    },
+    {
+      "name": "resizable-split-pane",
+      "family": "layout",
+      "role": "Resizable two/three-pane workspace shell for dense tools",
+      "supports_primitive": "advanced-component-catalog",
+      "status": "recommended-advanced",
+      "advanced_component": true,
+      "usage_guidance": [
+        "primary work happens between list, canvas/chat, and detail panels",
+        "users need to compare or inspect adjacent information without navigation"
+      ],
+      "avoid_when": [
+        "single linear form or landing page is enough"
+      ],
+      "pairs_with": [
+        "thread-list",
+        "artifact-preview-panel",
+        "inspector-drawer"
+      ],
+      "matched_signals": [
+        "artifact",
+        "compliance-artifact panel",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:monitoring-ops",
+        "pairs:artifact-preview-panel",
+        "panel",
+        "thread",
+        "thread list sidebar",
+        "workspace",
+        "workspace header"
+      ],
+      "score": 28,
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "citation-drawer",
+      "family": "copilot-artifact",
+      "role": "Source and citation drawer for AI answers, policies, and quoted evidence",
+      "supports_primitive": "advanced-component-catalog",
+      "status": "recommended-advanced",
+      "advanced_component": true,
+      "usage_guidance": [
+        "answers must show supporting policy, document, or source records",
+        "users need to inspect evidence without losing conversation context"
+      ],
+      "avoid_when": [
+        "citations are static footnotes only"
+      ],
+      "pairs_with": [
+        "inline-citation",
+        "source-card",
+        "evidence-graph"
+      ],
+      "matched_signals": [
+        "citation",
+        "citation footnote",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:document-content",
+        "pairs:inline-citation",
+        "policy",
+        "policy-check badge",
+        "source",
+        "source reference card"
+      ],
+      "score": 26,
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "decision-record-card",
+      "family": "data-display",
+      "role": "Auditable decision record summarizing decision, actor, evidence, and retention",
+      "supports_primitive": "advanced-component-catalog",
+      "status": "recommended-advanced",
+      "advanced_component": true,
+      "usage_guidance": [
+        "a reviewer or AI-assisted workflow reaches a durable decision",
+        "regulated teams need record ids and retention status"
+      ],
+      "avoid_when": [
+        "the action is transient and not auditable"
+      ],
+      "pairs_with": [
+        "audit-timeline",
+        "approval-rail",
+        "citation-drawer"
+      ],
+      "matched_signals": [
+        "audit",
+        "audit-trail timeline",
+        "data retention indicator",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:monitoring-ops",
+        "retention",
+        "reviewer assignment chip"
+      ],
+      "score": 23,
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "policy-matrix",
+      "family": "data-display",
+      "role": "Policy requirement by answer/field matrix with pass, warning, and exception states",
+      "supports_primitive": "advanced-component-catalog",
+      "status": "recommended-advanced",
+      "advanced_component": true,
+      "usage_guidance": [
+        "multiple policy rules must be checked against multiple claims or fields",
+        "reviewers need dense scan-and-drill compliance status"
+      ],
+      "avoid_when": [
+        "there is only one policy outcome"
+      ],
+      "pairs_with": [
+        "risk-summary-card",
+        "exception-queue",
+        "approval-rail"
+      ],
+      "matched_signals": [
+        "compliance",
+        "compliance warning modal",
+        "compliance-artifact panel",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:monitoring-ops",
+        "policy",
+        "policy-check badge"
+      ],
+      "score": 23,
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "source-card",
+      "family": "copilot-artifact",
+      "role": "Compact source record card with title, excerpt, metadata, and verification state",
+      "supports_primitive": "advanced-component-catalog",
+      "status": "recommended-advanced",
+      "advanced_component": true,
+      "usage_guidance": [
+        "AI output depends on external or internal source records",
+        "users need a repeatable citation preview component"
+      ],
+      "avoid_when": [
+        "source metadata is unavailable"
+      ],
+      "pairs_with": [
+        "citation-drawer",
+        "evidence-graph",
+        "inline-citation"
+      ],
+      "matched_signals": [
+        "citation",
+        "citation footnote",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:document-content",
+        "pairs:inline-citation",
+        "reference",
+        "source",
+        "source reference card"
+      ],
+      "score": 23,
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "audit-timeline",
+      "family": "data-display",
+      "role": "Chronological audit trail with actor, action, timestamp, and linked artifact",
+      "supports_primitive": "advanced-component-catalog",
+      "status": "recommended-advanced",
+      "advanced_component": true,
+      "usage_guidance": [
+        "regulated workflows require traceable user and AI actions",
+        "reviewers need to reconstruct what happened before approval"
+      ],
+      "avoid_when": [
+        "events are not user-facing or not actionable"
+      ],
+      "pairs_with": [
+        "decision-record-card",
+        "approval-rail",
+        "tool-call-trace"
+      ],
+      "matched_signals": [
+        "audit",
+        "audit-trail timeline",
+        "data retention indicator",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:monitoring-ops",
+        "retention",
+        "timeline"
+      ],
+      "score": 22,
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "diff-viewer",
+      "family": "document",
+      "role": "Before/after document comparison with inline additions and removals",
+      "supports_primitive": "advanced-component-catalog",
+      "status": "recommended-advanced",
+      "advanced_component": true,
+      "usage_guidance": [
+        "AI rewrites, policy edits, or reviewer changes need auditability",
+        "users must approve what changed before publishing"
+      ],
+      "avoid_when": [
+        "only a short status message changed"
+      ],
+      "pairs_with": [
+        "redline-viewer",
+        "revision-timeline",
+        "approval-rail"
+      ],
+      "matched_signals": [
+        "audit-trail timeline",
+        "citation footnote",
+        "compliance-artifact panel",
+        "draft",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:document-content",
+        "pairs:revision-timeline"
+      ],
+      "score": 22,
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "redline-viewer",
+      "family": "document",
+      "role": "Review-oriented prose surface with suggested insertions, deletions, and comments",
+      "supports_primitive": "advanced-component-catalog",
+      "status": "recommended-advanced",
+      "advanced_component": true,
+      "usage_guidance": [
+        "legal, compliance, or editorial text needs reviewer markup",
+        "comments must stay anchored to exact text ranges"
+      ],
+      "avoid_when": [
+        "structured rows are more important than prose"
+      ],
+      "pairs_with": [
+        "diff-viewer",
+        "comment-thread",
+        "approval-rail"
+      ],
+      "matched_signals": [
+        "compliance-artifact panel",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:document-content",
+        "pairs:comment-thread",
+        "policy",
+        "review",
+        "reviewer assignment chip"
+      ],
+      "score": 21,
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "approval-rail",
+      "family": "workflow",
+      "role": "Persistent approval state rail with owners, blockers, and next action",
+      "supports_primitive": "advanced-component-catalog",
+      "status": "recommended-advanced",
+      "advanced_component": true,
+      "usage_guidance": [
+        "work requires review, approval, rejection, or handoff",
+        "users need to know who owns the next decision"
+      ],
+      "avoid_when": [
+        "there is no explicit workflow owner or state"
+      ],
+      "pairs_with": [
+        "policy-matrix",
+        "risk-summary-card",
+        "diff-viewer"
+      ],
+      "matched_signals": [
+        "compliance warning modal",
+        "handoff",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:document-content",
+        "reviewer",
+        "reviewer assignment chip"
+      ],
+      "score": 20,
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "risk-summary-card",
+      "family": "data-display",
+      "role": "Compact risk score card with drivers, confidence, and recommended mitigation",
+      "supports_primitive": "advanced-component-catalog",
+      "status": "recommended-advanced",
+      "advanced_component": true,
+      "usage_guidance": [
+        "users need a fast read of risk before drilling into policy details",
+        "AI confidence or compliance severity must be visible"
+      ],
+      "avoid_when": [
+        "score cannot be explained with drivers"
+      ],
+      "pairs_with": [
+        "policy-matrix",
+        "confidence-meter",
+        "exception-queue"
+      ],
+      "matched_signals": [
+        "compliance",
+        "compliance warning modal",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:monitoring-ops",
+        "policy-check badge",
+        "warning"
+      ],
+      "score": 20,
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "inspector-drawer",
+      "family": "overlay",
+      "role": "Contextual detail drawer for properties, policy facts, or record metadata",
+      "supports_primitive": "advanced-component-catalog",
+      "status": "recommended-advanced",
+      "advanced_component": true,
+      "usage_guidance": [
+        "a selected item needs rich detail without leaving the main workflow",
+        "users need source facts, owners, versions, or retention metadata"
+      ],
+      "avoid_when": [
+        "the detail is short enough for an inline disclosure"
+      ],
+      "pairs_with": [
+        "policy-matrix",
+        "citation-drawer",
+        "decision-record-card"
+      ],
+      "matched_signals": [
+        "data retention indicator",
+        "mode:conversation-copilot",
+        "mode:monitoring-ops",
+        "policy-check badge",
+        "retention",
+        "source reference card"
+      ],
+      "score": 19,
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "reviewer-assignment-picker",
+      "family": "input",
+      "role": "Reviewer picker with role, availability, and escalation hints",
+      "supports_primitive": "advanced-component-catalog",
+      "status": "recommended-advanced",
+      "advanced_component": true,
+      "usage_guidance": [
+        "workflows require human approval or reassignment",
+        "reviewer choice depends on policy ownership or availability"
+      ],
+      "avoid_when": [
+        "there is only one fixed reviewer"
+      ],
+      "pairs_with": [
+        "approval-rail",
+        "exception-queue",
+        "presence-indicator"
+      ],
+      "matched_signals": [
+        "assignment",
+        "handoff",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:document-content",
+        "reviewer",
+        "reviewer assignment chip"
+      ],
+      "score": 19,
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
     }
   ],
   "candidate_component_archetypes": [
@@ -2761,6 +3264,829 @@
         "level": "inferred",
         "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
       }
+    }
+  ],
+  "advanced_component_catalog": [
+    {
+      "name": "resizable-split-pane",
+      "family": "layout",
+      "role": "Resizable two/three-pane workspace shell for dense tools",
+      "use_when": [
+        "primary work happens between list, canvas/chat, and detail panels",
+        "users need to compare or inspect adjacent information without navigation"
+      ],
+      "avoid_when": [
+        "single linear form or landing page is enough"
+      ],
+      "pairs_with": [
+        "thread-list",
+        "artifact-preview-panel",
+        "inspector-drawer"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "dashboard",
+        "canvas-tool",
+        "monitoring-ops"
+      ]
+    },
+    {
+      "name": "command-palette",
+      "family": "overlay",
+      "role": "Keyboard-first command launcher and cross-surface search",
+      "use_when": [
+        "the product has many actions or navigation targets",
+        "expert users benefit from quick action search"
+      ],
+      "avoid_when": [
+        "there are fewer than five meaningful commands"
+      ],
+      "pairs_with": [
+        "shortcut-hint",
+        "saved-view-bar",
+        "filter-builder"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "dashboard",
+        "canvas-tool",
+        "monitoring-ops"
+      ]
+    },
+    {
+      "name": "inspector-drawer",
+      "family": "overlay",
+      "role": "Contextual detail drawer for properties, policy facts, or record metadata",
+      "use_when": [
+        "a selected item needs rich detail without leaving the main workflow",
+        "users need source facts, owners, versions, or retention metadata"
+      ],
+      "avoid_when": [
+        "the detail is short enough for an inline disclosure"
+      ],
+      "pairs_with": [
+        "policy-matrix",
+        "citation-drawer",
+        "decision-record-card"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "dashboard",
+        "canvas-tool",
+        "monitoring-ops"
+      ]
+    },
+    {
+      "name": "diff-viewer",
+      "family": "document",
+      "role": "Before/after document comparison with inline additions and removals",
+      "use_when": [
+        "AI rewrites, policy edits, or reviewer changes need auditability",
+        "users must approve what changed before publishing"
+      ],
+      "avoid_when": [
+        "only a short status message changed"
+      ],
+      "pairs_with": [
+        "redline-viewer",
+        "revision-timeline",
+        "approval-rail"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "document-content"
+      ]
+    },
+    {
+      "name": "redline-viewer",
+      "family": "document",
+      "role": "Review-oriented prose surface with suggested insertions, deletions, and comments",
+      "use_when": [
+        "legal, compliance, or editorial text needs reviewer markup",
+        "comments must stay anchored to exact text ranges"
+      ],
+      "avoid_when": [
+        "structured rows are more important than prose"
+      ],
+      "pairs_with": [
+        "diff-viewer",
+        "comment-thread",
+        "approval-rail"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "document-content"
+      ]
+    },
+    {
+      "name": "citation-drawer",
+      "family": "copilot-artifact",
+      "role": "Source and citation drawer for AI answers, policies, and quoted evidence",
+      "use_when": [
+        "answers must show supporting policy, document, or source records",
+        "users need to inspect evidence without losing conversation context"
+      ],
+      "avoid_when": [
+        "citations are static footnotes only"
+      ],
+      "pairs_with": [
+        "inline-citation",
+        "source-card",
+        "evidence-graph"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "document-content"
+      ]
+    },
+    {
+      "name": "evidence-graph",
+      "family": "data-display",
+      "role": "Node-link evidence map connecting claims, sources, policies, and decisions",
+      "use_when": [
+        "trust depends on seeing relationships between claims and sources",
+        "auditors need to trace why an answer or decision was made"
+      ],
+      "avoid_when": [
+        "a simple source list communicates the relationship"
+      ],
+      "pairs_with": [
+        "citation-drawer",
+        "decision-record-card",
+        "policy-matrix"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "monitoring-ops"
+      ]
+    },
+    {
+      "name": "policy-matrix",
+      "family": "data-display",
+      "role": "Policy requirement by answer/field matrix with pass, warning, and exception states",
+      "use_when": [
+        "multiple policy rules must be checked against multiple claims or fields",
+        "reviewers need dense scan-and-drill compliance status"
+      ],
+      "avoid_when": [
+        "there is only one policy outcome"
+      ],
+      "pairs_with": [
+        "risk-summary-card",
+        "exception-queue",
+        "approval-rail"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "dashboard",
+        "monitoring-ops"
+      ]
+    },
+    {
+      "name": "audit-timeline",
+      "family": "data-display",
+      "role": "Chronological audit trail with actor, action, timestamp, and linked artifact",
+      "use_when": [
+        "regulated workflows require traceable user and AI actions",
+        "reviewers need to reconstruct what happened before approval"
+      ],
+      "avoid_when": [
+        "events are not user-facing or not actionable"
+      ],
+      "pairs_with": [
+        "decision-record-card",
+        "approval-rail",
+        "tool-call-trace"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "monitoring-ops",
+        "dashboard"
+      ]
+    },
+    {
+      "name": "approval-rail",
+      "family": "workflow",
+      "role": "Persistent approval state rail with owners, blockers, and next action",
+      "use_when": [
+        "work requires review, approval, rejection, or handoff",
+        "users need to know who owns the next decision"
+      ],
+      "avoid_when": [
+        "there is no explicit workflow owner or state"
+      ],
+      "pairs_with": [
+        "policy-matrix",
+        "risk-summary-card",
+        "diff-viewer"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "dashboard",
+        "document-content"
+      ]
+    },
+    {
+      "name": "risk-summary-card",
+      "family": "data-display",
+      "role": "Compact risk score card with drivers, confidence, and recommended mitigation",
+      "use_when": [
+        "users need a fast read of risk before drilling into policy details",
+        "AI confidence or compliance severity must be visible"
+      ],
+      "avoid_when": [
+        "score cannot be explained with drivers"
+      ],
+      "pairs_with": [
+        "policy-matrix",
+        "confidence-meter",
+        "exception-queue"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "dashboard",
+        "monitoring-ops"
+      ]
+    },
+    {
+      "name": "exception-queue",
+      "family": "data-display",
+      "role": "Work queue for unresolved policy, data, or workflow exceptions",
+      "use_when": [
+        "multiple issues require triage, assignment, and resolution",
+        "reviewers need to batch handle exceptions"
+      ],
+      "avoid_when": [
+        "exceptions are rare and single-item"
+      ],
+      "pairs_with": [
+        "bulk-action-table",
+        "policy-matrix",
+        "approval-rail"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "dashboard",
+        "monitoring-ops"
+      ]
+    },
+    {
+      "name": "saved-view-bar",
+      "family": "navigation",
+      "role": "Saved view and scope switcher for repeated operational filters",
+      "use_when": [
+        "teams revisit the same filtered views often",
+        "dense tools need stable scope memory"
+      ],
+      "avoid_when": [
+        "filters are one-off and simple"
+      ],
+      "pairs_with": [
+        "filter-builder",
+        "bulk-action-table",
+        "exception-queue"
+      ],
+      "recommended_for": [
+        "dashboard",
+        "monitoring-ops",
+        "conversation-copilot"
+      ]
+    },
+    {
+      "name": "filter-builder",
+      "family": "input",
+      "role": "Advanced condition builder for multi-field filtering",
+      "use_when": [
+        "users need AND/OR logic across several fields",
+        "filters should be saved, shared, or audited"
+      ],
+      "avoid_when": [
+        "a few filter chips are sufficient"
+      ],
+      "pairs_with": [
+        "saved-view-bar",
+        "bulk-action-table",
+        "exception-queue"
+      ],
+      "recommended_for": [
+        "dashboard",
+        "monitoring-ops",
+        "conversation-copilot"
+      ]
+    },
+    {
+      "name": "bulk-action-table",
+      "family": "data-display",
+      "role": "Selectable data table with sticky bulk action affordances",
+      "use_when": [
+        "users handle many records at once",
+        "selection count and destructive actions must stay visible"
+      ],
+      "avoid_when": [
+        "records are read-only or single-action"
+      ],
+      "pairs_with": [
+        "saved-view-bar",
+        "filter-builder",
+        "exception-queue"
+      ],
+      "recommended_for": [
+        "dashboard",
+        "monitoring-ops",
+        "conversation-copilot"
+      ]
+    },
+    {
+      "name": "tool-call-trace",
+      "family": "copilot-chat",
+      "role": "Expandable trace of AI tool calls, inputs, outputs, and latency",
+      "use_when": [
+        "AI actions need explainability or debugging",
+        "operators need to audit retrieval, policy checks, or workflow calls"
+      ],
+      "avoid_when": [
+        "trace data is sensitive and cannot be summarized"
+      ],
+      "pairs_with": [
+        "audit-timeline",
+        "citation-drawer",
+        "decision-record-card"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "monitoring-ops"
+      ]
+    },
+    {
+      "name": "source-card",
+      "family": "copilot-artifact",
+      "role": "Compact source record card with title, excerpt, metadata, and verification state",
+      "use_when": [
+        "AI output depends on external or internal source records",
+        "users need a repeatable citation preview component"
+      ],
+      "avoid_when": [
+        "source metadata is unavailable"
+      ],
+      "pairs_with": [
+        "citation-drawer",
+        "evidence-graph",
+        "inline-citation"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "document-content"
+      ]
+    },
+    {
+      "name": "confidence-meter",
+      "family": "feedback",
+      "role": "Confidence or certainty meter with explanation and threshold labels",
+      "use_when": [
+        "AI or policy outcome includes uncertainty",
+        "users must decide whether to trust, edit, or escalate"
+      ],
+      "avoid_when": [
+        "confidence cannot be explained or calibrated"
+      ],
+      "pairs_with": [
+        "risk-summary-card",
+        "policy-matrix",
+        "tool-call-trace"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "monitoring-ops",
+        "dashboard"
+      ]
+    },
+    {
+      "name": "decision-record-card",
+      "family": "data-display",
+      "role": "Auditable decision record summarizing decision, actor, evidence, and retention",
+      "use_when": [
+        "a reviewer or AI-assisted workflow reaches a durable decision",
+        "regulated teams need record ids and retention status"
+      ],
+      "avoid_when": [
+        "the action is transient and not auditable"
+      ],
+      "pairs_with": [
+        "audit-timeline",
+        "approval-rail",
+        "citation-drawer"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "dashboard",
+        "monitoring-ops"
+      ]
+    },
+    {
+      "name": "reviewer-assignment-picker",
+      "family": "input",
+      "role": "Reviewer picker with role, availability, and escalation hints",
+      "use_when": [
+        "workflows require human approval or reassignment",
+        "reviewer choice depends on policy ownership or availability"
+      ],
+      "avoid_when": [
+        "there is only one fixed reviewer"
+      ],
+      "pairs_with": [
+        "approval-rail",
+        "exception-queue",
+        "presence-indicator"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "dashboard",
+        "document-content"
+      ]
+    },
+    {
+      "name": "retention-indicator",
+      "family": "feedback",
+      "role": "Retention and recordkeeping status indicator for regulated content",
+      "use_when": [
+        "users need to know whether a record is retained, pending, or expired",
+        "policy requires retention visibility near decisions"
+      ],
+      "avoid_when": [
+        "retention is not relevant to user workflow"
+      ],
+      "pairs_with": [
+        "decision-record-card",
+        "audit-timeline",
+        "inspector-drawer"
+      ],
+      "recommended_for": [
+        "conversation-copilot",
+        "monitoring-ops"
+      ]
+    }
+  ],
+  "advanced_recommendations": [
+    {
+      "name": "resizable-split-pane",
+      "family": "layout",
+      "role": "Resizable two/three-pane workspace shell for dense tools",
+      "use_when": [
+        "primary work happens between list, canvas/chat, and detail panels",
+        "users need to compare or inspect adjacent information without navigation"
+      ],
+      "avoid_when": [
+        "single linear form or landing page is enough"
+      ],
+      "pairs_with": [
+        "thread-list",
+        "artifact-preview-panel",
+        "inspector-drawer"
+      ],
+      "score": 28,
+      "matched_signals": [
+        "artifact",
+        "compliance-artifact panel",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:monitoring-ops",
+        "pairs:artifact-preview-panel",
+        "panel",
+        "thread",
+        "thread list sidebar",
+        "workspace",
+        "workspace header"
+      ],
+      "source": "advanced-component-catalog",
+      "status": "recommended-advanced"
+    },
+    {
+      "name": "citation-drawer",
+      "family": "copilot-artifact",
+      "role": "Source and citation drawer for AI answers, policies, and quoted evidence",
+      "use_when": [
+        "answers must show supporting policy, document, or source records",
+        "users need to inspect evidence without losing conversation context"
+      ],
+      "avoid_when": [
+        "citations are static footnotes only"
+      ],
+      "pairs_with": [
+        "inline-citation",
+        "source-card",
+        "evidence-graph"
+      ],
+      "score": 26,
+      "matched_signals": [
+        "citation",
+        "citation footnote",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:document-content",
+        "pairs:inline-citation",
+        "policy",
+        "policy-check badge",
+        "source",
+        "source reference card"
+      ],
+      "source": "advanced-component-catalog",
+      "status": "recommended-advanced"
+    },
+    {
+      "name": "decision-record-card",
+      "family": "data-display",
+      "role": "Auditable decision record summarizing decision, actor, evidence, and retention",
+      "use_when": [
+        "a reviewer or AI-assisted workflow reaches a durable decision",
+        "regulated teams need record ids and retention status"
+      ],
+      "avoid_when": [
+        "the action is transient and not auditable"
+      ],
+      "pairs_with": [
+        "audit-timeline",
+        "approval-rail",
+        "citation-drawer"
+      ],
+      "score": 23,
+      "matched_signals": [
+        "audit",
+        "audit-trail timeline",
+        "data retention indicator",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:monitoring-ops",
+        "retention",
+        "reviewer assignment chip"
+      ],
+      "source": "advanced-component-catalog",
+      "status": "recommended-advanced"
+    },
+    {
+      "name": "policy-matrix",
+      "family": "data-display",
+      "role": "Policy requirement by answer/field matrix with pass, warning, and exception states",
+      "use_when": [
+        "multiple policy rules must be checked against multiple claims or fields",
+        "reviewers need dense scan-and-drill compliance status"
+      ],
+      "avoid_when": [
+        "there is only one policy outcome"
+      ],
+      "pairs_with": [
+        "risk-summary-card",
+        "exception-queue",
+        "approval-rail"
+      ],
+      "score": 23,
+      "matched_signals": [
+        "compliance",
+        "compliance warning modal",
+        "compliance-artifact panel",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:monitoring-ops",
+        "policy",
+        "policy-check badge"
+      ],
+      "source": "advanced-component-catalog",
+      "status": "recommended-advanced"
+    },
+    {
+      "name": "source-card",
+      "family": "copilot-artifact",
+      "role": "Compact source record card with title, excerpt, metadata, and verification state",
+      "use_when": [
+        "AI output depends on external or internal source records",
+        "users need a repeatable citation preview component"
+      ],
+      "avoid_when": [
+        "source metadata is unavailable"
+      ],
+      "pairs_with": [
+        "citation-drawer",
+        "evidence-graph",
+        "inline-citation"
+      ],
+      "score": 23,
+      "matched_signals": [
+        "citation",
+        "citation footnote",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:document-content",
+        "pairs:inline-citation",
+        "reference",
+        "source",
+        "source reference card"
+      ],
+      "source": "advanced-component-catalog",
+      "status": "recommended-advanced"
+    },
+    {
+      "name": "audit-timeline",
+      "family": "data-display",
+      "role": "Chronological audit trail with actor, action, timestamp, and linked artifact",
+      "use_when": [
+        "regulated workflows require traceable user and AI actions",
+        "reviewers need to reconstruct what happened before approval"
+      ],
+      "avoid_when": [
+        "events are not user-facing or not actionable"
+      ],
+      "pairs_with": [
+        "decision-record-card",
+        "approval-rail",
+        "tool-call-trace"
+      ],
+      "score": 22,
+      "matched_signals": [
+        "audit",
+        "audit-trail timeline",
+        "data retention indicator",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:monitoring-ops",
+        "retention",
+        "timeline"
+      ],
+      "source": "advanced-component-catalog",
+      "status": "recommended-advanced"
+    },
+    {
+      "name": "diff-viewer",
+      "family": "document",
+      "role": "Before/after document comparison with inline additions and removals",
+      "use_when": [
+        "AI rewrites, policy edits, or reviewer changes need auditability",
+        "users must approve what changed before publishing"
+      ],
+      "avoid_when": [
+        "only a short status message changed"
+      ],
+      "pairs_with": [
+        "redline-viewer",
+        "revision-timeline",
+        "approval-rail"
+      ],
+      "score": 22,
+      "matched_signals": [
+        "audit-trail timeline",
+        "citation footnote",
+        "compliance-artifact panel",
+        "draft",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:document-content",
+        "pairs:revision-timeline"
+      ],
+      "source": "advanced-component-catalog",
+      "status": "recommended-advanced"
+    },
+    {
+      "name": "redline-viewer",
+      "family": "document",
+      "role": "Review-oriented prose surface with suggested insertions, deletions, and comments",
+      "use_when": [
+        "legal, compliance, or editorial text needs reviewer markup",
+        "comments must stay anchored to exact text ranges"
+      ],
+      "avoid_when": [
+        "structured rows are more important than prose"
+      ],
+      "pairs_with": [
+        "diff-viewer",
+        "comment-thread",
+        "approval-rail"
+      ],
+      "score": 21,
+      "matched_signals": [
+        "compliance-artifact panel",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:document-content",
+        "pairs:comment-thread",
+        "policy",
+        "review",
+        "reviewer assignment chip"
+      ],
+      "source": "advanced-component-catalog",
+      "status": "recommended-advanced"
+    },
+    {
+      "name": "approval-rail",
+      "family": "workflow",
+      "role": "Persistent approval state rail with owners, blockers, and next action",
+      "use_when": [
+        "work requires review, approval, rejection, or handoff",
+        "users need to know who owns the next decision"
+      ],
+      "avoid_when": [
+        "there is no explicit workflow owner or state"
+      ],
+      "pairs_with": [
+        "policy-matrix",
+        "risk-summary-card",
+        "diff-viewer"
+      ],
+      "score": 20,
+      "matched_signals": [
+        "compliance warning modal",
+        "handoff",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:document-content",
+        "reviewer",
+        "reviewer assignment chip"
+      ],
+      "source": "advanced-component-catalog",
+      "status": "recommended-advanced"
+    },
+    {
+      "name": "risk-summary-card",
+      "family": "data-display",
+      "role": "Compact risk score card with drivers, confidence, and recommended mitigation",
+      "use_when": [
+        "users need a fast read of risk before drilling into policy details",
+        "AI confidence or compliance severity must be visible"
+      ],
+      "avoid_when": [
+        "score cannot be explained with drivers"
+      ],
+      "pairs_with": [
+        "policy-matrix",
+        "confidence-meter",
+        "exception-queue"
+      ],
+      "score": 20,
+      "matched_signals": [
+        "compliance",
+        "compliance warning modal",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:monitoring-ops",
+        "policy-check badge",
+        "warning"
+      ],
+      "source": "advanced-component-catalog",
+      "status": "recommended-advanced"
+    },
+    {
+      "name": "inspector-drawer",
+      "family": "overlay",
+      "role": "Contextual detail drawer for properties, policy facts, or record metadata",
+      "use_when": [
+        "a selected item needs rich detail without leaving the main workflow",
+        "users need source facts, owners, versions, or retention metadata"
+      ],
+      "avoid_when": [
+        "the detail is short enough for an inline disclosure"
+      ],
+      "pairs_with": [
+        "policy-matrix",
+        "citation-drawer",
+        "decision-record-card"
+      ],
+      "score": 19,
+      "matched_signals": [
+        "data retention indicator",
+        "mode:conversation-copilot",
+        "mode:monitoring-ops",
+        "policy-check badge",
+        "retention",
+        "source reference card"
+      ],
+      "source": "advanced-component-catalog",
+      "status": "recommended-advanced"
+    },
+    {
+      "name": "reviewer-assignment-picker",
+      "family": "input",
+      "role": "Reviewer picker with role, availability, and escalation hints",
+      "use_when": [
+        "workflows require human approval or reassignment",
+        "reviewer choice depends on policy ownership or availability"
+      ],
+      "avoid_when": [
+        "there is only one fixed reviewer"
+      ],
+      "pairs_with": [
+        "approval-rail",
+        "exception-queue",
+        "presence-indicator"
+      ],
+      "score": 19,
+      "matched_signals": [
+        "assignment",
+        "handoff",
+        "mode-default",
+        "mode:conversation-copilot",
+        "mode:document-content",
+        "reviewer",
+        "reviewer assignment chip"
+      ],
+      "source": "advanced-component-catalog",
+      "status": "recommended-advanced"
     }
   ]
 }

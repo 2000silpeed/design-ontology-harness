@@ -71,6 +71,7 @@ Style Capsule은 아래 섹션으로 구성됩니다.
 - Spacing And Shape
 - Component Priorities
 - Signature Components
+- Advanced Component Menu
 - Reference Governance
 - Agent Preflight
 
@@ -144,6 +145,18 @@ Style Capsule은 아래 섹션으로 구성됩니다.
 ```
 
 한 semantic role을 neutral surface 또는 transparent와 섞는 것은 허용됩니다. 여러 chromatic role을 섞어 새로운 palette mood를 만드는 것은 금지입니다.
+
+## Advanced Component Menu
+
+Style Capsule은 `component_inventory.json`의 `advanced_recommendations`를
+**Advanced Component Menu**로 노출할 수 있습니다. 이는 사용자가 고급 컴포넌트
+이름을 몰라도 `policy-matrix`, `citation-drawer`, `approval-rail`,
+`diff-viewer`, `tool-call-trace` 같은 구조를 제품 맥락에 맞게 쓰도록 돕습니다.
+
+이 메뉴는 복잡해 보이게 만드는 장식 목록이 아닙니다. compliance, evidence,
+audit, approval, bulk triage, AI traceability처럼 실제 업무 흐름을 더 명확하게
+만들 때만 사용합니다. 색상, 폰트, IA, copy, 상태 의미는 여전히 온톨로지와
+토큰이 우선합니다.
 
 ## 구현 repo에서 쓰는 법
 

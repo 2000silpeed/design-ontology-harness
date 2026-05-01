@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from .advanced_components import get_advanced_component
 from .models import DocumentRecord
 from .utils import ensure_dir, write_json
 
@@ -562,22 +563,27 @@ def generate_component_specs(
     specs: list[dict] = []
     for comp in component_list:
         family = comp["family"]
+        advanced = get_advanced_component(comp["name"])
         archetype_key = _infer_slot_archetype(comp["name"])
         archetype = SLOT_ARCHETYPES.get(archetype_key) if archetype_key else None
         family_anatomy = COMPONENT_ANATOMY.get(family) or COMPONENT_ANATOMY.get("data-display", {})
-        source = archetype or family_anatomy
+        source = advanced or archetype or family_anatomy
 
         kb_evidence = _find_kb_evidence(comp["name"], family, documents)
 
         spec = {
             "name": comp["name"],
             "family": family,
-            "archetype": archetype_key,
+            "archetype": f"advanced:{comp['name']}" if advanced else archetype_key,
+            "advanced_component": bool(advanced),
             "role": comp.get("role", ""),
             "source_pattern": comp.get("source", ""),
+            "usage_guidance": (advanced or {}).get("use_when", comp.get("usage_guidance", [])),
+            "avoid_when": (advanced or {}).get("avoid_when", comp.get("avoid_when", [])),
+            "pairs_with": (advanced or {}).get("pairs_with", comp.get("pairs_with", [])),
             "anatomy": {
-                "parts": source.get("parts", []),
-                "states": source.get("states", []),
+                "parts": (source.get("anatomy", {}) if isinstance(source.get("anatomy"), dict) else source).get("parts", []),
+                "states": (source.get("anatomy", {}) if isinstance(source.get("anatomy"), dict) else source).get("states", []),
             },
             "tokens": _build_token_bindings(comp["name"], family, source),
             "accessibility": source.get("accessibility", []),
@@ -682,12 +688,27 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
     for spec in specs_data["specs"]:
         md_lines.append("---\n")
         md_lines.append(f"## {spec['family']} / {spec['name']}\n")
-        md_lines.append(f"**역할**: {spec['role']}\n")
+        role = spec.get("role") or "—"
+        md_lines.append(f"**역할**: {role}\n")
 
         if spec.get("source_pattern"):
             md_lines.append(f"**탐지 출처**: {spec['source_pattern']}\n")
         if spec.get("archetype"):
             md_lines.append(f"**Slot archetype**: `{spec['archetype']}`\n")
+
+        if spec.get("advanced_component"):
+            md_lines.append("### Advanced Usage\n")
+            if spec.get("usage_guidance"):
+                md_lines.append("Use when:")
+                for item in spec.get("usage_guidance", [])[:3]:
+                    md_lines.append(f"- {item}")
+            if spec.get("avoid_when"):
+                md_lines.append("Avoid when:")
+                for item in spec.get("avoid_when", [])[:2]:
+                    md_lines.append(f"- {item}")
+            if spec.get("pairs_with"):
+                md_lines.append(f"Pairs with: {', '.join(spec.get('pairs_with', [])[:6])}")
+            md_lines.append("")
 
         md_lines.append("### 구조 (Anatomy)\n")
         for part in spec["anatomy"]["parts"]:

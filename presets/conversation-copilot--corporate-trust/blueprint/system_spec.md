@@ -154,7 +154,18 @@
 ## 8. Component Strategy
 
 - **Product primitives**: workspace header, project switcher, thread list sidebar, thread item, chat message, ai message, user message, prompt composer, streaming cursor, regenerate button, stop generation button, compliance-artifact panel, audit-trail timeline, policy-check badge, compliance warning modal, citation footnote, source reference card, reviewer assignment chip, data retention indicator, empty conversation state
-- **Required families**: button, data-display, editorial, feedback, input, marketing, navigation, commerce, copilot-artifact, copilot-chat, document, overlay, social
+- **Required families**: button, data-display, editorial, feedback, input, marketing, navigation, commerce, copilot-artifact, copilot-chat, document, overlay, social, layout, workflow
+- **Advanced component recommendations**:
+
+- **resizable-split-pane** (layout, score 28): primary work happens between list, canvas/chat, and detail panels; users need to compare or inspect adjacent information without navigation / pairs with: thread-list, artifact-preview-panel, inspector-drawer
+- **citation-drawer** (copilot-artifact, score 26): answers must show supporting policy, document, or source records; users need to inspect evidence without losing conversation context / pairs with: inline-citation, source-card, evidence-graph
+- **decision-record-card** (data-display, score 23): a reviewer or AI-assisted workflow reaches a durable decision; regulated teams need record ids and retention status / pairs with: audit-timeline, approval-rail, citation-drawer
+- **policy-matrix** (data-display, score 23): multiple policy rules must be checked against multiple claims or fields; reviewers need dense scan-and-drill compliance status / pairs with: risk-summary-card, exception-queue, approval-rail
+- **source-card** (copilot-artifact, score 23): AI output depends on external or internal source records; users need a repeatable citation preview component / pairs with: citation-drawer, evidence-graph, inline-citation
+- **audit-timeline** (data-display, score 22): regulated workflows require traceable user and AI actions; reviewers need to reconstruct what happened before approval / pairs with: decision-record-card, approval-rail, tool-call-trace
+- **diff-viewer** (document, score 22): AI rewrites, policy edits, or reviewer changes need auditability; users must approve what changed before publishing / pairs with: redline-viewer, revision-timeline, approval-rail
+- **redline-viewer** (document, score 21): legal, compliance, or editorial text needs reviewer markup; comments must stay anchored to exact text ranges / pairs with: diff-viewer, comment-thread, approval-rail
+
 - **Visual-reference archetypes**:
 
 - **Conversation sidecar** (overlay / 0.94): chat-panel, message-thread, message-composer, context-drawer
@@ -173,9 +184,11 @@
 - **commerce**: product-grid, product-card, product-detail, product-gallery, product-hero-image, image-thumbnail, price-tag, original-price-strikethrough
 - **copilot-artifact**: message-artifact, artifact-preview-panel, draft-document, outline-sidebar, revision-timeline, reading-mode-toggle, citation-footnote, quote-block
 - **copilot-chat**: streaming-cursor, typing-indicator, inline-citation, mention-chip, suggestion-card, thread-header
-- **document**: article-body, table-of-contents, heading-anchor, prose-block, reading-pane, footnote, link-card
+- **document**: article-body, table-of-contents, heading-anchor, prose-block, reading-pane, footnote, link-card, diff-viewer
 - **overlay**: bottom-sheet, modal-dialog, mention-popup, confirm-dialog, user-menu, autocomplete, tooltip-guide, command-palette / visual signals: Conversation sidecar (0.94)
 - **social**: feed-item, post-card, thread-view, reaction-bar, timeline-stream, avatar-cluster
+- **layout**: resizable-split-pane
+- **workflow**: approval-rail
 
 ## 9. Implementation Guardrails
 
@@ -213,7 +226,6 @@
   - navigation labels
   - domain information architecture
   - redistributable imagery unless explicitly licensed
-
 - Promoted failure patterns:
   - **token-bound-reference-palette-mixing**: Token binding is necessary but not sufficient; color role composition must still follow the ontology palette roles. Prevention: Derived colors may alias a semantic token or mix one semantic role with a neutral surface/transparent value. Do not mix multiple chromatic roles to create a local palette.
 - Feedback promotion: When implementation review identifies a repeatable design-system failure, promote it into governance, generated artifacts, and lint checks before treating the current screen as complete. Outputs: design_system_blueprint.governance, system_spec.md, system_ontology.json, IMPLEMENTATION_CONTRACT.md
@@ -480,176 +492,188 @@
 
 | Component | Tokens Used |
 |-----------|-------------|
-| activity-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| add-to-cart-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| app-shell | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| article-body | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| artifact-preview-panel | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| autocomplete | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| avatar | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| avatar-cluster | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| back-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| banner | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| block-controls | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| bottom-sheet | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| breadcrumb | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| byline-row | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| calendar-grid | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| category-pill | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chart-container | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chart-legend | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chart-tooltip | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chat-input | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chat-message | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chat-panel | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chat-thread | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| checkbox | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chip | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| citation-footnote | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| color-swatch-selector | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| column-header | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| command-palette | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| command-result-item | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| comment-input | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| comment-thread | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| confirm-dialog | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| content-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| content-meta | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| context-drawer | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| context-panel | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| cross-sell-grid | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| cta-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| cta-button-group | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| customer-logo | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| data-table | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| date-picker | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| date-range-picker | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| discount-badge | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| draft-document | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| editor-canvas | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| editor-toolbar | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| empty-conversation-state | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| empty-feed-illustration | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| empty-state | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| faq-answer | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| faq-item | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| faq-question | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| faq-section | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| feature-comparison | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| featured-story-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| feed-item | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| file-preview | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| filter-chip | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| filter-panel | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| filter-sidebar | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| filter-toolbar | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| follow-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| footnote | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| form-actions | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| form-section | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| gentle-toast | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| ghost-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| heading-anchor | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| hero-headline | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| hero-section | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| hero-visual | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| icon-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| image-thumbnail | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| inline-alert | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| inline-citation | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| inline-format-menu | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| insight-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| kanban-board | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| kanban-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| kanban-column | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| link-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| link-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| logo-cloud | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| mention-chip | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| mention-popup | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| message-artifact | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| message-composer | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| message-thread | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| metric-highlight | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| mobile-tab-bar | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| mobile-topbar | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| modal-dialog | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| new-thread-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| original-price-strikethrough | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| outline-sidebar | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| pagination | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| paragraph-block | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| player-controls | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| post-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| press-quote | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| prev-next-pager | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| price-tag | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| pricing-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| primary-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| product-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| product-detail | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| product-gallery | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| product-grid | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| product-hero-image | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| profile-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| prompt-composer | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| prose-block | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| quick-view-modal | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| quote-block | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| radio-group | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| reaction-bar | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| reading-mode-toggle | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| reading-pane | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| regenerate-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| reply-composer | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| revision-timeline | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| row-actions | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| search-field | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| search-results | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| secondary-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| section-header | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| section-tabs | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| segmented-control | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| select | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| share-sheet | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| shortcut-hint | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| sidebar-nav | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| size-selector | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| slash-command-menu | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| soft-dialog | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| sort-dropdown | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| stat-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| status-badge | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| step-progress | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| stop-generation-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| streaming-cursor | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| suggestion-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| tab-bar | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| table-of-contents | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| tag | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| tag-pill | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| text-field | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| textarea | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| thread-header | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| thread-view | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| time-picker | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| timeline-stream | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| toast | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| tone-slider | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| tooltip-guide | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| topbar | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| trust-strip | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| typing-indicator | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| upgrade-banner | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| upload-dropzone | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| upload-progress | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| user-menu | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| variant-selector | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| video-player | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| volume-slider | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| wishlist-toggle | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| wizard-layout | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| workspace-switcher | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| activity-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| add-to-cart-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| app-shell | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| approval-rail | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| article-body | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| artifact-preview-panel | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| audit-timeline | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| autocomplete | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| avatar | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| avatar-cluster | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| back-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| banner | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| block-controls | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| bottom-sheet | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| breadcrumb | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| byline-row | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| calendar-grid | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| category-pill | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| chart-container | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| chart-legend | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| chart-tooltip | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| chat-input | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| chat-message | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| chat-panel | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| chat-thread | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| checkbox | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| chip | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| citation-drawer | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| citation-footnote | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| color-swatch-selector | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| column-header | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| command-palette | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| command-result-item | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| comment-input | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| comment-thread | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| confirm-dialog | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| content-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| content-meta | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| context-drawer | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| context-panel | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| cross-sell-grid | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| cta-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| cta-button-group | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| customer-logo | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| data-table | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| date-picker | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| date-range-picker | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| decision-record-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| diff-viewer | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| discount-badge | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| draft-document | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| editor-canvas | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| editor-toolbar | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| empty-conversation-state | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| empty-feed-illustration | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| empty-state | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| faq-answer | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| faq-item | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| faq-question | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| faq-section | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| feature-comparison | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| featured-story-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| feed-item | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| file-preview | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| filter-chip | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| filter-panel | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| filter-sidebar | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| filter-toolbar | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| follow-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| footnote | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| form-actions | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| form-section | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| gentle-toast | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| ghost-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| heading-anchor | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| hero-headline | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| hero-section | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| hero-visual | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| icon-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| image-thumbnail | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| inline-alert | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| inline-citation | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| inline-format-menu | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| insight-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| inspector-drawer | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| kanban-board | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| kanban-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| kanban-column | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| link-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| link-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| logo-cloud | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| mention-chip | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| mention-popup | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| message-artifact | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| message-composer | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| message-thread | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| metric-highlight | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| mobile-tab-bar | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| mobile-topbar | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| modal-dialog | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| new-thread-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| original-price-strikethrough | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| outline-sidebar | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| pagination | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| paragraph-block | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| player-controls | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| policy-matrix | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| post-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| press-quote | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| prev-next-pager | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| price-tag | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| pricing-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| primary-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| product-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| product-detail | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| product-gallery | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| product-grid | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| product-hero-image | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| profile-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| prompt-composer | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| prose-block | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| quick-view-modal | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| quote-block | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| radio-group | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| reaction-bar | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| reading-mode-toggle | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| reading-pane | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| redline-viewer | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| regenerate-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| reply-composer | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| resizable-split-pane | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| reviewer-assignment-picker | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| revision-timeline | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| risk-summary-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| row-actions | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| search-field | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| search-results | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| secondary-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| section-header | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| section-tabs | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| segmented-control | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| select | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| share-sheet | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| shortcut-hint | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| sidebar-nav | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| size-selector | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| slash-command-menu | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| soft-dialog | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| sort-dropdown | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| source-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| stat-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| status-badge | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| step-progress | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| stop-generation-button | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| streaming-cursor | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| suggestion-card | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| tab-bar | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| table-of-contents | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| tag | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| tag-pill | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| text-field | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| textarea | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| thread-header | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| thread-view | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| time-picker | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| timeline-stream | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| toast | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| tone-slider | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| tooltip-guide | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| topbar | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| trust-strip | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| typing-indicator | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| upgrade-banner | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| upload-dropzone | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| upload-progress | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| user-menu | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| variant-selector | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| video-player | `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| volume-slider | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| wishlist-toggle | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| wizard-layout | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
+| workspace-switcher | `color.Super Sonic→surface`, `color.Copper→emphasis`, `color.Powder Blue→background`, `spacing.12→padding`, `radius.md→radius` |
 
 ## 19. Contrast Audit
 
@@ -698,3 +722,13 @@
 - **command palette**: command-palette, command-result-item, shortcut-hint
 - **forms**: text-field, select, checkbox, textarea, form-section, radio-group, form-actions
 - **notifications**: toast, inline-alert, empty-state, banner
+
+## 21. Generated Visual Asset Plan
+
+| Asset Slot | Model | Intended For | Manifest |
+|------------|-------|--------------|----------|
+| Brand-aligned raster image | imagine2 | only when the implementation surface would benefit from generated imagery | `public/generated/design-system/manifest.json` |
+| Card thumbnail | imagine2 | activity-card, add-to-cart-button, category-pill, color-swatch-selector, content-card, cross-sell-grid | `public/generated/design-system/manifest.json` |
+| Editorial cover | imagine2 | article-body, block-controls, byline-row, content-card, content-meta, editor-canvas | `public/generated/design-system/manifest.json` |
+| Empty-state illustration | imagine2 | empty-state, step-progress, tooltip-guide, wizard-layout, feedback | `public/generated/design-system/manifest.json` |
+| Hero image | imagine2 | cta-button-group, feature-comparison, featured-story-card, hero-headline, hero-section, hero-visual | `public/generated/design-system/manifest.json` |

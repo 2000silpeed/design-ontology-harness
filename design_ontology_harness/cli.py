@@ -468,6 +468,41 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _component_specs_source_from_inventory(component_list: list[dict], component_inventory: dict | None) -> list[dict]:
+    """Merge spec-detected components with generated inventory components.
+
+    `run-project` first detects components from spec.md, then `build_blueprint`
+    may add ontology-recommended advanced components. Component specs should cover
+    both sets so agents can implement the richer inventory directly.
+    """
+
+    by_name: dict[str, dict] = {}
+    for component in component_list:
+        name = component.get("name")
+        if name:
+            by_name[name] = dict(component)
+
+    if not isinstance(component_inventory, dict):
+        return list(by_name.values())
+
+    for component in component_inventory.get("components", []):
+        if not isinstance(component, dict):
+            continue
+        name = component.get("name")
+        if not name:
+            continue
+        if name in by_name:
+            merged = dict(by_name[name])
+            for key, value in component.items():
+                if key not in merged or merged[key] in (None, "", []):
+                    merged[key] = value
+            by_name[name] = merged
+        else:
+            by_name[name] = dict(component)
+
+    return list(by_name.values())
+
+
 def main() -> None:
     args = build_parser().parse_args()
     raw_output = getattr(args, "output_dir", None)
@@ -877,13 +912,18 @@ def main() -> None:
         build_root = ensure_dir(project_dir / manifest.get("build_dir", "build"))
         output_dir = ensure_dir(build_root / "system")
         blueprint = {}
+        component_inventory = {}
         bp_path = output_dir / "blueprint" / "design_system_blueprint.json"
         if bp_path.exists():
             blueprint = json.loads(bp_path.read_text(encoding="utf-8"))
+        inventory_path = output_dir / "blueprint" / "component_inventory.json"
+        if inventory_path.exists():
+            component_inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+        specs_source = _component_specs_source_from_inventory(component_list, component_inventory)
         specs_data = generate_component_specs(
             brand_profile=brand_profile,
             blueprint=blueprint,
-            component_list=component_list,
+            component_list=specs_source,
             documents=documents,
         )
         write_component_specs(output_dir, specs_data)
@@ -1300,7 +1340,10 @@ def main() -> None:
                 "output_dir": str(output_dir),
             },
         )
-        if component_list:
+        inventory_path = output_dir / "blueprint" / "component_inventory.json"
+        inventory_data = json.loads(inventory_path.read_text(encoding="utf-8")) if inventory_path.exists() else {}
+        specs_source = _component_specs_source_from_inventory(component_list, inventory_data)
+        if specs_source:
             bp_path = output_dir / "blueprint" / "design_system_blueprint.json"
             blueprint_data = {}
             if bp_path.exists():
@@ -1308,11 +1351,11 @@ def main() -> None:
             specs_data = generate_component_specs(
                 brand_profile=brand_profile,
                 blueprint=blueprint_data,
-                component_list=component_list,
+                component_list=specs_source,
                 documents=documents,
             )
             write_component_specs(output_dir, specs_data)
-            print(f"  -> 설계서({spec_file.name})에서 {len(component_list)}개 컴포넌트 스펙 자동 생성")
+            print(f"  -> 설계서({spec_file.name}) + inventory에서 {len(specs_source)}개 컴포넌트 스펙 자동 생성")
 
         print(f"[run-project] 시스템 산출물 생성 완료: {output_dir}/blueprint/")
         print(f"  -> 레퍼런스: {len(references)}개 | 문서: {len(documents)}개")

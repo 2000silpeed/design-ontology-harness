@@ -59,6 +59,11 @@ def build_foundation_layer(graph: DesignOntologyGraph, token_schema: dict) -> No
 def build_component_layer(
     graph: DesignOntologyGraph, component_inventory: dict, brand_profile: dict
 ) -> None:
+    component_meta_by_name = {
+        comp.get("name"): comp
+        for comp in component_inventory.get("components", [])
+        if comp.get("name")
+    }
     for family in component_inventory.get("families", []):
         family_name = family["family"]
         fid = f"family:{slugify(family_name)}"
@@ -74,7 +79,16 @@ def build_component_layer(
 
         for comp_name in family.get("components", []):
             cid = f"component:{slugify(comp_name)}"
-            graph.add_node(OntologyNode(id=cid, type=NodeType.Component, label=comp_name))
+            meta = component_meta_by_name.get(comp_name, {})
+            node_meta = {}
+            if meta.get("advanced_component"):
+                node_meta = {
+                    "advanced_component": True,
+                    "usage_guidance": meta.get("usage_guidance", []),
+                    "pairs_with": meta.get("pairs_with", []),
+                    "matched_signals": meta.get("matched_signals", []),
+                }
+            graph.add_node(OntologyNode(id=cid, type=NodeType.Component, label=comp_name, meta=node_meta))
             graph.add_edge(OntologyEdge(type=EdgeType.member_of_family, source=cid, target=fid))
 
     for comp in component_inventory.get("components", []):

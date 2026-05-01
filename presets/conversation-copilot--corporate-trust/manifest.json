@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "mercer",
-  "content_hash": "sha256:641769859ef5e7606e156ee2c55262992022eabf7bdd436f5b422b4c743f8cfb",
+  "content_hash": "sha256:941374e671d89dbd04b68132a6aef21a5fb1f295151ba91e749c04af11bd01ee",
   "app_mode": "conversation-copilot",
   "brand_tone": "corporate-trust",
   "color_modes": [
@@ -34,6 +34,6 @@
   },
   "owner": "@carol-external",
   "tier": "P3",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-05-01T15:11:23Z",
   "description": "금융·보험 enterprise AI 챗봇 builder — conversation-copilot--corporate-trust 톤, workspace + thread + chat + compliance-artifact + audit-trail + policy-check + citation, super-sonic blue + copper + powder blue palette, 규제·감사 맥락 한국어 1급"
 }

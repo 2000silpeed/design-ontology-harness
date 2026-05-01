@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from .advanced_components import catalog_entries, get_advanced_component, recommend_advanced_components
 from .models import DocumentRecord, ReferenceLink
 from .utils import ensure_dir, write_json
 from .graph_builders import build_full_ontology_graph
@@ -411,6 +412,11 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
         "editorial": {"states": ["default", "selected", "editing"], "priority": "high"},
         "data-display": {"states": ["default", "sorted", "filtered", "empty"], "priority": "high"},
         "marketing": {"states": ["default", "hover", "in-view"], "priority": "high"},
+        "layout": {"states": ["default", "resizing", "collapsed"], "priority": "high"},
+        "workflow": {"states": ["pending", "active", "blocked", "approved"], "priority": "high"},
+        "document": {"states": ["default", "selected", "commenting", "resolved"], "priority": "high"},
+        "copilot-chat": {"states": ["default", "loading", "complete", "error"], "priority": "high"},
+        "copilot-artifact": {"states": ["default", "loading", "verified", "error"], "priority": "high"},
     }
 
     for family in blueprint.get("component_strategy", {}).get("required_component_families", []):
@@ -498,6 +504,45 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
             }
         )
 
+    advanced_recommendations = recommend_advanced_components(
+        brand_profile=brand_profile,
+        blueprint=blueprint,
+        existing_components=[component["name"] for component in all_components],
+        limit=12,
+    )
+    for recommendation in advanced_recommendations:
+        component_name = recommendation["name"]
+        component_spec = get_advanced_component(component_name) or {}
+        family = recommendation.get("family") or component_spec.get("family") or classify_component_family(component_name)
+        families.setdefault(
+            family,
+            {
+                "family": family,
+                "priority": family_specs.get(family, {}).get("priority", "medium"),
+                "required_states": family_specs.get(family, {}).get("states", ["default"]),
+                "components": [],
+                "visual_reference_signals": [],
+            },
+        )
+        if component_name not in families[family]["components"]:
+            families[family]["components"].append(component_name)
+        all_components.append(
+            {
+                "name": component_name,
+                "family": family,
+                "role": recommendation.get("role", component_spec.get("role", "")),
+                "supports_primitive": "advanced-component-catalog",
+                "status": "recommended-advanced",
+                "advanced_component": True,
+                "usage_guidance": recommendation.get("use_when", []),
+                "avoid_when": recommendation.get("avoid_when", []),
+                "pairs_with": recommendation.get("pairs_with", []),
+                "matched_signals": recommendation.get("matched_signals", []),
+                "score": recommendation.get("score"),
+                "must_document": ["anatomy", "states", "content rules", "accessibility", "dos and donts"],
+            }
+        )
+
     existing_components_by_name = {component["name"]: component for component in all_components}
     for archetype in candidate_archetypes:
         if archetype.get("confidence", 0.0) < 0.55:
@@ -560,6 +605,8 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
         "families": sorted(families.values(), key=lambda item: (item["priority"] != "high", item["family"])),
         "components": all_components,
         "candidate_component_archetypes": candidate_archetypes,
+        "advanced_component_catalog": catalog_entries(),
+        "advanced_recommendations": advanced_recommendations,
     }
 
 
@@ -631,12 +678,27 @@ def build_system_ontology(
     edges.append({"type": "generated_with", "from": visual_asset_id, "to": image_model_id})
     edges.append({"type": "grounded_in", "from": visual_asset_id, "to": brand_id})
 
+    component_meta_by_name = {
+        component.get("name"): component
+        for component in component_inventory.get("components", [])
+        if component.get("name")
+    }
+
     for family in component_inventory.get("families", []):
         family_id = f"component-family:{family['family']}"
         nodes.append({"id": family_id, "type": "ComponentFamily", "label": family["family"]})
         for component_name in family.get("components", []):
             component_id = f"component:{slugify_text(component_name)}"
-            nodes.append({"id": component_id, "type": "Component", "label": component_name})
+            meta = component_meta_by_name.get(component_name, {})
+            node = {"id": component_id, "type": "Component", "label": component_name}
+            if meta.get("advanced_component"):
+                node["meta"] = {
+                    "advanced_component": True,
+                    "usage_guidance": meta.get("usage_guidance", []),
+                    "pairs_with": meta.get("pairs_with", []),
+                    "matched_signals": meta.get("matched_signals", []),
+                }
+            nodes.append(node)
             edges.append({"type": "composed_of", "from": family_id, "to": component_id})
 
     for primitive in brand_profile.get("product_primitives", []):
@@ -753,6 +815,16 @@ def build_system_spec_markdown(
         f"{', '.join(item.get('suggested_components', [])[:5])}"
         for item in component_inventory.get("candidate_component_archetypes", [])[:6]
     ) or "- No visual-reference archetypes suggested."
+    advanced_component_lines = "\n".join(
+        f"- **{item.get('name')}** ({item.get('family')}, score {item.get('score')}): "
+        f"{'; '.join(item.get('use_when', [])[:2])}"
+        + (
+            f" / pairs with: {', '.join(item.get('pairs_with', [])[:4])}"
+            if item.get("pairs_with")
+            else ""
+        )
+        for item in component_inventory.get("advanced_recommendations", [])[:8]
+    ) or "- No advanced components recommended from this product context."
     color_reference = brand_profile.get("_resolved_color_reference")
     visual_reference = brand_profile.get("_resolved_visual_reference")
     color_reference_lines = _build_color_reference_section(color_reference)
@@ -848,6 +920,10 @@ def build_system_spec_markdown(
 
 - **Product primitives**: {', '.join(brand_profile.get('product_primitives', []))}
 - **Required families**: {', '.join(item['family'] for item in component_inventory.get('families', []))}
+- **Advanced component recommendations**:
+
+{advanced_component_lines}
+
 - **Visual-reference archetypes**:
 
 {archetype_lines}

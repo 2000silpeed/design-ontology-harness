@@ -1,5 +1,7 @@
 import unittest
 
+from design_ontology_harness.authoring import build_component_inventory
+from design_ontology_harness.advanced_components import recommend_advanced_components
 from design_ontology_harness.component_specs import generate_component_specs
 
 
@@ -104,6 +106,62 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
 
         self.assertFalse(specs_data["visual_guidance"]["connected"])
         self.assertEqual(specs_data["specs"][0]["visual_adaptation"], [])
+
+    def test_advanced_components_are_recommended_and_specified(self) -> None:
+        brand_profile = {
+            "brand_name": "Mercer",
+            "brand_keywords": ["conversation-copilot", "compliance", "audit", "regulatory"],
+            "tone_of_voice": ["calm", "precise"],
+            "product_summary": "Enterprise copilot for policy-check, audit-trail, citation, and reviewer handoff.",
+            "product_primitives": [
+                "chat message",
+                "prompt composer",
+                "policy-check badge",
+                "audit-trail timeline",
+                "citation footnote",
+                "reviewer assignment chip",
+                "data retention indicator",
+            ],
+        }
+        blueprint = {
+            "component_strategy": {
+                "required_component_families": ["button", "input", "navigation", "feedback", "overlay"],
+                "product_primitives": [
+                    "compliance-artifact panel",
+                    "source reference card",
+                    "compliance warning modal",
+                ],
+            }
+        }
+
+        recommendations = recommend_advanced_components(
+            brand_profile=brand_profile,
+            blueprint=blueprint,
+            existing_components=[],
+        )
+        names = {item["name"] for item in recommendations}
+        self.assertIn("policy-matrix", names)
+        self.assertIn("citation-drawer", names)
+        self.assertIn("approval-rail", names)
+
+        inventory = build_component_inventory(brand_profile, blueprint)
+        inventory_names = {item["name"] for item in inventory["components"]}
+        self.assertIn("policy-matrix", inventory_names)
+        self.assertTrue(inventory["advanced_component_catalog"])
+        self.assertTrue(inventory["advanced_recommendations"])
+
+        specs_data = generate_component_specs(
+            brand_profile=brand_profile,
+            blueprint=blueprint,
+            component_list=inventory["components"],
+            documents=[],
+        )
+        by_name = {spec["name"]: spec for spec in specs_data["specs"]}
+        policy_matrix = by_name["policy-matrix"]
+        self.assertTrue(policy_matrix["advanced_component"])
+        self.assertEqual(policy_matrix["archetype"], "advanced:policy-matrix")
+        self.assertIn("status-cell", policy_matrix["anatomy"]["parts"])
+        self.assertIn("caption describes policy scope", policy_matrix["accessibility"])
 
 
 if __name__ == "__main__":

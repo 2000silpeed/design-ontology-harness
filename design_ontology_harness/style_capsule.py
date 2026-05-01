@@ -364,6 +364,23 @@ def _component_section(
         ]
     else:
         lines += ["- Read `component_inventory.json` before inventing a new component.", ""]
+
+    advanced = _advanced_component_rows(component_inventory)
+    lines.append("## Advanced Component Menu")
+    if advanced:
+        lines += [
+            "| Component | Use When | Pairs With |",
+            "| --- | --- | --- |",
+            *advanced,
+            "",
+        ]
+        lines.append(
+            "Use these as ontology-approved building blocks when the workflow calls for richer professional UI. "
+            "They still inherit token, typography, accessibility, and reference-governance rules."
+        )
+        lines.append("")
+    else:
+        lines += ["- No advanced recommendations for this preset. Read `component_inventory.json` before adding one.", ""]
     return lines
 
 
@@ -418,6 +435,21 @@ def _signature_component_rows(component_specs: dict[str, Any], app_mode: str) ->
         anatomy = _escape_pipe(_format_anatomy(item))
         token_binding = _escape_pipe(_format_token_binding(item))
         rows.append(f"| `{name}` | {family} | {anatomy} | {token_binding} |")
+    return rows
+
+
+def _advanced_component_rows(component_inventory: dict[str, Any]) -> list[str]:
+    recommendations = component_inventory.get("advanced_recommendations")
+    if not isinstance(recommendations, list):
+        return []
+    rows: list[str] = []
+    for item in recommendations[:8]:
+        if not isinstance(item, dict):
+            continue
+        name = _escape_pipe(_first_str(item.get("name"), "component"))
+        use_when = _escape_pipe("; ".join(_list_of_str(item.get("use_when"))[:2]))
+        pairs_with = _escape_pipe(_inline_list(_list_of_str(item.get("pairs_with")), 4))
+        rows.append(f"| `{name}` | {use_when or 'Context-specific advanced workflow'} | {pairs_with or 'n/a'} |")
     return rows
 
 

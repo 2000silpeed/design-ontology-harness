@@ -35,3 +35,5 @@ def test_style_capsule_renders_agent_ready_governance() -> None:
     assert "Pretendard" in text
     assert "lint-implementation" in text
     assert "token-bound-reference-palette-mixing" in text
+    assert "Advanced Component Menu" in text
+    assert "policy-matrix" in text

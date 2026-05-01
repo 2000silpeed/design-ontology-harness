@@ -20,6 +20,8 @@
     "ProductPrimitive",
     "SourceReference",
     "BenchmarkSystem",
+    "GeneratedVisualAsset",
+    "ImageGenerationModel",
     "GovernanceRule",
     "ImplementationFailurePattern"
   ],
@@ -48,6 +50,9 @@
     "defines",
     "applies_to",
     "maps_to_tier",
+    "generated_with",
+    "grounded_in",
+    "intended_for",
     "enforces",
     "prevents"
   ],
@@ -424,6 +429,113 @@
       "label": "filter-toolbar"
     },
     {
+      "id": "component:decision-record-card",
+      "type": "Component",
+      "label": "decision-record-card",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "a reviewer or AI-assisted workflow reaches a durable decision",
+          "regulated teams need record ids and retention status"
+        ],
+        "pairs_with": [
+          "audit-timeline",
+          "approval-rail",
+          "citation-drawer"
+        ],
+        "matched_signals": [
+          "audit",
+          "audit-trail timeline",
+          "data retention indicator",
+          "mode-default",
+          "mode:conversation-copilot",
+          "mode:monitoring-ops",
+          "retention",
+          "reviewer assignment chip"
+        ]
+      }
+    },
+    {
+      "id": "component:policy-matrix",
+      "type": "Component",
+      "label": "policy-matrix",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "multiple policy rules must be checked against multiple claims or fields",
+          "reviewers need dense scan-and-drill compliance status"
+        ],
+        "pairs_with": [
+          "risk-summary-card",
+          "exception-queue",
+          "approval-rail"
+        ],
+        "matched_signals": [
+          "compliance",
+          "compliance warning modal",
+          "compliance-artifact panel",
+          "mode-default",
+          "mode:conversation-copilot",
+          "mode:monitoring-ops",
+          "policy",
+          "policy-check badge"
+        ]
+      }
+    },
+    {
+      "id": "component:audit-timeline",
+      "type": "Component",
+      "label": "audit-timeline",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "regulated workflows require traceable user and AI actions",
+          "reviewers need to reconstruct what happened before approval"
+        ],
+        "pairs_with": [
+          "decision-record-card",
+          "approval-rail",
+          "tool-call-trace"
+        ],
+        "matched_signals": [
+          "audit",
+          "audit-trail timeline",
+          "data retention indicator",
+          "mode-default",
+          "mode:conversation-copilot",
+          "mode:monitoring-ops",
+          "retention",
+          "timeline"
+        ]
+      }
+    },
+    {
+      "id": "component:risk-summary-card",
+      "type": "Component",
+      "label": "risk-summary-card",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "users need a fast read of risk before drilling into policy details",
+          "AI confidence or compliance severity must be visible"
+        ],
+        "pairs_with": [
+          "policy-matrix",
+          "confidence-meter",
+          "exception-queue"
+        ],
+        "matched_signals": [
+          "compliance",
+          "compliance warning modal",
+          "mode-default",
+          "mode:conversation-copilot",
+          "mode:monitoring-ops",
+          "policy-check badge",
+          "warning"
+        ]
+      }
+    },
+    {
       "id": "family:editorial",
       "type": "ComponentFamily",
       "label": "editorial",
@@ -743,6 +855,32 @@
       "label": "sort-dropdown"
     },
     {
+      "id": "component:reviewer-assignment-picker",
+      "type": "Component",
+      "label": "reviewer-assignment-picker",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "workflows require human approval or reassignment",
+          "reviewer choice depends on policy ownership or availability"
+        ],
+        "pairs_with": [
+          "approval-rail",
+          "exception-queue",
+          "presence-indicator"
+        ],
+        "matched_signals": [
+          "assignment",
+          "handoff",
+          "mode-default",
+          "mode:conversation-copilot",
+          "mode:document-content",
+          "reviewer",
+          "reviewer assignment chip"
+        ]
+      }
+    },
+    {
       "id": "family:marketing",
       "type": "ComponentFamily",
       "label": "marketing",
@@ -996,13 +1134,28 @@
       "type": "ComponentFamily",
       "label": "copilot-artifact",
       "meta": {
-        "priority": "medium"
+        "priority": "high"
       }
     },
     {
       "id": "state:copilot-artifact-default",
       "type": "ComponentState",
       "label": "copilot-artifact/default"
+    },
+    {
+      "id": "state:copilot-artifact-loading",
+      "type": "ComponentState",
+      "label": "copilot-artifact/loading"
+    },
+    {
+      "id": "state:copilot-artifact-verified",
+      "type": "ComponentState",
+      "label": "copilot-artifact/verified"
+    },
+    {
+      "id": "state:copilot-artifact-error",
+      "type": "ComponentState",
+      "label": "copilot-artifact/error"
     },
     {
       "id": "component:message-artifact",
@@ -1050,17 +1203,89 @@
       "label": "paragraph-block"
     },
     {
+      "id": "component:citation-drawer",
+      "type": "Component",
+      "label": "citation-drawer",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "answers must show supporting policy, document, or source records",
+          "users need to inspect evidence without losing conversation context"
+        ],
+        "pairs_with": [
+          "inline-citation",
+          "source-card",
+          "evidence-graph"
+        ],
+        "matched_signals": [
+          "citation",
+          "citation footnote",
+          "mode-default",
+          "mode:conversation-copilot",
+          "mode:document-content",
+          "pairs:inline-citation",
+          "policy",
+          "policy-check badge",
+          "source",
+          "source reference card"
+        ]
+      }
+    },
+    {
+      "id": "component:source-card",
+      "type": "Component",
+      "label": "source-card",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "AI output depends on external or internal source records",
+          "users need a repeatable citation preview component"
+        ],
+        "pairs_with": [
+          "citation-drawer",
+          "evidence-graph",
+          "inline-citation"
+        ],
+        "matched_signals": [
+          "citation",
+          "citation footnote",
+          "mode-default",
+          "mode:conversation-copilot",
+          "mode:document-content",
+          "pairs:inline-citation",
+          "reference",
+          "source",
+          "source reference card"
+        ]
+      }
+    },
+    {
       "id": "family:copilot-chat",
       "type": "ComponentFamily",
       "label": "copilot-chat",
       "meta": {
-        "priority": "medium"
+        "priority": "high"
       }
     },
     {
       "id": "state:copilot-chat-default",
       "type": "ComponentState",
       "label": "copilot-chat/default"
+    },
+    {
+      "id": "state:copilot-chat-loading",
+      "type": "ComponentState",
+      "label": "copilot-chat/loading"
+    },
+    {
+      "id": "state:copilot-chat-complete",
+      "type": "ComponentState",
+      "label": "copilot-chat/complete"
+    },
+    {
+      "id": "state:copilot-chat-error",
+      "type": "ComponentState",
+      "label": "copilot-chat/error"
     },
     {
       "id": "component:streaming-cursor",
@@ -1097,13 +1322,28 @@
       "type": "ComponentFamily",
       "label": "document",
       "meta": {
-        "priority": "medium"
+        "priority": "high"
       }
     },
     {
       "id": "state:document-default",
       "type": "ComponentState",
       "label": "document/default"
+    },
+    {
+      "id": "state:document-selected",
+      "type": "ComponentState",
+      "label": "document/selected"
+    },
+    {
+      "id": "state:document-commenting",
+      "type": "ComponentState",
+      "label": "document/commenting"
+    },
+    {
+      "id": "state:document-resolved",
+      "type": "ComponentState",
+      "label": "document/resolved"
     },
     {
       "id": "component:article-body",
@@ -1139,6 +1379,60 @@
       "id": "component:link-card",
       "type": "Component",
       "label": "link-card"
+    },
+    {
+      "id": "component:diff-viewer",
+      "type": "Component",
+      "label": "diff-viewer",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "AI rewrites, policy edits, or reviewer changes need auditability",
+          "users must approve what changed before publishing"
+        ],
+        "pairs_with": [
+          "redline-viewer",
+          "revision-timeline",
+          "approval-rail"
+        ],
+        "matched_signals": [
+          "audit-trail timeline",
+          "citation footnote",
+          "compliance-artifact panel",
+          "draft",
+          "mode-default",
+          "mode:conversation-copilot",
+          "mode:document-content",
+          "pairs:revision-timeline"
+        ]
+      }
+    },
+    {
+      "id": "component:redline-viewer",
+      "type": "Component",
+      "label": "redline-viewer",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "legal, compliance, or editorial text needs reviewer markup",
+          "comments must stay anchored to exact text ranges"
+        ],
+        "pairs_with": [
+          "diff-viewer",
+          "comment-thread",
+          "approval-rail"
+        ],
+        "matched_signals": [
+          "compliance-artifact panel",
+          "mode-default",
+          "mode:conversation-copilot",
+          "mode:document-content",
+          "pairs:comment-thread",
+          "policy",
+          "review",
+          "reviewer assignment chip"
+        ]
+      }
     },
     {
       "id": "family:overlay",
@@ -1249,6 +1543,31 @@
       "label": "context-drawer"
     },
     {
+      "id": "component:inspector-drawer",
+      "type": "Component",
+      "label": "inspector-drawer",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "a selected item needs rich detail without leaving the main workflow",
+          "users need source facts, owners, versions, or retention metadata"
+        ],
+        "pairs_with": [
+          "policy-matrix",
+          "citation-drawer",
+          "decision-record-card"
+        ],
+        "matched_signals": [
+          "data retention indicator",
+          "mode:conversation-copilot",
+          "mode:monitoring-ops",
+          "policy-check badge",
+          "retention",
+          "source reference card"
+        ]
+      }
+    },
+    {
       "id": "family:social",
       "type": "ComponentFamily",
       "label": "social",
@@ -1290,6 +1609,113 @@
       "id": "component:avatar-cluster",
       "type": "Component",
       "label": "avatar-cluster"
+    },
+    {
+      "id": "family:layout",
+      "type": "ComponentFamily",
+      "label": "layout",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:layout-default",
+      "type": "ComponentState",
+      "label": "layout/default"
+    },
+    {
+      "id": "state:layout-resizing",
+      "type": "ComponentState",
+      "label": "layout/resizing"
+    },
+    {
+      "id": "state:layout-collapsed",
+      "type": "ComponentState",
+      "label": "layout/collapsed"
+    },
+    {
+      "id": "component:resizable-split-pane",
+      "type": "Component",
+      "label": "resizable-split-pane",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "primary work happens between list, canvas/chat, and detail panels",
+          "users need to compare or inspect adjacent information without navigation"
+        ],
+        "pairs_with": [
+          "thread-list",
+          "artifact-preview-panel",
+          "inspector-drawer"
+        ],
+        "matched_signals": [
+          "artifact",
+          "compliance-artifact panel",
+          "mode-default",
+          "mode:conversation-copilot",
+          "mode:monitoring-ops",
+          "pairs:artifact-preview-panel",
+          "panel",
+          "thread",
+          "thread list sidebar",
+          "workspace",
+          "workspace header"
+        ]
+      }
+    },
+    {
+      "id": "family:workflow",
+      "type": "ComponentFamily",
+      "label": "workflow",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:workflow-pending",
+      "type": "ComponentState",
+      "label": "workflow/pending"
+    },
+    {
+      "id": "state:workflow-active",
+      "type": "ComponentState",
+      "label": "workflow/active"
+    },
+    {
+      "id": "state:workflow-blocked",
+      "type": "ComponentState",
+      "label": "workflow/blocked"
+    },
+    {
+      "id": "state:workflow-approved",
+      "type": "ComponentState",
+      "label": "workflow/approved"
+    },
+    {
+      "id": "component:approval-rail",
+      "type": "Component",
+      "label": "approval-rail",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "work requires review, approval, rejection, or handoff",
+          "users need to know who owns the next decision"
+        ],
+        "pairs_with": [
+          "policy-matrix",
+          "risk-summary-card",
+          "diff-viewer"
+        ],
+        "matched_signals": [
+          "compliance warning modal",
+          "handoff",
+          "mode-default",
+          "mode:conversation-copilot",
+          "mode:document-content",
+          "reviewer",
+          "reviewer assignment chip"
+        ]
+      }
     },
     {
       "id": "primitive:baseline",
@@ -1435,6 +1861,11 @@
       "id": "primitive:hero-section",
       "type": "ProductPrimitive",
       "label": "hero section"
+    },
+    {
+      "id": "primitive:advanced-component-catalog",
+      "type": "ProductPrimitive",
+      "label": "advanced-component-catalog"
     },
     {
       "id": "palette:pantone-trend-blues",
@@ -1699,30 +2130,6 @@
       "meta": {
         "hex": "#C26748",
         "tier": "supporting"
-      }
-    },
-    {
-      "id": "font:pretendard",
-      "type": "FontFamily",
-      "label": "Pretendard",
-      "meta": {
-        "role": "heading",
-        "family_type": "humanist-sans",
-        "weight_range": "100-900",
-        "variable": true,
-        "source": "GitHub (cactus/pretendard)"
-      }
-    },
-    {
-      "id": "font:ibm-plex-mono",
-      "type": "FontFamily",
-      "label": "IBM Plex Mono",
-      "meta": {
-        "role": "mono",
-        "family_type": "monospace",
-        "weight_range": "100-700",
-        "variable": false,
-        "source": "Google Fonts"
       }
     },
     {
@@ -2299,6 +2706,146 @@
           "IMPLEMENTATION_CONTRACT.md"
         ]
       }
+    },
+    {
+      "id": "image-model:imagine2",
+      "type": "ImageGenerationModel",
+      "label": "imagine2",
+      "meta": {
+        "runtime": "Codex image generation",
+        "selection_rule": "Use when Codex exposes image-generation tooling or a model selector."
+      }
+    },
+    {
+      "id": "visual-asset:brand-aligned-raster",
+      "type": "GeneratedVisualAsset",
+      "label": "Brand-aligned raster image",
+      "meta": {
+        "slot": "brand-aligned-raster",
+        "model": "imagine2",
+        "candidate_count": "2-4",
+        "manifest_path": "public/generated/design-system/manifest.json",
+        "prompt_basis": [
+          "system_spec.md",
+          "token_schema.json",
+          "component_inventory.json",
+          "components/component_specs.md",
+          "visual_reference_report.json"
+        ],
+        "aspect_ratios": [
+          "16:9",
+          "4:3",
+          "1:1"
+        ],
+        "usage": "Optional Codex imagery when a screen needs professional raster substance.",
+        "activation": "only when the implementation surface would benefit from generated imagery",
+        "alt_text_required": true,
+        "status": "promptable"
+      }
+    },
+    {
+      "id": "visual-asset:hero-image",
+      "type": "GeneratedVisualAsset",
+      "label": "Hero image",
+      "meta": {
+        "slot": "hero-image",
+        "model": "imagine2",
+        "candidate_count": "2-4",
+        "manifest_path": "public/generated/design-system/manifest.json",
+        "prompt_basis": [
+          "system_spec.md",
+          "token_schema.json",
+          "component_inventory.json",
+          "components/component_specs.md",
+          "visual_reference_report.json"
+        ],
+        "aspect_ratios": [
+          "16:9",
+          "3:2"
+        ],
+        "usage": "First-viewport visual signal for landing, product, or editorial hero sections.",
+        "activation": "hero, landing, product, or editorial first screen",
+        "alt_text_required": true,
+        "status": "promptable"
+      }
+    },
+    {
+      "id": "visual-asset:card-thumbnail",
+      "type": "GeneratedVisualAsset",
+      "label": "Card thumbnail",
+      "meta": {
+        "slot": "card-thumbnail",
+        "model": "imagine2",
+        "candidate_count": "2-4",
+        "manifest_path": "public/generated/design-system/manifest.json",
+        "prompt_basis": [
+          "system_spec.md",
+          "token_schema.json",
+          "component_inventory.json",
+          "components/component_specs.md",
+          "visual_reference_report.json"
+        ],
+        "aspect_ratios": [
+          "4:3",
+          "1:1"
+        ],
+        "usage": "Content image for product, venue, object, media, or feature cards.",
+        "activation": "card grids or repeated content surfaces need real visual content",
+        "alt_text_required": true,
+        "status": "promptable"
+      }
+    },
+    {
+      "id": "visual-asset:editorial-cover",
+      "type": "GeneratedVisualAsset",
+      "label": "Editorial cover",
+      "meta": {
+        "slot": "editorial-cover",
+        "model": "imagine2",
+        "candidate_count": "2-4",
+        "manifest_path": "public/generated/design-system/manifest.json",
+        "prompt_basis": [
+          "system_spec.md",
+          "token_schema.json",
+          "component_inventory.json",
+          "components/component_specs.md",
+          "visual_reference_report.json"
+        ],
+        "aspect_ratios": [
+          "4:5",
+          "3:4"
+        ],
+        "usage": "Cover image for articles, case studies, press stories, or narrative modules.",
+        "activation": "editorial or story-led content module",
+        "alt_text_required": true,
+        "status": "promptable"
+      }
+    },
+    {
+      "id": "visual-asset:empty-state-illustration",
+      "type": "GeneratedVisualAsset",
+      "label": "Empty-state illustration",
+      "meta": {
+        "slot": "empty-state-illustration",
+        "model": "imagine2",
+        "candidate_count": "2-4",
+        "manifest_path": "public/generated/design-system/manifest.json",
+        "prompt_basis": [
+          "system_spec.md",
+          "token_schema.json",
+          "component_inventory.json",
+          "components/component_specs.md",
+          "visual_reference_report.json"
+        ],
+        "aspect_ratios": [
+          "4:3",
+          "1:1"
+        ],
+        "usage": "Supportive illustration for empty states, onboarding, or no-result panels.",
+        "activation": "empty state benefits from clarification without replacing text",
+        "alt_text_required": true,
+        "status": "promptable"
+      }
     }
   ],
   "edges": [
@@ -2565,6 +3112,26 @@
     {
       "type": "member_of_family",
       "source": "component:filter-toolbar",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:decision-record-card",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:policy-matrix",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:audit-timeline",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:risk-summary-card",
       "target": "family:data-display"
     },
     {
@@ -2863,6 +3430,11 @@
       "target": "family:input"
     },
     {
+      "type": "member_of_family",
+      "source": "component:reviewer-assignment-picker",
+      "target": "family:input"
+    },
+    {
       "type": "has_state",
       "source": "family:marketing",
       "target": "state:marketing-default"
@@ -3093,6 +3665,21 @@
       "target": "state:copilot-artifact-default"
     },
     {
+      "type": "has_state",
+      "source": "family:copilot-artifact",
+      "target": "state:copilot-artifact-loading"
+    },
+    {
+      "type": "has_state",
+      "source": "family:copilot-artifact",
+      "target": "state:copilot-artifact-verified"
+    },
+    {
+      "type": "has_state",
+      "source": "family:copilot-artifact",
+      "target": "state:copilot-artifact-error"
+    },
+    {
       "type": "member_of_family",
       "source": "component:message-artifact",
       "target": "family:copilot-artifact"
@@ -3138,9 +3725,34 @@
       "target": "family:copilot-artifact"
     },
     {
+      "type": "member_of_family",
+      "source": "component:citation-drawer",
+      "target": "family:copilot-artifact"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:source-card",
+      "target": "family:copilot-artifact"
+    },
+    {
       "type": "has_state",
       "source": "family:copilot-chat",
       "target": "state:copilot-chat-default"
+    },
+    {
+      "type": "has_state",
+      "source": "family:copilot-chat",
+      "target": "state:copilot-chat-loading"
+    },
+    {
+      "type": "has_state",
+      "source": "family:copilot-chat",
+      "target": "state:copilot-chat-complete"
+    },
+    {
+      "type": "has_state",
+      "source": "family:copilot-chat",
+      "target": "state:copilot-chat-error"
     },
     {
       "type": "member_of_family",
@@ -3178,6 +3790,21 @@
       "target": "state:document-default"
     },
     {
+      "type": "has_state",
+      "source": "family:document",
+      "target": "state:document-selected"
+    },
+    {
+      "type": "has_state",
+      "source": "family:document",
+      "target": "state:document-commenting"
+    },
+    {
+      "type": "has_state",
+      "source": "family:document",
+      "target": "state:document-resolved"
+    },
+    {
       "type": "member_of_family",
       "source": "component:article-body",
       "target": "family:document"
@@ -3210,6 +3837,16 @@
     {
       "type": "member_of_family",
       "source": "component:link-card",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:diff-viewer",
+      "target": "family:document"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:redline-viewer",
       "target": "family:document"
     },
     {
@@ -3313,6 +3950,11 @@
       "target": "family:overlay"
     },
     {
+      "type": "member_of_family",
+      "source": "component:inspector-drawer",
+      "target": "family:overlay"
+    },
+    {
       "type": "has_state",
       "source": "family:social",
       "target": "state:social-default"
@@ -3346,6 +3988,51 @@
       "type": "member_of_family",
       "source": "component:avatar-cluster",
       "target": "family:social"
+    },
+    {
+      "type": "has_state",
+      "source": "family:layout",
+      "target": "state:layout-default"
+    },
+    {
+      "type": "has_state",
+      "source": "family:layout",
+      "target": "state:layout-resizing"
+    },
+    {
+      "type": "has_state",
+      "source": "family:layout",
+      "target": "state:layout-collapsed"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:resizable-split-pane",
+      "target": "family:layout"
+    },
+    {
+      "type": "has_state",
+      "source": "family:workflow",
+      "target": "state:workflow-pending"
+    },
+    {
+      "type": "has_state",
+      "source": "family:workflow",
+      "target": "state:workflow-active"
+    },
+    {
+      "type": "has_state",
+      "source": "family:workflow",
+      "target": "state:workflow-blocked"
+    },
+    {
+      "type": "has_state",
+      "source": "family:workflow",
+      "target": "state:workflow-approved"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:approval-rail",
+      "target": "family:workflow"
     },
     {
       "type": "supports",
@@ -4113,6 +4800,66 @@
       "target": "primitive:hero-section"
     },
     {
+      "type": "supports",
+      "source": "component:resizable-split-pane",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:citation-drawer",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:decision-record-card",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:policy-matrix",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:source-card",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:audit-timeline",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:diff-viewer",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:redline-viewer",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:approval-rail",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:risk-summary-card",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:inspector-drawer",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:reviewer-assignment-picker",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
       "type": "belongs_to_palette",
       "source": "color:classic-blue",
       "target": "palette:pantone-trend-blues"
@@ -4528,11 +5275,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:primary-button",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:secondary-button",
       "target": "color:super-sonic",
@@ -4571,11 +5313,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:secondary-button",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -4618,11 +5355,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:ghost-button",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:icon-button",
       "target": "color:super-sonic",
@@ -4661,11 +5393,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:icon-button",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -4708,11 +5435,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:cta-button",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:mobile-topbar",
       "target": "color:super-sonic",
@@ -4751,11 +5473,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:mobile-topbar",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -4798,11 +5515,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:mobile-tab-bar",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:back-button",
       "target": "color:super-sonic",
@@ -4843,11 +5555,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:back-button",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:section-tabs",
       "target": "color:super-sonic",
@@ -4886,11 +5593,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:section-tabs",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -4917,11 +5619,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:inline-alert",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:empty-state",
       "target": "color:powder-blue",
@@ -4944,11 +5641,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:empty-state",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -4975,11 +5667,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:toast",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:bottom-sheet",
       "target": "color:super-sonic",
@@ -5018,11 +5705,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:bottom-sheet",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -5065,11 +5747,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:modal-dialog",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:text-field",
       "target": "color:super-sonic",
@@ -5108,11 +5785,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:text-field",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -5155,11 +5827,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:search-field",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:segmented-control",
       "target": "color:super-sonic",
@@ -5200,11 +5867,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:segmented-control",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:link-button",
       "target": "color:super-sonic",
@@ -5243,11 +5905,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:link-button",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -5274,11 +5931,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:chat-message",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:chat-input",
       "target": "color:super-sonic",
@@ -5317,11 +5969,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:chat-input",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -5348,11 +5995,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:chat-thread",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:comment-thread",
       "target": "color:powder-blue",
@@ -5377,11 +6019,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:comment-thread",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:comment-input",
       "target": "color:super-sonic",
@@ -5420,11 +6057,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:comment-input",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -5467,11 +6099,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:mention-popup",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:app-shell",
       "target": "color:super-sonic",
@@ -5510,11 +6137,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:app-shell",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -5557,11 +6179,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:sidebar-nav",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:topbar",
       "target": "color:super-sonic",
@@ -5600,11 +6217,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:topbar",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -5647,11 +6259,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:breadcrumb",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:tab-bar",
       "target": "color:super-sonic",
@@ -5690,11 +6297,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:tab-bar",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -5721,11 +6323,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:tag",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:status-badge",
       "target": "color:powder-blue",
@@ -5748,11 +6345,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:status-badge",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -5795,11 +6387,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:chip",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:prompt-composer",
       "target": "color:super-sonic",
@@ -5838,11 +6425,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:prompt-composer",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -5869,11 +6451,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:streaming-cursor",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:typing-indicator",
       "target": "color:powder-blue",
@@ -5896,11 +6473,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:typing-indicator",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -5927,11 +6499,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:inline-citation",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:regenerate-button",
       "target": "color:super-sonic",
@@ -5972,11 +6539,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:regenerate-button",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:stop-generation-button",
       "target": "color:super-sonic",
@@ -6015,11 +6577,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:stop-generation-button",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6046,11 +6603,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:mention-chip",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:suggestion-card",
       "target": "color:powder-blue",
@@ -6073,11 +6625,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:suggestion-card",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6104,11 +6651,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:thread-header",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:new-thread-button",
       "target": "color:super-sonic",
@@ -6147,11 +6689,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:new-thread-button",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6178,11 +6715,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:empty-conversation-state",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:confirm-dialog",
       "target": "color:super-sonic",
@@ -6221,11 +6753,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:confirm-dialog",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6268,11 +6795,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:textarea",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:select",
       "target": "color:super-sonic",
@@ -6311,11 +6833,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:select",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6358,11 +6875,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:checkbox",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:radio-group",
       "target": "color:super-sonic",
@@ -6401,11 +6913,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:radio-group",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6448,11 +6955,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:form-section",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:form-actions",
       "target": "color:super-sonic",
@@ -6491,11 +6993,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:form-actions",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6522,11 +7019,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:editor-canvas",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:editor-toolbar",
       "target": "color:powder-blue",
@@ -6549,11 +7041,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:editor-toolbar",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6580,11 +7067,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:inline-format-menu",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:slash-command-menu",
       "target": "color:powder-blue",
@@ -6607,11 +7089,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:slash-command-menu",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6638,11 +7115,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:block-controls",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:banner",
       "target": "color:powder-blue",
@@ -6665,11 +7137,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:banner",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6696,11 +7163,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:data-table",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:column-header",
       "target": "color:powder-blue",
@@ -6723,11 +7185,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:column-header",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6754,11 +7211,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:row-actions",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:pagination",
       "target": "color:super-sonic",
@@ -6799,11 +7251,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:pagination",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:filter-chip",
       "target": "color:super-sonic",
@@ -6842,11 +7289,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:filter-chip",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6873,11 +7315,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:stat-card",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:insight-card",
       "target": "color:powder-blue",
@@ -6900,11 +7337,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:insight-card",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6931,11 +7363,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:activity-card",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:section-header",
       "target": "color:powder-blue",
@@ -6958,11 +7385,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:section-header",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -6989,11 +7411,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:article-body",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:table-of-contents",
       "target": "color:powder-blue",
@@ -7016,11 +7433,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:table-of-contents",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7047,11 +7459,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:heading-anchor",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:prose-block",
       "target": "color:powder-blue",
@@ -7074,11 +7481,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:prose-block",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7105,11 +7507,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:reading-pane",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:footnote",
       "target": "color:powder-blue",
@@ -7132,11 +7529,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:footnote",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7177,11 +7569,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:prev-next-pager",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7208,11 +7595,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:link-card",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:date-picker",
       "target": "color:super-sonic",
@@ -7251,11 +7633,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:date-picker",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7282,11 +7659,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:calendar-grid",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:time-picker",
       "target": "color:super-sonic",
@@ -7327,11 +7699,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:time-picker",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:date-range-picker",
       "target": "color:super-sonic",
@@ -7370,11 +7737,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:date-range-picker",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7401,11 +7763,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:avatar",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:user-menu",
       "target": "color:super-sonic",
@@ -7444,11 +7801,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:user-menu",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7475,11 +7827,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:profile-card",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:message-artifact",
       "target": "color:powder-blue",
@@ -7502,11 +7849,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:message-artifact",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7533,11 +7875,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:artifact-preview-panel",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:draft-document",
       "target": "color:powder-blue",
@@ -7560,11 +7897,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:draft-document",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7591,11 +7923,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:outline-sidebar",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:revision-timeline",
       "target": "color:powder-blue",
@@ -7618,11 +7945,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:revision-timeline",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7663,11 +7985,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:tone-slider",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7694,11 +8011,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:reading-mode-toggle",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:citation-footnote",
       "target": "color:powder-blue",
@@ -7721,11 +8033,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:citation-footnote",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7752,11 +8059,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:quote-block",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:paragraph-block",
       "target": "color:powder-blue",
@@ -7779,11 +8081,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:paragraph-block",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7810,11 +8107,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:kanban-board",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:kanban-column",
       "target": "color:powder-blue",
@@ -7837,11 +8129,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:kanban-column",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7868,11 +8155,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:kanban-card",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:search-results",
       "target": "color:powder-blue",
@@ -7895,11 +8177,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:search-results",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7942,11 +8219,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:filter-panel",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:autocomplete",
       "target": "color:super-sonic",
@@ -7985,11 +8257,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:autocomplete",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8016,11 +8283,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:step-progress",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:wizard-layout",
       "target": "color:super-sonic",
@@ -8059,11 +8321,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:wizard-layout",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8106,11 +8363,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:tooltip-guide",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:command-palette",
       "target": "color:super-sonic",
@@ -8151,11 +8403,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:command-palette",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:command-result-item",
       "target": "color:super-sonic",
@@ -8194,11 +8441,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:command-result-item",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8225,11 +8467,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:shortcut-hint",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:video-player",
       "target": "color:powder-blue",
@@ -8252,11 +8489,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:video-player",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8299,11 +8531,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:player-controls",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:volume-slider",
       "target": "color:super-sonic",
@@ -8342,11 +8569,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:volume-slider",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8373,11 +8595,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:logo-cloud",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:customer-logo",
       "target": "color:powder-blue",
@@ -8400,11 +8617,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:customer-logo",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8431,11 +8643,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:metric-highlight",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:press-quote",
       "target": "color:powder-blue",
@@ -8458,11 +8665,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:press-quote",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8503,11 +8705,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:upload-dropzone",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8534,11 +8731,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:file-preview",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:upload-progress",
       "target": "color:powder-blue",
@@ -8561,11 +8753,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:upload-progress",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8592,11 +8779,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:chart-container",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:chart-tooltip",
       "target": "color:super-sonic",
@@ -8635,11 +8817,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:chart-tooltip",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8666,11 +8843,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:chart-legend",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:feed-item",
       "target": "color:powder-blue",
@@ -8693,11 +8865,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:feed-item",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8724,11 +8891,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:post-card",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:thread-view",
       "target": "color:powder-blue",
@@ -8751,11 +8913,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:thread-view",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8796,11 +8953,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:reply-composer",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8827,11 +8979,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:reaction-bar",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:follow-button",
       "target": "color:super-sonic",
@@ -8870,11 +9017,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:follow-button",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8901,11 +9043,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:timeline-stream",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:avatar-cluster",
       "target": "color:powder-blue",
@@ -8928,11 +9065,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:avatar-cluster",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8959,11 +9091,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:tag-pill",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:share-sheet",
       "target": "color:super-sonic",
@@ -9002,11 +9129,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:share-sheet",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9033,11 +9155,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:empty-feed-illustration",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:gentle-toast",
       "target": "color:powder-blue",
@@ -9060,11 +9177,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:gentle-toast",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9105,11 +9217,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:soft-dialog",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9136,11 +9243,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:pricing-card",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:feature-comparison",
       "target": "color:powder-blue",
@@ -9163,11 +9265,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:feature-comparison",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9194,11 +9291,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:upgrade-banner",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:faq-section",
       "target": "color:powder-blue",
@@ -9221,11 +9313,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:faq-section",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9252,11 +9339,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:faq-item",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:faq-question",
       "target": "color:powder-blue",
@@ -9279,11 +9361,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:faq-question",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9310,11 +9387,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:faq-answer",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:product-grid",
       "target": "color:powder-blue",
@@ -9337,11 +9409,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:product-grid",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9368,11 +9435,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:product-card",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:product-detail",
       "target": "color:powder-blue",
@@ -9395,11 +9457,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:product-detail",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9426,11 +9483,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:product-gallery",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:product-hero-image",
       "target": "color:powder-blue",
@@ -9453,11 +9505,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:product-hero-image",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9484,11 +9531,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:image-thumbnail",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:variant-selector",
       "target": "color:super-sonic",
@@ -9527,11 +9569,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:variant-selector",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9574,11 +9611,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:size-selector",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:color-swatch-selector",
       "target": "color:super-sonic",
@@ -9617,11 +9649,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:color-swatch-selector",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9664,11 +9691,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:add-to-cart-button",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:quick-view-modal",
       "target": "color:super-sonic",
@@ -9709,11 +9731,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:quick-view-modal",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:wishlist-toggle",
       "target": "color:super-sonic",
@@ -9752,11 +9769,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:wishlist-toggle",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9783,11 +9795,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:price-tag",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:original-price-strikethrough",
       "target": "color:powder-blue",
@@ -9810,11 +9817,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:original-price-strikethrough",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9841,11 +9843,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:discount-badge",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:cross-sell-grid",
       "target": "color:powder-blue",
@@ -9870,11 +9867,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:cross-sell-grid",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:category-pill",
       "target": "color:super-sonic",
@@ -9913,11 +9905,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:category-pill",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -9960,11 +9947,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:filter-sidebar",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:sort-dropdown",
       "target": "color:super-sonic",
@@ -10003,11 +9985,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:sort-dropdown",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -10050,11 +10027,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:chat-panel",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:message-thread",
       "target": "color:super-sonic",
@@ -10093,11 +10065,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:message-thread",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -10140,11 +10107,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:message-composer",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:context-drawer",
       "target": "color:super-sonic",
@@ -10183,11 +10145,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:context-drawer",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -10214,11 +10171,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:filter-toolbar",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:content-card",
       "target": "color:powder-blue",
@@ -10241,11 +10193,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:content-card",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -10272,11 +10219,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:featured-story-card",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:content-meta",
       "target": "color:powder-blue",
@@ -10301,11 +10243,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:content-meta",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:byline-row",
       "target": "color:powder-blue",
@@ -10328,11 +10265,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:byline-row",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -10375,11 +10307,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:workspace-switcher",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:context-panel",
       "target": "color:super-sonic",
@@ -10420,11 +10347,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:context-panel",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:hero-section",
       "target": "color:powder-blue",
@@ -10447,11 +10369,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:hero-section",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -10478,11 +10395,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:hero-headline",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:hero-visual",
       "target": "color:powder-blue",
@@ -10505,11 +10417,6 @@
       "meta": {
         "slot": "radius"
       }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:hero-visual",
-      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -10536,11 +10443,6 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:cta-button-group",
-      "target": "font:pretendard"
-    },
-    {
       "type": "uses_token",
       "source": "component:trust-strip",
       "target": "color:powder-blue",
@@ -10565,9 +10467,324 @@
       }
     },
     {
-      "type": "uses_font",
-      "source": "component:trust-strip",
-      "target": "font:pretendard"
+      "type": "uses_token",
+      "source": "component:resizable-split-pane",
+      "target": "color:powder-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:resizable-split-pane",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:resizable-split-pane",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:citation-drawer",
+      "target": "color:powder-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:citation-drawer",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:citation-drawer",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:decision-record-card",
+      "target": "color:powder-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:decision-record-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:decision-record-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:policy-matrix",
+      "target": "color:powder-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:policy-matrix",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:policy-matrix",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:source-card",
+      "target": "color:powder-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:source-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:source-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:audit-timeline",
+      "target": "color:powder-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:audit-timeline",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:audit-timeline",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:diff-viewer",
+      "target": "color:powder-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:diff-viewer",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:diff-viewer",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:redline-viewer",
+      "target": "color:powder-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:redline-viewer",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:redline-viewer",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:approval-rail",
+      "target": "color:powder-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:approval-rail",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:approval-rail",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:risk-summary-card",
+      "target": "color:powder-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:risk-summary-card",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:risk-summary-card",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inspector-drawer",
+      "target": "color:super-sonic",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inspector-drawer",
+      "target": "color:copper",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inspector-drawer",
+      "target": "color:powder-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inspector-drawer",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:inspector-drawer",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:reviewer-assignment-picker",
+      "target": "color:super-sonic",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:reviewer-assignment-picker",
+      "target": "color:copper",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:reviewer-assignment-picker",
+      "target": "color:powder-blue",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:reviewer-assignment-picker",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:reviewer-assignment-picker",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
     },
     {
       "type": "contrast_pair",
@@ -10806,14 +11023,24 @@
       "target": "a11y:contrast-aa"
     },
     {
-      "type": "references_font",
-      "source": "benchmark:shopify-polaris",
-      "target": "font:ibm-plex-mono"
+      "type": "requires",
+      "source": "family:layout",
+      "target": "a11y:focus-visible"
     },
     {
-      "type": "references_font",
-      "source": "benchmark:ibm-carbon",
-      "target": "font:ibm-plex-mono"
+      "type": "requires",
+      "source": "family:layout",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:workflow",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:workflow",
+      "target": "a11y:contrast-aa"
     },
     {
       "type": "similar_to",
@@ -11706,29 +11933,515 @@
       "type": "enforces",
       "source": "governance:implementation-feedback-promotion",
       "target": "governance:reference-absorption-scope"
+    },
+    {
+      "type": "generated_with",
+      "source": "visual-asset:brand-aligned-raster",
+      "target": "image-model:imagine2"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:brand-aligned-raster",
+      "target": "brand:mercer"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:conversation-copilot",
+      "target": "visual-asset:brand-aligned-raster"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:enterprise-chatbot",
+      "target": "visual-asset:brand-aligned-raster"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:corporate-trust",
+      "target": "visual-asset:brand-aligned-raster"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:finance",
+      "target": "visual-asset:brand-aligned-raster"
+    },
+    {
+      "type": "generated_with",
+      "source": "visual-asset:hero-image",
+      "target": "image-model:imagine2"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:hero-image",
+      "target": "brand:mercer"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:conversation-copilot",
+      "target": "visual-asset:hero-image"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:enterprise-chatbot",
+      "target": "visual-asset:hero-image"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:corporate-trust",
+      "target": "visual-asset:hero-image"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:finance",
+      "target": "visual-asset:hero-image"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:hero-image",
+      "target": "component:cta-button-group"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:hero-image",
+      "target": "component:feature-comparison"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:hero-image",
+      "target": "component:featured-story-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:hero-image",
+      "target": "component:hero-headline"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:hero-image",
+      "target": "component:hero-section"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:hero-image",
+      "target": "component:hero-visual"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:hero-image",
+      "target": "component:product-hero-image"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:hero-image",
+      "target": "component:trust-strip"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:hero-image",
+      "target": "family:marketing"
+    },
+    {
+      "type": "generated_with",
+      "source": "visual-asset:card-thumbnail",
+      "target": "image-model:imagine2"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:card-thumbnail",
+      "target": "brand:mercer"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:conversation-copilot",
+      "target": "visual-asset:card-thumbnail"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:enterprise-chatbot",
+      "target": "visual-asset:card-thumbnail"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:corporate-trust",
+      "target": "visual-asset:card-thumbnail"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:finance",
+      "target": "visual-asset:card-thumbnail"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:activity-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:add-to-cart-button"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:category-pill"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:color-swatch-selector"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:content-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:cross-sell-grid"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:decision-record-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:discount-badge"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:featured-story-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:filter-sidebar"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:image-thumbnail"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:insight-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:kanban-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:link-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:original-price-strikethrough"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:player-controls"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:post-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:price-tag"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:pricing-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:product-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:product-detail"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:product-gallery"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:product-grid"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:product-hero-image"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:profile-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:quick-view-modal"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:risk-summary-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:section-header"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:size-selector"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:sort-dropdown"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:source-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:stat-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:suggestion-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:variant-selector"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:video-player"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:volume-slider"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "component:wishlist-toggle"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "family:data-display"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "family:editorial"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:card-thumbnail",
+      "target": "family:marketing"
+    },
+    {
+      "type": "generated_with",
+      "source": "visual-asset:editorial-cover",
+      "target": "image-model:imagine2"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:editorial-cover",
+      "target": "brand:mercer"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:conversation-copilot",
+      "target": "visual-asset:editorial-cover"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:enterprise-chatbot",
+      "target": "visual-asset:editorial-cover"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:corporate-trust",
+      "target": "visual-asset:editorial-cover"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:finance",
+      "target": "visual-asset:editorial-cover"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:editorial-cover",
+      "target": "component:article-body"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:editorial-cover",
+      "target": "component:block-controls"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:editorial-cover",
+      "target": "component:byline-row"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:editorial-cover",
+      "target": "component:content-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:editorial-cover",
+      "target": "component:content-meta"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:editorial-cover",
+      "target": "component:editor-canvas"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:editorial-cover",
+      "target": "component:editor-toolbar"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:editorial-cover",
+      "target": "component:featured-story-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:editorial-cover",
+      "target": "component:inline-format-menu"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:editorial-cover",
+      "target": "component:press-quote"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:editorial-cover",
+      "target": "component:slash-command-menu"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:editorial-cover",
+      "target": "family:editorial"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:editorial-cover",
+      "target": "family:marketing"
+    },
+    {
+      "type": "generated_with",
+      "source": "visual-asset:empty-state-illustration",
+      "target": "image-model:imagine2"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:empty-state-illustration",
+      "target": "brand:mercer"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:conversation-copilot",
+      "target": "visual-asset:empty-state-illustration"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:enterprise-chatbot",
+      "target": "visual-asset:empty-state-illustration"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:corporate-trust",
+      "target": "visual-asset:empty-state-illustration"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:finance",
+      "target": "visual-asset:empty-state-illustration"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:empty-state-illustration",
+      "target": "component:empty-state"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:empty-state-illustration",
+      "target": "component:step-progress"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:empty-state-illustration",
+      "target": "component:tooltip-guide"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:empty-state-illustration",
+      "target": "component:wizard-layout"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:empty-state-illustration",
+      "target": "family:feedback"
     }
   ],
   "stats": {
-    "node_count": 372,
-    "edge_count": 1416,
+    "node_count": 407,
+    "edge_count": 1425,
     "nodes_by_type": {
       "Brand": 1,
       "Principle": 4,
       "SpacingToken": 11,
       "RadiusToken": 6,
-      "ComponentFamily": 13,
-      "ComponentState": 35,
-      "Component": 170,
-      "ProductPrimitive": 29,
+      "ComponentFamily": 15,
+      "ComponentState": 51,
+      "Component": 182,
+      "ProductPrimitive": 30,
       "ColorPalette": 4,
       "ColorToken": 25,
-      "FontFamily": 2,
       "LayoutPattern": 23,
       "InteractionPattern": 3,
       "AccessibilityRule": 8,
       "BenchmarkSystem": 35,
       "GovernanceRule": 2,
-      "ImplementationFailurePattern": 1
+      "ImplementationFailurePattern": 1,
+      "ImageGenerationModel": 1,
+      "GeneratedVisualAsset": 5
     }
   }
 }

@@ -275,6 +275,13 @@ uv run design-ontology install-preset \
 | `system_spec.md`, `token_schema.json`, `component_inventory.json` | 원본 설계 기준 |
 | `components/component_specs.*` | 컴포넌트 anatomy, states, token binding |
 
+`component_inventory.json`에는 기본 컴포넌트뿐 아니라
+`advanced_component_catalog`와 `advanced_recommendations`도 포함될 수 있습니다.
+사용자가 `policy-matrix`, `citation-drawer`, `approval-rail` 같은 이름을 몰라도
+하네스가 제품 문맥에서 고급 컴포넌트 후보를 추천하고, `STYLE.md` / `DESIGN.md`의
+**Advanced Component Menu**로 구현 에이전트에게 노출합니다. 자세한 기준은
+[`docs/ADVANCED_COMPONENT_CATALOG.md`](./docs/ADVANCED_COMPONENT_CATALOG.md)를 참고하세요.
+
 구현 에이전트에게는 이렇게 지시합니다.
 
 ```text
