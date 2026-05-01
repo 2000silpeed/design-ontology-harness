@@ -2,20 +2,20 @@
   color-scheme: light dark;
   --console-shadow: 0 24px 54px color-mix(in srgb, var(--ds-color-ink) 14%, transparent);
   --panel-shadow: 0 1px 2px color-mix(in srgb, var(--ds-color-ink) 8%, transparent);
-  --sidebar-bg: color-mix(in srgb, var(--ds-color-info) 84%, var(--ds-color-ink) 16%);
-  --sidebar-bg-strong: color-mix(in srgb, var(--ds-color-info) 70%, var(--ds-color-ink) 30%);
-  --sidebar-ink: var(--ds-color-ink-inverse);
-  --sidebar-muted: color-mix(in srgb, var(--sidebar-ink) 64%, transparent);
-  --chart-secondary: color-mix(in srgb, var(--ds-color-info) 52%, var(--ds-color-surface-tint));
-  --chart-grid: color-mix(in srgb, var(--ds-color-border) 44%, transparent);
+  --sidebar-bg: var(--ds-color-surface);
+  --sidebar-bg-strong: var(--ds-color-surface-muted);
+  --sidebar-ink: var(--ds-color-ink);
+  --sidebar-muted: var(--ds-color-ink-muted);
+  --chart-secondary: var(--ds-color-accent);
+  --chart-grid: color-mix(in srgb, var(--ds-color-border) 58%, transparent);
 }
 
 [data-theme="dark"] {
-  --sidebar-bg: color-mix(in srgb, var(--ds-color-info) 58%, var(--ds-color-canvas) 42%);
-  --sidebar-bg-strong: color-mix(in srgb, var(--ds-color-info) 48%, var(--ds-color-canvas) 52%);
+  --sidebar-bg: var(--ds-color-surface);
+  --sidebar-bg-strong: var(--ds-color-surface-muted);
   --sidebar-ink: var(--ds-color-ink);
   --sidebar-muted: var(--ds-color-ink-muted);
-  --chart-secondary: color-mix(in srgb, var(--ds-color-info) 62%, var(--ds-color-primary));
+  --chart-secondary: var(--ds-color-accent);
 }
 
 * {
@@ -34,9 +34,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--ds-color-surface-tint) 30%, transparent), transparent 260px),
-    var(--ds-color-canvas);
+  background: var(--ds-color-canvas);
 }
 
 body,
@@ -99,8 +97,8 @@ p {
   place-items: center;
   border: 1px solid color-mix(in srgb, var(--sidebar-ink) 18%, transparent);
   border-radius: var(--ds-radius-sm);
-  background: color-mix(in srgb, var(--ds-color-surface-tint) 55%, var(--ds-color-surface));
-  color: var(--ds-color-info);
+  background: var(--ds-color-surface);
+  color: var(--ds-color-primary);
   font-size: 13px;
   font-weight: 900;
 }
@@ -156,14 +154,14 @@ p {
 }
 
 .nav-item span {
-  color: color-mix(in srgb, var(--sidebar-ink) 52%, transparent);
+  color: var(--ds-color-ink-subtle);
   font-size: 11px;
   font-weight: 800;
 }
 
 .nav-item.active {
   border-left-color: var(--ds-color-primary);
-  background: color-mix(in srgb, var(--ds-color-primary) 16%, transparent);
+  background: color-mix(in srgb, var(--ds-color-primary) 8%, var(--ds-color-surface));
   color: var(--sidebar-ink);
 }
 
@@ -256,12 +254,12 @@ p {
   font-size: 10px;
 }
 
-.dashboard-shell {
+.review-shell {
   min-width: 0;
   background: var(--ds-color-canvas);
 }
 
-.dashboard-header {
+.review-header {
   border-bottom: 1px solid var(--ds-color-border);
   background: var(--ds-color-surface);
 }
@@ -382,7 +380,7 @@ p {
   letter-spacing: 0;
 }
 
-.dashboard-tabs {
+.review-tabs {
   display: flex;
   min-height: 42px;
   padding: 0 28px;
@@ -390,7 +388,7 @@ p {
   overflow-x: auto;
 }
 
-.dashboard-tabs button {
+.review-tabs button {
   position: relative;
   flex: 0 0 auto;
   background: transparent;
@@ -400,11 +398,11 @@ p {
   letter-spacing: 0;
 }
 
-.dashboard-tabs button.active {
+.review-tabs button.active {
   color: var(--ds-color-primary);
 }
 
-.dashboard-tabs button.active::after {
+.review-tabs button.active::after {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -472,21 +470,21 @@ p {
   height: 3px;
 }
 
-.legend .teal,
-.teal-line {
+.legend .policy-signal,
+.policy-line {
   stroke: var(--ds-color-primary);
 }
 
-.legend .blue,
-.blue-line {
+.legend .regulatory-signal,
+.regulatory-line {
   stroke: var(--chart-secondary);
 }
 
-.legend .teal {
+.legend .policy-signal {
   background: var(--ds-color-primary);
 }
 
-.legend .blue {
+.legend .regulatory-signal {
   background: var(--chart-secondary);
 }
 
@@ -508,7 +506,7 @@ p {
   opacity: 0.16;
 }
 
-.teal-area {
+.policy-area {
   fill: var(--ds-color-primary);
 }
 
@@ -522,11 +520,11 @@ p {
   stroke-width: 3;
 }
 
-.teal-points circle {
+.policy-points circle {
   stroke: var(--ds-color-primary);
 }
 
-.blue-points circle {
+.regulatory-points circle {
   stroke: var(--chart-secondary);
 }
 
@@ -539,16 +537,16 @@ p {
   display: grid;
   width: max-content;
   min-width: 92px;
-  border: 1px solid color-mix(in srgb, var(--ds-color-info) 80%, var(--ds-color-border));
+  border: 1px solid color-mix(in srgb, var(--ds-color-primary) 80%, var(--ds-color-border));
   border-radius: var(--ds-radius-sm);
-  background: var(--ds-color-info);
+  background: var(--ds-color-primary);
   color: var(--ds-color-ink-inverse);
   padding: 8px 10px;
   font-size: 11px;
   font-weight: 850;
   line-height: 1.15;
   text-align: center;
-  box-shadow: 0 8px 16px color-mix(in srgb, var(--ds-color-info) 20%, transparent);
+  box-shadow: 0 8px 16px color-mix(in srgb, var(--ds-color-primary) 20%, transparent);
 }
 
 [data-theme="dark"] .chart-tip {
@@ -843,7 +841,7 @@ p {
 
 .bar-chart span {
   height: calc(var(--v) * 1%);
-  background: linear-gradient(180deg, var(--ds-color-primary), color-mix(in srgb, var(--ds-color-surface-tint) 70%, var(--ds-color-surface)));
+  background: linear-gradient(180deg, var(--ds-color-primary), color-mix(in srgb, var(--ds-color-primary) 16%, var(--ds-color-surface)));
 }
 
 .days {
@@ -868,8 +866,8 @@ p {
   border-radius: 999px;
   background: conic-gradient(
     var(--ds-color-primary) 0 37%,
-    var(--ds-color-surface-tint) 37% 70%,
-    var(--chart-secondary) 70% 100%
+    var(--ds-color-accent) 37% 70%,
+    var(--ds-color-surface-muted) 70% 100%
   );
 }
 
@@ -966,7 +964,7 @@ p {
   object-fit: contain;
   border: 1px solid color-mix(in srgb, var(--ds-color-border) 52%, transparent);
   border-radius: var(--ds-radius-sm);
-  background: color-mix(in srgb, var(--ds-color-surface-tint) 18%, var(--ds-color-surface));
+  background: var(--ds-color-surface-muted);
 }
 
 .scatter {
@@ -1020,7 +1018,7 @@ p {
   fill: color-mix(in srgb, var(--ds-color-accent) 50%, transparent);
 }
 
-.radar-fill.teal-fill {
+.radar-fill.policy-fill {
   fill: color-mix(in srgb, var(--ds-color-primary) 32%, transparent);
 }
 
@@ -1116,7 +1114,7 @@ p {
 
   .utility-bar,
   .hero-row,
-  .dashboard-tabs,
+  .review-tabs,
   .hero-analytics,
   .card-grid {
     padding-right: 16px;
@@ -1190,7 +1188,7 @@ p {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .dashboard-tabs {
+  .review-tabs {
     gap: 16px;
   }
 

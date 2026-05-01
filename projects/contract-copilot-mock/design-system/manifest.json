@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "mercer",
-  "content_hash": "sha256:7187e2ae7895b5ed4183538b1e207c6ffa8dab5e368415736d8533aea5f94e6e",
+  "content_hash": "sha256:641769859ef5e7606e156ee2c55262992022eabf7bdd436f5b422b4c743f8cfb",
   "app_mode": "conversation-copilot",
   "brand_tone": "corporate-trust",
   "color_modes": [

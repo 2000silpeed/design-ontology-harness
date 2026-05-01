@@ -17,7 +17,9 @@ Applied cues:
 Latest refactor direction:
 
 - keep the contract-review domain model instead of copying generic dashboard content
-- dark fixed sidebar with document queue and legal review navigation
+- keep implementation names semantic to the product domain: review shell, policy signal, regulatory signal
+- keep palette composition strict: primary, accent, and neutral surfaces only; no reference-like dark rail or derived teal secondary
+- fixed workspace rail with document queue and legal review navigation
 - white review header with case metadata, KPI summaries, and tab navigation
 - large risk timeline paired with a right-side review summary rail
 - dense card grid for source clauses, AI review, evidence map, policy checks, recommendations, audit logs, and review metrics

@@ -45,7 +45,8 @@
     1. `build/system/` → `presets/<preset-id>/` 복사
     2. `manifest.json` 생성 (7-2 필드 전부)
     3. `preview.md` 텍스트 프리뷰 자동 생성 (색상 스와치 / 서체 / 대표 컴포넌트 3개 / 주의사항)
-    4. `content_hash` 계산
+    4. `STYLE.md` / `DESIGN.md` 스타일 캡슐 자동 생성 (권한 순서 / 토큰 / reference governance / lint preflight)
+    5. `content_hash` 계산
   - CLI: `uv run design-ontology build-preset --project signal-desk --preset-id document-content--editorial-warm`
 
 - [x] **7-6. 프리셋 검증기 (버전 계약 포함)**
@@ -196,7 +197,7 @@
 ### Phase 10B — alpha 후
 
 - [x] **10B-1. `raw-css-variables` 어댑터**
-  - 출력: `design-system/tokens.css` (`:root` + `[data-theme='dark']` + `@media prefers-color-scheme`) / `design-system/fonts.css` (ko) / Pretendard 스캐폴드 3종 / `design-system/README.md` / preset mirror
+  - 출력: `design-system/tokens.css` (`:root` + `[data-theme='dark']` + `@media prefers-color-scheme`) / `design-system/fonts.css` (ko) / Pretendard 스캐폴드 3종 / `design-system/README.md` / `IMPLEMENTATION_CONTRACT.md` / `STYLE.md` / `DESIGN.md` / preset mirror
   - 프레임워크 무관. user repo 최상위 절대 기록 안 함
   - 공통화: `design_system_mirror_ops()` 를 `adapters/base.py` 로 승격 (Next 어댑터도 동일 헬퍼 사용)
 

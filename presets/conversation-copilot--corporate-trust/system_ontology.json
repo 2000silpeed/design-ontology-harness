@@ -19,7 +19,9 @@
     "AccessibilityRule",
     "ProductPrimitive",
     "SourceReference",
-    "BenchmarkSystem"
+    "BenchmarkSystem",
+    "GovernanceRule",
+    "ImplementationFailurePattern"
   ],
   "edge_types": [
     "expresses",
@@ -45,7 +47,9 @@
     "governs",
     "defines",
     "applies_to",
-    "maps_to_tier"
+    "maps_to_tier",
+    "enforces",
+    "prevents"
   ],
   "nodes": [
     {
@@ -2239,6 +2243,61 @@
         "url": "https://toss.im",
         "category": "fintech",
         "color_strategy": "blue accent with conservative semantic palette"
+      }
+    },
+    {
+      "id": "governance:reference-absorption-scope",
+      "type": "GovernanceRule",
+      "label": "Reference absorption scope",
+      "meta": {
+        "rule": "Visual references are morphology inputs only; tokens, component specs, and product IA remain authoritative.",
+        "allowed": [
+          "component morphology",
+          "layout density",
+          "panel/card proportions",
+          "hierarchy rhythm",
+          "interaction affordance patterns"
+        ],
+        "denied": [
+          "color palette",
+          "palette composition or derived secondary palettes",
+          "typography family or scale",
+          "semantic status colors",
+          "product copy",
+          "product data model",
+          "navigation labels",
+          "domain information architecture",
+          "redistributable imagery unless explicitly licensed"
+        ]
+      }
+    },
+    {
+      "id": "failure-pattern:token-bound-reference-palette-mixing",
+      "type": "ImplementationFailurePattern",
+      "label": "token-bound-reference-palette-mixing",
+      "meta": {
+        "trigger": "Implementation uses --ds-* tokens but recombines visual-reference-like dark rails, teal/blue secondaries, or status/tint roles into a new palette.",
+        "rule": "Token binding is necessary but not sufficient; color role composition must still follow the ontology palette roles.",
+        "prevention": "Derived colors may alias a semantic token or mix one semantic role with a neutral surface/transparent value. Do not mix multiple chromatic roles to create a local palette.",
+        "technical_controls": [
+          "IMPLEMENTATION_CONTRACT.md",
+          "lint-implementation DS030",
+          "lint-implementation DS031"
+        ]
+      }
+    },
+    {
+      "id": "governance:implementation-feedback-promotion",
+      "type": "GovernanceRule",
+      "label": "implementation-feedback-promotion",
+      "meta": {
+        "rule": "When implementation review identifies a repeatable design-system failure, promote it into governance, generated artifacts, and lint checks before treating the current screen as complete.",
+        "outputs": [
+          "design_system_blueprint.governance",
+          "system_spec.md",
+          "system_ontology.json",
+          "IMPLEMENTATION_CONTRACT.md"
+        ]
       }
     }
   ],
@@ -11627,11 +11686,31 @@
       "meta": {
         "jaccard": 0.5
       }
+    },
+    {
+      "type": "grounded_in",
+      "source": "governance:reference-absorption-scope",
+      "target": "brand:mercer"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:reference-absorption-scope",
+      "target": "failure-pattern:token-bound-reference-palette-mixing"
+    },
+    {
+      "type": "grounded_in",
+      "source": "governance:implementation-feedback-promotion",
+      "target": "brand:mercer"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:implementation-feedback-promotion",
+      "target": "governance:reference-absorption-scope"
     }
   ],
   "stats": {
-    "node_count": 369,
-    "edge_count": 1412,
+    "node_count": 372,
+    "edge_count": 1416,
     "nodes_by_type": {
       "Brand": 1,
       "Principle": 4,
@@ -11647,7 +11726,9 @@
       "LayoutPattern": 23,
       "InteractionPattern": 3,
       "AccessibilityRule": 8,
-      "BenchmarkSystem": 35
+      "BenchmarkSystem": 35,
+      "GovernanceRule": 2,
+      "ImplementationFailurePattern": 1
     }
   }
 }

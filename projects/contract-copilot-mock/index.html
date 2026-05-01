@@ -51,8 +51,8 @@
         </div>
       </aside>
 
-      <main class="dashboard-shell">
-        <header class="dashboard-header">
+      <main class="review-shell">
+        <header class="review-header">
           <div class="utility-bar">
             <button class="menu-button" type="button" aria-label="메뉴 열기">☰</button>
             <span>CASE MR-2026-0419</span>
@@ -90,7 +90,7 @@
             <button class="report-button" type="button">승인 요청</button>
           </div>
 
-          <nav class="dashboard-tabs" aria-label="검토 보기">
+          <nav class="review-tabs" aria-label="검토 보기">
             <button class="active" type="button">검토 요약</button>
             <button type="button">문서 본문</button>
             <button type="button">근거 맵</button>
@@ -105,8 +105,8 @@
             <div class="panel-top">
               <h2>위험 신호 타임라인</h2>
               <div class="legend">
-                <span><i class="teal"></i>내부 정책</span>
-                <span><i class="blue"></i>감독 기준</span>
+                <span><i class="policy-signal"></i>내부 정책</span>
+                <span><i class="regulatory-signal"></i>감독 기준</span>
               </div>
             </div>
             <svg class="line-chart" viewBox="0 0 860 270" role="img" aria-label="위탁 조항 위험 신호 변화">
@@ -114,10 +114,10 @@
                 <path d="M42 38H820M42 88H820M42 138H820M42 188H820M42 238H820" />
                 <path d="M42 38V238M154 38V238M266 38V238M378 38V238M490 38V238M602 38V238M714 38V238M820 38V238" />
               </g>
-              <path class="area teal-area" d="M42 196L154 146L266 176L378 98L490 72L602 124L714 82L820 132L820 238L42 238Z" />
-              <path class="line teal-line" d="M42 196L154 146L266 176L378 98L490 72L602 124L714 82L820 132" />
-              <path class="line blue-line" d="M42 226L154 182L266 162L378 214L490 132L602 198L714 144L820 78" />
-              <g class="points teal-points">
+              <path class="area policy-area" d="M42 196L154 146L266 176L378 98L490 72L602 124L714 82L820 132L820 238L42 238Z" />
+              <path class="line policy-line" d="M42 196L154 146L266 176L378 98L490 72L602 124L714 82L820 132" />
+              <path class="line regulatory-line" d="M42 226L154 182L266 162L378 214L490 132L602 198L714 144L820 78" />
+              <g class="points policy-points">
                 <circle cx="42" cy="196" r="6" />
                 <circle cx="154" cy="146" r="6" />
                 <circle cx="266" cy="176" r="6" />
@@ -127,7 +127,7 @@
                 <circle cx="714" cy="82" r="6" />
                 <circle cx="820" cy="132" r="6" />
               </g>
-              <g class="points blue-points">
+              <g class="points regulatory-points">
                 <circle cx="42" cy="226" r="6" />
                 <circle cx="154" cy="182" r="6" />
                 <circle cx="266" cy="162" r="6" />
@@ -282,7 +282,7 @@
               <svg viewBox="0 0 210 170" role="img" aria-label="조항 영역별 정책 위험 비교">
                 <path class="radar-grid" d="M105 14L180 57L180 128L105 164L30 128L30 57ZM105 39L156 69L156 116L105 139L54 116L54 69Z" />
                 <path class="radar-fill gold" d="M105 40L154 76L144 120L98 140L58 108L74 66Z" />
-                <path class="radar-fill teal-fill" d="M105 28L170 68L158 130L100 152L42 116L64 48Z" />
+                <path class="radar-fill policy-fill" d="M105 28L170 68L158 130L100 152L42 116L64 48Z" />
               </svg>
               <div class="chart-tip">이전 조항<span>수정 필요</span></div>
             </div>

@@ -68,6 +68,8 @@ ONTOLOGY_RELATIONS = [
     {"id": "generated_with", "from": "GeneratedVisualAsset", "to": "ImageGenerationModel"},
     {"id": "grounded_in", "from": "GeneratedVisualAsset", "to": "Brand"},
     {"id": "intended_for", "from": "GeneratedVisualAsset", "to": "Component"},
+    {"id": "enforces", "from": "GovernanceRule", "to": "TokenCategory"},
+    {"id": "prevents", "from": "GovernanceRule", "to": "ImplementationFailurePattern"},
 ]
 
 BASELINE_FAMILY_COMPONENTS = {
@@ -655,6 +657,36 @@ def build_system_ontology(
         nodes.append({"id": ref_id, "type": "SourceReference", "label": target["source_label"]})
         edges.append({"type": "inspired_by", "from": brand_id, "to": ref_id})
 
+    governance = blueprint.get("governance", {})
+    reference_scope = governance.get("reference_absorption_scope", {})
+    scope_id = "governance:reference-absorption-scope"
+    nodes.append(
+        {
+            "id": scope_id,
+            "type": "GovernanceRule",
+            "label": "Reference absorption scope",
+            "meta": {
+                "rule": reference_scope.get("rule", ""),
+                "allowed": reference_scope.get("allowed", []),
+                "denied": reference_scope.get("denied", []),
+            },
+        }
+    )
+    edges.append({"type": "grounded_in", "from": scope_id, "to": brand_id})
+    for layer in ["color", "typography"]:
+        edges.append({"type": "enforces", "from": scope_id, "to": f"token-category:{layer}"})
+    for pattern in reference_scope.get("failure_patterns", []):
+        pattern_id = f"failure-pattern:{slugify_text(pattern.get('id', 'implementation-failure'))}"
+        nodes.append(
+            {
+                "id": pattern_id,
+                "type": "ImplementationFailurePattern",
+                "label": pattern.get("id", "implementation failure"),
+                "meta": pattern,
+            }
+        )
+        edges.append({"type": "prevents", "from": scope_id, "to": pattern_id})
+
     return {
         "entity_types": [
             "Brand",
@@ -668,6 +700,8 @@ def build_system_ontology(
             "AccessibilityRule",
             "GeneratedVisualAsset",
             "ImageGenerationModel",
+            "GovernanceRule",
+            "ImplementationFailurePattern",
         ],
         "relation_types": ONTOLOGY_RELATIONS,
         "nodes": _dedupe_nodes(nodes),
@@ -738,6 +772,19 @@ def build_system_spec_markdown(
     denied_reference_lines = "\n".join(
         f"  - {item}" for item in reference_scope.get("denied", [])
     ) or "  - No denied reference scope defined."
+    failure_pattern_lines = "\n".join(
+        f"  - **{item.get('id', 'failure-pattern')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in reference_scope.get("failure_patterns", [])
+    ) or "  - No promoted failure patterns defined."
+    promotion_policy = (
+        blueprint.get("governance", {}).get("feedback_promotion_policy")
+        or reference_scope.get("promotion_policy", {})
+    )
+    promotion_policy_line = (
+        f"- Feedback promotion: {promotion_policy.get('rule')} Outputs: {', '.join(promotion_policy.get('outputs', []))}"
+        if promotion_policy
+        else "- Feedback promotion: No promotion policy defined."
+    )
     reference_scope_rule = reference_scope.get(
         "rule",
         "References are advisory and never replace token/component/product IA authority.",
@@ -821,6 +868,9 @@ def build_system_spec_markdown(
 {allowed_reference_lines}
 - Denied from references:
 {denied_reference_lines}
+- Promoted failure patterns:
+{failure_pattern_lines}
+{promotion_policy_line}
 
 ## 11. AI Synthesis Principles
 

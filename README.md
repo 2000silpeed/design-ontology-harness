@@ -52,10 +52,13 @@ flowchart TB
         TOKEN["token_schema.json\n토큰 체계"]
         ONTOLOGY["system_ontology.json\n관계 그래프"]
         COMP_SPEC["component_specs.md\n컴포넌트 상세"]
+        STYLE["STYLE.md / DESIGN.md\n에이전트용 스타일 캡슐"]
     end
 
     subgraph APPLY["3. 적용"]
-        OUTPUT --> AGENT_PACK["에이전트 팩"]
+        OUTPUT --> PRESET["프리셋 승격\nbuild-preset"]
+        PRESET --> INSTALL["구현 repo 설치\ninstall-preset"]
+        INSTALL --> AGENT_PACK["에이전트 팩"]
         AGENT_PACK --> REFACTOR["/design-refactor\n토큰 교체"]
         AGENT_PACK --> REBUILD["/design-rebuild\n전체 재구성"]
     end
@@ -73,6 +76,8 @@ flowchart TB
 | **시각 레퍼런스** | 로컬 스크린샷/레퍼런스 이미지를 분석해 visual motif, density, layout cue를 보강하는 입력 |
 | **색상 레퍼런스** | 선택 가능한 색상 목록이 담긴 마크다운. 브랜드 키워드와 mood 매칭으로 팔레트를 자동 결정 |
 | **서체 엔진** | 25+ 실무 서체 DB에서 브랜드/제품 유형에 맞는 서체 조합을 자동 선택 |
+| **Style Capsule** | `STYLE.md` / `DESIGN.md`로 생성되는 짧은 실행 브리프. 에이전트가 구현 전 가장 먼저 읽는 스타일 요약 |
+| **Implementation Contract** | 구현 repo의 `design-system/IMPLEMENTATION_CONTRACT.md`. 외부 레퍼런스 흡수 범위와 토큰 적용 금지선을 명시 |
 | **Rebuild** | 기존 화면의 기능은 보존하되, 디자인 시스템 기반으로 비주얼을 새로 구성하는 것 |
 
 ## 입력 구조: 공식 KB + Visual References
@@ -90,6 +95,7 @@ flowchart TB
 - Pinterest는 필수 의존성이 아니라 **선택적 검색 보조 레이어**입니다. 직접 크롤링보다 검색어 생성과 사용자의 수동 수집을 우선합니다.
 - Pinterest 보조 수집에서는 raw asset 다운로드보다 screenshot/reference URL 기록을 우선하고, 수집물이 재배포 가능한 에셋이라고 가정하지 않습니다.
 - `system_spec.md`와 `component_specs.md`에서 image-derived hints는 advisory signal로만 취급됩니다.
+- 구현 단계에서는 외부 이미지를 색상/폰트/IA 소스로 쓰지 않습니다. `STYLE.md` / `DESIGN.md`와 `IMPLEMENTATION_CONTRACT.md`가 이 경계를 반복해서 고정합니다.
 
 ## 빠른 시작
 
@@ -236,6 +242,56 @@ uv run design-ontology run-project \
 | `components/component_specs.md` | 컴포넌트별 상세 스펙 (구조, 상태, 토큰, 접근성, 브랜드 적용) |
 | `components/component_specs.json` | 같은 내용의 JSON (에이전트용) |
 
+### 7단계: 프리셋으로 승격하고 구현 repo에 설치
+
+`run-project` 산출물은 하네스 내부 설계도입니다. 실제 앱 repo에서 바로 쓰려면 프리셋으로 승격한 뒤 adapter로 설치합니다.
+
+```bash
+uv run design-ontology build-preset \
+  --project projects/my-app \
+  --preset-id conversation-copilot--corporate-trust \
+  --owner maintainer \
+  --tier P3 \
+  --color-modes light \
+  --default-color-mode light \
+  --tags ko,enterprise,copilot
+
+uv run design-ontology install-preset \
+  --preset-id conversation-copilot--corporate-trust \
+  --target-repo /path/to/implementation-repo \
+  --adapter raw-css-variables \
+  --color-mode light \
+  --locale ko
+```
+
+설치 후 구현 repo의 `design-system/`에는 다음이 들어갑니다.
+
+| 파일 | 용도 |
+|------|------|
+| `IMPLEMENTATION_CONTRACT.md` | 외부 레퍼런스 흡수 범위, 토큰 바인딩 규칙, lint preflight |
+| `STYLE.md` | 사람이 읽기 쉬운 스타일 캡슐 |
+| `DESIGN.md` | Codex/Claude 같은 에이전트가 먼저 읽는 agent-ready 스타일 캡슐 |
+| `tokens.css` / `fonts.css` | adapter가 만든 실제 CSS 변수와 로케일 서체 |
+| `system_spec.md`, `token_schema.json`, `component_inventory.json` | 원본 설계 기준 |
+| `components/component_specs.*` | 컴포넌트 anatomy, states, token binding |
+
+구현 에이전트에게는 이렇게 지시합니다.
+
+```text
+design-system/IMPLEMENTATION_CONTRACT.md,
+design-system/STYLE.md,
+design-system/token_schema.json,
+design-system/components/component_specs.md 기준으로 화면을 리팩해줘.
+
+외부 참고 이미지는 형태, 밀도, 컴포넌트 비례만 반영하고
+색상, 폰트, IA, 카피는 온톨로지와 토큰을 우선해.
+작업 후 lint-implementation까지 돌려줘.
+```
+
+```bash
+uv run design-ontology lint-implementation --target-repo /path/to/implementation-repo
+```
+
 ## 설계서에서 컴포넌트 자동 탐지
 
 설계서를 넣으면 어떤 컴포넌트가 필요한지 자동으로 파악합니다.
@@ -365,7 +421,8 @@ Pinterest-assisted 운영 상세는 [docs/PINTEREST_ASSISTED_WORKFLOW.md](./docs
 ```bash
 uv run design-ontology init-agent-pack \
   --target-repo /path/to/my-project \
-  --targets claude
+  --artifact-dir design-system \
+  --targets codex,claude
 ```
 
 ### 생성되는 스킬 4종
@@ -378,6 +435,17 @@ uv run design-ontology init-agent-pack \
 | **Architect** | 자동 | 토큰 구조, 롤아웃 순서 계획 |
 
 Codex target을 함께 생성하면 추가로 **Visual Assets** 스킬이 포함됩니다. 이 스킬은 Codex에서 이미지 생성 기능을 사용할 수 있을 때 `imagine2` 모델로 브랜드/토큰/visual reference에 맞는 히어로, 카드, 에디토리얼 이미지를 만들고 `public/generated/design-system/manifest.json`에 prompt와 alt text를 기록하도록 안내합니다. 온톨로지에도 `GeneratedVisualAsset` / `ImageGenerationModel` 노드와 `generated_with`, `grounded_in`, `intended_for` 관계가 기록됩니다.
+
+에이전트 팩은 구현 전에 아래 순서를 따르도록 생성됩니다.
+
+1. `design-system/IMPLEMENTATION_CONTRACT.md`
+2. `design-system/STYLE.md` 또는 `design-system/DESIGN.md`
+3. `design-system/system_spec.md`
+4. `design-system/token_schema.json`
+5. `design-system/component_inventory.json`
+6. `design-system/components/component_specs.*`
+
+즉 Pinterest, Refero, 스크린샷 같은 외부 시각 자료는 “모양 참고”로만 들어가고, 색상 조합·폰트·정보구조·카피는 온톨로지 산출물이 계속 우선합니다.
 
 ### Rebuild vs Refactor
 
@@ -472,6 +540,29 @@ uv run design-ontology benchmark --brand-profile brand_profile.json --output-dir
 | 20 | **Pattern Catalog** | 레이아웃/인터랙션 패턴 + 구성 컴포넌트 |
 | 21 | **Generated Visual Asset Plan** | imagine2 기반 생성 이미지 슬롯 + manifest/alt text 계획 |
 
+## Style Capsule
+
+`STYLE.md`와 `DESIGN.md`는 Refero류 스타일 카드의 장점을 하네스 방식으로 흡수한 산출물입니다. 차이는 명확합니다. 외부 reference에서 취향을 가져오는 문서가 아니라, 이미 생성된 온톨로지/토큰/컴포넌트 스펙을 짧게 압축해 구현 에이전트가 실수하지 않게 만드는 문서입니다.
+
+포함 내용:
+
+- Authority order: 제품 IA → 토큰 → 컴포넌트 스펙 → 시스템 스펙 → 외부 레퍼런스
+- Voice and boundaries: 브랜드 키워드, tone, anti-keyword
+- Color roles: `--ds-color-*` 토큰과 HEX, source, usage
+- Typography: font role, type scale, 한글 wrap guardrails
+- Spacing and shape: spacing scale, density, radius bias
+- Component priorities: family, states, signature components
+- Reference governance: 허용/금지되는 reference 흡수 범위
+- Agent preflight: `lint-implementation` 실행 명령
+
+핵심 규칙:
+
+- visual reference는 component morphology, layout density, panel/card proportion, hierarchy rhythm만 반영합니다.
+- color palette, palette composition, typography scale, domain IA, product copy는 reference에서 가져오지 않습니다.
+- 토큰을 사용했더라도 `--ds-*` color role을 섞어 reference처럼 보이는 새 팔레트를 만들면 실패입니다.
+
+자세한 설명은 [docs/STYLE_CAPSULE.md](./docs/STYLE_CAPSULE.md)를 참고하세요.
+
 ## 온톨로지 그래프
 
 `system_ontology.json`은 단순 키워드 매칭이 아닌 **22종 노드 × 27종 관계**의 진짜 그래프입니다.
@@ -541,6 +632,9 @@ neighbors = graph.get_neighbors("component:primary-button")
 | `build-components` | 상세 컴포넌트 스펙 생성 | `--spec-file`, `--project-dir`, `--kb-dir` |
 | `extract-css` | CSS에서 디자인 토큰 추출 | `--css-dir`, `--html-file` |
 | `benchmark` | 벤치마크 레퍼런스 검색 | `--keywords`, `--brand-profile` |
+| `build-preset` | 프로젝트 산출물을 `presets/<id>/`로 승격하고 `STYLE.md` / `DESIGN.md` 생성 | `--project`, `--preset-id`, `--owner`, `--tier` |
+| `install-preset` | 프리셋을 실제 구현 repo의 `design-system/`에 설치 | `--preset-id`, `--target-repo`, `--adapter`, `--locale` |
+| `lint-implementation` | 구현 repo의 hardcoded color / palette recomposition 위반 검사 | `--target-repo` |
 | `run` | KB 없이 한번에 실행 | `--seed-url`, `--brand-profile` |
 | `synthesize` | 기존 크롤 결과로 재생성 | `--output-dir`, `--brand-profile` |
 | `extract-seed` | 시드에서 링크만 추출 | `--seed-url` |
@@ -793,7 +887,9 @@ design_ontology_harness/   코어 프레임워크
   font_reference.py        서체 자동 결정 (25+ 실무 서체 DB)
   spec_analyzer.py         설계서 → UI 패턴 탐지
   component_specs.py       컴포넌트별 상세 스펙 생성
+  style_capsule.py         STYLE.md / DESIGN.md 에이전트용 스타일 캡슐 생성
   agent_packs.py           Codex / Claude Code 에이전트 스킬 생성
+  implementation_linter.py 구현 repo 토큰/팔레트 위반 검사
   ontology.py              크롤 증거 기반 개념 매칭 (문서→개념)
 schemas/                   입력 스키마
 config/                    브랜드 프로필 예시

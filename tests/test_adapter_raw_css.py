@@ -93,6 +93,7 @@ def test_roundtrip_each_mode(preset_id: str, adapter: RawCssVariablesAdapter, tm
         paths = {op.path for op in ops}
         assert "design-system/tokens.css" in paths
         assert "design-system/README.md" in paths
+        assert "design-system/IMPLEMENTATION_CONTRACT.md" in paths
         assert "design-system/manifest.json" in paths
         # Raw adapter never writes outside design-system/.
         for op in ops:
@@ -133,6 +134,9 @@ def test_locale_ko_injects_fonts(adapter: RawCssVariablesAdapter, tmp_path: Path
     assert "Pretendard Variable" in fonts_css
     assert "@font-face" in fonts_css
     assert "--ds-font-ko" in fonts_css
+    assert "--ds-font-heading" in fonts_css
+    assert "--ds-font-body" in fonts_css
+    assert "--ds-font-mono" in fonts_css
     _assert_balanced_braces(fonts_css, label="fonts.css")
 
     # README should reference fonts.css when ko assets are present.
@@ -158,6 +162,19 @@ def test_locale_ko_noop_for_non_ko_preset(adapter: RawCssVariablesAdapter, tmp_p
     paths = {op.path for op in ops}
     assert "design-system/fonts.css" not in paths
     assert "design-system/fonts/PretendardVariable.placeholder" not in paths
+
+
+def test_mirror_copies_style_capsule_when_present(adapter: RawCssVariablesAdapter, tmp_path: Path):
+    bundle = load_preset_bundle(PRESETS_ROOT / "conversation-copilot--corporate-trust")
+
+    ops = adapter.render(bundle, tmp_path, "light", locale="ko")
+    paths = {op.path for op in ops}
+
+    assert "design-system/STYLE.md" in paths
+    assert "design-system/DESIGN.md" in paths
+    style_text = next(op.content for op in ops if op.path == "design-system/STYLE.md")
+    assert "Style Capsule" in style_text
+    assert "Token binding is necessary but not sufficient" in style_text
 
 
 def test_detect_bare_tmp_path_scores_above_threshold(

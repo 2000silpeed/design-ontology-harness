@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable
 
+from .style_capsule import render_style_markdown
 from .utils import ensure_dir, write_json
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -119,6 +120,16 @@ def _load_system_spec_excerpt(system_dir: Path) -> dict:
         except json.JSONDecodeError:
             spec["components"] = {}
     return spec
+
+
+def _load_json_dict(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+    return data if isinstance(data, dict) else {}
 
 
 def _render_preview_md(
@@ -361,6 +372,30 @@ def build_preset(request: BuildRequest) -> dict:
         locale_pairings=request.locale_pairings,
     )
     (preset_dir / "preview.md").write_text(preview_md, encoding="utf-8")
+
+    style_manifest = {
+        "id": request.preset_id,
+        "app_mode": app_mode,
+        "brand_tone": brand_tone,
+        "color_modes": request.color_modes,
+        "default_color_mode": request.default_color_mode,
+        "description": request.description or "",
+        "locale_pairings": request.locale_pairings or {},
+        "owner": request.owner,
+        "tier": request.tier,
+    }
+    style_excerpt = _load_system_spec_excerpt(preset_dir)
+    style_md = render_style_markdown(
+        preset_id=request.preset_id,
+        manifest=style_manifest,
+        brand_profile=_load_json_dict(preset_dir / "brand_profile.json"),
+        blueprint=style_excerpt.get("blueprint") or {},
+        token_schema=style_excerpt.get("tokens") or {},
+        component_inventory=_load_json_dict(preset_dir / "component_inventory.json"),
+        component_specs=style_excerpt.get("components") or {},
+    )
+    (preset_dir / "STYLE.md").write_text(style_md, encoding="utf-8")
+    (preset_dir / "DESIGN.md").write_text(style_md, encoding="utf-8")
 
     content_hash = _compute_content_hash(preset_dir)
 

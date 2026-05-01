@@ -214,6 +214,7 @@ Place generated artifacts from `design-ontology-harness` in this directory.
 Expected files:
 
 - `system_spec.md`
+- `STYLE.md` / `DESIGN.md`
 - `token_schema.json`
 - `component_inventory.json`
 - `system_ontology.json`
@@ -233,6 +234,8 @@ Recommended sync source:
 Recommended mapping:
 
 - `build/system/blueprint/system_spec.md` -> `{artifact_dir}/system_spec.md`
+- `presets/<id>/STYLE.md` -> `{artifact_dir}/STYLE.md`
+- `presets/<id>/DESIGN.md` -> `{artifact_dir}/DESIGN.md`
 - `build/system/blueprint/token_schema.json` -> `{artifact_dir}/token_schema.json`
 - `build/system/blueprint/component_inventory.json` -> `{artifact_dir}/component_inventory.json`
 - `build/system/blueprint/system_ontology.json` -> `{artifact_dir}/system_ontology.json`
@@ -269,20 +272,21 @@ paths:
 
 When this skill is active:
 
-1. Read `{artifact_dir}/system_spec.md` first.
-2. Read `{artifact_dir}/token_schema.json` and `{artifact_dir}/component_inventory.json`.
-3. If present, use `{artifact_dir}/system_ontology.json` to understand relations between principles, token categories, and component families.
-4. Translate user requests into:
+1. Read `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md` first when present.
+2. Read `{artifact_dir}/system_spec.md`.
+3. Read `{artifact_dir}/token_schema.json` and `{artifact_dir}/component_inventory.json`.
+4. If present, use `{artifact_dir}/system_ontology.json` to understand relations between principles, token categories, and component families.
+5. Translate user requests into:
    - affected principles
    - affected token categories
    - affected component families
    - required implementation order
-5. Favor extending existing primitives over inventing new components.
-6. Explicitly guard against anti-keywords from the system spec.
-7. Preserve existing user-facing entry points and feature surfaces unless the user explicitly asks for a structural change.
-8. Prefer incremental rollout plans over full-shell rewrites.
-9. If `token_schema.json` contains a curated color reference or palette roles, treat that as the starting point for semantic color decisions.
-10. If typography artifacts include script guardrails, account for their line-break and type-scale rules before proposing hero or landing compositions.
+6. Favor extending existing primitives over inventing new components.
+7. Explicitly guard against anti-keywords from the system spec.
+8. Preserve existing user-facing entry points and feature surfaces unless the user explicitly asks for a structural change.
+9. Prefer incremental rollout plans over full-shell rewrites.
+10. If `token_schema.json` contains a curated color reference or palette roles, treat that as the starting point for semantic color decisions.
+11. If typography artifacts include script guardrails, account for their line-break and type-scale rules before proposing hero or landing compositions.
 
 If any artifact file is missing, say exactly which file is missing and recommend syncing artifacts from the harness repo before implementation.
 """
@@ -303,9 +307,11 @@ paths:
 
 Before making changes:
 
-1. Read `{artifact_dir}/system_spec.md`.
-2. Read `{artifact_dir}/token_schema.json`.
-3. Read `{artifact_dir}/component_inventory.json`.
+1. Read `{artifact_dir}/IMPLEMENTATION_CONTRACT.md` when present.
+2. Read `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md` when present.
+3. Read `{artifact_dir}/system_spec.md`.
+4. Read `{artifact_dir}/token_schema.json`.
+5. Read `{artifact_dir}/component_inventory.json`.
 
 Implementation rules:
 
@@ -318,6 +324,9 @@ Implementation rules:
 - Prefer semantic tokens over one-off hardcoded colors so theme support survives future changes.
 - Default to the smallest viable surface refactor; do not rewrite the whole shell unless the task explicitly calls for it.
 - If `token_schema.json` includes a curated color reference or palette roles, align color decisions to that input before inventing a new palette.
+- Visual references are morphology inputs only. Do not absorb reference palettes, type scales, navigation labels, domain IA, or product copy.
+- Token binding is necessary but not sufficient: never recombine `--ds-*` roles into a new reference-like palette.
+- If user/reviewer feedback exposes a repeatable failure pattern, promote it into governance docs or lint rules before calling the screen complete.
 - Update nearby documentation or tests when implementation meaningfully changes.
 - NEVER change layout properties (display, flex-direction, grid-template, position, width, height).
 - NEVER change font-size or line-height to "fit the token scale." Existing sizes are tuned to the layout. Only replace when the token resolves to the exact same px. If no match, keep original + TODO.
@@ -351,19 +360,20 @@ Your job is to translate product work into a design-system implementation plan t
 
 Always:
 
-1. Read `{artifact_dir}/system_spec.md` first.
-2. Then read `{artifact_dir}/token_schema.json` and `{artifact_dir}/component_inventory.json`.
-3. Map the request to:
+1. Read `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md` first when present.
+2. Read `{artifact_dir}/system_spec.md`.
+3. Then read `{artifact_dir}/token_schema.json` and `{artifact_dir}/component_inventory.json`.
+4. Map the request to:
    - principles
    - token categories
    - component families
    - rollout order
-4. Prefer extending existing primitives over introducing new abstractions.
-5. Call out conflicts with anti-keywords or missing artifacts.
-6. Treat existing screens and interaction entry points as constraints, not disposable implementation details.
-7. Recommend incremental rollout steps before proposing a shell-level rewrite.
-8. If the token schema includes curated palette roles, use those roles as the default color direction in the plan.
-9. If typography script guardrails exist, reflect them in line length, headline scale, and Korean copy layout decisions.
+5. Prefer extending existing primitives over introducing new abstractions.
+6. Call out conflicts with anti-keywords or missing artifacts.
+7. Treat existing screens and interaction entry points as constraints, not disposable implementation details.
+8. Recommend incremental rollout steps before proposing a shell-level rewrite.
+9. If the token schema includes curated palette roles, use those roles as the default color direction in the plan.
+10. If typography script guardrails exist, reflect them in line length, headline scale, and Korean copy layout decisions.
 
 You are primarily a planning and alignment agent, not an implementation agent.
 """
@@ -382,9 +392,11 @@ You are a design-system implementation specialist.
 
 Before editing code:
 
-1. Read `{artifact_dir}/system_spec.md`.
-2. Read `{artifact_dir}/token_schema.json`.
-3. Read `{artifact_dir}/component_inventory.json`.
+1. Read `{artifact_dir}/IMPLEMENTATION_CONTRACT.md` when present.
+2. Read `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md` when present.
+3. Read `{artifact_dir}/system_spec.md`.
+4. Read `{artifact_dir}/token_schema.json`.
+5. Read `{artifact_dir}/component_inventory.json`.
 
 Implementation rules:
 
@@ -657,12 +669,13 @@ Your job is to take existing UI code (often AI-generated or prototyped quickly) 
 
 ## Startup
 
-1. Read `{artifact_dir}/component_specs.json` or `{artifact_dir}/components/component_specs.json`.
+1. Read `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md` when present.
+2. Read `{artifact_dir}/component_specs.json` or `{artifact_dir}/components/component_specs.json`.
    - Fallback: `{artifact_dir}/component_inventory.json`
-2. Read `{artifact_dir}/token_schema.json`.
-3. Read `{artifact_dir}/system_spec.md`.
+3. Read `{artifact_dir}/token_schema.json`.
+4. Read `{artifact_dir}/system_spec.md`.
 
-These three files are your source of truth. If any are missing, report which files are needed.
+These artifacts are your source of truth. If any core file is missing, report which files are needed.
 
 ## What to fix (in priority order)
 
@@ -918,11 +931,12 @@ Refactoring: `color: #3b82f6` → `color: var(--accent)` (same layout, different
 
 ## Startup
 
-1. Read `{artifact_dir}/system_spec.md` — extract brand keywords, principles, color palette, typography system
-2. Read `{artifact_dir}/token_schema.json` — get the actual token values
-3. Read `{artifact_dir}/components/component_specs.json` — component anatomy, states, accessibility
-4. If color palette exists, use those EXACT colors (not Tailwind defaults)
-5. If typography system exists, use those EXACT fonts and scale
+1. Read `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md` when present.
+2. Read `{artifact_dir}/system_spec.md` — extract brand keywords, principles, color palette, typography system
+3. Read `{artifact_dir}/token_schema.json` — get the actual token values
+4. Read `{artifact_dir}/components/component_specs.json` — component anatomy, states, accessibility
+5. If color palette exists, use those EXACT colors (not Tailwind defaults)
+6. If typography system exists, use those EXACT fonts and scale
 
 ## Process
 
@@ -973,6 +987,8 @@ Use this skill when working on planning or architectural questions related to th
 
 Read these files first when they exist:
 
+- `{artifact_dir}/IMPLEMENTATION_CONTRACT.md`
+- `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md`
 - `{artifact_dir}/system_spec.md`
 - `{artifact_dir}/token_schema.json`
 - `{artifact_dir}/component_inventory.json`
@@ -1005,6 +1021,8 @@ Use this skill when making code changes in the implementation repository.
 
 Read these files first when they exist:
 
+- `{artifact_dir}/IMPLEMENTATION_CONTRACT.md`
+- `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md`
 - `{artifact_dir}/system_spec.md`
 - `{artifact_dir}/token_schema.json`
 - `{artifact_dir}/component_inventory.json`
@@ -1020,9 +1038,12 @@ Read these files first when they exist:
 7. Use semantic tokens before introducing hardcoded surface or text colors.
 8. Update nearby documentation or tests when behavior or structure changes.
 9. Respect curated palette roles and reference colors recorded in the token schema when choosing UI colors.
-10. **NEVER use emojis as UI icons, state indicators, or button decorations** (no 🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊). Always implement SVG icon components or import from Lucide / Heroicons / Phosphor / Tabler. Emojis only belong in user-generated content, never in system UI.
-11. **NEVER leave half-finished components** ("TODO", "placeholder", "temp"). Read `{artifact_dir}/components/component_specs.md` and implement the full anatomy, states, and token bindings.
-12. **NEVER use bare library components without token binding.** If you import from a UI library, wrap it and override colors, spacing, radius, and typography using tokens from the schema.
+10. Visual references are morphology inputs only; do not absorb reference palettes, type scales, navigation labels, domain IA, or product copy.
+11. Token binding is necessary but not sufficient: never recombine `--ds-*` roles into a new reference-like palette.
+12. Promote repeatable user/reviewer feedback into governance docs or lint rules before calling a screen complete.
+13. **NEVER use emojis as UI icons, state indicators, or button decorations** (no 🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊). Always implement SVG icon components or import from Lucide / Heroicons / Phosphor / Tabler. Emojis only belong in user-generated content, never in system UI.
+14. **NEVER leave half-finished components** ("TODO", "placeholder", "temp"). Read `{artifact_dir}/components/component_specs.md` and implement the full anatomy, states, and token bindings.
+15. **NEVER use bare library components without token binding.** If you import from a UI library, wrap it and override colors, spacing, radius, and typography using tokens from the schema.
 
 {_script_aware_typography_guidance()}
 
@@ -1048,6 +1069,7 @@ Use this skill when the implementation would look more professional with generat
 
 Read these files first when they exist:
 
+- `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md`
 - `{artifact_dir}/system_spec.md`
 - `{artifact_dir}/token_schema.json`
 - `{artifact_dir}/component_inventory.json`

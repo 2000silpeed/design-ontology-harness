@@ -111,6 +111,8 @@ design-ontology-plugin/
 │       ├── components/
 │       ├── system_ontology.json
 │       ├── preview.md         # 텍스트 프리뷰 (기본)
+│       ├── STYLE.md           # 사람/에이전트용 스타일 캡슐
+│       ├── DESIGN.md          # agent-ready 스타일 캡슐 별칭
 │       └── preview/           # (선택) P0만 정적 이미지
 ├── adapters/
 │   ├── base/
@@ -391,7 +393,7 @@ class StackAdapter(ABC):
 | `tailwind.config.ts` | theme.extend (색상·서체·radius·spacing) |
 | `app/globals.css` | CSS 변수 + dark mode (`[data-theme='dark']`) |
 | `components.json` | shadcn 토큰 매핑 |
-| `design-system/` | 프리셋 산출물 복사본 |
+| `design-system/` | 프리셋 산출물 복사본 + `IMPLEMENTATION_CONTRACT.md` + `STYLE.md` / `DESIGN.md` |
 | `public/fonts/` (ko) | Pretendard 주입 |
 
 ### 7.4 충돌 정책

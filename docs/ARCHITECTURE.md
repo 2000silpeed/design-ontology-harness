@@ -25,7 +25,16 @@
 6. Authoring layer
    - 시스템 스펙, 토큰 스키마, 컴포넌트 인벤토리, 온톨로지 그래프를 생성합니다.
 
-7. Project scaffold layer
+7. Preset and Style Capsule layer
+   - 프로젝트 산출물을 `presets/<id>/`로 승격합니다.
+   - `preview.md`는 카탈로그용 요약입니다.
+   - `STYLE.md` / `DESIGN.md`는 구현 에이전트가 먼저 읽는 agent-ready 스타일 캡슐입니다.
+
+8. Adapter install layer
+   - 프리셋을 실제 구현 repo의 `design-system/`으로 설치합니다.
+   - `IMPLEMENTATION_CONTRACT.md`, adapter CSS, preset mirror, `INSTALLED.json`을 함께 씁니다.
+
+9. Project scaffold layer
    - 사용자가 자신의 프로젝트 폴더를 만들고, 같은 워크플로를 반복적으로 사용할 수 있게 합니다.
 
 ## Public Repo Shape
@@ -42,6 +51,8 @@
   재사용 가능한 지식베이스
 - `projects/<your-project>/`
   사용자가 생성한 개별 하네스 프로젝트
+- `presets/<id>/`
+  플러그인/adapter가 소비하는 프리셋 번들. `STYLE.md` / `DESIGN.md` 포함
 
 ## Extension Points
 
@@ -49,4 +60,6 @@
 - ontology concept set 교체 또는 확장
 - synthesis 전략 교체
 - output pack 종류 추가
+- style capsule 렌더러 확장
+- implementation linter 규칙 추가
 - agent prompt template 추가

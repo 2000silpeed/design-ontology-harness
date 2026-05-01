@@ -139,7 +139,9 @@ uv run design-ontology build-preset \
 > `--locale-pairings` 를 빠뜨리면 preview.md 의 `Locale Pairings` 섹션에 `ko` 페어링이 누락됩니다.
 > 한국어 UI 를 표방한 프리셋이라면 이 플래그를 꼭 같이 넘기세요.
 
-자동 생성: `presets/<id>/manifest.json` · `preview.md` · `content_hash`.
+자동 생성: `presets/<id>/manifest.json` · `preview.md` · `STYLE.md` · `DESIGN.md` · `content_hash`.
+
+`STYLE.md` / `DESIGN.md`는 구현 에이전트가 먼저 읽는 스타일 캡슐입니다. 외부 reference를 색상/폰트/IA 소스로 쓰지 않고, 형태·밀도·컴포넌트 비례만 흡수하도록 만드는 실행 브리프입니다.
 
 > 프리셋이 생성된 직후 `presets/matrix.json` 의 `presets[]` 배열에도 같은 id 로 **수동 엔트리**
 > 를 추가해야 합니다. matrix.json 에 없으면 `validate-presets` 는 통과해도 `match-preset` 이 해당
@@ -207,6 +209,9 @@ uv run design-ontology validate-presets
 
 # preview.md 템플릿 검증
 uv run design-ontology lint-previews --preset-id <your-id>
+
+# 구현 repo preflight 룰 검증 (샘플 repo나 adapter round-trip 산출물에 사용)
+uv run design-ontology lint-implementation --target-repo <target-repo>
 
 # 커뮤니티 전용 검증 (HEX 겹침 / 셀 중복 / self-match)
 python3 scripts/validate-community-preset.py --preset-id <your-id>
@@ -422,6 +427,9 @@ A. 아니요. 기여는 프리셋 산출물만. 어댑터 (`nextjs-tailwind-shad
 
 **Q. preview.md 를 수동으로 수정해도 되나요?**
 A. `build-preset` 재실행 시 덮어쓰기됩니다. 대표 컴포넌트·스와치 순서를 바꾸고 싶으면 `preset_builder.py` / spec.md 를 조정하세요.
+
+**Q. STYLE.md / DESIGN.md 를 수동으로 수정해도 되나요?**
+A. 권장하지 않습니다. 이 파일도 `build-preset` 재실행 시 덮어쓰기됩니다. 구현 규칙을 바꾸고 싶으면 `brand_profile`, blueprint governance, component spec, 또는 `style_capsule.py` 렌더러를 수정하세요.
 
 **Q. PR 이 리뷰 대기 상태로 오래 걸리면?**
 A. 메인테이너가 분기별 catalog-health 리포트와 함께 일괄 리뷰합니다. 긴급하면 이슈로 알려주세요.

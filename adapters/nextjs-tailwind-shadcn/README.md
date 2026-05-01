@@ -19,7 +19,8 @@ runtime is built out (Phase 11+) it will call back into the harness CLI.
 - `components.json` — shadcn config with `cssVariables: true` and aliases
   suitable for the App Router default layout.
 - `design-system/` — full copy of the preset artifacts (manifest, blueprint,
-  token_schema, component_inventory, system_spec, component_specs).
+  token_schema, component_inventory, system_spec, component_specs, STYLE.md,
+  DESIGN.md) plus generated `IMPLEMENTATION_CONTRACT.md`.
 - **locale=ko**: `public/fonts/PretendardVariable.placeholder` + `LICENSE-FONTS`
   (SIL OFL 1.1) + `scripts/fetch-pretendard.mjs` (install-time fetch).
 
@@ -33,6 +34,19 @@ runtime is built out (Phase 11+) it will call back into the harness CLI.
 - `design-system/` and font assets are generator-owned and are overwritten.
 - All other path collisions default to `.ds-proposed` — the adapter never
   silently overwrites user code.
+
+## Agent usage
+
+After install, agents should read files in this order:
+
+1. `design-system/IMPLEMENTATION_CONTRACT.md`
+2. `design-system/STYLE.md` or `design-system/DESIGN.md`
+3. `design-system/token_schema.json`
+4. `design-system/components/component_specs.md`
+
+External visual references may inform morphology, density, proportions, and
+hierarchy rhythm only. Color palettes, type scale, product copy, navigation
+labels, and domain IA remain ontology/token-led.
 
 ## Detect
 

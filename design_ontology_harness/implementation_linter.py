@@ -54,6 +54,9 @@ RADIUS_RE = re.compile(
     r"\bborder(?:-(?:top|right|bottom|left|start|end))?(?:-(?:left|right|start|end))?-radius\s*:\s*([^;]+)",
     re.IGNORECASE,
 )
+CUSTOM_PROPERTY_RE = re.compile(r"(?P<name>--[a-zA-Z0-9_-]+)\s*:\s*(?P<value>[^;]+)")
+COLOR_MIX_RE = re.compile(r"\bcolor-mix\s*\(", re.IGNORECASE)
+DS_COLOR_TOKEN_RE = re.compile(r"var\(\s*(--ds-color-[a-z0-9-]+)", re.IGNORECASE)
 
 NAMED_COLOR_RE = re.compile(
     r"\b(?:black|white|red|green|blue|yellow|purple|orange|gray|grey|slate|teal|cyan|magenta|pink|brown)\b",
@@ -66,6 +69,29 @@ COLOR_PROPERTY_RE = re.compile(
 )
 
 ALLOWED_RADIUS_VALUES = {"0", "0px", "50%", "999px", "inherit", "initial", "unset"}
+
+NEUTRAL_COLOR_TOKENS = {
+    "--ds-color-canvas",
+    "--ds-color-surface",
+    "--ds-color-surface-muted",
+    "--ds-color-surface-elevated",
+    "--ds-color-border",
+    "--ds-color-border-strong",
+    "--ds-color-ink",
+    "--ds-color-ink-muted",
+    "--ds-color-ink-subtle",
+    "--ds-color-ink-inverse",
+}
+
+REFERENCE_RISK_COLOR_TOKENS = {
+    "--ds-color-info",
+    "--ds-color-surface-tint",
+}
+
+STRUCTURAL_CUSTOM_PROPERTY_RE = re.compile(
+    r"--(?:.*(?:app|shell|sidebar|rail|nav|chrome|layout|panel|card|chart|graph|data|secondary|tertiary|surface|bg|background).*)",
+    re.IGNORECASE,
+)
 
 
 @dataclass
@@ -235,6 +261,19 @@ def _lint_text(text: str, rel_path: str) -> list[ImplementationIssue]:
                     )
                 )
 
+        custom_prop_match = CUSTOM_PROPERTY_RE.search(line)
+        if custom_prop_match:
+            issues.extend(
+                _lint_custom_color_property(
+                    custom_prop_match.group("name"),
+                    custom_prop_match.group("value"),
+                    rel_path,
+                    line_no,
+                    custom_prop_match.start("value") + 1,
+                    raw_line,
+                )
+            )
+
         font_match = FONT_FAMILY_RE.search(line)
         if font_match and "var(--ds-font" not in font_match.group(1) and "inherit" not in font_match.group(1):
             issues.append(
@@ -262,6 +301,48 @@ def _lint_text(text: str, rel_path: str) -> list[ImplementationIssue]:
                     raw_line,
                 )
             )
+
+    return issues
+
+
+def _lint_custom_color_property(
+    name: str,
+    value: str,
+    rel_path: str,
+    line_no: int,
+    column: int,
+    raw_line: str,
+) -> list[ImplementationIssue]:
+    if not COLOR_MIX_RE.search(value):
+        return []
+
+    tokens = {token.lower() for token in DS_COLOR_TOKEN_RE.findall(value)}
+    chromatic_tokens = tokens - NEUTRAL_COLOR_TOKENS
+    issues: list[ImplementationIssue] = []
+
+    if len(chromatic_tokens) > 1:
+        issues.append(
+            _issue(
+                "DS030",
+                rel_path,
+                line_no,
+                column,
+                "Derived local palette mixes multiple chromatic --ds-color roles; alias a single semantic token or mix one role with neutral/transparent.",
+                raw_line,
+            )
+        )
+
+    if STRUCTURAL_CUSTOM_PROPERTY_RE.fullmatch(name) and tokens & REFERENCE_RISK_COLOR_TOKENS:
+        issues.append(
+            _issue(
+                "DS031",
+                rel_path,
+                line_no,
+                column,
+                "Structural palette variable derives from info/surface-tint roles; keep reference-like palette composition out of implementation chrome.",
+                raw_line,
+            )
+        )
 
     return issues
 

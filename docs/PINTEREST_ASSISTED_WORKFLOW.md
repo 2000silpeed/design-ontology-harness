@@ -11,6 +11,7 @@ Pinterest-assisted 모드는 Pinterest를 직접 truth source로 삼는 기능�
 - 최종 분석 입력은 언제나 로컬 파일 기반 `visual_reference.sources`
 - 보드/핀 URL은 분석 대상이 아니라 provenance 또는 캡처 메모
 - manifest와 visual outputs는 `observed` / `inferred` / `unverified` provenance 문맥을 유지
+- 구현 repo에서는 `STYLE.md` / `DESIGN.md`와 `IMPLEMENTATION_CONTRACT.md`가 Pinterest reference의 흡수 범위를 제한합니다. 색상, 폰트, IA, copy는 Pinterest에서 가져오지 않습니다.
 
 ## 권장 운영 흐름
 
@@ -21,6 +22,7 @@ Pinterest-assisted 모드는 Pinterest를 직접 truth source로 삼는 기능�
 5. 사람 또는 에이전트가 명시적으로 선택
 6. 선택된 캡처만 `visual_reference.sources`로 승격
 7. `analyze-visuals` -> `run-project`
+8. `build-preset` -> `install-preset`으로 `STYLE.md` / `DESIGN.md`를 구현 repo에 배포
 
 ## 산출물
 

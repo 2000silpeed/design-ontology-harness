@@ -35,6 +35,8 @@ class NodeType(str, Enum):
     BenchmarkSystem = "BenchmarkSystem"
     GeneratedVisualAsset = "GeneratedVisualAsset"
     ImageGenerationModel = "ImageGenerationModel"
+    GovernanceRule = "GovernanceRule"
+    ImplementationFailurePattern = "ImplementationFailurePattern"
 
 
 class EdgeType(str, Enum):
@@ -65,6 +67,8 @@ class EdgeType(str, Enum):
     generated_with = "generated_with"
     grounded_in = "grounded_in"
     intended_for = "intended_for"
+    enforces = "enforces"
+    prevents = "prevents"
 
 
 @dataclass(slots=True)

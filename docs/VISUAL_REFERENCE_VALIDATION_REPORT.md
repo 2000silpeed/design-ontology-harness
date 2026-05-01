@@ -113,6 +113,9 @@ python -m design_ontology_harness.cli generate-visual-queries \
    plan/manifest에는 아래 guardrail이 함께 생성된다.
    `auth-and-dynamic-loading`, `volatile-search-results`, `copyright-and-redistribution`, `robots-and-access-constraints`
 
+5. 구현 repo에서는 `STYLE.md` / `DESIGN.md`와 `IMPLEMENTATION_CONTRACT.md`가 마지막 가드레일이다.
+   visual reference는 morphology/density/proportion으로만 흡수되고, palette/type/IA/copy는 온톨로지 산출물을 우선한다.
+
 ## 결론
 
 - `V-13`: 샘플 프로젝트 2종 검증 완료
@@ -124,3 +127,4 @@ python -m design_ontology_harness.cli generate-visual-queries \
 - local visual reference는 density / surface / tone / hierarchy를 보강
 - Pinterest는 query 생성과 선택 보조에 머무르고, 직접 분석 입력은 여전히 로컬 파일에 고정
 - image-derived signal은 `observed` / `inferred` / `unverified` provenance 문맥으로 추적 가능
+- Style Capsule은 reference 흡수 범위를 구현자/에이전트가 처음부터 읽는 문서로 고정

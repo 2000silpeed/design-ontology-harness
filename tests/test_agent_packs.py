@@ -5,17 +5,31 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from design_ontology_harness.agent_packs import _codex_visual_asset_skill, scaffold_agent_pack
+from design_ontology_harness.agent_packs import (
+    _codex_implementer_skill,
+    _codex_visual_asset_skill,
+    scaffold_agent_pack,
+)
 
 
 class AgentPackTests(unittest.TestCase):
     def test_codex_visual_asset_skill_uses_imagine2_and_artifacts(self) -> None:
         skill_text = _codex_visual_asset_skill("design-system")
 
+        self.assertIn("STYLE.md", skill_text)
+        self.assertIn("DESIGN.md", skill_text)
         self.assertIn("imagine2", skill_text)
         self.assertIn("visual_reference_report.json", skill_text)
         self.assertIn("public/generated/design-system/manifest.json", skill_text)
         self.assertIn("alt_text", skill_text)
+
+    def test_codex_implementer_reads_style_capsule_first(self) -> None:
+        skill_text = _codex_implementer_skill("design-system")
+
+        self.assertIn("IMPLEMENTATION_CONTRACT.md", skill_text)
+        self.assertIn("STYLE.md", skill_text)
+        self.assertIn("DESIGN.md", skill_text)
+        self.assertIn("Token binding is necessary but not sufficient", skill_text)
 
     def test_codex_scaffold_includes_visual_asset_skill(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

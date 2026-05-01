@@ -13,6 +13,7 @@ HTML `<head>` 에 아래 스니펫을 추가하세요.
 
 - `tokens.css` — 색상/반경 CSS 변수 (`:root`, dark 지원 프리셋은 `[data-theme='dark']` + `@media (prefers-color-scheme: dark)`)
 - `fonts.css` — Pretendard `@font-face` 및 `--ds-font-ko` (ko 로케일)
+- `STYLE.md` / `DESIGN.md` — 에이전트가 먼저 읽는 스타일 캡슐
 - 나머지 파일 — 프리셋 산출물 (직접 수정하지 말고 재설치로 갱신)
 
 예시: `color: var(--ds-color-ink); background: var(--ds-color-surface);`

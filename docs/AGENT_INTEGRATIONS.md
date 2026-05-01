@@ -67,40 +67,74 @@ If you later publish your own repo, you can fill those values in then.
 
 The generated skills and agents expect these files inside the implementation repo:
 
+- `design-system/IMPLEMENTATION_CONTRACT.md`
+- `design-system/STYLE.md`
+- `design-system/DESIGN.md`
 - `design-system/system_spec.md`
 - `design-system/token_schema.json`
 - `design-system/component_inventory.json`
 - `design-system/system_ontology.json`
+- `design-system/components/component_specs.md`
 
 If a curated color reference is connected through the harness project, the generated `system_spec.md` and `token_schema.json` will also carry the active palette, alternative palette candidates, and semantic role hints that agents should follow.
 
-You should sync them from a harness project output such as:
+The recommended path is to install a preset into the implementation repo:
 
-- `build/system/blueprint/system_spec.md`
-- `build/system/blueprint/token_schema.json`
-- `build/system/blueprint/component_inventory.json`
-- `build/system/blueprint/system_ontology.json`
+```bash
+uv run design-ontology install-preset \
+  --preset-id conversation-copilot--corporate-trust \
+  --target-repo /path/to/implementation-repo \
+  --adapter raw-css-variables \
+  --color-mode light \
+  --locale ko
+```
+
+This writes the design-system mirror plus `IMPLEMENTATION_CONTRACT.md`, `STYLE.md`, `DESIGN.md`, adapter CSS files, and `INSTALLED.json`.
+
+If you are syncing manually, copy them from a harness project/preset output:
+
+- `presets/<id>/STYLE.md`
+- `presets/<id>/DESIGN.md`
+- `presets/<id>/system_spec.md`
+- `presets/<id>/token_schema.json`
+- `presets/<id>/component_inventory.json`
+- `presets/<id>/system_ontology.json`
+- `presets/<id>/components/`
 
 ## Recommended Usage In An Implementation Repo
 
 1. Generate artifacts from the harness project
-2. Copy or sync them into `design-system/`
-3. Run `init-agent-pack`
-4. Use:
+2. Run `build-preset` if the project is not already in `presets/`
+3. Run `install-preset` so `design-system/` receives the full mirror
+4. Run `init-agent-pack`
+5. Use:
    - Codex skills for implementation inside Codex
    - Claude Code skills and subagents inside Claude Code
 
-If you do not need agent integrations, you can stop at step 2. The harness remains fully useful without any Codex or Claude-specific layer.
+If you do not need agent integrations, you can stop after `install-preset`. The harness remains fully useful without any Codex or Claude-specific layer.
 
 ## Practical Example
 
 In a frontend repo:
 
+- first ask the agent to read `design-system/IMPLEMENTATION_CONTRACT.md` and `design-system/STYLE.md`
 - ask the architect skill/agent to map a new screen to component families
 - ask the implementer skill/agent to build the screen using existing tokens and primitives
 - in Codex, ask the visual asset skill to generate `imagine2` imagery for hero, empty-state, editorial, or product sections when the screen needs real visual substance
 - check `system_ontology.json` for `GeneratedVisualAsset` and `ImageGenerationModel` nodes before treating generated imagery as part of the system contract
 - if the request falls outside the current artifacts, update the harness project first instead of improvising a new system
+
+Suggested prompt:
+
+```text
+design-system/IMPLEMENTATION_CONTRACT.md,
+design-system/STYLE.md,
+design-system/token_schema.json,
+design-system/components/component_specs.md 기준으로 작업해줘.
+
+외부 참고 이미지는 형태, 밀도, 컴포넌트 비례만 반영하고
+색상, 폰트, IA, 카피는 온톨로지와 토큰을 우선해.
+```
 
 ## Codex Visual Asset Workflow
 
@@ -109,7 +143,7 @@ In a frontend repo:
 
 기본 흐름:
 
-1. `design-system/system_spec.md`, `token_schema.json`, `component_inventory.json`, 가능하면 `visual_reference_report.json`을 읽습니다.
+1. `design-system/IMPLEMENTATION_CONTRACT.md`, `STYLE.md`, `token_schema.json`, `component_inventory.json`, 가능하면 `visual_reference_report.json`을 읽습니다.
 2. Codex에서 이미지 생성 모델 선택이 가능하면 `imagine2`를 선택합니다.
 3. 브랜드 키워드, 안티 키워드, 팔레트, density/surface cue를 반영해 2-4개 후보 이미지를 만듭니다.
 4. 승인한 이미지는 `public/generated/design-system/` 같은 정적 에셋 폴더에 넣고 `manifest.json`에 prompt, model, intended slot, alt text, source artifacts를 기록합니다.

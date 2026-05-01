@@ -771,6 +771,73 @@ def _infer_visual_asset_slots(component_inventory: dict) -> list[tuple[dict, lis
 
 
 # ---------------------------------------------------------------------------
+# Governance + feedback promotion layer
+# ---------------------------------------------------------------------------
+
+
+def build_governance_layer(
+    graph: DesignOntologyGraph,
+    brand_profile: dict,
+    blueprint: dict,
+) -> None:
+    """Promote implementation review learnings into ontology nodes."""
+    brand_name = brand_profile.get("brand_name", "Brand")
+    brand_id = f"brand:{slugify(brand_name)}"
+    governance = blueprint.get("governance") or {}
+    reference_scope = governance.get("reference_absorption_scope") or {}
+
+    scope_id = "governance:reference-absorption-scope"
+    graph.add_node(OntologyNode(
+        id=scope_id,
+        type=NodeType.GovernanceRule,
+        label="Reference absorption scope",
+        meta={
+            "rule": reference_scope.get("rule", ""),
+            "allowed": reference_scope.get("allowed", []),
+            "denied": reference_scope.get("denied", []),
+        },
+    ))
+    if graph.get_node(brand_id):
+        graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=scope_id, target=brand_id))
+
+    for category in ("color", "typography"):
+        target_id = f"token-category:{category}"
+        if graph.get_node(target_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.enforces, source=scope_id, target=target_id))
+
+    for pattern in reference_scope.get("failure_patterns", []):
+        pattern_id = f"failure-pattern:{slugify(pattern.get('id', 'implementation-failure'))}"
+        graph.add_node(OntologyNode(
+            id=pattern_id,
+            type=NodeType.ImplementationFailurePattern,
+            label=pattern.get("id", "implementation failure"),
+            meta={
+                "trigger": pattern.get("trigger", ""),
+                "rule": pattern.get("rule", ""),
+                "prevention": pattern.get("prevention", ""),
+                "technical_controls": pattern.get("technical_controls", []),
+            },
+        ))
+        graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=scope_id, target=pattern_id))
+
+    promotion = governance.get("feedback_promotion_policy") or reference_scope.get("promotion_policy") or {}
+    if promotion:
+        promotion_id = f"governance:{slugify(promotion.get('id', 'feedback-promotion'))}"
+        graph.add_node(OntologyNode(
+            id=promotion_id,
+            type=NodeType.GovernanceRule,
+            label=promotion.get("id", "feedback promotion"),
+            meta={
+                "rule": promotion.get("rule", ""),
+                "outputs": promotion.get("outputs", []),
+            },
+        ))
+        if graph.get_node(brand_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=promotion_id, target=brand_id))
+        graph.add_edge(OntologyEdge(type=EdgeType.enforces, source=promotion_id, target=scope_id))
+
+
+# ---------------------------------------------------------------------------
 # Orchestrator
 # ---------------------------------------------------------------------------
 
@@ -796,6 +863,7 @@ def build_full_ontology_graph(
     build_contrast_audit_layer(graph, brand_profile)
     build_accessibility_layer(graph, component_inventory)
     build_benchmark_layer(graph, brand_profile)
+    build_governance_layer(graph, brand_profile, blueprint)
     build_generated_visual_asset_layer(graph, brand_profile, blueprint, component_inventory)
 
     return graph

@@ -20,7 +20,7 @@
 실제 앱/서비스 저장소에서는:
 
 - `brand_profile.json` 혹은 이와 동등한 제품 정체성 입력값 유지
-- 생성된 `system_spec.md`, `token_schema.json`, `component_inventory.json` 소비
+- 생성된 `system_spec.md`, `token_schema.json`, `component_inventory.json`, `STYLE.md` / `DESIGN.md` 소비
 - 실제 토큰, 컴포넌트, 문서, 테스트 구현
 
 ## Workflow
@@ -125,6 +125,33 @@ uv run design-ontology run-project --project-dir projects/my-app
 
 `visual_reference`가 연결돼 있으면 위 산출물 안에 visual direction, layout rhythm, image-derived component hints도 함께 반영됩니다.
 
+### 6. 프리셋 승격과 Style Capsule 생성
+
+구현 repo에 설치하려면 프로젝트 산출물을 프리셋으로 승격합니다. 이 단계에서 `STYLE.md`와 `DESIGN.md`가 생성됩니다.
+
+```bash
+uv run design-ontology build-preset \
+  --project projects/my-app \
+  --preset-id conversation-copilot--corporate-trust \
+  --owner maintainer \
+  --tier P3 \
+  --color-modes light \
+  --default-color-mode light \
+  --tags ko,enterprise,copilot
+```
+
+생성 파일:
+
+- `presets/<id>/STYLE.md`
+- `presets/<id>/DESIGN.md`
+- `presets/<id>/manifest.json`
+- `presets/<id>/preview.md`
+- `presets/<id>/token_schema.json`
+- `presets/<id>/component_inventory.json`
+- `presets/<id>/system_spec.md`
+
+`STYLE.md` / `DESIGN.md`는 에이전트가 먼저 읽는 스타일 캡슐입니다. 자세한 규칙은 [STYLE_CAPSULE.md](./STYLE_CAPSULE.md)를 참고합니다.
+
 ## How To Use In A Real Implementation Repo
 
 ### Option 1. Separate harness repo + product repo
@@ -137,12 +164,25 @@ uv run design-ontology run-project --project-dir projects/my-app
 
 이때 연결 포인트는 보통 아래와 같습니다.
 
+- `IMPLEMENTATION_CONTRACT.md` -> 외부 reference 흡수 범위와 구현 preflight
+- `STYLE.md` / `DESIGN.md` -> 구현자가 먼저 읽는 짧은 스타일 캡슐
 - `token_schema.json` -> CSS variables / Tailwind theme / design token pipeline
 - `component_inventory.json` -> 구현 우선순위와 컴포넌트 backlog
 - `system_spec.md` -> 디자이너/개발자 공통 기준 문서
 - `system_ontology.json` -> agent prompt context 또는 graph DB 입력
 
-원하면 implementation repo에 바로 Codex / Claude Code integration pack도 생성할 수 있습니다.
+프리셋은 adapter로 바로 설치할 수 있습니다.
+
+```bash
+uv run design-ontology install-preset \
+  --preset-id conversation-copilot--corporate-trust \
+  --target-repo /path/to/implementation-repo \
+  --adapter raw-css-variables \
+  --color-mode light \
+  --locale ko
+```
+
+원하면 implementation repo에 Codex / Claude Code integration pack도 생성할 수 있습니다.
 
 ```bash
 uv run design-ontology init-agent-pack \
@@ -165,19 +205,41 @@ uv run design-ontology init-agent-pack \
 
 실제 구현용 에이전트는 아래 순서로 입력을 받는 것이 좋습니다.
 
-1. `brand_profile.json`
-2. `build/system/blueprint/system_spec.md`
-3. `build/system/blueprint/token_schema.json`
-4. `build/system/blueprint/component_inventory.json`
-5. 구현 대상 코드베이스
+1. `design-system/IMPLEMENTATION_CONTRACT.md`
+2. `design-system/STYLE.md` 또는 `design-system/DESIGN.md`
+3. `design-system/system_spec.md`
+4. `design-system/token_schema.json`
+5. `design-system/component_inventory.json`
+6. `design-system/components/component_specs.md`
+7. 구현 대상 코드베이스
 
 그 다음 에이전트에게 아래처럼 지시합니다.
 
 - `token_schema.json`에 맞춰 CSS 변수와 theme object 생성
 - `component_inventory.json`의 high priority family부터 구현
 - `system_spec.md`의 anti-keyword를 위반하지 않게 UI 의사결정
-- `system_spec.md`와 `component_specs.md`의 visual hints는 구조 변경이 아니라 표현 계층 결정에만 사용
+- `STYLE.md`와 `component_specs.md`의 visual hints는 reference 형태·밀도 흡수에만 사용
+- 외부 reference에서 색상, 폰트, IA, copy를 가져오지 않음
 - 새 컴포넌트 추가보다 기존 primitive 확장을 우선
+
+권장 프롬프트:
+
+```text
+design-system/IMPLEMENTATION_CONTRACT.md,
+design-system/STYLE.md,
+design-system/token_schema.json,
+design-system/components/component_specs.md 기준으로 이 화면을 리팩해줘.
+
+외부 참고 이미지는 형태, 밀도, 컴포넌트 비례만 반영하고
+색상, 폰트, IA, 카피는 온톨로지와 토큰을 우선해.
+작업 후 lint-implementation까지 돌려줘.
+```
+
+검증:
+
+```bash
+uv run design-ontology lint-implementation --target-repo /path/to/implementation-repo
+```
 
 ## Practical Rollout Order
 

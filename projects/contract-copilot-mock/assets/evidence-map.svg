@@ -4,35 +4,35 @@
   <defs>
     <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#FFFFFF"/>
-      <stop offset="1" stop-color="#EEF7F9"/>
+      <stop offset="1" stop-color="#EEF1F6"/>
     </linearGradient>
-    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="primary" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#0071A8"/>
-      <stop offset="1" stop-color="#05ADFF"/>
+      <stop offset="1" stop-color="#0071A8"/>
     </linearGradient>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#111111" flood-opacity="0.12"/>
     </filter>
   </defs>
 
-  <rect width="920" height="300" rx="24" fill="#F7F8FA"/>
-  <path d="M36 240 C188 122 265 250 390 128 S648 77 884 188" fill="none" stroke="#B0E0E6" stroke-width="18" stroke-linecap="round" opacity="0.7"/>
-  <path d="M58 90 C220 70 274 164 388 148 S585 95 824 78" fill="none" stroke="#D7A170" stroke-width="4" stroke-dasharray="10 12" opacity="0.9"/>
+  <rect width="920" height="300" rx="8" fill="#F7F8FA"/>
+  <path d="M36 240 C188 122 265 250 390 128 S648 77 884 188" fill="none" stroke="#EEF1F6" stroke-width="18" stroke-linecap="round"/>
+  <path d="M58 90 C220 70 274 164 388 148 S585 95 824 78" fill="none" stroke="#B87333" stroke-width="4" stroke-dasharray="10 12" opacity="0.78"/>
 
   <g filter="url(#shadow)">
-    <rect x="38" y="36" width="238" height="214" rx="18" fill="url(#panel)" stroke="#C4C4C4"/>
+    <rect x="38" y="36" width="238" height="214" rx="8" fill="url(#panel)" stroke="#C4C4C4"/>
     <rect x="60" y="60" width="72" height="12" rx="6" fill="#0071A8"/>
     <rect x="60" y="92" width="176" height="10" rx="5" fill="#6B6F74" opacity="0.35"/>
     <rect x="60" y="118" width="148" height="10" rx="5" fill="#6B6F74" opacity="0.28"/>
-    <rect x="60" y="144" width="184" height="44" rx="10" fill="#F8ECF2" stroke="#8B2252" stroke-width="2"/>
+    <rect x="60" y="144" width="184" height="44" rx="4" fill="#FFFFFF" stroke="#8B2252" stroke-width="2"/>
     <rect x="74" y="160" width="98" height="9" rx="5" fill="#8B2252" opacity="0.72"/>
     <rect x="60" y="206" width="132" height="10" rx="5" fill="#6B6F74" opacity="0.28"/>
   </g>
 
   <g filter="url(#shadow)">
-    <rect x="344" y="58" width="248" height="178" rx="18" fill="#FFFFFF" stroke="#B0E0E6"/>
+    <rect x="344" y="58" width="248" height="178" rx="8" fill="#FFFFFF" stroke="#C4C4C4"/>
     <rect x="366" y="82" width="94" height="14" rx="7" fill="#111111" opacity="0.86"/>
-    <circle cx="386" cy="136" r="30" fill="url(#blue)"/>
+    <circle cx="386" cy="136" r="30" fill="url(#primary)"/>
     <circle cx="484" cy="130" r="22" fill="#B87333"/>
     <circle cx="534" cy="178" r="26" fill="#4A7C59"/>
     <path d="M416 136 L462 131" stroke="#0071A8" stroke-width="4" stroke-linecap="round"/>
@@ -42,18 +42,18 @@
   </g>
 
   <g filter="url(#shadow)">
-    <rect x="662" y="42" width="214" height="82" rx="16" fill="#FFFFFF" stroke="#C4C4C4"/>
+    <rect x="662" y="42" width="214" height="82" rx="8" fill="#FFFFFF" stroke="#C4C4C4"/>
     <rect x="682" y="64" width="50" height="10" rx="5" fill="#0071A8"/>
     <rect x="682" y="88" width="142" height="9" rx="5" fill="#6B6F74" opacity="0.3"/>
     <circle cx="846" cy="82" r="12" fill="#4A7C59"/>
   </g>
 
   <g filter="url(#shadow)">
-    <rect x="634" y="158" width="242" height="100" rx="16" fill="#FFFFFF" stroke="#C4C4C4"/>
+    <rect x="634" y="158" width="242" height="100" rx="8" fill="#FFFFFF" stroke="#C4C4C4"/>
     <rect x="654" y="180" width="72" height="10" rx="5" fill="#B87333"/>
     <rect x="654" y="206" width="174" height="9" rx="5" fill="#6B6F74" opacity="0.32"/>
     <rect x="654" y="228" width="128" height="9" rx="5" fill="#6B6F74" opacity="0.24"/>
-    <rect x="812" y="178" width="40" height="28" rx="8" fill="#F8ECF2" stroke="#8B2252"/>
+    <rect x="812" y="178" width="40" height="28" rx="4" fill="#FFFFFF" stroke="#8B2252"/>
   </g>
 
   <path d="M276 158 L344 148" stroke="#0071A8" stroke-width="4" stroke-linecap="round"/>

@@ -3,6 +3,7 @@ import unittest
 from design_ontology_harness.graph_builders import build_full_ontology_graph
 from design_ontology_harness.graph_schema import EdgeType, NodeType
 from design_ontology_harness.graph_spec_sections import build_graph_spec_sections
+from design_ontology_harness.synthesis import REFERENCE_ABSORPTION_SCOPE
 
 
 class VisualAssetOntologyTests(unittest.TestCase):
@@ -104,6 +105,33 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIn("Generated Visual Asset Plan", sections)
         self.assertIn("imagine2", sections)
         self.assertIn("public/generated/design-system/manifest.json", sections)
+
+    def test_feedback_failure_patterns_are_promoted_to_governance_nodes(self) -> None:
+        graph = build_full_ontology_graph(
+            brand_profile={"brand_name": "Mercer"},
+            blueprint={
+                "principles": [],
+                "governance": {
+                    "reference_absorption_scope": REFERENCE_ABSORPTION_SCOPE,
+                    "feedback_promotion_policy": REFERENCE_ABSORPTION_SCOPE["promotion_policy"],
+                },
+            },
+            component_inventory={"families": [], "components": []},
+            token_schema={"categories": {}},
+        )
+
+        scope = graph.get_node("governance:reference-absorption-scope")
+        self.assertIsNotNone(scope)
+        self.assertEqual(scope.type, NodeType.GovernanceRule)
+        self.assertIn("palette composition or derived secondary palettes", scope.meta["denied"])
+
+        failure = graph.get_node("failure-pattern:token-bound-reference-palette-mixing")
+        self.assertIsNotNone(failure)
+        self.assertEqual(failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("DS030" in item for item in failure.meta["technical_controls"]))
+
+        prevention_edges = graph.get_edges_from("governance:reference-absorption-scope", EdgeType.prevents)
+        self.assertIn("failure-pattern:token-bound-reference-palette-mixing", {edge.target for edge in prevention_edges})
 
 
 if __name__ == "__main__":

@@ -51,6 +51,7 @@ REFERENCE_ABSORPTION_SCOPE = {
     ],
     "denied": [
         "color palette",
+        "palette composition or derived secondary palettes",
         "typography family or scale",
         "semantic status colors",
         "product copy",
@@ -60,6 +61,20 @@ REFERENCE_ABSORPTION_SCOPE = {
         "redistributable imagery unless explicitly licensed",
     ],
     "rule": "Visual references are morphology inputs only; tokens, component specs, and product IA remain authoritative.",
+    "failure_patterns": [
+        {
+            "id": "token-bound-reference-palette-mixing",
+            "trigger": "Implementation uses --ds-* tokens but recombines visual-reference-like dark rails, teal/blue secondaries, or status/tint roles into a new palette.",
+            "rule": "Token binding is necessary but not sufficient; color role composition must still follow the ontology palette roles.",
+            "prevention": "Derived colors may alias a semantic token or mix one semantic role with a neutral surface/transparent value. Do not mix multiple chromatic roles to create a local palette.",
+            "technical_controls": ["IMPLEMENTATION_CONTRACT.md", "lint-implementation DS030", "lint-implementation DS031"],
+        }
+    ],
+    "promotion_policy": {
+        "id": "implementation-feedback-promotion",
+        "rule": "When implementation review identifies a repeatable design-system failure, promote it into governance, generated artifacts, and lint checks before treating the current screen as complete.",
+        "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md"],
+    },
 }
 
 KEYWORD_PRINCIPLES = {
@@ -190,12 +205,16 @@ def build_blueprint(
                 "새 시각 규칙은 지원 대상 테마와 breakpoint 전체에서 먼저 검증",
                 "기존 데이터 밀도와 업무 완료 경로를 유지한 상태에서 시각 품질을 높이는 방향을 우선",
                 "기능 위치 변경, 정보 구조 변경, 패널 제거는 별도의 migration plan이 있을 때만 수행",
+                "레퍼런스는 형태·밀도·컴포넌트 비례만 흡수하고, 색 조합·폰트 스케일·도메인 IA는 토큰과 제품 온톨로지를 따른다",
+                "토큰을 사용하더라도 status/tint/info 역할을 섞어 레퍼런스처럼 보이는 새 팔레트를 만들지 않는다",
+                "구현 중 사용자·리뷰어가 반복 가능한 실패 패턴을 지적하면 현재 화면 수정에 그치지 않고 governance/contract/linter로 승격한다",
                 "아이콘 자리에 이모지(🎨 ✅ 🔥 등)를 넣지 않음 — SVG 아이콘 또는 아이콘 라이브러리만 사용",
                 "컴포넌트는 component_specs.md의 anatomy/states/token binding을 그대로 따라 완전히 구현",
                 "'TODO 컴포넌트', '임시 버튼', '플레이스홀더 카드' 같은 반쪽 구현을 남기지 않음"
             ],
             "ai_synthesis_principles": AI_SYNTHESIS_PRINCIPLES,
             "reference_absorption_scope": REFERENCE_ABSORPTION_SCOPE,
+            "feedback_promotion_policy": REFERENCE_ABSORPTION_SCOPE["promotion_policy"],
         },
         "ontology_targets": prioritized_concepts,
         "benchmark": build_benchmark_context(brand_profile),

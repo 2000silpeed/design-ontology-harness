@@ -127,6 +127,7 @@ def _build_readme(preset_id: str, has_fonts_css: bool) -> str:
         "\n"
         "- `tokens.css` — 색상/반경 CSS 변수 (`:root`, dark 지원 프리셋은 `[data-theme='dark']` + `@media (prefers-color-scheme: dark)`)\n"
         + ("- `fonts.css` — Pretendard `@font-face` 및 `--ds-font-ko` (ko 로케일)\n" if has_fonts_css else "")
+        + "- `STYLE.md` / `DESIGN.md` — 에이전트가 먼저 읽는 스타일 캡슐\n"
         + "- 나머지 파일 — 프리셋 산출물 (직접 수정하지 말고 재설치로 갱신)\n"
         "\n"
         "예시: `color: var(--ds-color-ink); background: var(--ds-color-surface);`\n"

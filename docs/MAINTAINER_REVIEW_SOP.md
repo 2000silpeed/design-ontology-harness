@@ -16,7 +16,7 @@ PR 도착
  ├─ b. 기여자 프로필 확인          (2 분)
  ├─ c. 브랜드 IP 스팟체크          (5 분)
  ├─ d. HEX + 셀 중복 수동 검증     (3 분)
- ├─ e. preview.md 육안 확인        (2 분)
+ ├─ e. preview.md + Style Capsule 확인 (3 분)
  ├─ f. self-match cross-validate  (2 분)
  ├─ g. 소스 디렉토리 구조 확인     (1 분)
  ├─ h. 병합 + rebuild + matrix    (5 분)
@@ -24,7 +24,7 @@ PR 도착
  └─ j. 실패 시 복구                (시나리오별)
 ```
 
-**총 예상 시간: 21 분 / PR** — 실측치는 Phase 13-11-C-2 dogfood 결과로 갱신 (§11).
+**총 예상 시간: 22 분 / PR** — 실측치는 Phase 13-11-C-2 dogfood 결과로 갱신 (§11).
 
 ---
 
@@ -89,7 +89,7 @@ python3 scripts/validate-community-preset.py --preset-id <new-id>
 
 **실패 시** → §j 시나리오 2 (HEX 2 개 이상 겹침) — 기여자에게 팔레트 조정 요청.
 
-### e. preview.md 5 섹션 렌더 육안 확인 (≤ 2분)
+### e. preview.md + Style Capsule 렌더 육안 확인 (≤ 3분)
 
 `gh pr view <PR#> --web` 또는 로컬 체크아웃에서 `less presets/<id>/preview.md` 로 5 섹션 육안 확인:
 
@@ -100,6 +100,16 @@ python3 scripts/validate-community-preset.py --preset-id <new-id>
 - [ ] `## 주의사항` — 이 프리셋과 맞지 않는 경우 + 대안 프리셋 링크
 
 **실패 시** → PR 댓글로 "preview.md 의 `<섹션>` 이 비어있습니다. `uv run design-ontology lint-previews --preset-id <id>` 통과시켜 주세요" 요청.
+
+추가로 `less presets/<id>/STYLE.md` 또는 `less presets/<id>/DESIGN.md` 로 스타일 캡슐을 확인합니다.
+
+- [ ] `Authority Order`가 존재하고 external visual references가 마지막 순서
+- [ ] `Color Roles`에 `--ds-color-*` 토큰이 포함됨
+- [ ] `Reference Governance`에 allowed/denied absorption scope가 포함됨
+- [ ] `Token binding is necessary but not sufficient` 문구가 포함됨
+- [ ] `Agent Preflight`에 `lint-implementation` 명령이 포함됨
+
+**실패 시** → `build-preset` 재실행 또는 `style_capsule.py` 렌더러 수정 요청. `STYLE.md`만 수동 수정하지 않습니다.
 
 ### f. self-match Top-1 복수 쿼리 cross-validate (≤ 2분)
 
@@ -289,12 +299,12 @@ Phase 13-11-D 이후 도입 후보 — 현재는 수동 절차.
 
 ```
 PR arrives → (a) automated checks green → (b) contributor profile sanity
-→ (c) brand IP spot-check → (d) HEX/cell overlap → (e) preview.md eyeballing
+→ (c) brand IP spot-check → (d) HEX/cell overlap → (e) preview.md + Style Capsule eyeballing
 → (f) self-match cross-validate → (g) source project layout → (h) merge + rebuild
 → (i) owner notification → (j) recovery playbook if anything failed
 ```
 
-Total ≈ 21 minutes per PR; actual dogfood numbers live in §11.
+Total ≈ 22 minutes per PR; actual dogfood numbers live in §11.
 
 ### Merge → rebuild sequence (maintainer local, harness repo)
 
@@ -328,12 +338,12 @@ Phase 13-11-C-2 에서 가상 기여자 2 명 (`@bob-external` marketing-landing
 | b. 기여자 프로필 | 2 m | 1.5 m | 1.5 m | new handle 은 프로필 링크 + PR 본문 기록으로 충분 |
 | c. 브랜드 IP | 5 m | 4 m | 6 m | carol 은 enterprise chatbot 레퍼런스 검증에 1 분 추가 |
 | d. HEX + 셀 | 3 m | 4 m | 5 m | carol 은 신규 color 등록 PR 선행 필요 판단 1 분 추가, bob 은 wheat 1 겹침 warning 사유 검토 |
-| e. preview.md | 2 m | 2 m | 2 m | 5 섹션 검사 동일 |
+| e. preview.md + Style Capsule | 3 m | 2 m | 2 m | 기존 dogfood는 5 섹션 검사 기준, Style Capsule 추가 후 +1 m 예상 |
 | f. self-match | 2 m | 2 m | 3 m | carol 은 `corporate ai chatbot enterprise trust` 쿼리에 keywords tie-break 확인 |
 | g. 소스 구조 | 1 m | 1 m | 1 m | loom/mercer 모두 scaffold 표준 |
 | h. rebuild + sync | 5 m | 5.5 m | 5.5 m | rebuild-all 20/20 + eval 66/66 + snapshot update |
 | i. owner 통지 | 1 m | 1 m | 1 m | 재평가일 2026-10-21 동일 |
-| **총합** | **21 m** | **~21 m** | **~25 m** | carol 은 신규 color 등록으로 +4 m |
+| **총합** | **22 m** | **~21 m** | **~25 m** | carol 은 신규 color 등록으로 +4 m |
 
 **관찰점 (Phase 13-11-C-2 실측)**
 1. **HEX 1 겹침 warning** 은 판단 시간 1 분 이내 — 동일 brand_tone 군 내가 아니면 warning 사유 기재만 요구하면 충분.
