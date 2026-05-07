@@ -1,6 +1,6 @@
 # Catalog Health Report
 
-> Generated at `2026-04-21T12:39:47Z` · harness `0.1.0`
+> Generated at `2026-05-04T12:29:31Z` · harness `0.1.0`
 
 ## Overview
 
@@ -109,6 +109,6 @@
 
 ## Sources
 
-- install hits: `/Users/sungwoon/ai-projects/design-ontology-harness/presets/.metrics/install_hits.json`
-- match hits: `/Users/sungwoon/ai-projects/design-ontology-harness/presets/.metrics/match_hits.json`
-- snapshot fixture: `/Users/sungwoon/ai-projects/design-ontology-harness/tests/fixtures/preset_snapshots.json`
+- install hits: `/home/runner/work/design-ontology-harness/design-ontology-harness/presets/.metrics/install_hits.json`
+- match hits: `/home/runner/work/design-ontology-harness/design-ontology-harness/presets/.metrics/match_hits.json`
+- snapshot fixture: `/home/runner/work/design-ontology-harness/design-ontology-harness/tests/fixtures/preset_snapshots.json`
