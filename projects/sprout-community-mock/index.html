@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>새싹광장 클래스 커뮤니티</title>
+    <link rel="icon" href="./favicon.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">본문으로 이동</a>
+
+    <svg class="icon-sprite" aria-hidden="true">
+      <symbol id="icon-home" viewBox="0 0 24 24">
+        <path d="m3 11 9-7 9 7" />
+        <path d="M5 10v10h14V10" />
+        <path d="M10 20v-6h4v6" />
+      </symbol>
+      <symbol id="icon-club" viewBox="0 0 24 24">
+        <path d="M7 6h10" />
+        <path d="M5 10h14" />
+        <path d="M7 14h10" />
+        <path d="M8 18h8" />
+        <path d="M4 4h16v16H4Z" />
+      </symbol>
+      <symbol id="icon-gallery" viewBox="0 0 24 24">
+        <path d="M4 5h16v14H4Z" />
+        <path d="m4 16 4.5-4.5 4 4 2.5-2.5L20 18" />
+        <path d="M15 9h.01" />
+      </symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24">
+        <path d="M12 3 5 6v5c0 4.7 3 8.2 7 10 4-1.8 7-5.3 7-10V6Z" />
+        <path d="m8.8 12 2.1 2.1 4.6-5" />
+      </symbol>
+      <symbol id="icon-bell" viewBox="0 0 24 24">
+        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+        <path d="M10 21h4" />
+      </symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24">
+        <path d="m21 21-4.3-4.3" />
+        <path d="M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z" />
+      </symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24">
+        <path d="M12 5v14" />
+        <path d="M5 12h14" />
+      </symbol>
+      <symbol id="icon-send" viewBox="0 0 24 24">
+        <path d="m22 2-7 20-4-9-9-4Z" />
+        <path d="M22 2 11 13" />
+      </symbol>
+      <symbol id="icon-heart" viewBox="0 0 24 24">
+        <path d="M20.8 5.6a5.3 5.3 0 0 0-7.5 0L12 6.9l-1.3-1.3a5.3 5.3 0 1 0-7.5 7.5L12 22l8.8-8.9a5.3 5.3 0 0 0 0-7.5Z" />
+      </symbol>
+      <symbol id="icon-message" viewBox="0 0 24 24">
+        <path d="M21 12a8 8 0 0 1-8 8H7l-4 2 1.4-4.2A8 8 0 1 1 21 12Z" />
+      </symbol>
+      <symbol id="icon-users" viewBox="0 0 24 24">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" />
+        <path d="M9.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+        <path d="M22 21v-2a4 4 0 0 0-3-3.9" />
+        <path d="M16 3.1a4 4 0 0 1 0 7.8" />
+      </symbol>
+      <symbol id="icon-star" viewBox="0 0 24 24">
+        <path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1-4.4-4.3 6.1-.9Z" />
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24">
+        <path d="m5 12 4 4L19 6" />
+      </symbol>
+      <symbol id="icon-leaf" viewBox="0 0 24 24">
+        <path d="M5 19c9 0 14-7 14-14C10 5 5 10 5 19Z" />
+        <path d="M5 19c3-5 7-8 14-14" />
+      </symbol>
+    </svg>
+
+    <div class="page-frame">
+      <aside class="rail" aria-label="새싹광장 메뉴">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg><use href="#icon-leaf" /></svg>
+          </span>
+          <div>
+            <strong>새싹광장</strong>
+            <span>초록초등 4학년 2반</span>
+          </div>
+        </div>
+
+        <nav class="primary-nav" aria-label="주요 화면">
+          <button class="nav-item active" type="button" data-view-target="home">
+            <svg><use href="#icon-home" /></svg>
+            <span>우리 반 광장</span>
+          </button>
+          <button class="nav-item" type="button" data-view-target="clubs">
+            <svg><use href="#icon-club" /></svg>
+            <span>동아리 방</span>
+          </button>
+          <button class="nav-item" type="button" data-view-target="gallery">
+            <svg><use href="#icon-gallery" /></svg>
+            <span>작품 자랑</span>
+          </button>
+          <button class="nav-item" type="button" data-view-target="safety">
+            <svg><use href="#icon-shield" /></svg>
+            <span>안전 약속</span>
+          </button>
+        </nav>
+
+        <section class="teacher-card" aria-labelledby="teacher-card-title">
+          <div class="section-kicker">teacher check</div>
+          <h2 id="teacher-card-title">선생님 확인</h2>
+          <dl>
+            <div>
+              <dt>기다리는 글</dt>
+              <dd>3</dd>
+            </div>
+            <div>
+              <dt>오늘 공개</dt>
+              <dd>12</dd>
+            </div>
+          </dl>
+          <button class="quiet-button" type="button" data-jump="safety">
+            <svg><use href="#icon-shield" /></svg>
+            확인 규칙 보기
+          </button>
+        </section>
+
+        <section class="kind-meter" aria-label="오늘의 친절 온도">
+          <span>친절 온도</span>
+          <strong>92</strong>
+          <i style="--value: 92%"></i>
+        </section>
+      </aside>
+
+      <main id="main" class="main-area">
+        <header class="topbar">
+          <div class="title-group">
+            <span class="section-kicker">class community</span>
+            <h1 id="viewTitle">우리 반 광장</h1>
+          </div>
+          <div class="top-actions">
+            <label class="search-box">
+              <svg><use href="#icon-search" /></svg>
+              <input type="search" placeholder="공지, 친구 칭찬, 작품 검색" />
+            </label>
+            <button class="icon-button" type="button" aria-label="알림">
+              <svg><use href="#icon-bell" /></svg>
+              <span class="notification-dot" aria-hidden="true"></span>
+            </button>
+            <button class="primary-button small" type="button" data-focus-composer>
+              <svg><use href="#icon-plus" /></svg>
+              새 글
+            </button>
+          </div>
+        </header>
+
+        <section class="view active" data-view="home" aria-labelledby="home-heading">
+          <div class="welcome-band">
+            <div class="welcome-copy">
+              <span class="section-kicker">today mission</span>
+              <h2 id="home-heading">오늘은 친구의 멋진 점을 하나 찾아보기</h2>
+              <p>칭찬은 선생님 확인 뒤 우리 반 광장에 올라가요.</p>
+            </div>
+            <svg class="welcome-art" viewBox="0 0 260 160" role="img" aria-label="책과 새싹 그림">
+              <rect x="24" y="34" width="92" height="92" rx="8" fill="#FFF8DC" stroke="#20443A" stroke-width="5" />
+              <path d="M48 60h42M48 80h46M48 100h32" stroke="#F88379" stroke-width="6" stroke-linecap="round" />
+              <path d="M146 118c30 0 54-24 54-54-30 0-54 24-54 54Z" fill="#98FF98" stroke="#20443A" stroke-width="5" />
+              <path d="M170 120V62" stroke="#20443A" stroke-width="6" stroke-linecap="round" />
+              <path d="M150 126h70" stroke="#B0E0E6" stroke-width="9" stroke-linecap="round" />
+              <path d="M130 42h78" stroke="#FFDAB9" stroke-width="10" stroke-linecap="round" />
+            </svg>
+          </div>
+
+          <div class="home-layout">
+            <div class="feed-column">
+              <article class="composer-panel" aria-labelledby="composer-title">
+                <div class="composer-head">
+                  <span class="avatar avatar-mint">새</span>
+                  <div>
+                    <h2 id="composer-title">따뜻한 글쓰기</h2>
+                    <p id="composerStatus">친구 이름은 별명으로, 사진은 선생님 확인 뒤에만 보여요.</p>
+                  </div>
+                </div>
+                <label class="composer-box" for="postText">
+                  <span>글 내용</span>
+                  <textarea id="postText" rows="4" placeholder="오늘 친구들과 나누고 싶은 이야기를 적어봐요."></textarea>
+                </label>
+                <div class="composer-tags" aria-label="글 주제 선택">
+                  <button class="tag-choice active" type="button">칭찬 카드</button>
+                  <button class="tag-choice" type="button">숙제 질문</button>
+                  <button class="tag-choice" type="button">점심 이야기</button>
+                  <button class="tag-choice" type="button">동아리 소식</button>
+                </div>
+                <div class="composer-actions">
+                  <span class="safe-note"><svg><use href="#icon-shield" /></svg> 선생님 승인 후 공개</span>
+                  <button id="postRequest" class="primary-button" type="button">
+                    <svg><use href="#icon-send" /></svg>
+                    게시 요청
+                  </button>
+                </div>
+              </article>
+
+              <article class="post-card">
+                <header class="post-head">
+                  <span class="avatar avatar-coral">도</span>
+                  <div>
+                    <h2>도토리 기자</h2>
+                    <p>독서 모둠 · 선생님 확인 완료</p>
+                  </div>
+                  <span class="post-time">12분 전</span>
+                </header>
+                <p class="post-text">
+                  오늘 과학 시간에 물이 얼 때 부피가 커지는 걸 배웠어요. 우리 모둠은 얼음 관찰표를 더 예쁘게 정리해 보기로 했어요.
+                </p>
+                <figure class="learning-card" aria-label="독서 지도와 관찰 메모 그림">
+                  <svg viewBox="0 0 560 210" role="img" aria-label="파스텔 관찰 메모">
+                    <rect width="560" height="210" rx="8" fill="#EEF8FF" />
+                    <rect x="34" y="34" width="140" height="130" rx="8" fill="#FFFFFF" stroke="#20443A" stroke-width="4" />
+                    <rect x="210" y="34" width="132" height="54" rx="8" fill="#FFDAB9" />
+                    <rect x="210" y="110" width="132" height="54" rx="8" fill="#98FF98" />
+                    <path d="M386 152c46 0 82-37 82-82-46 0-82 36-82 82Z" fill="#F88379" opacity=".72" />
+                    <path d="M402 156V76" stroke="#20443A" stroke-width="6" stroke-linecap="round" />
+                    <path d="M58 68h88M58 96h74M58 124h94" stroke="#F88379" stroke-width="6" stroke-linecap="round" />
+                  </svg>
+                </figure>
+                <div class="reaction-row" aria-label="게시물 반응">
+                  <button class="reaction-button" type="button" data-reaction>
+                    <svg><use href="#icon-heart" /></svg>
+                    응원 <span>18</span>
+                  </button>
+                  <button class="reaction-button" type="button">
+                    <svg><use href="#icon-message" /></svg>
+                    답글 6
+                  </button>
+                  <button class="reaction-button" type="button">
+                    <svg><use href="#icon-star" /></svg>
+                    모아보기
+                  </button>
+                </div>
+              </article>
+
+              <article class="post-card">
+                <header class="post-head">
+                  <span class="avatar avatar-sky">비</span>
+                  <div>
+                    <h2>비눗방울 작가</h2>
+                    <p>작품 자랑 · 선생님 확인 완료</p>
+                  </div>
+                  <span class="post-time">34분 전</span>
+                </header>
+                <p class="post-text">
+                  미술 시간에 만든 바다 포스터예요. 제목은 "쓰레기 없는 파란 길"입니다. 다음에는 친구들이 만든 표어도 같이 붙이고 싶어요.
+                </p>
+                <div class="comment-preview">
+                  <span class="avatar avatar-lavender">솔</span>
+                  <p><strong>솔잎 탐정</strong> 글자가 잘 보여서 캠페인 포스터 같아요.</p>
+                </div>
+                <div class="reaction-row" aria-label="게시물 반응">
+                  <button class="reaction-button" type="button" data-reaction>
+                    <svg><use href="#icon-heart" /></svg>
+                    응원 <span>23</span>
+                  </button>
+                  <button class="reaction-button" type="button">
+                    <svg><use href="#icon-message" /></svg>
+                    답글 9
+                  </button>
+                  <button class="reaction-button" type="button">
+                    <svg><use href="#icon-star" /></svg>
+                    모아보기
+                  </button>
+                </div>
+              </article>
+            </div>
+
+            <aside class="side-column" aria-label="학급 요약">
+              <section class="notice-panel">
+                <div class="panel-title">
+                  <div>
+                    <span class="section-kicker">notice</span>
+                    <h2>선생님 알림</h2>
+                  </div>
+                  <span class="status-pill">중요</span>
+                </div>
+                <p>내일은 학교 텃밭 관찰일입니다. 모둠별로 작은 수첩과 필통을 챙겨 오세요.</p>
+                <button class="secondary-button" type="button">읽었어요</button>
+              </section>
+
+              <section class="buddy-panel">
+                <div class="panel-title">
+                  <div>
+                    <span class="section-kicker">buddy</span>
+                    <h2>오늘의 도움 친구</h2>
+                  </div>
+                  <svg><use href="#icon-users" /></svg>
+                </div>
+                <ol class="buddy-list">
+                  <li><span class="avatar avatar-coral">강</span><strong>준비물 같이 확인</strong><small>2교시 전</small></li>
+                  <li><span class="avatar avatar-mint">나</span><strong>전학생 교실 안내</strong><small>점심 후</small></li>
+                  <li><span class="avatar avatar-sky">라</span><strong>칠판 당번 도와주기</strong><small>종례 전</small></li>
+                </ol>
+              </section>
+
+              <section class="rules-panel">
+                <div class="panel-title">
+                  <div>
+                    <span class="section-kicker">promise</span>
+                    <h2>우리 반 약속</h2>
+                  </div>
+                </div>
+                <ul class="promise-list">
+                  <li><svg><use href="#icon-check" /></svg> 진짜 이름 대신 별명 쓰기</li>
+                  <li><svg><use href="#icon-check" /></svg> 친구를 놀리는 말 올리지 않기</li>
+                  <li><svg><use href="#icon-check" /></svg> 사진은 선생님 확인 후 공유</li>
+                </ul>
+              </section>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" data-view="clubs" aria-labelledby="clubs-heading">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker">clubs</span>
+              <h2 id="clubs-heading">동아리 방</h2>
+            </div>
+            <button class="primary-button" type="button">
+              <svg><use href="#icon-plus" /></svg>
+              모임 만들기
+            </button>
+          </div>
+          <div class="club-grid">
+            <article class="club-card science">
+              <span class="club-icon"><svg><use href="#icon-leaf" /></svg></span>
+              <h3>과학 탐험대</h3>
+              <p>텃밭 관찰, 실험 기록, 작은 발표를 준비해요.</p>
+              <div class="mini-meta"><span>14명</span><span>수요일 2교시</span></div>
+            </article>
+            <article class="club-card art">
+              <span class="club-icon"><svg><use href="#icon-gallery" /></svg></span>
+              <h3>그림 연구소</h3>
+              <p>포스터와 캐릭터를 그리고 친구 작품에 따뜻한 말을 남겨요.</p>
+              <div class="mini-meta"><span>11명</span><span>목요일 점심</span></div>
+            </article>
+            <article class="club-card reading">
+              <span class="club-icon"><svg><use href="#icon-club" /></svg></span>
+              <h3>책갈피 모임</h3>
+              <p>한 주에 한 권씩 마음에 남는 문장을 모아요.</p>
+              <div class="mini-meta"><span>9명</span><span>금요일 아침</span></div>
+            </article>
+          </div>
+          <section class="schedule-panel" aria-labelledby="schedule-heading">
+            <div class="panel-title">
+              <div>
+                <span class="section-kicker">this week</span>
+                <h2 id="schedule-heading">이번 주 모임표</h2>
+              </div>
+            </div>
+            <div class="schedule-list">
+              <div><time>월</time><strong>칭찬 카드 쓰기</strong><span>우리 반 광장</span></div>
+              <div><time>수</time><strong>텃밭 관찰 사진 고르기</strong><span>과학 탐험대</span></div>
+              <div><time>금</time><strong>책갈피 발표</strong><span>책갈피 모임</span></div>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" data-view="gallery" aria-labelledby="gallery-heading">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker">gallery</span>
+              <h2 id="gallery-heading">작품 자랑</h2>
+            </div>
+            <button class="primary-button" type="button">
+              <svg><use href="#icon-plus" /></svg>
+              작품 올리기
+            </button>
+          </div>
+          <div class="gallery-grid">
+            <article class="art-card">
+              <div class="art-thumb poster-a" aria-hidden="true"></div>
+              <h3>쓰레기 없는 파란 길</h3>
+              <p>비눗방울 작가 · 환경 포스터</p>
+              <span class="status-pill">공개됨</span>
+            </article>
+            <article class="art-card">
+              <div class="art-thumb poster-b" aria-hidden="true"></div>
+              <h3>우리 동네 새싹 지도</h3>
+              <p>도토리 기자 · 관찰 지도</p>
+              <span class="status-pill mint">확인 중</span>
+            </article>
+            <article class="art-card">
+              <div class="art-thumb poster-c" aria-hidden="true"></div>
+              <h3>친구에게 보내는 말</h3>
+              <p>솔잎 탐정 · 손글씨 카드</p>
+              <span class="status-pill">공개됨</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" data-view="safety" aria-labelledby="safety-heading">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker">safety</span>
+              <h2 id="safety-heading">안전 약속</h2>
+            </div>
+            <button class="secondary-button" type="button">
+              <svg><use href="#icon-shield" /></svg>
+              보호자 안내
+            </button>
+          </div>
+          <div class="safety-grid">
+            <article class="safety-card">
+              <span class="safety-icon"><svg><use href="#icon-shield" /></svg></span>
+              <h3>선생님 승인</h3>
+              <p>새 글, 사진, 댓글은 공개 전 확인 큐를 지나가요.</p>
+              <div class="progress-line"><i style="--value: 76%"></i></div>
+            </article>
+            <article class="safety-card">
+              <span class="safety-icon"><svg><use href="#icon-check" /></svg></span>
+              <h3>개인정보 가림</h3>
+              <p>전화번호, 주소처럼 위험한 정보는 입력 전에 알려줘요.</p>
+              <div class="progress-line"><i style="--value: 88%"></i></div>
+            </article>
+            <article class="safety-card">
+              <span class="safety-icon"><svg><use href="#icon-heart" /></svg></span>
+              <h3>친절 말하기</h3>
+              <p>놀림이나 비교 대신 도움 되는 말로 바꾸도록 안내해요.</p>
+              <div class="progress-line"><i style="--value: 92%"></i></div>
+            </article>
+          </div>
+          <section class="queue-panel" aria-labelledby="queue-heading">
+            <div class="panel-title">
+              <div>
+                <span class="section-kicker">review queue</span>
+                <h2 id="queue-heading">확인 중인 활동</h2>
+              </div>
+              <span class="status-pill mint">3개</span>
+            </div>
+            <div class="review-list">
+              <div><span class="avatar avatar-coral">모</span><strong>점심시간 사진</strong><p>얼굴 흐림 확인 필요</p></div>
+              <div><span class="avatar avatar-mint">초</span><strong>동아리 모집 글</strong><p>시간과 장소 표현 확인</p></div>
+              <div><span class="avatar avatar-sky">하</span><strong>칭찬 댓글</strong><p>친구 별명 표기 확인</p></div>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="./mockup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="새싹광장">
+  <rect width="64" height="64" rx="14" fill="#FFF8DC"/>
+  <path d="M18 38c8 0 18-8 18-20-8 0-18 8-18 20Z" fill="#98FF98" stroke="#20443A" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M34 42c7 0 14-6 14-16-7 0-14 6-14 16Z" fill="#B0E0E6" stroke="#20443A" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M32 46V27" fill="none" stroke="#20443A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M18 48h28" fill="none" stroke="#F88379" stroke-width="5" stroke-linecap="round"/>
+</svg>
