@@ -1,0 +1,419 @@
+{
+  "node_types": [
+    "Brand",
+    "Principle",
+    "Component",
+    "GeneratedVisualAsset",
+    "ImageGenerationModel",
+    "SourceReference"
+  ],
+  "edge_types": [
+    "expresses",
+    "constrains",
+    "generated_with",
+    "grounded_in",
+    "intended_for",
+    "captures"
+  ],
+  "nodes": [
+    {
+      "id": "brand:sprout-community",
+      "type": "Brand",
+      "label": "새싹광장",
+      "meta": {
+        "product": "초등학생을 위한 학급 커뮤니티 목업",
+        "audience": "elementary students, teachers, guardians"
+      }
+    },
+    {
+      "id": "principle:playful-soft",
+      "type": "Principle",
+      "label": "Playful soft",
+      "meta": {
+        "rule": "Use cute, fresh, pastel imagery with friendly classroom energy."
+      }
+    },
+    {
+      "id": "principle:child-safe-community",
+      "type": "Principle",
+      "label": "Child-safe community",
+      "meta": {
+        "rule": "Avoid identifiable children, private information, real addresses, scary mood, or unsafe behavior."
+      }
+    },
+    {
+      "id": "principle:korean-first-accessibility",
+      "type": "Principle",
+      "label": "Korean-first accessibility",
+      "meta": {
+        "rule": "Every integrated content image needs Korean alt text and must not replace accessible UI text."
+      }
+    },
+    {
+      "id": "image-model:codex-imagegen",
+      "type": "ImageGenerationModel",
+      "label": "Codex image_gen skill",
+      "meta": {
+        "runtime": "Codex built-in image_gen",
+        "default_path": true,
+        "api_fallback": "disabled",
+        "fallback_policy": "no API fallback",
+        "failure_behavior": "If built-in image_gen fails, do not invoke CLI or OpenAI API fallback."
+      }
+    },
+    {
+      "id": "source-reference:codex-imagegen-session-019e1507",
+      "type": "SourceReference",
+      "label": "Codex generated image session 019e1507",
+      "meta": {
+        "kind": "generated-image-session",
+        "directory": "/Users/sungwoon/.codex/generated_images/019e1507-34d5-7792-a649-fce2980656b8",
+        "preserve_originals": true
+      }
+    },
+    {
+      "id": "component:welcome-band",
+      "type": "Component",
+      "label": "welcome-band",
+      "meta": {
+        "family": "hero",
+        "file": "index.html"
+      }
+    },
+    {
+      "id": "component:feed-post-card",
+      "type": "Component",
+      "label": "feed post card",
+      "meta": {
+        "family": "social",
+        "file": "index.html"
+      }
+    },
+    {
+      "id": "component:learning-card",
+      "type": "Component",
+      "label": "learning-card image frame",
+      "meta": {
+        "family": "media",
+        "file": "index.html"
+      }
+    },
+    {
+      "id": "component:art-card",
+      "type": "Component",
+      "label": "art-card",
+      "meta": {
+        "family": "gallery",
+        "file": "index.html"
+      }
+    },
+    {
+      "id": "visual-asset:hero-classroom-garden",
+      "type": "GeneratedVisualAsset",
+      "label": "Hero classroom garden",
+      "meta": {
+        "slot": "hero-image",
+        "status": "integrated",
+        "asset_path": "assets/hero-classroom-garden.webp",
+        "original_png_path": "/Users/sungwoon/.codex/generated_images/019e1507-34d5-7792-a649-fce2980656b8/ig_0c0f52e562273d84016a01c813f87481919f7b84ded3476e2c.png",
+        "model": "Codex image_gen skill",
+        "api_fallback": "disabled",
+        "dimensions": {
+          "width": 1672,
+          "height": 941,
+          "aspect_ratio": "16:9"
+        },
+        "sha256": "adcdf29713285d46dbc1a15785fb793ed0cdb3ac309b869a6763dcde5ee415c4",
+        "alt_text": "화분과 색연필, 공책이 놓인 밝은 교실 정원"
+      }
+    },
+    {
+      "id": "visual-asset:science-ice-observation",
+      "type": "GeneratedVisualAsset",
+      "label": "Science ice observation",
+      "meta": {
+        "slot": "feed-card-image",
+        "status": "integrated",
+        "asset_path": "assets/science-ice-observation.webp",
+        "original_png_path": "/Users/sungwoon/.codex/generated_images/019e1507-34d5-7792-a649-fce2980656b8/ig_0c0f52e562273d84016a01c853bc3c819197482b72c533f0c2.png",
+        "model": "Codex image_gen skill",
+        "api_fallback": "disabled",
+        "dimensions": {
+          "width": 1448,
+          "height": 1086,
+          "aspect_ratio": "4:3"
+        },
+        "sha256": "d4c93d74efc3090e3ceeb61d70a93e86e0caa4652f784634377c17c7f1d86065",
+        "alt_text": "얼음과 물방울을 관찰하는 과학 책상 그림"
+      }
+    },
+    {
+      "id": "visual-asset:gallery-ocean-poster",
+      "type": "GeneratedVisualAsset",
+      "label": "Clean ocean poster",
+      "meta": {
+        "slot": "gallery-artwork",
+        "status": "integrated",
+        "asset_path": "assets/gallery-ocean-poster.webp",
+        "original_png_path": "/Users/sungwoon/.codex/generated_images/019e1507-34d5-7792-a649-fce2980656b8/ig_0c0f52e562273d84016a01c89f2b5881918b45431c4abda7dc.png",
+        "model": "Codex image_gen skill",
+        "api_fallback": "disabled",
+        "dimensions": {
+          "width": 1448,
+          "height": 1086,
+          "aspect_ratio": "4:3"
+        },
+        "sha256": "33674907ecb7878e06938065dc42b24ea38951a00371710da601f81dd9f2cf41",
+        "alt_text": "깨끗한 바다와 해변을 종이 오리기처럼 표현한 환경 포스터"
+      }
+    },
+    {
+      "id": "visual-asset:gallery-sprout-map",
+      "type": "GeneratedVisualAsset",
+      "label": "Neighborhood sprout map",
+      "meta": {
+        "slot": "gallery-artwork",
+        "status": "integrated",
+        "asset_path": "assets/gallery-sprout-map.webp",
+        "original_png_path": "/Users/sungwoon/.codex/generated_images/019e1507-34d5-7792-a649-fce2980656b8/ig_0c0f52e562273d84016a01c8e7dd2081919f17d5d538380646.png",
+        "model": "Codex image_gen skill",
+        "api_fallback": "disabled",
+        "dimensions": {
+          "width": 1448,
+          "height": 1086,
+          "aspect_ratio": "4:3"
+        },
+        "sha256": "22d63ff84c130a62ed06057555cba01f8e1313572e8f39312a546596c1cef385",
+        "alt_text": "학교와 텃밭을 새싹 표시로 꾸민 동네 지도 작품"
+      }
+    },
+    {
+      "id": "visual-asset:gallery-kindness-card",
+      "type": "GeneratedVisualAsset",
+      "label": "Kindness card artwork",
+      "meta": {
+        "slot": "gallery-artwork",
+        "status": "integrated",
+        "asset_path": "assets/gallery-kindness-card.webp",
+        "original_png_path": "/Users/sungwoon/.codex/generated_images/019e1507-34d5-7792-a649-fce2980656b8/ig_0c0f52e562273d84016a01c94919f88191a232662b0605ec72.png",
+        "model": "Codex image_gen skill",
+        "api_fallback": "disabled",
+        "dimensions": {
+          "width": 1448,
+          "height": 1086,
+          "aspect_ratio": "4:3"
+        },
+        "sha256": "48ee7df28b088f9877a0f382270d2df257cde306ce7a9b0c397719f70fd9ae96",
+        "alt_text": "하트와 잎사귀 장식이 있는 따뜻한 손글씨 카드 작품"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "type": "expresses",
+      "source": "brand:sprout-community",
+      "target": "principle:playful-soft"
+    },
+    {
+      "type": "expresses",
+      "source": "brand:sprout-community",
+      "target": "principle:child-safe-community"
+    },
+    {
+      "type": "expresses",
+      "source": "brand:sprout-community",
+      "target": "principle:korean-first-accessibility"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:playful-soft",
+      "target": "visual-asset:hero-classroom-garden"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:playful-soft",
+      "target": "visual-asset:science-ice-observation"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:playful-soft",
+      "target": "visual-asset:gallery-ocean-poster"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:playful-soft",
+      "target": "visual-asset:gallery-sprout-map"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:playful-soft",
+      "target": "visual-asset:gallery-kindness-card"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:child-safe-community",
+      "target": "visual-asset:hero-classroom-garden"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:child-safe-community",
+      "target": "visual-asset:science-ice-observation"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:child-safe-community",
+      "target": "visual-asset:gallery-ocean-poster"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:child-safe-community",
+      "target": "visual-asset:gallery-sprout-map"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:child-safe-community",
+      "target": "visual-asset:gallery-kindness-card"
+    },
+    {
+      "type": "generated_with",
+      "source": "visual-asset:hero-classroom-garden",
+      "target": "image-model:codex-imagegen"
+    },
+    {
+      "type": "generated_with",
+      "source": "visual-asset:science-ice-observation",
+      "target": "image-model:codex-imagegen"
+    },
+    {
+      "type": "generated_with",
+      "source": "visual-asset:gallery-ocean-poster",
+      "target": "image-model:codex-imagegen"
+    },
+    {
+      "type": "generated_with",
+      "source": "visual-asset:gallery-sprout-map",
+      "target": "image-model:codex-imagegen"
+    },
+    {
+      "type": "generated_with",
+      "source": "visual-asset:gallery-kindness-card",
+      "target": "image-model:codex-imagegen"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:hero-classroom-garden",
+      "target": "brand:sprout-community"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:science-ice-observation",
+      "target": "brand:sprout-community"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:gallery-ocean-poster",
+      "target": "brand:sprout-community"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:gallery-sprout-map",
+      "target": "brand:sprout-community"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:gallery-kindness-card",
+      "target": "brand:sprout-community"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:hero-classroom-garden",
+      "target": "source-reference:codex-imagegen-session-019e1507"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:science-ice-observation",
+      "target": "source-reference:codex-imagegen-session-019e1507"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:gallery-ocean-poster",
+      "target": "source-reference:codex-imagegen-session-019e1507"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:gallery-sprout-map",
+      "target": "source-reference:codex-imagegen-session-019e1507"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:gallery-kindness-card",
+      "target": "source-reference:codex-imagegen-session-019e1507"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:hero-classroom-garden",
+      "target": "component:welcome-band"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:science-ice-observation",
+      "target": "component:learning-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:science-ice-observation",
+      "target": "component:feed-post-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:gallery-ocean-poster",
+      "target": "component:learning-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:gallery-ocean-poster",
+      "target": "component:art-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:gallery-sprout-map",
+      "target": "component:art-card"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:gallery-kindness-card",
+      "target": "component:art-card"
+    },
+    {
+      "type": "captures",
+      "source": "source-reference:codex-imagegen-session-019e1507",
+      "target": "visual-asset:hero-classroom-garden"
+    },
+    {
+      "type": "captures",
+      "source": "source-reference:codex-imagegen-session-019e1507",
+      "target": "visual-asset:science-ice-observation"
+    },
+    {
+      "type": "captures",
+      "source": "source-reference:codex-imagegen-session-019e1507",
+      "target": "visual-asset:gallery-ocean-poster"
+    },
+    {
+      "type": "captures",
+      "source": "source-reference:codex-imagegen-session-019e1507",
+      "target": "visual-asset:gallery-sprout-map"
+    },
+    {
+      "type": "captures",
+      "source": "source-reference:codex-imagegen-session-019e1507",
+      "target": "visual-asset:gallery-kindness-card"
+    }
+  ],
+  "summary": {
+    "node_count": 15,
+    "edge_count": 40,
+    "generated_visual_asset_count": 5,
+    "api_fallback": "disabled"
+  }
+}
