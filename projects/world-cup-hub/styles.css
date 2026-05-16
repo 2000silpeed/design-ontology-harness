@@ -1,104 +1,186 @@
+/* design-ontology:START */
+:root {
+  --ds-color-canvas: #f3f7f4;
+  --ds-color-body-start: #f7faf7;
+  --ds-color-body-mid: #eef6f3;
+  --ds-color-body-end: #e2efe7;
+  --ds-color-surface: #ffffff;
+  --ds-color-surface-muted: #e7efed;
+  --ds-color-surface-elevated: #ffffff;
+  --ds-color-surface-tint: #e6f0ef;
+  --ds-color-surface-soft: #eef8f1;
+  --ds-color-shell: #ffffff;
+  --ds-color-topbar: #f8fbf9;
+  --ds-color-panel: #ffffff;
+  --ds-color-control: #ffffff;
+  --ds-color-control-strong: #edf5f3;
+  --ds-color-cell: #ffffff;
+  --ds-color-primary: #0f4c81;
+  --ds-color-primary-strong: #0b6da8;
+  --ds-color-accent: #178a4c;
+  --ds-color-success: #178a4c;
+  --ds-color-warning: #a16b00;
+  --ds-color-danger: #bd2e4a;
+  --ds-color-info: #0f4c81;
+  --ds-color-ink: #071821;
+  --ds-color-ink-muted: #465e5f;
+  --ds-color-ink-subtle: #6d8080;
+  --ds-color-ink-inverse: #f8fff9;
+  --ds-color-badge-ink: #ffffff;
+  --ds-color-safe-ink: #105c34;
+  --ds-color-danger-ink: #9f1d35;
+  --ds-color-brand-mark: #061116;
+  --ds-color-border: rgba(7, 24, 33, 0.14);
+  --ds-color-border-strong: rgba(7, 24, 33, 0.24);
+  --ds-color-shadow: rgba(15, 40, 46, 0.16);
+  --ds-color-shadow-soft: rgba(15, 40, 46, 0.12);
+  --ds-radius-xs: 4px;
+  --ds-radius-sm: 6px;
+  --ds-radius-md: 8px;
+  --ds-radius-shell: 12px;
+  --ds-font-heading: "Space Grotesk", Pretendard, Inter, system-ui, sans-serif;
+  --ds-font-body: Pretendard, Inter, "Apple SD Gothic Neo", system-ui, sans-serif;
+  --ds-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  --team-mex: #006847;
+  --team-rsa: #007a4d;
+  --team-kor: #c60c30;
+  --team-cze: #11457e;
+  --team-can: #d52b1e;
+  --team-sui: #e00022;
+  --team-usa: #3c3b6e;
+  --team-par: #d52b1e;
+  --team-bra: #009c3b;
+  --team-mar: #c1272d;
+  --team-ned: #f36c21;
+  --team-jpn: #bc002d;
+  --team-esp: #aa151b;
+  --team-cpv: #003893;
+  --team-fra: #0055a4;
+  --team-sen: #00853f;
+  --team-arg: #75aadb;
+  --team-alg: #006233;
+  --team-eng: #ce1124;
+  --team-cro: #171796;
+}
+
+html[data-theme="dark"] {
+  --ds-color-canvas: #061116;
+  --ds-color-body-start: #061116;
+  --ds-color-body-mid: #081920;
+  --ds-color-body-end: #10221c;
+  --ds-color-surface: #0b2028;
+  --ds-color-surface-muted: #071821;
+  --ds-color-surface-elevated: #102d34;
+  --ds-color-surface-tint: #102d34;
+  --ds-color-surface-soft: #132b26;
+  --ds-color-shell: #061116;
+  --ds-color-topbar: #071821;
+  --ds-color-panel: #0b2028;
+  --ds-color-control: #061116;
+  --ds-color-control-strong: #061116;
+  --ds-color-cell: #061116;
+  --ds-color-primary-strong: #87ceeb;
+  --ds-color-accent: #50c878;
+  --ds-color-success: #50c878;
+  --ds-color-warning: #ffbf00;
+  --ds-color-info: #87ceeb;
+  --ds-color-ink: #f8f8f4;
+  --ds-color-ink-muted: #a9bbb8;
+  --ds-color-ink-subtle: #6f8586;
+  --ds-color-ink-inverse: #052015;
+  --ds-color-badge-ink: #ffffff;
+  --ds-color-safe-ink: #c7ffdc;
+  --ds-color-danger-ink: #ffd7dd;
+  --ds-color-border: rgba(248, 248, 244, 0.14);
+  --ds-color-border-strong: rgba(248, 248, 244, 0.24);
+  --ds-color-shadow: rgba(0, 0, 0, 0.34);
+  --ds-color-shadow-soft: rgba(0, 0, 0, 0.24);
+}
+/* design-ontology:END */
+
 :root {
   color-scheme: light;
-  --color-canvas: #f3f7f4;
-  --color-rail: #e7efed;
-  --color-panel: #ffffff;
-  --color-panel-strong: #e6f0ef;
-  --color-panel-soft: #eef8f1;
-  --color-primary: #0f4c81;
-  --color-primary-bright: #0b6da8;
-  --color-accent: #178a4c;
-  --color-gold: #a16b00;
-  --color-danger: #bd2e4a;
-  --color-text: #071821;
-  --color-muted: #465e5f;
-  --color-subtle: #6d8080;
-  --color-line: rgba(7, 24, 33, 0.14);
-  --color-line-strong: rgba(7, 24, 33, 0.24);
-  --shadow-lg: 0 30px 90px rgba(15, 40, 46, 0.16);
-  --shadow-sm: 0 14px 32px rgba(15, 40, 46, 0.12);
+  --color-canvas: var(--ds-color-canvas);
+  --color-rail: var(--ds-color-surface-muted);
+  --color-panel: var(--ds-color-surface);
+  --color-panel-strong: var(--ds-color-surface-tint);
+  --color-panel-soft: var(--ds-color-surface-soft);
+  --color-primary: var(--ds-color-primary);
+  --color-primary-bright: var(--ds-color-primary-strong);
+  --color-accent: var(--ds-color-accent);
+  --color-gold: var(--ds-color-warning);
+  --color-danger: var(--ds-color-danger);
+  --color-text: var(--ds-color-ink);
+  --color-muted: var(--ds-color-ink-muted);
+  --color-subtle: var(--ds-color-ink-subtle);
+  --color-line: var(--ds-color-border);
+  --color-line-strong: var(--ds-color-border-strong);
+  --shadow-lg: 0 30px 90px var(--ds-color-shadow);
+  --shadow-sm: 0 14px 32px var(--ds-color-shadow-soft);
   --body-bg:
-    linear-gradient(90deg, rgba(23, 138, 76, 0.12) 0 1px, transparent 1px 100%),
-    linear-gradient(180deg, #f7faf7 0%, #eef6f3 52%, #e2efe7 100%);
-  --shell-bg: rgba(255, 255, 255, 0.88);
-  --topbar-bg: rgba(248, 251, 249, 0.94);
-  --panel-bg: rgba(255, 255, 255, 0.92);
-  --control-bg: rgba(255, 255, 255, 0.72);
-  --control-bg-strong: rgba(237, 245, 243, 0.88);
-  --metric-bg: rgba(255, 255, 255, 0.64);
-  --cell-bg: rgba(255, 255, 255, 0.62);
-  --icon-chip-bg: rgba(15, 76, 129, 0.07);
-  --icon-chip-border: rgba(15, 76, 129, 0.16);
-  --status-gradient: linear-gradient(90deg, rgba(15, 76, 129, 0.13), rgba(23, 138, 76, 0.09));
-  --active-green-bg: rgba(23, 138, 76, 0.11);
-  --active-green-border: rgba(23, 138, 76, 0.34);
-  --gold-bg: rgba(255, 191, 0, 0.15);
-  --gold-border: rgba(161, 107, 0, 0.34);
-  --blue-bg: rgba(15, 76, 129, 0.1);
-  --danger-bg: rgba(189, 46, 74, 0.12);
-  --danger-border: rgba(189, 46, 74, 0.32);
-  --muted-chip-bg: rgba(7, 24, 33, 0.06);
-  --bar-track-bg: rgba(7, 24, 33, 0.1);
-  --tag-bg: rgba(15, 76, 129, 0.1);
-  --tag-text: #0f4c81;
-  --primary-action-text: #f8fff9;
-  --safe-text: #105c34;
-  --danger-text: #9f1d35;
-  --brand-mark-bg: #061116;
-  --brand-mark-shadow: inset 0 0 0 1px rgba(248, 248, 244, 0.08), 0 10px 22px rgba(0, 0, 0, 0.2);
-  --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-shell: 12px;
-  --font-display: "Space Grotesk", Pretendard, Inter, system-ui, sans-serif;
-  --font-ui: Pretendard, Inter, "Apple SD Gothic Neo", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    linear-gradient(90deg, color-mix(in srgb, var(--ds-color-success) 12%, transparent) 0 1px, transparent 1px 100%),
+    linear-gradient(180deg, var(--ds-color-body-start) 0%, var(--ds-color-body-mid) 52%, var(--ds-color-body-end) 100%);
+  --shell-bg: color-mix(in srgb, var(--ds-color-shell) 88%, transparent);
+  --topbar-bg: color-mix(in srgb, var(--ds-color-topbar) 94%, transparent);
+  --panel-bg: color-mix(in srgb, var(--ds-color-panel) 92%, transparent);
+  --control-bg: color-mix(in srgb, var(--ds-color-control) 72%, transparent);
+  --control-bg-strong: color-mix(in srgb, var(--ds-color-control-strong) 88%, transparent);
+  --metric-bg: color-mix(in srgb, var(--ds-color-surface-elevated) 64%, transparent);
+  --cell-bg: color-mix(in srgb, var(--ds-color-cell) 62%, transparent);
+  --icon-chip-bg: color-mix(in srgb, var(--ds-color-primary) 7%, transparent);
+  --icon-chip-border: color-mix(in srgb, var(--ds-color-primary) 16%, transparent);
+  --status-gradient:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--ds-color-primary) 13%, transparent),
+      color-mix(in srgb, var(--ds-color-success) 9%, transparent)
+    );
+  --active-bg: color-mix(in srgb, var(--ds-color-success) 11%, transparent);
+  --active-border: color-mix(in srgb, var(--ds-color-success) 34%, transparent);
+  --gold-bg: color-mix(in srgb, var(--ds-color-warning) 15%, transparent);
+  --gold-border: color-mix(in srgb, var(--ds-color-warning) 34%, transparent);
+  --info-bg: color-mix(in srgb, var(--ds-color-primary) 10%, transparent);
+  --danger-bg: color-mix(in srgb, var(--ds-color-danger) 12%, transparent);
+  --danger-border: color-mix(in srgb, var(--ds-color-danger) 32%, transparent);
+  --muted-chip-bg: color-mix(in srgb, var(--ds-color-ink) 6%, transparent);
+  --bar-track-bg: color-mix(in srgb, var(--ds-color-ink) 10%, transparent);
+  --tag-bg: color-mix(in srgb, var(--ds-color-primary) 10%, transparent);
+  --tag-text: var(--ds-color-primary);
+  --primary-action-text: var(--ds-color-ink-inverse);
+  --safe-text: var(--ds-color-safe-ink);
+  --danger-text: var(--ds-color-danger-ink);
+  --brand-mark-bg: var(--ds-color-brand-mark);
+  --brand-mark-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--ds-color-badge-ink) 8%, transparent),
+    0 10px 22px color-mix(in srgb, var(--ds-color-shadow) 20%, transparent);
 }
 
 html[data-theme="dark"] {
   color-scheme: dark;
-  --color-canvas: #061116;
-  --color-rail: #071821;
-  --color-panel: #0b2028;
-  --color-panel-strong: #102d34;
-  --color-panel-soft: #132b26;
-  --color-primary-bright: #87ceeb;
-  --color-accent: #50c878;
-  --color-gold: #ffbf00;
-  --color-text: #f8f8f4;
-  --color-muted: #a9bbb8;
-  --color-subtle: #6f8586;
-  --color-line: rgba(248, 248, 244, 0.14);
-  --color-line-strong: rgba(248, 248, 244, 0.24);
-  --shadow-lg: 0 30px 90px rgba(0, 0, 0, 0.34);
-  --shadow-sm: 0 14px 32px rgba(0, 0, 0, 0.24);
-  --body-bg:
-    linear-gradient(90deg, rgba(80, 200, 120, 0.12) 0 1px, transparent 1px 100%),
-    linear-gradient(180deg, #061116 0%, #081920 44%, #10221c 100%);
-  --shell-bg: rgba(6, 17, 22, 0.9);
-  --topbar-bg: rgba(7, 24, 33, 0.94);
-  --panel-bg: rgba(11, 32, 40, 0.92);
-  --control-bg: rgba(6, 17, 22, 0.52);
-  --control-bg-strong: rgba(6, 17, 22, 0.55);
-  --metric-bg: rgba(6, 17, 22, 0.52);
-  --cell-bg: rgba(6, 17, 22, 0.36);
-  --icon-chip-bg: rgba(248, 248, 244, 0.06);
-  --icon-chip-border: rgba(248, 248, 244, 0.16);
-  --status-gradient: linear-gradient(90deg, rgba(15, 76, 129, 0.35), rgba(80, 200, 120, 0.08));
-  --active-green-bg: rgba(80, 200, 120, 0.11);
-  --active-green-border: rgba(80, 200, 120, 0.28);
-  --gold-bg: rgba(255, 191, 0, 0.12);
-  --gold-border: rgba(255, 191, 0, 0.58);
-  --blue-bg: rgba(15, 76, 129, 0.28);
-  --danger-bg: rgba(189, 46, 74, 0.16);
-  --danger-border: rgba(189, 46, 74, 0.44);
-  --muted-chip-bg: rgba(255, 255, 255, 0.06);
-  --bar-track-bg: rgba(255, 255, 255, 0.1);
-  --tag-bg: rgba(135, 206, 235, 0.12);
-  --tag-text: #cdefff;
-  --primary-action-text: #052015;
-  --safe-text: #c7ffdc;
-  --danger-text: #ffd7dd;
+  --shell-bg: color-mix(in srgb, var(--ds-color-shell) 90%, transparent);
+  --topbar-bg: color-mix(in srgb, var(--ds-color-topbar) 94%, transparent);
+  --control-bg: color-mix(in srgb, var(--ds-color-control) 52%, transparent);
+  --control-bg-strong: color-mix(in srgb, var(--ds-color-control-strong) 55%, transparent);
+  --metric-bg: color-mix(in srgb, var(--ds-color-cell) 52%, transparent);
+  --cell-bg: color-mix(in srgb, var(--ds-color-cell) 36%, transparent);
+  --icon-chip-bg: color-mix(in srgb, var(--ds-color-ink) 6%, transparent);
+  --icon-chip-border: color-mix(in srgb, var(--ds-color-ink) 16%, transparent);
+  --status-gradient:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--ds-color-primary) 35%, transparent),
+      color-mix(in srgb, var(--ds-color-success) 8%, transparent)
+    );
+  --active-border: color-mix(in srgb, var(--ds-color-success) 28%, transparent);
+  --gold-bg: color-mix(in srgb, var(--ds-color-warning) 12%, transparent);
+  --gold-border: color-mix(in srgb, var(--ds-color-warning) 58%, transparent);
+  --info-bg: color-mix(in srgb, var(--ds-color-primary) 28%, transparent);
+  --danger-bg: color-mix(in srgb, var(--ds-color-danger) 16%, transparent);
+  --danger-border: color-mix(in srgb, var(--ds-color-danger) 44%, transparent);
+  --muted-chip-bg: color-mix(in srgb, var(--ds-color-badge-ink) 6%, transparent);
+  --bar-track-bg: color-mix(in srgb, var(--ds-color-badge-ink) 10%, transparent);
+  --tag-bg: color-mix(in srgb, var(--ds-color-primary-strong) 12%, transparent);
+  --tag-text: var(--ds-color-primary-strong);
 }
 
 * {
@@ -109,7 +191,7 @@ html {
   min-width: 320px;
   background: var(--color-canvas);
   color: var(--color-text);
-  font-family: var(--font-ui);
+  font-family: var(--ds-font-body);
   font-size: 15px;
   letter-spacing: 0;
 }
@@ -215,7 +297,7 @@ th:last-child {
   inset-inline-start: 12px;
   z-index: 30;
   padding: 10px 12px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--ds-radius-sm);
   background: var(--color-panel-strong);
   color: var(--color-text);
   transform: translateY(-160%);
@@ -226,12 +308,13 @@ th:last-child {
 }
 
 .app-shell {
-  width: min(1480px, calc(100vw - 28px));
+  width: calc(100% - 28px);
+  max-width: 1480px;
   min-height: calc(100vh - 28px);
   margin: 14px auto;
   overflow: hidden;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-shell);
+  border-radius: var(--ds-radius-shell);
   background: var(--shell-bg);
   box-shadow: var(--shadow-lg);
 }
@@ -264,8 +347,8 @@ th:last-child {
   width: 44px;
   height: 44px;
   place-items: center;
-  border: 1px solid rgba(255, 191, 0, 0.46);
-  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--ds-color-warning) 46%, transparent);
+  border-radius: var(--ds-radius-md);
   overflow: hidden;
   background: var(--brand-mark-bg);
   box-shadow: var(--brand-mark-shadow);
@@ -287,7 +370,7 @@ th:last-child {
 }
 
 .brand-block strong {
-  font-family: var(--font-display);
+  font-family: var(--ds-font-heading);
   font-size: 1.04rem;
   font-weight: 800;
 }
@@ -322,7 +405,7 @@ th:last-child {
   gap: 8px;
   padding: 0 12px;
   border: 1px solid transparent;
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: transparent;
   color: var(--color-muted);
   font-size: 0.84rem;
@@ -331,8 +414,8 @@ th:last-child {
 
 .nav-button.active,
 .nav-button:hover {
-  border-color: var(--active-green-border);
-  background: var(--active-green-bg);
+  border-color: var(--active-border);
+  background: var(--active-bg);
   color: var(--color-text);
 }
 
@@ -346,7 +429,7 @@ th:last-child {
   gap: 7px;
   padding: 0 11px;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--control-bg);
   color: var(--color-muted);
   font-size: 0.78rem;
@@ -371,13 +454,13 @@ th:last-child {
   align-items: stretch;
   padding: 20px;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--status-gradient), var(--color-panel);
 }
 
 .eyebrow {
   color: var(--color-gold);
-  font-family: var(--font-mono);
+  font-family: var(--ds-font-mono);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0;
@@ -386,7 +469,7 @@ th:last-child {
 
 .status-copy h1 {
   margin-top: 8px;
-  font-family: var(--font-display);
+  font-family: var(--ds-font-heading);
   font-size: clamp(1.5rem, 2.5vw, 2.45rem);
   line-height: 1.16;
   text-wrap: balance;
@@ -418,7 +501,7 @@ th:last-child {
   min-height: 112px;
   padding: 14px;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--metric-bg);
 }
 
@@ -427,7 +510,7 @@ th:last-child {
   display: grid;
   place-items: center;
   border: 1px solid var(--icon-chip-border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--ds-radius-sm);
   background: var(--icon-chip-bg);
 }
 
@@ -459,7 +542,7 @@ th:last-child {
   display: block;
   margin-top: 0;
   color: var(--color-text);
-  font-family: var(--font-display);
+  font-family: var(--ds-font-heading);
   font-size: 2rem;
   line-height: 1;
 }
@@ -478,7 +561,7 @@ th:last-child {
   max-height: 330px;
   object-fit: cover;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--color-panel);
 }
 
@@ -488,14 +571,14 @@ th:last-child {
   min-width: 0;
   padding: 18px;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--color-panel-soft);
 }
 
 .next-match h2,
 .panel-heading h2 {
   margin-top: 5px;
-  font-family: var(--font-display);
+  font-family: var(--ds-font-heading);
   font-size: 1.22rem;
   line-height: 1.25;
   word-break: keep-all;
@@ -522,7 +605,7 @@ th:last-child {
 .panel {
   min-width: 0;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--panel-bg);
   box-shadow: var(--shadow-sm);
 }
@@ -551,7 +634,7 @@ th:last-child {
   height: 40px;
   padding: 0 11px;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--control-bg-strong);
   color: var(--color-muted);
 }
@@ -574,7 +657,7 @@ th:last-child {
   height: 40px;
   place-items: center;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--control-bg);
   color: var(--color-muted);
 }
@@ -601,7 +684,7 @@ th:last-child {
   gap: 2px;
   padding: 0 10px;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--cell-bg);
   color: var(--color-muted);
   text-align: left;
@@ -610,10 +693,9 @@ th:last-child {
 .date-button strong {
   overflow: hidden;
   color: var(--color-text);
-  font-family: var(--font-mono);
+  font-family: var(--ds-font-mono);
   font-size: 0.78rem;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .date-button span {
@@ -621,8 +703,8 @@ th:last-child {
 }
 
 .date-button.active {
-  border-color: var(--active-green-border);
-  background: var(--active-green-bg);
+  border-color: var(--active-border);
+  background: var(--active-bg);
 }
 
 .chip-row {
@@ -647,7 +729,6 @@ th:last-child {
   color: var(--color-muted);
   font-size: 0.8rem;
   font-weight: 750;
-  white-space: nowrap;
 }
 
 .chip.active {
@@ -664,7 +745,7 @@ th:last-child {
   margin: 12px 16px 0;
   padding: 4px;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--control-bg);
 }
 
@@ -672,17 +753,16 @@ th:last-child {
   flex: 1 1 0;
   min-width: 0;
   min-height: 34px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--ds-radius-sm);
   background: transparent;
   color: var(--color-muted);
   font-size: 0.78rem;
   font-weight: 750;
-  white-space: nowrap;
 }
 
 .segmented-control button.active {
   background: var(--color-primary);
-  color: #fff;
+  color: var(--ds-color-badge-ink);
 }
 
 .table-wrap {
@@ -726,7 +806,7 @@ th:last-child {
 
 .schedule-row:hover,
 .schedule-row.selected {
-  background: var(--active-green-bg);
+  background: var(--active-bg);
 }
 
 .time-cell {
@@ -736,7 +816,7 @@ th:last-child {
 
 .time-cell strong {
   color: var(--color-text);
-  font-family: var(--font-mono);
+  font-family: var(--ds-font-mono);
   font-size: 0.85rem;
 }
 
@@ -767,7 +847,7 @@ th:last-child {
 
 .vs {
   color: var(--color-gold);
-  font-family: var(--font-mono);
+  font-family: var(--ds-font-mono);
   font-size: 0.72rem;
   font-weight: 800;
 }
@@ -778,13 +858,13 @@ th:last-child {
   height: 24px;
   place-items: center;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-xs);
+  border-radius: var(--ds-radius-xs);
   background: var(--team-color, var(--color-primary));
-  color: #fff;
-  font-family: var(--font-mono);
+  color: var(--ds-color-badge-ink);
+  font-family: var(--ds-font-mono);
   font-size: 0.68rem;
   font-weight: 800;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 2px color-mix(in srgb, var(--ds-color-shadow) 30%, transparent);
 }
 
 .venue-cell,
@@ -837,7 +917,7 @@ th:last-child {
   padding: 0 9px;
   border: 1px solid var(--color-line);
   border-radius: 999px;
-  background: var(--blue-bg);
+  background: var(--info-bg);
   color: var(--color-text);
   font-size: 0.74rem;
   font-weight: 800;
@@ -845,8 +925,8 @@ th:last-child {
 }
 
 .status-badge.safe {
-  border-color: var(--active-green-border);
-  background: var(--active-green-bg);
+  border-color: var(--active-border);
+  background: var(--active-bg);
   color: var(--safe-text);
 }
 
@@ -903,7 +983,7 @@ th:last-child {
 }
 
 .match-detail h2 {
-  font-family: var(--font-display);
+  font-family: var(--ds-font-heading);
   font-size: 1.28rem;
   line-height: 1.25;
   word-break: keep-all;
@@ -920,7 +1000,7 @@ th:last-child {
   min-height: 66px;
   padding: 10px 10px 10px 44px;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--cell-bg);
 }
 
@@ -985,7 +1065,7 @@ th:last-child {
   justify-content: center;
   min-height: 40px;
   padding: 0 14px;
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   font-weight: 800;
 }
 
@@ -1015,13 +1095,13 @@ th:last-child {
   gap: 10px;
   padding: 14px;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--cell-bg);
 }
 
 .result-card h3,
 .prediction-card h3 {
-  font-family: var(--font-display);
+  font-family: var(--ds-font-heading);
   font-size: 1rem;
   line-height: 1.3;
   word-break: keep-all;
@@ -1043,7 +1123,7 @@ th:last-child {
   justify-content: space-between;
   min-height: 46px;
   color: var(--color-text);
-  font-family: var(--font-display);
+  font-family: var(--ds-font-heading);
   font-size: 1.25rem;
   font-weight: 850;
 }
@@ -1110,7 +1190,7 @@ th:last-child {
 .vote-actions button {
   min-height: 42px;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--control-bg);
   font-size: 0.82rem;
   font-weight: 800;
@@ -1174,7 +1254,7 @@ th:last-child {
   min-width: 0;
   height: 40px;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   background: var(--control-bg);
   color: var(--color-text);
   padding: 0 12px;
@@ -1183,7 +1263,7 @@ th:last-child {
 .empty-state {
   padding: 18px;
   border: 1px dashed var(--color-line-strong);
-  border-radius: var(--radius-md);
+  border-radius: var(--ds-radius-md);
   color: var(--color-muted);
   font-size: 0.9rem;
   line-height: 1.6;

@@ -1,24 +1,24 @@
 const teams = {
-  MEX: { name: "멕시코", short: "MEX", color: "#006847" },
-  RSA: { name: "남아공", short: "RSA", color: "#007a4d" },
-  KOR: { name: "대한민국", short: "KOR", color: "#c60c30" },
-  CZE: { name: "체코", short: "CZE", color: "#11457e" },
-  CAN: { name: "캐나다", short: "CAN", color: "#d52b1e" },
-  SUI: { name: "스위스", short: "SUI", color: "#e00022" },
-  USA: { name: "미국", short: "USA", color: "#3c3b6e" },
-  PAR: { name: "파라과이", short: "PAR", color: "#d52b1e" },
-  BRA: { name: "브라질", short: "BRA", color: "#009c3b" },
-  MAR: { name: "모로코", short: "MAR", color: "#c1272d" },
-  NED: { name: "네덜란드", short: "NED", color: "#f36c21" },
-  JPN: { name: "일본", short: "JPN", color: "#bc002d" },
-  ESP: { name: "스페인", short: "ESP", color: "#aa151b" },
-  CPV: { name: "카보베르데", short: "CPV", color: "#003893" },
-  FRA: { name: "프랑스", short: "FRA", color: "#0055a4" },
-  SEN: { name: "세네갈", short: "SEN", color: "#00853f" },
-  ARG: { name: "아르헨티나", short: "ARG", color: "#75aadb" },
-  ALG: { name: "알제리", short: "ALG", color: "#006233" },
-  ENG: { name: "잉글랜드", short: "ENG", color: "#ce1124" },
-  CRO: { name: "크로아티아", short: "CRO", color: "#171796" }
+  MEX: { name: "멕시코", short: "MEX", color: "var(--team-mex)" },
+  RSA: { name: "남아공", short: "RSA", color: "var(--team-rsa)" },
+  KOR: { name: "대한민국", short: "KOR", color: "var(--team-kor)" },
+  CZE: { name: "체코", short: "CZE", color: "var(--team-cze)" },
+  CAN: { name: "캐나다", short: "CAN", color: "var(--team-can)" },
+  SUI: { name: "스위스", short: "SUI", color: "var(--team-sui)" },
+  USA: { name: "미국", short: "USA", color: "var(--team-usa)" },
+  PAR: { name: "파라과이", short: "PAR", color: "var(--team-par)" },
+  BRA: { name: "브라질", short: "BRA", color: "var(--team-bra)" },
+  MAR: { name: "모로코", short: "MAR", color: "var(--team-mar)" },
+  NED: { name: "네덜란드", short: "NED", color: "var(--team-ned)" },
+  JPN: { name: "일본", short: "JPN", color: "var(--team-jpn)" },
+  ESP: { name: "스페인", short: "ESP", color: "var(--team-esp)" },
+  CPV: { name: "카보베르데", short: "CPV", color: "var(--team-cpv)" },
+  FRA: { name: "프랑스", short: "FRA", color: "var(--team-fra)" },
+  SEN: { name: "세네갈", short: "SEN", color: "var(--team-sen)" },
+  ARG: { name: "아르헨티나", short: "ARG", color: "var(--team-arg)" },
+  ALG: { name: "알제리", short: "ALG", color: "var(--team-alg)" },
+  ENG: { name: "잉글랜드", short: "ENG", color: "var(--team-eng)" },
+  CRO: { name: "크로아티아", short: "CRO", color: "var(--team-cro)" }
 };
 
 const matches = [
@@ -282,7 +282,7 @@ function escapeHtml(value) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+    .replaceAll("'", "&#x27;");
 }
 
 function getTeam(code) {
@@ -537,9 +537,9 @@ function renderPrediction() {
   const prediction = predictionWithLocal(match);
   const localPick = state.votes[match.id];
   const bars = [
-    { key: "home", label: getTeam(match.home).name, value: prediction.home, color: "#50c878" },
-    { key: "draw", label: "무승부", value: prediction.draw, color: "#ffbf00" },
-    { key: "away", label: getTeam(match.away).name, value: prediction.away, color: "#87ceeb" }
+    { key: "home", label: getTeam(match.home).name, value: prediction.home, color: "var(--ds-color-success)" },
+    { key: "draw", label: "무승부", value: prediction.draw, color: "var(--ds-color-warning)" },
+    { key: "away", label: getTeam(match.away).name, value: prediction.away, color: "var(--ds-color-info)" }
   ];
   elements.predictionPanel.innerHTML = `
     <article class="prediction-card">
