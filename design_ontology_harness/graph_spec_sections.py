@@ -1,4 +1,4 @@
-"""Generate system_spec.md sections 18-20 from the ontology graph."""
+"""Generate system_spec.md graph-backed sections from the ontology graph."""
 
 from __future__ import annotations
 
@@ -252,6 +252,58 @@ def build_brand_identity_asset_section(graph: DesignOntologyGraph) -> str:
     return "\n".join(lines)
 
 
+def build_commercial_product_realism_section(graph: DesignOntologyGraph) -> str:
+    policy = graph.get_node("governance:commercial-product-realism")
+    if not policy:
+        return "No commercial product realism policy defined."
+
+    lines: list[str] = []
+    lines.append(f"- **Policy**: {policy.meta.get('rule', 'Product UI should lead with operational substance.')}")
+
+    applies_to = policy.meta.get("applies_to") or []
+    if applies_to:
+        lines.append(f"- **Applies to**: {', '.join(applies_to[:8])}")
+
+    diagnosis = policy.meta.get("diagnosis") or []
+    if diagnosis:
+        lines.append("- **Why AI-looking screens fail**:")
+        for item in diagnosis[:4]:
+            lines.append(f"  - {item}")
+
+    required_signals = policy.meta.get("required_signals") or []
+    if required_signals:
+        lines.append("- **Required realism signals**:")
+        for item in required_signals[:8]:
+            lines.append(f"  - {item}")
+
+    successful_patterns = policy.meta.get("successful_patterns") or []
+    if successful_patterns:
+        lines.append("- **Successful reusable patterns**:")
+        for pattern in successful_patterns[:10]:
+            pattern_id = pattern.get("id", "successful-pattern")
+            rule = pattern.get("rule", "")
+            implementation = pattern.get("implementation", "")
+            verification = pattern.get("verification", "")
+            detail = "; ".join(part for part in (rule, implementation, verification) if part)
+            lines.append(f"  - {pattern_id}: {detail}")
+
+    rules = policy.meta.get("implementation_rules") or []
+    if rules:
+        lines.append("- **Implementation rules**:")
+        for rule in rules[:10]:
+            lines.append(f"  - {rule}")
+
+    failure_edges = graph.get_edges_from(policy.id, EdgeType.prevents)
+    if failure_edges:
+        lines.append("- **Promoted failure patterns**:")
+        for edge in failure_edges[:8]:
+            failure = graph.get_node(edge.target)
+            if failure:
+                lines.append(f"  - {failure.label}: {failure.meta.get('prevention', '')}")
+
+    return "\n".join(lines)
+
+
 def build_reference_intelligence_section(graph: DesignOntologyGraph) -> str:
     providers = graph.get_nodes_by_type(NodeType.ReferenceProvider)
     cards = graph.get_nodes_by_type(NodeType.DesignContextCard)
@@ -330,4 +382,8 @@ def build_graph_spec_sections(graph: DesignOntologyGraph) -> str:
 ## 24. Reference Intelligence Pack
 
 {build_reference_intelligence_section(graph)}
+
+## 25. Commercial Product Realism
+
+{build_commercial_product_realism_section(graph)}
 """

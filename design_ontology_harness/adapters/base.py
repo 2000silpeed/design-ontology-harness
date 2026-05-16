@@ -575,6 +575,15 @@ calling the current screen complete. Current-screen fixes alone are not enough.
 - Decorative icons use `aria-hidden="true"`; semantic icons need an accessible label or adjacent visible text.
 - Do not replace user-generated emoji content, chat text, blog body, or emoji-picker data.
 
+## Commercial Product Realism
+
+- Dashboards, tools, sports/data products, and community products must lead with operational product substance, not pitch-deck hero composition.
+- First viewport should expose the active task surface: status strip, filters/date rail, compact table/list rows, next item, source/update label, or primary workflow.
+- Do not use homogeneous card walls as the default structure. Promote the primary workflow, compress secondary information into rows/tables/rails, and vary density deliberately.
+- Exact numbers, predictions, rankings, poll counts, odds, or operational claims need source/update context or a visible sample/demo label.
+- Generated or decorative imagery must support the domain context and must not outrank data, navigation, controls, or the first operational surface.
+- Include realistic state texture such as live/final/upcoming/delayed/empty/error/source-updated when the domain supports those states.
+
 ## Preflight
 
 Run this before considering an implementation aligned:

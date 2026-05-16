@@ -27,6 +27,20 @@ CONCEPTS = [
         "label": "Imagery",
         "terms": ["imagery", "visual asset", "generated image", "image generation", "illustration", "media asset"],
     },
+    {
+        "id": "product_realism",
+        "label": "Commercial Product Realism",
+        "terms": [
+            "commercial UI",
+            "production UI",
+            "real product",
+            "operational UI",
+            "operational density",
+            "data provenance",
+            "status variation",
+            "live operations",
+        ],
+    },
 ]
 
 

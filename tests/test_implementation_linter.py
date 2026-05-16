@@ -10,6 +10,7 @@ from design_ontology_harness.implementation_linter import lint_implementation
 from design_ontology_harness.synthesis import (
     APP_ICON_IDENTITY_POLICY,
     COLOR_MODE_PARITY_POLICY,
+    COMMERCIAL_PRODUCT_REALISM_POLICY,
     ICON_REFACTOR_POLICY,
     REFERENCE_ABSORPTION_SCOPE,
     RESPONSIVE_RESILIENCE_POLICY,
@@ -276,9 +277,25 @@ def test_responsive_resilience_policy_is_structured_for_ontology():
     assert RESPONSIVE_RESILIENCE_POLICY["id"] == "responsive-resilience"
     assert 320 in RESPONSIVE_RESILIENCE_POLICY["viewport_contract"]["required_widths_px"]
     assert any("Buttons" in rule for rule in RESPONSIVE_RESILIENCE_POLICY["control_rules"])
+    assert any("Horizontal rails" in rule for rule in RESPONSIVE_RESILIENCE_POLICY["control_rules"])
     pattern_ids = {item["id"] for item in RESPONSIVE_RESILIENCE_POLICY["failure_patterns"]}
-    assert {"mobile-control-overflow", "viewport-horizontal-overflow"} <= pattern_ids
+    assert {"mobile-control-overflow", "viewport-horizontal-overflow", "horizontal-rail-label-clipping"} <= pattern_ids
     assert "lint-implementation" in RESPONSIVE_RESILIENCE_POLICY["outputs"]
+
+
+def test_commercial_product_realism_success_patterns_are_structured_for_ontology():
+    assert COMMERCIAL_PRODUCT_REALISM_POLICY["id"] == "commercial-product-realism"
+    pattern_ids = {item["id"] for item in COMMERCIAL_PRODUCT_REALISM_POLICY["successful_patterns"]}
+    assert "same-domain-reference-before-redesign" in pattern_ids
+    assert "score-ticker-as-scan-surface" in pattern_ids
+    assert "national-flag-code-identity" in pattern_ids
+    assert "source-ledger-and-sample-labeling" in pattern_ids
+    assert "editorial-insight-side-rail" in pattern_ids
+    assert "dual-mode-screenshot-qa" in pattern_ids
+    assert "brand-app-icon-as-required-identity" in pattern_ids
+    failure_ids = {item["id"] for item in COMMERCIAL_PRODUCT_REALISM_POLICY["failure_patterns"]}
+    assert "generic-national-team-badges" in failure_ids
+    assert "untokenized-domain-identity-colors" in failure_ids
 
 
 def test_color_mode_parity_policy_is_structured_for_ontology():

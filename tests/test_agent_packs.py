@@ -32,6 +32,8 @@ class AgentPackTests(unittest.TestCase):
         self.assertIn("STYLE.md", skill_text)
         self.assertIn("DESIGN.md", skill_text)
         self.assertIn("Token binding is necessary but not sufficient", skill_text)
+        self.assertIn("Commercial product realism", skill_text)
+        self.assertIn("pitch decks", skill_text)
 
     def test_codex_scaffold_includes_visual_asset_skill(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -66,6 +68,7 @@ class AgentPackTests(unittest.TestCase):
             self.assertIn("imagery", plugin_manifest["keywords"])
             self.assertIn("image_gen", plugin_manifest["interface"]["longDescription"])
             self.assertIn("light mode", " ".join(plugin_manifest["interface"]["defaultPrompt"]))
+            self.assertIn("operational product surfaces", " ".join(plugin_manifest["interface"]["defaultPrompt"]))
             self.assertIn("fallbacks are disabled", plugin_manifest["interface"]["longDescription"])
 
 

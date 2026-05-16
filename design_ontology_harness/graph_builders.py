@@ -1129,6 +1129,7 @@ def build_governance_layer(
     responsive_policy = governance.get("responsive_resilience_policy") or {}
     icon_policy = governance.get("icon_refactor_policy") or {}
     app_icon_policy = governance.get("app_icon_identity_policy") or {}
+    commercial_policy = governance.get("commercial_product_realism_policy") or {}
 
     scope_id = "governance:reference-absorption-scope"
     graph.add_node(OntologyNode(
@@ -1289,6 +1290,53 @@ def build_governance_layer(
                 },
             ))
             graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=icon_policy_id, target=pattern_id))
+
+    if commercial_policy:
+        commercial_policy_id = f"governance:{slugify(commercial_policy.get('id', 'commercial-product-realism'))}"
+        graph.add_node(OntologyNode(
+            id=commercial_policy_id,
+            type=NodeType.GovernanceRule,
+            label=commercial_policy.get("id", "commercial product realism"),
+            meta={
+                "rule": commercial_policy.get("rule", ""),
+                "applies_to": commercial_policy.get("applies_to", []),
+                "diagnosis": commercial_policy.get("diagnosis", []),
+                "required_signals": commercial_policy.get("required_signals", []),
+                "successful_patterns": commercial_policy.get("successful_patterns", []),
+                "implementation_rules": commercial_policy.get("implementation_rules", []),
+                "outputs": commercial_policy.get("outputs", []),
+            },
+        ))
+        if graph.get_node(brand_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=commercial_policy_id, target=brand_id))
+
+        for target_id in (
+            "pattern:layout-dashboard-cards",
+            "pattern:layout-data-tables",
+            "pattern:layout-workspace-navigation",
+            "component:table",
+            "component:data-table",
+            "component:status-badge",
+            "component:tabs",
+            "component:filter-chip",
+        ):
+            if graph.get_node(target_id):
+                graph.add_edge(OntologyEdge(type=EdgeType.enforces, source=commercial_policy_id, target=target_id))
+
+        for pattern in commercial_policy.get("failure_patterns", []):
+            pattern_id = f"failure-pattern:{slugify(pattern.get('id', 'commercial-product-realism-failure'))}"
+            graph.add_node(OntologyNode(
+                id=pattern_id,
+                type=NodeType.ImplementationFailurePattern,
+                label=pattern.get("id", "commercial product realism failure"),
+                meta={
+                    "trigger": pattern.get("trigger", ""),
+                    "rule": pattern.get("rule", ""),
+                    "prevention": pattern.get("prevention", ""),
+                    "technical_controls": pattern.get("technical_controls", []),
+                },
+            ))
+            graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=commercial_policy_id, target=pattern_id))
 
     if app_icon_policy:
         app_icon_policy_id = f"governance:{slugify(app_icon_policy.get('id', 'brand-app-icon-identity'))}"

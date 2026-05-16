@@ -239,6 +239,7 @@ const state = {
   activeDate: "all",
   activeGroup: "all",
   activeStatus: "all",
+  tickerFilter: "all",
   query: "",
   theme: readStore("wch:theme", "light"),
   votes: readStore("wch:votes", {}),
@@ -248,11 +249,13 @@ const state = {
 const elements = {
   daysUntil: document.querySelector("#daysUntil"),
   voteTotal: document.querySelector("#voteTotal"),
+  tickerRail: document.querySelector("#tickerRail"),
   favoriteMatch: document.querySelector("#favoriteMatch"),
   dateRail: document.querySelector("#dateRail"),
   groupFilters: document.querySelector("#groupFilters"),
   scheduleRows: document.querySelector("#scheduleRows"),
   matchDetail: document.querySelector("#matchDetail"),
+  insightRail: document.querySelector("#insightRail"),
   predictionPanel: document.querySelector("#predictionPanel"),
   resultsList: document.querySelector("#resultsList"),
   standingsRows: document.querySelector("#standingsRows"),
@@ -291,7 +294,12 @@ function getTeam(code) {
 
 function teamBadge(code) {
   const team = getTeam(code);
-  return `<span class="team-badge" style="--team-color:${team.color}">${team.short}</span>`;
+  return `
+    <span class="team-badge flag-badge flag-${code.toLowerCase()}" style="--team-color:${team.color}" aria-label="${escapeHtml(team.name)} 국기">
+      <span class="flag-shape" aria-hidden="true"></span>
+      <span class="team-code">${team.short}</span>
+    </span>
+  `;
 }
 
 function icon(name, className = "ui-icon") {
@@ -350,6 +358,24 @@ function statusLabel(status) {
   }[status] ?? status;
 }
 
+function matchFlavor(match) {
+  const isKorea = [match.home, match.away].includes("KOR");
+  const isOpening = match.no === 1;
+  const isHighInterest = match.prediction.votes >= 20000;
+  if (isOpening) return { label: "개막전", className: "safe" };
+  if (isKorea) return { label: "대한민국 추적", className: "safe" };
+  if (isHighInterest) return { label: "팬 관심", className: "" };
+  return { label: statusLabel(match.status), className: "muted" };
+}
+
+function isOpeningWeek(match) {
+  return dateKey(match) <= "2026-06-17";
+}
+
+function isSpotlight(match) {
+  return [match.home, match.away].includes("KOR") || match.no === 1 || match.prediction.votes >= 20000;
+}
+
 function selectedMatch() {
   return matches.find((match) => match.id === state.selectedMatchId) ?? matches[0];
 }
@@ -386,6 +412,49 @@ function updateSummary() {
   elements.voteTotal.textContent = (seedTotal + localVoteCount).toLocaleString("ko-KR");
 }
 
+function tickerMatches() {
+  const filtered = matches.filter((match) => {
+    if (state.tickerFilter === "korea") return [match.home, match.away].includes("KOR");
+    if (state.tickerFilter === "spotlight") return isSpotlight(match);
+    if (state.tickerFilter === "opening") return isOpeningWeek(match);
+    return true;
+  });
+  return filtered.slice(0, 10);
+}
+
+function renderTicker() {
+  document.querySelectorAll("[data-ticker-filter]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.tickerFilter === state.tickerFilter);
+  });
+
+  const cards = tickerMatches();
+  if (!cards.length) {
+    elements.tickerRail.innerHTML = `<div class="empty-state compact-empty">조건에 맞는 경기 티커가 없습니다.</div>`;
+    return;
+  }
+
+  elements.tickerRail.innerHTML = cards.map((match) => {
+    const flavor = matchFlavor(match);
+    const selected = state.selectedMatchId === match.id;
+    const homeTeam = getTeam(match.home);
+    const awayTeam = getTeam(match.away);
+    return `
+      <button class="ticker-card ${selected ? "selected" : ""}" type="button" data-select-match="${match.id}" aria-label="${escapeHtml(homeTeam.name)} vs ${escapeHtml(awayTeam.name)} · ${escapeHtml(flavor.label)} · ${escapeHtml(match.prediction.model)}">
+        <span class="ticker-date">${shortDateLabel(dateKey(match))}</span>
+        <span class="ticker-teams">
+          ${teamBadge(match.home)}
+          <span class="vs">vs</span>
+          ${teamBadge(match.away)}
+        </span>
+        <span class="ticker-bottom">
+          <span class="status-badge ${flavor.className}">${flavor.label}</span>
+          <span>${escapeHtml(match.prediction.model)}</span>
+        </span>
+      </button>
+    `;
+  }).join("");
+}
+
 function renderFavorite() {
   const nextKorea = matches.find((match) => [match.home, match.away].includes("KOR"));
   const opponent = nextKorea.home === "KOR" ? getTeam(nextKorea.away) : getTeam(nextKorea.home);
@@ -404,6 +473,45 @@ function renderFavorite() {
       <div><span class="meta-icon">${icon("chart")}</span><dt>팬 전망</dt><dd>${escapeHtml(nextKorea.prediction.model)}</dd></div>
     </dl>
     <button class="secondary-button" type="button" data-select-match="${nextKorea.id}">경기 열기</button>
+  `;
+}
+
+function renderInsightRail() {
+  const match = selectedMatch();
+  const nextKorea = matches.find((item) => [item.home, item.away].includes("KOR"));
+  const topOpinion = [...allOpinions()].sort((a, b) => b.likes - a.likes)[0];
+  const selectedOpinions = allOpinions().filter((opinion) => opinion.matchId === match.id);
+  const threadLabel = `${selectedOpinions.length}개 의견`;
+  const groupRows = standingsA.map((row) => `${getTeam(row.team).name}: ${row.forecast}`);
+
+  elements.insightRail.innerHTML = `
+    <article class="insight-item">
+      <h3>${icon("star")}선택 경기</h3>
+      <p>${escapeHtml(match.note)}</p>
+      <div class="insight-meta">
+        <span>${escapeHtml(match.prediction.model)}</span>
+        <span>${threadLabel}</span>
+      </div>
+    </article>
+    <article class="insight-item">
+      <h3>${icon("pulse")}대한민국 추적</h3>
+      <p>${escapeHtml(nextKorea.note)}</p>
+      <span class="status-badge safe">${shortDateLabel(dateKey(nextKorea))}</span>
+    </article>
+    <article class="insight-item">
+      <h3>${icon("message")}팬 반응</h3>
+      <p>${escapeHtml(topOpinion.text)}</p>
+      <div class="insight-meta">
+        <span>${escapeHtml(topOpinion.author)}</span>
+        <span>${topOpinion.likes} 좋아요</span>
+      </div>
+    </article>
+    <article class="insight-item">
+      <h3>${icon("bracket")}Group A 경우의 수</h3>
+      <ul>
+        ${groupRows.map((row) => `<li>${escapeHtml(row)}</li>`).join("")}
+      </ul>
+    </article>
   `;
 }
 
@@ -623,11 +731,13 @@ function renderDiscussion() {
 
 function renderAll() {
   updateSummary();
+  renderTicker();
   renderFavorite();
   renderDateRail();
   renderGroupFilters();
   renderSchedule();
   renderMatchDetail();
+  renderInsightRail();
   renderPrediction();
   renderResults();
   renderStandings();
@@ -667,11 +777,20 @@ document.addEventListener("click", (event) => {
     return;
   }
 
+  const tickerButton = event.target.closest("[data-ticker-filter]");
+  if (tickerButton) {
+    state.tickerFilter = tickerButton.dataset.tickerFilter;
+    renderTicker();
+    return;
+  }
+
   const selectButton = event.target.closest("[data-select-match]");
   if (selectButton) {
     state.selectedMatchId = selectButton.dataset.selectMatch;
+    renderTicker();
     renderSchedule();
     renderMatchDetail();
+    renderInsightRail();
     renderPrediction();
     renderDiscussion();
     return;
@@ -715,6 +834,7 @@ elements.opinionForm.addEventListener("submit", (event) => {
   });
   writeStore("wch:opinions", state.opinions);
   elements.opinionText.value = "";
+  renderInsightRail();
   renderDiscussion();
 });
 

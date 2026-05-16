@@ -153,6 +153,7 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
                 "Ship normal light mode and dark mode together unless a single mode is explicitly requested",
                 "When a screen needs professional imagery, use the built-in Codex image_gen visual asset path without API fallback",
                 "Treat favicon, app-shell mark, and web manifest icon as required brand-specific identity assets",
+                "For dashboards, tools, sports/data, and community products, lead with operational product surfaces instead of pitch-deck heroes or homogeneous card walls",
             ],
             "screenshots": [],
             "brandColor": "#6B7B8D",
@@ -297,6 +298,21 @@ Normal light mode and dark mode travel together unless the user explicitly asks 
 """
 
 
+def _commercial_product_realism_guidance() -> str:
+    return """
+## Commercial product realism
+
+For dashboards, tools, sports/data products, and community products, the first viewport should feel like an operated product, not a pitch deck.
+
+- Lead with the active task surface: status strip, filters/date rail, table/list rows, next item, source/update label, or primary workflow.
+- Do not open product UIs with an oversized marketing hero, generic slogan, and equally weighted feature cards unless the user explicitly asks for a landing page.
+- Avoid homogeneous card walls. Promote one primary workflow module, compress secondary information into rows/tables/rails, and vary density only when the information architecture justifies it.
+- Exact numbers, predictions, rankings, poll counts, odds, or operational claims need source/update context or a visible sample/demo label.
+- Generated or decorative imagery must support the domain object, venue, person, product, or state; it must not outrank data, navigation, controls, or the first operational surface.
+- Include realistic state texture: live/final/upcoming/delayed/empty/error/source-updated as appropriate for the domain.
+"""
+
+
 def _emoji_to_svg_refactor_guidance() -> str:
     return """
 ## Emoji-to-SVG refactor
@@ -344,6 +360,7 @@ When this skill is active:
 10. If `token_schema.json` contains a curated color reference or palette roles, treat that as the starting point for semantic color decisions.
 11. If typography artifacts include script guardrails, account for their line-break and type-scale rules before proposing hero or landing compositions.
 12. Treat responsive resilience as a planning constraint: buttons and action groups need a mobile wrap/stack strategy before implementation begins.
+13. For dashboard/tool/data/community products, plan the first viewport around the operational task surface before considering hero imagery or feature cards.
 
 If any artifact file is missing, say exactly which file is missing and recommend syncing artifacts from the harness repo before implementation.
 """
@@ -385,6 +402,7 @@ Implementation rules:
 - Visual references are morphology inputs only. Do not absorb reference palettes, type scales, navigation labels, domain IA, or product copy.
 - Token binding is necessary but not sufficient: never recombine `--ds-*` roles into a new reference-like palette.
 - If user/reviewer feedback exposes a repeatable failure pattern, promote it into governance docs or lint rules before calling the screen complete.
+- For dashboards, tools, sports/data products, and community products, lead with operational substance instead of pitch-deck hero composition.
 - Update nearby documentation or tests when implementation meaningfully changes.
 - NEVER change layout properties (display, flex-direction, grid-template, position, width, height).
 - NEVER change font-size or line-height to "fit the token scale." Existing sizes are tuned to the layout. Only replace when the token resolves to the exact same px. If no match, keep original + TODO.
@@ -396,6 +414,8 @@ Implementation rules:
 {_script_aware_typography_guidance()}
 
 {_color_mode_parity_guidance()}
+
+{_commercial_product_realism_guidance()}
 
 {_responsive_resilience_guidance()}
 
@@ -439,6 +459,7 @@ Always:
 9. If the token schema includes curated palette roles, use those roles as the default color direction in the plan.
 10. If typography script guardrails exist, reflect them in line length, headline scale, and Korean copy layout decisions.
 11. Include the mobile overflow prevention strategy for button/action groups when planning responsive screens.
+12. For dashboard/tool/data/community products, make the first viewport task-led and provenance-aware, not a marketing hero plus card wall.
 
 You are primarily a planning and alignment agent, not an implementation agent.
 """
@@ -474,11 +495,14 @@ Implementation rules:
 - If token_schema includes curated palette roles or selected reference colors, preserve that color direction while implementing.
 - If the request falls outside the current system artifacts, state the gap clearly instead of inventing an ungrounded pattern.
 - Treat favicon, app-shell mark, and web manifest icon as required brand-specific identity assets, not generic initials tiles.
+- For dashboards, tools, sports/data products, and community products, lead with operational product state, filters, tables/lists, and provenance before decorative imagery.
 - NEVER change layout properties, element sizes, or text-flow properties (font-size, line-height, white-space, word-break) unless explicitly requested.
 - NEVER change font-size to match a token scale — existing sizes are already tuned to the layout. Only replace when the token is the exact same px value. "Fitting the scale" is a design change, not a refactor.
 - When replacing spacing/sizing values with tokens, only use exact matches — never round to the nearest token value.
 
 {_script_aware_typography_guidance()}
+
+{_commercial_product_realism_guidance()}
 
 {_responsive_resilience_guidance()}
 """
@@ -547,7 +571,14 @@ AI가 생성한 UI 코드나 급하게 만든 프로토타입을, 디자인 시�
 - 버튼, 카드, 배지, 탭, 네비게이션, 상태 표시, empty state에 이모지가 아이콘처럼 쓰임
 - 이모지를 그대로 두거나 텍스트 glyph로 스타일링하는 임시 처리
 
+**상용 제품 리얼리즘 위반**
+- 대시보드/도구/데이터 제품이 실제 작업 표면보다 큰 히어로, 슬로건, 균일한 카드벽으로 시작함
+- 정확한 수치, 예측, 순위, 운영 상태가 출처/업데이트 시각/샘플 라벨 없이 확정 데이터처럼 보임
+- 생성 이미지가 표, 필터, 상태, 내비게이션보다 더 큰 비중을 차지함
+
 {_emoji_to_svg_refactor_guidance()}
+
+{_commercial_product_realism_guidance()}
 
 ### Phase 3: 리팩토링 실행
 
@@ -900,6 +931,8 @@ system_spec.md의 Typography System에서:
 
 {_script_aware_typography_guidance()}
 
+{_commercial_product_realism_guidance()}
+
 {_responsive_resilience_guidance()}
 
 #### 3-3. 여백과 리듬
@@ -922,7 +955,7 @@ spacing scale을 활용해 시각적 리듬을 만듭니다:
 
 화면 유형별 레이아웃 패턴:
 ```
-대시보드:    상단 히어로/요약 → 통계 카드 그리드 → 데이터 테이블
+대시보드:    운영 헤더/상태 스트립 → 필터/날짜 레일 → 핵심 표·리스트 → 보조 요약 카드
 목록/피드:   상단 필터/검색 → 반복 카드/행 → 페이지네이션
 상세 페이지:  헤더(제목+메타) → 메인 콘텐츠 → 사이드 정보 → 관련 항목
 설정:       좌측 메뉴 → 우측 폼 섹션
@@ -1033,8 +1066,11 @@ Refactoring: `color: #3b82f6` → `color: var(--accent)` (same layout, different
 - Components follow the spec — all anatomy parts, all states, all accessibility attributes
 - Anti-keywords are hard constraints — if "cluttered" is anti, ensure generous whitespace
 - Brand keywords drive visual decisions — "bold" means strong contrast, "calm" means subtle transitions
+- Commercial product realism matters — operational product screens lead with real workflow state, filters, data rows, and provenance before hero imagery or feature-card grids
 
 {_script_aware_typography_guidance()}
+
+{_commercial_product_realism_guidance()}
 
 {_responsive_resilience_guidance()}
 
@@ -1089,6 +1125,7 @@ Read these files first when they exist:
 9. Plan button/action-group mobile behavior up front: wrap, stack, or prove it fits at 320px without horizontal scroll.
 10. Plan light/default and dark mode token coverage up front; light is the default mode.
 11. Treat the app icon as a required brand identity asset, not a generic initials tile.
+12. For dashboard/tool/data/community products, plan the first viewport around operational state, filters, data rows, and provenance before hero imagery.
 """
 
 
@@ -1131,10 +1168,13 @@ Read these files first when they exist:
 15. **NEVER leave half-finished components** ("TODO", "placeholder", "temp"). Read `{artifact_dir}/components/component_specs.md` and implement the full anatomy, states, and token bindings.
 16. **NEVER use bare library components without token binding.** If you import from a UI library, wrap it and override colors, spacing, radius, and typography using tokens from the schema.
 17. **NEVER ship generic initials tiles as final app icons.** Favicon, app-shell marks, and web manifests need brand-specific SVG identity assets.
+18. **NEVER let dashboard/tool/data/community products open like pitch decks** unless the user explicitly asks for a landing page. Lead with operational state, filters, tables/lists, and source/update context.
 
 {_script_aware_typography_guidance()}
 
 {_color_mode_parity_guidance()}
+
+{_commercial_product_realism_guidance()}
 
 {_responsive_resilience_guidance()}
 
@@ -1194,6 +1234,7 @@ Do not generate imagery for:
 - icons, logos, button glyphs, tabs, toggles, or status markers
 - app icons, favicons, or app-shell brand marks; these are deterministic brand identity assets, not generated raster imagery
 - components that should be built with CSS, SVG primitives, or an icon library
+- dashboard/tool/data-product first viewports where users need tables, schedules, filters, live state, or provenance before decorative visuals
 - copyrighted characters, real brands, real people, or identifiable private locations unless the user explicitly provided licensed source material
 - purely atmospheric blurred backgrounds that do not reveal the product, state, place, or object
 
@@ -1251,6 +1292,7 @@ For Korean-first products, include Hangul-safe composition constraints:
 - Provide meaningful `alt` text for content images; use empty alt only for truly decorative images.
 - Use CSS/object-fit and art direction so the important subject remains visible on mobile and desktop.
 - Do not let images replace accessible text, data, controls, or navigation.
+- Do not let images outrank the operational product surface in dashboards, tools, sports/data products, or community products.
 - Keep palette and crop behavior aligned with tokens and responsive breakpoints.
 - Verify desktop and mobile screenshots after integration; check that images render, crop cleanly, and do not obscure text.
 
@@ -1265,7 +1307,7 @@ For Korean-first products, include Hangul-safe composition constraints:
 def _codex_plugin_openai_yaml() -> str:
     return """display_name: Design System Harness
 short_description: Apply local design-system artifacts and brand imagery inside implementation repos
-default_prompt: Implement UI changes using the design-system artifacts in this repository; use Codex image_gen visual assets when the screen needs professional imagery, without API fallback
+default_prompt: Implement UI changes using the design-system artifacts in this repository; lead dashboard/tool/data products with operational surfaces; use Codex image_gen visual assets when the screen needs professional imagery, without API fallback
 """
 
 

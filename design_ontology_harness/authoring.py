@@ -1025,6 +1025,39 @@ def build_system_spec_markdown(
 {app_icon_rules}
 - **Promoted app icon failure patterns**:
 {app_icon_failures}"""
+    commercial_policy = governance.get("commercial_product_realism_policy", {})
+    commercial_applies_to = ", ".join(commercial_policy.get("applies_to", [])) or "dashboard, tool, data product, operational UI"
+    commercial_diagnosis_lines = "\n".join(
+        f"- {item}" for item in commercial_policy.get("diagnosis", [])
+    ) or "- No commercial realism diagnosis defined."
+    commercial_signal_lines = "\n".join(
+        f"- {item}" for item in commercial_policy.get("required_signals", [])
+    ) or "- No commercial realism signals defined."
+    commercial_success_lines = "\n".join(
+        f"- **{item.get('id', 'successful-pattern')}**: {item.get('rule', '')} Implementation: {item.get('implementation', '')} Verification: {item.get('verification', '')}"
+        for item in commercial_policy.get("successful_patterns", [])
+    ) or "- No commercial realism success patterns defined."
+    commercial_rule_lines = "\n".join(
+        f"- {item}" for item in commercial_policy.get("implementation_rules", [])
+    ) or "- No commercial realism implementation rules defined."
+    commercial_failure_lines = "\n".join(
+        f"- **{item.get('id', 'commercial-product-realism-failure')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in commercial_policy.get("failure_patterns", [])
+    ) or "- No commercial realism failure patterns defined."
+    commercial_section = f"""### Commercial Product Realism
+
+- **Rule**: {commercial_policy.get('rule', 'Product UI should lead with operational substance rather than presentation-only composition.')}
+- **Applies to**: {commercial_applies_to}
+- **Why AI-looking screens fail**:
+{commercial_diagnosis_lines}
+- **Required realism signals**:
+{commercial_signal_lines}
+- **Successful reusable patterns**:
+{commercial_success_lines}
+- **Implementation rules**:
+{commercial_rule_lines}
+- **Promoted realism failure patterns**:
+{commercial_failure_lines}"""
     concept_lines = "\n".join(
         f"- **{target['concept_id']}**: {target['count']}"
         for target in blueprint.get("ontology_targets", [])
@@ -1109,6 +1142,8 @@ def build_system_spec_markdown(
 {icon_refactor_section}
 
 {app_icon_section}
+
+{commercial_section}
 
 ## 10. Reference Absorption Rule
 

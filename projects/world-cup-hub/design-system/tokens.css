@@ -61,6 +61,17 @@
   --team-alg: #006233;
   --team-eng: #ce1124;
   --team-cro: #171796;
+  --ds-color-flag-paper: #ffffff;
+  --ds-color-flag-ink: #111111;
+  --ds-color-flag-a: #d52b1e;
+  --ds-color-flag-b: #003893;
+  --ds-color-flag-c: #00205b;
+  --ds-color-flag-d: #007a4d;
+  --ds-color-flag-e: #ffcd00;
+  --ds-color-flag-f: #75aadb;
+  --ds-color-flag-g: #f36c21;
+  --ds-color-flag-h: #c1272d;
+  --ds-color-flag-i: #11457e;
 }
 
 html[data-theme="dark"] {

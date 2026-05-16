@@ -6,8 +6,8 @@
     <title>World Cup Hub</title>
     <link rel="icon" href="./assets/app-icon.svg?v=brand-icon-20260516" type="image/svg+xml" />
     <link rel="manifest" href="./site.webmanifest?v=brand-icon-20260516" />
-    <link rel="stylesheet" href="./design-system/tokens.css?v=no-hardcoded-20260516" />
-    <link rel="stylesheet" href="./styles.css?v=no-hardcoded-20260516" />
+    <link rel="stylesheet" href="./design-system/tokens.css?v=flag-badges-20260516" />
+    <link rel="stylesheet" href="./styles.css?v=ticker-fit-20260516c" />
   </head>
   <body>
     <a class="skip-link" href="#main">본문으로 이동</a>
@@ -123,12 +123,12 @@
       </header>
 
       <main id="main" class="workspace">
-        <section id="dashboard" class="status-strip" aria-label="대회 현황">
+        <section id="dashboard" class="status-strip" aria-label="대회 운영 현황">
           <div class="status-copy">
-            <p class="eyebrow">FIFA World Cup 2026</p>
-            <h1>월드컵 일정과 예측을 한 화면에서</h1>
+            <p class="eyebrow">FIFA World Cup 2026 · operations view</p>
+            <h1>경기 일정, 예측, 팬 반응을 바로 확인하는 운영 보드</h1>
             <p class="source-note">
-              일정 seed: FIFA 공식 일정 페이지 · 화면 데이터: 정적 MVP 샘플 · 2026년 5월 16일 기준 대회 전 상태
+              일정 seed: FIFA 공식 일정 페이지 · 예측/의견 데이터: 정적 MVP 샘플 · 업데이트 기준 2026년 5월 16일
             </p>
           </div>
           <div class="status-metrics" aria-label="요약 지표">
@@ -139,13 +139,13 @@
             </article>
             <article>
               <i class="metric-icon"><svg><use href="#icon-stadium" /></svg></i>
-              <span>본선 경기</span>
+              <span>공식 일정</span>
               <strong>104</strong>
             </article>
             <article>
               <i class="metric-icon"><svg><use href="#icon-bracket" /></svg></i>
-              <span>조별 경기</span>
-              <strong>72</strong>
+              <span>상태</span>
+              <strong>Pre</strong>
             </article>
             <article>
               <i class="metric-icon"><svg><use href="#icon-vote" /></svg></i>
@@ -155,13 +155,58 @@
           </div>
         </section>
 
-        <section class="hero-board" aria-label="대표 경기 보드">
-          <img src="./assets/world-cup-command-center.webp" alt="야간 경기장 안에 월드컵 일정, 예측, 경기 분석 보드가 표시된 커맨드 센터" />
-          <div class="next-match">
-            <p class="eyebrow">favorite team</p>
-            <h2>대한민국 다음 경기</h2>
-            <div id="favoriteMatch" class="favorite-match"></div>
+        <section class="score-ticker" aria-label="경기 빠른 보기">
+          <div class="ticker-head">
+            <div>
+              <p class="eyebrow">match ticker</p>
+              <h2>빠른 경기 체크</h2>
+            </div>
+            <div class="ticker-tabs" aria-label="티커 필터">
+              <button class="active" type="button" data-ticker-filter="all">전체</button>
+              <button type="button" data-ticker-filter="korea">대한민국</button>
+              <button type="button" data-ticker-filter="spotlight">빅매치</button>
+              <button type="button" data-ticker-filter="opening">개막주</button>
+            </div>
           </div>
+          <div id="tickerRail" class="ticker-rail"></div>
+        </section>
+
+        <section class="ops-board" aria-label="운영 체크 포인트">
+          <article class="ops-card next-match">
+            <div class="ops-card-heading">
+              <div>
+                <p class="eyebrow">favorite team</p>
+                <h2>대한민국 다음 경기</h2>
+              </div>
+              <span class="status-badge">추적 중</span>
+            </div>
+            <div id="favoriteMatch" class="favorite-match"></div>
+          </article>
+
+          <article class="ops-card">
+            <div class="ops-card-heading">
+              <div>
+                <p class="eyebrow">source ledger</p>
+                <h2>데이터 출처</h2>
+              </div>
+              <svg class="source-icon" aria-hidden="true"><use href="#icon-source" /></svg>
+            </div>
+            <ul class="source-ledger">
+              <li><strong>Fixtures</strong><span>FIFA 공식 일정 seed</span></li>
+              <li><strong>Results</strong><span>대회 전 · 공식 결과 대기</span></li>
+              <li><strong>Predictions</strong><span>샘플 투표/모델 표시</span></li>
+              <li><strong>Updated</strong><span>2026-05-16 KST</span></li>
+            </ul>
+          </article>
+
+          <article class="ops-card visual-context">
+            <img src="./assets/world-cup-command-center.webp" alt="야간 경기장 안에 월드컵 일정, 예측, 경기 분석 보드가 표시된 커맨드 센터" />
+            <div>
+              <p class="eyebrow">visual context</p>
+              <h2>경기장 커맨드 센터</h2>
+              <p>경기장 분위기 참고 이미지 · 일정과 경기 데이터 영역을 우선합니다.</p>
+            </div>
+          </article>
         </section>
 
         <div class="dashboard-grid">
@@ -208,8 +253,20 @@
             </div>
           </section>
 
-          <aside class="panel match-panel" aria-labelledby="match-title">
-            <div id="matchDetail"></div>
+          <aside class="side-rail" aria-label="경기 인사이트 레일">
+            <section class="panel match-panel" aria-labelledby="match-title">
+              <div id="matchDetail"></div>
+            </section>
+            <section class="panel editorial-panel" aria-labelledby="insight-title">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">watch rail</p>
+                  <h2 id="insight-title">관전 레일</h2>
+                </div>
+                <span class="status-badge safe">팬 관점</span>
+              </div>
+              <div id="insightRail" class="insight-list"></div>
+            </section>
           </aside>
         </div>
 
@@ -282,6 +339,6 @@
       </main>
     </div>
 
-    <script src="./app.js?v=token-lint-20260516"></script>
+    <script src="./app.js?v=ticker-fit-20260516"></script>
   </body>
 </html>

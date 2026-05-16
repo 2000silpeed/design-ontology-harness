@@ -9,6 +9,7 @@ from design_ontology_harness.graph_spec_sections import build_graph_spec_section
 from design_ontology_harness.synthesis import (
     APP_ICON_IDENTITY_POLICY,
     COLOR_MODE_PARITY_POLICY,
+    COMMERCIAL_PRODUCT_REALISM_POLICY,
     ICON_REFACTOR_POLICY,
     REFERENCE_ABSORPTION_SCOPE,
     RESPONSIVE_RESILIENCE_POLICY,
@@ -323,6 +324,7 @@ class VisualAssetOntologyTests(unittest.TestCase):
                     "responsive_resilience_policy": RESPONSIVE_RESILIENCE_POLICY,
                     "icon_refactor_policy": ICON_REFACTOR_POLICY,
                     "app_icon_identity_policy": APP_ICON_IDENTITY_POLICY,
+                    "commercial_product_realism_policy": COMMERCIAL_PRODUCT_REALISM_POLICY,
                     "feedback_promotion_policy": REFERENCE_ABSORPTION_SCOPE["promotion_policy"],
                 },
             },
@@ -347,14 +349,21 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIsNotNone(responsive)
         self.assertEqual(responsive.type, NodeType.GovernanceRule)
         self.assertIn(320, responsive.meta["viewport_contract"]["required_widths_px"])
+        self.assertTrue(any("Horizontal rails" in item for item in responsive.meta["control_rules"]))
 
         mobile_overflow = graph.get_node("failure-pattern:mobile-control-overflow")
         self.assertIsNotNone(mobile_overflow)
         self.assertEqual(mobile_overflow.type, NodeType.ImplementationFailurePattern)
         self.assertTrue(any("DS040" in item for item in mobile_overflow.meta["technical_controls"]))
 
+        rail_clipping = graph.get_node("failure-pattern:horizontal-rail-label-clipping")
+        self.assertIsNotNone(rail_clipping)
+        self.assertEqual(rail_clipping.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("scrollWidth<=clientWidth" in item for item in rail_clipping.meta["technical_controls"]))
+
         responsive_edges = graph.get_edges_from("governance:responsive-resilience", EdgeType.prevents)
         self.assertIn("failure-pattern:mobile-control-overflow", {edge.target for edge in responsive_edges})
+        self.assertIn("failure-pattern:horizontal-rail-label-clipping", {edge.target for edge in responsive_edges})
 
         color_mode_policy = graph.get_node("governance:color-mode-parity")
         self.assertIsNotNone(color_mode_policy)
@@ -409,6 +418,50 @@ class VisualAssetOntologyTests(unittest.TestCase):
         app_icon_edges = graph.get_edges_from("governance:brand-app-icon-identity", EdgeType.prevents)
         self.assertIn("failure-pattern:generic-initials-app-icon", {edge.target for edge in app_icon_edges})
 
+        realism_policy = graph.get_node("governance:commercial-product-realism")
+        self.assertIsNotNone(realism_policy)
+        self.assertEqual(realism_policy.type, NodeType.GovernanceRule)
+        self.assertIn("first-viewport task surface", realism_policy.meta["required_signals"])
+        self.assertTrue(any("national flag identity marks" in item for item in realism_policy.meta["required_signals"]))
+        self.assertTrue(any("reference-backed domain morphology" in item for item in realism_policy.meta["required_signals"]))
+        successful_pattern_ids = {item["id"] for item in realism_policy.meta["successful_patterns"]}
+        self.assertIn("same-domain-reference-before-redesign", successful_pattern_ids)
+        self.assertIn("score-ticker-as-scan-surface", successful_pattern_ids)
+        self.assertIn("national-flag-code-identity", successful_pattern_ids)
+        self.assertIn("source-ledger-and-sample-labeling", successful_pattern_ids)
+        self.assertIn("editorial-insight-side-rail", successful_pattern_ids)
+        self.assertIn("dual-mode-screenshot-qa", successful_pattern_ids)
+        self.assertIn("brand-app-icon-as-required-identity", successful_pattern_ids)
+        self.assertTrue(any("country-based sports competitions" in item for item in realism_policy.meta["implementation_rules"]))
+        self.assertTrue(any("Flag colors and domain identity marks" in item for item in realism_policy.meta["implementation_rules"]))
+        self.assertTrue(any("same-domain commercial references" in item for item in realism_policy.meta["implementation_rules"]))
+
+        pitch_deck_failure = graph.get_node("failure-pattern:pitch-deck-dashboard-shell")
+        self.assertIsNotNone(pitch_deck_failure)
+        self.assertEqual(pitch_deck_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("Commercial Product Realism" in item for item in pitch_deck_failure.meta["technical_controls"]))
+
+        reference_free_failure = graph.get_node("failure-pattern:reference-free-realism-refactor")
+        self.assertIsNotNone(reference_free_failure)
+        self.assertEqual(reference_free_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("Reference Intelligence" in item for item in reference_free_failure.meta["technical_controls"]))
+
+        generic_badge_failure = graph.get_node("failure-pattern:generic-national-team-badges")
+        self.assertIsNotNone(generic_badge_failure)
+        self.assertEqual(generic_badge_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("icon_refactor_policy" in item for item in generic_badge_failure.meta["technical_controls"]))
+
+        untokenized_identity_failure = graph.get_node("failure-pattern:untokenized-domain-identity-colors")
+        self.assertIsNotNone(untokenized_identity_failure)
+        self.assertEqual(untokenized_identity_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("DS003" in item for item in untokenized_identity_failure.meta["technical_controls"]))
+
+        realism_edges = graph.get_edges_from("governance:commercial-product-realism", EdgeType.prevents)
+        self.assertIn("failure-pattern:pitch-deck-dashboard-shell", {edge.target for edge in realism_edges})
+        self.assertIn("failure-pattern:reference-free-realism-refactor", {edge.target for edge in realism_edges})
+        self.assertIn("failure-pattern:generic-national-team-badges", {edge.target for edge in realism_edges})
+        self.assertIn("failure-pattern:untokenized-domain-identity-colors", {edge.target for edge in realism_edges})
+
         sections = build_graph_spec_sections(graph)
         self.assertIn("Color Mode Parity", sections)
         self.assertIn("dark-only-implementation", sections)
@@ -416,6 +469,14 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIn("Mercer app icon", sections)
         self.assertIn("assets/app-icon.svg", sections)
         self.assertIn("generic-initials-app-icon", sections)
+        self.assertIn("Commercial Product Realism", sections)
+        self.assertIn("pitch-deck-dashboard-shell", sections)
+        self.assertIn("reference-free-realism-refactor", sections)
+        self.assertIn("generic-national-team-badges", sections)
+        self.assertIn("Successful reusable patterns", sections)
+        self.assertIn("score-ticker-as-scan-surface", sections)
+        self.assertIn("national-flag-code-identity", sections)
+        self.assertIn("untokenized-domain-identity-colors", sections)
 
 
 if __name__ == "__main__":
