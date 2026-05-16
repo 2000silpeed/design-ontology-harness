@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>World Cup Hub</title>
+    <link rel="icon" href="./assets/app-icon.svg?v=brand-icon-20260516" type="image/svg+xml" />
+    <link rel="manifest" href="./site.webmanifest?v=brand-icon-20260516" />
+    <link rel="stylesheet" href="./styles.css?v=icons-20260516" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">본문으로 이동</a>
+
+    <svg class="icon-sprite" aria-hidden="true">
+      <symbol id="icon-calendar" viewBox="0 0 24 24">
+        <path d="M8 2v4M16 2v4M3 10h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" />
+      </symbol>
+      <symbol id="icon-trophy" viewBox="0 0 24 24">
+        <path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z" />
+        <path d="M7 6H4v2a4 4 0 0 0 4 4M17 6h3v2a4 4 0 0 1-4 4" />
+      </symbol>
+      <symbol id="icon-chart" viewBox="0 0 24 24">
+        <path d="M4 19V5M4 19h17M8 16v-5M13 16V8M18 16v-9" />
+      </symbol>
+      <symbol id="icon-message" viewBox="0 0 24 24">
+        <path d="M21 11.5a8 8 0 0 1-8 8H6l-4 3 1.5-5A8 8 0 1 1 21 11.5Z" />
+      </symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24">
+        <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" />
+      </symbol>
+      <symbol id="icon-star" viewBox="0 0 24 24">
+        <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2 7.5 14 3 9.6l6.2-.9L12 3Z" />
+      </symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24">
+        <path d="M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24">
+        <path d="m5 12 4 4L19 6" />
+      </symbol>
+      <symbol id="icon-filter" viewBox="0 0 24 24">
+        <path d="M4 6h16M7 12h10M10 18h4" />
+      </symbol>
+      <symbol id="icon-ball" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <path d="m12 7 4 3-1.6 4.8H9.6L8 10l4-3Z" />
+        <path d="M12 7V3M8 10 4.5 8M16 10l3.5-2M9.6 14.8 7.3 19M14.4 14.8l2.3 4.2" />
+      </symbol>
+      <symbol id="icon-stadium" viewBox="0 0 24 24">
+        <path d="M3 10c2.7-3 15.3-3 18 0v7c-3.7 2.7-14.3 2.7-18 0v-7Z" />
+        <path d="M6 11.5c2-1.5 10-1.5 12 0M7 16h10M9 14h6M5 5l3 3M19 5l-3 3M12 3v4" />
+      </symbol>
+      <symbol id="icon-bracket" viewBox="0 0 24 24">
+        <path d="M4 5h6v5H4zM4 14h6v5H4zM14 9h6v6h-6zM10 7.5h2a2 2 0 0 1 2 2v2M10 16.5h2a2 2 0 0 0 2-2v-2" />
+      </symbol>
+      <symbol id="icon-venue" viewBox="0 0 24 24">
+        <path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z" />
+        <circle cx="12" cy="10" r="2.8" />
+      </symbol>
+      <symbol id="icon-pulse" viewBox="0 0 24 24">
+        <path d="M3 12h4l2-5 4 10 2-5h6" />
+        <path d="M5 5a9 9 0 0 1 14 0M5 19a9 9 0 0 0 14 0" />
+      </symbol>
+      <symbol id="icon-vote" viewBox="0 0 24 24">
+        <path d="M4 10h16v10H4zM8 10l4-6 4 6M8 15h8" />
+      </symbol>
+      <symbol id="icon-whistle" viewBox="0 0 24 24">
+        <path d="M4 13a5 5 0 1 0 9.7-1.7L17 8h3l1-3h-5.4l-4 4H9a5 5 0 0 0-5 4Z" />
+        <circle cx="9" cy="14" r="1.8" />
+      </symbol>
+      <symbol id="icon-source" viewBox="0 0 24 24">
+        <path d="M6 3h9l3 3v15H6z" />
+        <path d="M14 3v4h4M9 11h6M9 15h6M9 19h3" />
+      </symbol>
+    </svg>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <div class="brand-mark" aria-hidden="true">
+            <img src="./assets/app-icon.svg?v=brand-icon-20260516" alt="" />
+          </div>
+          <div>
+            <strong>World Cup Hub</strong>
+            <span>Fixtures · Results · Predictions · Fan pulse</span>
+          </div>
+        </div>
+        <nav class="main-nav" aria-label="주요 섹션">
+          <button class="nav-button active" type="button" data-scroll-target="dashboard">
+            <svg><use href="#icon-trophy" /></svg>
+            대시보드
+          </button>
+          <button class="nav-button" type="button" data-scroll-target="schedule">
+            <svg><use href="#icon-calendar" /></svg>
+            일정
+          </button>
+          <button class="nav-button" type="button" data-scroll-target="results">
+            <svg><use href="#icon-check" /></svg>
+            결과
+          </button>
+          <button class="nav-button" type="button" data-scroll-target="predictions">
+            <svg><use href="#icon-chart" /></svg>
+            예측
+          </button>
+          <button class="nav-button" type="button" data-scroll-target="community">
+            <svg><use href="#icon-message" /></svg>
+            의견
+          </button>
+        </nav>
+      </header>
+
+      <main id="main" class="workspace">
+        <section id="dashboard" class="status-strip" aria-label="대회 현황">
+          <div class="status-copy">
+            <p class="eyebrow">FIFA World Cup 2026</p>
+            <h1>월드컵 일정과 예측을 한 화면에서</h1>
+            <p class="source-note">
+              일정 seed: FIFA 공식 일정 페이지 · 화면 데이터: 정적 MVP 샘플 · 2026년 5월 16일 기준 대회 전 상태
+            </p>
+          </div>
+          <div class="status-metrics" aria-label="요약 지표">
+            <article>
+              <i class="metric-icon"><svg><use href="#icon-clock" /></svg></i>
+              <span>개막까지</span>
+              <strong id="daysUntil">-</strong>
+            </article>
+            <article>
+              <i class="metric-icon"><svg><use href="#icon-stadium" /></svg></i>
+              <span>본선 경기</span>
+              <strong>104</strong>
+            </article>
+            <article>
+              <i class="metric-icon"><svg><use href="#icon-bracket" /></svg></i>
+              <span>조별 경기</span>
+              <strong>72</strong>
+            </article>
+            <article>
+              <i class="metric-icon"><svg><use href="#icon-vote" /></svg></i>
+              <span>샘플 예측</span>
+              <strong id="voteTotal">-</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="hero-board" aria-label="대표 경기 보드">
+          <img src="./assets/world-cup-command-center.webp" alt="야간 경기장 안에 월드컵 일정, 예측, 경기 분석 보드가 표시된 커맨드 센터" />
+          <div class="next-match">
+            <p class="eyebrow">favorite team</p>
+            <h2>대한민국 다음 경기</h2>
+            <div id="favoriteMatch" class="favorite-match"></div>
+          </div>
+        </section>
+
+        <div class="dashboard-grid">
+          <section id="schedule" class="panel schedule-panel" aria-labelledby="schedule-title">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">fixtures</p>
+                <h2 id="schedule-title">경기 일정</h2>
+              </div>
+              <div class="panel-tools">
+                <label class="search-box">
+                  <svg><use href="#icon-search" /></svg>
+                  <input id="matchSearch" type="search" placeholder="팀, 도시, 조 검색" autocomplete="off" />
+                </label>
+                <button class="icon-button" type="button" aria-label="필터">
+                  <svg><use href="#icon-filter" /></svg>
+                </button>
+              </div>
+            </div>
+
+            <div id="dateRail" class="date-rail" aria-label="날짜 필터"></div>
+            <div id="groupFilters" class="chip-row" aria-label="조 필터"></div>
+            <div class="segmented-control" aria-label="상태 필터">
+              <button class="active" type="button" data-status-filter="all">전체</button>
+              <button type="button" data-status-filter="scheduled">예정</button>
+              <button type="button" data-status-filter="live">진행</button>
+              <button type="button" data-status-filter="sample-result">샘플 결과</button>
+            </div>
+
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead>
+                  <tr>
+                    <th scope="col">시간</th>
+                    <th scope="col">경기</th>
+                    <th scope="col">조</th>
+                    <th scope="col">장소</th>
+                    <th scope="col">예측</th>
+                    <th scope="col">의견</th>
+                  </tr>
+                </thead>
+                <tbody id="scheduleRows"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <aside class="panel match-panel" aria-labelledby="match-title">
+            <div id="matchDetail"></div>
+          </aside>
+        </div>
+
+        <div class="insight-grid">
+          <section id="results" class="panel" aria-labelledby="results-title">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">results</p>
+                <h2 id="results-title">결과 센터</h2>
+              </div>
+              <span class="status-badge muted">공식 결과 대기</span>
+            </div>
+            <div id="resultsList" class="result-list"></div>
+          </section>
+
+          <section class="panel" aria-labelledby="standings-title">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">group table</p>
+                <h2 id="standings-title">Group A</h2>
+              </div>
+              <span class="status-badge">KOR 포함</span>
+            </div>
+            <div class="table-wrap compact">
+              <table class="standings-table">
+                <thead>
+                  <tr>
+                    <th scope="col">팀</th>
+                    <th scope="col">경기</th>
+                    <th scope="col">승점</th>
+                    <th scope="col">팬 전망</th>
+                  </tr>
+                </thead>
+                <tbody id="standingsRows"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <div class="insight-grid lower">
+          <section id="predictions" class="panel" aria-labelledby="prediction-title">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">prediction room</p>
+                <h2 id="prediction-title">승부예측</h2>
+              </div>
+              <span class="status-badge safe">베팅 아님</span>
+            </div>
+            <div id="predictionPanel"></div>
+          </section>
+
+          <section id="community" class="panel" aria-labelledby="community-title">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">fan pulse</p>
+                <h2 id="community-title">의견</h2>
+              </div>
+              <span class="status-badge muted" id="threadCount">-</span>
+            </div>
+            <div id="discussionThread" class="discussion-thread"></div>
+            <form id="opinionForm" class="opinion-form">
+              <label for="opinionText">의견 작성</label>
+              <div class="composer-row">
+                <input id="opinionText" type="text" maxlength="120" placeholder="짧은 관전 포인트를 남겨보세요" />
+                <button class="primary-button" type="submit">등록</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script src="./app.js?v=icons-20260516"></script>
+  </body>
+</html>

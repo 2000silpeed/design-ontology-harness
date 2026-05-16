@@ -13,14 +13,16 @@ from design_ontology_harness.agent_packs import (
 
 
 class AgentPackTests(unittest.TestCase):
-    def test_codex_visual_asset_skill_uses_imagine2_and_artifacts(self) -> None:
+    def test_codex_visual_asset_skill_uses_builtin_imagegen_without_api_fallback(self) -> None:
         skill_text = _codex_visual_asset_skill("design-system")
 
         self.assertIn("STYLE.md", skill_text)
         self.assertIn("DESIGN.md", skill_text)
-        self.assertIn("imagine2", skill_text)
+        self.assertIn("image_gen", skill_text)
+        self.assertIn("do not call an API fallback", skill_text)
         self.assertIn("visual_reference_report.json", skill_text)
         self.assertIn("public/generated/design-system/manifest.json", skill_text)
+        self.assertIn("public/generated/design-system/imagegen-prompts.md", skill_text)
         self.assertIn("alt_text", skill_text)
 
     def test_codex_implementer_reads_style_capsule_first(self) -> None:
@@ -57,11 +59,13 @@ class AgentPackTests(unittest.TestCase):
 
             self.assertTrue(skill_path.exists())
             self.assertIn(str(skill_path), result["created"])
-            self.assertIn("imagine2", skill_path.read_text(encoding="utf-8"))
+            self.assertIn("image_gen", skill_path.read_text(encoding="utf-8"))
+            self.assertIn("do not call an API fallback", skill_path.read_text(encoding="utf-8"))
 
             plugin_manifest = json.loads(plugin_manifest_path.read_text(encoding="utf-8"))
             self.assertIn("imagery", plugin_manifest["keywords"])
-            self.assertIn("imagine2", plugin_manifest["interface"]["longDescription"])
+            self.assertIn("image_gen", plugin_manifest["interface"]["longDescription"])
+            self.assertIn("fallbacks are disabled", plugin_manifest["interface"]["longDescription"])
 
 
 if __name__ == "__main__":

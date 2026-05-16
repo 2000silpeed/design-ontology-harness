@@ -92,6 +92,34 @@ STRUCTURAL_CUSTOM_PROPERTY_RE = re.compile(
     r"--(?:.*(?:app|shell|sidebar|rail|nav|chrome|layout|panel|card|chart|graph|data|secondary|tertiary|surface|bg|background).*)",
     re.IGNORECASE,
 )
+WIDTH_DECLARATION_RE = re.compile(
+    r"\b(?P<prop>width|inline-size|min-width|min-inline-size)\s*:\s*(?P<value>[^;}{]+)",
+    re.IGNORECASE,
+)
+FLEX_WRAP_NOWRAP_RE = re.compile(r"\bflex-wrap\s*:\s*nowrap\b", re.IGNORECASE)
+WHITE_SPACE_NOWRAP_RE = re.compile(r"\bwhite-space\s*:\s*nowrap\b", re.IGNORECASE)
+TAILWIND_FIXED_WIDTH_RE = re.compile(r"\b(?P<class>(?:min-w|w)-\[(?P<value>\d+)px\])")
+TAILWIND_SCREEN_WIDTH_RE = re.compile(r"\bw-screen\b")
+TAILWIND_NOWRAP_RE = re.compile(r"\bwhitespace-nowrap\b")
+EMOJI_RE = re.compile(r"[\U0001F300-\U0001FAFF\u2600-\u27BF]")
+BUTTON_LIKE_CONTEXT_RE = re.compile(
+    r"(?:^|[\s.#:'\"`_\-/])(?:button|btn|cta|tab|chip|filter-chip|toolbar|action-button|primary-action)(?:$|[\s.#:'\"`_\-/\]])",
+    re.IGNORECASE,
+)
+ACTION_GROUP_CONTEXT_RE = re.compile(
+    r"(?:^|[\s.#:'\"`_\-/])(?:actions?|action-row|button-group|button-row|cta-row|toolbar|control-row|form-actions)(?:$|[\s.#:'\"`_\-/\]])",
+    re.IGNORECASE,
+)
+EMOJI_UI_CONTEXT_RE = re.compile(
+    r"(?:^|[\s.#<:'\"`_\-/])(?:button|btn|cta|card|tile|badge|chip|tab|nav|status|state|toast|banner|alert|empty-state|icon|marker)(?:$|[\s.#>:'\"`_\-/\]])",
+    re.IGNORECASE,
+)
+EMOJI_CONTENT_CONTEXT_RE = re.compile(
+    r"(?:emoji[-_]?picker|emojiPicker|reaction-data|user-generated|user-content|chat-message|comment-body|blog-body|article-body|markdown|prose)",
+    re.IGNORECASE,
+)
+CONTROL_MIN_WIDTH_LIMIT_PX = 240
+CONTROL_WIDTH_LIMIT_PX = 280
 
 
 @dataclass
@@ -210,6 +238,7 @@ def _lint_text(text: str, rel_path: str) -> list[ImplementationIssue]:
     issues: list[ImplementationIssue] = []
     in_managed_block = False
     in_block_comment = False
+    current_selector: str | None = None
 
     for line_no, raw_line in enumerate(text.splitlines(), start=1):
         if DS_BLOCK_START in raw_line:
@@ -222,6 +251,7 @@ def _lint_text(text: str, rel_path: str) -> list[ImplementationIssue]:
         line, in_block_comment = _strip_comment_segments(raw_line, in_block_comment)
         if not line.strip():
             continue
+        selector_for_line = _selector_for_line(line, current_selector)
 
         for match in COLOR_LITERAL_RE.finditer(line):
             issues.append(
@@ -302,6 +332,180 @@ def _lint_text(text: str, rel_path: str) -> list[ImplementationIssue]:
                 )
             )
 
+        issues.extend(_lint_responsive_overflow(line, selector_for_line, rel_path, line_no, raw_line))
+        issues.extend(_lint_emoji_ui(line, selector_for_line, rel_path, line_no, raw_line))
+
+        current_selector = _next_selector_context(line, selector_for_line, current_selector)
+
+    return issues
+
+
+def _selector_for_line(line: str, current_selector: str | None) -> str | None:
+    stripped = line.strip()
+    if "{" not in stripped:
+        return current_selector
+    before = stripped.split("{", 1)[0].strip()
+    if not before or before.startswith("@") or before.startswith("from ") or before.startswith("to "):
+        return current_selector
+    return before
+
+
+def _next_selector_context(
+    line: str,
+    selector_for_line: str | None,
+    current_selector: str | None,
+) -> str | None:
+    opens = line.count("{")
+    closes = line.count("}")
+    if opens and selector_for_line:
+        if closes >= opens:
+            return current_selector if current_selector != selector_for_line else None
+        return selector_for_line
+    if closes and closes >= opens:
+        return None
+    return current_selector
+
+
+def _lint_responsive_overflow(
+    line: str,
+    selector: str | None,
+    rel_path: str,
+    line_no: int,
+    raw_line: str,
+) -> list[ImplementationIssue]:
+    issues: list[ImplementationIssue] = []
+    context = f"{selector or ''} {line}"
+    button_like = bool(BUTTON_LIKE_CONTEXT_RE.search(context))
+    action_group = bool(ACTION_GROUP_CONTEXT_RE.search(context))
+
+    for match in WIDTH_DECLARATION_RE.finditer(line):
+        prop = match.group("prop").lower()
+        value = match.group("value").strip()
+        lower_value = value.lower()
+
+        if "100vw" in lower_value:
+            issues.append(
+                _issue(
+                    "DS041",
+                    rel_path,
+                    line_no,
+                    match.start("value") + 1,
+                    "Viewport-width sizing can create mobile horizontal overflow inside padded containers; prefer width/max-width: 100% or a documented full-bleed pattern.",
+                    raw_line,
+                )
+            )
+
+        px_value = _first_px_value(value)
+        if button_like and px_value is not None:
+            limit = CONTROL_MIN_WIDTH_LIMIT_PX if prop.startswith("min-") else CONTROL_WIDTH_LIMIT_PX
+            if px_value >= limit:
+                issues.append(
+                    _issue(
+                        "DS040",
+                        rel_path,
+                        line_no,
+                        match.start("value") + 1,
+                        "Button-like control uses a mobile-hostile fixed width/min-width; use max-inline-size: 100%, min-inline-size: 0, and a wrap/stack fallback.",
+                        raw_line,
+                    )
+                )
+
+    for match in TAILWIND_FIXED_WIDTH_RE.finditer(line):
+        if not button_like:
+            continue
+        px_value = int(match.group("value"))
+        limit = CONTROL_MIN_WIDTH_LIMIT_PX if match.group("class").startswith("min-w") else CONTROL_WIDTH_LIMIT_PX
+        if px_value >= limit:
+            issues.append(
+                _issue(
+                    "DS040",
+                    rel_path,
+                    line_no,
+                    match.start() + 1,
+                    "Button-like Tailwind width class can overflow mobile; use responsive max-w-full/min-w-0 plus wrap/stack behavior.",
+                    raw_line,
+                )
+            )
+
+    for match in TAILWIND_SCREEN_WIDTH_RE.finditer(line):
+        issues.append(
+            _issue(
+                "DS041",
+                rel_path,
+                line_no,
+                match.start() + 1,
+                "Tailwind w-screen commonly creates mobile horizontal overflow in padded layouts; prefer w-full/max-w-full unless this is a documented full-bleed element.",
+                raw_line,
+            )
+        )
+
+    nowrap_match = FLEX_WRAP_NOWRAP_RE.search(line)
+    if action_group and nowrap_match:
+        issues.append(
+            _issue(
+                "DS042",
+                rel_path,
+                line_no,
+                nowrap_match.start() + 1,
+                "Action/control row disables wrapping; provide flex-wrap: wrap or a <=480px stacked fallback so buttons stay onscreen.",
+                raw_line,
+            )
+        )
+
+    css_nowrap = WHITE_SPACE_NOWRAP_RE.search(line)
+    tailwind_nowrap = TAILWIND_NOWRAP_RE.search(line)
+    nowrap_column = css_nowrap.start() + 1 if css_nowrap else tailwind_nowrap.start() + 1 if tailwind_nowrap else None
+    if button_like and nowrap_column is not None:
+        issues.append(
+            _issue(
+                "DS043",
+                rel_path,
+                line_no,
+                nowrap_column,
+                "Button-like control prevents label wrapping; verify real mobile copy or pair it with a mobile stack/fallback.",
+                raw_line,
+            )
+        )
+
+    return issues
+
+
+def _first_px_value(value: str) -> int | None:
+    match = re.search(r"(-?\d+(?:\.\d+)?)px\b", value, re.IGNORECASE)
+    if not match:
+        return None
+    try:
+        return int(float(match.group(1)))
+    except ValueError:
+        return None
+
+
+def _lint_emoji_ui(
+    line: str,
+    selector: str | None,
+    rel_path: str,
+    line_no: int,
+    raw_line: str,
+) -> list[ImplementationIssue]:
+    if EMOJI_CONTENT_CONTEXT_RE.search(line):
+        return []
+
+    context = f"{selector or ''} {line}"
+    if not EMOJI_UI_CONTEXT_RE.search(context):
+        return []
+
+    issues: list[ImplementationIssue] = []
+    for match in EMOJI_RE.finditer(line):
+        issues.append(
+            _issue(
+                "DS050",
+                rel_path,
+                line_no,
+                match.start() + 1,
+                "Emoji used as a UI affordance; replace it during refactor with an SVG file/component or approved icon library.",
+                raw_line,
+            )
+        )
     return issues
 
 

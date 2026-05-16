@@ -32,6 +32,7 @@ from .preset_ops import (
     rebuild_all,
 )
 from .preset_validator import format_report as format_preset_report, validate_all
+from .reference_context import build_design_context_pack
 from .spec_analyzer import analyze_spec_file, build_component_list, detected_to_primitives
 from .synthesis import build_blueprint, load_brand_profile
 from .utils import ensure_dir, write_json, write_jsonl
@@ -949,7 +950,17 @@ def main() -> None:
         )
         visual_report = brand_profile.get("_resolved_visual_reference") or {}
         issues = brand_profile.get("_visual_reference_issues", [])
-        _write_visual_analysis_outputs(visuals_dir, brand_profile_path, visual_report, issues)
+        design_context_pack = brand_profile.get("_design_context_pack") or build_design_context_pack(
+            brand_profile,
+            visual_report,
+        )
+        _write_visual_analysis_outputs(
+            visuals_dir,
+            brand_profile_path,
+            visual_report,
+            issues,
+            design_context_pack=design_context_pack,
+        )
 
         coverage = visual_report.get("coverage", {}) or {}
         motifs = visual_report.get("visual_motifs", {}) or {}
@@ -966,7 +977,7 @@ def main() -> None:
             f"surface {(motifs.get('surface_style') or {}).get('value', 'n/a')} | "
             f"layout {top_layout}"
         )
-        print("  -> visual_reference_report.json, visual_motifs.json, layout_cues.json 저장")
+        print("  -> visual_reference_report.json, visual_motifs.json, layout_cues.json, design_context_pack.json 저장")
         if issues:
             print("  -> 이슈:")
             for issue in issues[:5]:
@@ -1004,9 +1015,16 @@ def main() -> None:
             query_report=report,
             project_dir=project_dir,
         )
+        design_context_pack = build_design_context_pack(
+            brand_profile,
+            brand_profile.get("_resolved_visual_reference") or {},
+            report,
+        )
+        write_json(visuals_dir / "design_context_pack.json", design_context_pack)
 
         print(f"[generate-visual-queries] {report['query_count']}개 query 생성 완료: {visuals_dir}/visual_query_suggestions.json")
         print(f"  -> Pinterest assist plan: {visuals_dir}/pinterest_assist_plan.json")
+        print(f"  -> Design context pack: {visuals_dir}/design_context_pack.json")
         print(f"  -> Candidate manifest: {visuals_dir}/pinterest_candidate_manifest.json")
         print(f"  -> Selection manifest: {visuals_dir}/pinterest_selection_manifest.json")
         if spec_path and spec_path.exists():
@@ -1310,6 +1328,13 @@ def main() -> None:
             )
         elif brand_profile.get("visual_reference"):
             print("  시각 레퍼런스: 설정됨, 하지만 유효한 로컬 이미지가 아직 해석되지 않음")
+        visual_asset_manifests = brand_profile.get("_generated_visual_asset_manifests", [])
+        if visual_asset_manifests:
+            asset_count = sum(len(manifest.get("assets", []) or []) for manifest in visual_asset_manifests)
+            print(f"  생성 이미지 manifest: {len(visual_asset_manifests)}개 | asset {asset_count}개 자동 승격")
+        identity_assets = brand_profile.get("_identity_assets", [])
+        if identity_assets:
+            print(f"  브랜드 identity asset: {len(identity_assets)}개 자동 승격")
 
         spec_file = project_dir / "spec.md"
         if not spec_file.exists():
@@ -1760,6 +1785,8 @@ def _write_visual_analysis_outputs(
     brand_profile_path: Path,
     visual_report: dict,
     issues: list[str],
+    *,
+    design_context_pack: dict | None = None,
 ) -> None:
     motifs = visual_report.get("visual_motifs", {}) or {}
     layout_cues = visual_report.get("layout_cues", []) or []
@@ -1773,12 +1800,19 @@ def _write_visual_analysis_outputs(
     write_json(output_dir / "component_style_hints.json", component_hints)
     write_json(output_dir / "candidate_component_archetypes.json", archetypes)
     write_json(output_dir / "reference_mood_summary.json", mood_summary)
+    if design_context_pack:
+        write_json(output_dir / "design_context_pack.json", design_context_pack)
     write_json(
         output_dir / "visual_analysis_summary.json",
         {
             "brand_profile": str(brand_profile_path),
             "issues": issues,
             "coverage": visual_report.get("coverage", {}),
+            "design_context_activation": (
+                (design_context_pack or {}).get("activation_state")
+                if design_context_pack
+                else None
+            ),
             "top_layout_cue": layout_cues[0]["id"] if layout_cues else None,
             "density": (motifs.get("density") or {}).get("value"),
             "surface_style": (motifs.get("surface_style") or {}).get("value"),

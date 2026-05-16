@@ -9,7 +9,9 @@ from .benchmark_kb import build_benchmark_context, save_benchmark_report
 from .color_reference import resolve_color_reference
 from .css_pipeline import load_css_extraction
 from .font_reference import resolve_font_system
+from .graph_builders import VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS
 from .models import DocumentRecord, ReferenceLink
+from .reference_context import build_design_context_pack
 from .utils import ensure_dir, write_json
 from .visual_reference import resolve_visual_reference
 
@@ -32,7 +34,7 @@ AI_SYNTHESIS_PRINCIPLES = [
     {
         "id": "no_emoji_as_ui",
         "rule": "이모지를 UI 요소로 쓰지 않는다",
-        "detail": "AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 반드시 SVG 아이콘 컴포넌트를 직접 구현하거나, 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)를 import해서 사용한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다. 이 규칙은 AI가 UI를 만들 때 가장 자주 저지르는 실수이므로 엄격히 적용한다.",
+        "detail": "AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 반드시 SVG 파일/아이콘 컴포넌트 또는 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)를 사용한다. 리팩토링 중 카드, 버튼, 배지, 탭, 상태 표시, empty state에서 이모지를 발견하면 그대로 두지 말고 적절한 SVG 아이콘으로 교체한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다.",
     },
     {
         "id": "implement_components_directly",
@@ -75,6 +77,100 @@ REFERENCE_ABSORPTION_SCOPE = {
         "rule": "When implementation review identifies a repeatable design-system failure, promote it into governance, generated artifacts, and lint checks before treating the current screen as complete.",
         "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md"],
     },
+}
+
+RESPONSIVE_RESILIENCE_POLICY = {
+    "id": "responsive-resilience",
+    "rule": "Every generated or refactored UI must preserve horizontal fit at mobile widths before visual polish is considered complete.",
+    "viewport_contract": {
+        "required_widths_px": [320, 360, 390, 430, 768, 1024, 1440],
+        "pass_condition": "document.documentElement.scrollWidth <= window.innerWidth and all primary controls remain reachable without horizontal scrolling.",
+    },
+    "control_rules": [
+        "Buttons, CTA groups, tabs, filter chips, and toolbar actions must not rely on fixed px widths or mobile-hostile min-width values.",
+        "Every button-like control needs max-inline-size: 100%; controls inside flex/grid parents need min-inline-size: 0 so labels can shrink or wrap.",
+        "Action rows must wrap or stack at narrow widths; two-button rows need a <=480px fallback before implementation is complete.",
+        "Long Korean CTA labels must be tested with real copy. Prefer wrapping/stacking over clipping, overflow hidden, or forcing white-space: nowrap.",
+        "Do not use width: 100vw inside padded containers; it commonly creates horizontal scroll. Use width: 100%, max-width: 100%, or a documented full-bleed pattern.",
+        "Never hide body overflow-x as the fix for a layout bug; remove the overflowing width/min-width instead.",
+    ],
+    "failure_patterns": [
+        {
+            "id": "mobile-control-overflow",
+            "trigger": "A button, CTA, tab, chip, or action group extends beyond a 320-430px viewport or requires sideways scrolling.",
+            "rule": "Controls must fit, wrap, or stack within their container at mobile widths.",
+            "prevention": "Ban fixed/min-width px sizing on button-like controls unless paired with max-inline-size: 100%, min-inline-size: 0, and a mobile wrap/stack fallback.",
+            "technical_controls": ["system_spec.md Responsive Resilience", "components/component_specs.md button notes", "lint-implementation DS040", "lint-implementation DS042", "viewport screenshot QA"],
+        },
+        {
+            "id": "viewport-horizontal-overflow",
+            "trigger": "The page has horizontal scroll at mobile widths because a section, grid, or full-bleed element exceeds the viewport.",
+            "rule": "No generated screen is complete while scrollWidth exceeds innerWidth on supported mobile viewports.",
+            "prevention": "Avoid 100vw in padded containers, use minmax(0, 1fr) for grids, set min-width: 0 on flex/grid children, and verify 320/360/390/430px screenshots.",
+            "technical_controls": ["system_spec.md viewport contract", "lint-implementation DS041", "lint-implementation DS043", "Playwright mobile viewport check"],
+        },
+    ],
+    "outputs": ["design_system_blueprint.governance", "system_spec.md", "token_schema.json", "component_specs.md", "IMPLEMENTATION_CONTRACT.md", "lint-implementation"],
+}
+
+ICON_REFACTOR_POLICY = {
+    "id": "emoji-to-svg-refactor",
+    "rule": "During UI refactors, emoji-looking UI affordances must be replaced with SVG-based icons instead of preserved as text glyphs.",
+    "targets": ["button", "card", "badge", "tab", "navigation item", "status indicator", "empty state", "toast", "banner"],
+    "replacement_order": [
+        "Use the project's existing icon library when one is already installed and stylistically compatible.",
+        "Reuse existing local SVG/icon components when available.",
+        "Create a simple local SVG file or SVG component when no suitable icon exists.",
+    ],
+    "implementation_rules": [
+        "Keep SVG stroke/fill bound to currentColor or design tokens, not hard-coded palette values.",
+        "Decorative SVG icons use aria-hidden=\"true\"; semantic icons get an accessible label or adjacent text.",
+        "Store new SVG assets in the nearest existing icons/assets directory; create a minimal icons directory only when none exists.",
+        "Do not replace user-generated emoji content, chat text, blog body, or emoji-picker data.",
+        "Do not use emoji as a placeholder while searching for a proper icon.",
+    ],
+    "failure_patterns": [
+        {
+            "id": "emoji-ui-affordance",
+            "trigger": "A button, card, nav item, badge, status indicator, or empty state uses an emoji as its icon or visual marker.",
+            "rule": "UI affordances must use SVG files/components or an approved icon library, never emoji glyphs.",
+            "prevention": "Replace the emoji with an appropriate existing icon, imported icon, or locally authored SVG with token-bound color and accessible semantics.",
+            "technical_controls": ["component_specs.md Non-negotiable", "design-system-refactor skill", "lint-implementation DS050"],
+        }
+    ],
+    "outputs": ["system_spec.md", "component_specs.md", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "lint-implementation"],
+}
+
+APP_ICON_IDENTITY_POLICY = {
+    "id": "brand-app-icon-identity",
+    "rule": "Every app or website implementation must include a brand-specific app icon identity asset; generic initial-letter tiles are not acceptable as final app icons.",
+    "required_assets": [
+        {
+            "id": "identity-asset:app-icon",
+            "label": "Brand app icon",
+            "required": True,
+            "formats": ["svg source", "favicon", "web app manifest icon when applicable"],
+            "targets": ["favicon", "app shell brand mark", "web app manifest", "mobile home-screen icon"],
+            "description": "A compact identity mark that encodes the product domain, brand palette, and interaction posture without relying on generic initials.",
+        }
+    ],
+    "implementation_rules": [
+        "Do not ship a plain initials tile such as WC, AI, DS, or App as the final app icon unless the brand system explicitly defines that lettermark.",
+        "The app icon must use the brand palette, visual keywords, and product primitives as evidence for shape language.",
+        "Use a deterministic SVG source for the primary app icon; generated raster imagery may support marketing visuals but must not replace the identity icon source.",
+        "Wire the app icon into favicon/link metadata and the visible app-shell brand mark when the implementation has one.",
+        "Keep small-size legibility: the icon must remain recognizable at 32px and in a 44px navigation mark.",
+    ],
+    "failure_patterns": [
+        {
+            "id": "generic-initials-app-icon",
+            "trigger": "A favicon, app-shell mark, or web app icon uses generic initials or placeholder text instead of a brand-specific identity asset.",
+            "rule": "App icons are required brand identity assets, not temporary text badges.",
+            "prevention": "Create or reuse a brand-specific SVG app icon, wire it to favicon/manifest/app-shell surfaces, and document it in the ontology.",
+            "technical_controls": ["system_spec.md Brand Identity Assets", "system_ontology.json BrandIdentityAsset", "IMPLEMENTATION_CONTRACT.md", "viewport screenshot QA"],
+        }
+    ],
+    "outputs": ["brand_profile", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "lint-implementation"],
 }
 
 KEYWORD_PRINCIPLES = {
@@ -127,8 +223,102 @@ def load_brand_profile(path: Path) -> dict:
             profile["_resolved_visual_reference"] = resolved_visual_reference
         if issues:
             profile["_visual_reference_issues"] = issues
+        profile["_design_context_pack"] = build_design_context_pack(
+            profile,
+            resolved_visual_reference if resolved_visual_reference else {},
+        )
+
+    generated_visual_asset_manifests = discover_generated_visual_asset_manifests(path.parent)
+    if generated_visual_asset_manifests:
+        profile["_generated_visual_asset_manifests"] = generated_visual_asset_manifests
+
+    identity_assets = discover_brand_identity_assets(path.parent, profile)
+    if identity_assets:
+        profile["_identity_assets"] = identity_assets
 
     return profile
+
+
+def discover_brand_identity_assets(project_dir: Path, profile: dict | None = None) -> list[dict]:
+    """Discover project-local brand identity assets that should be promoted into ontology."""
+    profile = profile or {}
+    assets: list[dict] = []
+    seen_ids: set[str] = set()
+
+    for asset in profile.get("identity_assets", []):
+        if not isinstance(asset, dict):
+            continue
+        asset_id = str(asset.get("id") or "identity-asset:app-icon")
+        seen_ids.add(asset_id)
+        assets.append(asset)
+
+    app_icon_candidates = [
+        "assets/app-icon.svg",
+        "public/app-icon.svg",
+        "app-icon.svg",
+        "favicon.svg",
+    ]
+    manifest_candidates = [
+        "site.webmanifest",
+        "manifest.webmanifest",
+        "public/site.webmanifest",
+        "public/manifest.webmanifest",
+    ]
+    app_icon_path = next((path for path in app_icon_candidates if (project_dir / path).exists()), None)
+    if app_icon_path and "identity-asset:app-icon" not in seen_ids:
+        manifest_path = next((path for path in manifest_candidates if (project_dir / path).exists()), None)
+        targets = ["favicon", "app shell brand mark"]
+        if manifest_path:
+            targets.append("web app manifest")
+        assets.append({
+            "id": "identity-asset:app-icon",
+            "label": "Brand app icon",
+            "slot": "app-icon",
+            "required": True,
+            "integrated": True,
+            "asset_path": app_icon_path,
+            "manifest_path": manifest_path,
+            "format": "svg",
+            "targets": targets,
+            "description": "Project-local app icon discovered from common brand identity asset paths.",
+            "discovered_from": "common-app-icon-path",
+        })
+
+    return assets
+
+
+def discover_generated_visual_asset_manifests(project_dir: Path) -> list[dict]:
+    """Load project-local generated image manifests for automatic ontology promotion."""
+    manifests: list[dict] = []
+    seen_paths: set[Path] = set()
+
+    for relative_path in VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS:
+        manifest_path = (project_dir / relative_path).resolve()
+        if manifest_path in seen_paths or not manifest_path.exists():
+            continue
+        seen_paths.add(manifest_path)
+        try:
+            raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(raw_manifest, dict):
+            continue
+        assets = raw_manifest.get("assets")
+        if not isinstance(assets, list) or not assets:
+            continue
+
+        manifests.append({
+            "path": relative_path,
+            "absolute_path": str(manifest_path),
+            "schema_version": raw_manifest.get("schema_version"),
+            "project": raw_manifest.get("project"),
+            "brand": raw_manifest.get("brand"),
+            "generator": raw_manifest.get("generator") or {},
+            "source_session": raw_manifest.get("source_session") or {},
+            "assets": [asset for asset in assets if isinstance(asset, dict)],
+        })
+
+    return manifests
 
 
 def build_blueprint(
@@ -179,6 +369,9 @@ def build_blueprint(
         "color_reference": brand_profile.get("_resolved_color_reference"),
         "visual_reference": brand_profile.get("_resolved_visual_reference"),
         "visual_reference_issues": brand_profile.get("_visual_reference_issues", []),
+        "design_context_pack": brand_profile.get("_design_context_pack"),
+        "identity_assets": brand_profile.get("_identity_assets", []),
+        "generated_visual_assets": brand_profile.get("_generated_visual_asset_manifests", []),
         "visual_language": (brand_profile.get("_resolved_visual_reference") or {}).get("visual_motifs"),
         "layout_cues": (brand_profile.get("_resolved_visual_reference") or {}).get("layout_cues"),
         "component_style_hints": (brand_profile.get("_resolved_visual_reference") or {}).get("component_style_hints"),
@@ -203,17 +396,24 @@ def build_blueprint(
                 "기존 핵심 화면, 진입점, 작업 흐름은 명시적 승인 없이 제거하거나 숨기지 않음",
                 "전면 셸 리라이트보다 토큰 -> primitive -> feature surface 순서의 점진적 롤아웃을 우선",
                 "새 시각 규칙은 지원 대상 테마와 breakpoint 전체에서 먼저 검증",
+                "모바일 320/360/390/430px에서 horizontal scroll 또는 버튼/CTA 잘림이 있으면 완료로 보지 않음",
+                "버튼·CTA·탭·필터칩·툴바 액션은 fixed width/min-width에 의존하지 않고 wrap 또는 stack fallback을 가져야 함",
+                "padded container 안에서 width: 100vw를 쓰지 않음 — width: 100%, max-width: 100%, documented full-bleed 패턴을 우선",
                 "기존 데이터 밀도와 업무 완료 경로를 유지한 상태에서 시각 품질을 높이는 방향을 우선",
                 "기능 위치 변경, 정보 구조 변경, 패널 제거는 별도의 migration plan이 있을 때만 수행",
                 "레퍼런스는 형태·밀도·컴포넌트 비례만 흡수하고, 색 조합·폰트 스케일·도메인 IA는 토큰과 제품 온톨로지를 따른다",
                 "토큰을 사용하더라도 status/tint/info 역할을 섞어 레퍼런스처럼 보이는 새 팔레트를 만들지 않는다",
                 "구현 중 사용자·리뷰어가 반복 가능한 실패 패턴을 지적하면 현재 화면 수정에 그치지 않고 governance/contract/linter로 승격한다",
-                "아이콘 자리에 이모지(🎨 ✅ 🔥 등)를 넣지 않음 — SVG 아이콘 또는 아이콘 라이브러리만 사용",
+                "아이콘 자리에 이모지(🎨 ✅ 🔥 등)를 넣지 않음 — 리팩토링 중 발견하면 SVG 파일/아이콘 컴포넌트 또는 아이콘 라이브러리로 교체",
+                "favicon, 앱 셸 브랜드 마크, 웹 manifest에는 브랜드 특정 앱 아이콘을 사용하고 일반 이니셜 타일을 최종 아이콘으로 남기지 않음",
                 "컴포넌트는 component_specs.md의 anatomy/states/token binding을 그대로 따라 완전히 구현",
                 "'TODO 컴포넌트', '임시 버튼', '플레이스홀더 카드' 같은 반쪽 구현을 남기지 않음"
             ],
             "ai_synthesis_principles": AI_SYNTHESIS_PRINCIPLES,
             "reference_absorption_scope": REFERENCE_ABSORPTION_SCOPE,
+            "responsive_resilience_policy": RESPONSIVE_RESILIENCE_POLICY,
+            "icon_refactor_policy": ICON_REFACTOR_POLICY,
+            "app_icon_identity_policy": APP_ICON_IDENTITY_POLICY,
             "feedback_promotion_policy": REFERENCE_ABSORPTION_SCOPE["promotion_policy"],
         },
         "ontology_targets": prioritized_concepts,
@@ -222,6 +422,8 @@ def build_blueprint(
 
     if blueprint["visual_reference"]:
         write_json(blueprint_dir / "visual_reference_report.json", blueprint["visual_reference"])
+    if blueprint.get("design_context_pack"):
+        write_json(blueprint_dir / "design_context_pack.json", blueprint["design_context_pack"])
     save_benchmark_report(output_dir, brand_profile)
     write_json(blueprint_dir / "design_system_blueprint.json", blueprint)
     generate_system_pack(output_dir, brand_profile, blueprint, references, documents)

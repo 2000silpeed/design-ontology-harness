@@ -637,6 +637,46 @@ def build_benchmark_layer(graph: DesignOntologyGraph, brand_profile: dict) -> No
 
 
 VISUAL_ASSET_MANIFEST_PATH = "public/generated/design-system/manifest.json"
+VISUAL_ASSET_PROMPT_PACK_PATH = "public/generated/design-system/imagegen-prompts.md"
+VISUAL_IMAGE_GENERATOR_ID = "image-model:codex-imagegen"
+VISUAL_IMAGE_GENERATOR_LABEL = "Codex image_gen skill"
+VISUAL_IMAGE_GENERATOR_FAILURE_POLICY = "no API fallback"
+VISUAL_ASSET_CONTRACT_ID = "governance:generated-visual-asset-contract"
+VISUAL_ASSET_MANIFEST_SCHEMA = "visual-asset-manifest/v1"
+VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS = [
+    VISUAL_ASSET_MANIFEST_PATH,
+    "design-system/generated_visual_assets.json",
+]
+VISUAL_ASSET_MANIFEST_REQUIRED_FIELDS = [
+    "schema_version",
+    "project",
+    "brand",
+    "generator",
+    "source_session",
+    "assets",
+]
+VISUAL_ASSET_RECORD_REQUIRED_FIELDS = [
+    "id",
+    "label",
+    "slot",
+    "status",
+    "asset_path",
+    "original_png_path",
+    "format",
+    "dimensions",
+    "size_kb",
+    "sha256",
+    "intended_for",
+    "alt_text",
+    "prompt_summary",
+]
+VISUAL_ASSET_CONTRACT_RULES = [
+    "Use Codex built-in image_gen as the default generation path; do not call CLI, SDK, or OpenAI API fallback unless the user explicitly requests that path.",
+    "Copy every project-bound final asset into the workspace before implementation code references it.",
+    "Preserve the original generated PNG path in the manifest when available, but never make runtime code depend on the Codex home directory.",
+    "Record alt_text, prompt_summary, intended_for, dimensions, size_kb, and sha256 for each integrated raster asset.",
+    "Generated images are not valid replacements for icons, logos, button glyphs, status markers, or deterministic diagrams.",
+]
 
 VISUAL_ASSET_SLOT_RULES = [
     {
@@ -693,20 +733,39 @@ def build_generated_visual_asset_layer(
     blueprint: dict,
     component_inventory: dict,
 ) -> None:
-    """Represent Codex/imagine2 visual generation as ontology nodes and edges."""
+    """Represent Codex built-in imagegen visual generation as ontology nodes and edges."""
     brand_name = brand_profile.get("brand_name", "Brand")
     brand_id = f"brand:{slugify(brand_name)}"
-    model_id = "image-model:imagine2"
+    model_id = VISUAL_IMAGE_GENERATOR_ID
+
+    _add_visual_asset_contract_nodes(graph)
 
     graph.add_node(OntologyNode(
         id=model_id,
         type=NodeType.ImageGenerationModel,
-        label="imagine2",
+        label=VISUAL_IMAGE_GENERATOR_LABEL,
         meta={
-            "runtime": "Codex image generation",
-            "selection_rule": "Use when Codex exposes image-generation tooling or a model selector.",
+            "runtime": "Codex built-in image_gen skill",
+            "default_path": True,
+            "selection_rule": "Use the Codex imagegen skill's built-in image_gen tool for default generated imagery.",
+            "fallback_policy": VISUAL_IMAGE_GENERATOR_FAILURE_POLICY,
+            "api_fallback": "disabled",
+            "failure_behavior": "If built-in image_gen is unavailable or fails, stop and report the failure; do not invoke CLI or OpenAI API fallback.",
+            "source_session_tracking": True,
+            "default_source_directory": "$CODEX_HOME/generated_images/<session-id>",
+            "workspace_copy_required": True,
+            "contract_id": VISUAL_ASSET_CONTRACT_ID,
         },
     ))
+    graph.add_edge(OntologyEdge(type=EdgeType.governs, source=VISUAL_ASSET_CONTRACT_ID, target=model_id))
+
+    for manifest in _iter_generated_visual_asset_manifests(brand_profile, blueprint):
+        _add_integrated_visual_assets_from_manifest(
+            graph=graph,
+            manifest=manifest,
+            brand_id=brand_id,
+            model_id=model_id,
+        )
 
     prompt_basis = [
         "system_spec.md",
@@ -726,18 +785,33 @@ def build_generated_visual_asset_layer(
             label=rule["label"],
             meta={
                 "slot": rule["slot"],
-                "model": "imagine2",
+                "model": VISUAL_IMAGE_GENERATOR_LABEL,
+                "api_fallback": "disabled",
+                "fallback_policy": VISUAL_IMAGE_GENERATOR_FAILURE_POLICY,
+                "failure_behavior": "Do not call external image APIs if Codex image_gen fails.",
                 "candidate_count": "2-4",
                 "manifest_path": VISUAL_ASSET_MANIFEST_PATH,
+                "compatible_manifest_paths": VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
+                "manifest_schema": VISUAL_ASSET_MANIFEST_SCHEMA,
+                "manifest_required_fields": VISUAL_ASSET_MANIFEST_REQUIRED_FIELDS,
+                "asset_record_required_fields": VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+                "prompt_pack_path": VISUAL_ASSET_PROMPT_PACK_PATH,
                 "prompt_basis": prompt_basis,
                 "aspect_ratios": rule["aspect_ratios"],
                 "usage": rule["usage"],
                 "activation": rule["activation"],
                 "alt_text_required": True,
+                "prompt_summary_required": True,
+                "sha256_required": True,
+                "original_preservation_required": True,
+                "workspace_copy_required": True,
+                "source_session_tracking": True,
+                "contract_id": VISUAL_ASSET_CONTRACT_ID,
                 "status": "promptable",
             },
         ))
         graph.add_edge(OntologyEdge(type=EdgeType.generated_with, source=asset_id, target=model_id))
+        graph.add_edge(OntologyEdge(type=EdgeType.governs, source=VISUAL_ASSET_CONTRACT_ID, target=asset_id))
         if graph.get_node(brand_id):
             graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=asset_id, target=brand_id))
 
@@ -749,6 +823,258 @@ def build_generated_visual_asset_layer(
         for target_id in targets:
             if graph.get_node(target_id):
                 graph.add_edge(OntologyEdge(type=EdgeType.intended_for, source=asset_id, target=target_id))
+
+
+def _add_visual_asset_contract_nodes(graph: DesignOntologyGraph) -> None:
+    graph.add_node(OntologyNode(
+        id=VISUAL_ASSET_CONTRACT_ID,
+        type=NodeType.GovernanceRule,
+        label="Generated visual asset contract",
+        meta={
+            "schema_version": VISUAL_ASSET_MANIFEST_SCHEMA,
+            "preferred_manifest_path": VISUAL_ASSET_MANIFEST_PATH,
+            "compatible_manifest_paths": VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
+            "prompt_pack_path": VISUAL_ASSET_PROMPT_PACK_PATH,
+            "default_source_directory": "$CODEX_HOME/generated_images/<session-id>",
+            "preserve_originals": True,
+            "workspace_copy_required": True,
+            "runtime_code_must_not_reference_codex_home": True,
+            "api_fallback": "disabled",
+            "failure_policy": VISUAL_IMAGE_GENERATOR_FAILURE_POLICY,
+            "manifest_required_fields": VISUAL_ASSET_MANIFEST_REQUIRED_FIELDS,
+            "asset_record_required_fields": VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+            "rules": VISUAL_ASSET_CONTRACT_RULES,
+            "source_project_pattern": "sprout-community-mock/design-system/generated_visual_assets.json",
+        },
+    ))
+
+    failure_patterns = [
+        {
+            "id": "failure-pattern:generated-image-api-fallback",
+            "label": "Generated image API fallback",
+            "trigger": "Implementation calls a CLI, SDK runner, or OpenAI image API after Codex image_gen is unavailable or fails.",
+            "prevention": "Stop, report the skipped generation, and write imagegen-prompts.md instead of silently changing generation path.",
+        },
+        {
+            "id": "failure-pattern:generated-image-untracked-asset",
+            "label": "Untracked generated image",
+            "trigger": "A generated raster image is referenced by product code without a manifest record.",
+            "prevention": "Record asset_path, original_png_path, dimensions, sha256, intended_for, alt_text, and prompt_summary before wiring the asset.",
+        },
+        {
+            "id": "failure-pattern:generated-image-codex-home-runtime-reference",
+            "label": "Codex home runtime asset reference",
+            "trigger": "Runtime HTML/CSS/JS points at $CODEX_HOME or another agent-local generated image path.",
+            "prevention": "Copy the final asset into the workspace and reference the workspace-relative asset path only.",
+        },
+        {
+            "id": "failure-pattern:generated-image-missing-accessibility-record",
+            "label": "Generated image missing accessibility record",
+            "trigger": "A generated visual asset is integrated without alt_text or an intended_for target.",
+            "prevention": "Treat alt text and target component linkage as required manifest fields, not implementation notes.",
+        },
+    ]
+    for failure in failure_patterns:
+        graph.add_node(OntologyNode(
+            id=failure["id"],
+            type=NodeType.ImplementationFailurePattern,
+            label=failure["label"],
+            meta={
+                "trigger": failure["trigger"],
+                "prevention": failure["prevention"],
+                "technical_controls": [
+                    "system_ontology.json GeneratedVisualAsset",
+                    "system_spec.md Generated Visual Asset Plan",
+                    VISUAL_ASSET_MANIFEST_PATH,
+                    VISUAL_ASSET_PROMPT_PACK_PATH,
+                ],
+            },
+        ))
+        graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=VISUAL_ASSET_CONTRACT_ID, target=failure["id"]))
+
+
+def _iter_generated_visual_asset_manifests(brand_profile: dict, blueprint: dict) -> list[dict]:
+    manifests: list[dict] = []
+    seen: set[str] = set()
+    for candidate_list in (
+        brand_profile.get("_generated_visual_asset_manifests", []),
+        blueprint.get("generated_visual_assets", []),
+    ):
+        if not isinstance(candidate_list, list):
+            continue
+        for manifest in candidate_list:
+            if not isinstance(manifest, dict):
+                continue
+            key = str(manifest.get("absolute_path") or manifest.get("path") or id(manifest))
+            if key in seen:
+                continue
+            seen.add(key)
+            manifests.append(manifest)
+    return manifests
+
+
+def _add_integrated_visual_assets_from_manifest(
+    graph: DesignOntologyGraph,
+    manifest: dict,
+    brand_id: str,
+    model_id: str,
+) -> None:
+    source_session = manifest.get("source_session") if isinstance(manifest.get("source_session"), dict) else {}
+    manifest_path = str(manifest.get("path") or VISUAL_ASSET_MANIFEST_PATH)
+    schema_version = str(manifest.get("schema_version") or VISUAL_ASSET_MANIFEST_SCHEMA)
+    assets = manifest.get("assets") or []
+    if not isinstance(assets, list):
+        return
+
+    for index, asset in enumerate(asset for asset in assets if isinstance(asset, dict)):
+        raw_id = str(asset.get("id") or "").strip()
+        if raw_id:
+            asset_id = raw_id if raw_id.startswith("visual-asset:") else f"visual-asset:{slugify(raw_id)}"
+        else:
+            fallback = asset.get("label") or asset.get("asset_path") or asset.get("slot") or f"asset-{index + 1}"
+            asset_id = f"visual-asset:{slugify(str(fallback))}"
+        if graph.get_node(asset_id):
+            asset_id = f"{asset_id}-integrated"
+
+        label = str(asset.get("label") or asset_id.removeprefix("visual-asset:")).strip()
+        meta = {
+            "slot": asset.get("slot"),
+            "status": asset.get("status", "integrated"),
+            "asset_path": asset.get("asset_path"),
+            "original_png_path": asset.get("original_png_path"),
+            "format": asset.get("format"),
+            "dimensions": asset.get("dimensions"),
+            "size_kb": asset.get("size_kb"),
+            "sha256": asset.get("sha256"),
+            "intended_for": asset.get("intended_for", []),
+            "alt_text": asset.get("alt_text"),
+            "prompt_summary": asset.get("prompt_summary"),
+            "manifest_path": manifest_path,
+            "manifest_schema": schema_version,
+            "manifest_absolute_path": manifest.get("absolute_path"),
+            "source_session_id": source_session.get("id"),
+            "source_session_directory": source_session.get("default_directory"),
+            "model": VISUAL_IMAGE_GENERATOR_LABEL,
+            "api_fallback": "disabled",
+            "fallback_policy": VISUAL_IMAGE_GENERATOR_FAILURE_POLICY,
+            "workspace_copy_required": True,
+            "original_preservation_required": True,
+            "source_session_tracking": True,
+            "contract_id": VISUAL_ASSET_CONTRACT_ID,
+            "integrated": True,
+        }
+        graph.add_node(OntologyNode(
+            id=asset_id,
+            type=NodeType.GeneratedVisualAsset,
+            label=label,
+            meta={key: value for key, value in meta.items() if value not in (None, "", [])},
+        ))
+        graph.add_edge(OntologyEdge(type=EdgeType.generated_with, source=asset_id, target=model_id))
+        graph.add_edge(OntologyEdge(type=EdgeType.governs, source=VISUAL_ASSET_CONTRACT_ID, target=asset_id))
+        if graph.get_node(brand_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=asset_id, target=brand_id))
+
+        for target in asset.get("intended_for", []) or []:
+            target_id = str(target).strip()
+            if not target_id:
+                continue
+            candidate_ids = [
+                target_id,
+                f"component:{slugify(target_id)}",
+                f"family:{slugify(target_id)}",
+            ]
+            for candidate_id in candidate_ids:
+                if graph.get_node(candidate_id):
+                    graph.add_edge(OntologyEdge(type=EdgeType.intended_for, source=asset_id, target=candidate_id))
+                    break
+
+
+def build_reference_context_layer(
+    graph: DesignOntologyGraph,
+    brand_profile: dict,
+    blueprint: dict,
+) -> None:
+    """Represent provider-neutral design context as ontology nodes."""
+
+    pack = blueprint.get("design_context_pack") or brand_profile.get("_design_context_pack")
+    if not isinstance(pack, dict) or not pack:
+        return
+
+    brand_name = brand_profile.get("brand_name") or blueprint.get("brand_name") or "Brand"
+    brand_id = f"brand:{slugify(brand_name)}"
+    pack_id = "design-context-pack:default"
+    graph.add_node(OntologyNode(
+        id=pack_id,
+        type=NodeType.DesignContextPack,
+        label="Design context pack",
+        meta={
+            "schema_version": pack.get("schema_version"),
+            "activation_state": pack.get("activation_state"),
+            "purpose": pack.get("purpose"),
+            "research_gap_count": len(pack.get("research_gaps", []) or []),
+            "authority_order": (pack.get("absorption_policy") or {}).get("authority_order", []),
+            "allowed": (pack.get("absorption_policy") or {}).get("allowed", []),
+            "denied": (pack.get("absorption_policy") or {}).get("denied", []),
+        },
+    ))
+    if graph.get_node(brand_id):
+        graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=pack_id, target=brand_id))
+
+    provider_ids: set[str] = set()
+    for provider in pack.get("providers", []) or []:
+        if not isinstance(provider, dict):
+            continue
+        provider_id = str(provider.get("provider_id") or provider.get("kind") or "").strip()
+        if not provider_id:
+            continue
+        node_id = f"reference-provider:{slugify(provider_id)}"
+        provider_ids.add(provider_id)
+        graph.add_node(OntologyNode(
+            id=node_id,
+            type=NodeType.ReferenceProvider,
+            label=provider.get("label") or provider_id,
+            meta={
+                "provider_id": provider_id,
+                "kind": provider.get("kind"),
+                "status": provider.get("status"),
+                "access_mode": provider.get("access_mode"),
+                "truth_role": provider.get("truth_role"),
+                "allowed_outputs": provider.get("allowed_outputs", []),
+                "denied_outputs": provider.get("denied_outputs", []),
+            },
+        ))
+        graph.add_edge(OntologyEdge(type=EdgeType.provided_by, source=pack_id, target=node_id))
+
+    for card in pack.get("context_cards", [])[:48]:
+        if not isinstance(card, dict):
+            continue
+        context_id = str(card.get("context_id") or card.get("label") or "").strip()
+        if not context_id:
+            continue
+        card_id = f"design-context-card:{slugify(context_id)}"
+        graph.add_node(OntologyNode(
+            id=card_id,
+            type=NodeType.DesignContextCard,
+            label=card.get("label") or context_id,
+            meta={
+                "context_id": context_id,
+                "kind": card.get("kind"),
+                "status": card.get("status"),
+                "provenance_level": card.get("provenance_level"),
+                "flows": card.get("flows", []),
+                "morphology": card.get("morphology", []),
+                "absorbed_traits": card.get("absorbed_traits", []),
+                "must_not_absorb": card.get("must_not_absorb", []),
+                "source_path": card.get("source_path"),
+                "source_url": card.get("source_url"),
+            },
+        ))
+        graph.add_edge(OntologyEdge(type=EdgeType.extracted_from, source=card_id, target=pack_id))
+        provider_id = str(card.get("provider_id") or "").strip()
+        provider_node_id = f"reference-provider:{slugify(provider_id)}"
+        if provider_id in provider_ids and graph.get_node(provider_node_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.provided_by, source=card_id, target=provider_node_id))
+            graph.add_edge(OntologyEdge(type=EdgeType.captures, source=provider_node_id, target=card_id))
 
 
 def _infer_visual_asset_slots(component_inventory: dict) -> list[tuple[dict, list[str]]]:
@@ -799,6 +1125,9 @@ def build_governance_layer(
     brand_id = f"brand:{slugify(brand_name)}"
     governance = blueprint.get("governance") or {}
     reference_scope = governance.get("reference_absorption_scope") or {}
+    responsive_policy = governance.get("responsive_resilience_policy") or {}
+    icon_policy = governance.get("icon_refactor_policy") or {}
+    app_icon_policy = governance.get("app_icon_identity_policy") or {}
 
     scope_id = "governance:reference-absorption-scope"
     graph.add_node(OntologyNode(
@@ -850,6 +1179,168 @@ def build_governance_layer(
             graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=promotion_id, target=brand_id))
         graph.add_edge(OntologyEdge(type=EdgeType.enforces, source=promotion_id, target=scope_id))
 
+    if responsive_policy:
+        responsive_id = f"governance:{slugify(responsive_policy.get('id', 'responsive-resilience'))}"
+        graph.add_node(OntologyNode(
+            id=responsive_id,
+            type=NodeType.GovernanceRule,
+            label=responsive_policy.get("id", "responsive resilience"),
+            meta={
+                "rule": responsive_policy.get("rule", ""),
+                "viewport_contract": responsive_policy.get("viewport_contract", {}),
+                "control_rules": responsive_policy.get("control_rules", []),
+                "outputs": responsive_policy.get("outputs", []),
+            },
+        ))
+        if graph.get_node(brand_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=responsive_id, target=brand_id))
+
+        for pattern in responsive_policy.get("failure_patterns", []):
+            pattern_id = f"failure-pattern:{slugify(pattern.get('id', 'responsive-failure'))}"
+            graph.add_node(OntologyNode(
+                id=pattern_id,
+                type=NodeType.ImplementationFailurePattern,
+                label=pattern.get("id", "responsive failure"),
+                meta={
+                    "trigger": pattern.get("trigger", ""),
+                    "rule": pattern.get("rule", ""),
+                    "prevention": pattern.get("prevention", ""),
+                    "technical_controls": pattern.get("technical_controls", []),
+                },
+            ))
+            graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=responsive_id, target=pattern_id))
+
+    if icon_policy:
+        icon_policy_id = f"governance:{slugify(icon_policy.get('id', 'emoji-to-svg-refactor'))}"
+        graph.add_node(OntologyNode(
+            id=icon_policy_id,
+            type=NodeType.GovernanceRule,
+            label=icon_policy.get("id", "emoji to svg refactor"),
+            meta={
+                "rule": icon_policy.get("rule", ""),
+                "targets": icon_policy.get("targets", []),
+                "replacement_order": icon_policy.get("replacement_order", []),
+                "implementation_rules": icon_policy.get("implementation_rules", []),
+                "outputs": icon_policy.get("outputs", []),
+            },
+        ))
+        if graph.get_node(brand_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=icon_policy_id, target=brand_id))
+
+        for pattern in icon_policy.get("failure_patterns", []):
+            pattern_id = f"failure-pattern:{slugify(pattern.get('id', 'emoji-ui-affordance'))}"
+            graph.add_node(OntologyNode(
+                id=pattern_id,
+                type=NodeType.ImplementationFailurePattern,
+                label=pattern.get("id", "emoji UI affordance"),
+                meta={
+                    "trigger": pattern.get("trigger", ""),
+                    "rule": pattern.get("rule", ""),
+                    "prevention": pattern.get("prevention", ""),
+                    "technical_controls": pattern.get("technical_controls", []),
+                },
+            ))
+            graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=icon_policy_id, target=pattern_id))
+
+    if app_icon_policy:
+        app_icon_policy_id = f"governance:{slugify(app_icon_policy.get('id', 'brand-app-icon-identity'))}"
+        profile_identity_assets: dict[str, dict] = {}
+        for identity_asset in (
+            brand_profile.get("_identity_assets", [])
+            or brand_profile.get("identity_assets", [])
+            or blueprint.get("identity_assets", [])
+        ):
+            if not isinstance(identity_asset, dict):
+                continue
+            asset_id = str(identity_asset.get("id") or "")
+            if asset_id:
+                profile_identity_assets[asset_id] = identity_asset
+        graph.add_node(OntologyNode(
+            id=app_icon_policy_id,
+            type=NodeType.GovernanceRule,
+            label=app_icon_policy.get("id", "brand app icon identity"),
+            meta={
+                "rule": app_icon_policy.get("rule", ""),
+                "implementation_rules": app_icon_policy.get("implementation_rules", []),
+                "outputs": app_icon_policy.get("outputs", []),
+            },
+        ))
+        if graph.get_node(brand_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=app_icon_policy_id, target=brand_id))
+
+        required_asset_ids: set[str] = set()
+        for asset in app_icon_policy.get("required_assets", []):
+            asset_id = asset.get("id") or f"identity-asset:{slugify(asset.get('label', 'app-icon'))}"
+            required_asset_ids.add(asset_id)
+            project_asset = profile_identity_assets.get(asset_id, {})
+            targets = sorted(set((asset.get("targets", []) or []) + (project_asset.get("targets", []) or [])))
+            formats = sorted(set((asset.get("formats", []) or []) + ([project_asset.get("format")] if project_asset.get("format") else []) + (project_asset.get("formats", []) or [])))
+            graph.add_node(OntologyNode(
+                id=asset_id,
+                type=NodeType.BrandIdentityAsset,
+                label=project_asset.get("label") or asset.get("label", "Brand app icon"),
+                meta={
+                    "required": bool(asset.get("required", True) or project_asset.get("required", False)),
+                    "integrated": bool(project_asset.get("integrated") or project_asset.get("asset_path")),
+                    "slot": project_asset.get("slot") or "app-icon",
+                    "asset_path": project_asset.get("asset_path"),
+                    "manifest_path": project_asset.get("manifest_path"),
+                    "favicon_path": project_asset.get("favicon_path"),
+                    "formats": formats,
+                    "targets": targets,
+                    "description": project_asset.get("description") or asset.get("description", ""),
+                    "discovered_from": project_asset.get("discovered_from"),
+                    "source_policy": app_icon_policy_id,
+                },
+            ))
+            graph.add_edge(OntologyEdge(type=EdgeType.governs, source=app_icon_policy_id, target=asset_id))
+            graph.add_edge(OntologyEdge(type=EdgeType.defines, source=app_icon_policy_id, target=asset_id))
+            if graph.get_node(brand_id):
+                graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=asset_id, target=brand_id))
+            for target_id in ("component:app-shell", "component:top-navigation", "pattern:layout-app-shell", "pattern:layout-top-navigation"):
+                if graph.get_node(target_id):
+                    graph.add_edge(OntologyEdge(type=EdgeType.intended_for, source=asset_id, target=target_id))
+
+        for asset_id, project_asset in profile_identity_assets.items():
+            if asset_id in required_asset_ids:
+                continue
+            graph.add_node(OntologyNode(
+                id=asset_id,
+                type=NodeType.BrandIdentityAsset,
+                label=project_asset.get("label", "Brand identity asset"),
+                meta={
+                    "required": bool(project_asset.get("required", False)),
+                    "integrated": bool(project_asset.get("integrated") or project_asset.get("asset_path")),
+                    "slot": project_asset.get("slot"),
+                    "asset_path": project_asset.get("asset_path"),
+                    "manifest_path": project_asset.get("manifest_path"),
+                    "favicon_path": project_asset.get("favicon_path"),
+                    "formats": project_asset.get("formats", []) or ([project_asset.get("format")] if project_asset.get("format") else []),
+                    "targets": project_asset.get("targets", []),
+                    "description": project_asset.get("description", ""),
+                    "discovered_from": project_asset.get("discovered_from"),
+                    "source_policy": app_icon_policy_id,
+                },
+            ))
+            graph.add_edge(OntologyEdge(type=EdgeType.governs, source=app_icon_policy_id, target=asset_id))
+            if graph.get_node(brand_id):
+                graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=asset_id, target=brand_id))
+
+        for pattern in app_icon_policy.get("failure_patterns", []):
+            pattern_id = f"failure-pattern:{slugify(pattern.get('id', 'generic-initials-app-icon'))}"
+            graph.add_node(OntologyNode(
+                id=pattern_id,
+                type=NodeType.ImplementationFailurePattern,
+                label=pattern.get("id", "generic initials app icon"),
+                meta={
+                    "trigger": pattern.get("trigger", ""),
+                    "rule": pattern.get("rule", ""),
+                    "prevention": pattern.get("prevention", ""),
+                    "technical_controls": pattern.get("technical_controls", []),
+                },
+            ))
+            graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=app_icon_policy_id, target=pattern_id))
+
 
 # ---------------------------------------------------------------------------
 # Orchestrator
@@ -878,6 +1369,7 @@ def build_full_ontology_graph(
     build_accessibility_layer(graph, component_inventory)
     build_benchmark_layer(graph, brand_profile)
     build_governance_layer(graph, brand_profile, blueprint)
+    build_reference_context_layer(graph, brand_profile, blueprint)
     build_generated_visual_asset_layer(graph, brand_profile, blueprint, component_inventory)
 
     return graph

@@ -1,0 +1,42 @@
+{
+  "schema_version": "visual-asset-manifest/v1",
+  "project": "world-cup-hub",
+  "brand": "World Cup Hub",
+  "generator": {
+    "id": "image-model:codex-imagegen",
+    "label": "Codex image_gen skill",
+    "runtime": "Codex built-in image_gen",
+    "api_fallback": "disabled",
+    "failure_policy": "no API fallback"
+  },
+  "source_session": {
+    "id": "019e2de5-941b-7971-98e3-6ed84372f36b",
+    "default_directory": "/Users/sungwoon/.codex/generated_images/019e2de5-941b-7971-98e3-6ed84372f36b",
+    "preserve_originals": true
+  },
+  "assets": [
+    {
+      "id": "visual-asset:world-cup-command-center",
+      "label": "World Cup command center",
+      "slot": "hero-image",
+      "status": "integrated",
+      "asset_path": "assets/world-cup-command-center.webp",
+      "original_png_path": "/Users/sungwoon/.codex/generated_images/019e2de5-941b-7971-98e3-6ed84372f36b/ig_05e8553d24da513b016a07d77edabc8191bf7569ff5368de06.png",
+      "format": "webp",
+      "dimensions": {
+        "width": 1672,
+        "height": 941,
+        "aspect_ratio": "16:9"
+      },
+      "size_kb": 188,
+      "sha256": "64809ab56a32fecf73a4938701cd28f0b6326a13d48248330223e7cf31a0cec9",
+      "intended_for": [
+        "component:hero-board",
+        "component:hero-image",
+        "component:tournament-dashboard"
+      ],
+      "alt_text": "야간 경기장 안에 월드컵 일정, 예측, 경기 분석 보드가 표시된 커맨드 센터",
+      "prompt_summary": "Wide 16:9 World Cup Hub hero image showing a football tournament command center with pitch analytics, schedule cards, prediction bars, fan discussion pulse, deep blue stadium lighting, green pitch accents, amber highlights, and no official branding."
+    }
+  ]
+}

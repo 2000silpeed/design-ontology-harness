@@ -5,7 +5,16 @@ from pathlib import Path
 from .advanced_components import catalog_entries, get_advanced_component, recommend_advanced_components
 from .models import DocumentRecord, ReferenceLink
 from .utils import ensure_dir, write_json
-from .graph_builders import build_full_ontology_graph
+from .graph_builders import (
+    VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
+    VISUAL_ASSET_CONTRACT_ID,
+    VISUAL_ASSET_MANIFEST_PATH,
+    VISUAL_ASSET_MANIFEST_REQUIRED_FIELDS,
+    VISUAL_ASSET_MANIFEST_SCHEMA,
+    VISUAL_ASSET_PROMPT_PACK_PATH,
+    VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+    build_full_ontology_graph,
+)
 from .graph_spec_sections import build_graph_spec_sections
 
 REQUIRED_PROFILE_KEYS = {
@@ -216,6 +225,7 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
     color_reference = brand_profile.get("_resolved_color_reference")
     font_system = brand_profile.get("_resolved_font_system")
     visual_reference = brand_profile.get("_resolved_visual_reference")
+    responsive_policy = (blueprint.get("governance") or {}).get("responsive_resilience_policy") or {}
 
     schema = {
         "naming": {
@@ -256,6 +266,23 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
             "spacing": {
                 "scale": [0, 2, 4, 8, 12, 16, 24, 32, 48, 64, 96],
                 "density_modes": ["comfortable", "compact"] if calm_system else ["default", "dense"],
+            },
+            "layout": {
+                "breakpoints_px": responsive_policy.get("viewport_contract", {}).get(
+                    "required_widths_px",
+                    [320, 360, 390, 430, 768, 1024, 1440],
+                ),
+                "container_rules": [
+                    "모든 section/container는 box-sizing: border-box 기준으로 320px viewport에서 overflow-x 없이 맞아야 함",
+                    "grid/flex children에는 필요한 경우 min-width: 0 또는 min-inline-size: 0을 명시",
+                    "repeat(N, 1fr) 고정 grid는 모바일에서 1열 또는 minmax(0, 1fr) fallback을 제공",
+                    "padded container 내부에서 width: 100vw 사용 금지",
+                ],
+                "control_rules": responsive_policy.get("control_rules", []),
+                "viewport_pass_condition": responsive_policy.get("viewport_contract", {}).get(
+                    "pass_condition",
+                    "scrollWidth <= innerWidth and primary controls stay reachable.",
+                ),
             },
             "radius": {
                 "scale": ["none", "sm", "md", "lg", "xl", "pill"],
@@ -665,16 +692,71 @@ def build_system_ontology(
             principle_id = f"principle:{slugify_text(principle['keyword'])}"
             edges.append({"type": "constrains", "from": principle_id, "to": token_category_id})
 
-    image_model_id = "image-model:imagine2"
+    image_model_id = "image-model:codex-imagegen"
     visual_asset_id = "visual-asset:brand-aligned-raster"
-    nodes.append({"id": image_model_id, "type": "ImageGenerationModel", "label": "imagine2"})
+    visual_asset_contract_id = VISUAL_ASSET_CONTRACT_ID
+    nodes.append({
+        "id": visual_asset_contract_id,
+        "type": "GovernanceRule",
+        "label": "Generated visual asset contract",
+        "meta": {
+            "schema_version": VISUAL_ASSET_MANIFEST_SCHEMA,
+            "preferred_manifest_path": VISUAL_ASSET_MANIFEST_PATH,
+            "compatible_manifest_paths": VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
+            "prompt_pack_path": VISUAL_ASSET_PROMPT_PACK_PATH,
+            "default_source_directory": "$CODEX_HOME/generated_images/<session-id>",
+            "preserve_originals": True,
+            "workspace_copy_required": True,
+            "runtime_code_must_not_reference_codex_home": True,
+            "api_fallback": "disabled",
+            "failure_policy": "no API fallback",
+            "manifest_required_fields": VISUAL_ASSET_MANIFEST_REQUIRED_FIELDS,
+            "asset_record_required_fields": VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+        },
+    })
+    nodes.append({
+        "id": image_model_id,
+        "type": "ImageGenerationModel",
+        "label": "Codex image_gen skill",
+        "meta": {
+            "runtime": "Codex built-in image_gen skill",
+            "default_path": True,
+            "api_fallback": "disabled",
+            "fallback_policy": "no API fallback",
+            "failure_behavior": "If Codex image_gen fails, do not invoke CLI or OpenAI API fallback.",
+            "source_session_tracking": True,
+            "default_source_directory": "$CODEX_HOME/generated_images/<session-id>",
+            "workspace_copy_required": True,
+            "contract_id": visual_asset_contract_id,
+        },
+    })
     nodes.append(
         {
             "id": visual_asset_id,
             "type": "GeneratedVisualAsset",
             "label": "Brand-aligned raster image",
+            "meta": {
+                "model": "Codex image_gen skill",
+                "api_fallback": "disabled",
+                "fallback_policy": "no API fallback",
+                "manifest_path": VISUAL_ASSET_MANIFEST_PATH,
+                "compatible_manifest_paths": VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
+                "manifest_schema": VISUAL_ASSET_MANIFEST_SCHEMA,
+                "manifest_required_fields": VISUAL_ASSET_MANIFEST_REQUIRED_FIELDS,
+                "asset_record_required_fields": VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+                "prompt_pack_path": VISUAL_ASSET_PROMPT_PACK_PATH,
+                "alt_text_required": True,
+                "prompt_summary_required": True,
+                "sha256_required": True,
+                "original_preservation_required": True,
+                "workspace_copy_required": True,
+                "source_session_tracking": True,
+                "contract_id": visual_asset_contract_id,
+            },
         }
     )
+    edges.append({"type": "governs", "from": visual_asset_contract_id, "to": image_model_id})
+    edges.append({"type": "governs", "from": visual_asset_contract_id, "to": visual_asset_id})
     edges.append({"type": "generated_with", "from": visual_asset_id, "to": image_model_id})
     edges.append({"type": "grounded_in", "from": visual_asset_id, "to": brand_id})
 
@@ -791,9 +873,10 @@ def build_system_spec_markdown(
         f"- **{foundation['name']}** ({foundation['priority']}): signal {foundation['signal_count']}"
         for foundation in foundations
     )
+    governance = blueprint.get("governance", {})
     implementation_guardrail_lines = "\n".join(
         f"- {line}"
-        for line in blueprint.get("governance", {}).get("implementation_guardrails", [])
+        for line in governance.get("implementation_guardrails", [])
     ) or "- No implementation guardrails defined."
     family_lines = "\n".join(
         (
@@ -829,15 +912,18 @@ def build_system_spec_markdown(
     visual_reference = brand_profile.get("_resolved_visual_reference")
     color_reference_lines = _build_color_reference_section(color_reference)
     visual_reference_lines = _build_visual_reference_section(visual_reference)
+    design_context_lines = _build_design_context_pack_section(
+        blueprint.get("design_context_pack") or brand_profile.get("_design_context_pack")
+    )
     validation_lines = "\n".join(
         [f"- Error: {message}" for message in validation.get("errors", [])]
         + [f"- Warning: {message}" for message in validation.get("warnings", [])]
     ) or "- No validation issues."
     ai_synthesis_lines = "\n".join(
         f"- **{principle['rule']}**: {principle['detail']}"
-        for principle in blueprint.get("governance", {}).get("ai_synthesis_principles", [])
+        for principle in governance.get("ai_synthesis_principles", [])
     ) or "- No AI synthesis principles defined."
-    reference_scope = blueprint.get("governance", {}).get("reference_absorption_scope", {})
+    reference_scope = governance.get("reference_absorption_scope", {})
     allowed_reference_lines = "\n".join(
         f"  - {item}" for item in reference_scope.get("allowed", [])
     ) or "  - No allowed reference scope defined."
@@ -849,7 +935,7 @@ def build_system_spec_markdown(
         for item in reference_scope.get("failure_patterns", [])
     ) or "  - No promoted failure patterns defined."
     promotion_policy = (
-        blueprint.get("governance", {}).get("feedback_promotion_policy")
+        governance.get("feedback_promotion_policy")
         or reference_scope.get("promotion_policy", {})
     )
     promotion_policy_line = (
@@ -861,6 +947,67 @@ def build_system_spec_markdown(
         "rule",
         "References are advisory and never replace token/component/product IA authority.",
     )
+    responsive_policy = governance.get("responsive_resilience_policy", {})
+    responsive_contract = responsive_policy.get("viewport_contract", {})
+    responsive_widths = responsive_contract.get("required_widths_px", [320, 360, 390, 430, 768, 1024, 1440])
+    responsive_control_lines = "\n".join(
+        f"- {item}" for item in responsive_policy.get("control_rules", [])
+    ) or "- No responsive control rules defined."
+    responsive_failure_lines = "\n".join(
+        f"- **{item.get('id', 'responsive-failure')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in responsive_policy.get("failure_patterns", [])
+    ) or "- No responsive failure patterns defined."
+    responsive_section = f"""### Responsive Resilience
+
+- **Viewport contract**: verify {', '.join(str(width) + 'px' for width in responsive_widths)}.
+- **Pass condition**: {responsive_contract.get('pass_condition', 'scrollWidth <= innerWidth and primary controls stay reachable.')}
+- **Control rules**:
+{responsive_control_lines}
+- **Promoted responsive failure patterns**:
+{responsive_failure_lines}"""
+    icon_policy = governance.get("icon_refactor_policy", {})
+    icon_targets = ", ".join(icon_policy.get("targets", [])) or "button, card, badge, navigation, status UI"
+    icon_replacement_lines = "\n".join(
+        f"- {item}" for item in icon_policy.get("replacement_order", [])
+    ) or "- Use existing icon library, local SVG components, or create a minimal SVG asset."
+    icon_rule_lines = "\n".join(
+        f"- {item}" for item in icon_policy.get("implementation_rules", [])
+    ) or "- No icon refactor implementation rules defined."
+    icon_failure_lines = "\n".join(
+        f"- **{item.get('id', 'emoji-ui-affordance')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in icon_policy.get("failure_patterns", [])
+    ) or "- No icon refactor failure patterns defined."
+    icon_refactor_section = f"""### Emoji-to-SVG Refactor
+
+- **Rule**: {icon_policy.get('rule', 'Replace emoji UI affordances with SVG icons during refactors.')}
+- **Targets**: {icon_targets}
+- **Replacement order**:
+{icon_replacement_lines}
+- **Implementation rules**:
+{icon_rule_lines}
+- **Promoted icon failure patterns**:
+{icon_failure_lines}"""
+    app_icon_policy = governance.get("app_icon_identity_policy", {})
+    app_icon_assets = "\n".join(
+        f"- **{item.get('label', 'Brand app icon')}**: targets {', '.join(item.get('targets', []))}; formats {', '.join(item.get('formats', []))}"
+        for item in app_icon_policy.get("required_assets", [])
+    ) or "- No app icon identity assets defined."
+    app_icon_rules = "\n".join(
+        f"- {item}" for item in app_icon_policy.get("implementation_rules", [])
+    ) or "- No app icon implementation rules defined."
+    app_icon_failures = "\n".join(
+        f"- **{item.get('id', 'generic-initials-app-icon')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in app_icon_policy.get("failure_patterns", [])
+    ) or "- No app icon failure patterns defined."
+    app_icon_section = f"""### Brand App Icon Identity
+
+- **Rule**: {app_icon_policy.get('rule', 'Every app or website implementation must include a brand-specific app icon identity asset.')}
+- **Required assets**:
+{app_icon_assets}
+- **Implementation rules**:
+{app_icon_rules}
+- **Promoted app icon failure patterns**:
+{app_icon_failures}"""
     concept_lines = "\n".join(
         f"- **{target['concept_id']}**: {target['count']}"
         for target in blueprint.get("ontology_targets", [])
@@ -916,6 +1063,10 @@ def build_system_spec_markdown(
 
 {visual_reference_lines}
 
+### Design Context Pack
+
+{design_context_lines}
+
 ## 8. Component Strategy
 
 - **Product primitives**: {', '.join(brand_profile.get('product_primitives', []))}
@@ -933,6 +1084,12 @@ def build_system_spec_markdown(
 ## 9. Implementation Guardrails
 
 {implementation_guardrail_lines}
+
+{responsive_section}
+
+{icon_refactor_section}
+
+{app_icon_section}
 
 ## 10. Reference Absorption Rule
 
@@ -1336,6 +1493,57 @@ def _build_visual_reference_section(visual_reference: dict | None) -> str:
     return "\n".join(lines)
 
 
+def _build_design_context_pack_section(design_context_pack: dict | None) -> str:
+    if not design_context_pack:
+        return "- No design context pack generated. Connect visual_reference sources or provider plans to ground reference research."
+
+    lines = [
+        f"- **Activation**: {design_context_pack.get('activation_state', 'planned')}",
+        f"- **Schema**: {design_context_pack.get('schema_version', 'design-context-pack/v1')}",
+        f"- **Rule**: {(design_context_pack.get('absorption_policy') or {}).get('rule', 'References stay advisory.')}",
+    ]
+
+    providers = design_context_pack.get("providers", []) or []
+    if providers:
+        lines.append("- **Providers**:")
+        for provider in providers[:6]:
+            lines.append(
+                f"  - `{provider.get('provider_id')}`: {provider.get('status')} / "
+                f"{provider.get('access_mode')} / {provider.get('truth_role')}"
+            )
+
+    flow_index = design_context_pack.get("flow_index", []) or []
+    if flow_index:
+        lines.append("- **Flow coverage**:")
+        for item in flow_index[:6]:
+            providers_text = ", ".join(item.get("providers", [])[:3]) or "no selected provider evidence"
+            lines.append(
+                f"  - {item.get('flow')}: {item.get('status')} "
+                f"({item.get('context_count', 0)} context cards; {providers_text})"
+            )
+
+    cards = design_context_pack.get("context_cards", []) or []
+    if cards:
+        lines.append("- **Context cards**:")
+        for card in cards[:5]:
+            flows = ", ".join(card.get("flows", [])[:3]) or "general"
+            morphology = ", ".join(card.get("morphology", [])[:3]) or "general"
+            lines.append(
+                f"  - `{card.get('context_id')}` ({card.get('kind')}, {card.get('provenance_level')}): "
+                f"{card.get('label')} / flows: {flows} / morphology: {morphology}"
+            )
+
+    gaps = design_context_pack.get("research_gaps", []) or []
+    if gaps:
+        lines.append("- **Research gaps**:")
+        for gap in gaps[:4]:
+            lines.append(
+                f"  - {gap.get('id')} ({gap.get('severity')}): {gap.get('recommended_action')}"
+            )
+
+    return "\n".join(lines)
+
+
 def _build_quick_start_section(
     brand_profile: dict,
     token_schema: dict,
@@ -1382,6 +1590,7 @@ def _build_do_dont_section(brand_profile: dict, blueprint: dict) -> str:
     lines.append("- 접근성 기준을 모든 text/surface 조합에서 먼저 검증")
     lines.append("- 컴포넌트 변형 추가 전 기존 variant로 해결 가능한지 먼저 확인")
     lines.append("- 아이콘은 SVG 컴포넌트 또는 Lucide/Heroicons/Phosphor/Tabler 등 라이브러리로 구현")
+    lines.append("- 앱 아이콘은 브랜드 특정 SVG identity asset으로 구현하고 favicon/manifest/app shell에 연결")
     lines.append("- component_specs.md의 anatomy/states/token binding을 그대로 따라 완전히 구현")
 
     lines.append("\n### DON'T\n")

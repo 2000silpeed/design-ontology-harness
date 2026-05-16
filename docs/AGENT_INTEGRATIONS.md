@@ -26,7 +26,7 @@
 
 - 로컬 Codex plugin bundle
 - implementation repo에서 system artifacts를 읽는 skill 제공
-- Codex에서 이미지 생성 기능이 가능할 때 `imagine2` 모델로 브랜드에 맞는 히어로/카드/에디토리얼 이미지를 생성하고 통합하는 visual asset skill 제공
+- Codex의 내장 `image_gen` 스킬이 가능할 때 브랜드에 맞는 히어로/카드/에디토리얼 이미지를 생성하고 통합하는 visual asset skill 제공. 실패해도 CLI/API fallback은 호출하지 않음
 
 ### Claude Code
 
@@ -120,8 +120,9 @@ In a frontend repo:
 - first ask the agent to read `design-system/IMPLEMENTATION_CONTRACT.md` and `design-system/STYLE.md`
 - ask the architect skill/agent to map a new screen to component families
 - ask the implementer skill/agent to build the screen using existing tokens and primitives
-- in Codex, ask the visual asset skill to generate `imagine2` imagery for hero, empty-state, editorial, or product sections when the screen needs real visual substance
+- in Codex, ask the visual asset skill to generate imagery through the built-in `image_gen` skill for hero, empty-state, editorial, or product sections when the screen needs real visual substance
 - check `system_ontology.json` for `GeneratedVisualAsset` and `ImageGenerationModel` nodes before treating generated imagery as part of the system contract
+- check `system_ontology.json` for `BrandIdentityAsset` before treating favicon, app-shell mark, or web manifest icon as complete
 - if the request falls outside the current artifacts, update the harness project first instead of improvising a new system
 
 Suggested prompt:
@@ -139,21 +140,30 @@ design-system/components/component_specs.md 기준으로 작업해줘.
 ## Codex Visual Asset Workflow
 
 `design-system-visual-assets`는 화면을 더 프로페셔널하게 만들기 위한 선택적 Codex 전용 스킬입니다.
-온톨로지에는 `GeneratedVisualAsset` 슬롯과 `ImageGenerationModel`(`imagine2`) 노드가 함께 기록되어, 생성 이미지가 임시 장식이 아니라 브랜드/토큰/컴포넌트 관계에 묶인 산출물로 추적됩니다.
+온톨로지에는 `GeneratedVisualAsset` 슬롯과 `ImageGenerationModel`(`Codex image_gen skill`) 노드가 함께 기록되어, 생성 이미지가 임시 장식이 아니라 브랜드/토큰/컴포넌트 관계에 묶인 산출물로 추적됩니다. 이 노드는 `api_fallback: disabled` 정책도 함께 기록합니다.
 
 기본 흐름:
 
 1. `design-system/IMPLEMENTATION_CONTRACT.md`, `STYLE.md`, `token_schema.json`, `component_inventory.json`, 가능하면 `visual_reference_report.json`을 읽습니다.
-2. Codex에서 이미지 생성 모델 선택이 가능하면 `imagine2`를 선택합니다.
+2. Codex의 내장 `image_gen` 스킬을 사용합니다. CLI, SDK runner, OpenAI API fallback은 사용하지 않습니다.
 3. 브랜드 키워드, 안티 키워드, 팔레트, density/surface cue를 반영해 2-4개 후보 이미지를 만듭니다.
-4. 승인한 이미지는 `public/generated/design-system/` 같은 정적 에셋 폴더에 넣고 `manifest.json`에 prompt, model, intended slot, alt text, source artifacts를 기록합니다.
+4. 승인한 이미지는 `public/generated/design-system/` 같은 정적 에셋 폴더에 넣고 manifest에 prompt, model, intended slot, alt text, source artifacts를 기록합니다.
 5. 구현 코드에는 기존 프레임워크의 이미지 컴포넌트와 `alt` 텍스트, responsive crop 규칙을 적용합니다.
 
 가드레일:
 
 - 아이콘, 로고, 버튼 glyph, 상태 마커는 이미지 생성 대상이 아닙니다. SVG나 아이콘 라이브러리를 사용합니다.
+- 앱 아이콘, favicon, 앱 셸 브랜드 마크는 필수 `BrandIdentityAsset`입니다. 일반 이니셜 타일을 최종 아이콘으로 남기지 말고 브랜드 특정 SVG identity asset으로 연결합니다.
 - 저작권 캐릭터, 실제 브랜드, 실제 인물, 권리가 불분명한 장소는 사용하지 않습니다.
-- 이미지 생성 도구가 없으면 생성했다고 말하지 않고 `imagine2-prompts.md` 프롬프트 팩만 남깁니다.
+- 이미지 생성 도구가 없거나 실패하면 생성했다고 말하지 않고 `imagegen-prompts.md` 프롬프트 팩만 남깁니다. 그래도 API fallback은 호출하지 않습니다.
+
+Manifest contract:
+
+- Preferred path: `public/generated/design-system/manifest.json`
+- Compatible path: `design-system/generated_visual_assets.json`
+- Top-level fields: `schema_version`, `project`, `brand`, `generator`, `source_session`, `assets`
+- Asset fields: `id`, `label`, `slot`, `status`, `asset_path`, `original_png_path`, `format`, `dimensions`, `size_kb`, `sha256`, `intended_for`, `alt_text`, `prompt_summary`
+- Runtime code must reference the workspace copy, never `$CODEX_HOME/generated_images/...`; the original PNG path is recorded only for provenance.
 
 ## Refactor Safety Expectation
 

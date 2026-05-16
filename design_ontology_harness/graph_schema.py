@@ -1,4 +1,4 @@
-"""Design Ontology Graph Schema — 22 node types, 27 edge types.
+"""Design Ontology Graph Schema — typed design-system graph.
 
 Defines the typed graph structure for representing design system relationships.
 Replaces the flat keyword-matching approach in ontology.py with a true
@@ -33,8 +33,12 @@ class NodeType(str, Enum):
     ProductPrimitive = "ProductPrimitive"
     SourceReference = "SourceReference"
     BenchmarkSystem = "BenchmarkSystem"
+    BrandIdentityAsset = "BrandIdentityAsset"
     GeneratedVisualAsset = "GeneratedVisualAsset"
     ImageGenerationModel = "ImageGenerationModel"
+    ReferenceProvider = "ReferenceProvider"
+    DesignContextPack = "DesignContextPack"
+    DesignContextCard = "DesignContextCard"
     GovernanceRule = "GovernanceRule"
     ImplementationFailurePattern = "ImplementationFailurePattern"
 
@@ -67,6 +71,9 @@ class EdgeType(str, Enum):
     generated_with = "generated_with"
     grounded_in = "grounded_in"
     intended_for = "intended_for"
+    provided_by = "provided_by"
+    extracted_from = "extracted_from"
+    captures = "captures"
     enforces = "enforces"
     prevents = "prevents"
 
