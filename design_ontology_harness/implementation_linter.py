@@ -246,6 +246,16 @@ def _lint_text(text: str, rel_path: str) -> list[ImplementationIssue]:
 
     for line_no, raw_line in enumerate(text.splitlines(), start=1):
         if DS_BLOCK_START in raw_line:
+            issues.append(
+                _issue(
+                    "DS061",
+                    rel_path,
+                    line_no,
+                    raw_line.find(DS_BLOCK_START) + 1,
+                    "Design-token managed blocks belong in the artifact directory; implementation files should consume --ds-* tokens only.",
+                    raw_line,
+                )
+            )
             in_managed_block = True
         if in_managed_block:
             if DS_BLOCK_END in raw_line:

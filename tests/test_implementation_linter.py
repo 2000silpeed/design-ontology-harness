@@ -208,7 +208,7 @@ def test_allows_light_and_dark_color_modes(tmp_path: Path):
     assert "DS060" not in codes
 
 
-def test_ignores_design_system_and_managed_blocks(tmp_path: Path):
+def test_excludes_design_system_but_flags_managed_blocks_in_implementation(tmp_path: Path):
     (tmp_path / "design-system").mkdir()
     (tmp_path / "design-system" / "tokens.css").write_text(
         ":root { --ds-color-primary: #0071A8; }\n",
@@ -231,8 +231,11 @@ def test_ignores_design_system_and_managed_blocks(tmp_path: Path):
     )
 
     report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
 
-    assert report.ok
+    assert not report.ok
+    assert "DS061" in codes
+    assert "DS001" not in codes
     assert report.checked_files == ["app.css"]
 
 
@@ -246,6 +249,8 @@ def test_implementation_contract_declares_reference_scope():
     assert "color palette" in contract
     assert "palette composition or derived secondary palettes" in contract
     assert "Feedback Promotion Rule" in contract
+    assert "Do not hard-code hex/rgb/hsl colors in implementation files" in contract
+    assert "tokens.css" in contract
     assert "Color Mode Parity" in contract
     assert "normal light mode and dark mode" in contract
     assert "Responsive Resilience" in contract

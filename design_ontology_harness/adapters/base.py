@@ -538,7 +538,8 @@ Denied from visual references:
 - Use `var(--ds-color-*)` for color, surface, border, and feedback states.
 - Use `var(--ds-font-*)` for explicit font-family declarations.
 - Use `var(--ds-radius-*)` for component radii; only fully circular affordances may use `999px`.
-- Do not hard-code hex/rgb/hsl colors in implementation files outside generated managed blocks.
+- Do not hard-code hex/rgb/hsl colors in implementation files.
+- Keep generated token value blocks in `design-system/` artifacts such as `tokens.css`; implementation files consume `--ds-*` tokens only.
 - Do not add reference-derived local palette variables such as teal/gold/slate unless they alias `--ds-*` tokens.
 - Token binding is necessary but not sufficient: do not recombine `--ds-*` color roles into a new reference-like palette.
 - Derived colors may alias one semantic token or mix one semantic role with a neutral surface/transparent value; do not mix multiple chromatic roles for local palette variables.

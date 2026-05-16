@@ -137,7 +137,7 @@ COLOR_MODE_PARITY_POLICY = {
             "id": "theme-token-drift",
             "trigger": "Light and dark modes use unrelated local colors instead of paired semantic roles.",
             "rule": "Mode values must map through the same semantic token roles.",
-            "prevention": "Keep mode differences inside token values; components should consume the same semantic variables in both modes.",
+            "prevention": "Keep mode differences inside artifact token files such as design-system/tokens.css; components should consume the same semantic variables in both modes.",
             "technical_controls": ["token_schema.json semantic roles", "IMPLEMENTATION_CONTRACT.md", "lint-implementation DS061"],
         },
     ],

@@ -378,7 +378,7 @@ Implementation rules:
 - Reuse or extend primitives before adding net-new components.
 - Preserve existing features, navigation entry points, and data flows unless removal is explicitly requested.
 - Keep supported themes, breakpoints, and critical interaction states working while refactoring.
-- Prefer semantic tokens over one-off hardcoded colors so theme support survives future changes.
+- Use semantic tokens only; raw color values belong in `{artifact_dir}` token artifacts, not implementation files.
 - Always include both normal light mode and dark mode unless the task explicitly asks for one mode only.
 - Default to the smallest viable surface refactor; do not rewrite the whole shell unless the task explicitly calls for it.
 - If `token_schema.json` includes a curated color reference or palette roles, align color decisions to that input before inventing a new palette.
@@ -469,7 +469,7 @@ Implementation rules:
 - Use the token schema to name and organize variables or theme values.
 - Use the component inventory to decide whether to create, extend, or defer a component.
 - Preserve existing feature surfaces and task-completion paths unless the user explicitly wants a structural redesign.
-- Maintain supported themes and responsive layouts; avoid introducing hardcoded colors that only work in one mode.
+- Maintain supported themes and responsive layouts; do not introduce hardcoded color values in implementation files.
 - Prefer local, reversible refactors over all-at-once shell rewrites.
 - If token_schema includes curated palette roles or selected reference colors, preserve that color direction while implementing.
 - If the request falls outside the current system artifacts, state the gap clearly instead of inventing an ungrounded pattern.
@@ -1120,7 +1120,7 @@ Read these files first when they exist:
 4. Reuse or extend primitives before adding net-new components.
 5. Preserve existing features, entry points, and task flows unless removal is explicitly requested.
 6. Keep supported themes and responsive layouts working during refactors.
-7. Use semantic tokens before introducing hardcoded surface or text colors.
+7. Use semantic tokens only; keep raw surface or text color values in design-system artifacts.
 8. Update nearby documentation or tests when behavior or structure changes.
 9. Respect curated palette roles and reference colors recorded in the token schema when choosing UI colors.
 10. Visual references are morphology inputs only; do not absorb reference palettes, type scales, navigation labels, domain IA, or product copy.
