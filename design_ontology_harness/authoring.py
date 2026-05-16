@@ -947,6 +947,23 @@ def build_system_spec_markdown(
         "rule",
         "References are advisory and never replace token/component/product IA authority.",
     )
+    color_mode_policy = governance.get("color_mode_parity_policy", {})
+    color_mode_rules = "\n".join(
+        f"- {item}" for item in color_mode_policy.get("implementation_rules", [])
+    ) or "- No color mode parity rules defined."
+    color_mode_failures = "\n".join(
+        f"- **{item.get('id', 'dark-only-implementation')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in color_mode_policy.get("failure_patterns", [])
+    ) or "- No color mode failure patterns defined."
+    color_mode_section = f"""### Color Mode Parity
+
+- **Rule**: {color_mode_policy.get('rule', 'Every product UI needs light and dark modes.')}
+- **Required modes**: {', '.join(color_mode_policy.get('required_modes', ['light', 'dark']))}
+- **Default mode**: {color_mode_policy.get('default_mode', 'light')}
+- **Implementation rules**:
+{color_mode_rules}
+- **Promoted color mode failure patterns**:
+{color_mode_failures}"""
     responsive_policy = governance.get("responsive_resilience_policy", {})
     responsive_contract = responsive_policy.get("viewport_contract", {})
     responsive_widths = responsive_contract.get("required_widths_px", [320, 360, 390, 430, 768, 1024, 1440])
@@ -1084,6 +1101,8 @@ def build_system_spec_markdown(
 ## 9. Implementation Guardrails
 
 {implementation_guardrail_lines}
+
+{color_mode_section}
 
 {responsive_section}
 
@@ -1587,6 +1606,7 @@ def _build_do_dont_section(brand_profile: dict, blueprint: dict) -> str:
     if brand_keywords:
         lines.append(f"- 모든 시각적 선택에서 **{', '.join(brand_keywords[:3])}** 기준을 적용")
     lines.append("- semantic token을 통해 컬러를 적용 (하드코딩 금지)")
+    lines.append("- 일반(light) 모드와 dark 모드를 같은 semantic token 역할로 함께 구현")
     lines.append("- 접근성 기준을 모든 text/surface 조합에서 먼저 검증")
     lines.append("- 컴포넌트 변형 추가 전 기존 variant로 해결 가능한지 먼저 확인")
     lines.append("- 아이콘은 SVG 컴포넌트 또는 Lucide/Heroicons/Phosphor/Tabler 등 라이브러리로 구현")
@@ -1600,6 +1620,7 @@ def _build_do_dont_section(brand_profile: dict, blueprint: dict) -> str:
     lines.append("- hex 값을 임의로 생성하지 않음 (반드시 레퍼런스에서 가져오기)")
     lines.append("- 토큰명을 임의로 발명하지 않음 (네이밍 패턴에서 도출)")
     lines.append("- 한 레퍼런스의 비주얼을 그대로 복제하지 않음")
+    lines.append("- 다크모드만 구현하고 일반 모드를 빠뜨리지 않음")
     lines.append("- 기존 기능 진입점을 승인 없이 제거하지 않음")
     lines.append("- **이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 아이콘/버튼/상태 표시로 절대 쓰지 않음** — 본문 콘텐츠에만 허용")
     lines.append("- '임시 버튼', 'TODO 컴포넌트', '플레이스홀더 카드' 같은 반쪽 구현을 남기지 않음")

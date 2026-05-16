@@ -150,6 +150,7 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
             "capabilities": ["Interactive", "Write"],
             "defaultPrompt": [
                 "Implement UI changes using the local design-system artifacts and component inventory",
+                "Ship normal light mode and dark mode together unless a single mode is explicitly requested",
                 "When a screen needs professional imagery, use the built-in Codex image_gen visual asset path without API fallback",
                 "Treat favicon, app-shell mark, and web manifest icon as required brand-specific identity assets",
             ],
@@ -282,6 +283,20 @@ Treat mobile fit as a contract, not a final polish pass.
 """
 
 
+def _color_mode_parity_guidance() -> str:
+    return """
+## Color mode parity
+
+Normal light mode and dark mode travel together unless the user explicitly asks for a single-mode artifact.
+
+- Use light mode as the default `:root` or app-default token set.
+- Add dark mode as an override such as `[data-theme="dark"]`, a theme provider, or equivalent framework mode.
+- Components consume the same semantic variables in both modes; only token values change.
+- Do not ship dark-only dashboards, tools, landing pages, or prototypes.
+- Verify both modes with screenshots or DOM checks when the implementation has a visible UI shell.
+"""
+
+
 def _emoji_to_svg_refactor_guidance() -> str:
     return """
 ## Emoji-to-SVG refactor
@@ -364,6 +379,7 @@ Implementation rules:
 - Preserve existing features, navigation entry points, and data flows unless removal is explicitly requested.
 - Keep supported themes, breakpoints, and critical interaction states working while refactoring.
 - Prefer semantic tokens over one-off hardcoded colors so theme support survives future changes.
+- Always include both normal light mode and dark mode unless the task explicitly asks for one mode only.
 - Default to the smallest viable surface refactor; do not rewrite the whole shell unless the task explicitly calls for it.
 - If `token_schema.json` includes a curated color reference or palette roles, align color decisions to that input before inventing a new palette.
 - Visual references are morphology inputs only. Do not absorb reference palettes, type scales, navigation labels, domain IA, or product copy.
@@ -378,6 +394,8 @@ Implementation rules:
 - **NEVER use bare library components (e.g., default `<Button>` from a UI lib) without binding design tokens.** Every component must have its colors, spacing, radius, and typography wired to the token system. If you import from a library, wrap it and override styles with CSS variables from the token schema.
 
 {_script_aware_typography_guidance()}
+
+{_color_mode_parity_guidance()}
 
 {_responsive_resilience_guidance()}
 
@@ -1069,7 +1087,8 @@ Read these files first when they exist:
 7. Use curated palette roles from the token schema as the default color direction when available.
 8. If typography script guardrails exist, incorporate them into headline scale, measure, and Korean copy wrapping decisions up front.
 9. Plan button/action-group mobile behavior up front: wrap, stack, or prove it fits at 320px without horizontal scroll.
-10. Treat the app icon as a required brand identity asset, not a generic initials tile.
+10. Plan light/default and dark mode token coverage up front; light is the default mode.
+11. Treat the app icon as a required brand identity asset, not a generic initials tile.
 """
 
 
@@ -1107,12 +1126,15 @@ Read these files first when they exist:
 10. Visual references are morphology inputs only; do not absorb reference palettes, type scales, navigation labels, domain IA, or product copy.
 11. Token binding is necessary but not sufficient: never recombine `--ds-*` roles into a new reference-like palette.
 12. Promote repeatable user/reviewer feedback into governance docs or lint rules before calling a screen complete.
-13. **NEVER use emojis as UI icons, state indicators, or button decorations** (no 🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊). Always implement SVG icon components or import from Lucide / Heroicons / Phosphor / Tabler. Emojis only belong in user-generated content, never in system UI.
-14. **NEVER leave half-finished components** ("TODO", "placeholder", "temp"). Read `{artifact_dir}/components/component_specs.md` and implement the full anatomy, states, and token bindings.
-15. **NEVER use bare library components without token binding.** If you import from a UI library, wrap it and override colors, spacing, radius, and typography using tokens from the schema.
-16. **NEVER ship generic initials tiles as final app icons.** Favicon, app-shell marks, and web manifests need brand-specific SVG identity assets.
+13. **ALWAYS ship normal light mode and dark mode together** unless the user explicitly asks for one mode only. Light mode is the default token set; dark mode is an override.
+14. **NEVER use emojis as UI icons, state indicators, or button decorations** (no 🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊). Always implement SVG icon components or import from Lucide / Heroicons / Phosphor / Tabler. Emojis only belong in user-generated content, never in system UI.
+15. **NEVER leave half-finished components** ("TODO", "placeholder", "temp"). Read `{artifact_dir}/components/component_specs.md` and implement the full anatomy, states, and token bindings.
+16. **NEVER use bare library components without token binding.** If you import from a UI library, wrap it and override colors, spacing, radius, and typography using tokens from the schema.
+17. **NEVER ship generic initials tiles as final app icons.** Favicon, app-shell marks, and web manifests need brand-specific SVG identity assets.
 
 {_script_aware_typography_guidance()}
+
+{_color_mode_parity_guidance()}
 
 {_responsive_resilience_guidance()}
 

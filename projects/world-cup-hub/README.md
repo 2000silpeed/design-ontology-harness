@@ -12,7 +12,7 @@
 ## Static MVP
 
 - `index.html`: 앱 화면
-- `styles.css`: 하네스 token 방향을 반영한 UI 스타일
+- `styles.css`: 하네스 token 방향을 반영한 UI 스타일, light 기본 모드 + dark 대응 모드
 - `app.js`: 일정 필터, 경기 선택, 예측 투표, 의견 작성 인터랙션
 - Inline SVG icon sprite: 일정, 경기장, 예측, 결과, 출처 같은 반복 UI 신호용 결정론적 아이콘 세트
 - `assets/app-icon.svg`: favicon, web app manifest, app shell brand mark에 연결된 브랜드 특정 앱 아이콘

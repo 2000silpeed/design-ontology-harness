@@ -240,6 +240,7 @@ const state = {
   activeGroup: "all",
   activeStatus: "all",
   query: "",
+  theme: readStore("wch:theme", "light"),
   votes: readStore("wch:votes", {}),
   opinions: readStore("wch:opinions", [])
 };
@@ -259,7 +260,8 @@ const elements = {
   threadCount: document.querySelector("#threadCount"),
   search: document.querySelector("#matchSearch"),
   opinionForm: document.querySelector("#opinionForm"),
-  opinionText: document.querySelector("#opinionText")
+  opinionText: document.querySelector("#opinionText"),
+  themeToggle: document.querySelector("[data-theme-toggle]")
 };
 
 function readStore(key, fallback) {
@@ -294,6 +296,18 @@ function teamBadge(code) {
 
 function icon(name, className = "ui-icon") {
   return `<svg class="${className}" aria-hidden="true"><use href="#icon-${name}" /></svg>`;
+}
+
+function applyTheme() {
+  const theme = state.theme === "dark" ? "dark" : "light";
+  const nextTheme = theme === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = theme;
+  if (!elements.themeToggle) return;
+  elements.themeToggle.setAttribute("aria-label", `${nextTheme === "dark" ? "다크" : "일반"} 모드로 전환`);
+  elements.themeToggle.innerHTML = `
+    ${icon(nextTheme === "dark" ? "moon" : "sun")}
+    <span>${nextTheme === "dark" ? "다크" : "일반"}</span>
+  `;
 }
 
 function dateKey(match) {
@@ -621,6 +635,14 @@ function renderAll() {
 }
 
 document.addEventListener("click", (event) => {
+  const themeButton = event.target.closest("[data-theme-toggle]");
+  if (themeButton) {
+    state.theme = state.theme === "dark" ? "light" : "dark";
+    writeStore("wch:theme", state.theme);
+    applyTheme();
+    return;
+  }
+
   const dateButton = event.target.closest("[data-date-filter]");
   if (dateButton) {
     state.activeDate = dateButton.dataset.dateFilter;
@@ -696,4 +718,5 @@ elements.opinionForm.addEventListener("submit", (event) => {
   renderDiscussion();
 });
 
+applyTheme();
 renderAll();

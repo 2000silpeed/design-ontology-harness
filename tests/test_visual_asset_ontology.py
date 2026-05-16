@@ -8,6 +8,7 @@ from design_ontology_harness.graph_schema import EdgeType, NodeType
 from design_ontology_harness.graph_spec_sections import build_graph_spec_sections
 from design_ontology_harness.synthesis import (
     APP_ICON_IDENTITY_POLICY,
+    COLOR_MODE_PARITY_POLICY,
     ICON_REFACTOR_POLICY,
     REFERENCE_ABSORPTION_SCOPE,
     RESPONSIVE_RESILIENCE_POLICY,
@@ -318,6 +319,7 @@ class VisualAssetOntologyTests(unittest.TestCase):
                 "principles": [],
                 "governance": {
                     "reference_absorption_scope": REFERENCE_ABSORPTION_SCOPE,
+                    "color_mode_parity_policy": COLOR_MODE_PARITY_POLICY,
                     "responsive_resilience_policy": RESPONSIVE_RESILIENCE_POLICY,
                     "icon_refactor_policy": ICON_REFACTOR_POLICY,
                     "app_icon_identity_policy": APP_ICON_IDENTITY_POLICY,
@@ -354,6 +356,26 @@ class VisualAssetOntologyTests(unittest.TestCase):
         responsive_edges = graph.get_edges_from("governance:responsive-resilience", EdgeType.prevents)
         self.assertIn("failure-pattern:mobile-control-overflow", {edge.target for edge in responsive_edges})
 
+        color_mode_policy = graph.get_node("governance:color-mode-parity")
+        self.assertIsNotNone(color_mode_policy)
+        self.assertEqual(color_mode_policy.type, NodeType.GovernanceRule)
+        self.assertEqual(color_mode_policy.meta["default_mode"], "light")
+
+        light_mode = graph.get_node("color-mode:light")
+        dark_mode = graph.get_node("color-mode:dark")
+        self.assertIsNotNone(light_mode)
+        self.assertIsNotNone(dark_mode)
+        self.assertEqual(light_mode.type, NodeType.ColorMode)
+        self.assertTrue(light_mode.meta["default"])
+        self.assertFalse(dark_mode.meta["default"])
+
+        dark_only_failure = graph.get_node("failure-pattern:dark-only-implementation")
+        self.assertIsNotNone(dark_only_failure)
+        self.assertEqual(dark_only_failure.type, NodeType.ImplementationFailurePattern)
+
+        color_mode_edges = graph.get_edges_from("governance:color-mode-parity", EdgeType.prevents)
+        self.assertIn("failure-pattern:dark-only-implementation", {edge.target for edge in color_mode_edges})
+
         icon_policy = graph.get_node("governance:emoji-to-svg-refactor")
         self.assertIsNotNone(icon_policy)
         self.assertEqual(icon_policy.type, NodeType.GovernanceRule)
@@ -388,6 +410,8 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIn("failure-pattern:generic-initials-app-icon", {edge.target for edge in app_icon_edges})
 
         sections = build_graph_spec_sections(graph)
+        self.assertIn("Color Mode Parity", sections)
+        self.assertIn("dark-only-implementation", sections)
         self.assertIn("Brand Identity Assets", sections)
         self.assertIn("Mercer app icon", sections)
         self.assertIn("assets/app-icon.svg", sections)

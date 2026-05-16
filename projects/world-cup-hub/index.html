@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>World Cup Hub</title>
     <link rel="icon" href="./assets/app-icon.svg?v=brand-icon-20260516" type="image/svg+xml" />
     <link rel="manifest" href="./site.webmanifest?v=brand-icon-20260516" />
-    <link rel="stylesheet" href="./styles.css?v=icons-20260516" />
+    <link rel="stylesheet" href="./styles.css?v=color-modes-20260516" />
   </head>
   <body>
     <a class="skip-link" href="#main">본문으로 이동</a>
@@ -71,6 +71,13 @@
         <path d="M6 3h9l3 3v15H6z" />
         <path d="M14 3v4h4M9 11h6M9 15h6M9 19h3" />
       </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+      </symbol>
+      <symbol id="icon-moon" viewBox="0 0 24 24">
+        <path d="M20 15.8A8.5 8.5 0 0 1 8.2 4a7.2 7.2 0 1 0 11.8 11.8Z" />
+      </symbol>
     </svg>
 
     <div class="app-shell">
@@ -84,28 +91,34 @@
             <span>Fixtures · Results · Predictions · Fan pulse</span>
           </div>
         </div>
-        <nav class="main-nav" aria-label="주요 섹션">
-          <button class="nav-button active" type="button" data-scroll-target="dashboard">
-            <svg><use href="#icon-trophy" /></svg>
-            대시보드
+        <div class="topbar-actions">
+          <nav class="main-nav" aria-label="주요 섹션">
+            <button class="nav-button active" type="button" data-scroll-target="dashboard">
+              <svg><use href="#icon-trophy" /></svg>
+              대시보드
+            </button>
+            <button class="nav-button" type="button" data-scroll-target="schedule">
+              <svg><use href="#icon-calendar" /></svg>
+              일정
+            </button>
+            <button class="nav-button" type="button" data-scroll-target="results">
+              <svg><use href="#icon-check" /></svg>
+              결과
+            </button>
+            <button class="nav-button" type="button" data-scroll-target="predictions">
+              <svg><use href="#icon-chart" /></svg>
+              예측
+            </button>
+            <button class="nav-button" type="button" data-scroll-target="community">
+              <svg><use href="#icon-message" /></svg>
+              의견
+            </button>
+          </nav>
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="다크 모드로 전환">
+            <svg aria-hidden="true"><use href="#icon-moon" /></svg>
+            <span>다크</span>
           </button>
-          <button class="nav-button" type="button" data-scroll-target="schedule">
-            <svg><use href="#icon-calendar" /></svg>
-            일정
-          </button>
-          <button class="nav-button" type="button" data-scroll-target="results">
-            <svg><use href="#icon-check" /></svg>
-            결과
-          </button>
-          <button class="nav-button" type="button" data-scroll-target="predictions">
-            <svg><use href="#icon-chart" /></svg>
-            예측
-          </button>
-          <button class="nav-button" type="button" data-scroll-target="community">
-            <svg><use href="#icon-message" /></svg>
-            의견
-          </button>
-        </nav>
+        </div>
       </header>
 
       <main id="main" class="workspace">

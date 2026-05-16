@@ -113,6 +113,37 @@ RESPONSIVE_RESILIENCE_POLICY = {
     "outputs": ["design_system_blueprint.governance", "system_spec.md", "token_schema.json", "component_specs.md", "IMPLEMENTATION_CONTRACT.md", "lint-implementation"],
 }
 
+COLOR_MODE_PARITY_POLICY = {
+    "id": "color-mode-parity",
+    "rule": "Every generated or refactored product UI must ship a normal light mode and a dark mode unless the user explicitly requests a single-mode artifact.",
+    "required_modes": ["light", "dark"],
+    "default_mode": "light",
+    "implementation_rules": [
+        "Use light mode as the default :root or app-default token set; dark mode must be an override such as [data-theme=\"dark\"].",
+        "Do not build dark-only surfaces for dashboards, tools, landing pages, or prototypes unless explicitly requested.",
+        "Every semantic surface/text/border/accent role needs a light and dark value or a documented derivation.",
+        "Theme toggles, preview links, screenshots, or QA scripts must verify both modes when the implementation has a UI shell.",
+        "Do not solve dark mode by inverting the entire page; define mode-specific semantic tokens and keep imagery/icons legible in both modes.",
+    ],
+    "failure_patterns": [
+        {
+            "id": "dark-only-implementation",
+            "trigger": "A generated UI defines only dark surfaces or color-scheme: dark without a light/default token mode.",
+            "rule": "Normal light mode is required alongside dark mode.",
+            "prevention": "Define :root light tokens, add [data-theme=\"dark\"] overrides, and verify both modes before completion.",
+            "technical_controls": ["system_spec.md Color Mode Parity", "system_ontology.json ColorMode", "lint-implementation DS060", "light/dark screenshot QA"],
+        },
+        {
+            "id": "theme-token-drift",
+            "trigger": "Light and dark modes use unrelated local colors instead of paired semantic roles.",
+            "rule": "Mode values must map through the same semantic token roles.",
+            "prevention": "Keep mode differences inside token values; components should consume the same semantic variables in both modes.",
+            "technical_controls": ["token_schema.json semantic roles", "IMPLEMENTATION_CONTRACT.md", "lint-implementation DS061"],
+        },
+    ],
+    "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "token_schema.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "lint-implementation"],
+}
+
 ICON_REFACTOR_POLICY = {
     "id": "emoji-to-svg-refactor",
     "rule": "During UI refactors, emoji-looking UI affordances must be replaced with SVG-based icons instead of preserved as text glyphs.",
@@ -396,6 +427,7 @@ def build_blueprint(
                 "기존 핵심 화면, 진입점, 작업 흐름은 명시적 승인 없이 제거하거나 숨기지 않음",
                 "전면 셸 리라이트보다 토큰 -> primitive -> feature surface 순서의 점진적 롤아웃을 우선",
                 "새 시각 규칙은 지원 대상 테마와 breakpoint 전체에서 먼저 검증",
+                "일반(light) 모드와 dark 모드를 함께 제공하고, light를 기본 :root 또는 앱 기본값으로 둠",
                 "모바일 320/360/390/430px에서 horizontal scroll 또는 버튼/CTA 잘림이 있으면 완료로 보지 않음",
                 "버튼·CTA·탭·필터칩·툴바 액션은 fixed width/min-width에 의존하지 않고 wrap 또는 stack fallback을 가져야 함",
                 "padded container 안에서 width: 100vw를 쓰지 않음 — width: 100%, max-width: 100%, documented full-bleed 패턴을 우선",
@@ -411,6 +443,7 @@ def build_blueprint(
             ],
             "ai_synthesis_principles": AI_SYNTHESIS_PRINCIPLES,
             "reference_absorption_scope": REFERENCE_ABSORPTION_SCOPE,
+            "color_mode_parity_policy": COLOR_MODE_PARITY_POLICY,
             "responsive_resilience_policy": RESPONSIVE_RESILIENCE_POLICY,
             "icon_refactor_policy": ICON_REFACTOR_POLICY,
             "app_icon_identity_policy": APP_ICON_IDENTITY_POLICY,

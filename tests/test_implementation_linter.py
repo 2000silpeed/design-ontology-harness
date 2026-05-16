@@ -9,6 +9,7 @@ from design_ontology_harness.adapters.base import implementation_contract
 from design_ontology_harness.implementation_linter import lint_implementation
 from design_ontology_harness.synthesis import (
     APP_ICON_IDENTITY_POLICY,
+    COLOR_MODE_PARITY_POLICY,
     ICON_REFACTOR_POLICY,
     REFERENCE_ABSORPTION_SCOPE,
     RESPONSIVE_RESILIENCE_POLICY,
@@ -168,6 +169,45 @@ def test_allows_emoji_in_user_generated_content_context(tmp_path: Path):
     assert report.ok
 
 
+def test_flags_dark_only_color_mode(tmp_path: Path):
+    (tmp_path / "styles.css").write_text(
+        """
+        :root {
+          color-scheme: dark;
+          --ds-color-canvas: #061116;
+        }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS060" in codes
+
+
+def test_allows_light_and_dark_color_modes(tmp_path: Path):
+    (tmp_path / "styles.css").write_text(
+        """
+        :root {
+          color-scheme: light;
+          --ds-color-canvas: var(--brand-light);
+        }
+        [data-theme="dark"] {
+          color-scheme: dark;
+          --ds-color-canvas: var(--brand-dark);
+        }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS060" not in codes
+
+
 def test_ignores_design_system_and_managed_blocks(tmp_path: Path):
     (tmp_path / "design-system").mkdir()
     (tmp_path / "design-system" / "tokens.css").write_text(
@@ -206,6 +246,8 @@ def test_implementation_contract_declares_reference_scope():
     assert "color palette" in contract
     assert "palette composition or derived secondary palettes" in contract
     assert "Feedback Promotion Rule" in contract
+    assert "Color Mode Parity" in contract
+    assert "normal light mode and dark mode" in contract
     assert "Responsive Resilience" in contract
     assert "320, 360, 390, 430" in contract
     assert "Buttons, CTAs, tabs, chips" in contract
@@ -232,6 +274,15 @@ def test_responsive_resilience_policy_is_structured_for_ontology():
     pattern_ids = {item["id"] for item in RESPONSIVE_RESILIENCE_POLICY["failure_patterns"]}
     assert {"mobile-control-overflow", "viewport-horizontal-overflow"} <= pattern_ids
     assert "lint-implementation" in RESPONSIVE_RESILIENCE_POLICY["outputs"]
+
+
+def test_color_mode_parity_policy_is_structured_for_ontology():
+    assert COLOR_MODE_PARITY_POLICY["id"] == "color-mode-parity"
+    assert COLOR_MODE_PARITY_POLICY["required_modes"] == ["light", "dark"]
+    assert COLOR_MODE_PARITY_POLICY["default_mode"] == "light"
+    pattern_ids = {item["id"] for item in COLOR_MODE_PARITY_POLICY["failure_patterns"]}
+    assert {"dark-only-implementation", "theme-token-drift"} <= pattern_ids
+    assert "lint-implementation" in COLOR_MODE_PARITY_POLICY["outputs"]
 
 
 def test_icon_refactor_policy_is_structured_for_ontology():

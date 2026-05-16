@@ -549,6 +549,31 @@ If implementation review or user feedback exposes a repeatable design-system fai
 promote it into ontology governance, this contract, and `lint-implementation` before
 calling the current screen complete. Current-screen fixes alone are not enough.
 
+## Color Mode Parity
+
+- Ship normal light mode and dark mode together unless a single-mode artifact is explicitly requested.
+- Light mode is the default `:root` or app-default token set; dark mode is an override such as `[data-theme="dark"]`.
+- Components must consume the same semantic token roles in both modes. Only token values should change.
+- Do not ship dark-only dashboards, tools, landing pages, or prototypes.
+- Verify both modes with screenshots or DOM checks when the implementation has a visible UI shell.
+
+## Responsive Resilience
+
+- Verify changed screens at 320, 360, 390, 430, 768, and desktop widths.
+- The screen is not complete if `document.documentElement.scrollWidth > window.innerWidth`.
+- Buttons, CTAs, tabs, chips, and toolbar actions must not use fixed px widths or mobile-hostile `min-width` values unless a <=480px wrap/stack fallback is present.
+- Button-like controls should keep `max-inline-size: 100%`; controls inside flex/grid parents need `min-inline-size: 0`.
+- Action rows must wrap or stack on narrow viewports.
+- Avoid `width: 100vw` inside padded containers, and do not hide `overflow-x` on `body` as the fix for overflow.
+
+## Emoji-to-SVG Refactor
+
+- UI icons, button decorations, cards, badges, tabs, nav markers, status indicators, empty states, toasts, and banners must not use emoji glyphs.
+- During refactors, replace any emoji-looking UI affordance with the project's existing icon library, an existing local SVG/icon component, or a newly authored SVG asset.
+- New SVGs should live in the nearest existing icon/assets directory and use `currentColor` or design tokens for stroke/fill.
+- Decorative icons use `aria-hidden="true"`; semantic icons need an accessible label or adjacent visible text.
+- Do not replace user-generated emoji content, chat text, blog body, or emoji-picker data.
+
 ## Preflight
 
 Run this before considering an implementation aligned:

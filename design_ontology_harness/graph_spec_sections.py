@@ -75,6 +75,41 @@ def build_contrast_audit_section(graph: DesignOntologyGraph) -> str:
     return "\n".join(rows)
 
 
+def build_color_mode_parity_section(graph: DesignOntologyGraph) -> str:
+    modes = graph.get_nodes_by_type(NodeType.ColorMode)
+    policy = graph.get_node("governance:color-mode-parity")
+    if not modes and not policy:
+        return "No color mode parity policy defined."
+
+    lines: list[str] = []
+    if policy:
+        lines.append(f"- **Policy**: {policy.meta.get('rule', 'Light and dark modes are required.')}")
+        lines.append(f"- **Default mode**: `{policy.meta.get('default_mode', 'light')}`")
+        rules = policy.meta.get("implementation_rules") or []
+        if rules:
+            lines.append("- **Implementation rules**:")
+            for rule in rules[:6]:
+                lines.append(f"  - {rule}")
+        failure_edges = graph.get_edges_from(policy.id, EdgeType.prevents)
+        if failure_edges:
+            lines.append("- **Promoted failure patterns**:")
+            for edge in failure_edges[:6]:
+                failure = graph.get_node(edge.target)
+                if failure:
+                    lines.append(f"  - {failure.label}: {failure.meta.get('prevention', '')}")
+        lines.append("")
+
+    if modes:
+        lines.append("| Mode | Required | Default |")
+        lines.append("|------|----------|---------|")
+        for mode in sorted(modes, key=lambda node: node.label):
+            required = "yes" if mode.meta.get("required") else "no"
+            default = "yes" if mode.meta.get("default") else "no"
+            lines.append(f"| {mode.label} | {required} | {default} |")
+
+    return "\n".join(lines)
+
+
 def build_pattern_catalog_section(graph: DesignOntologyGraph) -> str:
     layout_patterns = graph.get_nodes_by_type(NodeType.LayoutPattern)
     interaction_patterns = graph.get_nodes_by_type(NodeType.InteractionPattern)
@@ -272,23 +307,27 @@ def build_graph_spec_sections(graph: DesignOntologyGraph) -> str:
 
 {build_component_token_map_section(graph)}
 
-## 19. Contrast Audit
+## 19. Color Mode Parity
+
+{build_color_mode_parity_section(graph)}
+
+## 20. Contrast Audit
 
 {build_contrast_audit_section(graph)}
 
-## 20. Pattern Catalog
+## 21. Pattern Catalog
 
 {build_pattern_catalog_section(graph)}
 
-## 21. Brand Identity Assets
+## 22. Brand Identity Assets
 
 {build_brand_identity_asset_section(graph)}
 
-## 22. Generated Visual Asset Plan
+## 23. Generated Visual Asset Plan
 
 {build_generated_visual_asset_section(graph)}
 
-## 23. Reference Intelligence Pack
+## 24. Reference Intelligence Pack
 
 {build_reference_intelligence_section(graph)}
 """

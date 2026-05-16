@@ -102,6 +102,10 @@ TAILWIND_FIXED_WIDTH_RE = re.compile(r"\b(?P<class>(?:min-w|w)-\[(?P<value>\d+)p
 TAILWIND_SCREEN_WIDTH_RE = re.compile(r"\bw-screen\b")
 TAILWIND_NOWRAP_RE = re.compile(r"\bwhitespace-nowrap\b")
 EMOJI_RE = re.compile(r"[\U0001F300-\U0001FAFF\u2600-\u27BF]")
+COLOR_SCHEME_DARK_RE = re.compile(r"\bcolor-scheme\s*:\s*dark\b", re.IGNORECASE)
+COLOR_SCHEME_LIGHT_RE = re.compile(r"\bcolor-scheme\s*:\s*light\b", re.IGNORECASE)
+DARK_MODE_MARKER_RE = re.compile(r"(?:data-theme=['\"]dark['\"]|prefers-color-scheme\s*:\s*dark|\bcolor-scheme\s*:\s*dark\b)", re.IGNORECASE)
+LIGHT_MODE_MARKER_RE = re.compile(r"(?:data-theme=['\"]light['\"]|\bcolor-scheme\s*:\s*light\b)", re.IGNORECASE)
 BUTTON_LIKE_CONTEXT_RE = re.compile(
     r"(?:^|[\s.#:'\"`_\-/])(?:button|btn|cta|tab|chip|filter-chip|toolbar|action-button|primary-action)(?:$|[\s.#:'\"`_\-/\]])",
     re.IGNORECASE,
@@ -337,7 +341,32 @@ def _lint_text(text: str, rel_path: str) -> list[ImplementationIssue]:
 
         current_selector = _next_selector_context(line, selector_for_line, current_selector)
 
+    issues.extend(_lint_color_mode_parity(text, rel_path))
     return issues
+
+
+def _lint_color_mode_parity(text: str, rel_path: str) -> list[ImplementationIssue]:
+    has_dark = bool(DARK_MODE_MARKER_RE.search(text))
+    has_light = bool(LIGHT_MODE_MARKER_RE.search(text))
+    if not has_dark or has_light:
+        return []
+
+    match = COLOR_SCHEME_DARK_RE.search(text) or DARK_MODE_MARKER_RE.search(text)
+    line_no = text[:match.start()].count("\n") + 1 if match else 1
+    line_start = text.rfind("\n", 0, match.start()) + 1 if match else 0
+    line_end = text.find("\n", match.start()) if match else -1
+    if line_end == -1:
+        line_end = len(text)
+    return [
+        _issue(
+            "DS060",
+            rel_path,
+            line_no,
+            (match.start() - line_start + 1) if match else 1,
+            "Dark mode is defined without an explicit light/default mode; define :root light tokens plus dark overrides.",
+            text[line_start:line_end],
+        )
+    ]
 
 
 def _selector_for_line(line: str, current_selector: str | None) -> str | None:

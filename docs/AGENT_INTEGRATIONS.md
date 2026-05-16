@@ -120,6 +120,7 @@ In a frontend repo:
 - first ask the agent to read `design-system/IMPLEMENTATION_CONTRACT.md` and `design-system/STYLE.md`
 - ask the architect skill/agent to map a new screen to component families
 - ask the implementer skill/agent to build the screen using existing tokens and primitives
+- require normal light mode and dark mode together unless the task explicitly asks for one mode only; light mode is the default surface
 - in Codex, ask the visual asset skill to generate imagery through the built-in `image_gen` skill for hero, empty-state, editorial, or product sections when the screen needs real visual substance
 - check `system_ontology.json` for `GeneratedVisualAsset` and `ImageGenerationModel` nodes before treating generated imagery as part of the system contract
 - check `system_ontology.json` for `BrandIdentityAsset` before treating favicon, app-shell mark, or web manifest icon as complete
@@ -135,6 +136,7 @@ design-system/components/component_specs.md 기준으로 작업해줘.
 
 외부 참고 이미지는 형태, 밀도, 컴포넌트 비례만 반영하고
 색상, 폰트, IA, 카피는 온톨로지와 토큰을 우선해.
+일반(light) 모드와 dark 모드를 같은 semantic token 역할로 함께 구현해.
 ```
 
 ## Codex Visual Asset Workflow

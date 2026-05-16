@@ -65,6 +65,7 @@ class AgentPackTests(unittest.TestCase):
             plugin_manifest = json.loads(plugin_manifest_path.read_text(encoding="utf-8"))
             self.assertIn("imagery", plugin_manifest["keywords"])
             self.assertIn("image_gen", plugin_manifest["interface"]["longDescription"])
+            self.assertIn("light mode", " ".join(plugin_manifest["interface"]["defaultPrompt"]))
             self.assertIn("fallbacks are disabled", plugin_manifest["interface"]["longDescription"])
 
 

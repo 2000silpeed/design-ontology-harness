@@ -1125,6 +1125,7 @@ def build_governance_layer(
     brand_id = f"brand:{slugify(brand_name)}"
     governance = blueprint.get("governance") or {}
     reference_scope = governance.get("reference_absorption_scope") or {}
+    color_mode_policy = governance.get("color_mode_parity_policy") or {}
     responsive_policy = governance.get("responsive_resilience_policy") or {}
     icon_policy = governance.get("icon_refactor_policy") or {}
     app_icon_policy = governance.get("app_icon_identity_policy") or {}
@@ -1178,6 +1179,53 @@ def build_governance_layer(
         if graph.get_node(brand_id):
             graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=promotion_id, target=brand_id))
         graph.add_edge(OntologyEdge(type=EdgeType.enforces, source=promotion_id, target=scope_id))
+
+    if color_mode_policy:
+        color_mode_id = f"governance:{slugify(color_mode_policy.get('id', 'color-mode-parity'))}"
+        graph.add_node(OntologyNode(
+            id=color_mode_id,
+            type=NodeType.GovernanceRule,
+            label=color_mode_policy.get("id", "color mode parity"),
+            meta={
+                "rule": color_mode_policy.get("rule", ""),
+                "required_modes": color_mode_policy.get("required_modes", []),
+                "default_mode": color_mode_policy.get("default_mode", "light"),
+                "implementation_rules": color_mode_policy.get("implementation_rules", []),
+                "outputs": color_mode_policy.get("outputs", []),
+            },
+        ))
+        if graph.get_node(brand_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=color_mode_id, target=brand_id))
+
+        for mode in color_mode_policy.get("required_modes", []):
+            mode_id = f"color-mode:{slugify(str(mode))}"
+            graph.add_node(OntologyNode(
+                id=mode_id,
+                type=NodeType.ColorMode,
+                label=str(mode),
+                meta={
+                    "required": True,
+                    "default": mode == color_mode_policy.get("default_mode", "light"),
+                    "source_policy": color_mode_id,
+                },
+            ))
+            graph.add_edge(OntologyEdge(type=EdgeType.governs, source=color_mode_id, target=mode_id))
+            graph.add_edge(OntologyEdge(type=EdgeType.defines, source=color_mode_id, target=mode_id))
+
+        for pattern in color_mode_policy.get("failure_patterns", []):
+            pattern_id = f"failure-pattern:{slugify(pattern.get('id', 'color-mode-failure'))}"
+            graph.add_node(OntologyNode(
+                id=pattern_id,
+                type=NodeType.ImplementationFailurePattern,
+                label=pattern.get("id", "color mode failure"),
+                meta={
+                    "trigger": pattern.get("trigger", ""),
+                    "rule": pattern.get("rule", ""),
+                    "prevention": pattern.get("prevention", ""),
+                    "technical_controls": pattern.get("technical_controls", []),
+                },
+            ))
+            graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=color_mode_id, target=pattern_id))
 
     if responsive_policy:
         responsive_id = f"governance:{slugify(responsive_policy.get('id', 'responsive-resilience'))}"
