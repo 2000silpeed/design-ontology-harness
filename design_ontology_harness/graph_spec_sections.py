@@ -151,7 +151,9 @@ def build_pattern_catalog_section(graph: DesignOntologyGraph) -> str:
 
 def build_generated_visual_asset_section(graph: DesignOntologyGraph) -> str:
     assets = graph.get_nodes_by_type(NodeType.GeneratedVisualAsset)
-    if not assets:
+    sourced_assets = graph.get_nodes_by_type(NodeType.SourcedVisualAsset)
+    all_assets = assets + sourced_assets
+    if not all_assets:
         return "No generated visual asset slots defined."
 
     lines: list[str] = []
@@ -172,33 +174,71 @@ def build_generated_visual_asset_section(graph: DesignOntologyGraph) -> str:
             lines.append(f"- **Required asset record fields**: {', '.join(f'`{field}`' for field in required_fields[:14])}")
         lines.append("")
 
+    sourced_contract = graph.get_node("governance:sourced-visual-asset-fallback-contract")
+    if sourced_contract:
+        lines.append(
+            f"- **Sourced fallback**: {sourced_contract.meta.get('fallback_policy', 'license-verified sourced visual fallback')} / "
+            f"candidate manifest `{sourced_contract.meta.get('candidate_manifest_path', 'public/generated/design-system/sourced-visual-candidates.json')}`"
+        )
+        provider_allowlist = sourced_contract.meta.get("provider_allowlist") or []
+        if provider_allowlist:
+            lines.append(f"- **Allowed visual providers**: {', '.join(f'`{provider}`' for provider in provider_allowlist[:8])}")
+        licensed_providers = sourced_contract.meta.get("licensed_provider_allowlist") or []
+        if licensed_providers:
+            lines.append(
+                f"- **Licensed providers require proof**: {', '.join(f'`{provider}`' for provider in licensed_providers[:8])}"
+            )
+        reference_only = sourced_contract.meta.get("reference_only_providers") or sourced_contract.meta.get("reference_only_excluded") or []
+        if reference_only:
+            lines.append(
+                f"- **Reference-only providers**: {', '.join(f'`{provider}`' for provider in reference_only[:8])}; morphology only, no runtime asset copy."
+            )
+        lines.append(
+            "- **Sourced execution**: license metadata required; workspace copy required; runtime hotlinking disabled; stock/search images are not valid identity assets."
+        )
+        required_fields = sourced_contract.meta.get("asset_record_required_fields") or []
+        if required_fields:
+            lines.append(f"- **Required sourced record fields**: {', '.join(f'`{field}`' for field in required_fields[:16])}")
+        lines.append("")
+
     integrated_assets = [
-        asset for asset in assets
+        asset for asset in all_assets
         if asset.meta.get("integrated") or asset.meta.get("asset_path")
     ]
     if integrated_assets:
         lines.append("### Integrated Assets")
         lines.append("")
-        lines.append("| Asset | Slot | Workspace Path | Alt Text |")
-        lines.append("|-------|------|----------------|----------|")
+        lines.append("| Asset | Mode | Slot | Workspace Path | Source | Alt Text |")
+        lines.append("|-------|------|------|----------------|--------|----------|")
         for asset in sorted(integrated_assets, key=lambda n: n.label):
+            mode = asset.meta.get("acquisition_mode", "generated")
             slot = asset.meta.get("slot", "—")
             path = asset.meta.get("asset_path", "—")
+            source_url = asset.meta.get("source_url", "—")
             alt_text = asset.meta.get("alt_text", "—")
-            lines.append(f"| {asset.label} | {slot} | `{path}` | {alt_text} |")
+            lines.append(f"| {asset.label} | {mode} | {slot} | `{path}` | {source_url} | {alt_text} |")
         lines.append("")
 
     rows: list[str] = []
-    rows.append("| Asset Slot | Generator | Intended For | Manifest | Failure Policy |")
-    rows.append("|------------|-----------|--------------|----------|----------------|")
+    rows.append("| Asset Slot | Mode | Source | Intended For | Manifest | Policy |")
+    rows.append("|------------|------|--------|--------------|----------|--------|")
 
-    for asset in sorted(assets, key=lambda n: n.label):
-        model = "—"
-        for edge in graph.get_edges_from(asset.id, EdgeType.generated_with):
-            node = graph.get_node(edge.target)
-            if node:
-                model = node.label
-                break
+    for asset in sorted(all_assets, key=lambda n: n.label):
+        mode = asset.meta.get("acquisition_mode") or ("sourced" if asset.type == NodeType.SourcedVisualAsset else "generated")
+        source = "—"
+        if asset.type == NodeType.SourcedVisualAsset:
+            providers = []
+            for edge in graph.get_edges_from(asset.id, EdgeType.sourced_from):
+                node = graph.get_node(edge.target)
+                if node:
+                    providers.append(node.label)
+            source = ", ".join(providers[:4]) if providers else "license-verified source"
+        else:
+            for edge in graph.get_edges_from(asset.id, EdgeType.generated_with):
+                node = graph.get_node(edge.target)
+                if node:
+                    source = node.label
+                    break
 
         targets: list[str] = []
         for edge in graph.get_edges_from(asset.id, EdgeType.intended_for):
@@ -211,7 +251,7 @@ def build_generated_visual_asset_section(graph: DesignOntologyGraph) -> str:
         intended_for = ", ".join(targets[:6]) if targets else ", ".join(asset.meta.get("intended_for", [])[:6])
         if not intended_for:
             intended_for = asset.meta.get("activation", "optional")
-        rows.append(f"| {asset.label} | {model} | {intended_for} | `{manifest}` | {failure_policy} |")
+        rows.append(f"| {asset.label} | {mode} | {source} | {intended_for} | `{manifest}` | {failure_policy} |")
 
     lines.extend(rows)
     return "\n".join(lines)

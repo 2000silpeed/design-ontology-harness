@@ -642,6 +642,9 @@ VISUAL_IMAGE_GENERATOR_ID = "image-model:codex-imagegen"
 VISUAL_IMAGE_GENERATOR_LABEL = "Codex image_gen skill"
 VISUAL_IMAGE_GENERATOR_FAILURE_POLICY = "no API fallback"
 VISUAL_ASSET_CONTRACT_ID = "governance:generated-visual-asset-contract"
+SOURCED_VISUAL_ASSET_CONTRACT_ID = "governance:sourced-visual-asset-fallback-contract"
+SOURCED_VISUAL_ASSET_FALLBACK_POLICY = "license-verified sourced visual fallback"
+SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH = "public/generated/design-system/sourced-visual-candidates.json"
 VISUAL_ASSET_MANIFEST_SCHEMA = "visual-asset-manifest/v1"
 VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS = [
     VISUAL_ASSET_MANIFEST_PATH,
@@ -670,6 +673,24 @@ VISUAL_ASSET_RECORD_REQUIRED_FIELDS = [
     "alt_text",
     "prompt_summary",
 ]
+SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS = [
+    "id",
+    "label",
+    "slot",
+    "status",
+    "acquisition_mode",
+    "asset_path",
+    "source_url",
+    "download_url",
+    "provider",
+    "author",
+    "license",
+    "attribution_required",
+    "sha256",
+    "intended_for",
+    "alt_text",
+    "selection_reason",
+]
 VISUAL_ASSET_CONTRACT_RULES = [
     "Use Codex built-in image_gen as the default generation path; do not call CLI, SDK, or OpenAI API fallback unless the user explicitly requests that path.",
     "Copy every project-bound final asset into the workspace before implementation code references it.",
@@ -677,6 +698,267 @@ VISUAL_ASSET_CONTRACT_RULES = [
     "Record alt_text, prompt_summary, intended_for, dimensions, size_kb, and sha256 for each integrated raster asset.",
     "Generated images are not valid replacements for icons, logos, button glyphs, status markers, or deterministic diagrams.",
 ]
+SOURCED_VISUAL_ASSET_CONTRACT_RULES = [
+    "Use sourced visuals only as a fallback when Codex image_gen is unavailable, fails, or the product needs real-world photographic evidence more than generated imagery.",
+    "Search only allowlisted free sourced providers, licensed providers with user-supplied proof, local licensed files, or user-supplied assets with explicit permission.",
+    "Use reference-only providers for morphology, density, hierarchy, and flow research only; never copy their images into runtime assets.",
+    "Paid stock providers require license_proof, usage_scope, and licensed_to metadata before an image can be promoted into implementation.",
+    "Do not use a result unless the source URL, provider, author, license label, attribution requirement, and download URL are recorded.",
+    "Copy accepted assets into the workspace; never hotlink a search result or CDN URL from runtime code.",
+    "Store selection_reason, crop/focal-point notes, alt_text, sha256, and intended_for before wiring the image into UI code.",
+    "Do not use sourced search images for logos, app icons, favicons, button glyphs, status markers, or flags unless the specific asset license and identity use are explicitly approved.",
+]
+
+FREE_SOURCED_VISUAL_PROVIDER_RULES = [
+    {
+        "id": "openverse",
+        "label": "Openverse",
+        "tier": "free-sourced",
+        "kind": "free-image-search",
+        "license_scope": ["CC0", "Public Domain", "CC BY", "CC BY-SA"],
+        "attribution_default": "license-dependent",
+        "license_proof_required": False,
+        "asset_usage": "may become SourcedVisualAsset when per-asset metadata is recorded",
+        "notes": "Prefer results with machine-readable Creative Commons metadata.",
+    },
+    {
+        "id": "wikimedia-commons",
+        "label": "Wikimedia Commons",
+        "tier": "free-sourced",
+        "kind": "free-media-commons",
+        "license_scope": ["CC0", "Public Domain", "CC BY", "CC BY-SA", "GFDL"],
+        "attribution_default": "usually required",
+        "license_proof_required": False,
+        "asset_usage": "may become SourcedVisualAsset when file-page license and author metadata are recorded",
+        "notes": "Use only files with visible license and author metadata on the file page.",
+    },
+    {
+        "id": "unsplash",
+        "label": "Unsplash",
+        "tier": "free-sourced",
+        "kind": "free-photo-provider",
+        "license_scope": ["Unsplash License"],
+        "attribution_default": "recommended",
+        "license_proof_required": False,
+        "asset_usage": "may become SourcedVisualAsset when photo URL, photographer, and license page are recorded",
+        "notes": "Record the photo page URL and photographer; avoid brand/logo-like use.",
+    },
+    {
+        "id": "pexels",
+        "label": "Pexels",
+        "tier": "free-sourced",
+        "kind": "free-photo-provider",
+        "license_scope": ["Pexels License"],
+        "attribution_default": "recommended",
+        "license_proof_required": False,
+        "asset_usage": "may become SourcedVisualAsset when photo URL, photographer, and license page are recorded",
+        "notes": "Record the photo page URL and photographer; avoid implying endorsement.",
+    },
+]
+
+LICENSED_VISUAL_PROVIDER_RULES = [
+    {
+        "id": "adobe-stock",
+        "label": "Adobe Stock",
+        "tier": "licensed",
+        "kind": "paid-stock-provider",
+        "license_scope": ["Adobe Stock Standard License", "Adobe Stock Extended License"],
+        "attribution_default": "license-dependent",
+        "license_proof_required": True,
+        "asset_usage": "may become SourcedVisualAsset only when purchase/license proof is recorded",
+        "notes": "Use for production-grade licensed stock when the user has rights or supplies proof.",
+    },
+    {
+        "id": "shutterstock",
+        "label": "Shutterstock",
+        "tier": "licensed",
+        "kind": "paid-stock-provider",
+        "license_scope": ["Shutterstock Standard License", "Shutterstock Enhanced License"],
+        "attribution_default": "license-dependent",
+        "license_proof_required": True,
+        "asset_usage": "may become SourcedVisualAsset only when purchase/license proof is recorded",
+        "notes": "Editorial or sensitive-subject content may have additional restrictions.",
+    },
+    {
+        "id": "getty-images",
+        "label": "Getty Images",
+        "tier": "licensed",
+        "kind": "paid-stock-provider",
+        "license_scope": ["Getty Images royalty-free", "Getty Images rights-managed"],
+        "attribution_default": "license-dependent",
+        "license_proof_required": True,
+        "asset_usage": "may become SourcedVisualAsset only when use-specific license proof is recorded",
+        "notes": "Rights-managed assets are use-specific; record the permitted usage scope.",
+    },
+    {
+        "id": "istock",
+        "label": "iStock",
+        "tier": "licensed",
+        "kind": "paid-stock-provider",
+        "license_scope": ["iStock Standard License", "iStock Extended License"],
+        "attribution_default": "license-dependent",
+        "license_proof_required": True,
+        "asset_usage": "may become SourcedVisualAsset only when purchase/license proof is recorded",
+        "notes": "Use only under the user's account or supplied license documentation.",
+    },
+    {
+        "id": "envato-elements",
+        "label": "Envato Elements",
+        "tier": "licensed",
+        "kind": "subscription-asset-provider",
+        "license_scope": ["Envato Elements License"],
+        "attribution_default": "license-dependent",
+        "license_proof_required": True,
+        "asset_usage": "may become SourcedVisualAsset only when project registration/license proof is recorded",
+        "notes": "Record project registration or equivalent license evidence for each asset.",
+    },
+    {
+        "id": "local-licensed-file",
+        "label": "Local licensed file",
+        "tier": "licensed",
+        "kind": "user-supplied-or-curated",
+        "license_scope": ["explicit project permission"],
+        "attribution_default": "project-defined",
+        "license_proof_required": True,
+        "asset_usage": "may become SourcedVisualAsset when explicit project permission is recorded",
+        "notes": "Use when the user provides or curates an asset with redistribution permission.",
+    },
+]
+
+REFERENCE_ONLY_PROVIDER_RULES = [
+    {
+        "id": "lazyweb",
+        "label": "Lazyweb",
+        "tier": "reference-only",
+        "kind": "design-reference-corpus",
+        "license_scope": ["reference use only"],
+        "attribution_default": "not applicable",
+        "license_proof_required": False,
+        "asset_usage": "morphology and UX reference only; do not copy images into runtime assets",
+        "notes": "Use for layout, density, hierarchy, and product morphology research.",
+    },
+    {
+        "id": "mobbin",
+        "label": "Mobbin",
+        "tier": "reference-only",
+        "kind": "app-screen-reference",
+        "license_scope": ["reference use only"],
+        "attribution_default": "not applicable",
+        "license_proof_required": False,
+        "asset_usage": "morphology and UX reference only; do not copy images into runtime assets",
+        "notes": "Use for app UI patterns, flows, and screen density research.",
+    },
+    {
+        "id": "dribbble",
+        "label": "Dribbble",
+        "tier": "reference-only",
+        "kind": "design-inspiration-site",
+        "license_scope": ["reference use only unless explicitly licensed"],
+        "attribution_default": "not applicable",
+        "license_proof_required": False,
+        "asset_usage": "inspiration/reference only; do not copy images into runtime assets",
+        "notes": "Treat as visual inspiration; avoid copying composition, imagery, or brand work.",
+    },
+    {
+        "id": "behance",
+        "label": "Behance",
+        "tier": "reference-only",
+        "kind": "portfolio-reference-site",
+        "license_scope": ["reference use only unless explicitly licensed"],
+        "attribution_default": "not applicable",
+        "license_proof_required": False,
+        "asset_usage": "inspiration/reference only; do not copy images into runtime assets",
+        "notes": "Use as design research, not as an asset source.",
+    },
+    {
+        "id": "awwwards",
+        "label": "Awwwards",
+        "tier": "reference-only",
+        "kind": "website-reference-gallery",
+        "license_scope": ["reference use only"],
+        "attribution_default": "not applicable",
+        "license_proof_required": False,
+        "asset_usage": "morphology and interaction reference only; do not copy images into runtime assets",
+        "notes": "Use for layout and interaction research, not for runtime media assets.",
+    },
+]
+
+VISUAL_ASSET_PROVIDER_RULES = (
+    FREE_SOURCED_VISUAL_PROVIDER_RULES
+    + LICENSED_VISUAL_PROVIDER_RULES
+    + REFERENCE_ONLY_PROVIDER_RULES
+)
+SOURCED_VISUAL_PROVIDER_RULES = FREE_SOURCED_VISUAL_PROVIDER_RULES + LICENSED_VISUAL_PROVIDER_RULES
+
+FREE_SOURCED_VISUAL_ASSET_LICENSE_POLICY = {
+    "id": "license-policy:verified-free-visual-asset",
+    "label": "Verified free visual asset license",
+    "allowed_license_kinds": [
+        "CC0",
+        "Public Domain",
+        "CC BY",
+        "CC BY-SA",
+        "Unsplash License",
+        "Pexels License",
+        "explicit project permission",
+    ],
+    "required_metadata": [
+        "source_url",
+        "download_url",
+        "provider",
+        "author",
+        "license",
+        "attribution_required",
+        "retrieved_at",
+        "sha256",
+    ],
+    "denied": [
+        "unknown license",
+        "metadata-free image search result",
+        "hotlinked runtime asset",
+        "logo or app icon replacement from stock/search",
+        "rights-unclear celebrity, character, brand, or private-location imagery",
+    ],
+}
+LICENSED_VISUAL_ASSET_PROOF_POLICY = {
+    "id": "license-policy:paid-visual-provider-proof",
+    "label": "Paid visual provider license proof",
+    "required_metadata": [
+        "provider",
+        "source_url",
+        "download_url",
+        "license",
+        "license_proof",
+        "usage_scope",
+        "licensed_to",
+        "retrieved_at",
+        "sha256",
+    ],
+    "denied": [
+        "paid stock asset without purchase proof",
+        "account-only asset with no project license record",
+        "editorial asset used commercially without clearance",
+        "rights-managed asset used outside recorded usage scope",
+    ],
+}
+REFERENCE_ONLY_VISUAL_POLICY = {
+    "id": "license-policy:reference-only-provider-no-runtime-assets",
+    "label": "Reference-only provider no runtime assets",
+    "allowed": [
+        "component morphology",
+        "layout density",
+        "interaction pattern",
+        "module hierarchy",
+        "screen flow notes",
+    ],
+    "denied": [
+        "runtime image asset",
+        "downloaded stock/photo asset",
+        "brand artwork copy",
+        "competitor UI screenshot as shipped content",
+        "logo, icon, or illustration reuse",
+    ],
+}
 
 VISUAL_ASSET_SLOT_RULES = [
     {
@@ -733,12 +1015,13 @@ def build_generated_visual_asset_layer(
     blueprint: dict,
     component_inventory: dict,
 ) -> None:
-    """Represent Codex built-in imagegen visual generation as ontology nodes and edges."""
+    """Represent generated imagery plus sourced visual fallback as ontology nodes and edges."""
     brand_name = brand_profile.get("brand_name", "Brand")
     brand_id = f"brand:{slugify(brand_name)}"
     model_id = VISUAL_IMAGE_GENERATOR_ID
 
     _add_visual_asset_contract_nodes(graph)
+    _add_sourced_visual_asset_contract_nodes(graph, brand_id)
 
     graph.add_node(OntologyNode(
         id=model_id,
@@ -749,15 +1032,18 @@ def build_generated_visual_asset_layer(
             "default_path": True,
             "selection_rule": "Use the Codex imagegen skill's built-in image_gen tool for default generated imagery.",
             "fallback_policy": VISUAL_IMAGE_GENERATOR_FAILURE_POLICY,
+            "sourced_fallback_policy": SOURCED_VISUAL_ASSET_FALLBACK_POLICY,
             "api_fallback": "disabled",
-            "failure_behavior": "If built-in image_gen is unavailable or fails, stop and report the failure; do not invoke CLI or OpenAI API fallback.",
+            "failure_behavior": "If built-in image_gen is unavailable or fails, use the license-verified sourced visual fallback or write a prompt pack; do not invoke CLI or OpenAI API fallback.",
             "source_session_tracking": True,
             "default_source_directory": "$CODEX_HOME/generated_images/<session-id>",
             "workspace_copy_required": True,
             "contract_id": VISUAL_ASSET_CONTRACT_ID,
+            "fallback_contract_id": SOURCED_VISUAL_ASSET_CONTRACT_ID,
         },
     ))
     graph.add_edge(OntologyEdge(type=EdgeType.governs, source=VISUAL_ASSET_CONTRACT_ID, target=model_id))
+    graph.add_edge(OntologyEdge(type=EdgeType.governs, source=SOURCED_VISUAL_ASSET_CONTRACT_ID, target=model_id))
 
     for manifest in _iter_generated_visual_asset_manifests(brand_profile, blueprint):
         _add_integrated_visual_assets_from_manifest(
@@ -823,6 +1109,13 @@ def build_generated_visual_asset_layer(
         for target_id in targets:
             if graph.get_node(target_id):
                 graph.add_edge(OntologyEdge(type=EdgeType.intended_for, source=asset_id, target=target_id))
+
+        _add_sourced_visual_asset_slot_plan(
+            graph=graph,
+            rule=rule,
+            targets=targets,
+            brand_id=brand_id,
+        )
 
 
 def _add_visual_asset_contract_nodes(graph: DesignOntologyGraph) -> None:
@@ -893,6 +1186,224 @@ def _add_visual_asset_contract_nodes(graph: DesignOntologyGraph) -> None:
         graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=VISUAL_ASSET_CONTRACT_ID, target=failure["id"]))
 
 
+def _add_sourced_visual_asset_contract_nodes(graph: DesignOntologyGraph, brand_id: str) -> None:
+    graph.add_node(OntologyNode(
+        id=SOURCED_VISUAL_ASSET_CONTRACT_ID,
+        type=NodeType.GovernanceRule,
+        label="Sourced visual asset fallback contract",
+        meta={
+            "schema_version": VISUAL_ASSET_MANIFEST_SCHEMA,
+            "preferred_manifest_path": VISUAL_ASSET_MANIFEST_PATH,
+            "candidate_manifest_path": SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH,
+            "compatible_manifest_paths": VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
+            "fallback_policy": SOURCED_VISUAL_ASSET_FALLBACK_POLICY,
+            "fallback_for": VISUAL_ASSET_CONTRACT_ID,
+            "api_fallback": "disabled",
+            "hotlinking_allowed": False,
+            "workspace_copy_required": True,
+            "license_metadata_required": True,
+            "asset_record_required_fields": SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+            "provider_allowlist": [provider["id"] for provider in SOURCED_VISUAL_PROVIDER_RULES],
+            "free_provider_allowlist": [provider["id"] for provider in FREE_SOURCED_VISUAL_PROVIDER_RULES],
+            "licensed_provider_allowlist": [provider["id"] for provider in LICENSED_VISUAL_PROVIDER_RULES],
+            "reference_only_providers": [provider["id"] for provider in REFERENCE_ONLY_PROVIDER_RULES],
+            "license_policy_id": FREE_SOURCED_VISUAL_ASSET_LICENSE_POLICY["id"],
+            "paid_license_policy_id": LICENSED_VISUAL_ASSET_PROOF_POLICY["id"],
+            "reference_only_policy_id": REFERENCE_ONLY_VISUAL_POLICY["id"],
+            "rules": SOURCED_VISUAL_ASSET_CONTRACT_RULES,
+        },
+    ))
+    if graph.get_node(brand_id):
+        graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=SOURCED_VISUAL_ASSET_CONTRACT_ID, target=brand_id))
+
+    free_license_policy_id = FREE_SOURCED_VISUAL_ASSET_LICENSE_POLICY["id"]
+    graph.add_node(OntologyNode(
+        id=free_license_policy_id,
+        type=NodeType.LicensePolicy,
+        label=FREE_SOURCED_VISUAL_ASSET_LICENSE_POLICY["label"],
+        meta={
+            "provider_tier": "free-sourced",
+            "allowed_license_kinds": FREE_SOURCED_VISUAL_ASSET_LICENSE_POLICY["allowed_license_kinds"],
+            "required_metadata": FREE_SOURCED_VISUAL_ASSET_LICENSE_POLICY["required_metadata"],
+            "denied": FREE_SOURCED_VISUAL_ASSET_LICENSE_POLICY["denied"],
+        },
+    ))
+    graph.add_edge(OntologyEdge(type=EdgeType.governs, source=SOURCED_VISUAL_ASSET_CONTRACT_ID, target=free_license_policy_id))
+
+    paid_license_policy_id = LICENSED_VISUAL_ASSET_PROOF_POLICY["id"]
+    graph.add_node(OntologyNode(
+        id=paid_license_policy_id,
+        type=NodeType.LicensePolicy,
+        label=LICENSED_VISUAL_ASSET_PROOF_POLICY["label"],
+        meta={
+            "provider_tier": "licensed",
+            "required_metadata": LICENSED_VISUAL_ASSET_PROOF_POLICY["required_metadata"],
+            "denied": LICENSED_VISUAL_ASSET_PROOF_POLICY["denied"],
+        },
+    ))
+    graph.add_edge(OntologyEdge(type=EdgeType.governs, source=SOURCED_VISUAL_ASSET_CONTRACT_ID, target=paid_license_policy_id))
+
+    reference_only_policy_id = REFERENCE_ONLY_VISUAL_POLICY["id"]
+    graph.add_node(OntologyNode(
+        id=reference_only_policy_id,
+        type=NodeType.LicensePolicy,
+        label=REFERENCE_ONLY_VISUAL_POLICY["label"],
+        meta={
+            "provider_tier": "reference-only",
+            "allowed": REFERENCE_ONLY_VISUAL_POLICY["allowed"],
+            "denied": REFERENCE_ONLY_VISUAL_POLICY["denied"],
+        },
+    ))
+    graph.add_edge(OntologyEdge(type=EdgeType.governs, source=SOURCED_VISUAL_ASSET_CONTRACT_ID, target=reference_only_policy_id))
+
+    for provider in VISUAL_ASSET_PROVIDER_RULES:
+        provider_id = f"visual-asset-provider:{slugify(provider['id'])}"
+        graph.add_node(OntologyNode(
+            id=provider_id,
+            type=_visual_asset_provider_node_type(provider),
+            label=provider["label"],
+            meta={
+                "provider_id": provider["id"],
+                "tier": provider["tier"],
+                "kind": provider["kind"],
+                "license_scope": provider["license_scope"],
+                "attribution_default": provider["attribution_default"],
+                "license_proof_required": provider["license_proof_required"],
+                "license_metadata_required": True,
+                "workspace_copy_required": provider["tier"] != "reference-only",
+                "asset_copy_allowed": provider["tier"] != "reference-only",
+                "asset_usage": provider["asset_usage"],
+                "notes": provider["notes"],
+            },
+        ))
+        graph.add_edge(OntologyEdge(type=EdgeType.governs, source=SOURCED_VISUAL_ASSET_CONTRACT_ID, target=provider_id))
+
+    failure_patterns = [
+        {
+            "id": "failure-pattern:unverified-search-image",
+            "label": "Unverified search image",
+            "trigger": "A free image search result is integrated without source URL, author, license, or attribution metadata.",
+            "prevention": "Use only allowlisted providers or user-supplied files with explicit permission, and record full license metadata before implementation.",
+        },
+        {
+            "id": "failure-pattern:hotlinked-sourced-visual",
+            "label": "Hotlinked sourced visual",
+            "trigger": "Runtime code references a remote search/CDN URL instead of a workspace-local asset copy.",
+            "prevention": "Download or copy the accepted visual into the project assets folder and reference the workspace path only.",
+        },
+        {
+            "id": "failure-pattern:stock-image-as-identity-asset",
+            "label": "Stock image used as identity asset",
+            "trigger": "A searched photo or illustration is used as an app icon, favicon, logo, button glyph, status marker, or flag substitute.",
+            "prevention": "Keep identity assets deterministic and brand-specific; use sourced images only for content, hero, card, editorial, or contextual imagery slots.",
+        },
+        {
+            "id": "failure-pattern:missing-visual-attribution",
+            "label": "Missing sourced visual attribution",
+            "trigger": "A sourced visual requiring attribution is shipped without visible or documented credit.",
+            "prevention": "Record attribution_required and attribution_text in the manifest, then place or document the credit according to the license.",
+        },
+    ]
+    for failure in failure_patterns:
+        graph.add_node(OntologyNode(
+            id=failure["id"],
+            type=NodeType.ImplementationFailurePattern,
+            label=failure["label"],
+            meta={
+                "trigger": failure["trigger"],
+                "prevention": failure["prevention"],
+                "technical_controls": [
+                    "system_ontology.json SourcedVisualAsset",
+                    "system_spec.md Generated Visual Asset Plan",
+                    VISUAL_ASSET_MANIFEST_PATH,
+                    SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH,
+                ],
+            },
+        ))
+        graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=SOURCED_VISUAL_ASSET_CONTRACT_ID, target=failure["id"]))
+
+
+def _visual_asset_provider_node_type(provider: dict) -> NodeType:
+    tier = str(provider.get("tier") or "").strip().lower()
+    if tier == "free-sourced":
+        return NodeType.FreeSourcedVisualProvider
+    if tier == "licensed":
+        return NodeType.LicensedVisualProvider
+    if tier == "reference-only":
+        return NodeType.ReferenceOnlyProvider
+    return NodeType.VisualAssetProvider
+
+
+def _visual_asset_provider_rule(provider_id: str) -> dict | None:
+    normalized = slugify(provider_id)
+    for provider in VISUAL_ASSET_PROVIDER_RULES:
+        if slugify(str(provider.get("id", ""))) == normalized:
+            return provider
+    return None
+
+
+def _license_policy_id_for_provider_rule(provider: dict | None) -> str:
+    tier = str((provider or {}).get("tier") or "").strip().lower()
+    if tier == "licensed":
+        return LICENSED_VISUAL_ASSET_PROOF_POLICY["id"]
+    if tier == "reference-only":
+        return REFERENCE_ONLY_VISUAL_POLICY["id"]
+    return FREE_SOURCED_VISUAL_ASSET_LICENSE_POLICY["id"]
+
+
+def _add_sourced_visual_asset_slot_plan(
+    graph: DesignOntologyGraph,
+    rule: dict,
+    targets: list[str],
+    brand_id: str,
+) -> None:
+    asset_id = f"sourced-visual-asset:{rule['slot']}-fallback"
+    provider_ids = [f"visual-asset-provider:{slugify(provider['id'])}" for provider in SOURCED_VISUAL_PROVIDER_RULES]
+    graph.add_node(OntologyNode(
+        id=asset_id,
+        type=NodeType.SourcedVisualAsset,
+        label=f"{rule['label']} sourced fallback",
+        meta={
+            "slot": rule["slot"],
+            "acquisition_mode": "sourced",
+            "fallback_for": f"visual-asset:{rule['slot']}",
+            "fallback_policy": SOURCED_VISUAL_ASSET_FALLBACK_POLICY,
+            "candidate_manifest_path": SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH,
+            "manifest_path": VISUAL_ASSET_MANIFEST_PATH,
+            "compatible_manifest_paths": VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
+            "manifest_schema": VISUAL_ASSET_MANIFEST_SCHEMA,
+            "asset_record_required_fields": SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+            "provider_allowlist": [provider["id"] for provider in SOURCED_VISUAL_PROVIDER_RULES],
+            "free_provider_allowlist": [provider["id"] for provider in FREE_SOURCED_VISUAL_PROVIDER_RULES],
+            "licensed_provider_allowlist": [provider["id"] for provider in LICENSED_VISUAL_PROVIDER_RULES],
+            "reference_only_excluded": [provider["id"] for provider in REFERENCE_ONLY_PROVIDER_RULES],
+            "license_policy_id": FREE_SOURCED_VISUAL_ASSET_LICENSE_POLICY["id"],
+            "paid_license_policy_id": LICENSED_VISUAL_ASSET_PROOF_POLICY["id"],
+            "aspect_ratios": rule["aspect_ratios"],
+            "usage": rule["usage"],
+            "activation": rule["activation"],
+            "hotlinking_allowed": False,
+            "workspace_copy_required": True,
+            "license_metadata_required": True,
+            "alt_text_required": True,
+            "sha256_required": True,
+            "selection_reason_required": True,
+            "status": "searchable-fallback",
+            "contract_id": SOURCED_VISUAL_ASSET_CONTRACT_ID,
+        },
+    ))
+    graph.add_edge(OntologyEdge(type=EdgeType.governs, source=SOURCED_VISUAL_ASSET_CONTRACT_ID, target=asset_id))
+    graph.add_edge(OntologyEdge(type=EdgeType.licensed_under, source=asset_id, target=FREE_SOURCED_VISUAL_ASSET_LICENSE_POLICY["id"]))
+    if graph.get_node(brand_id):
+        graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=asset_id, target=brand_id))
+    for provider_id in provider_ids:
+        if graph.get_node(provider_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.sourced_from, source=asset_id, target=provider_id))
+    for target_id in targets:
+        if graph.get_node(target_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.intended_for, source=asset_id, target=target_id))
+
+
 def _iter_generated_visual_asset_manifests(brand_profile: dict, blueprint: dict) -> list[dict]:
     manifests: list[dict] = []
     seen: set[str] = set()
@@ -927,19 +1438,33 @@ def _add_integrated_visual_assets_from_manifest(
         return
 
     for index, asset in enumerate(asset for asset in assets if isinstance(asset, dict)):
+        is_sourced = _is_sourced_visual_asset_record(asset)
         raw_id = str(asset.get("id") or "").strip()
         if raw_id:
-            asset_id = raw_id if raw_id.startswith("visual-asset:") else f"visual-asset:{slugify(raw_id)}"
+            if raw_id.startswith(("visual-asset:", "sourced-visual-asset:")):
+                asset_id = raw_id
+            elif is_sourced:
+                asset_id = f"sourced-visual-asset:{slugify(raw_id)}"
+            else:
+                asset_id = f"visual-asset:{slugify(raw_id)}"
         else:
             fallback = asset.get("label") or asset.get("asset_path") or asset.get("slot") or f"asset-{index + 1}"
-            asset_id = f"visual-asset:{slugify(str(fallback))}"
+            prefix = "sourced-visual-asset" if is_sourced else "visual-asset"
+            asset_id = f"{prefix}:{slugify(str(fallback))}"
         if graph.get_node(asset_id):
             asset_id = f"{asset_id}-integrated"
 
         label = str(asset.get("label") or asset_id.removeprefix("visual-asset:")).strip()
+        contract_id = SOURCED_VISUAL_ASSET_CONTRACT_ID if is_sourced else VISUAL_ASSET_CONTRACT_ID
+        node_type = NodeType.SourcedVisualAsset if is_sourced else NodeType.GeneratedVisualAsset
+        acquisition_mode = str(asset.get("acquisition_mode") or ("sourced" if is_sourced else "generated"))
+        provider_id = _asset_provider_id(asset)
+        provider_rule = _visual_asset_provider_rule(provider_id) if provider_id else None
+        provider_tier = str((provider_rule or {}).get("tier") or "unrecognized")
         meta = {
             "slot": asset.get("slot"),
             "status": asset.get("status", "integrated"),
+            "acquisition_mode": acquisition_mode,
             "asset_path": asset.get("asset_path"),
             "original_png_path": asset.get("original_png_path"),
             "format": asset.get("format"),
@@ -949,28 +1474,62 @@ def _add_integrated_visual_assets_from_manifest(
             "intended_for": asset.get("intended_for", []),
             "alt_text": asset.get("alt_text"),
             "prompt_summary": asset.get("prompt_summary"),
+            "source_url": asset.get("source_url") or asset.get("source_page_url"),
+            "download_url": asset.get("download_url"),
+            "provider": provider_id,
+            "provider_tier": provider_tier if is_sourced else None,
+            "author": asset.get("author") or asset.get("creator"),
+            "license": _asset_license_label(asset),
+            "license_proof": asset.get("license_proof"),
+            "usage_scope": asset.get("usage_scope"),
+            "licensed_to": asset.get("licensed_to"),
+            "attribution_required": asset.get("attribution_required"),
+            "attribution_text": asset.get("attribution_text"),
+            "retrieved_at": asset.get("retrieved_at"),
+            "selection_reason": asset.get("selection_reason"),
+            "crop_notes": asset.get("crop_notes"),
+            "focal_point": asset.get("focal_point"),
             "manifest_path": manifest_path,
             "manifest_schema": schema_version,
             "manifest_absolute_path": manifest.get("absolute_path"),
             "source_session_id": source_session.get("id"),
             "source_session_directory": source_session.get("default_directory"),
-            "model": VISUAL_IMAGE_GENERATOR_LABEL,
+            "model": None if is_sourced else VISUAL_IMAGE_GENERATOR_LABEL,
             "api_fallback": "disabled",
-            "fallback_policy": VISUAL_IMAGE_GENERATOR_FAILURE_POLICY,
+            "fallback_policy": SOURCED_VISUAL_ASSET_FALLBACK_POLICY if is_sourced else VISUAL_IMAGE_GENERATOR_FAILURE_POLICY,
             "workspace_copy_required": True,
-            "original_preservation_required": True,
-            "source_session_tracking": True,
-            "contract_id": VISUAL_ASSET_CONTRACT_ID,
+            "original_preservation_required": None if is_sourced else True,
+            "source_session_tracking": None if is_sourced else True,
+            "license_metadata_required": True if is_sourced else None,
+            "license_proof_required": provider_rule.get("license_proof_required") if is_sourced and provider_rule else None,
+            "hotlinking_allowed": False if is_sourced else None,
+            "asset_copy_allowed": provider_tier != "reference-only" if is_sourced else None,
+            "candidate_manifest_path": SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH if is_sourced else None,
+            "asset_record_required_fields": SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS if is_sourced else None,
+            "contract_id": contract_id,
             "integrated": True,
         }
         graph.add_node(OntologyNode(
             id=asset_id,
-            type=NodeType.GeneratedVisualAsset,
+            type=node_type,
             label=label,
             meta={key: value for key, value in meta.items() if value not in (None, "", [])},
         ))
-        graph.add_edge(OntologyEdge(type=EdgeType.generated_with, source=asset_id, target=model_id))
-        graph.add_edge(OntologyEdge(type=EdgeType.governs, source=VISUAL_ASSET_CONTRACT_ID, target=asset_id))
+        if is_sourced:
+            provider_node_id = _ensure_manifest_visual_asset_provider(graph, asset)
+            if provider_node_id:
+                graph.add_edge(OntologyEdge(type=EdgeType.sourced_from, source=asset_id, target=provider_node_id))
+            graph.add_edge(OntologyEdge(
+                type=EdgeType.licensed_under,
+                source=asset_id,
+                target=_license_policy_id_for_provider_rule(provider_rule),
+            ))
+            specific_license_id = _ensure_manifest_license_policy(graph, asset)
+            if specific_license_id:
+                graph.add_edge(OntologyEdge(type=EdgeType.licensed_under, source=asset_id, target=specific_license_id))
+        else:
+            graph.add_edge(OntologyEdge(type=EdgeType.generated_with, source=asset_id, target=model_id))
+        graph.add_edge(OntologyEdge(type=EdgeType.governs, source=contract_id, target=asset_id))
         if graph.get_node(brand_id):
             graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=asset_id, target=brand_id))
 
@@ -987,6 +1546,97 @@ def _add_integrated_visual_assets_from_manifest(
                 if graph.get_node(candidate_id):
                     graph.add_edge(OntologyEdge(type=EdgeType.intended_for, source=asset_id, target=candidate_id))
                     break
+
+
+def _is_sourced_visual_asset_record(asset: dict) -> bool:
+    mode = str(asset.get("acquisition_mode") or "").strip().lower()
+    if mode in {"sourced", "stock", "free-search", "user_supplied", "user-supplied"}:
+        return True
+    return any(asset.get(key) for key in ("source_url", "source_page_url", "download_url", "provider", "license", "author"))
+
+
+def _asset_provider_id(asset: dict) -> str:
+    provider = asset.get("provider")
+    if isinstance(provider, dict):
+        value = provider.get("id") or provider.get("provider_id") or provider.get("name") or provider.get("label")
+    else:
+        value = provider
+    return str(value or "").strip()
+
+
+def _asset_license_label(asset: dict) -> str:
+    license_data = asset.get("license")
+    if isinstance(license_data, dict):
+        value = license_data.get("label") or license_data.get("id") or license_data.get("name")
+    else:
+        value = license_data
+    return str(value or "").strip()
+
+
+def _ensure_manifest_visual_asset_provider(graph: DesignOntologyGraph, asset: dict) -> str | None:
+    provider_id = _asset_provider_id(asset)
+    if not provider_id:
+        return None
+    node_id = f"visual-asset-provider:{slugify(provider_id)}"
+    if graph.get_node(node_id):
+        return node_id
+
+    provider_rule = _visual_asset_provider_rule(provider_id)
+    provider_meta = provider_rule or {
+        "id": provider_id,
+        "label": provider_id,
+        "tier": "unrecognized",
+        "kind": "manifest-provider",
+        "license_scope": [],
+        "attribution_default": "unknown",
+        "license_proof_required": True,
+        "asset_usage": "requires manual review before runtime use",
+        "notes": "Provider was found in a manifest but is not in the ontology allowlist.",
+    }
+    graph.add_node(OntologyNode(
+        id=node_id,
+        type=_visual_asset_provider_node_type(provider_meta),
+        label=provider_meta.get("label") or provider_id,
+        meta={
+            "provider_id": provider_id,
+            "tier": provider_meta.get("tier"),
+            "kind": provider_meta.get("kind"),
+            "license_scope": provider_meta.get("license_scope", []),
+            "attribution_default": provider_meta.get("attribution_default"),
+            "license_proof_required": provider_meta.get("license_proof_required"),
+            "license_metadata_required": True,
+            "workspace_copy_required": provider_meta.get("tier") != "reference-only",
+            "asset_copy_allowed": provider_meta.get("tier") != "reference-only",
+            "asset_usage": provider_meta.get("asset_usage"),
+            "allowlist_status": "known" if provider_rule else "unrecognized",
+            "notes": provider_meta.get("notes"),
+        },
+    ))
+    graph.add_edge(OntologyEdge(type=EdgeType.governs, source=SOURCED_VISUAL_ASSET_CONTRACT_ID, target=node_id))
+    return node_id
+
+
+def _ensure_manifest_license_policy(graph: DesignOntologyGraph, asset: dict) -> str | None:
+    license_label = _asset_license_label(asset)
+    if not license_label:
+        return None
+    node_id = f"license-policy:{slugify(license_label)}"
+    if graph.get_node(node_id):
+        return node_id
+
+    graph.add_node(OntologyNode(
+        id=node_id,
+        type=NodeType.LicensePolicy,
+        label=license_label,
+        meta={
+            "source": "visual asset manifest",
+            "attribution_required": asset.get("attribution_required"),
+            "attribution_text": asset.get("attribution_text"),
+            "source_url": asset.get("source_url") or asset.get("source_page_url"),
+        },
+    ))
+    graph.add_edge(OntologyEdge(type=EdgeType.governs, source=SOURCED_VISUAL_ASSET_CONTRACT_ID, target=node_id))
+    return node_id
 
 
 def build_reference_context_layer(

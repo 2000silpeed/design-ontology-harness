@@ -147,6 +147,86 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIn("design-system/generated_visual_assets.json", sections)
         self.assertIn("workspace copy required", sections)
 
+    def test_sourced_visual_asset_fallback_is_modeled_with_license_policy(self) -> None:
+        graph = build_full_ontology_graph(
+            brand_profile={"brand_name": "Checkpoint"},
+            blueprint={"principles": []},
+            component_inventory={
+                "families": [{"family": "marketing", "components": ["hero-section"]}],
+                "components": [
+                    {
+                        "name": "hero-section",
+                        "family": "marketing",
+                        "role": "Landing hero",
+                        "supports_primitive": "landing narrative",
+                    }
+                ],
+            },
+            token_schema={"categories": {}},
+        )
+
+        contract = graph.get_node("governance:sourced-visual-asset-fallback-contract")
+        self.assertIsNotNone(contract)
+        self.assertEqual(contract.type, NodeType.GovernanceRule)
+        self.assertEqual(contract.meta["fallback_policy"], "license-verified sourced visual fallback")
+        self.assertFalse(contract.meta["hotlinking_allowed"])
+        self.assertIn("source_url", contract.meta["asset_record_required_fields"])
+        self.assertIn("openverse", contract.meta["provider_allowlist"])
+
+        provider = graph.get_node("visual-asset-provider:openverse")
+        self.assertIsNotNone(provider)
+        self.assertEqual(provider.type, NodeType.FreeSourcedVisualProvider)
+        self.assertEqual(provider.meta["tier"], "free-sourced")
+        self.assertTrue(provider.meta["license_metadata_required"])
+
+        licensed_provider = graph.get_node("visual-asset-provider:adobe-stock")
+        self.assertIsNotNone(licensed_provider)
+        self.assertEqual(licensed_provider.type, NodeType.LicensedVisualProvider)
+        self.assertTrue(licensed_provider.meta["license_proof_required"])
+
+        reference_provider = graph.get_node("visual-asset-provider:lazyweb")
+        self.assertIsNotNone(reference_provider)
+        self.assertEqual(reference_provider.type, NodeType.ReferenceOnlyProvider)
+        self.assertFalse(reference_provider.meta["asset_copy_allowed"])
+
+        license_policy = graph.get_node("license-policy:verified-free-visual-asset")
+        self.assertIsNotNone(license_policy)
+        self.assertEqual(license_policy.type, NodeType.LicensePolicy)
+        self.assertIn("unknown license", license_policy.meta["denied"])
+
+        paid_policy = graph.get_node("license-policy:paid-visual-provider-proof")
+        self.assertIsNotNone(paid_policy)
+        self.assertIn("license_proof", paid_policy.meta["required_metadata"])
+
+        reference_policy = graph.get_node("license-policy:reference-only-provider-no-runtime-assets")
+        self.assertIsNotNone(reference_policy)
+        self.assertIn("runtime image asset", reference_policy.meta["denied"])
+
+        sourced = graph.get_node("sourced-visual-asset:hero-image-fallback")
+        self.assertIsNotNone(sourced)
+        self.assertEqual(sourced.type, NodeType.SourcedVisualAsset)
+        self.assertEqual(sourced.meta["acquisition_mode"], "sourced")
+        self.assertFalse(sourced.meta["hotlinking_allowed"])
+        self.assertEqual(sourced.meta["candidate_manifest_path"], "public/generated/design-system/sourced-visual-candidates.json")
+
+        provider_edges = graph.get_edges_from("sourced-visual-asset:hero-image-fallback", EdgeType.sourced_from)
+        self.assertIn("visual-asset-provider:openverse", {edge.target for edge in provider_edges})
+
+        license_edges = graph.get_edges_from("sourced-visual-asset:hero-image-fallback", EdgeType.licensed_under)
+        self.assertIn("license-policy:verified-free-visual-asset", {edge.target for edge in license_edges})
+
+        failure = graph.get_node("failure-pattern:unverified-search-image")
+        self.assertIsNotNone(failure)
+        self.assertEqual(failure.type, NodeType.ImplementationFailurePattern)
+
+        sections = build_graph_spec_sections(graph)
+        self.assertIn("Sourced fallback", sections)
+        self.assertIn("Openverse", sections)
+        self.assertIn("Licensed providers require proof", sections)
+        self.assertIn("Reference-only providers", sections)
+        self.assertIn("license metadata required", sections)
+        self.assertIn("stock/search images are not valid identity assets", sections)
+
     def test_project_visual_asset_manifest_is_auto_discovered_from_brand_profile_path(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             project_dir = Path(tmp)
@@ -299,6 +379,133 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIn("Integrated Assets", sections)
         self.assertIn("assets/world-cup-command-center.webp", sections)
         self.assertIn("야간 경기장 커맨드 센터", sections)
+
+    def test_sourced_manifest_assets_are_promoted_to_graph_and_spec(self) -> None:
+        manifest = {
+            "path": "public/generated/design-system/manifest.json",
+            "schema_version": "visual-asset-manifest/v1",
+            "project": "world-cup-hub",
+            "brand": "World Cup Hub",
+            "assets": [
+                {
+                    "id": "sourced-visual-asset:stadium-entrance-photo",
+                    "label": "Stadium entrance photo",
+                    "slot": "card-thumbnail",
+                    "status": "integrated",
+                    "acquisition_mode": "sourced",
+                    "asset_path": "assets/stadium-entrance.webp",
+                    "source_url": "https://openverse.org/image/example",
+                    "download_url": "https://images.example/stadium.jpg",
+                    "provider": "openverse",
+                    "author": "Example Photographer",
+                    "license": {"id": "cc0", "label": "CC0"},
+                    "attribution_required": False,
+                    "retrieved_at": "2026-05-17",
+                    "format": "webp",
+                    "dimensions": {"width": 1200, "height": 900, "aspect_ratio": "4:3"},
+                    "size_kb": 144,
+                    "sha256": "def456",
+                    "intended_for": ["component:venue-card"],
+                    "alt_text": "경기장 출입구 외부 사진",
+                    "selection_reason": "Real-world venue texture for a match card.",
+                }
+            ],
+        }
+        graph = build_full_ontology_graph(
+            brand_profile={
+                "brand_name": "World Cup Hub",
+                "_generated_visual_asset_manifests": [manifest],
+            },
+            blueprint={"principles": [], "generated_visual_assets": [manifest]},
+            component_inventory={
+                "families": [{"family": "marketing", "components": ["venue-card"]}],
+                "components": [{"name": "venue-card", "family": "marketing", "role": "Venue card"}],
+            },
+            token_schema={"categories": {}},
+        )
+
+        asset = graph.get_node("sourced-visual-asset:stadium-entrance-photo")
+        self.assertIsNotNone(asset)
+        self.assertEqual(asset.type, NodeType.SourcedVisualAsset)
+        self.assertTrue(asset.meta["integrated"])
+        self.assertEqual(asset.meta["acquisition_mode"], "sourced")
+        self.assertEqual(asset.meta["asset_path"], "assets/stadium-entrance.webp")
+        self.assertEqual(asset.meta["source_url"], "https://openverse.org/image/example")
+        self.assertEqual(asset.meta["provider"], "openverse")
+        self.assertEqual(asset.meta["license"], "CC0")
+        self.assertFalse(asset.meta["hotlinking_allowed"])
+
+        provider_edges = graph.get_edges_from("sourced-visual-asset:stadium-entrance-photo", EdgeType.sourced_from)
+        self.assertIn("visual-asset-provider:openverse", {edge.target for edge in provider_edges})
+
+        license_edges = graph.get_edges_from("sourced-visual-asset:stadium-entrance-photo", EdgeType.licensed_under)
+        self.assertIn("license-policy:verified-free-visual-asset", {edge.target for edge in license_edges})
+        self.assertIn("license-policy:cc0", {edge.target for edge in license_edges})
+
+        target_edges = graph.get_edges_from("sourced-visual-asset:stadium-entrance-photo", EdgeType.intended_for)
+        self.assertIn("component:venue-card", {edge.target for edge in target_edges})
+
+        sections = build_graph_spec_sections(graph)
+        self.assertIn("Integrated Assets", sections)
+        self.assertIn("sourced", sections)
+        self.assertIn("assets/stadium-entrance.webp", sections)
+        self.assertIn("https://openverse.org/image/example", sections)
+        self.assertIn("경기장 출입구 외부 사진", sections)
+
+    def test_paid_provider_manifest_requires_license_proof_policy(self) -> None:
+        manifest = {
+            "path": "public/generated/design-system/manifest.json",
+            "schema_version": "visual-asset-manifest/v1",
+            "project": "brand-site",
+            "brand": "Brand Site",
+            "assets": [
+                {
+                    "id": "sourced-visual-asset:licensed-hero-photo",
+                    "label": "Licensed hero photo",
+                    "slot": "hero-image",
+                    "status": "integrated",
+                    "acquisition_mode": "sourced",
+                    "asset_path": "assets/licensed-hero.webp",
+                    "source_url": "https://stock.adobe.com/images/example",
+                    "download_url": "https://stock.adobe.com/download/example",
+                    "provider": "adobe-stock",
+                    "author": "Stock Photographer",
+                    "license": "Adobe Stock Standard License",
+                    "license_proof": "adobe-stock-license-123",
+                    "usage_scope": "website mockup",
+                    "licensed_to": "Brand Site",
+                    "attribution_required": False,
+                    "retrieved_at": "2026-05-17",
+                    "sha256": "abc456",
+                    "intended_for": ["component:hero-section"],
+                    "alt_text": "브랜드 사이트 히어로 이미지",
+                    "selection_reason": "Production-grade licensed stock for a hero.",
+                }
+            ],
+        }
+        graph = build_full_ontology_graph(
+            brand_profile={"brand_name": "Brand Site", "_generated_visual_asset_manifests": [manifest]},
+            blueprint={"principles": [], "generated_visual_assets": [manifest]},
+            component_inventory={
+                "families": [{"family": "marketing", "components": ["hero-section"]}],
+                "components": [{"name": "hero-section", "family": "marketing", "role": "Hero"}],
+            },
+            token_schema={"categories": {}},
+        )
+
+        asset = graph.get_node("sourced-visual-asset:licensed-hero-photo")
+        self.assertIsNotNone(asset)
+        self.assertEqual(asset.type, NodeType.SourcedVisualAsset)
+        self.assertEqual(asset.meta["provider_tier"], "licensed")
+        self.assertTrue(asset.meta["license_proof_required"])
+        self.assertEqual(asset.meta["license_proof"], "adobe-stock-license-123")
+
+        provider = graph.get_node("visual-asset-provider:adobe-stock")
+        self.assertIsNotNone(provider)
+        self.assertEqual(provider.type, NodeType.LicensedVisualProvider)
+
+        license_edges = graph.get_edges_from("sourced-visual-asset:licensed-hero-photo", EdgeType.licensed_under)
+        self.assertIn("license-policy:paid-visual-provider-proof", {edge.target for edge in license_edges})
 
     def test_feedback_failure_patterns_are_promoted_to_governance_nodes(self) -> None:
         graph = build_full_ontology_graph(

@@ -4,6 +4,12 @@ import json
 from pathlib import Path
 
 from .graph_builders import (
+    FREE_SOURCED_VISUAL_PROVIDER_RULES,
+    LICENSED_VISUAL_PROVIDER_RULES,
+    REFERENCE_ONLY_PROVIDER_RULES,
+    SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH,
+    SOURCED_VISUAL_ASSET_FALLBACK_POLICY,
+    SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
     VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
     VISUAL_ASSET_MANIFEST_PATH,
     VISUAL_ASSET_MANIFEST_REQUIRED_FIELDS,
@@ -144,14 +150,14 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
         "interface": {
             "displayName": "Design System Harness",
             "shortDescription": "Apply design-system artifacts inside a real implementation repo",
-            "longDescription": "Provides Codex skills for reading design-system artifacts, implementing tokens/components, and creating brand-aligned generated imagery with the built-in Codex image_gen skill when available. API and CLI image fallbacks are disabled.",
+            "longDescription": "Provides Codex skills for reading design-system artifacts, implementing tokens/components, creating brand-aligned generated imagery with the built-in Codex image_gen skill, and using license-verified sourced visual fallback when generation is unavailable or real-world photography is more appropriate. API and CLI image fallbacks are disabled.",
             "developerName": "Design Ontology Harness",
             "category": "Coding",
             "capabilities": ["Interactive", "Write"],
             "defaultPrompt": [
                 "Implement UI changes using the local design-system artifacts and component inventory",
                 "Ship normal light mode and dark mode together unless a single mode is explicitly requested",
-                "When a screen needs professional imagery, use the built-in Codex image_gen visual asset path without API fallback",
+                "When a screen needs professional imagery, use Codex image_gen first; if unavailable, use license-verified sourced visual fallback without API fallback",
                 "Treat favicon, app-shell mark, and web manifest icon as required brand-specific identity assets",
                 "For dashboards, tools, sports/data, and community products, lead with operational product surfaces instead of pitch-deck heroes or homogeneous card walls",
             ],
@@ -1198,14 +1204,20 @@ def _codex_visual_asset_skill(artifact_dir: str) -> str:
     asset_record_fields = "\n".join(
         f"   - `{field}`" for field in VISUAL_ASSET_RECORD_REQUIRED_FIELDS
     )
+    sourced_asset_record_fields = "\n".join(
+        f"   - `{field}`" for field in SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS
+    )
+    free_provider_list = ", ".join(f"`{provider['label']}`" for provider in FREE_SOURCED_VISUAL_PROVIDER_RULES)
+    licensed_provider_list = ", ".join(f"`{provider['label']}`" for provider in LICENSED_VISUAL_PROVIDER_RULES)
+    reference_only_provider_list = ", ".join(f"`{provider['label']}`" for provider in REFERENCE_ONLY_PROVIDER_RULES)
     return f"""---
 name: design-system-visual-assets
-description: Generate and integrate professional brand-aligned imagery for Codex implementations. Use when a screen, landing page, empty state, editorial hero, or product section needs raster imagery that matches the local design-system artifacts.
+description: Generate or source professional brand-aligned imagery for Codex implementations. Use when a screen, landing page, empty state, editorial hero, or product section needs raster imagery that matches the local design-system artifacts.
 ---
 
 # Design System Visual Assets
 
-Use this skill when the implementation would look more professional with generated raster imagery instead of flat placeholder blocks, generic gradients, emoji, or stock-like decoration.
+Use this skill when the implementation would look more professional with generated or sourced raster imagery instead of flat placeholder blocks, generic gradients, emoji, or stock-like decoration.
 
 ## Required Inputs
 
@@ -1238,6 +1250,14 @@ Do not generate imagery for:
 - copyrighted characters, real brands, real people, or identifiable private locations unless the user explicitly provided licensed source material
 - purely atmospheric blurred backgrounds that do not reveal the product, state, place, or object
 
+## Acquisition Order
+
+1. Prefer Codex built-in `image_gen` when a brand-specific synthetic image is appropriate.
+2. Use sourced visual fallback when `image_gen` is unavailable, fails, or the screen needs real-world photographic evidence more than generated imagery.
+3. If neither path can meet the manifest and license contract, leave a prompt/candidate pack and report that imagery was not integrated.
+
+Never switch to CLI, SDK runner, or OpenAI image API fallback unless the user explicitly asks for that different path.
+
 ## Codex Imagegen Workflow
 
 When Codex exposes the built-in `image_gen` tool through the installed imagegen skill:
@@ -1269,7 +1289,44 @@ Required asset record fields:
 
 {asset_record_fields}
 
-If the built-in imagegen path is unavailable or fails, do not pretend an image was generated and do not call an API fallback. Instead, create a ready-to-run prompt pack at `{VISUAL_ASSET_PROMPT_PACK_PATH}` or the nearest existing docs/assets directory, then report that generation was skipped.
+If the built-in imagegen path is unavailable or fails, do not pretend an image was generated and do not call an API fallback. Move to the sourced visual fallback below, or create a ready-to-run prompt pack at `{VISUAL_ASSET_PROMPT_PACK_PATH}` or the nearest existing docs/assets directory, then report that generation was skipped.
+
+## Sourced Visual Fallback
+
+Use this fallback for free/rights-clear visual search, not for another image generation provider.
+
+Provider tiers:
+
+- Free sourced providers: {free_provider_list}
+- Licensed providers: {licensed_provider_list}
+- Reference-only providers: {reference_only_provider_list}
+
+Tier rules:
+
+- Free sourced provider images can become runtime assets only when per-asset license metadata is recorded.
+- Licensed provider images can become runtime assets only when user-supplied purchase/license proof, usage scope, and licensed-to metadata are recorded.
+- Reference-only provider images are for morphology, density, hierarchy, and flow research only. Do not copy them into runtime assets.
+
+Selection rules:
+
+1. Search for 3-8 candidates that match the product domain, subject, crop, and visual role.
+2. Reject any candidate without source URL, download URL, provider, author/creator, license label, and attribution requirement.
+3. Reject paid-provider results unless the user supplied license proof or the asset is already licensed for this project.
+4. Reject reference-only results as runtime assets; summarize their morphology only.
+5. Reject results with unclear rights, recognizable private people, copyrighted characters, third-party logos, or brand endorsement risk unless the user supplied permission.
+6. Copy the accepted asset into the workspace before implementation references it. Do not hotlink remote search/CDN URLs.
+7. Record source metadata in `{VISUAL_ASSET_MANIFEST_PATH}` with acquisition mode `sourced`.
+8. Optionally keep reviewed-but-not-used candidates in `{SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH}`.
+
+Sourced fallback policy:
+
+- `{SOURCED_VISUAL_ASSET_FALLBACK_POLICY}`
+
+Required sourced asset record fields:
+
+{sourced_asset_record_fields}
+
+Sourced visual assets are still not valid replacements for icons, logos, app icons, favicons, button glyphs, status markers, or flags unless the exact asset license and identity use are explicitly approved.
 
 ## Prompt Recipe
 
@@ -1294,20 +1351,22 @@ For Korean-first products, include Hangul-safe composition constraints:
 - Do not let images replace accessible text, data, controls, or navigation.
 - Do not let images outrank the operational product surface in dashboards, tools, sports/data products, or community products.
 - Keep palette and crop behavior aligned with tokens and responsive breakpoints.
+- Keep generated and sourced assets in the same manifest, but distinguish them with `acquisition_mode`.
+- For sourced assets, include visible or documented attribution whenever `attribution_required` is true.
 - Verify desktop and mobile screenshots after integration; check that images render, crop cleanly, and do not obscure text.
 
 ## Output Expectations
 
-- List the generated assets and their intended slots.
-- Mention the Codex `image_gen` prompt basis: which artifacts and brand signals were used.
-- Mention any manual review needed for licensing, realism, or content fit.
+- List generated and/or sourced assets and their intended slots.
+- Mention the Codex `image_gen` prompt basis or the sourced visual query/provider basis.
+- Mention any manual review needed for licensing, attribution, realism, or content fit.
 """
 
 
 def _codex_plugin_openai_yaml() -> str:
     return """display_name: Design System Harness
 short_description: Apply local design-system artifacts and brand imagery inside implementation repos
-default_prompt: Implement UI changes using the design-system artifacts in this repository; lead dashboard/tool/data products with operational surfaces; use Codex image_gen visual assets when the screen needs professional imagery, without API fallback
+default_prompt: Implement UI changes using the design-system artifacts in this repository; lead dashboard/tool/data products with operational surfaces; use Codex image_gen first for professional imagery, then license-verified sourced visual fallback when needed, without API fallback
 """
 
 

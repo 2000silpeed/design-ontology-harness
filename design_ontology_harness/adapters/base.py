@@ -584,6 +584,16 @@ calling the current screen complete. Current-screen fixes alone are not enough.
 - Generated or decorative imagery must support the domain context and must not outrank data, navigation, controls, or the first operational surface.
 - Include realistic state texture such as live/final/upcoming/delayed/empty/error/source-updated when the domain supports those states.
 
+## Visual Asset Acquisition
+
+- Use Codex built-in `image_gen` first when a brand-specific synthetic raster is appropriate.
+- If `image_gen` is unavailable, fails, or real-world photography is more appropriate, use sourced visual fallback rather than another image-generation API.
+- Sourced visual fallback requires source URL, download URL, provider, author/creator, license label, attribution requirement, sha256, alt text, and intended component slot in the manifest.
+- Free sourced providers can be used with per-asset license metadata; paid/licensed providers additionally require license proof, usage scope, and licensed-to metadata.
+- Reference-only providers such as design galleries or app screenshot corpora are morphology inputs only; do not copy their images into runtime assets.
+- Do not hotlink remote search/CDN URLs from runtime code; copy accepted visuals into the project workspace before referencing them.
+- Do not use searched stock/free images as app icons, favicons, logos, button glyphs, status markers, or flags. Those remain deterministic identity/icon assets.
+
 ## Preflight
 
 Run this before considering an implementation aligned:

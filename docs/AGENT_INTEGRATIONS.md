@@ -180,7 +180,9 @@ In a frontend repo:
 - ask the implementer skill/agent to build the screen using existing tokens and primitives
 - require normal light mode and dark mode together unless the task explicitly asks for one mode only; light mode is the default surface
 - in Codex, ask the visual asset skill to generate imagery through the built-in `image_gen` skill for hero, empty-state, editorial, or product sections when the screen needs real visual substance
+- when `image_gen` is unavailable or a real-world photo is more appropriate, use sourced visual fallback with license metadata instead of another image-generation API
 - check `system_ontology.json` for `GeneratedVisualAsset` and `ImageGenerationModel` nodes before treating generated imagery as part of the system contract
+- check `system_ontology.json` for `SourcedVisualAsset`, `FreeSourcedVisualProvider`, `LicensedVisualProvider`, `ReferenceOnlyProvider`, and `LicensePolicy` nodes before treating searched/free imagery as part of the system contract
 - check `system_ontology.json` for `BrandIdentityAsset` before treating favicon, app-shell mark, or web manifest icon as complete
 - if the request falls outside the current artifacts, update the harness project first instead of improvising a new system
 
@@ -206,20 +208,34 @@ design-system/components/component_specs.md 기준으로 작업해줘.
 `design-system-visual-assets`는 화면을 더 프로페셔널하게 만들기 위한 선택적 Codex 전용 스킬입니다.
 온톨로지에는 `GeneratedVisualAsset` 슬롯과 `ImageGenerationModel`(`Codex image_gen skill`) 노드가 함께 기록되어, 생성 이미지가 임시 장식이 아니라 브랜드/토큰/컴포넌트 관계에 묶인 산출물로 추적됩니다. 이 노드는 `api_fallback: disabled` 정책도 함께 기록합니다.
 
+`image_gen`이 불가능하거나 실제 사진성이 더 중요한 화면에서는 **sourced visual fallback**을 사용합니다. 이 fallback은 다른 이미지 생성 API가 아니라, 라이선스 검증 가능한 무료/권리 명확 이미지 후보를 찾아 프로젝트 에셋으로 복사하는 경로입니다. 온톨로지에는 `SourcedVisualAsset`, `FreeSourcedVisualProvider`, `LicensedVisualProvider`, `ReferenceOnlyProvider`, `LicensePolicy` 노드와 `sourced_from`, `licensed_under` 관계로 기록됩니다.
+
+Provider tier:
+
+- `FreeSourcedVisualProvider`: Openverse, Wikimedia Commons, Unsplash, Pexels. per-asset license metadata가 있으면 목업/구현 에셋으로 승격할 수 있습니다.
+- `LicensedVisualProvider`: Adobe Stock, Shutterstock, Getty Images, iStock, Envato Elements, local licensed files. 구매/구독/프로젝트 라이선스 증빙이 있을 때만 승격합니다.
+- `ReferenceOnlyProvider`: Lazyweb, Mobbin, Dribbble, Behance, Awwwards. 형태, 밀도, flow, hierarchy 참고만 가능하고 runtime asset으로 복사하지 않습니다.
+
 기본 흐름:
 
 1. `design-system/IMPLEMENTATION_CONTRACT.md`, `STYLE.md`, `token_schema.json`, `component_inventory.json`, 가능하면 `visual_reference_report.json`을 읽습니다.
-2. Codex의 내장 `image_gen` 스킬을 사용합니다. CLI, SDK runner, OpenAI API fallback은 사용하지 않습니다.
+2. Codex의 내장 `image_gen` 스킬을 먼저 사용합니다. CLI, SDK runner, OpenAI API fallback은 사용하지 않습니다.
 3. 브랜드 키워드, 안티 키워드, 팔레트, density/surface cue를 반영해 2-4개 후보 이미지를 만듭니다.
-4. 승인한 이미지는 `public/generated/design-system/` 같은 정적 에셋 폴더에 넣고 manifest에 prompt, model, intended slot, alt text, source artifacts를 기록합니다.
-5. 구현 코드에는 기존 프레임워크의 이미지 컴포넌트와 `alt` 텍스트, responsive crop 규칙을 적용합니다.
+4. `image_gen`이 실패하거나 실제 사진 reference가 더 적합하면 Openverse, Wikimedia Commons, Unsplash, Pexels 같은 free provider 또는 사용자가 권리를 가진 Adobe Stock/Shutterstock/Getty/iStock/Envato/local licensed files에서 후보를 찾습니다.
+5. paid stock provider는 license proof, usage scope, licensed-to metadata가 없으면 버립니다.
+6. reference-only provider는 morphology note로만 쓰고 이미지 파일은 복사하지 않습니다.
+7. source URL, download URL, provider, author, license, attribution 여부, sha256을 기록할 수 없는 후보는 버립니다.
+8. 승인한 이미지는 `public/generated/design-system/` 같은 정적 에셋 폴더에 넣고 manifest에 acquisition mode, intended slot, alt text, source artifacts를 기록합니다.
+9. 구현 코드에는 기존 프레임워크의 이미지 컴포넌트와 `alt` 텍스트, responsive crop 규칙을 적용합니다.
 
 가드레일:
 
 - 아이콘, 로고, 버튼 glyph, 상태 마커는 이미지 생성 대상이 아닙니다. SVG나 아이콘 라이브러리를 사용합니다.
 - 앱 아이콘, favicon, 앱 셸 브랜드 마크는 필수 `BrandIdentityAsset`입니다. 일반 이니셜 타일을 최종 아이콘으로 남기지 말고 브랜드 특정 SVG identity asset으로 연결합니다.
+- 검색 이미지는 앱 아이콘, 로고, favicon, 상태 아이콘, 국가/팀 flag 대체재로 쓰지 않습니다. 그 용도는 deterministic SVG 또는 명시적으로 허가된 identity asset이 필요합니다.
 - 저작권 캐릭터, 실제 브랜드, 실제 인물, 권리가 불분명한 장소는 사용하지 않습니다.
-- 이미지 생성 도구가 없거나 실패하면 생성했다고 말하지 않고 `imagegen-prompts.md` 프롬프트 팩만 남깁니다. 그래도 API fallback은 호출하지 않습니다.
+- 이미지 생성 도구가 없거나 실패하면 생성했다고 말하지 않습니다. sourced fallback을 쓰거나 `imagegen-prompts.md` 프롬프트 팩만 남깁니다. 그래도 API fallback은 호출하지 않습니다.
+- sourced fallback은 hotlink하지 않습니다. 반드시 프로젝트 정적 에셋으로 복사한 뒤 workspace-relative path를 참조합니다.
 
 Manifest contract:
 
@@ -227,6 +243,7 @@ Manifest contract:
 - Compatible path: `design-system/generated_visual_assets.json`
 - Top-level fields: `schema_version`, `project`, `brand`, `generator`, `source_session`, `assets`
 - Asset fields: `id`, `label`, `slot`, `status`, `asset_path`, `original_png_path`, `format`, `dimensions`, `size_kb`, `sha256`, `intended_for`, `alt_text`, `prompt_summary`
+- Sourced asset fields: `acquisition_mode`, `source_url`, `download_url`, `provider`, `author`, `license`, `attribution_required`, `selection_reason`
 - Runtime code must reference the workspace copy, never `$CODEX_HOME/generated_images/...`; the original PNG path is recorded only for provenance.
 
 ## Refactor Safety Expectation

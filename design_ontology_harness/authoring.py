@@ -6,6 +6,10 @@ from .advanced_components import catalog_entries, get_advanced_component, recomm
 from .models import DocumentRecord, ReferenceLink
 from .utils import ensure_dir, write_json
 from .graph_builders import (
+    SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH,
+    SOURCED_VISUAL_ASSET_CONTRACT_ID,
+    SOURCED_VISUAL_ASSET_FALLBACK_POLICY,
+    SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
     VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
     VISUAL_ASSET_CONTRACT_ID,
     VISUAL_ASSET_MANIFEST_PATH,
@@ -76,8 +80,13 @@ ONTOLOGY_RELATIONS = [
     {"id": "applies_to", "from": "AccessibilityRule", "to": "ComponentFamily"},
     {"id": "inspired_by", "from": "Brand", "to": "SourceReference"},
     {"id": "generated_with", "from": "GeneratedVisualAsset", "to": "ImageGenerationModel"},
+    {"id": "sourced_from", "from": "SourcedVisualAsset", "to": "FreeSourcedVisualProvider"},
+    {"id": "sourced_from", "from": "SourcedVisualAsset", "to": "LicensedVisualProvider"},
+    {"id": "licensed_under", "from": "SourcedVisualAsset", "to": "LicensePolicy"},
     {"id": "grounded_in", "from": "GeneratedVisualAsset", "to": "Brand"},
+    {"id": "grounded_in", "from": "SourcedVisualAsset", "to": "Brand"},
     {"id": "intended_for", "from": "GeneratedVisualAsset", "to": "Component"},
+    {"id": "intended_for", "from": "SourcedVisualAsset", "to": "Component"},
     {"id": "enforces", "from": "GovernanceRule", "to": "TokenCategory"},
     {"id": "prevents", "from": "GovernanceRule", "to": "ImplementationFailurePattern"},
 ]
@@ -694,7 +703,9 @@ def build_system_ontology(
 
     image_model_id = "image-model:codex-imagegen"
     visual_asset_id = "visual-asset:brand-aligned-raster"
+    sourced_visual_asset_id = "sourced-visual-asset:brand-aligned-raster-fallback"
     visual_asset_contract_id = VISUAL_ASSET_CONTRACT_ID
+    sourced_visual_asset_contract_id = SOURCED_VISUAL_ASSET_CONTRACT_ID
     nodes.append({
         "id": visual_asset_contract_id,
         "type": "GovernanceRule",
@@ -730,6 +741,78 @@ def build_system_ontology(
             "contract_id": visual_asset_contract_id,
         },
     })
+    nodes.append({
+        "id": sourced_visual_asset_contract_id,
+        "type": "GovernanceRule",
+        "label": "Sourced visual asset fallback contract",
+        "meta": {
+            "schema_version": VISUAL_ASSET_MANIFEST_SCHEMA,
+            "preferred_manifest_path": VISUAL_ASSET_MANIFEST_PATH,
+            "candidate_manifest_path": SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH,
+            "compatible_manifest_paths": VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
+            "fallback_policy": SOURCED_VISUAL_ASSET_FALLBACK_POLICY,
+            "fallback_for": visual_asset_contract_id,
+            "api_fallback": "disabled",
+            "hotlinking_allowed": False,
+            "workspace_copy_required": True,
+            "license_metadata_required": True,
+            "asset_record_required_fields": SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+        },
+    })
+    nodes.append({
+        "id": "visual-asset-provider:openverse",
+        "type": "FreeSourcedVisualProvider",
+        "label": "Openverse",
+        "meta": {
+            "provider_id": "openverse",
+            "tier": "free-sourced",
+            "kind": "free-image-search",
+            "license_metadata_required": True,
+            "license_proof_required": False,
+            "workspace_copy_required": True,
+        },
+    })
+    nodes.append({
+        "id": "visual-asset-provider:adobe-stock",
+        "type": "LicensedVisualProvider",
+        "label": "Adobe Stock",
+        "meta": {
+            "provider_id": "adobe-stock",
+            "tier": "licensed",
+            "kind": "paid-stock-provider",
+            "license_metadata_required": True,
+            "license_proof_required": True,
+            "workspace_copy_required": True,
+        },
+    })
+    nodes.append({
+        "id": "visual-asset-provider:lazyweb",
+        "type": "ReferenceOnlyProvider",
+        "label": "Lazyweb",
+        "meta": {
+            "provider_id": "lazyweb",
+            "tier": "reference-only",
+            "kind": "design-reference-corpus",
+            "asset_copy_allowed": False,
+            "workspace_copy_required": False,
+        },
+    })
+    nodes.append({
+        "id": "license-policy:verified-free-visual-asset",
+        "type": "LicensePolicy",
+        "label": "Verified free visual asset license",
+        "meta": {
+            "required_metadata": [
+                "source_url",
+                "download_url",
+                "provider",
+                "author",
+                "license",
+                "attribution_required",
+                "sha256",
+            ],
+        },
+    })
     nodes.append(
         {
             "id": visual_asset_id,
@@ -755,10 +838,36 @@ def build_system_ontology(
             },
         }
     )
+    nodes.append(
+        {
+            "id": sourced_visual_asset_id,
+            "type": "SourcedVisualAsset",
+            "label": "Brand-aligned sourced visual fallback",
+            "meta": {
+                "acquisition_mode": "sourced",
+                "fallback_for": visual_asset_id,
+                "fallback_policy": SOURCED_VISUAL_ASSET_FALLBACK_POLICY,
+                "candidate_manifest_path": SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH,
+                "manifest_path": VISUAL_ASSET_MANIFEST_PATH,
+                "manifest_schema": VISUAL_ASSET_MANIFEST_SCHEMA,
+                "asset_record_required_fields": SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+                "hotlinking_allowed": False,
+                "workspace_copy_required": True,
+                "license_metadata_required": True,
+                "contract_id": sourced_visual_asset_contract_id,
+            },
+        }
+    )
     edges.append({"type": "governs", "from": visual_asset_contract_id, "to": image_model_id})
     edges.append({"type": "governs", "from": visual_asset_contract_id, "to": visual_asset_id})
+    edges.append({"type": "governs", "from": sourced_visual_asset_contract_id, "to": sourced_visual_asset_id})
+    edges.append({"type": "governs", "from": sourced_visual_asset_contract_id, "to": "visual-asset-provider:openverse"})
+    edges.append({"type": "governs", "from": sourced_visual_asset_contract_id, "to": "license-policy:verified-free-visual-asset"})
     edges.append({"type": "generated_with", "from": visual_asset_id, "to": image_model_id})
+    edges.append({"type": "sourced_from", "from": sourced_visual_asset_id, "to": "visual-asset-provider:openverse"})
+    edges.append({"type": "licensed_under", "from": sourced_visual_asset_id, "to": "license-policy:verified-free-visual-asset"})
     edges.append({"type": "grounded_in", "from": visual_asset_id, "to": brand_id})
+    edges.append({"type": "grounded_in", "from": sourced_visual_asset_id, "to": brand_id})
 
     component_meta_by_name = {
         component.get("name"): component
@@ -844,6 +953,12 @@ def build_system_ontology(
             "AccessibilityRule",
             "GeneratedVisualAsset",
             "ImageGenerationModel",
+            "SourcedVisualAsset",
+            "VisualAssetProvider",
+            "FreeSourcedVisualProvider",
+            "LicensedVisualProvider",
+            "ReferenceOnlyProvider",
+            "LicensePolicy",
             "GovernanceRule",
             "ImplementationFailurePattern",
         ],
