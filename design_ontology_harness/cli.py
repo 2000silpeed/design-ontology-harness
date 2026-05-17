@@ -225,6 +225,20 @@ def build_parser() -> argparse.ArgumentParser:
     )
     lint_impl_parser.add_argument("--json", action="store_true", help="Emit JSON report")
 
+    visual_compare_parser = subparsers.add_parser(
+        "compare-visuals",
+        help="Compare before/after screenshots and fail when visual change is not evidenced",
+    )
+    visual_compare_parser.add_argument("--before", required=True, help="Baseline screenshot path")
+    visual_compare_parser.add_argument("--after", required=True, help="Revised screenshot path")
+    visual_compare_parser.add_argument(
+        "--min-change-ratio",
+        type=float,
+        default=0.001,
+        help="Minimum changed-pixel ratio required to pass (default: 0.001)",
+    )
+    visual_compare_parser.add_argument("--json", action="store_true", help="Emit JSON report")
+
     rebuild_parser = subparsers.add_parser(
         "rebuild-all-presets",
         help="Walk matrix.json and rebuild every preset from its source_project",
@@ -583,6 +597,19 @@ def main() -> None:
             artifact_dir=args.artifact_dir,
         )
         print(format_json(report) if args.json else format_report(report))
+        if not report.ok:
+            raise SystemExit(1)
+        return
+
+    if args.command == "compare-visuals":
+        from .visual_evidence import compare_visuals, format_visual_comparison, format_visual_comparison_json
+
+        report = compare_visuals(
+            Path(args.before),
+            Path(args.after),
+            min_change_ratio=args.min_change_ratio,
+        )
+        print(format_visual_comparison_json(report) if args.json else format_visual_comparison(report))
         if not report.ok:
             raise SystemExit(1)
         return

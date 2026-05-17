@@ -12,6 +12,7 @@ from design_ontology_harness.synthesis import (
     COLOR_MODE_PARITY_POLICY,
     COMMERCIAL_PRODUCT_REALISM_POLICY,
     ICON_REFACTOR_POLICY,
+    MOCKUP_VISUAL_SUBSTANCE_POLICY,
     REFERENCE_ABSORPTION_SCOPE,
     RESPONSIVE_RESILIENCE_POLICY,
 )
@@ -154,6 +155,381 @@ def test_flags_emoji_used_as_ui_affordance(tmp_path: Path):
     assert "DS050" in codes
 
 
+def test_flags_homogeneous_card_wall_risk(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <main class="card-grid">
+          <section class="hero-card"></section>
+          <article class="metric-card"></article>
+          <article class="metric-card"></article>
+          <article class="feature-card"></article>
+          <article class="feature-card"></article>
+          <aside class="summary-panel"></aside>
+          <aside class="detail-panel"></aside>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+    (tmp_path / "styles.css").write_text(
+        """
+        .hero-card, .metric-card, .feature-card, .summary-panel, .detail-panel {
+          border: 1px solid var(--ds-color-border);
+          border-radius: var(--ds-radius-md);
+          background: var(--ds-color-surface);
+        }
+        .card-grid { display: grid; gap: 12px; }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS070" in codes
+
+
+def test_flags_icon_starved_interactive_surface(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <nav><button>저장</button><button>공유</button></nav>
+          <section class="filter-toolbar">
+            <button class="filter-chip">아침</button>
+            <button class="filter-chip">저녁</button>
+            <button class="status-badge">활성</button>
+            <button class="primary-action">장소 기록</button>
+          </section>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS071" in codes
+
+
+def test_flags_missing_domain_visual_substance(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "서울 장소와 골목을 추천하는 지도 앱"}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <button class="filter-chip"><svg class="icon"><use href="#icon-clock" /></svg>아침</button>
+          <button class="filter-chip"><svg class="icon"><use href="#icon-clock" /></svg>저녁</button>
+          <button class="primary-action"><svg class="icon"><use href="#icon-plus" /></svg>장소 기록</button>
+          <section class="result-list">
+            <div class="place-row">서촌 골목</div>
+            <div class="place-row">을지로 골목</div>
+          </section>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS072" in codes
+
+
+def test_flags_low_information_inline_domain_svg(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "서울 장소와 골목을 추천하는 지도 앱"}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section class="map-visual">
+            <svg class="alley-map" viewBox="0 0 200 120" role="img" aria-label="골목 그림">
+              <path d="M10 90h180" />
+              <path d="M24 32h50v58H24Z" />
+              <path d="M126 24h44v66h-44Z" />
+              <circle cx="92" cy="58" r="12" />
+            </svg>
+          </section>
+          <figure class="place-illustration">서촌 장소</figure>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS073" in codes
+
+
+def test_allows_semantic_inline_domain_svg(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "서울 장소와 골목을 추천하는 지도 앱"}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section class="map-visual">
+            <svg class="alley-map" viewBox="0 0 200 120" role="img" aria-labelledby="mapTitle mapDesc">
+              <title id="mapTitle">서촌 산책선 지도</title>
+              <desc id="mapDesc">서점, 찻집, 계단을 감각 신호와 연결한 지도</desc>
+              <g data-subject="paper-alley">
+                <path d="M10 90h180" />
+                <path d="M24 32h50v58H24Z" />
+                <path d="M126 24h44v66h-44Z" />
+                <circle cx="92" cy="58" r="12" />
+                <text x="24" y="28">서점 골목</text>
+              </g>
+            </svg>
+          </section>
+          <figure class="place-illustration">서촌 장소</figure>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS073" not in codes
+
+
+def test_flags_ad_hoc_sketch_domain_visual(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "서울 장소와 골목을 추천하는 지도 앱"}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section class="map-visual">
+            <svg class="place-sketch" viewBox="0 0 200 120" role="img" aria-labelledby="mapTitle mapDesc">
+              <title id="mapTitle">골목 그림</title>
+              <desc id="mapDesc">즉흥 스케치</desc>
+              <g data-subject="alley">
+                <path d="M10 90h180" />
+                <path d="M24 32h50v58H24Z" />
+                <path d="M126 24h44v66h-44Z" />
+                <circle cx="92" cy="58" r="12" />
+                <text x="24" y="28">서점 골목</text>
+              </g>
+            </svg>
+          </section>
+          <figure class="place-visual">서촌 장소</figure>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS074" in codes
+
+
+def test_flags_ambiguous_mock_runtime_surface(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "서울 장소와 골목을 추천하는 지도 앱"}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section class="map-visual schematic-map">
+            <div class="placeholder-map">서촌 감각 도식</div>
+          </section>
+          <figure class="place-visual">장소 이미지</figure>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS075" in codes
+
+
+def test_allows_declared_runtime_surface(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "서울 장소와 골목을 추천하는 지도 앱"}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section class="map-visual" data-runtime-surface="map-sdk-layer">
+            <div class="real-map">서촌 지도 레이어</div>
+          </section>
+          <figure class="place-visual" data-runtime-surface="generated-place-photo">장소 이미지</figure>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS075" not in codes
+
+
+def test_flags_media_runtime_surface_without_asset(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "서울 장소와 골목을 추천하는 지도 앱"}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section class="map-visual" data-runtime-surface="map-sdk-layer">
+            <div class="real-map">서촌 지도 레이어</div>
+          </section>
+          <section class="place-media-surface" data-runtime-surface="place-media-evidence">
+            <figure class="place-photo">패턴만 있는 장소 사진 슬롯</figure>
+          </section>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS076" in codes
+
+
+def test_allows_media_runtime_surface_with_image_asset(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "서울 장소와 골목을 추천하는 지도 앱"}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section class="map-visual" data-runtime-surface="map-sdk-layer">
+            <div class="real-map">서촌 지도 레이어</div>
+          </section>
+          <section class="place-media-surface" data-runtime-surface="place-media-evidence">
+            <figure class="place-photo"><img src="./assets/place.png" alt="장소 사진" /></figure>
+          </section>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS076" not in codes
+
+
+def test_flags_individual_media_tile_without_asset(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "서울 장소와 골목을 추천하는 지도 앱"}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section class="place-media-surface" data-runtime-surface="place-media-evidence">
+            <figure class="place-photo"><img src="./assets/place.png" alt="장소 사진" /></figure>
+            <figure class="texture-card">패턴만 남은 질감 카드</figure>
+          </section>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS078" in codes
+
+
+def test_allows_explicit_pending_media_tile_without_asset(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "서울 장소와 골목을 추천하는 지도 앱"}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section class="place-media-surface" data-runtime-surface="place-media-evidence">
+            <figure class="place-photo"><img src="./assets/place.png" alt="장소 사진" /></figure>
+            <figure class="texture-card" data-state="pending">수집 대기</figure>
+          </section>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS078" not in codes
+
+
+def test_flags_generic_initials_brand_mark_without_app_icon(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "index.html").write_text(
+        """
+        <header>
+          <span class="brand-mark">AS</span>
+        </header>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS077" in codes
+
+
+def test_allows_wired_app_icon_brand_mark(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "index.html").write_text(
+        """
+        <head>
+          <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml" />
+          <link rel="manifest" href="./manifest.webmanifest" />
+        </head>
+        <header>
+          <span class="brand-mark"><img src="./assets/app-icon.svg" alt="" /></span>
+        </header>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS077" not in codes
+
+
 def test_allows_emoji_in_user_generated_content_context(tmp_path: Path):
     (tmp_path / "Post.tsx").write_text(
         """
@@ -259,6 +635,21 @@ def test_implementation_contract_declares_reference_scope():
     assert "Buttons, CTAs, tabs, chips" in contract
     assert "Emoji-to-SVG Refactor" in contract
     assert "existing icon library" in contract
+    assert "Icon And Visual Affordance Coverage" in contract
+    assert "Visual Evidence And Screenshot Comparison" in contract
+    assert "Mock Fidelity And Runtime Representation" in contract
+    assert "data-runtime-surface" in contract
+    assert "compare-visuals" in contract
+    assert "image_gen" in contract
+    assert "DS070" in contract
+    assert "DS071" in contract
+    assert "DS072" in contract
+    assert "DS073" in contract
+    assert "DS074" in contract
+    assert "DS075" in contract
+    assert "DS076" in contract
+    assert "DS077" in contract
+    assert "DS078" in contract
     assert "uv run design-ontology lint-implementation --target-repo ." in contract
 
 
@@ -296,6 +687,12 @@ def test_commercial_product_realism_success_patterns_are_structured_for_ontology
     failure_ids = {item["id"] for item in COMMERCIAL_PRODUCT_REALISM_POLICY["failure_patterns"]}
     assert "generic-national-team-badges" in failure_ids
     assert "untokenized-domain-identity-colors" in failure_ids
+    assert "unverified-redesign-screenshot" in failure_ids
+    card_wall = next(item for item in COMMERCIAL_PRODUCT_REALISM_POLICY["failure_patterns"] if item["id"] == "homogeneous-card-wall")
+    assert "lint-implementation DS070" in card_wall["technical_controls"]
+    unverified = next(item for item in COMMERCIAL_PRODUCT_REALISM_POLICY["failure_patterns"] if item["id"] == "unverified-redesign-screenshot")
+    assert "compare-visuals" in unverified["technical_controls"]
+    assert "compare-visuals" in COMMERCIAL_PRODUCT_REALISM_POLICY["outputs"]
 
 
 def test_color_mode_parity_policy_is_structured_for_ontology():
@@ -311,8 +708,29 @@ def test_icon_refactor_policy_is_structured_for_ontology():
     assert ICON_REFACTOR_POLICY["id"] == "emoji-to-svg-refactor"
     assert "button" in ICON_REFACTOR_POLICY["targets"]
     assert any("existing icon library" in item for item in ICON_REFACTOR_POLICY["replacement_order"])
-    assert ICON_REFACTOR_POLICY["failure_patterns"][0]["id"] == "emoji-ui-affordance"
+    failure_ids = {item["id"] for item in ICON_REFACTOR_POLICY["failure_patterns"]}
+    assert {"emoji-ui-affordance", "icon-starved-control-surface"} <= failure_ids
     assert "lint-implementation" in ICON_REFACTOR_POLICY["outputs"]
+
+
+def test_mockup_visual_substance_policy_flags_low_information_svg():
+    failure_ids = {item["id"] for item in MOCKUP_VISUAL_SUBSTANCE_POLICY["failure_patterns"]}
+    assert "low-information-inline-svg-visual" in failure_ids
+    assert "amateur-ad-hoc-illustration" in failure_ids
+    assert "ambiguous-mock-runtime-surface" in failure_ids
+    assert "media-runtime-surface-without-asset" in failure_ids
+    assert "media-tile-without-asset" in failure_ids
+    low_info = next(item for item in MOCKUP_VISUAL_SUBSTANCE_POLICY["failure_patterns"] if item["id"] == "low-information-inline-svg-visual")
+    assert "lint-implementation DS073" in low_info["technical_controls"]
+    amateur = next(item for item in MOCKUP_VISUAL_SUBSTANCE_POLICY["failure_patterns"] if item["id"] == "amateur-ad-hoc-illustration")
+    assert "lint-implementation DS074" in amateur["technical_controls"]
+    assert "image_gen" in amateur["prevention"]
+    ambiguous = next(item for item in MOCKUP_VISUAL_SUBSTANCE_POLICY["failure_patterns"] if item["id"] == "ambiguous-mock-runtime-surface")
+    assert "lint-implementation DS075" in ambiguous["technical_controls"]
+    media = next(item for item in MOCKUP_VISUAL_SUBSTANCE_POLICY["failure_patterns"] if item["id"] == "media-runtime-surface-without-asset")
+    assert "lint-implementation DS076" in media["technical_controls"]
+    tile = next(item for item in MOCKUP_VISUAL_SUBSTANCE_POLICY["failure_patterns"] if item["id"] == "media-tile-without-asset")
+    assert "lint-implementation DS078" in tile["technical_controls"]
 
 
 def test_app_icon_identity_policy_is_structured_for_ontology():
@@ -320,6 +738,7 @@ def test_app_icon_identity_policy_is_structured_for_ontology():
     assert APP_ICON_IDENTITY_POLICY["required_assets"][0]["id"] == "identity-asset:app-icon"
     assert "favicon" in APP_ICON_IDENTITY_POLICY["required_assets"][0]["targets"]
     assert APP_ICON_IDENTITY_POLICY["failure_patterns"][0]["id"] == "generic-initials-app-icon"
+    assert "lint-implementation DS077" in APP_ICON_IDENTITY_POLICY["failure_patterns"][0]["technical_controls"]
     assert "system_ontology.json" in APP_ICON_IDENTITY_POLICY["outputs"]
 
 

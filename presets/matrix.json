@@ -664,6 +664,30 @@
       "tier": "P2"
     },
     {
+      "id": "monitoring-ops--corporate-trust",
+      "app_mode": "monitoring-ops",
+      "brand_tone": "corporate-trust",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "ko",
+        "place",
+        "map",
+        "ontology",
+        "sensory",
+        "mobile-first"
+      ],
+      "description": "Mobile-first sensory place curation system for Seoul alley mood mapping",
+      "source_project": "seoul-alley-mood-map",
+      "owner": "codex",
+      "preview_path": "presets/monitoring-ops--corporate-trust/preview.md",
+      "locale_pairings": {},
+      "tier": "P3"
+    },
+    {
       "id": "monitoring-ops--minimal-tech",
       "app_mode": "monitoring-ops",
       "brand_tone": "minimal-tech",

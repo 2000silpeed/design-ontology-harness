@@ -1,0 +1,3294 @@
+{
+  "brand_name": "Seoul Alley Mood Map",
+  "system_name": "Alley Sense System",
+  "product_summary": "서울의 골목 장소를 감각 속성과 감정 태그로 기록하고 추천하는 모바일 우선 장소 큐레이션 도구",
+  "positioning": {
+    "audiences": [
+      "혼자 산책하거나 작업할 조용한 장소를 찾는 서울 거주자",
+      "카페, 서점, 작은 공원, 골목길을 분위기 기준으로 저장하고 비교하고 싶은 사용자",
+      "관광 명소보다 시간대, 빛, 소리, 혼잡도 같은 실제 경험 신호를 믿고 싶은 사용자"
+    ],
+    "brand_keywords": [
+      "situated",
+      "quiet",
+      "sensory",
+      "curated",
+      "walkable",
+      "trustworthy",
+      "local"
+    ],
+    "anti_keywords": [
+      "generic-map",
+      "tourism-brochure",
+      "photo-influencer-feed",
+      "commerce-led",
+      "real-estate",
+      "overdecorated",
+      "neon",
+      "glassmorphism",
+      "beige-only-editorial",
+      "gamified"
+    ],
+    "tone_of_voice": [
+      "calm",
+      "observational",
+      "specific",
+      "warm",
+      "non-salesy"
+    ],
+    "platforms": [
+      "mobile web",
+      "desktop browser preview"
+    ],
+    "accessibility_targets": [
+      "WCAG 2.2 AA",
+      "44px minimum touch target",
+      "16px minimum form text",
+      "reduced motion friendly",
+      "map alternatives through list and table views"
+    ]
+  },
+  "principles": [
+    {
+      "keyword": "situated",
+      "name": "Situated",
+      "rule": "`situated`를 시각적 선택과 인터랙션 선택의 기본 기준으로 삼습니다.",
+      "implications": [
+        "situated와 충돌하는 컴포넌트 변형은 만들지 않기",
+        "situated를 토큰 네이밍과 문서화 기준에 반영하기"
+      ]
+    },
+    {
+      "keyword": "quiet",
+      "name": "Quiet",
+      "rule": "`quiet`를 시각적 선택과 인터랙션 선택의 기본 기준으로 삼습니다.",
+      "implications": [
+        "quiet와 충돌하는 컴포넌트 변형은 만들지 않기",
+        "quiet를 토큰 네이밍과 문서화 기준에 반영하기"
+      ]
+    },
+    {
+      "keyword": "sensory",
+      "name": "Sensory",
+      "rule": "`sensory`를 시각적 선택과 인터랙션 선택의 기본 기준으로 삼습니다.",
+      "implications": [
+        "sensory와 충돌하는 컴포넌트 변형은 만들지 않기",
+        "sensory를 토큰 네이밍과 문서화 기준에 반영하기"
+      ]
+    },
+    {
+      "keyword": "curated",
+      "name": "Curated",
+      "rule": "`curated`를 시각적 선택과 인터랙션 선택의 기본 기준으로 삼습니다.",
+      "implications": [
+        "curated와 충돌하는 컴포넌트 변형은 만들지 않기",
+        "curated를 토큰 네이밍과 문서화 기준에 반영하기"
+      ]
+    }
+  ],
+  "reference_strategy": {
+    "seed_article": "https://carbondesignsystem.com",
+    "top_sources_by_concept_coverage": [
+      {
+        "source_label": "Primer",
+        "covered_concepts": [
+          "accessibility",
+          "brand",
+          "color",
+          "component",
+          "content",
+          "design_system",
+          "design_token",
+          "foundation",
+          "iconography",
+          "layout",
+          "motion",
+          "pattern",
+          "spacing",
+          "style_guide",
+          "typography"
+        ]
+      },
+      {
+        "source_label": "Carbon Design System",
+        "covered_concepts": [
+          "accessibility",
+          "brand",
+          "color",
+          "component",
+          "content",
+          "design_system",
+          "design_token",
+          "foundation",
+          "iconography",
+          "layout",
+          "pattern",
+          "spacing",
+          "typography"
+        ]
+      }
+    ],
+    "rule": "레퍼런스는 그대로 복제하지 않고, 원칙과 구조만 가져와 브랜드 아이덴티티에 맞게 재구성합니다."
+  },
+  "token_strategy": {
+    "color": {
+      "goal": "브랜드 개성을 드러내되 UI 전체를 지배하지 않는 팔레트",
+      "rules": [
+        "brand color는 1개의 primary accent를 중심으로 설계",
+        "semantic color는 brand color와 분리해서 유지",
+        "contrast ratio는 접근성 목표를 우선",
+        "지원하는 theme 모드마다 semantic surface/text/border 쌍을 함께 정의",
+        "하드코딩 색상보다 semantic token 적용을 우선"
+      ]
+    },
+    "typography": {
+      "goal": "정보 구조와 브랜드 톤을 동시에 전달하는 타입 시스템",
+      "rules": [
+        "heading/body/caption 역할을 토큰으로 고정",
+        "텍스트 길이가 긴 화면에서 리듬이 무너지지 않도록 line-height를 계층별로 정의",
+        "편집형 제품이면 typography scale을 먼저 확정"
+      ],
+      "signal": false
+    },
+    "spacing": {
+      "goal": "밀도와 여백의 성격을 제품 전반에서 일관되게 유지",
+      "rules": [
+        "4pt 또는 8pt 기반 scale을 정하고 예외 사용을 제한",
+        "컴포넌트 내부 spacing과 레이아웃 spacing을 분리"
+      ]
+    },
+    "motion": {
+      "goal": "상태 변화를 설명하는 수준의 모션만 허용",
+      "rules": [
+        "transition duration/easing을 토큰화",
+        "주의 환기용 모션과 구조적 모션을 구분"
+      ],
+      "brand_signal": [
+        "filter-first exploration",
+        "save and compare",
+        "time-of-day switching",
+        "mood-to-place matching",
+        "confidence labels",
+        "touch-safe controls",
+        "recoverable edits"
+      ]
+    },
+    "visual_keywords": [
+      "mobile-first place companion",
+      "compact sensory metadata",
+      "quiet geographic grid",
+      "real texture evidence",
+      "time-of-day atmosphere",
+      "low elevation surfaces",
+      "scan-first recommendation cards"
+    ]
+  },
+  "component_strategy": {
+    "product_primitives": [
+      "neighborhood switcher",
+      "time-of-day segmented control",
+      "sensory filter chips",
+      "mood match score",
+      "map pin layer",
+      "place list card",
+      "sensory evidence strip",
+      "place detail sheet",
+      "light sound crowding profile",
+      "emotion tag cluster",
+      "recommendation queue",
+      "ontology inspector panel",
+      "place relationship graph",
+      "add place form",
+      "empty and uncertain evidence states"
+    ],
+    "required_component_families": [
+      "button",
+      "input",
+      "navigation",
+      "feedback",
+      "overlay"
+    ],
+    "rules": [
+      "primitive 단위로 책임을 먼저 정의하고 컴포넌트는 그 위에 매핑",
+      "variant proliferation을 막기 위해 상태와 강조 레벨을 먼저 표준화",
+      "브랜드 표현은 surface, emphasis, typography에서 주고 구조는 안정적으로 유지",
+      "기존 기능 진입점은 유지한 채 내부 구현과 시각 언어부터 교체",
+      "전체 셸을 한 번에 다시 그리기보다 feature surface 단위로 순차 적용"
+    ],
+    "concept_alignment": [
+      "accessibility",
+      "color",
+      "component",
+      "content",
+      "design_system",
+      "iconography",
+      "layout",
+      "pattern"
+    ]
+  },
+  "color_reference": {
+    "title": "REFERENCE X Vol.1 - Color Reference",
+    "source_path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "families": [
+      "Deep Blues",
+      "Deep Greens",
+      "Deep Oranges",
+      "Deep Reds",
+      "Deep Violets",
+      "Deep Yellows",
+      "Natural Blues",
+      "Natural Greens",
+      "Natural Oranges",
+      "Natural Reds",
+      "Natural Violets",
+      "Natural Yellows",
+      "Pantone Trend Blues",
+      "Pantone Trend Greens",
+      "Pantone Trend Oranges",
+      "Pantone Trend Reds",
+      "Pantone Trend Violets",
+      "Pantone Trend Yellows",
+      "Pastel Blues",
+      "Pastel Greens",
+      "Pastel Oranges",
+      "Pastel Reds",
+      "Pastel Violets",
+      "Pastel Yellows",
+      "Standard Blues",
+      "Standard Greens",
+      "Standard Oranges",
+      "Standard Reds",
+      "Standard Violets",
+      "Standard Yellows"
+    ],
+    "selected_colors": [
+      {
+        "name": "Navy Blue",
+        "family": "Deep Blues",
+        "hex": "#000080",
+        "cmyk": "C 100%, M 99%, Y 23%, K 8%",
+        "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함",
+        "usage": "영국 해군의 제복 색에서 유래. 세계적으로 전통, 질서, 규율을 상징. 지속적 신뢰감과 전문적 안정감을 표현하며 제복, 금융 등 공공 기관의 시각 아이덴티티에 널리 사용됨. 세련된 무드 완성.",
+        "pairings": [
+          "#FFFFFF",
+          "#D6C6A6",
+          "#D4AF37",
+          "#E97E68",
+          "#708090",
+          "#B0C4DE"
+        ]
+      },
+      {
+        "name": "Ochre",
+        "family": "Standard Oranges",
+        "hex": "#CC7722",
+        "cmyk": "C 18%, M 60%, Y 94%, K 6%",
+        "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성",
+        "usage": "토양 및 목재의 질감과 맞닿은 자연 기반 톤. 주황의 활기를 유지하면서도 과하지 않은 차분함이 특징. 디지털과 인쇄 등 모든 재질에서 존재감이 높고 안정적인 브랜딩에 강점이 있음.",
+        "pairings": [
+          "#1C2E4A",
+          "#4C7A77",
+          "#D7B899",
+          "#F3E9DA",
+          "#6E7B8B",
+          "#B6B995"
+        ]
+      },
+      {
+        "name": "Apricot",
+        "family": "Natural Oranges",
+        "hex": "#FFB27F",
+        "cmyk": "C 1%, M 38%, Y 51%, K 0%",
+        "mood": "밝은 명도, 낮은 채도, 살짝 핑크빛이 도는 부드러운 오렌지 / 따뜻함, 부드러움, 친근함, 여유, 자연스러움",
+        "usage": "살구 빛에서 유래된 온화한 컬러. 주황의 활기를 보존하면서 부드러운 감정선을 형성함. 브랜딩 영역에서 심리적 안정감을 제공하기 용이함.",
+        "pairings": [
+          "#F8F3ED",
+          "#B9B4A5",
+          "#9A9E56",
+          "#F88379",
+          "#6B90B4",
+          "#7E5A45"
+        ]
+      }
+    ],
+    "palette_roles": {
+      "primary": {
+        "name": "Ocean Blue",
+        "family": "Natural Blues",
+        "hex": "#4F97A3",
+        "cmyk": "C 70%, M 26%, Y 33%, K 5%",
+        "mood": "중명도, 중채도, 매트한 청록색 계열 / 신뢰, 정화, 깊이감, 유연함, 안정감",
+        "usage": "빛에 따라 푸른색과 청록빛이 동시에 드러나는 것이 특징. 사용 분야에 따라 스펙트럼이 다를 수 있지만 다양한 산업 분야에 감각적으로 사용 가능. 브랜딩에서 지속가능성 키워드로 자주 쓰임.",
+        "pairings": [
+          "#F7F7F7",
+          "#E77A64",
+          "#D8C7A0",
+          "#60727B",
+          "#9FD6C2",
+          "#203A4A"
+        ]
+      },
+      "accent": {
+        "name": "Fern Green",
+        "family": "Natural Greens",
+        "hex": "#4F7942",
+        "cmyk": "C 70%, M 33%, Y 87%, K 18%",
+        "mood": "중명도, 중채도의 내추럴 그린 / 차분함, 안정감, 유연함",
+        "usage": "양치식물(Fern)의 잎사귀 색감에서 유래. 모스 그린보다 밝고 투명한 생명감을 지님. 자연형 녹색에 가깝고 브라운기가 적어 청량함이 강함. 지속가능성, 차분함, 조화의 이미지를 브랜딩할 때 사용.",
+        "pairings": [
+          "#E8DDC3",
+          "#C2C9A8",
+          "#C66B3D",
+          "#F5F3EB",
+          "#3B3B3B",
+          "#D6C49B"
+        ]
+      },
+      "surface_tint": {
+        "name": "Naples Yellow",
+        "family": "Pastel Yellows",
+        "hex": "#FADA5E",
+        "cmyk": "C 7%, M 13%, Y 71%, K 0%",
+        "mood": "고명도, 저채도, 크리미한 라이트 옐로 톤 / 부드러움, 따뜻함, 온화함, 예술적 감성",
+        "usage": "르네상스 시대 회화에서 자주 사용된 전통 안료 컬러로 백색과 황색이 섞인 따뜻한 파스텔 톤. 회화나 인테리어에서는 빛을 머금은 듯한 채광감을 표현함. 미니멀하고 감성적인 온 톤 배색에 자주 활용됨.",
+        "pairings": [
+          "#B9B4A6",
+          "#C1C381",
+          "#A7B7C7",
+          "#C97E63",
+          "#F8F5E9",
+          "#2B2B2B"
+        ]
+      }
+    },
+    "preferred_families": [
+      "Natural Blues",
+      "Natural Greens",
+      "Pastel Yellows",
+      "Deep Blues",
+      "Natural Oranges"
+    ],
+    "selection_mode": "manual",
+    "strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "mixed",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "tinted",
+      "prefer_moods": [
+        "차분함",
+        "안정감",
+        "자연스러움",
+        "사색적",
+        "신뢰감",
+        "따뜻함",
+        "방향성"
+      ],
+      "avoid_moods": [
+        "화려함",
+        "네온",
+        "강한 쇼핑몰",
+        "럭셔리",
+        "귀여움",
+        "단색 지배",
+        "베이지"
+      ]
+    },
+    "expansion": {
+      "enabled": true,
+      "supporting_color_count": 8,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "active_palette": {
+      "selection_mode": "manual",
+      "roles": {
+        "primary": {
+          "name": "Ocean Blue",
+          "family": "Natural Blues",
+          "hex": "#4F97A3",
+          "cmyk": "C 70%, M 26%, Y 33%, K 5%",
+          "mood": "중명도, 중채도, 매트한 청록색 계열 / 신뢰, 정화, 깊이감, 유연함, 안정감",
+          "usage": "빛에 따라 푸른색과 청록빛이 동시에 드러나는 것이 특징. 사용 분야에 따라 스펙트럼이 다를 수 있지만 다양한 산업 분야에 감각적으로 사용 가능. 브랜딩에서 지속가능성 키워드로 자주 쓰임.",
+          "pairings": [
+            "#F7F7F7",
+            "#E77A64",
+            "#D8C7A0",
+            "#60727B",
+            "#9FD6C2",
+            "#203A4A"
+          ]
+        },
+        "accent": {
+          "name": "Fern Green",
+          "family": "Natural Greens",
+          "hex": "#4F7942",
+          "cmyk": "C 70%, M 33%, Y 87%, K 18%",
+          "mood": "중명도, 중채도의 내추럴 그린 / 차분함, 안정감, 유연함",
+          "usage": "양치식물(Fern)의 잎사귀 색감에서 유래. 모스 그린보다 밝고 투명한 생명감을 지님. 자연형 녹색에 가깝고 브라운기가 적어 청량함이 강함. 지속가능성, 차분함, 조화의 이미지를 브랜딩할 때 사용.",
+          "pairings": [
+            "#E8DDC3",
+            "#C2C9A8",
+            "#C66B3D",
+            "#F5F3EB",
+            "#3B3B3B",
+            "#D6C49B"
+          ]
+        },
+        "surface_tint": {
+          "name": "Naples Yellow",
+          "family": "Pastel Yellows",
+          "hex": "#FADA5E",
+          "cmyk": "C 7%, M 13%, Y 71%, K 0%",
+          "mood": "고명도, 저채도, 크리미한 라이트 옐로 톤 / 부드러움, 따뜻함, 온화함, 예술적 감성",
+          "usage": "르네상스 시대 회화에서 자주 사용된 전통 안료 컬러로 백색과 황색이 섞인 따뜻한 파스텔 톤. 회화나 인테리어에서는 빛을 머금은 듯한 채광감을 표현함. 미니멀하고 감성적인 온 톤 배색에 자주 활용됨.",
+          "pairings": [
+            "#B9B4A6",
+            "#C1C381",
+            "#A7B7C7",
+            "#C97E63",
+            "#F8F5E9",
+            "#2B2B2B"
+          ]
+        }
+      },
+      "selected_colors": [
+        {
+          "name": "Navy Blue",
+          "family": "Deep Blues",
+          "hex": "#000080",
+          "cmyk": "C 100%, M 99%, Y 23%, K 8%",
+          "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함",
+          "usage": "영국 해군의 제복 색에서 유래. 세계적으로 전통, 질서, 규율을 상징. 지속적 신뢰감과 전문적 안정감을 표현하며 제복, 금융 등 공공 기관의 시각 아이덴티티에 널리 사용됨. 세련된 무드 완성.",
+          "pairings": [
+            "#FFFFFF",
+            "#D6C6A6",
+            "#D4AF37",
+            "#E97E68",
+            "#708090",
+            "#B0C4DE"
+          ]
+        },
+        {
+          "name": "Ochre",
+          "family": "Standard Oranges",
+          "hex": "#CC7722",
+          "cmyk": "C 18%, M 60%, Y 94%, K 6%",
+          "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성",
+          "usage": "토양 및 목재의 질감과 맞닿은 자연 기반 톤. 주황의 활기를 유지하면서도 과하지 않은 차분함이 특징. 디지털과 인쇄 등 모든 재질에서 존재감이 높고 안정적인 브랜딩에 강점이 있음.",
+          "pairings": [
+            "#1C2E4A",
+            "#4C7A77",
+            "#D7B899",
+            "#F3E9DA",
+            "#6E7B8B",
+            "#B6B995"
+          ]
+        },
+        {
+          "name": "Apricot",
+          "family": "Natural Oranges",
+          "hex": "#FFB27F",
+          "cmyk": "C 1%, M 38%, Y 51%, K 0%",
+          "mood": "밝은 명도, 낮은 채도, 살짝 핑크빛이 도는 부드러운 오렌지 / 따뜻함, 부드러움, 친근함, 여유, 자연스러움",
+          "usage": "살구 빛에서 유래된 온화한 컬러. 주황의 활기를 보존하면서 부드러운 감정선을 형성함. 브랜딩 영역에서 심리적 안정감을 제공하기 용이함.",
+          "pairings": [
+            "#F8F3ED",
+            "#B9B4A5",
+            "#9A9E56",
+            "#F88379",
+            "#6B90B4",
+            "#7E5A45"
+          ]
+        }
+      ],
+      "candidate_id": null
+    },
+    "palette_candidates": [
+      {
+        "id": "signature-1",
+        "label": "Signature",
+        "score": 52.82,
+        "roles": {
+          "primary": {
+            "name": "Navy Blue",
+            "family": "Deep Blues",
+            "hex": "#000080",
+            "cmyk": "C 100%, M 99%, Y 23%, K 8%",
+            "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함",
+            "usage": "영국 해군의 제복 색에서 유래. 세계적으로 전통, 질서, 규율을 상징. 지속적 신뢰감과 전문적 안정감을 표현하며 제복, 금융 등 공공 기관의 시각 아이덴티티에 널리 사용됨. 세련된 무드 완성.",
+            "pairings": [
+              "#FFFFFF",
+              "#D6C6A6",
+              "#D4AF37",
+              "#E97E68",
+              "#708090",
+              "#B0C4DE"
+            ]
+          },
+          "accent": {
+            "name": "Ochre",
+            "family": "Standard Oranges",
+            "hex": "#CC7722",
+            "cmyk": "C 18%, M 60%, Y 94%, K 6%",
+            "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성",
+            "usage": "토양 및 목재의 질감과 맞닿은 자연 기반 톤. 주황의 활기를 유지하면서도 과하지 않은 차분함이 특징. 디지털과 인쇄 등 모든 재질에서 존재감이 높고 안정적인 브랜딩에 강점이 있음.",
+            "pairings": [
+              "#1C2E4A",
+              "#4C7A77",
+              "#D7B899",
+              "#F3E9DA",
+              "#6E7B8B",
+              "#B6B995"
+            ]
+          },
+          "surface_tint": {
+            "name": "Apricot",
+            "family": "Natural Oranges",
+            "hex": "#FFB27F",
+            "cmyk": "C 1%, M 38%, Y 51%, K 0%",
+            "mood": "밝은 명도, 낮은 채도, 살짝 핑크빛이 도는 부드러운 오렌지 / 따뜻함, 부드러움, 친근함, 여유, 자연스러움",
+            "usage": "살구 빛에서 유래된 온화한 컬러. 주황의 활기를 보존하면서 부드러운 감정선을 형성함. 브랜딩 영역에서 심리적 안정감을 제공하기 용이함.",
+            "pairings": [
+              "#F8F3ED",
+              "#B9B4A5",
+              "#9A9E56",
+              "#F88379",
+              "#6B90B4",
+              "#7E5A45"
+            ]
+          }
+        },
+        "rationale": [
+          "Navy Blue is inside preferred families.",
+          "Ochre matches brand tone keywords.",
+          "Apricot is inside preferred families."
+        ],
+        "strategy_snapshot": {
+          "temperature": "mixed",
+          "contrast": "balanced",
+          "diversity": "balanced",
+          "surface_style": "tinted"
+        }
+      },
+      {
+        "id": "soft-spread-2",
+        "label": "Soft Spread",
+        "score": 53.38,
+        "roles": {
+          "primary": {
+            "name": "Ochre",
+            "family": "Standard Oranges",
+            "hex": "#CC7722",
+            "cmyk": "C 18%, M 60%, Y 94%, K 6%",
+            "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성",
+            "usage": "토양 및 목재의 질감과 맞닿은 자연 기반 톤. 주황의 활기를 유지하면서도 과하지 않은 차분함이 특징. 디지털과 인쇄 등 모든 재질에서 존재감이 높고 안정적인 브랜딩에 강점이 있음.",
+            "pairings": [
+              "#1C2E4A",
+              "#4C7A77",
+              "#D7B899",
+              "#F3E9DA",
+              "#6E7B8B",
+              "#B6B995"
+            ]
+          },
+          "accent": {
+            "name": "Apricot",
+            "family": "Natural Oranges",
+            "hex": "#FFB27F",
+            "cmyk": "C 1%, M 38%, Y 51%, K 0%",
+            "mood": "밝은 명도, 낮은 채도, 살짝 핑크빛이 도는 부드러운 오렌지 / 따뜻함, 부드러움, 친근함, 여유, 자연스러움",
+            "usage": "살구 빛에서 유래된 온화한 컬러. 주황의 활기를 보존하면서 부드러운 감정선을 형성함. 브랜딩 영역에서 심리적 안정감을 제공하기 용이함.",
+            "pairings": [
+              "#F8F3ED",
+              "#B9B4A5",
+              "#9A9E56",
+              "#F88379",
+              "#6B90B4",
+              "#7E5A45"
+            ]
+          },
+          "surface_tint": {
+            "name": "Misty Blue",
+            "family": "Pastel Blues",
+            "hex": "#B5C7EB",
+            "cmyk": "C 32%, M 17%, Y 0%, K 0%",
+            "mood": "중명도, 저채도, 보라색이 섞인 뉴트럴 블루 톤 / 차분함, 사색적, 몽환적, 잔잔함, 감정의 여운",
+            "usage": "이름처럼 안개가 낀 듯한 부드러운 푸른빛. 블루의 신뢰감과 바이올렛의 감성적 온기가 동시에 느껴짐. 빛에 따라 다르게 보이는 색으로 감정 층위가 깊은 디자인에 쓰이며 문학적, 예술적 무드에 어울림.",
+            "pairings": [
+              "#F9F9F6",
+              "#C4C3D0",
+              "#D4A5A5",
+              "#6A7BA2",
+              "#D8C6A2",
+              "#2C3456"
+            ]
+          }
+        },
+        "rationale": [
+          "Ochre matches brand tone keywords.",
+          "Apricot is inside preferred families.",
+          "Misty Blue matches brand tone keywords."
+        ],
+        "strategy_snapshot": {
+          "temperature": "mixed",
+          "contrast": "soft",
+          "diversity": "balanced",
+          "surface_style": "airy"
+        }
+      }
+    ],
+    "expanded_palette": {
+      "search_strategy": {
+        "sources": [
+          "seed pairings",
+          "brand keywords",
+          "family tone",
+          "hue compatibility",
+          "related families"
+        ],
+        "supporting_color_count": 8,
+        "combination_count": 3,
+        "seed_roles": {
+          "primary": {
+            "name": "Ocean Blue",
+            "hex": "#4F97A3",
+            "family": "Natural Blues"
+          },
+          "accent": {
+            "name": "Fern Green",
+            "hex": "#4F7942",
+            "family": "Natural Greens"
+          },
+          "surface_tint": {
+            "name": "Naples Yellow",
+            "hex": "#FADA5E",
+            "family": "Pastel Yellows"
+          }
+        },
+        "preferred_families": [
+          "Natural Blues",
+          "Natural Greens",
+          "Pastel Yellows",
+          "Deep Blues",
+          "Natural Oranges"
+        ]
+      },
+      "supporting_colors": [
+        {
+          "name": "Navy Blue",
+          "family": "Deep Blues",
+          "hex": "#000080",
+          "cmyk": "C 100%, M 99%, Y 23%, K 8%",
+          "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함",
+          "usage": "영국 해군의 제복 색에서 유래. 세계적으로 전통, 질서, 규율을 상징. 지속적 신뢰감과 전문적 안정감을 표현하며 제복, 금융 등 공공 기관의 시각 아이덴티티에 널리 사용됨. 세련된 무드 완성.",
+          "pairings": [
+            "#FFFFFF",
+            "#D6C6A6",
+            "#D4AF37",
+            "#E97E68",
+            "#708090",
+            "#B0C4DE"
+          ],
+          "source_type": "reference-color",
+          "search_score": 9.95,
+          "search_reasons": [
+            "Navy Blue stays inside the preferred families.",
+            "Navy Blue reinforces the brand mood signals."
+          ]
+        },
+        {
+          "name": "Classic Blue",
+          "family": "Pantone Trend Blues",
+          "hex": "#0F4C81",
+          "cmyk": "C 97%, M 72%, Y 24%, K 9%",
+          "mood": "중명도, 중채도, 클래식한 딥 블루 톤 / 신뢰, 평온함, 지성, 안정감",
+          "usage": "팬톤 2020년 올해의 컬러. 불안정한 시대 속 '안정과 확신'을 상징함. 시대의 불확실함 속에서도 변치 않는 신뢰감을 전달하며 브랜드 아이덴티티에서는 전문성, 지속가능성을 형성함. 패션, 인테리어에서 세련된 미니멀리즘으로 사용.",
+          "pairings": [
+            "#FFFFFF",
+            "#BEB7A4",
+            "#D7C4A3",
+            "#F88379",
+            "#E1AD01",
+            "#B87333"
+          ],
+          "source_type": "reference-color",
+          "search_score": 8.45,
+          "search_reasons": [
+            "Classic Blue reinforces the brand mood signals."
+          ]
+        },
+        {
+          "name": "Ochre",
+          "family": "Standard Oranges",
+          "hex": "#CC7722",
+          "cmyk": "C 18%, M 60%, Y 94%, K 6%",
+          "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성",
+          "usage": "토양 및 목재의 질감과 맞닿은 자연 기반 톤. 주황의 활기를 유지하면서도 과하지 않은 차분함이 특징. 디지털과 인쇄 등 모든 재질에서 존재감이 높고 안정적인 브랜딩에 강점이 있음.",
+          "pairings": [
+            "#1C2E4A",
+            "#4C7A77",
+            "#D7B899",
+            "#F3E9DA",
+            "#6E7B8B",
+            "#B6B995"
+          ],
+          "source_type": "reference-color",
+          "search_score": 8.3,
+          "search_reasons": [
+            "Ochre reinforces the brand mood signals."
+          ]
+        },
+        {
+          "name": "Pairing #60727B",
+          "family": "Derived Pairing",
+          "hex": "#60727B",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Ocean Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Ocean Blue"
+          ],
+          "search_score": 7.9,
+          "search_reasons": [
+            "Pairing #60727B comes from the seed pairing references.",
+            "Pairing #60727B is explicitly paired with Ocean Blue.",
+            "Pairing #60727B can act as a neutral support color."
+          ]
+        },
+        {
+          "name": "Sky Blue",
+          "family": "Natural Blues",
+          "hex": "#87CEEB",
+          "cmyk": "C 49%, M 5%, Y 7%, K 0%",
+          "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음",
+          "usage": "대기 중 산란광의 자연스러운 푸른빛을 재현한 색. 자연광에서의 개방감을 시각적으로 구현함. UI/UX에서는 피로감 없는 인터페이스 컬러로 활용됨. 화이트, 우드 톤과 함께 사용 시 정서적 안정감을 극대화함.",
+          "pairings": [
+            "#F5F5F5",
+            "#E6DBB8",
+            "#333333",
+            "#D8A7A7",
+            "#B6E3C1",
+            "#CFC7B5"
+          ],
+          "source_type": "reference-color",
+          "search_score": 7.75,
+          "search_reasons": [
+            "Sky Blue stays inside the preferred families.",
+            "Sky Blue reinforces the brand mood signals."
+          ]
+        },
+        {
+          "name": "Pairing #F5F3EB",
+          "family": "Derived Pairing",
+          "hex": "#F5F3EB",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Fern Green.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Fern Green"
+          ],
+          "search_score": 7.6,
+          "search_reasons": [
+            "Pairing #F5F3EB comes from the seed pairing references.",
+            "Pairing #F5F3EB is explicitly paired with Fern Green."
+          ]
+        },
+        {
+          "name": "Pairing #F8F5E9",
+          "family": "Derived Pairing",
+          "hex": "#F8F5E9",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Naples Yellow.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Naples Yellow"
+          ],
+          "search_score": 7.6,
+          "search_reasons": [
+            "Pairing #F8F5E9 comes from the seed pairing references.",
+            "Pairing #F8F5E9 is explicitly paired with Naples Yellow."
+          ]
+        },
+        {
+          "name": "Apricot",
+          "family": "Natural Oranges",
+          "hex": "#FFB27F",
+          "cmyk": "C 1%, M 38%, Y 51%, K 0%",
+          "mood": "밝은 명도, 낮은 채도, 살짝 핑크빛이 도는 부드러운 오렌지 / 따뜻함, 부드러움, 친근함, 여유, 자연스러움",
+          "usage": "살구 빛에서 유래된 온화한 컬러. 주황의 활기를 보존하면서 부드러운 감정선을 형성함. 브랜딩 영역에서 심리적 안정감을 제공하기 용이함.",
+          "pairings": [
+            "#F8F3ED",
+            "#B9B4A5",
+            "#9A9E56",
+            "#F88379",
+            "#6B90B4",
+            "#7E5A45"
+          ],
+          "source_type": "reference-color",
+          "search_score": 7.6,
+          "search_reasons": [
+            "Apricot stays inside the preferred families.",
+            "Apricot reinforces the brand mood signals."
+          ]
+        }
+      ],
+      "semantic_roles": {
+        "brand_primary": {
+          "name": "Ocean Blue",
+          "family": "Natural Blues",
+          "hex": "#4F97A3",
+          "cmyk": "C 70%, M 26%, Y 33%, K 5%",
+          "mood": "중명도, 중채도, 매트한 청록색 계열 / 신뢰, 정화, 깊이감, 유연함, 안정감",
+          "usage": "빛에 따라 푸른색과 청록빛이 동시에 드러나는 것이 특징. 사용 분야에 따라 스펙트럼이 다를 수 있지만 다양한 산업 분야에 감각적으로 사용 가능. 브랜딩에서 지속가능성 키워드로 자주 쓰임.",
+          "pairings": [
+            "#F7F7F7",
+            "#E77A64",
+            "#D8C7A0",
+            "#60727B",
+            "#9FD6C2",
+            "#203A4A"
+          ]
+        },
+        "brand_accent": {
+          "name": "Fern Green",
+          "family": "Natural Greens",
+          "hex": "#4F7942",
+          "cmyk": "C 70%, M 33%, Y 87%, K 18%",
+          "mood": "중명도, 중채도의 내추럴 그린 / 차분함, 안정감, 유연함",
+          "usage": "양치식물(Fern)의 잎사귀 색감에서 유래. 모스 그린보다 밝고 투명한 생명감을 지님. 자연형 녹색에 가깝고 브라운기가 적어 청량함이 강함. 지속가능성, 차분함, 조화의 이미지를 브랜딩할 때 사용.",
+          "pairings": [
+            "#E8DDC3",
+            "#C2C9A8",
+            "#C66B3D",
+            "#F5F3EB",
+            "#3B3B3B",
+            "#D6C49B"
+          ]
+        },
+        "surface_tint": {
+          "name": "Naples Yellow",
+          "family": "Pastel Yellows",
+          "hex": "#FADA5E",
+          "cmyk": "C 7%, M 13%, Y 71%, K 0%",
+          "mood": "고명도, 저채도, 크리미한 라이트 옐로 톤 / 부드러움, 따뜻함, 온화함, 예술적 감성",
+          "usage": "르네상스 시대 회화에서 자주 사용된 전통 안료 컬러로 백색과 황색이 섞인 따뜻한 파스텔 톤. 회화나 인테리어에서는 빛을 머금은 듯한 채광감을 표현함. 미니멀하고 감성적인 온 톤 배색에 자주 활용됨.",
+          "pairings": [
+            "#B9B4A6",
+            "#C1C381",
+            "#A7B7C7",
+            "#C97E63",
+            "#F8F5E9",
+            "#2B2B2B"
+          ]
+        },
+        "canvas": {
+          "name": "Canvas White",
+          "family": "Generated Fallback",
+          "hex": "#F7F8FA",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "surface": {
+          "name": "Paper",
+          "family": "Generated Fallback",
+          "hex": "#FFFFFF",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "surface_muted": {
+          "name": "Surface Muted",
+          "family": "Generated Fallback",
+          "hex": "#EEF1F6",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "surface_elevated": {
+          "name": "Paper",
+          "family": "Generated Fallback",
+          "hex": "#FFFFFF",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "border": {
+          "name": "Border Neutral",
+          "family": "Generated Fallback",
+          "hex": "#D6DDE6",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "border_strong": {
+          "name": "Border Strong",
+          "family": "Generated Fallback",
+          "hex": "#B0BAC7",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "ink": {
+          "name": "Ink",
+          "family": "Generated Fallback",
+          "hex": "#111111",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "ink_muted": {
+          "name": "Pairing #60727B",
+          "family": "Derived Pairing",
+          "hex": "#60727B",
+          "mood": "Seed pairing support",
+          "usage": "Referenced as a compatible pairing for Ocean Blue.",
+          "pairings": [],
+          "source_type": "pairing-swatch",
+          "source_seed_names": [
+            "Ocean Blue"
+          ],
+          "search_score": 7.9,
+          "search_reasons": [
+            "Pairing #60727B comes from the seed pairing references.",
+            "Pairing #60727B is explicitly paired with Ocean Blue.",
+            "Pairing #60727B can act as a neutral support color."
+          ]
+        },
+        "ink_subtle": {
+          "name": "Subtle Ink",
+          "family": "Generated Fallback",
+          "hex": "#6B7280",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "ink_inverse": {
+          "name": "Ink Inverse",
+          "family": "Generated Fallback",
+          "hex": "#FFFFFF",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "primary_support": {
+          "name": "Navy Blue",
+          "family": "Deep Blues",
+          "hex": "#000080",
+          "cmyk": "C 100%, M 99%, Y 23%, K 8%",
+          "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함",
+          "usage": "영국 해군의 제복 색에서 유래. 세계적으로 전통, 질서, 규율을 상징. 지속적 신뢰감과 전문적 안정감을 표현하며 제복, 금융 등 공공 기관의 시각 아이덴티티에 널리 사용됨. 세련된 무드 완성.",
+          "pairings": [
+            "#FFFFFF",
+            "#D6C6A6",
+            "#D4AF37",
+            "#E97E68",
+            "#708090",
+            "#B0C4DE"
+          ],
+          "source_type": "reference-color",
+          "search_score": 9.95,
+          "search_reasons": [
+            "Navy Blue stays inside the preferred families.",
+            "Navy Blue reinforces the brand mood signals."
+          ]
+        },
+        "accent_support": {
+          "name": "Fern Green",
+          "family": "Natural Greens",
+          "hex": "#4F7942",
+          "cmyk": "C 70%, M 33%, Y 87%, K 18%",
+          "mood": "중명도, 중채도의 내추럴 그린 / 차분함, 안정감, 유연함",
+          "usage": "양치식물(Fern)의 잎사귀 색감에서 유래. 모스 그린보다 밝고 투명한 생명감을 지님. 자연형 녹색에 가깝고 브라운기가 적어 청량함이 강함. 지속가능성, 차분함, 조화의 이미지를 브랜딩할 때 사용.",
+          "pairings": [
+            "#E8DDC3",
+            "#C2C9A8",
+            "#C66B3D",
+            "#F5F3EB",
+            "#3B3B3B",
+            "#D6C49B"
+          ]
+        },
+        "info": {
+          "name": "Navy Blue",
+          "family": "Deep Blues",
+          "hex": "#000080",
+          "cmyk": "C 100%, M 99%, Y 23%, K 8%",
+          "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함",
+          "usage": "영국 해군의 제복 색에서 유래. 세계적으로 전통, 질서, 규율을 상징. 지속적 신뢰감과 전문적 안정감을 표현하며 제복, 금융 등 공공 기관의 시각 아이덴티티에 널리 사용됨. 세련된 무드 완성.",
+          "pairings": [
+            "#FFFFFF",
+            "#D6C6A6",
+            "#D4AF37",
+            "#E97E68",
+            "#708090",
+            "#B0C4DE"
+          ],
+          "source_type": "reference-color",
+          "search_score": 9.95,
+          "search_reasons": [
+            "Navy Blue stays inside the preferred families.",
+            "Navy Blue reinforces the brand mood signals."
+          ]
+        },
+        "success": {
+          "name": "Fern Green",
+          "family": "Natural Greens",
+          "hex": "#4F7942",
+          "cmyk": "C 70%, M 33%, Y 87%, K 18%",
+          "mood": "중명도, 중채도의 내추럴 그린 / 차분함, 안정감, 유연함",
+          "usage": "양치식물(Fern)의 잎사귀 색감에서 유래. 모스 그린보다 밝고 투명한 생명감을 지님. 자연형 녹색에 가깝고 브라운기가 적어 청량함이 강함. 지속가능성, 차분함, 조화의 이미지를 브랜딩할 때 사용.",
+          "pairings": [
+            "#E8DDC3",
+            "#C2C9A8",
+            "#C66B3D",
+            "#F5F3EB",
+            "#3B3B3B",
+            "#D6C49B"
+          ],
+          "source_type": "active-role:accent"
+        },
+        "warning": {
+          "name": "Ochre",
+          "family": "Standard Oranges",
+          "hex": "#CC7722",
+          "cmyk": "C 18%, M 60%, Y 94%, K 6%",
+          "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성",
+          "usage": "토양 및 목재의 질감과 맞닿은 자연 기반 톤. 주황의 활기를 유지하면서도 과하지 않은 차분함이 특징. 디지털과 인쇄 등 모든 재질에서 존재감이 높고 안정적인 브랜딩에 강점이 있음.",
+          "pairings": [
+            "#1C2E4A",
+            "#4C7A77",
+            "#D7B899",
+            "#F3E9DA",
+            "#6E7B8B",
+            "#B6B995"
+          ],
+          "source_type": "reference-color",
+          "search_score": 8.3,
+          "search_reasons": [
+            "Ochre reinforces the brand mood signals."
+          ]
+        },
+        "danger": {
+          "name": "Danger",
+          "family": "Generated Fallback",
+          "hex": "#8B2252",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        },
+        "link": {
+          "name": "Ocean Blue",
+          "family": "Natural Blues",
+          "hex": "#4F97A3",
+          "cmyk": "C 70%, M 26%, Y 33%, K 5%",
+          "mood": "중명도, 중채도, 매트한 청록색 계열 / 신뢰, 정화, 깊이감, 유연함, 안정감",
+          "usage": "빛에 따라 푸른색과 청록빛이 동시에 드러나는 것이 특징. 사용 분야에 따라 스펙트럼이 다를 수 있지만 다양한 산업 분야에 감각적으로 사용 가능. 브랜딩에서 지속가능성 키워드로 자주 쓰임.",
+          "pairings": [
+            "#F7F7F7",
+            "#E77A64",
+            "#D8C7A0",
+            "#60727B",
+            "#9FD6C2",
+            "#203A4A"
+          ]
+        },
+        "link_hover": {
+          "name": "Link Hover",
+          "family": "Generated Fallback",
+          "hex": "#427E88",
+          "mood": "Generated fallback support color",
+          "usage": "Used when the reference file does not expose a suitable support swatch.",
+          "pairings": [],
+          "source_type": "generated-fallback"
+        }
+      },
+      "component_sets": {
+        "button_primary": {
+          "surface_default": "#4F97A3",
+          "surface_hover": "#45848E",
+          "surface_active": "#3E7781",
+          "surface_disabled": "#B4D1D7",
+          "text_default": "#FFFFFF",
+          "text_disabled": "#FBFCFC",
+          "border_default": "#4F97A3",
+          "focus_ring": "#4F97A3"
+        },
+        "button_secondary": {
+          "surface_default": "#FFFFFF",
+          "surface_hover": "#F1F1F1",
+          "surface_active": "#E7E7E7",
+          "surface_disabled": "#F7F8FA",
+          "text_default": "#111111",
+          "text_disabled": "#909091",
+          "border_default": "#BDC8D7",
+          "border_hover": "#A3B3C7",
+          "focus_ring": "#4F97A3"
+        },
+        "button_ghost": {
+          "surface_default": "transparent",
+          "surface_hover": "#F3F3F3",
+          "surface_active": "#EAEAEA",
+          "surface_disabled": "transparent",
+          "text_default": "#60727B",
+          "text_hover": "#111111",
+          "text_disabled": "#B3BCC1",
+          "border_default": "transparent",
+          "focus_ring": "#4F97A3"
+        },
+        "button_danger": {
+          "surface_default": "#8B2252",
+          "surface_hover": "#721C43",
+          "surface_active": "#62183A",
+          "text_default": "#FFFFFF",
+          "border_default": "#8B2252",
+          "focus_ring": "#8B2252"
+        },
+        "input": {
+          "surface_default": "#FFFFFF",
+          "surface_filled": "#FFFFFF",
+          "surface_disabled": "#F7F8FA",
+          "text_default": "#111111",
+          "text_placeholder": "#9CA8AE",
+          "text_disabled": "#B3BCC1",
+          "border_default": "#D6DDE6",
+          "border_hover": "#B6C3D3",
+          "border_focus": "#4F97A3",
+          "border_error": "#8B2252",
+          "border_disabled": "#E6EAF0"
+        },
+        "card": {
+          "surface_default": "#FFFFFF",
+          "surface_hover": "#FAFAFA",
+          "surface_muted": "#F7F8FA",
+          "border_default": "#D6DDE6",
+          "border_hover": "#B6C3D3",
+          "border_focus": "#4F97A3"
+        },
+        "nav_link": {
+          "text_default": "#60727B",
+          "text_hover": "#111111",
+          "text_active": "#4F97A3",
+          "surface_hover": "#F5F5F5",
+          "indicator": "#4F7942"
+        },
+        "link": {
+          "text_default": "#4F97A3",
+          "text_hover": "#3E7781",
+          "text_visited": "#5C787C"
+        },
+        "feedback_info": {
+          "surface": "#E0E0F0",
+          "text": "#000080",
+          "border": "#4A4AA5",
+          "icon": "#000080"
+        },
+        "feedback_success": {
+          "surface": "#EAEFE8",
+          "text": "#4F7942",
+          "border": "#819F79",
+          "icon": "#4F7942"
+        },
+        "feedback_warning": {
+          "surface": "#F9EFE4",
+          "text": "#CC7722",
+          "border": "#D99E63",
+          "icon": "#CC7722"
+        },
+        "feedback_danger": {
+          "surface": "#F1E4EA",
+          "text": "#8B2252",
+          "border": "#AB6284",
+          "icon": "#8B2252"
+        }
+      },
+      "combination_lists": [
+        {
+          "id": "seed-core",
+          "label": "Seed Core",
+          "purpose": "기본 테마를 이루는 핵심 색",
+          "colors": [
+            {
+              "role": "primary",
+              "name": "Ocean Blue",
+              "hex": "#4F97A3",
+              "family": "Natural Blues",
+              "source_type": null
+            },
+            {
+              "role": "accent",
+              "name": "Fern Green",
+              "hex": "#4F7942",
+              "family": "Natural Greens",
+              "source_type": null
+            },
+            {
+              "role": "surface_tint",
+              "name": "Naples Yellow",
+              "hex": "#FADA5E",
+              "family": "Pastel Yellows",
+              "source_type": null
+            }
+          ]
+        },
+        {
+          "id": "surface-system",
+          "label": "Surface System",
+          "purpose": "배경, 패널, 텍스트, 보더에 쓰는 기본 조합",
+          "colors": [
+            {
+              "role": "canvas",
+              "name": "Canvas White",
+              "hex": "#F7F8FA",
+              "family": "Generated Fallback",
+              "source_type": "generated-fallback"
+            },
+            {
+              "role": "surface",
+              "name": "Paper",
+              "hex": "#FFFFFF",
+              "family": "Generated Fallback",
+              "source_type": "generated-fallback"
+            },
+            {
+              "role": "surface_tint",
+              "name": "Naples Yellow",
+              "hex": "#FADA5E",
+              "family": "Pastel Yellows",
+              "source_type": null
+            },
+            {
+              "role": "border",
+              "name": "Border Neutral",
+              "hex": "#D6DDE6",
+              "family": "Generated Fallback",
+              "source_type": "generated-fallback"
+            },
+            {
+              "role": "ink",
+              "name": "Ink",
+              "hex": "#111111",
+              "family": "Generated Fallback",
+              "source_type": "generated-fallback"
+            },
+            {
+              "role": "ink_muted",
+              "name": "Pairing #60727B",
+              "hex": "#60727B",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            }
+          ]
+        },
+        {
+          "id": "support-spectrum",
+          "label": "Support Spectrum",
+          "purpose": "보조 하이라이트, 차트, 2차 액션에 쓰는 확장 리스트",
+          "colors": [
+            {
+              "role": "support",
+              "name": "Navy Blue",
+              "hex": "#000080",
+              "family": "Deep Blues",
+              "source_type": "reference-color"
+            },
+            {
+              "role": "support",
+              "name": "Classic Blue",
+              "hex": "#0F4C81",
+              "family": "Pantone Trend Blues",
+              "source_type": "reference-color"
+            },
+            {
+              "role": "support",
+              "name": "Ochre",
+              "hex": "#CC7722",
+              "family": "Standard Oranges",
+              "source_type": "reference-color"
+            },
+            {
+              "role": "support",
+              "name": "Pairing #60727B",
+              "hex": "#60727B",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            },
+            {
+              "role": "support",
+              "name": "Sky Blue",
+              "hex": "#87CEEB",
+              "family": "Natural Blues",
+              "source_type": "reference-color"
+            },
+            {
+              "role": "support",
+              "name": "Pairing #F5F3EB",
+              "hex": "#F5F3EB",
+              "family": "Derived Pairing",
+              "source_type": "pairing-swatch"
+            }
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "Green/blue should express orientation and trust; warm accents should suggest street light or brick texture without turning the UI into a beige editorial theme.",
+      "Place photos or texture thumbnails may carry atmospheric richness; interface chrome must stay quiet and legible.",
+      "Do not copy the palette of tourism, booking, or real-estate references."
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "mobile map saved places sensory tags",
+      "quiet local discovery app cards",
+      "mobile place detail atmosphere metadata",
+      "knowledge graph inspector panel UI"
+    ],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.35,
+      "component_shape": 0.2,
+      "color_balance": 0.1,
+      "typography_mood": 0.15,
+      "surface_style": 0.2
+    },
+    "extraction_policy": "advisory-only",
+    "notes": [
+      "No external screenshot is authoritative in this first test run.",
+      "External or Lazyweb references may inform density and component morphology only; color, typography, IA, and copy stay governed by this profile and generated system docs.",
+      "The ontology inspector is a product-facing transparency panel, not a developer console."
+    ],
+    "must_include": [
+      "list alternative to the map",
+      "sensory metadata visible on cards",
+      "place confidence and evidence state",
+      "ontology inspector that exposes relations without feeling like an engineering dashboard"
+    ],
+    "avoid_patterns": [
+      "full-screen marketing hero",
+      "nested cards",
+      "large decorative gradients",
+      "tour package cards",
+      "price or booking language",
+      "photo feed dominance",
+      "one-hue beige atmosphere"
+    ],
+    "sources": [],
+    "images": [],
+    "selected_images": [],
+    "duplicate_groups": [],
+    "similar_groups": [],
+    "coverage": {
+      "source_count": 0,
+      "resolved_source_count": 0,
+      "image_count": 0,
+      "selected_image_count": 0,
+      "format_counts": {},
+      "orientation_counts": {},
+      "aspect_ratio_buckets": {}
+    },
+    "visual_motifs": {
+      "density": {
+        "value": "dense",
+        "confidence": 0.27,
+        "evidence": [
+          "dashboard x0.9",
+          "control x0.9"
+        ],
+        "candidates": [
+          {
+            "value": "dense",
+            "score": 4.5
+          },
+          {
+            "value": "airy",
+            "score": 0.5
+          },
+          {
+            "value": "balanced",
+            "score": 0.2
+          }
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Derived from query and brand context only because no local image selection was available."
+        }
+      },
+      "surface_style": {
+        "value": "tinted",
+        "confidence": 0.13,
+        "evidence": [
+          "editorial x0.1"
+        ],
+        "candidates": [
+          {
+            "value": "tinted",
+            "score": 0.1
+          }
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Derived from query and brand context only because no local image selection was available."
+        }
+      },
+      "typography_mood": {
+        "value": "utilitarian",
+        "confidence": 0.24,
+        "evidence": [
+          "dashboard x0.9",
+          "control x0.9"
+        ],
+        "candidates": [
+          {
+            "value": "utilitarian",
+            "score": 4.5
+          },
+          {
+            "value": "editorial",
+            "score": 0.3
+          }
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Derived from query and brand context only because no local image selection was available."
+        }
+      },
+      "corner_style": {
+        "value": "medium",
+        "confidence": 0.15,
+        "evidence": [
+          "card x0.9"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Derived from query and brand context only because no local image geometry was available."
+        }
+      },
+      "color_balance": {
+        "observed": false,
+        "temperature": "unknown",
+        "contrast_profile": "unknown",
+        "neutral_bias": "unknown",
+        "dominant": [],
+        "supporting": [],
+        "provenance": {
+          "level": "unverified",
+          "detail": "No reliable pixel-color sample was available from the current selection."
+        }
+      },
+      "image_selection": {
+        "selected_image_count": 0,
+        "available_image_count": 0,
+        "provenance": {
+          "level": "unverified",
+          "detail": "No local image files were available for selection."
+        }
+      }
+    },
+    "layout_cues": [
+      {
+        "id": "data-review-surface",
+        "label": "Data review surface",
+        "confidence": 0.28,
+        "evidence": [
+          "grid x0.8",
+          "filter x1.35",
+          "score x0.9"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+        }
+      },
+      {
+        "id": "dashboard-grid",
+        "label": "Dashboard grid",
+        "confidence": 0.21,
+        "evidence": [
+          "dashboard x0.9"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+        }
+      }
+    ],
+    "component_style_hints": {
+      "cards": {
+        "direction": "low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.",
+        "confidence": 0.15,
+        "evidence": [
+          "surface=tinted",
+          "density=dense",
+          "corner=medium"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+        }
+      },
+      "navigation": {
+        "direction": "navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.",
+        "confidence": 0.15,
+        "evidence": [
+          "Data review surface"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+        }
+      },
+      "typography": {
+        "direction": "정보 밀도에 맞춰 type scale 차이를 줄이고 table/list label의 정렬 정확도를 우선한다.",
+        "confidence": 0.13,
+        "evidence": [
+          "typography_mood=utilitarian"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+        }
+      },
+      "data_display": {
+        "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+        "confidence": 0.17,
+        "evidence": [
+          "layout=dashboard-grid",
+          "density=dense"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+        }
+      }
+    },
+    "candidate_component_archetypes": [
+      {
+        "id": "data-review-table",
+        "label": "Data review table",
+        "family": "data-display",
+        "confidence": 0.29,
+        "suggested_components": [
+          "data-table",
+          "column-header",
+          "row-actions",
+          "filter-toolbar",
+          "pagination"
+        ],
+        "supports_primitives": [
+          "data tables",
+          "search and filter"
+        ],
+        "evidence": [
+          "layout=data-review-surface (0.28)",
+          "layout=dashboard-grid (0.21)",
+          "grid x0.8",
+          "filter x1.35"
+        ],
+        "provenance": {
+          "level": "inferred",
+          "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+        }
+      }
+    ],
+    "reference_mood_summary": {
+      "top_layout": "Data review surface",
+      "recommended_direction": [
+        "layout는 Data review surface 기준으로 정리",
+        "surface language는 tinted 성향 우선",
+        "typography mood는 utilitarian 축 유지",
+        "density는 dense 기준으로 primitive spacing 조정",
+        "palette temperature는 unknown 쪽을 우선"
+      ],
+      "avoidance": [
+        "full-screen marketing hero",
+        "nested cards",
+        "large decorative gradients",
+        "tour package cards",
+        "price or booking language",
+        "photo feed dominance",
+        "one-hue beige atmosphere"
+      ],
+      "component_focus": [
+        "cards",
+        "data_display",
+        "navigation",
+        "typography"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+      }
+    },
+    "brand_context": {
+      "brand_name": "Seoul Alley Mood Map",
+      "system_name": "Alley Sense System",
+      "brand_keywords": [
+        "situated",
+        "quiet",
+        "sensory",
+        "curated",
+        "walkable",
+        "trustworthy",
+        "local"
+      ],
+      "anti_keywords": [
+        "generic-map",
+        "tourism-brochure",
+        "photo-influencer-feed",
+        "commerce-led",
+        "real-estate",
+        "overdecorated",
+        "neon",
+        "glassmorphism",
+        "beige-only-editorial",
+        "gamified"
+      ],
+      "visual_keywords": [
+        "mobile-first place companion",
+        "compact sensory metadata",
+        "quiet geographic grid",
+        "real texture evidence",
+        "time-of-day atmosphere",
+        "low elevation surfaces",
+        "scan-first recommendation cards"
+      ],
+      "interaction_keywords": [
+        "filter-first exploration",
+        "save and compare",
+        "time-of-day switching",
+        "mood-to-place matching",
+        "confidence labels",
+        "touch-safe controls",
+        "recoverable edits"
+      ],
+      "product_primitives": [
+        "neighborhood switcher",
+        "time-of-day segmented control",
+        "sensory filter chips",
+        "mood match score",
+        "map pin layer",
+        "place list card",
+        "sensory evidence strip",
+        "place detail sheet",
+        "light sound crowding profile",
+        "emotion tag cluster",
+        "recommendation queue",
+        "ontology inspector panel",
+        "place relationship graph",
+        "add place form",
+        "empty and uncertain evidence states"
+      ]
+    }
+  },
+  "visual_reference_issues": [
+    "visual_reference.sources is empty"
+  ],
+  "design_context_pack": {
+    "schema_version": "design-context-pack/v1",
+    "activation_state": "planned",
+    "purpose": "Unify local screenshots, curated exports, corpus providers, and search assists into ontology-safe design research context.",
+    "artifact_outputs": [
+      "build/visuals/design_context_pack.json",
+      "build/system/blueprint/design_context_pack.json"
+    ],
+    "providers": [
+      {
+        "provider_id": "pinterest",
+        "kind": "pinterest",
+        "label": "Pinterest-assisted capture",
+        "status": "preview",
+        "access_mode": "manual-or-playwright-capture",
+        "truth_role": "search assist and shortlist support",
+        "allowed_outputs": [
+          "component morphology",
+          "layout density",
+          "panel/card proportions",
+          "hierarchy rhythm",
+          "interaction affordance patterns",
+          "flow pattern labels"
+        ],
+        "denied_outputs": [
+          "color palette",
+          "palette composition",
+          "typography scale",
+          "domain information architecture",
+          "product copy",
+          "redistributable imagery unless explicitly licensed"
+        ],
+        "config": {
+          "capture_mode": "manual-save",
+          "capture_dir": "references/visual/pinterest-assisted"
+        }
+      },
+      {
+        "provider_id": "lazyweb",
+        "kind": "lazyweb",
+        "label": "Lazyweb MCP real-app corpus",
+        "status": "suggested",
+        "access_mode": "mcp-or-manual-export",
+        "truth_role": "real app flow and screen corpus provider",
+        "allowed_outputs": [
+          "component morphology",
+          "layout density",
+          "panel/card proportions",
+          "hierarchy rhythm",
+          "interaction affordance patterns",
+          "flow pattern labels"
+        ],
+        "denied_outputs": [
+          "color palette",
+          "palette composition",
+          "typography scale",
+          "domain information architecture",
+          "product copy",
+          "redistributable imagery unless explicitly licensed"
+        ],
+        "config": {
+          "activation_hint": "Connect Lazyweb MCP or export selected screens into visual_reference.sources.",
+          "recommended_for": [
+            "real app screens",
+            "flow search",
+            "competitive morphology"
+          ]
+        }
+      }
+    ],
+    "context_cards": [
+      {
+        "context_id": "research-query-01",
+        "kind": "research-query",
+        "label": "mobile map saved places sensory tags",
+        "provider_id": "lazyweb",
+        "status": "research-needed",
+        "provenance_level": "planned",
+        "source_path": null,
+        "source_url": null,
+        "flows": [
+          "general-product-ui"
+        ],
+        "morphology": [
+          "general-interface-composition"
+        ],
+        "absorbed_traits": [
+          "Use as search intent only until real screenshots are selected.",
+          "intent=general",
+          "primitive=unknown"
+        ],
+        "must_not_absorb": [
+          "color palette",
+          "palette composition",
+          "typography scale",
+          "domain information architecture",
+          "product copy",
+          "redistributable imagery unless explicitly licensed"
+        ]
+      },
+      {
+        "context_id": "research-query-02",
+        "kind": "research-query",
+        "label": "quiet local discovery app cards",
+        "provider_id": "lazyweb",
+        "status": "research-needed",
+        "provenance_level": "planned",
+        "source_path": null,
+        "source_url": null,
+        "flows": [
+          "general-product-ui"
+        ],
+        "morphology": [
+          "general-interface-composition"
+        ],
+        "absorbed_traits": [
+          "Use as search intent only until real screenshots are selected.",
+          "intent=general",
+          "primitive=unknown"
+        ],
+        "must_not_absorb": [
+          "color palette",
+          "palette composition",
+          "typography scale",
+          "domain information architecture",
+          "product copy",
+          "redistributable imagery unless explicitly licensed"
+        ]
+      },
+      {
+        "context_id": "research-query-03",
+        "kind": "research-query",
+        "label": "mobile place detail atmosphere metadata",
+        "provider_id": "lazyweb",
+        "status": "research-needed",
+        "provenance_level": "planned",
+        "source_path": null,
+        "source_url": null,
+        "flows": [
+          "general-product-ui"
+        ],
+        "morphology": [
+          "general-interface-composition"
+        ],
+        "absorbed_traits": [
+          "Use as search intent only until real screenshots are selected.",
+          "intent=general",
+          "primitive=unknown"
+        ],
+        "must_not_absorb": [
+          "color palette",
+          "palette composition",
+          "typography scale",
+          "domain information architecture",
+          "product copy",
+          "redistributable imagery unless explicitly licensed"
+        ]
+      },
+      {
+        "context_id": "research-query-04",
+        "kind": "research-query",
+        "label": "knowledge graph inspector panel UI",
+        "provider_id": "lazyweb",
+        "status": "research-needed",
+        "provenance_level": "planned",
+        "source_path": null,
+        "source_url": null,
+        "flows": [
+          "general-product-ui"
+        ],
+        "morphology": [
+          "card-stack",
+          "split-pane"
+        ],
+        "absorbed_traits": [
+          "Use as search intent only until real screenshots are selected.",
+          "intent=general",
+          "primitive=unknown"
+        ],
+        "must_not_absorb": [
+          "color palette",
+          "palette composition",
+          "typography scale",
+          "domain information architecture",
+          "product copy",
+          "redistributable imagery unless explicitly licensed"
+        ]
+      }
+    ],
+    "flow_index": [
+      {
+        "flow": "general-product-ui",
+        "context_count": 4,
+        "providers": [
+          "lazyweb"
+        ],
+        "status": "covered"
+      },
+      {
+        "flow": "empty-state",
+        "context_count": 0,
+        "providers": [],
+        "status": "gap"
+      },
+      {
+        "flow": "onboarding",
+        "context_count": 0,
+        "providers": [],
+        "status": "gap"
+      },
+      {
+        "flow": "settings",
+        "context_count": 0,
+        "providers": [],
+        "status": "gap"
+      }
+    ],
+    "component_morphology_index": [
+      {
+        "morphology": "general-interface-composition",
+        "context_count": 3,
+        "examples": [
+          "research-query-01",
+          "research-query-02",
+          "research-query-03"
+        ]
+      },
+      {
+        "morphology": "card-stack",
+        "context_count": 1,
+        "examples": [
+          "research-query-04"
+        ]
+      },
+      {
+        "morphology": "split-pane",
+        "context_count": 1,
+        "examples": [
+          "research-query-04"
+        ]
+      }
+    ],
+    "absorption_policy": {
+      "authority_order": [
+        "product task flow and information architecture",
+        "token_schema.json and generated CSS variables",
+        "components/component_specs.* and component_inventory.json",
+        "system_spec.md and system_ontology.json",
+        "external reference context"
+      ],
+      "allowed": [
+        "component morphology",
+        "layout density",
+        "panel/card proportions",
+        "hierarchy rhythm",
+        "interaction affordance patterns",
+        "flow pattern labels"
+      ],
+      "denied": [
+        "color palette",
+        "palette composition",
+        "typography scale",
+        "domain information architecture",
+        "product copy",
+        "redistributable imagery unless explicitly licensed"
+      ],
+      "rule": "Reference context is research input only; it never overrides product IA, tokens, component specs, or governance."
+    },
+    "research_gaps": [
+      {
+        "id": "no-observed-screens",
+        "severity": "high",
+        "detail": "No selected local screenshots are available; visual signals are query/planning-only.",
+        "recommended_action": "Capture or export 3-8 representative screens before treating morphology guidance as grounded."
+      },
+      {
+        "id": "real-app-corpus-provider-not-connected",
+        "severity": "medium",
+        "detail": "A real-app corpus provider is only suggested, not connected.",
+        "recommended_action": "Connect Lazyweb MCP or export selected Lazyweb screens into visual_reference.sources with provenance."
+      },
+      {
+        "id": "flow-coverage-gaps",
+        "severity": "medium",
+        "detail": "Some product flows are not covered by selected reference screens.",
+        "flows": [
+          "empty-state",
+          "onboarding",
+          "settings"
+        ],
+        "recommended_action": "Search corpus/provider screens by these flows before mock generation."
+      }
+    ]
+  },
+  "identity_assets": [
+    {
+      "id": "identity-asset:app-icon",
+      "label": "Brand app icon",
+      "slot": "app-icon",
+      "required": true,
+      "integrated": true,
+      "asset_path": "assets/app-icon.svg",
+      "manifest_path": "manifest.webmanifest",
+      "format": "svg",
+      "targets": [
+        "favicon",
+        "app shell brand mark",
+        "web app manifest"
+      ],
+      "description": "Project-local app icon discovered from common brand identity asset paths.",
+      "discovered_from": "common-app-icon-path"
+    }
+  ],
+  "generated_visual_assets": [],
+  "visual_language": {
+    "density": {
+      "value": "dense",
+      "confidence": 0.27,
+      "evidence": [
+        "dashboard x0.9",
+        "control x0.9"
+      ],
+      "candidates": [
+        {
+          "value": "dense",
+          "score": 4.5
+        },
+        {
+          "value": "airy",
+          "score": 0.5
+        },
+        {
+          "value": "balanced",
+          "score": 0.2
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.13,
+      "evidence": [
+        "editorial x0.1"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 0.1
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "typography_mood": {
+      "value": "utilitarian",
+      "confidence": 0.24,
+      "evidence": [
+        "dashboard x0.9",
+        "control x0.9"
+      ],
+      "candidates": [
+        {
+          "value": "utilitarian",
+          "score": 4.5
+        },
+        {
+          "value": "editorial",
+          "score": 0.3
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "corner_style": {
+      "value": "medium",
+      "confidence": 0.15,
+      "evidence": [
+        "card x0.9"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image geometry was available."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.28,
+      "evidence": [
+        "grid x0.8",
+        "filter x1.35",
+        "score x0.9"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.21,
+      "evidence": [
+        "dashboard x0.9"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.",
+      "confidence": 0.15,
+      "evidence": [
+        "surface=tinted",
+        "density=dense",
+        "corner=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "navigation": {
+      "direction": "navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.",
+      "confidence": 0.15,
+      "evidence": [
+        "Data review surface"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "typography": {
+      "direction": "정보 밀도에 맞춰 type scale 차이를 줄이고 table/list label의 정렬 정확도를 우선한다.",
+      "confidence": 0.13,
+      "evidence": [
+        "typography_mood=utilitarian"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.17,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=dense"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.29,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.28)",
+        "layout=dashboard-grid (0.21)",
+        "grid x0.8",
+        "filter x1.35"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Data review surface",
+    "recommended_direction": [
+      "layout는 Data review surface 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 utilitarian 축 유지",
+      "density는 dense 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "full-screen marketing hero",
+      "nested cards",
+      "large decorative gradients",
+      "tour package cards",
+      "price or booking language",
+      "photo feed dominance",
+      "one-hue beige atmosphere"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "font_system": {
+    "heading": {
+      "name": "Pretendard",
+      "family": "humanist-sans",
+      "personality": [
+        "trustworthy",
+        "readable",
+        "professional"
+      ],
+      "weight_range": "100-900",
+      "variable": true,
+      "source": "GitHub (cactus/pretendard)",
+      "note": "한글 UI 서체의 사실상 표준. Apple SD Gothic Neo 기반이지만 더 정교함. 라틴은 Inter 계열."
+    },
+    "body": {
+      "name": "Pretendard",
+      "family": "humanist-sans",
+      "personality": [
+        "trustworthy",
+        "readable",
+        "professional"
+      ],
+      "weight_range": "100-900",
+      "variable": true,
+      "source": "GitHub (cactus/pretendard)",
+      "note": "한글 UI 서체의 사실상 표준. Apple SD Gothic Neo 기반이지만 더 정교함. 라틴은 Inter 계열."
+    },
+    "korean": {
+      "name": "Pretendard",
+      "family": "humanist-sans",
+      "personality": [
+        "trustworthy",
+        "readable",
+        "professional"
+      ],
+      "weight_range": "100-900",
+      "variable": true,
+      "source": "GitHub (cactus/pretendard)",
+      "note": "한글 UI 서체의 사실상 표준. Apple SD Gothic Neo 기반이지만 더 정교함. 라틴은 Inter 계열."
+    },
+    "korean_rationale": {
+      "primary_is_korean": true,
+      "font": "Pretendard",
+      "reason": "한글 UI 서체의 사실상 표준. 토스, 당근, 리디 등 국내 주요 서비스에서 사용. 자간이 자연스럽고 weight 전 구간에서 안정적.",
+      "glyph_width": "중간",
+      "small_size_limit": "13px까지 가독성 유지",
+      "best_for_kr": [
+        "UI 전반",
+        "대시보드",
+        "모바일 앱",
+        "장문 본문"
+      ],
+      "avoid_for_kr": [],
+      "latin_pair": "Inter (x-height/weight 일치)"
+    },
+    "mono": null,
+    "type_scale": {
+      "base": 14,
+      "scale_ratio": 1.2,
+      "sizes": {
+        "xs": 11,
+        "sm": 12,
+        "md": 14,
+        "lg": 17,
+        "xl": 20,
+        "2xl": 24,
+        "3xl": 29
+      },
+      "line_heights": {
+        "tight": 1.25,
+        "normal": 1.4,
+        "comfortable": 1.5,
+        "relaxed": 1.6
+      },
+      "best_for": [
+        "dashboard",
+        "data-heavy",
+        "mobile"
+      ]
+    },
+    "line_height_preset": "comfortable",
+    "product_type_detected": "mobile",
+    "needs_korean": true,
+    "pairing_source": "auto-scored",
+    "strategy": [
+      "단일 서체(Pretendard)로 weight 대비 위계 — 일관성 우선",
+      "한글 서체: Pretendard — 라틴과 x-height/weight 조화"
+    ],
+    "loading": {
+      "fonts": [
+        {
+          "font": "Pretendard",
+          "weights": "400;500;600",
+          "priority": "preload"
+        }
+      ],
+      "fallback_strategy": "system-ui → font swap",
+      "display": "swap",
+      "subset": "latin,korean",
+      "note": "본문 서체를 preload, 모노스페이스는 lazy load. font-display: swap으로 FOUT 최소화."
+    },
+    "pitfall_warnings": [],
+    "letter_spacing": {
+      "heading_tracking": {
+        "xl": "-0.01em",
+        "2xl": "-0.01em",
+        "3xl": "-0.01em"
+      },
+      "note": "큰 헤딩에 negative tracking 적용. 미적용 시 글자가 풀어진 느낌."
+    },
+    "script_guardrails": {
+      "primary_script": "korean",
+      "headline_font": {
+        "name": "Pretendard",
+        "line_height": "1.25-1.35",
+        "letter_spacing": "0em",
+        "note": "기본 자간/행간이 안정적이라 추가 보정 없이 바로 쓰기 좋다."
+      },
+      "body_font": {
+        "name": "Pretendard",
+        "line_height": "1.6-1.7",
+        "ui_label_line_height": "1.4-1.5",
+        "letter_spacing": "0em",
+        "note": "기본 자간/행간이 안정적이라 추가 보정 없이 바로 쓰기 좋다."
+      },
+      "wrap": {
+        "headline": {
+          "word_break": "keep-all",
+          "overflow_wrap": "normal",
+          "text_wrap": "balance"
+        },
+        "body": {
+          "word_break": "keep-all",
+          "overflow_wrap": "normal"
+        },
+        "avoid": [
+          "forced <br /> before breakpoint QA",
+          "English-first ch heuristics without real Korean copy review"
+        ]
+      },
+      "scale": {
+        "headline_start": "default-scale",
+        "guidance": "기본 스케일을 사용할 수 있지만 한글 문장 기준으로 실제 wrap을 먼저 검증한다."
+      },
+      "warnings": [],
+      "rules": [
+        "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
+        "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
+        "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다."
+      ]
+    }
+  },
+  "css_extraction": null,
+  "governance": {
+    "source_of_truth": [
+      "brand profile",
+      "design tokens",
+      "component specs",
+      "usage rules",
+      "existing product surfaces and task flows"
+    ],
+    "change_policy": [
+      "새 컴포넌트보다 기존 primitive 확장을 우선",
+      "예외 케이스는 variant로 흡수 가능한지 먼저 검토",
+      "브랜드 키워드와 anti-keyword를 위반하면 추가하지 않음"
+    ],
+    "implementation_guardrails": [
+      "기존 핵심 화면, 진입점, 작업 흐름은 명시적 승인 없이 제거하거나 숨기지 않음",
+      "전면 셸 리라이트보다 토큰 -> primitive -> feature surface 순서의 점진적 롤아웃을 우선",
+      "새 시각 규칙은 지원 대상 테마와 breakpoint 전체에서 먼저 검증",
+      "일반(light) 모드와 dark 모드를 함께 제공하고, light를 기본 :root 또는 앱 기본값으로 둠",
+      "모바일 320/360/390/430px에서 horizontal scroll 또는 버튼/CTA 잘림이 있으면 완료로 보지 않음",
+      "버튼·CTA·탭·필터칩·툴바 액션은 fixed width/min-width에 의존하지 않고 wrap 또는 stack fallback을 가져야 함",
+      "padded container 안에서 width: 100vw를 쓰지 않음 — width: 100%, max-width: 100%, documented full-bleed 패턴을 우선",
+      "기존 데이터 밀도와 업무 완료 경로를 유지한 상태에서 시각 품질을 높이는 방향을 우선",
+      "기능 위치 변경, 정보 구조 변경, 패널 제거는 별도의 migration plan이 있을 때만 수행",
+      "레퍼런스는 형태·밀도·컴포넌트 비례만 흡수하고, 색 조합·폰트 스케일·도메인 IA는 토큰과 제품 온톨로지를 따른다",
+      "토큰을 사용하더라도 status/tint/info 역할을 섞어 레퍼런스처럼 보이는 새 팔레트를 만들지 않는다",
+      "구현 중 사용자·리뷰어가 반복 가능한 실패 패턴을 지적하면 현재 화면 수정에 그치지 않고 governance/contract/linter로 승격한다",
+      "상용 제품형 화면은 피치덱식 히어로/균일 카드벽보다 실제 작업 표면, 데이터 밀도, 상태, 필터, 출처를 첫 화면에 우선 배치한다",
+      "데이터·스포츠·운영 UI에서 정확한 수치, 예측, 순위, 투표수는 출처/업데이트 시각/샘플 라벨 없이 확정값처럼 보이게 하지 않는다",
+      "사이트·앱·랜딩·제품·장소·콘텐츠·게임 목업은 도메인 실체를 보여주는 이미지/미디어/identity asset을 적극적으로 사용하고, 이미지 없는 카드·그라디언트만으로 완성 처리하지 않는다",
+      "생성 이미지와 장식 비주얼은 도메인 맥락을 보조해야 하며 일정, 결과, 표, 필터, 상태 같은 핵심 작업 표면을 압도하지 않는다",
+      "Codex image_gen이 실패하거나 실제 사진성이 더 중요해 sourced visual fallback을 사용할 때는 라이선스/저작자/출처/attribution/sha256을 manifest에 기록하고 프로젝트 에셋으로 복사한 뒤 사용한다",
+      "유료 stock provider는 구매·구독·프로젝트 라이선스 증빙이 없으면 구현 에셋으로 승격하지 않고, reference-only provider는 형태·밀도·flow 참고로만 사용한다",
+      "라이선스 메타데이터가 없는 검색 이미지를 사용하지 않고, 런타임 코드가 원격 검색/CDN URL을 hotlink하지 않는다",
+      "아이콘 자리에 이모지(🎨 ✅ 🔥 등)를 넣지 않음 — 리팩토링 중 발견하면 SVG 파일/아이콘 컴포넌트 또는 아이콘 라이브러리로 교체",
+      "favicon, 앱 셸 브랜드 마크, 웹 manifest에는 브랜드 특정 앱 아이콘을 사용하고 일반 이니셜 타일을 최종 아이콘으로 남기지 않음",
+      "컴포넌트는 component_specs.md의 anatomy/states/token binding을 그대로 따라 완전히 구현",
+      "'TODO 컴포넌트', '임시 버튼', '플레이스홀더 카드' 같은 반쪽 구현을 남기지 않음"
+    ],
+    "ai_synthesis_principles": [
+      {
+        "id": "no_fabricated_hex",
+        "rule": "hex를 만들지 않는다",
+        "detail": "AI는 색상 hex 값을 임의로 생성하지 않는다. 반드시 color_reference, CSS 추출, 브랜드 가이드 등 실증 소스에서 가져온 값만 사용한다."
+      },
+      {
+        "id": "no_fabricated_token_names",
+        "rule": "토큰명을 만들지 않는다",
+        "detail": "AI는 토큰 이름을 임의로 발명하지 않는다. 네이밍 패턴(core/semantic/component 레이어 규칙)은 정의하되, 구체적 토큰명은 실제 컴포넌트와 역할에서 도출한다."
+      },
+      {
+        "id": "interpretation_over_facts_only",
+        "rule": "팩트 위에 해석만",
+        "detail": "AI는 수집된 레퍼런스, 프로필, 온톨로지 증거 위에 해석과 구조화만 수행한다. 증거 없는 추론, 존재하지 않는 패턴 서술, 가상의 사용 사례 생성을 금지한다."
+      },
+      {
+        "id": "no_emoji_as_ui",
+        "rule": "이모지를 UI 요소로 쓰지 않는다",
+        "detail": "AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 반드시 SVG 파일/아이콘 컴포넌트 또는 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)를 사용한다. 리팩토링 중 카드, 버튼, 배지, 탭, 상태 표시, empty state에서 이모지를 발견하면 그대로 두지 말고 적절한 SVG 아이콘으로 교체한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다."
+      },
+      {
+        "id": "implement_components_directly",
+        "rule": "컴포넌트를 직접 구현한다",
+        "detail": "AI는 '임시 버튼', '플레이스홀더 카드', 'TODO 컴포넌트' 같은 반쪽 구현을 남기지 않는다. system_spec.md의 Component Strategy와 component_specs.md에 정의된 구조(anatomy), 상태(states), 토큰 바인딩, 접근성 규칙을 그대로 따라 완전한 컴포넌트를 구현한다. 기존 라이브러리 컴포넌트를 그냥 import해서 쓰는 대신, 디자인 시스템 토큰으로 스타일을 명시적으로 바인딩한다."
+      },
+      {
+        "id": "operational_surface_over_pitch_deck",
+        "rule": "상용 제품 화면처럼 구성한다",
+        "detail": "AI는 대시보드, 도구, 데이터 제품, 커뮤니티 제품을 피치덱식 히어로와 균일한 장식 카드 묶음으로 시작하지 않는다. 첫 화면은 사용자가 실제로 확인하거나 조작해야 하는 상태, 필터, 표/리스트, 출처, 업데이트 시각, 핵심 액션을 먼저 보여준다."
+      },
+      {
+        "id": "licensed_visual_assets_only",
+        "rule": "검색 이미지는 라이선스가 검증될 때만 사용한다",
+        "detail": "AI는 image_gen을 사용할 수 없거나 실제 사진성이 더 중요한 경우에만 sourced visual fallback을 사용한다. 무료 provider는 per-asset license metadata가 필요하고, paid provider는 license_proof/usage_scope/licensed_to가 필요하다. Reference-only provider는 형태와 밀도 참고만 가능하며 이미지를 구현 에셋으로 복사하지 않는다. source_url, download_url, provider, author, license, attribution_required, sha256, alt_text를 manifest에 기록하지 못하는 이미지는 구현에 넣지 않는다. 런타임 hotlink와 stock/search 이미지를 앱 아이콘·로고·상태 아이콘으로 쓰는 것을 금지한다."
+      },
+      {
+        "id": "visual_substance_in_mockups",
+        "rule": "목업은 관련 이미지를 적극적으로 사용한다",
+        "detail": "AI는 사이트, 앱, 랜딩, 제품 소개, 콘텐츠 카드, 스포츠/장소/상품/포트폴리오 목업을 이미지 없는 카드와 그라디언트 블록만으로 끝내지 않는다. 도메인 실체를 드러내는 생성 이미지, 라이선스 검증 이미지, 사용자 제공 이미지, 브랜드 identity asset을 적극적으로 배치하고 manifest/alt/crop/반응형 검증까지 완료한다. 단 대시보드·운영 UI에서는 이미지가 표, 필터, 상태, 출처 같은 핵심 작업 표면을 밀어내지 않게 한다."
+      },
+      {
+        "id": "no_homogeneous_card_wall",
+        "rule": "카드벽을 기본 레이아웃으로 쓰지 않는다",
+        "detail": "AI는 페이지 섹션 전체를 카드 안에 다시 넣거나, 동일한 radius/shadow/padding을 가진 카드 묶음으로 화면을 채우지 않는다. 반복되는 객체에는 카드가 가능하지만, 1차 작업 표면은 canvas, map, table, row list, rail, inspector, sheet 같은 도메인 구조로 먼저 만든다."
+      },
+      {
+        "id": "active_svg_visual_affordances",
+        "rule": "아이콘과 도메인 그림은 완성 조건이다",
+        "detail": "AI는 필터, 상태, 액션, 추천 근거, 도메인 객체에 SVG 아이콘이나 deterministic SVG/이미지 자산을 적극적으로 연결한다. 도메인이 장소·상품·콘텐츠·게임·스포츠처럼 시각 실체를 갖는 경우, 텍스트와 테두리만으로 완료 처리하지 않는다."
+      }
+    ],
+    "reference_absorption_scope": {
+      "allowed": [
+        "component morphology",
+        "layout density",
+        "panel/card proportions",
+        "hierarchy rhythm",
+        "interaction affordance patterns"
+      ],
+      "denied": [
+        "color palette",
+        "palette composition or derived secondary palettes",
+        "typography family or scale",
+        "semantic status colors",
+        "product copy",
+        "product data model",
+        "navigation labels",
+        "domain information architecture",
+        "redistributable imagery unless explicitly licensed"
+      ],
+      "rule": "Visual references are morphology inputs only; tokens, component specs, and product IA remain authoritative.",
+      "failure_patterns": [
+        {
+          "id": "token-bound-reference-palette-mixing",
+          "trigger": "Implementation uses --ds-* tokens but recombines visual-reference-like dark rails, teal/blue secondaries, or status/tint roles into a new palette.",
+          "rule": "Token binding is necessary but not sufficient; color role composition must still follow the ontology palette roles.",
+          "prevention": "Derived colors may alias a semantic token or mix one semantic role with a neutral surface/transparent value. Do not mix multiple chromatic roles to create a local palette.",
+          "technical_controls": [
+            "IMPLEMENTATION_CONTRACT.md",
+            "lint-implementation DS030",
+            "lint-implementation DS031"
+          ]
+        }
+      ],
+      "promotion_policy": {
+        "id": "implementation-feedback-promotion",
+        "rule": "When implementation review identifies a repeatable design-system failure, promote it into governance, generated artifacts, and lint checks before treating the current screen as complete.",
+        "outputs": [
+          "design_system_blueprint.governance",
+          "system_spec.md",
+          "system_ontology.json",
+          "IMPLEMENTATION_CONTRACT.md"
+        ]
+      }
+    },
+    "color_mode_parity_policy": {
+      "id": "color-mode-parity",
+      "rule": "Every generated or refactored product UI must ship a normal light mode and a dark mode unless the user explicitly requests a single-mode artifact.",
+      "required_modes": [
+        "light",
+        "dark"
+      ],
+      "default_mode": "light",
+      "implementation_rules": [
+        "Use light mode as the default :root or app-default token set; dark mode must be an override such as [data-theme=\"dark\"].",
+        "Do not build dark-only surfaces for dashboards, tools, landing pages, or prototypes unless explicitly requested.",
+        "Every semantic surface/text/border/accent role needs a light and dark value or a documented derivation.",
+        "Theme toggles, preview links, screenshots, or QA scripts must verify both modes when the implementation has a UI shell.",
+        "Do not solve dark mode by inverting the entire page; define mode-specific semantic tokens and keep imagery/icons legible in both modes."
+      ],
+      "failure_patterns": [
+        {
+          "id": "dark-only-implementation",
+          "trigger": "A generated UI defines only dark surfaces or color-scheme: dark without a light/default token mode.",
+          "rule": "Normal light mode is required alongside dark mode.",
+          "prevention": "Define :root light tokens, add [data-theme=\"dark\"] overrides, and verify both modes before completion.",
+          "technical_controls": [
+            "system_spec.md Color Mode Parity",
+            "system_ontology.json ColorMode",
+            "lint-implementation DS060",
+            "light/dark screenshot QA"
+          ]
+        },
+        {
+          "id": "theme-token-drift",
+          "trigger": "Light and dark modes use unrelated local colors instead of paired semantic roles.",
+          "rule": "Mode values must map through the same semantic token roles.",
+          "prevention": "Keep mode differences inside artifact token files such as design-system/tokens.css; components should consume the same semantic variables in both modes.",
+          "technical_controls": [
+            "token_schema.json semantic roles",
+            "IMPLEMENTATION_CONTRACT.md",
+            "lint-implementation DS061"
+          ]
+        }
+      ],
+      "outputs": [
+        "design_system_blueprint.governance",
+        "system_spec.md",
+        "system_ontology.json",
+        "token_schema.json",
+        "IMPLEMENTATION_CONTRACT.md",
+        "agent_packs",
+        "lint-implementation"
+      ]
+    },
+    "responsive_resilience_policy": {
+      "id": "responsive-resilience",
+      "rule": "Every generated or refactored UI must preserve horizontal fit at mobile widths before visual polish is considered complete.",
+      "viewport_contract": {
+        "required_widths_px": [
+          320,
+          360,
+          390,
+          430,
+          768,
+          1024,
+          1440
+        ],
+        "pass_condition": "document.documentElement.scrollWidth <= window.innerWidth and all primary controls remain reachable without horizontal scrolling."
+      },
+      "control_rules": [
+        "Buttons, CTA groups, tabs, filter chips, and toolbar actions must not rely on fixed px widths or mobile-hostile min-width values.",
+        "Every button-like control needs max-inline-size: 100%; controls inside flex/grid parents need min-inline-size: 0 so labels can shrink or wrap.",
+        "Action rows must wrap or stack at narrow widths; two-button rows need a <=480px fallback before implementation is complete.",
+        "Long Korean CTA labels must be tested with real copy. Prefer wrapping/stacking over clipping, overflow hidden, or forcing white-space: nowrap.",
+        "Horizontal rails, tickers, score strips, and carousels must not reveal partially clipped text. Either size cards so visible items are complete, or use compact labels such as icon+code in the rail and move full names to the detailed surface.",
+        "Do not use width: 100vw inside padded containers; it commonly creates horizontal scroll. Use width: 100%, max-width: 100%, or a documented full-bleed pattern.",
+        "Never hide body overflow-x as the fix for a layout bug; remove the overflowing width/min-width instead."
+      ],
+      "failure_patterns": [
+        {
+          "id": "mobile-control-overflow",
+          "trigger": "A button, CTA, tab, chip, or action group extends beyond a 320-430px viewport or requires sideways scrolling.",
+          "rule": "Controls must fit, wrap, or stack within their container at mobile widths.",
+          "prevention": "Ban fixed/min-width px sizing on button-like controls unless paired with max-inline-size: 100%, min-inline-size: 0, and a mobile wrap/stack fallback.",
+          "technical_controls": [
+            "system_spec.md Responsive Resilience",
+            "components/component_specs.md button notes",
+            "lint-implementation DS040",
+            "lint-implementation DS042",
+            "viewport screenshot QA"
+          ]
+        },
+        {
+          "id": "viewport-horizontal-overflow",
+          "trigger": "The page has horizontal scroll at mobile widths because a section, grid, or full-bleed element exceeds the viewport.",
+          "rule": "No generated screen is complete while scrollWidth exceeds innerWidth on supported mobile viewports.",
+          "prevention": "Avoid 100vw in padded containers, use minmax(0, 1fr) for grids, set min-width: 0 on flex/grid children, and verify 320/360/390/430px screenshots.",
+          "technical_controls": [
+            "system_spec.md viewport contract",
+            "lint-implementation DS041",
+            "lint-implementation DS043",
+            "Playwright mobile viewport check"
+          ]
+        },
+        {
+          "id": "horizontal-rail-label-clipping",
+          "trigger": "A horizontal ticker, score strip, carousel, or date rail shows ellipsized/cropped labels or exposes a partial next card with clipped readable text.",
+          "rule": "Scrollable rails may hint that more content exists, but visible text inside each rendered item must be complete and legible.",
+          "prevention": "Use whole-card column math at tablet/desktop breakpoints; at mobile widths show one full card or remove full names from the rail. Split dense scan labels from descriptive names, and preserve full names in aria-labels or detail panels.",
+          "technical_controls": [
+            "system_spec.md Responsive Resilience",
+            "component_specs.md rail/ticker notes",
+            "viewport screenshot QA",
+            "Playwright element scrollWidth<=clientWidth checks"
+          ]
+        }
+      ],
+      "outputs": [
+        "design_system_blueprint.governance",
+        "system_spec.md",
+        "token_schema.json",
+        "component_specs.md",
+        "IMPLEMENTATION_CONTRACT.md",
+        "lint-implementation"
+      ]
+    },
+    "icon_refactor_policy": {
+      "id": "emoji-to-svg-refactor",
+      "rule": "During UI refactors, emoji-looking UI affordances must be replaced with SVG-based icons instead of preserved as text glyphs.",
+      "targets": [
+        "button",
+        "card",
+        "badge",
+        "tab",
+        "navigation item",
+        "status indicator",
+        "empty state",
+        "toast",
+        "banner"
+      ],
+      "replacement_order": [
+        "Use the project's existing icon library when one is already installed and stylistically compatible.",
+        "Reuse existing local SVG/icon components when available.",
+        "Create a simple local SVG file or SVG component when no suitable icon exists."
+      ],
+      "implementation_rules": [
+        "Keep SVG stroke/fill bound to currentColor or design tokens, not hard-coded palette values.",
+        "Decorative SVG icons use aria-hidden=\"true\"; semantic icons get an accessible label or adjacent text.",
+        "Store new SVG assets in the nearest existing icons/assets directory; create a minimal icons directory only when none exists.",
+        "Do not replace user-generated emoji content, chat text, blog body, or emoji-picker data.",
+        "Do not use emoji as a placeholder while searching for a proper icon."
+      ],
+      "failure_patterns": [
+        {
+          "id": "emoji-ui-affordance",
+          "trigger": "A button, card, nav item, badge, status indicator, or empty state uses an emoji as its icon or visual marker.",
+          "rule": "UI affordances must use SVG files/components or an approved icon library, never emoji glyphs.",
+          "prevention": "Replace the emoji with an appropriate existing icon, imported icon, or locally authored SVG with token-bound color and accessible semantics.",
+          "technical_controls": [
+            "component_specs.md Non-negotiable",
+            "design-system-refactor skill",
+            "lint-implementation DS050"
+          ]
+        },
+        {
+          "id": "icon-starved-control-surface",
+          "trigger": "An interactive surface has filters, actions, badges, or status chips but almost no SVG/icon affordances.",
+          "rule": "Icons are part of scanability for controls and state, not optional decoration.",
+          "prevention": "Add token-bound SVG icons to filters, actions, status, and repeated scan surfaces while keeping accessible text labels.",
+          "technical_controls": [
+            "IMPLEMENTATION_CONTRACT.md",
+            "component_specs.md icon notes",
+            "lint-implementation DS071"
+          ]
+        }
+      ],
+      "outputs": [
+        "system_spec.md",
+        "component_specs.md",
+        "IMPLEMENTATION_CONTRACT.md",
+        "agent_packs",
+        "lint-implementation"
+      ]
+    },
+    "app_icon_identity_policy": {
+      "id": "brand-app-icon-identity",
+      "rule": "Every app or website implementation must include a brand-specific app icon identity asset; generic initial-letter tiles are not acceptable as final app icons.",
+      "required_assets": [
+        {
+          "id": "identity-asset:app-icon",
+          "label": "Brand app icon",
+          "required": true,
+          "formats": [
+            "svg source",
+            "favicon",
+            "web app manifest icon when applicable"
+          ],
+          "targets": [
+            "favicon",
+            "app shell brand mark",
+            "web app manifest",
+            "mobile home-screen icon"
+          ],
+          "description": "A compact identity mark that encodes the product domain, brand palette, and interaction posture without relying on generic initials."
+        }
+      ],
+      "implementation_rules": [
+        "Do not ship a plain initials tile such as WC, AI, DS, or App as the final app icon unless the brand system explicitly defines that lettermark.",
+        "The app icon must use the brand palette, visual keywords, and product primitives as evidence for shape language.",
+        "Use a deterministic SVG source for the primary app icon; generated raster imagery may support marketing visuals but must not replace the identity icon source.",
+        "Wire the app icon into favicon/link metadata and the visible app-shell brand mark when the implementation has one.",
+        "Keep small-size legibility: the icon must remain recognizable at 32px and in a 44px navigation mark."
+      ],
+      "failure_patterns": [
+        {
+          "id": "generic-initials-app-icon",
+          "trigger": "A favicon, app-shell mark, or web app icon uses generic initials or placeholder text instead of a brand-specific identity asset.",
+          "rule": "App icons are required brand identity assets, not temporary text badges.",
+          "prevention": "Create or reuse a brand-specific SVG app icon, wire it to favicon/manifest/app-shell surfaces, and document it in the ontology.",
+          "technical_controls": [
+            "system_spec.md Brand Identity Assets",
+            "system_ontology.json BrandIdentityAsset",
+            "IMPLEMENTATION_CONTRACT.md",
+            "lint-implementation DS077",
+            "viewport screenshot QA"
+          ]
+        }
+      ],
+      "outputs": [
+        "brand_profile",
+        "system_spec.md",
+        "system_ontology.json",
+        "IMPLEMENTATION_CONTRACT.md",
+        "agent_packs",
+        "lint-implementation"
+      ]
+    },
+    "mockup_visual_substance_policy": {
+      "id": "mockup-visual-substance",
+      "rule": "Commercial mockups should use meaningful visual assets by default; image-free screens are incomplete when the product, content, place, object, or story needs visual substance.",
+      "applies_to": [
+        "website mockup",
+        "landing page",
+        "product page",
+        "commerce",
+        "editorial/content surface",
+        "portfolio",
+        "venue/place page",
+        "sports hub",
+        "travel/food/real-estate",
+        "game or interactive experience",
+        "empty state/onboarding"
+      ],
+      "diagnosis": [
+        "Image-free mockups often look unfinished because cards, hero sections, editorial modules, and content surfaces have no concrete subject matter.",
+        "Gradient blocks, abstract blobs, and homogeneous placeholder panels read as AI-generated polish rather than a real product or brand surface.",
+        "Professional sites usually reveal an actual product, place, person, object, state, gameplay, article subject, or brand identity asset early in the experience."
+      ],
+      "required_signals": [
+        "at least one relevant visual asset when the first viewport is a landing, brand, product, venue, editorial, portfolio, game, or content-led surface",
+        "real content thumbnails or product/place/object imagery where repeated cards represent visual entities",
+        "image_gen, sourced visual fallback, user-supplied assets, or deterministic SVG identity assets selected according to the visual asset acquisition contract",
+        "deterministic inline SVG visuals include visible labels/legends or title/desc plus data-subject anchors when they represent places, products, diagrams, maps, or scenes",
+        "manifest entry with acquisition_mode, asset_path, intended_for, alt_text, sha256, crop/focal notes when applicable",
+        "responsive crop and light/dark legibility verified by screenshots or DOM checks"
+      ],
+      "image_acquisition_order": [
+        "Use user-supplied licensed imagery when provided and relevant.",
+        "Use Codex image_gen for brand-specific synthetic raster imagery.",
+        "Use sourced visual fallback when real-world photography is more appropriate or image_gen is unavailable.",
+        "Use deterministic SVG/identity assets for app icons, logos, flags, diagrams, and UI glyphs."
+      ],
+      "implementation_rules": [
+        "Do not ship a commercial website/app mockup with only text, bordered cards, gradients, and empty media placeholders when the domain naturally needs imagery.",
+        "Hero, product, venue, editorial, portfolio, and game surfaces need a concrete visual subject, not a purely atmospheric background.",
+        "Repeated content cards should use thumbnails or compact visual identity when the item represents a place, person, product, match, article, media, or object.",
+        "Empty states and onboarding panels can use illustration, but the illustration must clarify the product state rather than decorate a blank panel.",
+        "Path-only inline SVGs with generic map/sketch/illustration classes do not count as visual substance unless the visual is semantically anchored with labels, legend, title/desc, or data-subject landmarks.",
+        "Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.",
+        "Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.",
+        "A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.",
+        "Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.",
+        "Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.",
+        "Every integrated raster image must be represented in the visual asset manifest before product code references it."
+      ],
+      "failure_patterns": [
+        {
+          "id": "image-free-commercial-mockup",
+          "trigger": "A site, app, landing, product, venue, editorial, portfolio, game, or content-led mockup ships with no meaningful visual asset despite obvious visual subject matter.",
+          "rule": "Visual substance is part of mockup completeness, not optional decoration.",
+          "prevention": "Add relevant generated, sourced, user-supplied, or deterministic visual assets and record them in the manifest before calling the mockup complete.",
+          "technical_controls": [
+            "system_spec.md Mockup Visual Substance",
+            "system_ontology.json GovernanceRule",
+            "design-system-visual-assets skill",
+            "lint-implementation DS072",
+            "viewport screenshot QA"
+          ]
+        },
+        {
+          "id": "placeholder-gradient-as-image",
+          "trigger": "A hero, card, or editorial module uses only gradients, abstract blobs, empty frames, or generic decorative panels where a real visual subject is expected.",
+          "rule": "A visual slot must reveal the actual product, place, object, state, content, or brand identity.",
+          "prevention": "Replace placeholder media with image_gen, sourced, user-supplied, or deterministic SVG assets that match the domain and slot.",
+          "technical_controls": [
+            "Generated Visual Asset Plan",
+            "visual manifest review",
+            "visual QA screenshots"
+          ]
+        },
+        {
+          "id": "low-information-inline-svg-visual",
+          "trigger": "A domain visual is an unlabeled path-only SVG map, sketch, scene, or illustration that does not expose the actual place, product, object, state, or data relationship.",
+          "rule": "Deterministic SVG visuals need semantic anchors; otherwise they are decorative placeholders, not visual substance.",
+          "prevention": "Add visible labels, legend, title/desc, and data-subject landmarks, or replace the slot with a stronger generated, sourced, or user-supplied asset.",
+          "technical_controls": [
+            "lint-implementation DS073",
+            "system_spec.md Mockup Visual Substance",
+            "visual QA screenshots"
+          ]
+        },
+        {
+          "id": "amateur-ad-hoc-illustration",
+          "trigger": "A mockup uses an improvised sketch/doodle/hand-drawn SVG as the main domain visual and the result reads amateur or meaningless.",
+          "rule": "A bad drawing does not become acceptable because it is labeled; low-confidence illustration should be removed or replaced.",
+          "prevention": "Use image_gen, a sourced/user-supplied asset, a reference-backed illustration, or a clean product schematic/data visualization. Do not ship rough path art as visual substance.",
+          "technical_controls": [
+            "lint-implementation DS074",
+            "visual QA screenshots",
+            "implementation feedback promotion"
+          ]
+        },
+        {
+          "id": "ambiguous-mock-runtime-surface",
+          "trigger": "A mockup shows a schematic, placeholder map, or abstract visual surface without clarifying what runtime app surface it represents.",
+          "rule": "Even a mockup must make the production representation legible.",
+          "prevention": "Mark the surface as a map SDK layer, generated/sourced media, chart/table, product schematic, or explicit loading/empty state; avoid ambiguous decorative stand-ins.",
+          "technical_controls": [
+            "lint-implementation DS075",
+            "IMPLEMENTATION_CONTRACT.md",
+            "visual QA screenshots"
+          ]
+        },
+        {
+          "id": "media-runtime-surface-without-asset",
+          "trigger": "A place, product, article, or content detail declares a media/photo runtime surface but renders only CSS patterns, gradients, or generic blocks.",
+          "rule": "Runtime media surfaces need actual media assets or explicit empty/loading states.",
+          "prevention": "Bind a generated, sourced, or user-supplied image/video asset with alt text and manifest metadata, or render a clear empty/loading state instead of fake visual texture.",
+          "technical_controls": [
+            "lint-implementation DS076",
+            "visual asset manifest",
+            "image_gen or sourced asset pipeline"
+          ]
+        },
+        {
+          "id": "media-tile-without-asset",
+          "trigger": "One or more place-photo, texture-card, media-card, evidence-card, or thumbnail-card slots remain CSS-only after the surrounding media surface has been implemented.",
+          "rule": "Every visible media/evidence tile needs its own asset or an explicit empty/loading/pending state.",
+          "prevention": "Attach generated, sourced, or user-supplied media to each tile, or mark the tile as an intentional empty/loading/pending state with clear copy.",
+          "technical_controls": [
+            "lint-implementation DS078",
+            "visual asset manifest",
+            "viewport screenshot QA"
+          ]
+        },
+        {
+          "id": "unmanifested-mockup-image",
+          "trigger": "A mockup references a raster image in HTML/CSS/JS without a visual asset manifest record.",
+          "rule": "Integrated raster assets must be traceable.",
+          "prevention": "Record acquisition_mode, asset_path, intended_for, alt_text, sha256, and source/prompt metadata before wiring the asset.",
+          "technical_controls": [
+            "public/generated/design-system/manifest.json",
+            "design-system/generated_visual_assets.json",
+            "system_ontology.json SourcedVisualAsset/GeneratedVisualAsset"
+          ]
+        }
+      ],
+      "outputs": [
+        "design_system_blueprint.governance",
+        "system_spec.md",
+        "system_ontology.json",
+        "IMPLEMENTATION_CONTRACT.md",
+        "agent_packs",
+        "visual QA",
+        "compare-visuals"
+      ]
+    },
+    "commercial_product_realism_policy": {
+      "id": "commercial-product-realism",
+      "rule": "Product and data UIs must feel operated, not generated: lead with real workflow state, data density, provenance, and asymmetric hierarchy instead of pitch-deck hero composition.",
+      "applies_to": [
+        "dashboard",
+        "tool",
+        "sports data product",
+        "community product",
+        "operational surface",
+        "B2B/SaaS product UI"
+      ],
+      "diagnosis": [
+        "AI-looking screens often use a large cinematic hero, symmetric card grids, generic metric tiles, and equally polished panels before the actual task surface appears.",
+        "Commercial sports and data products feel more credible because they expose compact live modules, filters, list/table rows, timestamps, source labels, status variation, and editorial or utility rails.",
+        "Generated raster imagery becomes suspicious when it dominates a workflow screen and is not tied to actual product state, team identity, venue context, or inspectable content."
+      ],
+      "required_signals": [
+        "first-viewport task surface",
+        "compact data/list/table module where the domain expects scanning",
+        "clear primary action or filter path",
+        "status variation such as live, final, upcoming, delayed, empty, error, or source-updated",
+        "source labels, timestamps, sample/demo labels, or data provenance for exact numbers",
+        "domain-specific identity assets such as team crests, app icon, venue/match labels, or object imagery when applicable",
+        "national flag identity marks for country-based tournaments, paired with code/name text for scanability and accessibility",
+        "reference-backed domain morphology such as score strips, compact rails, tables, tabs, and editorial sidebars before major realism refactors"
+      ],
+      "successful_patterns": [
+        {
+          "id": "same-domain-reference-before-redesign",
+          "rule": "Before a realism pass, collect same-domain commercial references and current-state screenshots.",
+          "implementation": "Use reference screenshots to extract morphology only: module order, density, rail/table rhythm, status texture, and hierarchy.",
+          "verification": "A research report or design-context pack exists, and implementation notes name what was absorbed and what was not copied."
+        },
+        {
+          "id": "operational-header-before-hero-media",
+          "rule": "Sports/data products open with operational status and task controls, not a cinematic hero.",
+          "implementation": "Use compact status strips, date/filter rails, next match/current item, source labels, and primary task surfaces above decorative imagery.",
+          "verification": "First viewport contains inspectable data/state modules before or alongside any generated visual context."
+        },
+        {
+          "id": "score-ticker-as-scan-surface",
+          "rule": "Match tickers are scan surfaces; they should favor compact identity and state over full descriptive copy.",
+          "implementation": "Use flag/code or icon/code labels, status chips, short prediction/result labels, and whole-card scroll math. Move full names and explanations to detail panels or aria-labels.",
+          "verification": "Ticker item text does not clip at 390, 1024, or 1440px, and full match names remain available in detail views or accessibility labels."
+        },
+        {
+          "id": "national-flag-code-identity",
+          "rule": "Country-based tournament UIs use national flag identity marks plus team codes/names as the primary recognition layer.",
+          "implementation": "Use deterministic local SVG/CSS flag marks or licensed flag assets; pair with FIFA/IOC-style codes in dense rails and names in detailed surfaces.",
+          "verification": "No emoji flags are used as UI icons; flag colors are represented through design-system tokens such as --ds-color-* rather than local raw colors."
+        },
+        {
+          "id": "source-ledger-and-sample-labeling",
+          "rule": "Exact-looking sports metrics, predictions, and schedules need visible provenance.",
+          "implementation": "Add source ledger, updated-at labels, sample/demo labels, and clear separation between official fixtures/results and MVP sample predictions/opinions.",
+          "verification": "Numbers and predictions have source/update/sample context in the first screen or nearby metadata."
+        },
+        {
+          "id": "editorial-insight-side-rail",
+          "rule": "Sports hubs benefit from an asymmetric side rail for context, fan pulse, and editorial watch points.",
+          "implementation": "Pair the primary schedule/table with a sticky or stacked rail containing selected match, country tracking, fan reaction, and group implication cards.",
+          "verification": "Primary task remains dominant while the rail provides contextual depth without becoming a homogeneous card wall."
+        },
+        {
+          "id": "visual-context-secondary",
+          "rule": "Generated or atmospheric imagery supports venue/domain context but does not replace the product workflow.",
+          "implementation": "Keep generated images small or secondary in operational products; use them to reinforce venue/command-center mood after schedule/status surfaces are visible.",
+          "verification": "The image is not the largest first-viewport object in dashboards/tools unless the user explicitly requests a landing page."
+        },
+        {
+          "id": "dual-mode-screenshot-qa",
+          "rule": "Light mode is the default product mode and dark mode remains available; both need screenshot QA.",
+          "implementation": "Bind components to paired semantic tokens and capture at least light mode plus dark mode when theme support exists.",
+          "verification": "The implementation includes :root light tokens, dark overrides, and viewport screenshots or checks for both modes."
+        },
+        {
+          "id": "brand-app-icon-as-required-identity",
+          "rule": "App icon identity is part of product completeness, not optional polish.",
+          "implementation": "Create or discover a brand-specific deterministic SVG app icon, wire favicon/manifest/app-shell, and avoid generic initials such as WC unless explicitly defined by the brand.",
+          "verification": "BrandIdentityAsset is present in the ontology and the icon is visible in browser/app shell surfaces."
+        }
+      ],
+      "implementation_rules": [
+        "For dashboards, tools, sports/data products, and community products, do not make the first screen read like a marketing landing page unless the user explicitly asks for a landing page.",
+        "Replace oversized hero pitches with an operational header: current status, primary workflow, filters/date rail, next item, or live summary.",
+        "Use compact rows, tables, rails, tabs, and status chips when the domain task is scanning or comparison; reserve large cards for true summaries or repeated content items.",
+        "Avoid homogeneous card walls where every module has the same weight, radius, tint, icon treatment, and spacing. Create an explicit hierarchy between primary task, secondary rail, and supporting modules.",
+        "Exact metrics, model outputs, poll counts, odds, rankings, or match data need source/update context or a visible sample/demo label.",
+        "Generated or decorative imagery must support the domain object, venue, person, product, or state. It must not replace data, navigation, controls, or the first operational surface.",
+        "Use asymmetry and real product rhythm: some dense modules, some editorial/context rails, some compact controls, and visible state variation.",
+        "For country-based sports competitions, represent teams with deterministic SVG/CSS flag marks plus text codes or names. Do not use platform emoji flags as UI icons, and do not default to generic colored letter badges when national identity is the primary domain signal.",
+        "Flag colors and domain identity marks are design-system tokens. Do not create implementation-local --flag-* or raw color values in component CSS; use --ds-color-* or generated asset metadata.",
+        "When a product UI is judged AI-looking, gather at least two same-domain commercial references and convert only observed morphology into the implementation: module order, density, status texture, rail/table patterns, and state hierarchy. Do not copy competitor copy, data, palette, or navigation taxonomy."
+      ],
+      "failure_patterns": [
+        {
+          "id": "pitch-deck-dashboard-shell",
+          "trigger": "A dashboard, tool, sports/data, or community UI opens with an oversized marketing hero, broad slogan, and feature cards before the real workflow or data surface.",
+          "rule": "Operational products must lead with the user's live task or inspectable product state, not a pitch-deck composition.",
+          "prevention": "Start with a compact command header, status strip, active filters/date rail, table/list, or primary workflow module; move marketing copy lower or remove it.",
+          "technical_controls": [
+            "system_spec.md Commercial Product Realism",
+            "system_ontology.json GovernanceRule",
+            "IMPLEMENTATION_CONTRACT.md",
+            "agent_packs",
+            "visual QA"
+          ]
+        },
+        {
+          "id": "homogeneous-card-wall",
+          "trigger": "The first viewport is dominated by equally weighted cards with similar radius, shadow, icon chips, label style, and spacing.",
+          "rule": "Commercial product UIs need hierarchy, density variation, and task-led asymmetry.",
+          "prevention": "Promote one primary workflow module, compress secondary data into rows/tables/rails, and vary module scale only when the information architecture justifies it.",
+          "technical_controls": [
+            "system_spec.md Component Strategy",
+            "component_specs.md module hierarchy notes",
+            "lint-implementation DS070",
+            "visual QA"
+          ]
+        },
+        {
+          "id": "unverified-redesign-screenshot",
+          "trigger": "A redesign or visual-feedback response claims improvement while the baseline screenshot was overwritten, cached, or byte-identical to the revised screenshot.",
+          "rule": "Visual feedback is not closed until before/after screenshots are preserved and compared.",
+          "prevention": "Capture baseline and revised screenshots under distinct filenames, run compare-visuals, and cite hashes plus changed-pixel ratio before claiming a visual change.",
+          "technical_controls": [
+            "compare-visuals",
+            "visual QA screenshots",
+            "implementation feedback promotion"
+          ]
+        },
+        {
+          "id": "decorative-ai-hero-over-data",
+          "trigger": "A cinematic generated image or decorative visual dominates a product workflow where users need schedules, results, controls, or status first.",
+          "rule": "Generated imagery supports product context but does not outrank the operational surface.",
+          "prevention": "Make imagery secondary, domain-specific, and connected to real content; prioritize score strips, tables, filters, or domain objects in the first viewport.",
+          "technical_controls": [
+            "system_spec.md Generated Visual Asset Plan",
+            "system_spec.md Commercial Product Realism",
+            "image manifest review"
+          ]
+        },
+        {
+          "id": "synthetic-metric-copy",
+          "trigger": "The UI shows precise-looking numbers, predictions, rankings, poll counts, or operational claims without source, timestamp, sample/demo labeling, or data provenance.",
+          "rule": "Credible product data must expose provenance or clearly identify itself as sample/demo data.",
+          "prevention": "Add source/update labels, sample badges, data-footnote components, or remove exact-looking fabricated values until real data is available.",
+          "technical_controls": [
+            "system_spec.md Content/Data Provenance",
+            "component_specs.md data footnote",
+            "copy review"
+          ]
+        },
+        {
+          "id": "missing-operational-state-texture",
+          "trigger": "Lists, cards, schedules, feeds, or dashboards have only ideal/default states and no live/final/empty/error/delayed/source-updated variation.",
+          "rule": "Commercial interfaces reveal operational state texture through varied statuses and edge cases.",
+          "prevention": "Design and implement realistic domain states before final visual polish; include at least the states required by component_specs.md and product primitives.",
+          "technical_controls": [
+            "component_specs.md states",
+            "system_ontology.json ComponentState",
+            "scenario QA"
+          ]
+        },
+        {
+          "id": "reference-free-realism-refactor",
+          "trigger": "A screen receives 'AI-looking' or 'not commercial enough' feedback and the next iteration changes styling from taste alone without collecting same-domain commercial references.",
+          "rule": "Commercial realism fixes must be evidence-backed: reference data informs morphology, while ontology tokens, component specs, and product goals remain authoritative.",
+          "prevention": "Capture a current-state screenshot, collect at least two same-domain references, summarize observed patterns, and implement the relevant density, rail, table, status, or hierarchy changes without copying protected content.",
+          "technical_controls": [
+            "Reference Intelligence",
+            "Commercial Product Realism",
+            "visual QA screenshots",
+            "implementation feedback promotion"
+          ]
+        },
+        {
+          "id": "generic-national-team-badges",
+          "trigger": "A country-based sports UI represents national teams only as generic colored badges, initials, or abstract crests while flags are the expected recognition layer.",
+          "rule": "National-team products should expose flag identity marks as the primary visual cue, with text codes/names retained for scanability and accessibility.",
+          "prevention": "Use local deterministic SVG/CSS flag marks or licensed flag assets paired with team codes. Avoid emoji flags and avoid replacing readable text with image-only flags.",
+          "technical_controls": [
+            "Commercial Product Realism",
+            "Brand Identity Assets",
+            "icon_refactor_policy",
+            "visual QA screenshots"
+          ]
+        },
+        {
+          "id": "untokenized-domain-identity-colors",
+          "trigger": "A UI introduces local flag, team, league, venue, or domain identity colors directly inside implementation CSS instead of design-system tokens.",
+          "rule": "Domain identity colors are still governed design tokens; component CSS consumes token roles rather than inventing local palette variables.",
+          "prevention": "Promote domain identity colors into token files as --ds-color-* or documented asset metadata, then bind components to those variables.",
+          "technical_controls": [
+            "lint-implementation DS003",
+            "token_schema.json",
+            "Commercial Product Realism",
+            "Brand Identity Assets"
+          ]
+        }
+      ],
+      "outputs": [
+        "design_system_blueprint.governance",
+        "system_spec.md",
+        "system_ontology.json",
+        "IMPLEMENTATION_CONTRACT.md",
+        "agent_packs",
+        "visual QA",
+        "compare-visuals"
+      ]
+    },
+    "feedback_promotion_policy": {
+      "id": "implementation-feedback-promotion",
+      "rule": "When implementation review identifies a repeatable design-system failure, promote it into governance, generated artifacts, and lint checks before treating the current screen as complete.",
+      "outputs": [
+        "design_system_blueprint.governance",
+        "system_spec.md",
+        "system_ontology.json",
+        "IMPLEMENTATION_CONTRACT.md"
+      ]
+    }
+  },
+  "ontology_targets": [
+    {
+      "concept_id": "component",
+      "count": 121
+    },
+    {
+      "concept_id": "design_system",
+      "count": 68
+    },
+    {
+      "concept_id": "layout",
+      "count": 42
+    },
+    {
+      "concept_id": "content",
+      "count": 36
+    },
+    {
+      "concept_id": "accessibility",
+      "count": 35
+    },
+    {
+      "concept_id": "color",
+      "count": 35
+    },
+    {
+      "concept_id": "pattern",
+      "count": 35
+    },
+    {
+      "concept_id": "iconography",
+      "count": 30
+    }
+  ],
+  "benchmark": {
+    "matched_systems": [
+      {
+        "id": "stripe",
+        "name": "Stripe",
+        "category": "fintech",
+        "keywords": [
+          "trustworthy",
+          "precise",
+          "calm"
+        ],
+        "color_strategy": "neutral-dominant with purple accent",
+        "notable": [
+          "dashboard-first",
+          "data-dense UI",
+          "global design language"
+        ]
+      },
+      {
+        "id": "github-primer",
+        "name": "GitHub Primer",
+        "category": "devtool",
+        "keywords": [
+          "trustworthy",
+          "accessible",
+          "systematic"
+        ],
+        "color_strategy": "semantic color scales with theme modes",
+        "notable": [
+          "open source",
+          "Figma/code parity",
+          "accessibility-first"
+        ]
+      },
+      {
+        "id": "shopify-polaris",
+        "name": "Shopify Polaris",
+        "category": "commerce",
+        "keywords": [
+          "trustworthy",
+          "editorial",
+          "inclusive"
+        ],
+        "color_strategy": "green accent with warm neutrals",
+        "notable": [
+          "merchant-focused",
+          "content guidelines",
+          "pattern library"
+        ]
+      },
+      {
+        "id": "atlassian",
+        "name": "Atlassian Design System",
+        "category": "productivity",
+        "keywords": [
+          "trustworthy",
+          "bold",
+          "accessible"
+        ],
+        "color_strategy": "blue accent with semantic states",
+        "notable": [
+          "enterprise-scale",
+          "accessibility guidelines",
+          "brand evolution"
+        ]
+      },
+      {
+        "id": "slack",
+        "name": "Slack",
+        "category": "communication",
+        "keywords": [
+          "friendly",
+          "accessible",
+          "trustworthy"
+        ],
+        "color_strategy": "aubergine brand with semantic states",
+        "notable": [
+          "real-time messaging",
+          "emoji-rich",
+          "workspace theming"
+        ]
+      }
+    ],
+    "total_benchmark_count": 35,
+    "common_typography_in_matches": {
+      "Inter": 3,
+      "Mona Sans": 1,
+      "Lato": 1
+    },
+    "color_strategy_patterns": [
+      "neutral-dominant with purple accent",
+      "semantic color scales with theme modes",
+      "green accent with warm neutrals",
+      "blue accent with semantic states",
+      "aubergine brand with semantic states"
+    ],
+    "industry_keywords": [
+      "accessible",
+      "bold",
+      "calm",
+      "composable",
+      "editorial",
+      "expressive",
+      "fast",
+      "flexible",
+      "friendly",
+      "inclusive",
+      "minimal",
+      "playful",
+      "precise",
+      "refined",
+      "systematic",
+      "trustworthy",
+      "warm"
+    ]
+  }
+}

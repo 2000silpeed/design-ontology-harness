@@ -56,6 +56,16 @@ AI_SYNTHESIS_PRINCIPLES = [
         "rule": "목업은 관련 이미지를 적극적으로 사용한다",
         "detail": "AI는 사이트, 앱, 랜딩, 제품 소개, 콘텐츠 카드, 스포츠/장소/상품/포트폴리오 목업을 이미지 없는 카드와 그라디언트 블록만으로 끝내지 않는다. 도메인 실체를 드러내는 생성 이미지, 라이선스 검증 이미지, 사용자 제공 이미지, 브랜드 identity asset을 적극적으로 배치하고 manifest/alt/crop/반응형 검증까지 완료한다. 단 대시보드·운영 UI에서는 이미지가 표, 필터, 상태, 출처 같은 핵심 작업 표면을 밀어내지 않게 한다.",
     },
+    {
+        "id": "no_homogeneous_card_wall",
+        "rule": "카드벽을 기본 레이아웃으로 쓰지 않는다",
+        "detail": "AI는 페이지 섹션 전체를 카드 안에 다시 넣거나, 동일한 radius/shadow/padding을 가진 카드 묶음으로 화면을 채우지 않는다. 반복되는 객체에는 카드가 가능하지만, 1차 작업 표면은 canvas, map, table, row list, rail, inspector, sheet 같은 도메인 구조로 먼저 만든다.",
+    },
+    {
+        "id": "active_svg_visual_affordances",
+        "rule": "아이콘과 도메인 그림은 완성 조건이다",
+        "detail": "AI는 필터, 상태, 액션, 추천 근거, 도메인 객체에 SVG 아이콘이나 deterministic SVG/이미지 자산을 적극적으로 연결한다. 도메인이 장소·상품·콘텐츠·게임·스포츠처럼 시각 실체를 갖는 경우, 텍스트와 테두리만으로 완료 처리하지 않는다.",
+    },
 ]
 
 REFERENCE_ABSORPTION_SCOPE = {
@@ -190,6 +200,13 @@ ICON_REFACTOR_POLICY = {
             "rule": "UI affordances must use SVG files/components or an approved icon library, never emoji glyphs.",
             "prevention": "Replace the emoji with an appropriate existing icon, imported icon, or locally authored SVG with token-bound color and accessible semantics.",
             "technical_controls": ["component_specs.md Non-negotiable", "design-system-refactor skill", "lint-implementation DS050"],
+        },
+        {
+            "id": "icon-starved-control-surface",
+            "trigger": "An interactive surface has filters, actions, badges, or status chips but almost no SVG/icon affordances.",
+            "rule": "Icons are part of scanability for controls and state, not optional decoration.",
+            "prevention": "Add token-bound SVG icons to filters, actions, status, and repeated scan surfaces while keeping accessible text labels.",
+            "technical_controls": ["IMPLEMENTATION_CONTRACT.md", "component_specs.md icon notes", "lint-implementation DS071"],
         }
     ],
     "outputs": ["system_spec.md", "component_specs.md", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "lint-implementation"],
@@ -221,7 +238,7 @@ APP_ICON_IDENTITY_POLICY = {
             "trigger": "A favicon, app-shell mark, or web app icon uses generic initials or placeholder text instead of a brand-specific identity asset.",
             "rule": "App icons are required brand identity assets, not temporary text badges.",
             "prevention": "Create or reuse a brand-specific SVG app icon, wire it to favicon/manifest/app-shell surfaces, and document it in the ontology.",
-            "technical_controls": ["system_spec.md Brand Identity Assets", "system_ontology.json BrandIdentityAsset", "IMPLEMENTATION_CONTRACT.md", "viewport screenshot QA"],
+            "technical_controls": ["system_spec.md Brand Identity Assets", "system_ontology.json BrandIdentityAsset", "IMPLEMENTATION_CONTRACT.md", "lint-implementation DS077", "viewport screenshot QA"],
         }
     ],
     "outputs": ["brand_profile", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "lint-implementation"],
@@ -252,6 +269,7 @@ MOCKUP_VISUAL_SUBSTANCE_POLICY = {
         "at least one relevant visual asset when the first viewport is a landing, brand, product, venue, editorial, portfolio, game, or content-led surface",
         "real content thumbnails or product/place/object imagery where repeated cards represent visual entities",
         "image_gen, sourced visual fallback, user-supplied assets, or deterministic SVG identity assets selected according to the visual asset acquisition contract",
+        "deterministic inline SVG visuals include visible labels/legends or title/desc plus data-subject anchors when they represent places, products, diagrams, maps, or scenes",
         "manifest entry with acquisition_mode, asset_path, intended_for, alt_text, sha256, crop/focal notes when applicable",
         "responsive crop and light/dark legibility verified by screenshots or DOM checks",
     ],
@@ -266,6 +284,10 @@ MOCKUP_VISUAL_SUBSTANCE_POLICY = {
         "Hero, product, venue, editorial, portfolio, and game surfaces need a concrete visual subject, not a purely atmospheric background.",
         "Repeated content cards should use thumbnails or compact visual identity when the item represents a place, person, product, match, article, media, or object.",
         "Empty states and onboarding panels can use illustration, but the illustration must clarify the product state rather than decorate a blank panel.",
+        "Path-only inline SVGs with generic map/sketch/illustration classes do not count as visual substance unless the visual is semantically anchored with labels, legend, title/desc, or data-subject landmarks.",
+        "Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.",
+        "Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.",
+        "A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.",
         "Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.",
         "Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.",
         "Every integrated raster image must be represented in the visual asset manifest before product code references it.",
@@ -276,7 +298,7 @@ MOCKUP_VISUAL_SUBSTANCE_POLICY = {
             "trigger": "A site, app, landing, product, venue, editorial, portfolio, game, or content-led mockup ships with no meaningful visual asset despite obvious visual subject matter.",
             "rule": "Visual substance is part of mockup completeness, not optional decoration.",
             "prevention": "Add relevant generated, sourced, user-supplied, or deterministic visual assets and record them in the manifest before calling the mockup complete.",
-            "technical_controls": ["system_spec.md Mockup Visual Substance", "system_ontology.json GovernanceRule", "design-system-visual-assets skill", "viewport screenshot QA"],
+            "technical_controls": ["system_spec.md Mockup Visual Substance", "system_ontology.json GovernanceRule", "design-system-visual-assets skill", "lint-implementation DS072", "viewport screenshot QA"],
         },
         {
             "id": "placeholder-gradient-as-image",
@@ -286,6 +308,41 @@ MOCKUP_VISUAL_SUBSTANCE_POLICY = {
             "technical_controls": ["Generated Visual Asset Plan", "visual manifest review", "visual QA screenshots"],
         },
         {
+            "id": "low-information-inline-svg-visual",
+            "trigger": "A domain visual is an unlabeled path-only SVG map, sketch, scene, or illustration that does not expose the actual place, product, object, state, or data relationship.",
+            "rule": "Deterministic SVG visuals need semantic anchors; otherwise they are decorative placeholders, not visual substance.",
+            "prevention": "Add visible labels, legend, title/desc, and data-subject landmarks, or replace the slot with a stronger generated, sourced, or user-supplied asset.",
+            "technical_controls": ["lint-implementation DS073", "system_spec.md Mockup Visual Substance", "visual QA screenshots"],
+        },
+        {
+            "id": "amateur-ad-hoc-illustration",
+            "trigger": "A mockup uses an improvised sketch/doodle/hand-drawn SVG as the main domain visual and the result reads amateur or meaningless.",
+            "rule": "A bad drawing does not become acceptable because it is labeled; low-confidence illustration should be removed or replaced.",
+            "prevention": "Use image_gen, a sourced/user-supplied asset, a reference-backed illustration, or a clean product schematic/data visualization. Do not ship rough path art as visual substance.",
+            "technical_controls": ["lint-implementation DS074", "visual QA screenshots", "implementation feedback promotion"],
+        },
+        {
+            "id": "ambiguous-mock-runtime-surface",
+            "trigger": "A mockup shows a schematic, placeholder map, or abstract visual surface without clarifying what runtime app surface it represents.",
+            "rule": "Even a mockup must make the production representation legible.",
+            "prevention": "Mark the surface as a map SDK layer, generated/sourced media, chart/table, product schematic, or explicit loading/empty state; avoid ambiguous decorative stand-ins.",
+            "technical_controls": ["lint-implementation DS075", "IMPLEMENTATION_CONTRACT.md", "visual QA screenshots"],
+        },
+        {
+            "id": "media-runtime-surface-without-asset",
+            "trigger": "A place, product, article, or content detail declares a media/photo runtime surface but renders only CSS patterns, gradients, or generic blocks.",
+            "rule": "Runtime media surfaces need actual media assets or explicit empty/loading states.",
+            "prevention": "Bind a generated, sourced, or user-supplied image/video asset with alt text and manifest metadata, or render a clear empty/loading state instead of fake visual texture.",
+            "technical_controls": ["lint-implementation DS076", "visual asset manifest", "image_gen or sourced asset pipeline"],
+        },
+        {
+            "id": "media-tile-without-asset",
+            "trigger": "One or more place-photo, texture-card, media-card, evidence-card, or thumbnail-card slots remain CSS-only after the surrounding media surface has been implemented.",
+            "rule": "Every visible media/evidence tile needs its own asset or an explicit empty/loading/pending state.",
+            "prevention": "Attach generated, sourced, or user-supplied media to each tile, or mark the tile as an intentional empty/loading/pending state with clear copy.",
+            "technical_controls": ["lint-implementation DS078", "visual asset manifest", "viewport screenshot QA"],
+        },
+        {
             "id": "unmanifested-mockup-image",
             "trigger": "A mockup references a raster image in HTML/CSS/JS without a visual asset manifest record.",
             "rule": "Integrated raster assets must be traceable.",
@@ -293,7 +350,7 @@ MOCKUP_VISUAL_SUBSTANCE_POLICY = {
             "technical_controls": ["public/generated/design-system/manifest.json", "design-system/generated_visual_assets.json", "system_ontology.json SourcedVisualAsset/GeneratedVisualAsset"],
         },
     ],
-    "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "visual QA"],
+    "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "visual QA", "compare-visuals"],
 }
 
 COMMERCIAL_PRODUCT_REALISM_POLICY = {
@@ -403,7 +460,14 @@ COMMERCIAL_PRODUCT_REALISM_POLICY = {
             "trigger": "The first viewport is dominated by equally weighted cards with similar radius, shadow, icon chips, label style, and spacing.",
             "rule": "Commercial product UIs need hierarchy, density variation, and task-led asymmetry.",
             "prevention": "Promote one primary workflow module, compress secondary data into rows/tables/rails, and vary module scale only when the information architecture justifies it.",
-            "technical_controls": ["system_spec.md Component Strategy", "component_specs.md module hierarchy notes", "visual QA"],
+            "technical_controls": ["system_spec.md Component Strategy", "component_specs.md module hierarchy notes", "lint-implementation DS070", "visual QA"],
+        },
+        {
+            "id": "unverified-redesign-screenshot",
+            "trigger": "A redesign or visual-feedback response claims improvement while the baseline screenshot was overwritten, cached, or byte-identical to the revised screenshot.",
+            "rule": "Visual feedback is not closed until before/after screenshots are preserved and compared.",
+            "prevention": "Capture baseline and revised screenshots under distinct filenames, run compare-visuals, and cite hashes plus changed-pixel ratio before claiming a visual change.",
+            "technical_controls": ["compare-visuals", "visual QA screenshots", "implementation feedback promotion"],
         },
         {
             "id": "decorative-ai-hero-over-data",
@@ -448,7 +512,7 @@ COMMERCIAL_PRODUCT_REALISM_POLICY = {
             "technical_controls": ["lint-implementation DS003", "token_schema.json", "Commercial Product Realism", "Brand Identity Assets"],
         },
     ],
-    "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "visual QA"],
+    "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "visual QA", "compare-visuals"],
 }
 
 KEYWORD_PRINCIPLES = {

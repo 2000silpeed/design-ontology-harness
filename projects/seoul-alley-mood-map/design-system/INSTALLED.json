@@ -1,0 +1,19 @@
+{
+  "preset_id": "monitoring-ops--corporate-trust",
+  "preset_api_version": "1.0.0",
+  "adapter_id": "raw-css-variables",
+  "adapter_version": "0.1.0",
+  "harness_version": "0.1.0",
+  "color_mode": "light",
+  "locale": "ko",
+  "installed_at": "2026-05-17T14:03:23Z",
+  "content_hash": "sha256:bb3d3771bc7b81a724e6032de4bf3bdaddb47f978f559c73e863ce81361d677f",
+  "proposed_files": [],
+  "counts": {
+    "created": 0,
+    "merged": 1,
+    "overwritten": 24,
+    "proposed": 0,
+    "skipped": 0
+  }
+}

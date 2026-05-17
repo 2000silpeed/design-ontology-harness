@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Seoul Alley Mood Map</title>
+    <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./design-system/tokens.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <svg class="icon-sprite" aria-hidden="true" focusable="false">
+      <symbol id="icon-map-pin" viewBox="0 0 24 24">
+        <path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" />
+        <circle cx="12" cy="9" r="2.4" />
+      </symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8.5" />
+        <path d="M12 7.5v5l3.5 2" />
+      </symbol>
+      <symbol id="icon-bookmark" viewBox="0 0 24 24">
+        <path d="M7 4.5h10v15l-5-3-5 3v-15Z" />
+      </symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24">
+        <path d="M12 5v14M5 12h14" />
+      </symbol>
+      <symbol id="icon-eye" viewBox="0 0 24 24">
+        <path d="M3 12s3.2-6 9-6 9 6 9 6-3.2 6-9 6-9-6-9-6Z" />
+        <circle cx="12" cy="12" r="2.6" />
+      </symbol>
+      <symbol id="icon-node" viewBox="0 0 24 24">
+        <circle cx="6" cy="7" r="3" />
+        <circle cx="18" cy="12" r="3" />
+        <circle cx="8" cy="18" r="3" />
+        <path d="m8.7 8.2 6.6 2.6M15.8 13.8l-5.2 2.8" />
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="3.5" />
+        <path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7" />
+      </symbol>
+      <symbol id="icon-sound" viewBox="0 0 24 24">
+        <path d="M5 15H3.5A1.5 1.5 0 0 1 2 13.5v-3A1.5 1.5 0 0 1 3.5 9H5l4-3v12l-4-3Z" />
+        <path d="M14 9.5c.8 1.3.8 3.7 0 5M17 7c1.9 2.7 1.9 7.3 0 10" />
+      </symbol>
+      <symbol id="icon-leaf" viewBox="0 0 24 24">
+        <path d="M20 4C10 4 5 9 5 18c8 0 13-5 15-14Z" />
+        <path d="M5 18c3.8-5.4 8-8.6 12.5-9.7" />
+      </symbol>
+      <symbol id="icon-book" viewBox="0 0 24 24">
+        <path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 0-3-3V4Z" />
+        <path d="M5 17a3 3 0 0 1 3-3h9" />
+      </symbol>
+      <symbol id="icon-rain" viewBox="0 0 24 24">
+        <path d="M7 15.5h10a4 4 0 0 0 .6-8 5.8 5.8 0 0 0-10.9 1.8A3.2 3.2 0 0 0 7 15.5Z" />
+        <path d="M8 19l-1 2M13 18l-1 2M18 19l-1 2" />
+      </symbol>
+      <symbol id="icon-stairs" viewBox="0 0 24 24">
+        <path d="M4 18h5v-4h5v-4h6" />
+      </symbol>
+    </svg>
+
+    <a class="skip-link" href="#main">본문으로 이동</a>
+
+    <div class="app-shell">
+      <header class="topbar" aria-label="서비스 상태">
+        <div class="brand-lockup">
+          <span class="brand-mark" aria-hidden="true">
+            <img src="./assets/app-icon.svg" alt="" />
+          </span>
+          <div>
+            <p>Alley Sense</p>
+            <strong>서울 골목 감각 지도</strong>
+          </div>
+        </div>
+
+        <div class="topbar-status" aria-label="현재 탐색 상태">
+          <span><svg class="icon"><use href="#icon-map-pin" /></svg>서촌 · 늦은 오후</span>
+          <span><svg class="icon"><use href="#icon-node" /></svg>12개 감각 신호</span>
+          <span><svg class="icon"><use href="#icon-clock" /></svg>업데이트 16:20</span>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="icon-button" type="button" title="저장한 장소" aria-label="저장한 장소">
+            <svg class="icon"><use href="#icon-bookmark" /></svg>
+          </button>
+          <button class="primary-action" type="button">
+            <svg class="icon"><use href="#icon-plus" /></svg>
+            장소 기록
+          </button>
+        </div>
+      </header>
+
+      <main id="main" class="workspace" aria-label="골목 감각 탐색">
+        <section class="control-strip" aria-label="탐색 조건">
+          <div class="control-group area-group">
+            <label for="areaSelect">동네</label>
+            <select id="areaSelect" aria-label="동네 선택">
+              <option>서촌</option>
+              <option>을지로</option>
+              <option>망원</option>
+              <option>해방촌</option>
+            </select>
+          </div>
+
+          <div class="control-group time-group">
+            <span id="timeLabel">시간대</span>
+            <div class="segmented" role="group" aria-labelledby="timeLabel">
+              <button type="button"><svg class="icon"><use href="#icon-sun" /></svg>아침</button>
+              <button class="active" type="button" aria-pressed="true"><svg class="icon"><use href="#icon-sun" /></svg>늦은 오후</button>
+              <button type="button"><svg class="icon"><use href="#icon-map-pin" /></svg>밤</button>
+              <button type="button"><svg class="icon"><use href="#icon-rain" /></svg>비 오는 날</button>
+            </div>
+          </div>
+
+          <div class="chip-rail" aria-label="감각 필터">
+            <button class="filter-chip active" type="button" aria-pressed="true"><svg class="icon"><use href="#icon-sound" /></svg>조용함</button>
+            <button class="filter-chip active" type="button" aria-pressed="true"><svg class="icon"><use href="#icon-sun" /></svg>노란빛</button>
+            <button class="filter-chip" type="button"><svg class="icon"><use href="#icon-book" /></svg>종이 질감</button>
+            <button class="filter-chip" type="button"><svg class="icon"><use href="#icon-eye" /></svg>낮은 혼잡</button>
+            <button class="filter-chip" type="button"><svg class="icon"><use href="#icon-rain" /></svg>비 냄새</button>
+          </div>
+        </section>
+
+        <section class="product-surface">
+          <div class="map-zone">
+            <div class="canvas-heading">
+              <div>
+                <p class="eyebrow">selected context</p>
+                <h1>오늘은 조용한 노란빛 골목</h1>
+              </div>
+              <span class="confidence-pill"><svg class="icon"><use href="#icon-node" /></svg>추천 근거 4개</span>
+            </div>
+
+            <div class="map-visual" data-runtime-surface="map-sdk-layer">
+              <div class="real-map" role="img" aria-label="서촌 지도 타일 레이어 위에 감각 장소 핀과 추천 경로가 표시된 앱 화면">
+                <div class="map-tile-grid" aria-hidden="true"></div>
+                <div class="road road-main"></div>
+                <div class="road road-main alt"></div>
+                <div class="road road-vertical west"></div>
+                <div class="road road-vertical center"></div>
+                <div class="road road-vertical east"></div>
+                <div class="road road-small north"></div>
+                <div class="road road-small south"></div>
+                <div class="walk-route"></div>
+
+                <span class="street-label label-main">자하문로7길</span>
+                <span class="street-label label-west">필운대로</span>
+                <span class="street-label label-east">옥인길</span>
+                <span class="poi-label poi-book">독립서점</span>
+                <span class="poi-label poi-tea">작은 찻집</span>
+                <span class="poi-label poi-park">수성동 계단</span>
+
+                <div class="map-cluster quiet-zone">
+                  <span>조용함 밀집</span>
+                </div>
+                <div class="map-cluster light-zone">
+                  <span>노란빛 경로</span>
+                </div>
+                <div class="map-controls" aria-label="지도 조작">
+                  <button type="button" aria-label="지도 확대">+</button>
+                  <button type="button" aria-label="지도 축소">-</button>
+                  <button type="button">레이어</button>
+                </div>
+                <div class="map-scale">50 m</div>
+              </div>
+
+              <button class="map-pin active" data-place="paper" style="--x: 25%; --y: 40%" type="button" aria-pressed="true">
+                <svg class="icon"><use href="#icon-map-pin" /></svg>
+                <span>92</span>
+              </button>
+              <button class="map-pin" data-place="tea" style="--x: 54%; --y: 44%" type="button" aria-pressed="false">
+                <svg class="icon"><use href="#icon-map-pin" /></svg>
+                <span>86</span>
+              </button>
+              <button class="map-pin" data-place="rain" style="--x: 79%; --y: 51%" type="button" aria-pressed="false">
+                <svg class="icon"><use href="#icon-map-pin" /></svg>
+                <span>81</span>
+              </button>
+            </div>
+
+            <div class="map-caption">
+              <span>감각 근거가 확인된 장소 3곳을 서촌 산책선 위에 묶었습니다.</span>
+              <button class="ghost-action" type="button">
+                <svg class="icon"><use href="#icon-eye" /></svg>
+                리스트 보기
+              </button>
+            </div>
+
+            <section class="recommendation-strip" aria-label="추천 장소 목록">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">recommendation queue</p>
+                  <h2>현재 조건과 맞는 장소</h2>
+                </div>
+                <span>3개 결과</span>
+              </div>
+              <div id="placeList" class="place-list-grid"></div>
+            </section>
+          </div>
+
+          <aside class="inspector-rail" aria-label="선택 장소 상세">
+            <section class="inspector-section place-detail">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">place detail</p>
+                  <h2 id="detailName">서촌 종이 골목</h2>
+                </div>
+                <span id="detailScore" class="score-badge">92%</span>
+              </div>
+
+              <div class="place-media-surface" data-runtime-surface="place-media-evidence" aria-label="선택 장소 사진과 기록 근거">
+                <figure class="place-photo primary">
+                  <img src="./assets/generated/seochon-paper-alley-photo.png" alt="나무 서점과 식물이 있는 조용한 서촌 골목 사진" />
+                  <figcaption>
+                    <span>장소 사진</span>
+                    <strong>사용자 사진 6장</strong>
+                  </figcaption>
+                </figure>
+                <figure class="place-photo">
+                  <img src="./assets/generated/seochon-paper-wood-texture.png" alt="오래된 목재와 종이 포스터 질감 사진" />
+                  <figcaption>
+                    <span>질감 증거</span>
+                    <strong>종이 · 목재</strong>
+                  </figcaption>
+                </figure>
+                <figure class="place-photo">
+                  <img src="./assets/generated/seochon-rain-alley-photo.png" alt="비가 온 뒤 젖은 좁은 서울 골목 사진" />
+                  <figcaption>
+                    <span>날씨 증거</span>
+                    <strong>비 오는 날 사진</strong>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <p id="detailSummary" class="detail-summary"></p>
+
+              <div class="texture-strip" aria-label="장소 질감 증거">
+                <figure class="texture-card">
+                  <img src="./assets/generated/seochon-paper-wood-texture.png" alt="종이 포스터와 오래된 목재 질감" />
+                  <figcaption>종이 · 목재</figcaption>
+                </figure>
+                <figure class="texture-card">
+                  <img src="./assets/generated/seochon-brick-pavement-texture.png" alt="오래된 벽돌과 좁은 골목 바닥 질감" />
+                  <figcaption>벽돌 · 포장면</figcaption>
+                </figure>
+                <figure class="texture-card">
+                  <img src="./assets/generated/seochon-plant-shadow-texture.png" alt="화분 식물과 골목 벽에 생긴 부드러운 그림자" />
+                  <figcaption>식물 그늘</figcaption>
+                </figure>
+              </div>
+
+              <div id="sensoryMeters" class="sensory-meters"></div>
+
+              <div class="evidence-row" aria-label="근거 상태">
+                <span id="evidenceState" class="evidence-badge"></span>
+                <span id="updatedState" class="evidence-badge quiet"></span>
+              </div>
+
+              <div class="action-row">
+                <button class="primary-action" type="button">
+                  <svg class="icon"><use href="#icon-bookmark" /></svg>
+                  저장
+                </button>
+                <button class="secondary-action" type="button">비슷한 장소</button>
+              </div>
+            </section>
+
+            <section class="inspector-section ontology-section" aria-label="온톨로지 관계">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">ontology inspector</p>
+                  <h2>추천 관계</h2>
+                </div>
+                <svg class="panel-icon" aria-hidden="true"><use href="#icon-node" /></svg>
+              </div>
+
+              <div id="ontologySummary" class="ontology-summary"></div>
+              <div id="relationList" class="relation-list"></div>
+            </section>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

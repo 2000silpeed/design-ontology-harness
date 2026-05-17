@@ -30,6 +30,14 @@ DEFAULT_INCLUDE_EXTENSIONS = {
     ".svelte",
 }
 
+UI_MARKUP_EXTENSIONS = {
+    ".html",
+    ".tsx",
+    ".jsx",
+    ".vue",
+    ".svelte",
+}
+
 DEFAULT_EXCLUDED_DIRS = {
     ".git",
     ".next",
@@ -122,6 +130,100 @@ EMOJI_CONTENT_CONTEXT_RE = re.compile(
     r"(?:emoji[-_]?picker|emojiPicker|reaction-data|user-generated|user-content|chat-message|comment-body|blog-body|article-body|markdown|prose)",
     re.IGNORECASE,
 )
+CARD_PANEL_TOKEN_RE = re.compile(r"\b[a-z0-9_-]*(?:card|panel)[a-z0-9_-]*\b", re.IGNORECASE)
+LAYOUT_DIVERSITY_TOKEN_RE = re.compile(
+    r"\b(?:row|table|rail|canvas|map-zone|map-visual|sketch|illustration|figure|media|timeline|split|inspector-rail|list-row|data-table|toolbar|strip|sheet|scene)\b",
+    re.IGNORECASE,
+)
+INTERACTIVE_UI_RE = re.compile(
+    r"(?:<(?:button|select|input|nav|a)\b|role=['\"](?:button|tab|navigation|switch|checkbox)['\"]|class(?:Name)?=['\"][^'\"]*(?:button|btn|cta|chip|tab|filter|nav|toolbar|action|status|badge)[^'\"]*)",
+    re.IGNORECASE,
+)
+VISUAL_AFFORDANCE_RE = re.compile(
+    r"(?:<svg\b|<img\b|<picture\b|<video\b|<canvas\b|<use\b|use\s+href=|href=['\"]#icon-|lucide-|heroicon|icon-|Icon[A-Z]|background-image|mask-image)",
+    re.IGNORECASE,
+)
+DOMAIN_VISUAL_RE = re.compile(
+    r"(?:<img\b|<picture\b|<video\b|<canvas\b|class(?:Name)?=['\"][^'\"]*(?:sketch|illustration|map|visual|media|figure|thumbnail|photo|image|texture|scene|sprite)[^'\"]*)",
+    re.IGNORECASE,
+)
+DOMAIN_INLINE_SVG_RE = re.compile(r"<svg\b(?P<attrs>[^>]*)>(?P<body>.*?)</svg>", re.IGNORECASE | re.DOTALL)
+DOMAIN_VISUAL_SVG_HINT_RE = re.compile(
+    r"(?:class(?:Name)?=['\"][^'\"]*(?:sketch|illustration|map|visual|scene|diagram)[^'\"]*|aria-label=['\"][^'\"]*(?:그림|지도|일러스트|스케치|image|map|sketch|illustration|diagram)[^'\"]*)",
+    re.IGNORECASE,
+)
+SVG_SHAPE_RE = re.compile(r"<(?:path|circle|rect|line|polyline|polygon|ellipse)\b", re.IGNORECASE)
+SEMANTIC_DOMAIN_VISUAL_ANCHOR_RE = re.compile(
+    r"(?:<title\b|<desc\b|<text\b|data-(?:subject|landmark|evidence|visual|place|slot)=|aria-labelledby=)",
+    re.IGNORECASE,
+)
+AD_HOC_ILLUSTRATION_RE = re.compile(
+    r"\b(?:sketch|doodle|hand-?drawn|rough-illustration|placeholder-illustration)\b",
+    re.IGNORECASE,
+)
+AMBIGUOUS_MOCK_SURFACE_RE = re.compile(
+    r"\b(?:schematic|mock-map|mock-visual|placeholder-visual|placeholder-map|도식)\b",
+    re.IGNORECASE,
+)
+RUNTIME_SURFACE_MARKER_RE = re.compile(r"\bdata-runtime-surface\s*=", re.IGNORECASE)
+MEDIA_RUNTIME_SURFACE_RE = re.compile(
+    r"\bdata-runtime-surface\s*=\s*['\"][^'\"]*(?:media|photo|thumbnail|image|generated|sourced)[^'\"]*['\"]",
+    re.IGNORECASE,
+)
+MEDIA_ASSET_RE = re.compile(
+    r"(?:<(?:img|picture|video|source)\b|url\(\s*['\"]?[^'\"\)]*\.(?:png|jpe?g|webp|avif|gif))",
+    re.IGNORECASE,
+)
+MEDIA_TILE_RE = re.compile(
+    r"<(?P<tag>figure|div|span)\b(?P<attrs>[^>]*class(?:Name)?=['\"][^'\"]*(?:place-photo|texture-card|media-card|evidence-card|thumbnail-card)[^'\"]*['\"][^>]*)>(?P<body>.*?)</(?P=tag)>",
+    re.IGNORECASE | re.DOTALL,
+)
+EXPLICIT_EMPTY_STATE_RE = re.compile(r"(?:\bdata-state=['\"](?:empty|loading|pending)['\"]|\b(?:empty-state|loading-state|pending-state)\b)", re.IGNORECASE)
+GENERIC_APP_MARK_RE = re.compile(
+    r"class(?:Name)?=['\"][^'\"]*(?:brand-mark|app-icon|favicon)[^'\"]*['\"][^>]*>\s*[A-Z]{1,3}\s*<",
+    re.IGNORECASE | re.DOTALL,
+)
+APP_ICON_ASSET_RE = re.compile(
+    r"(?:rel=['\"]icon['\"][^>]+href=['\"][^'\"]*(?:app-icon|favicon)\.svg|src=['\"][^'\"]*app-icon\.svg|manifest\.webmanifest|assets/app-icon\.svg)",
+    re.IGNORECASE,
+)
+VISUAL_SUBJECT_KEYWORDS = {
+    "place",
+    "places",
+    "venue",
+    "travel",
+    "food",
+    "restaurant",
+    "map",
+    "location",
+    "product",
+    "commerce",
+    "portfolio",
+    "article",
+    "editorial",
+    "game",
+    "sports",
+    "team",
+    "content",
+    "image",
+    "diagram",
+    "photo",
+    "visual",
+    "장소",
+    "골목",
+    "지도",
+    "여행",
+    "음식",
+    "식당",
+    "상품",
+    "제품",
+    "이미지",
+    "사진",
+    "도식",
+    "콘텐츠",
+    "경기",
+    "팀",
+}
 CONTROL_MIN_WIDTH_LIMIT_PX = 240
 CONTROL_WIDTH_LIMIT_PX = 280
 
@@ -173,6 +275,7 @@ def lint_implementation(
         target_repo=str(target),
         artifact_dir=artifact_dir,
     )
+    file_texts: dict[str, str] = {}
 
     for path in _iter_candidate_files(target, artifact_dir=artifact_dir, extensions=extensions):
         rel = path.relative_to(target).as_posix()
@@ -181,8 +284,16 @@ def lint_implementation(
             text = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
+        file_texts[rel] = text
         report.issues.extend(_lint_text(text, rel))
 
+    report.issues.extend(
+        _lint_project_composition(
+            file_texts,
+            target=target,
+            artifact_dir=artifact_dir,
+        )
+    )
     report.checked_files.sort()
     report.issues.sort(key=lambda issue: (issue.path, issue.line, issue.column, issue.code))
     return report
@@ -377,6 +488,191 @@ def _lint_color_mode_parity(text: str, rel_path: str) -> list[ImplementationIssu
             text[line_start:line_end],
         )
     ]
+
+
+def _lint_project_composition(
+    file_texts: dict[str, str],
+    *,
+    target: Path,
+    artifact_dir: str,
+) -> list[ImplementationIssue]:
+    """Catch repeatable composition failures that only appear at project scope."""
+
+    ui_files = {
+        rel: text
+        for rel, text in file_texts.items()
+        if Path(rel).suffix.lower() in UI_MARKUP_EXTENSIONS
+    }
+    if not ui_files:
+        return []
+
+    combined = "\n".join(file_texts.values())
+    first_ui_path = sorted(ui_files)[0]
+    issues: list[ImplementationIssue] = []
+
+    card_panel_count = len(CARD_PANEL_TOKEN_RE.findall(combined))
+    layout_diversity_count = len(LAYOUT_DIVERSITY_TOKEN_RE.findall(combined))
+    if card_panel_count >= 10 and card_panel_count > max(8, layout_diversity_count * 2):
+        issues.append(
+            _issue(
+                "DS070",
+                first_ui_path,
+                1,
+                1,
+                "Homogeneous card/panel wall risk; promote one primary workflow surface and compress secondary content into rows, rails, tables, canvas, or inspector surfaces.",
+                f"card_or_panel_tokens={card_panel_count}, layout_diversity_tokens={layout_diversity_count}",
+            )
+        )
+
+    if not (target / artifact_dir).exists():
+        return issues
+
+    interactive_count = len(INTERACTIVE_UI_RE.findall(combined))
+    visual_affordance_count = len(VISUAL_AFFORDANCE_RE.findall(combined))
+    if interactive_count >= 6 and visual_affordance_count < 3:
+        issues.append(
+            _issue(
+                "DS071",
+                first_ui_path,
+                1,
+                1,
+                "Interactive UI has too few SVG/icon/visual affordances; use token-bound SVG icons for filters, status, actions, and scan surfaces.",
+                f"interactive_markers={interactive_count}, visual_affordance_markers={visual_affordance_count}",
+            )
+        )
+
+    if _profile_requires_domain_visuals(target, artifact_dir):
+        domain_visual_count = len(DOMAIN_VISUAL_RE.findall(combined))
+        if domain_visual_count < 2:
+            issues.append(
+                _issue(
+                    "DS072",
+                    first_ui_path,
+                    1,
+                    1,
+                    "Domain visual substance is missing; add a real or deterministic product/place/object/content visual, not only text, borders, or generic controls.",
+                    f"domain_visual_markers={domain_visual_count}",
+                )
+            )
+        low_information_visuals = _find_low_information_domain_svgs(combined)
+        if low_information_visuals:
+            issues.append(
+                _issue(
+                    "DS073",
+                    first_ui_path,
+                    1,
+                    1,
+                    "Domain visual is a low-information inline SVG; add visible labels, a legend, title/desc, and data-subject anchors so the visual explains the product/place/object instead of acting as decoration.",
+                    low_information_visuals[0],
+                )
+            )
+        ad_hoc_match = AD_HOC_ILLUSTRATION_RE.search(combined)
+        if ad_hoc_match:
+            issues.append(
+                _issue(
+                    "DS074",
+                    first_ui_path,
+                    1,
+                    1,
+                    "Ad-hoc sketch/doodle illustration used as domain visual; replace it with an approved visual asset or a polished product schematic, not a rough path drawing.",
+                    _single_line_snippet(ad_hoc_match.group(0)),
+                )
+            )
+        ambiguous_surface_match = AMBIGUOUS_MOCK_SURFACE_RE.search(combined)
+        if ambiguous_surface_match and not RUNTIME_SURFACE_MARKER_RE.search(combined):
+            issues.append(
+                _issue(
+                    "DS075",
+                    first_ui_path,
+                    1,
+                    1,
+                    "Mock visual surface does not declare its real app representation; add data-runtime-surface for map SDK layers, generated/sourced media, charts, tables, or explicit empty/loading states.",
+                    _single_line_snippet(ambiguous_surface_match.group(0)),
+                )
+            )
+        if MEDIA_RUNTIME_SURFACE_RE.search(combined) and not MEDIA_ASSET_RE.search(combined):
+            issues.append(
+                _issue(
+                    "DS076",
+                    first_ui_path,
+                    1,
+                    1,
+                    "Media/photo runtime surface has no image or video asset; place/product/content media slots must bind to generated, sourced, user-supplied, or explicit empty-state assets instead of CSS-only patterns.",
+                    "data-runtime-surface media/photo without <img>, <picture>, <video>, or image url(...) asset",
+                )
+            )
+        empty_media_tiles = _find_media_tiles_without_assets(combined)
+        if empty_media_tiles:
+            issues.append(
+                _issue(
+                    "DS078",
+                    first_ui_path,
+                    1,
+                    1,
+                    "Media/evidence tile has no asset; each place-photo, texture-card, media-card, evidence-card, or thumbnail-card needs an image/video asset or explicit empty/loading/pending state.",
+                    empty_media_tiles[0],
+                )
+            )
+
+    if GENERIC_APP_MARK_RE.search(combined) and not APP_ICON_ASSET_RE.search(combined):
+        issues.append(
+            _issue(
+                "DS077",
+                first_ui_path,
+                1,
+                1,
+                "Generic initials used as app-shell brand mark without a wired app icon asset; create a brand-specific SVG app icon and connect favicon/manifest/app-shell surfaces.",
+                _single_line_snippet(GENERIC_APP_MARK_RE.search(combined).group(0)),
+            )
+        )
+
+    return issues
+
+
+def _find_media_tiles_without_assets(text: str) -> list[str]:
+    snippets: list[str] = []
+    for match in MEDIA_TILE_RE.finditer(text):
+        block = match.group(0)
+        if MEDIA_ASSET_RE.search(block) or EXPLICIT_EMPTY_STATE_RE.search(block):
+            continue
+        snippets.append(_single_line_snippet(block))
+    return snippets
+
+
+def _find_low_information_domain_svgs(text: str) -> list[str]:
+    snippets: list[str] = []
+    for match in DOMAIN_INLINE_SVG_RE.finditer(text):
+        block = match.group(0)
+        if not DOMAIN_VISUAL_SVG_HINT_RE.search(block):
+            continue
+        if len(SVG_SHAPE_RE.findall(block)) < 4:
+            continue
+        if SEMANTIC_DOMAIN_VISUAL_ANCHOR_RE.search(block):
+            continue
+        snippets.append(_single_line_snippet(block))
+    return snippets
+
+
+def _single_line_snippet(text: str, *, limit: int = 180) -> str:
+    snippet = " ".join(text.split())
+    return snippet if len(snippet) <= limit else f"{snippet[: limit - 1]}..."
+
+
+def _profile_requires_domain_visuals(target: Path, artifact_dir: str) -> bool:
+    for candidate in (
+        target / artifact_dir / "brand_profile.json",
+        target / "brand_profile.json",
+    ):
+        if not candidate.exists():
+            continue
+        try:
+            profile = json.loads(candidate.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        searchable = json.dumps(profile, ensure_ascii=False).lower()
+        if any(keyword.lower() in searchable for keyword in VISUAL_SUBJECT_KEYWORDS):
+            return True
+    return False
 
 
 def _selector_for_line(line: str, current_selector: str | None) -> str | None:
