@@ -1117,6 +1117,22 @@ def build_generated_visual_asset_layer(
             brand_id=brand_id,
         )
 
+    visual_policy = graph.get_node("governance:mockup-visual-substance")
+    if visual_policy:
+        for target_id in (
+            VISUAL_ASSET_CONTRACT_ID,
+            SOURCED_VISUAL_ASSET_CONTRACT_ID,
+            model_id,
+            "identity-asset:app-icon",
+        ):
+            if graph.get_node(target_id):
+                graph.add_edge(OntologyEdge(type=EdgeType.enforces, source=visual_policy.id, target=target_id))
+        for asset in (
+            graph.get_nodes_by_type(NodeType.GeneratedVisualAsset)
+            + graph.get_nodes_by_type(NodeType.SourcedVisualAsset)
+        ):
+            graph.add_edge(OntologyEdge(type=EdgeType.enforces, source=visual_policy.id, target=asset.id))
+
 
 def _add_visual_asset_contract_nodes(graph: DesignOntologyGraph) -> None:
     graph.add_node(OntologyNode(
@@ -1779,6 +1795,7 @@ def build_governance_layer(
     responsive_policy = governance.get("responsive_resilience_policy") or {}
     icon_policy = governance.get("icon_refactor_policy") or {}
     app_icon_policy = governance.get("app_icon_identity_policy") or {}
+    visual_substance_policy = governance.get("mockup_visual_substance_policy") or {}
     commercial_policy = governance.get("commercial_product_realism_policy") or {}
 
     scope_id = "governance:reference-absorption-scope"
@@ -1987,6 +2004,48 @@ def build_governance_layer(
                 },
             ))
             graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=commercial_policy_id, target=pattern_id))
+
+    if visual_substance_policy:
+        visual_policy_id = f"governance:{slugify(visual_substance_policy.get('id', 'mockup-visual-substance'))}"
+        graph.add_node(OntologyNode(
+            id=visual_policy_id,
+            type=NodeType.GovernanceRule,
+            label=visual_substance_policy.get("id", "mockup visual substance"),
+            meta={
+                "rule": visual_substance_policy.get("rule", ""),
+                "applies_to": visual_substance_policy.get("applies_to", []),
+                "diagnosis": visual_substance_policy.get("diagnosis", []),
+                "required_signals": visual_substance_policy.get("required_signals", []),
+                "image_acquisition_order": visual_substance_policy.get("image_acquisition_order", []),
+                "implementation_rules": visual_substance_policy.get("implementation_rules", []),
+                "outputs": visual_substance_policy.get("outputs", []),
+            },
+        ))
+        if graph.get_node(brand_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=visual_policy_id, target=brand_id))
+
+        for target_id in (
+            "governance:generated-visual-asset-contract",
+            "governance:sourced-visual-asset-fallback-contract",
+            "identity-asset:app-icon",
+        ):
+            if graph.get_node(target_id):
+                graph.add_edge(OntologyEdge(type=EdgeType.enforces, source=visual_policy_id, target=target_id))
+
+        for pattern in visual_substance_policy.get("failure_patterns", []):
+            pattern_id = f"failure-pattern:{slugify(pattern.get('id', 'mockup-visual-substance-failure'))}"
+            graph.add_node(OntologyNode(
+                id=pattern_id,
+                type=NodeType.ImplementationFailurePattern,
+                label=pattern.get("id", "mockup visual substance failure"),
+                meta={
+                    "trigger": pattern.get("trigger", ""),
+                    "rule": pattern.get("rule", ""),
+                    "prevention": pattern.get("prevention", ""),
+                    "technical_controls": pattern.get("technical_controls", []),
+                },
+            ))
+            graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=visual_policy_id, target=pattern_id))
 
     if app_icon_policy:
         app_icon_policy_id = f"governance:{slugify(app_icon_policy.get('id', 'brand-app-icon-identity'))}"

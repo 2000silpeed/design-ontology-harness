@@ -1175,6 +1175,7 @@ Read these files first when they exist:
 16. **NEVER use bare library components without token binding.** If you import from a UI library, wrap it and override colors, spacing, radius, and typography using tokens from the schema.
 17. **NEVER ship generic initials tiles as final app icons.** Favicon, app-shell marks, and web manifests need brand-specific SVG identity assets.
 18. **NEVER let dashboard/tool/data/community products open like pitch decks** unless the user explicitly asks for a landing page. Lead with operational state, filters, tables/lists, and source/update context.
+19. **NEVER treat image-free commercial mockups as complete** when the product, place, object, article, game, venue, or content model naturally needs visual assets. Use generated, sourced, user-provided, or deterministic identity imagery with manifest records.
 
 {_script_aware_typography_guidance()}
 
@@ -1219,6 +1220,8 @@ description: Generate or source professional brand-aligned imagery for Codex imp
 
 Use this skill when the implementation would look more professional with generated or sourced raster imagery instead of flat placeholder blocks, generic gradients, emoji, or stock-like decoration.
 
+For website, app, landing, product, editorial, portfolio, venue, sports, game, commerce, or content-led mockups, treat relevant visual assets as part of completeness. Image-free card walls, gradient media blocks, empty framed placeholders, and purely atmospheric panels should be replaced with concrete product/place/object/state/content imagery unless the user explicitly requests a text-only wireframe.
+
 ## Required Inputs
 
 Read these files first when they exist:
@@ -1240,6 +1243,7 @@ Generate imagery for:
 - product, venue, object, or media cards that benefit from real visual substance
 - empty states, onboarding panels, or feature sections where illustration clarifies the product
 - case-study or article covers where the system spec calls for editorial treatment
+- sports, travel, food, real-estate, portfolio, game, commerce, and brand/product mockups where visual subject matter makes the screen feel complete
 
 Do not generate imagery for:
 
@@ -1254,7 +1258,9 @@ Do not generate imagery for:
 
 1. Prefer Codex built-in `image_gen` when a brand-specific synthetic image is appropriate.
 2. Use sourced visual fallback when `image_gen` is unavailable, fails, or the screen needs real-world photographic evidence more than generated imagery.
-3. If neither path can meet the manifest and license contract, leave a prompt/candidate pack and report that imagery was not integrated.
+3. Use user-supplied licensed imagery when provided and relevant.
+4. Use deterministic SVG identity assets for app icons, logos, flags, diagrams, and UI glyphs.
+5. If no image path can meet the manifest and license contract, leave a prompt/candidate pack and report why imagery was not integrated; do not silently ship an image-free mockup.
 
 Never switch to CLI, SDK runner, or OpenAI image API fallback unless the user explicitly asks for that different path.
 
@@ -1353,6 +1359,8 @@ For Korean-first products, include Hangul-safe composition constraints:
 - Keep palette and crop behavior aligned with tokens and responsive breakpoints.
 - Keep generated and sourced assets in the same manifest, but distinguish them with `acquisition_mode`.
 - For sourced assets, include visible or documented attribution whenever `attribution_required` is true.
+- Every integrated raster image needs a manifest record before runtime code references it.
+- Define stable aspect ratios, object-fit/object-position, and mobile crop behavior so imagery does not obscure Korean text or controls.
 - Verify desktop and mobile screenshots after integration; check that images render, crop cleanly, and do not obscure text.
 
 ## Output Expectations

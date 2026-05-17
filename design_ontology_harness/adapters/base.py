@@ -586,6 +586,8 @@ calling the current screen complete. Current-screen fixes alone are not enough.
 
 ## Visual Asset Acquisition
 
+- Commercial mockups should actively use relevant visual assets when the product, place, object, article, game, venue, or content model needs visual substance.
+- Do not treat image-free card walls, gradient media blocks, or empty framed placeholders as complete website/app mockups when the domain naturally expects imagery.
 - Use Codex built-in `image_gen` first when a brand-specific synthetic raster is appropriate.
 - If `image_gen` is unavailable, fails, or real-world photography is more appropriate, use sourced visual fallback rather than another image-generation API.
 - Sourced visual fallback requires source URL, download URL, provider, author/creator, license label, attribution requirement, sha256, alt text, and intended component slot in the manifest.
@@ -593,6 +595,7 @@ calling the current screen complete. Current-screen fixes alone are not enough.
 - Reference-only providers such as design galleries or app screenshot corpora are morphology inputs only; do not copy their images into runtime assets.
 - Do not hotlink remote search/CDN URLs from runtime code; copy accepted visuals into the project workspace before referencing them.
 - Do not use searched stock/free images as app icons, favicons, logos, button glyphs, status markers, or flags. Those remain deterministic identity/icon assets.
+- Keep images secondary in operational dashboards/tools when data and controls are the primary task, but still use domain visuals such as identity marks, thumbnails, venue/object imagery, or editorial context when they increase credibility.
 
 ## Preflight
 

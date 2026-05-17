@@ -344,6 +344,53 @@ def build_commercial_product_realism_section(graph: DesignOntologyGraph) -> str:
     return "\n".join(lines)
 
 
+def build_mockup_visual_substance_section(graph: DesignOntologyGraph) -> str:
+    policy = graph.get_node("governance:mockup-visual-substance")
+    if not policy:
+        return "No mockup visual substance policy defined."
+
+    lines: list[str] = []
+    lines.append(f"- **Policy**: {policy.meta.get('rule', 'Use relevant visual assets in mockups.')}")
+
+    applies_to = policy.meta.get("applies_to") or []
+    if applies_to:
+        lines.append(f"- **Applies to**: {', '.join(applies_to[:10])}")
+
+    diagnosis = policy.meta.get("diagnosis") or []
+    if diagnosis:
+        lines.append("- **Why image-free mockups fail**:")
+        for item in diagnosis[:4]:
+            lines.append(f"  - {item}")
+
+    required_signals = policy.meta.get("required_signals") or []
+    if required_signals:
+        lines.append("- **Required visual substance signals**:")
+        for item in required_signals[:8]:
+            lines.append(f"  - {item}")
+
+    acquisition_order = policy.meta.get("image_acquisition_order") or []
+    if acquisition_order:
+        lines.append("- **Image acquisition order**:")
+        for item in acquisition_order[:6]:
+            lines.append(f"  - {item}")
+
+    rules = policy.meta.get("implementation_rules") or []
+    if rules:
+        lines.append("- **Implementation rules**:")
+        for rule in rules[:10]:
+            lines.append(f"  - {rule}")
+
+    failure_edges = graph.get_edges_from(policy.id, EdgeType.prevents)
+    if failure_edges:
+        lines.append("- **Promoted failure patterns**:")
+        for edge in failure_edges[:8]:
+            failure = graph.get_node(edge.target)
+            if failure:
+                lines.append(f"  - {failure.label}: {failure.meta.get('prevention', '')}")
+
+    return "\n".join(lines)
+
+
 def build_reference_intelligence_section(graph: DesignOntologyGraph) -> str:
     providers = graph.get_nodes_by_type(NodeType.ReferenceProvider)
     cards = graph.get_nodes_by_type(NodeType.DesignContextCard)
@@ -419,11 +466,15 @@ def build_graph_spec_sections(graph: DesignOntologyGraph) -> str:
 
 {build_generated_visual_asset_section(graph)}
 
-## 24. Reference Intelligence Pack
+## 24. Mockup Visual Substance
+
+{build_mockup_visual_substance_section(graph)}
+
+## 25. Reference Intelligence Pack
 
 {build_reference_intelligence_section(graph)}
 
-## 25. Commercial Product Realism
+## 26. Commercial Product Realism
 
 {build_commercial_product_realism_section(graph)}
 """

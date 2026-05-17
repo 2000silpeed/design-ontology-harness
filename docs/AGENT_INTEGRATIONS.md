@@ -147,8 +147,10 @@ Codex나 Claude Code가 이 하네스를 AI 도구로 사용할 때는 아래 �
    `BrandIdentityAsset`으로 취급합니다. 일반 `WC`, `AI`, `DS` 이니셜 타일을
    최종 아이콘으로 남기지 않고 브랜드 특정 SVG/아이콘 자산을 만듭니다.
 6. **Visuals**: 히어로/카드/에디토리얼 이미지는 Codex 내장 `image_gen` 경로를
-   사용합니다. 버튼 glyph, 상태 마커, 앱 아이콘은 이미지 생성 대상이 아니라
-   SVG나 아이콘 라이브러리 대상입니다.
+   사용합니다. 사이트, 앱, 랜딩, 제품, 장소, 콘텐츠, 게임 목업은 이미지 없는
+   카드/그라디언트만으로 완료하지 않고 도메인 실체를 보여주는 visual asset을
+   적극적으로 배치합니다. 버튼 glyph, 상태 마커, 앱 아이콘은 이미지 생성 대상이
+   아니라 SVG나 아이콘 라이브러리 대상입니다.
 7. **Mode parity**: 명시적으로 한 모드만 요구하지 않는 한 light mode와 dark mode를
    같은 semantic token 역할로 함께 구현하고 캡처합니다.
 8. **Verification**: `lint-implementation`을 실행하고, 브라우저 캡처로 desktop,
@@ -181,6 +183,7 @@ In a frontend repo:
 - require normal light mode and dark mode together unless the task explicitly asks for one mode only; light mode is the default surface
 - in Codex, ask the visual asset skill to generate imagery through the built-in `image_gen` skill for hero, empty-state, editorial, or product sections when the screen needs real visual substance
 - when `image_gen` is unavailable or a real-world photo is more appropriate, use sourced visual fallback with license metadata instead of another image-generation API
+- do not treat image-free commercial mockups as complete when the product, place, object, article, game, venue, or content model naturally needs visual assets
 - check `system_ontology.json` for `GeneratedVisualAsset` and `ImageGenerationModel` nodes before treating generated imagery as part of the system contract
 - check `system_ontology.json` for `SourcedVisualAsset`, `FreeSourcedVisualProvider`, `LicensedVisualProvider`, `ReferenceOnlyProvider`, and `LicensePolicy` nodes before treating searched/free imagery as part of the system contract
 - check `system_ontology.json` for `BrandIdentityAsset` before treating favicon, app-shell mark, or web manifest icon as complete
@@ -201,6 +204,8 @@ design-system/components/component_specs.md 기준으로 작업해줘.
 국가 기반 경기 화면은 flag + code를 스캔 surface에 쓰고, 전체 이름은 detail surface에 둬.
 앱 아이콘, favicon, app-shell mark는 브랜드 특정 BrandIdentityAsset으로 만들어줘.
 작업 후 lint-implementation과 브라우저 캡처로 clipping/overflow를 확인해.
+사이트/앱/랜딩/제품/장소/콘텐츠/게임 목업은 관련 visual asset을 적극적으로 써서
+이미지 없는 카드벽이나 그라디언트 placeholder만으로 완성하지 말아줘.
 ```
 
 ## Codex Visual Asset Workflow
@@ -209,6 +214,8 @@ design-system/components/component_specs.md 기준으로 작업해줘.
 온톨로지에는 `GeneratedVisualAsset` 슬롯과 `ImageGenerationModel`(`Codex image_gen skill`) 노드가 함께 기록되어, 생성 이미지가 임시 장식이 아니라 브랜드/토큰/컴포넌트 관계에 묶인 산출물로 추적됩니다. 이 노드는 `api_fallback: disabled` 정책도 함께 기록합니다.
 
 `image_gen`이 불가능하거나 실제 사진성이 더 중요한 화면에서는 **sourced visual fallback**을 사용합니다. 이 fallback은 다른 이미지 생성 API가 아니라, 라이선스 검증 가능한 무료/권리 명확 이미지 후보를 찾아 프로젝트 에셋으로 복사하는 경로입니다. 온톨로지에는 `SourcedVisualAsset`, `FreeSourcedVisualProvider`, `LicensedVisualProvider`, `ReferenceOnlyProvider`, `LicensePolicy` 노드와 `sourced_from`, `licensed_under` 관계로 기록됩니다.
+
+목업에서는 visual asset을 더 적극적으로 사용합니다. 이미지 없는 카드벽, 빈 media frame, 그라디언트만 있는 hero는 제품 실체가 없는 미완성 화면으로 보기 쉽습니다. 따라서 landing, product, venue, editorial, portfolio, commerce, sports, game, content-led screen은 실제 제품/장소/오브젝트/상태/콘텐츠를 드러내는 이미지나 identity asset을 기본적으로 계획합니다. 운영형 dashboard/tool에서는 이미지가 표·필터·상태·출처를 밀어내면 안 되지만, 팀/국기/장소 썸네일/제품 오브젝트/편집 맥락처럼 신뢰도를 높이는 도메인 visual은 사용합니다.
 
 Provider tier:
 

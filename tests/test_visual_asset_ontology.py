@@ -11,6 +11,7 @@ from design_ontology_harness.synthesis import (
     COLOR_MODE_PARITY_POLICY,
     COMMERCIAL_PRODUCT_REALISM_POLICY,
     ICON_REFACTOR_POLICY,
+    MOCKUP_VISUAL_SUBSTANCE_POLICY,
     REFERENCE_ABSORPTION_SCOPE,
     RESPONSIVE_RESILIENCE_POLICY,
     discover_brand_identity_assets,
@@ -531,6 +532,7 @@ class VisualAssetOntologyTests(unittest.TestCase):
                     "responsive_resilience_policy": RESPONSIVE_RESILIENCE_POLICY,
                     "icon_refactor_policy": ICON_REFACTOR_POLICY,
                     "app_icon_identity_policy": APP_ICON_IDENTITY_POLICY,
+                    "mockup_visual_substance_policy": MOCKUP_VISUAL_SUBSTANCE_POLICY,
                     "commercial_product_realism_policy": COMMERCIAL_PRODUCT_REALISM_POLICY,
                     "feedback_promotion_policy": REFERENCE_ABSORPTION_SCOPE["promotion_policy"],
                 },
@@ -625,6 +627,25 @@ class VisualAssetOntologyTests(unittest.TestCase):
         app_icon_edges = graph.get_edges_from("governance:brand-app-icon-identity", EdgeType.prevents)
         self.assertIn("failure-pattern:generic-initials-app-icon", {edge.target for edge in app_icon_edges})
 
+        visual_policy = graph.get_node("governance:mockup-visual-substance")
+        self.assertIsNotNone(visual_policy)
+        self.assertEqual(visual_policy.type, NodeType.GovernanceRule)
+        self.assertTrue(any("visual asset" in item for item in visual_policy.meta["required_signals"]))
+        self.assertTrue(any("image_gen" in item for item in visual_policy.meta["image_acquisition_order"]))
+
+        image_free_failure = graph.get_node("failure-pattern:image-free-commercial-mockup")
+        self.assertIsNotNone(image_free_failure)
+        self.assertEqual(image_free_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("Mockup Visual Substance" in item for item in image_free_failure.meta["technical_controls"]))
+
+        placeholder_failure = graph.get_node("failure-pattern:placeholder-gradient-as-image")
+        self.assertIsNotNone(placeholder_failure)
+        self.assertEqual(placeholder_failure.type, NodeType.ImplementationFailurePattern)
+
+        visual_edges = graph.get_edges_from("governance:mockup-visual-substance", EdgeType.prevents)
+        self.assertIn("failure-pattern:image-free-commercial-mockup", {edge.target for edge in visual_edges})
+        self.assertIn("failure-pattern:placeholder-gradient-as-image", {edge.target for edge in visual_edges})
+
         realism_policy = graph.get_node("governance:commercial-product-realism")
         self.assertIsNotNone(realism_policy)
         self.assertEqual(realism_policy.type, NodeType.GovernanceRule)
@@ -676,6 +697,9 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIn("Mercer app icon", sections)
         self.assertIn("assets/app-icon.svg", sections)
         self.assertIn("generic-initials-app-icon", sections)
+        self.assertIn("Mockup Visual Substance", sections)
+        self.assertIn("image-free-commercial-mockup", sections)
+        self.assertIn("placeholder-gradient-as-image", sections)
         self.assertIn("Commercial Product Realism", sections)
         self.assertIn("pitch-deck-dashboard-shell", sections)
         self.assertIn("reference-free-realism-refactor", sections)

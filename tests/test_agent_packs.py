@@ -33,6 +33,8 @@ class AgentPackTests(unittest.TestCase):
         self.assertIn("public/generated/design-system/sourced-visual-candidates.json", skill_text)
         self.assertIn("source_url", skill_text)
         self.assertIn("Do not hotlink", skill_text)
+        self.assertIn("Image-free card walls", skill_text)
+        self.assertIn("visual assets as part of completeness", skill_text)
         self.assertIn("alt_text", skill_text)
 
     def test_codex_implementer_reads_style_capsule_first(self) -> None:
@@ -44,6 +46,7 @@ class AgentPackTests(unittest.TestCase):
         self.assertIn("Token binding is necessary but not sufficient", skill_text)
         self.assertIn("Commercial product realism", skill_text)
         self.assertIn("pitch decks", skill_text)
+        self.assertIn("image-free commercial mockups", skill_text)
 
     def test_codex_scaffold_includes_visual_asset_skill(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

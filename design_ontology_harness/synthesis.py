@@ -51,6 +51,11 @@ AI_SYNTHESIS_PRINCIPLES = [
         "rule": "검색 이미지는 라이선스가 검증될 때만 사용한다",
         "detail": "AI는 image_gen을 사용할 수 없거나 실제 사진성이 더 중요한 경우에만 sourced visual fallback을 사용한다. 무료 provider는 per-asset license metadata가 필요하고, paid provider는 license_proof/usage_scope/licensed_to가 필요하다. Reference-only provider는 형태와 밀도 참고만 가능하며 이미지를 구현 에셋으로 복사하지 않는다. source_url, download_url, provider, author, license, attribution_required, sha256, alt_text를 manifest에 기록하지 못하는 이미지는 구현에 넣지 않는다. 런타임 hotlink와 stock/search 이미지를 앱 아이콘·로고·상태 아이콘으로 쓰는 것을 금지한다.",
     },
+    {
+        "id": "visual_substance_in_mockups",
+        "rule": "목업은 관련 이미지를 적극적으로 사용한다",
+        "detail": "AI는 사이트, 앱, 랜딩, 제품 소개, 콘텐츠 카드, 스포츠/장소/상품/포트폴리오 목업을 이미지 없는 카드와 그라디언트 블록만으로 끝내지 않는다. 도메인 실체를 드러내는 생성 이미지, 라이선스 검증 이미지, 사용자 제공 이미지, 브랜드 identity asset을 적극적으로 배치하고 manifest/alt/crop/반응형 검증까지 완료한다. 단 대시보드·운영 UI에서는 이미지가 표, 필터, 상태, 출처 같은 핵심 작업 표면을 밀어내지 않게 한다.",
+    },
 ]
 
 REFERENCE_ABSORPTION_SCOPE = {
@@ -220,6 +225,75 @@ APP_ICON_IDENTITY_POLICY = {
         }
     ],
     "outputs": ["brand_profile", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "lint-implementation"],
+}
+
+MOCKUP_VISUAL_SUBSTANCE_POLICY = {
+    "id": "mockup-visual-substance",
+    "rule": "Commercial mockups should use meaningful visual assets by default; image-free screens are incomplete when the product, content, place, object, or story needs visual substance.",
+    "applies_to": [
+        "website mockup",
+        "landing page",
+        "product page",
+        "commerce",
+        "editorial/content surface",
+        "portfolio",
+        "venue/place page",
+        "sports hub",
+        "travel/food/real-estate",
+        "game or interactive experience",
+        "empty state/onboarding",
+    ],
+    "diagnosis": [
+        "Image-free mockups often look unfinished because cards, hero sections, editorial modules, and content surfaces have no concrete subject matter.",
+        "Gradient blocks, abstract blobs, and homogeneous placeholder panels read as AI-generated polish rather than a real product or brand surface.",
+        "Professional sites usually reveal an actual product, place, person, object, state, gameplay, article subject, or brand identity asset early in the experience.",
+    ],
+    "required_signals": [
+        "at least one relevant visual asset when the first viewport is a landing, brand, product, venue, editorial, portfolio, game, or content-led surface",
+        "real content thumbnails or product/place/object imagery where repeated cards represent visual entities",
+        "image_gen, sourced visual fallback, user-supplied assets, or deterministic SVG identity assets selected according to the visual asset acquisition contract",
+        "manifest entry with acquisition_mode, asset_path, intended_for, alt_text, sha256, crop/focal notes when applicable",
+        "responsive crop and light/dark legibility verified by screenshots or DOM checks",
+    ],
+    "image_acquisition_order": [
+        "Use user-supplied licensed imagery when provided and relevant.",
+        "Use Codex image_gen for brand-specific synthetic raster imagery.",
+        "Use sourced visual fallback when real-world photography is more appropriate or image_gen is unavailable.",
+        "Use deterministic SVG/identity assets for app icons, logos, flags, diagrams, and UI glyphs.",
+    ],
+    "implementation_rules": [
+        "Do not ship a commercial website/app mockup with only text, bordered cards, gradients, and empty media placeholders when the domain naturally needs imagery.",
+        "Hero, product, venue, editorial, portfolio, and game surfaces need a concrete visual subject, not a purely atmospheric background.",
+        "Repeated content cards should use thumbnails or compact visual identity when the item represents a place, person, product, match, article, media, or object.",
+        "Empty states and onboarding panels can use illustration, but the illustration must clarify the product state rather than decorate a blank panel.",
+        "Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.",
+        "Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.",
+        "Every integrated raster image must be represented in the visual asset manifest before product code references it.",
+    ],
+    "failure_patterns": [
+        {
+            "id": "image-free-commercial-mockup",
+            "trigger": "A site, app, landing, product, venue, editorial, portfolio, game, or content-led mockup ships with no meaningful visual asset despite obvious visual subject matter.",
+            "rule": "Visual substance is part of mockup completeness, not optional decoration.",
+            "prevention": "Add relevant generated, sourced, user-supplied, or deterministic visual assets and record them in the manifest before calling the mockup complete.",
+            "technical_controls": ["system_spec.md Mockup Visual Substance", "system_ontology.json GovernanceRule", "design-system-visual-assets skill", "viewport screenshot QA"],
+        },
+        {
+            "id": "placeholder-gradient-as-image",
+            "trigger": "A hero, card, or editorial module uses only gradients, abstract blobs, empty frames, or generic decorative panels where a real visual subject is expected.",
+            "rule": "A visual slot must reveal the actual product, place, object, state, content, or brand identity.",
+            "prevention": "Replace placeholder media with image_gen, sourced, user-supplied, or deterministic SVG assets that match the domain and slot.",
+            "technical_controls": ["Generated Visual Asset Plan", "visual manifest review", "visual QA screenshots"],
+        },
+        {
+            "id": "unmanifested-mockup-image",
+            "trigger": "A mockup references a raster image in HTML/CSS/JS without a visual asset manifest record.",
+            "rule": "Integrated raster assets must be traceable.",
+            "prevention": "Record acquisition_mode, asset_path, intended_for, alt_text, sha256, and source/prompt metadata before wiring the asset.",
+            "technical_controls": ["public/generated/design-system/manifest.json", "design-system/generated_visual_assets.json", "system_ontology.json SourcedVisualAsset/GeneratedVisualAsset"],
+        },
+    ],
+    "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "visual QA"],
 }
 
 COMMERCIAL_PRODUCT_REALISM_POLICY = {
@@ -611,6 +685,7 @@ def build_blueprint(
                 "구현 중 사용자·리뷰어가 반복 가능한 실패 패턴을 지적하면 현재 화면 수정에 그치지 않고 governance/contract/linter로 승격한다",
                 "상용 제품형 화면은 피치덱식 히어로/균일 카드벽보다 실제 작업 표면, 데이터 밀도, 상태, 필터, 출처를 첫 화면에 우선 배치한다",
                 "데이터·스포츠·운영 UI에서 정확한 수치, 예측, 순위, 투표수는 출처/업데이트 시각/샘플 라벨 없이 확정값처럼 보이게 하지 않는다",
+                "사이트·앱·랜딩·제품·장소·콘텐츠·게임 목업은 도메인 실체를 보여주는 이미지/미디어/identity asset을 적극적으로 사용하고, 이미지 없는 카드·그라디언트만으로 완성 처리하지 않는다",
                 "생성 이미지와 장식 비주얼은 도메인 맥락을 보조해야 하며 일정, 결과, 표, 필터, 상태 같은 핵심 작업 표면을 압도하지 않는다",
                 "Codex image_gen이 실패하거나 실제 사진성이 더 중요해 sourced visual fallback을 사용할 때는 라이선스/저작자/출처/attribution/sha256을 manifest에 기록하고 프로젝트 에셋으로 복사한 뒤 사용한다",
                 "유료 stock provider는 구매·구독·프로젝트 라이선스 증빙이 없으면 구현 에셋으로 승격하지 않고, reference-only provider는 형태·밀도·flow 참고로만 사용한다",
@@ -626,6 +701,7 @@ def build_blueprint(
             "responsive_resilience_policy": RESPONSIVE_RESILIENCE_POLICY,
             "icon_refactor_policy": ICON_REFACTOR_POLICY,
             "app_icon_identity_policy": APP_ICON_IDENTITY_POLICY,
+            "mockup_visual_substance_policy": MOCKUP_VISUAL_SUBSTANCE_POLICY,
             "commercial_product_realism_policy": COMMERCIAL_PRODUCT_REALISM_POLICY,
             "feedback_promotion_policy": REFERENCE_ABSORPTION_SCOPE["promotion_policy"],
         },

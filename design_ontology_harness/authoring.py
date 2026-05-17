@@ -1140,6 +1140,38 @@ def build_system_spec_markdown(
 {app_icon_rules}
 - **Promoted app icon failure patterns**:
 {app_icon_failures}"""
+    visual_substance_policy = governance.get("mockup_visual_substance_policy", {})
+    visual_substance_applies_to = ", ".join(visual_substance_policy.get("applies_to", [])) or "website, landing, product, venue, editorial, content-led mockups"
+    visual_substance_diagnosis_lines = "\n".join(
+        f"- {item}" for item in visual_substance_policy.get("diagnosis", [])
+    ) or "- No mockup visual substance diagnosis defined."
+    visual_substance_signal_lines = "\n".join(
+        f"- {item}" for item in visual_substance_policy.get("required_signals", [])
+    ) or "- No mockup visual substance signals defined."
+    visual_substance_order_lines = "\n".join(
+        f"- {item}" for item in visual_substance_policy.get("image_acquisition_order", [])
+    ) or "- Use user-supplied, generated, sourced, or deterministic identity assets as appropriate."
+    visual_substance_rule_lines = "\n".join(
+        f"- {item}" for item in visual_substance_policy.get("implementation_rules", [])
+    ) or "- No mockup visual substance implementation rules defined."
+    visual_substance_failure_lines = "\n".join(
+        f"- **{item.get('id', 'mockup-visual-substance-failure')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in visual_substance_policy.get("failure_patterns", [])
+    ) or "- No mockup visual substance failure patterns defined."
+    visual_substance_section = f"""### Mockup Visual Substance
+
+- **Rule**: {visual_substance_policy.get('rule', 'Commercial mockups should use relevant visual assets by default.')}
+- **Applies to**: {visual_substance_applies_to}
+- **Why image-free mockups fail**:
+{visual_substance_diagnosis_lines}
+- **Required visual substance signals**:
+{visual_substance_signal_lines}
+- **Image acquisition order**:
+{visual_substance_order_lines}
+- **Implementation rules**:
+{visual_substance_rule_lines}
+- **Promoted visual substance failure patterns**:
+{visual_substance_failure_lines}"""
     commercial_policy = governance.get("commercial_product_realism_policy", {})
     commercial_applies_to = ", ".join(commercial_policy.get("applies_to", [])) or "dashboard, tool, data product, operational UI"
     commercial_diagnosis_lines = "\n".join(
@@ -1257,6 +1289,8 @@ def build_system_spec_markdown(
 {icon_refactor_section}
 
 {app_icon_section}
+
+{visual_substance_section}
 
 {commercial_section}
 
