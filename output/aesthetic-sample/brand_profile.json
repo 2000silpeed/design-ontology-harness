@@ -1,0 +1,10 @@
+{
+  "brand_name": "Signal Desk Sample",
+  "system_name": "Signal Desk Sample System",
+  "product_summary": "A decision dashboard for teams reviewing signals, evidence, and next actions.",
+  "audiences": ["product operators", "strategy teams"],
+  "brand_keywords": ["clear", "trustworthy", "analytical", "calm"],
+  "anti_keywords": ["generic", "noisy", "decorative"],
+  "tone_of_voice": ["precise", "warm", "confident"],
+  "product_primitives": ["signal table", "evidence panel", "status filters", "action queue"]
+}

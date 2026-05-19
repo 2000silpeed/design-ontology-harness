@@ -1,0 +1,569 @@
+{
+  "schema_version": "aesthetic-self-improvement-loop/v1",
+  "design_id": "seoul-alley-mood-map-v7",
+  "threshold": 0.82,
+  "min_dimension_score": 0.7,
+  "max_iterations": 3,
+  "auto_apply_estimates": false,
+  "passed": true,
+  "ready_to_execute": true,
+  "status": "passed",
+  "execution_gate": {
+    "state": "open",
+    "reason": "iteration-1 scored 83.56, meeting threshold 82.00."
+  },
+  "selected_iteration": "iteration-1",
+  "iterations": [
+    {
+      "iteration_id": "iteration-1",
+      "design_id": "seoul-alley-mood-map-v7",
+      "score": 0.8356,
+      "score_100": 83.56,
+      "threshold": 0.82,
+      "min_dimension_score": 0.7,
+      "passed": true,
+      "status": "passed",
+      "coverage_ratio": 1.0,
+      "dimension_scores": [
+        {
+          "dimension_id": "visual_harmony",
+          "label": "Visual harmony",
+          "weight": 0.24,
+          "score": 0.8175,
+          "metric_scores": [
+            {
+              "metric_id": "color_harmony",
+              "label": "Color harmony",
+              "raw_value": 8.4,
+              "score": 0.8400000000000001,
+              "present": true
+            },
+            {
+              "metric_id": "spacing_consistency",
+              "label": "Spacing consistency",
+              "raw_value": 8.1,
+              "score": 0.8099999999999999,
+              "present": true
+            },
+            {
+              "metric_id": "typography_balance",
+              "label": "Typography balance",
+              "raw_value": 8.0,
+              "score": 0.8,
+              "present": true
+            },
+            {
+              "metric_id": "composition_order",
+              "label": "Composition order",
+              "raw_value": 8.2,
+              "score": 0.82,
+              "present": true
+            }
+          ],
+          "missing_metrics": []
+        },
+        {
+          "dimension_id": "clarity",
+          "label": "Clarity",
+          "weight": 0.2,
+          "score": 0.8150000000000001,
+          "metric_scores": [
+            {
+              "metric_id": "hierarchy_clarity",
+              "label": "Hierarchy clarity",
+              "raw_value": 8.3,
+              "score": 0.8300000000000001,
+              "present": true
+            },
+            {
+              "metric_id": "contrast_legibility",
+              "label": "Contrast and legibility",
+              "raw_value": 8.0,
+              "score": 0.8,
+              "present": true
+            },
+            {
+              "metric_id": "content_density_control",
+              "label": "Content density control",
+              "raw_value": 7.8,
+              "score": 0.78,
+              "present": true
+            },
+            {
+              "metric_id": "task_focus",
+              "label": "Task focus",
+              "raw_value": 8.5,
+              "score": 0.85,
+              "present": true
+            }
+          ],
+          "missing_metrics": []
+        },
+        {
+          "dimension_id": "brand_fit",
+          "label": "Brand fit",
+          "weight": 0.18,
+          "score": 0.8875,
+          "metric_scores": [
+            {
+              "metric_id": "keyword_alignment",
+              "label": "Keyword alignment",
+              "raw_value": 9.0,
+              "score": 0.9,
+              "present": true
+            },
+            {
+              "metric_id": "tone_alignment",
+              "label": "Tone alignment",
+              "raw_value": 8.8,
+              "score": 0.8800000000000001,
+              "present": true
+            },
+            {
+              "metric_id": "domain_fit",
+              "label": "Domain fit",
+              "raw_value": 9.0,
+              "score": 0.9,
+              "present": true
+            },
+            {
+              "metric_id": "anti_keyword_avoidance",
+              "label": "Anti-keyword avoidance",
+              "raw_value": 8.7,
+              "score": 0.8699999999999999,
+              "present": true
+            }
+          ],
+          "missing_metrics": []
+        },
+        {
+          "dimension_id": "emotional_appeal",
+          "label": "Emotional appeal",
+          "weight": 0.14,
+          "score": 0.8333333333333334,
+          "metric_scores": [
+            {
+              "metric_id": "desirability",
+              "label": "Desirability",
+              "raw_value": 8.3,
+              "score": 0.8300000000000001,
+              "present": true
+            },
+            {
+              "metric_id": "confidence_signal",
+              "label": "Confidence signal",
+              "raw_value": 8.6,
+              "score": 0.86,
+              "present": true
+            },
+            {
+              "metric_id": "warmth_or_energy",
+              "label": "Warmth or energy",
+              "raw_value": 8.1,
+              "score": 0.8099999999999999,
+              "present": true
+            }
+          ],
+          "missing_metrics": []
+        },
+        {
+          "dimension_id": "craft_quality",
+          "label": "Craft quality",
+          "weight": 0.14,
+          "score": 0.8400000000000001,
+          "metric_scores": [
+            {
+              "metric_id": "responsive_fit",
+              "label": "Responsive fit",
+              "raw_value": 8.5,
+              "score": 0.85,
+              "present": true
+            },
+            {
+              "metric_id": "token_binding",
+              "label": "Token binding",
+              "raw_value": 8.2,
+              "score": 0.82,
+              "present": true
+            },
+            {
+              "metric_id": "accessibility_baseline",
+              "label": "Accessibility baseline",
+              "raw_value": 8.0,
+              "score": 0.8,
+              "present": true
+            },
+            {
+              "metric_id": "interaction_affordance",
+              "label": "Interaction affordance",
+              "raw_value": 8.5,
+              "score": 0.85,
+              "present": true
+            },
+            {
+              "metric_id": "asset_completeness",
+              "label": "Asset completeness",
+              "raw_value": 8.8,
+              "score": 0.8800000000000001,
+              "present": true
+            }
+          ],
+          "missing_metrics": []
+        },
+        {
+          "dimension_id": "novelty",
+          "label": "Novelty",
+          "weight": 0.1,
+          "score": 0.8233333333333333,
+          "metric_scores": [
+            {
+              "metric_id": "distinctiveness",
+              "label": "Distinctiveness",
+              "raw_value": 8.2,
+              "score": 0.82,
+              "present": true
+            },
+            {
+              "metric_id": "reference_transformation",
+              "label": "Reference transformation",
+              "raw_value": 8.4,
+              "score": 0.8400000000000001,
+              "present": true
+            },
+            {
+              "metric_id": "memorability",
+              "label": "Memorability",
+              "raw_value": 8.1,
+              "score": 0.8099999999999999,
+              "present": true
+            }
+          ],
+          "missing_metrics": []
+        }
+      ],
+      "missing_metrics": [],
+      "actions": [
+        {
+          "action_id": "clarity:content_density_control",
+          "dimension_id": "clarity",
+          "metric_id": "content_density_control",
+          "priority": 1,
+          "expected_lift": 0.07,
+          "instruction": "Reduce competing modules or group dense content into scannable rows, tables, rails, or panels."
+        },
+        {
+          "action_id": "clarity:contrast_legibility",
+          "dimension_id": "clarity",
+          "metric_id": "contrast_legibility",
+          "priority": 2,
+          "expected_lift": 0.08,
+          "instruction": "Raise text/background and control/border contrast while preserving the selected token roles."
+        },
+        {
+          "action_id": "visual_harmony:typography_balance",
+          "dimension_id": "visual_harmony",
+          "metric_id": "typography_balance",
+          "priority": 3,
+          "expected_lift": 0.07,
+          "instruction": "Rebalance type hierarchy so headings, body, captions, and controls use distinct but restrained roles."
+        },
+        {
+          "action_id": "craft_quality:accessibility_baseline",
+          "dimension_id": "craft_quality",
+          "metric_id": "accessibility_baseline",
+          "priority": 4,
+          "expected_lift": 0.07,
+          "instruction": "Check contrast, focus states, labels, and target sizes as part of visual polish, not after it."
+        },
+        {
+          "action_id": "visual_harmony:spacing_consistency",
+          "dimension_id": "visual_harmony",
+          "metric_id": "spacing_consistency",
+          "priority": 5,
+          "expected_lift": 0.07,
+          "instruction": "Normalize page rhythm with shared spacing steps for section, cluster, and control gaps."
+        },
+        {
+          "action_id": "emotional_appeal:warmth_or_energy",
+          "dimension_id": "emotional_appeal",
+          "metric_id": "warmth_or_energy",
+          "priority": 6,
+          "expected_lift": 0.06,
+          "instruction": "Tune motion, image choice, accent placement, or microcopy energy to the target audience."
+        }
+      ]
+    }
+  ],
+  "next_iteration_brief": null,
+  "ontology": {
+    "schema_version": "aesthetic-evaluation-ontology/v1",
+    "dimensions": [
+      {
+        "id": "visual_harmony",
+        "label": "Visual harmony",
+        "weight": 0.24,
+        "description": "How coherently color, type, spacing, and composition work together.",
+        "metrics": [
+          "color_harmony",
+          "spacing_consistency",
+          "typography_balance",
+          "composition_order"
+        ]
+      },
+      {
+        "id": "clarity",
+        "label": "Clarity",
+        "weight": 0.2,
+        "description": "How quickly the intended hierarchy, action, and information structure can be read.",
+        "metrics": [
+          "hierarchy_clarity",
+          "contrast_legibility",
+          "content_density_control",
+          "task_focus"
+        ]
+      },
+      {
+        "id": "brand_fit",
+        "label": "Brand fit",
+        "weight": 0.18,
+        "description": "How well the candidate expresses the intended brand posture and avoids anti-keywords.",
+        "metrics": [
+          "keyword_alignment",
+          "tone_alignment",
+          "domain_fit",
+          "anti_keyword_avoidance"
+        ]
+      },
+      {
+        "id": "emotional_appeal",
+        "label": "Emotional appeal",
+        "weight": 0.14,
+        "description": "How desirable, confident, and affectively appropriate the surface feels.",
+        "metrics": [
+          "desirability",
+          "confidence_signal",
+          "warmth_or_energy"
+        ]
+      },
+      {
+        "id": "craft_quality",
+        "label": "Craft quality",
+        "weight": 0.14,
+        "description": "How polished and implementation-ready the candidate is across fit, tokens, and affordances.",
+        "metrics": [
+          "responsive_fit",
+          "token_binding",
+          "accessibility_baseline",
+          "interaction_affordance",
+          "asset_completeness"
+        ]
+      },
+      {
+        "id": "novelty",
+        "label": "Novelty",
+        "weight": 0.1,
+        "description": "How distinctive the design is without breaking its product and brand constraints.",
+        "metrics": [
+          "distinctiveness",
+          "reference_transformation",
+          "memorability"
+        ]
+      }
+    ],
+    "metrics": {
+      "color_harmony": {
+        "label": "Color harmony",
+        "improvement": "Tighten the palette around one primary accent, one neutral surface ladder, and explicit semantic roles.",
+        "expected_lift": 0.08
+      },
+      "spacing_consistency": {
+        "label": "Spacing consistency",
+        "improvement": "Normalize page rhythm with shared spacing steps for section, cluster, and control gaps.",
+        "expected_lift": 0.07
+      },
+      "typography_balance": {
+        "label": "Typography balance",
+        "improvement": "Rebalance type hierarchy so headings, body, captions, and controls use distinct but restrained roles.",
+        "expected_lift": 0.07
+      },
+      "composition_order": {
+        "label": "Composition order",
+        "improvement": "Strengthen alignment, focal sequence, and proportional grouping before adding more decoration.",
+        "expected_lift": 0.08
+      },
+      "hierarchy_clarity": {
+        "label": "Hierarchy clarity",
+        "improvement": "Make the primary state, primary action, and next-best secondary action visible in the first scan.",
+        "expected_lift": 0.09
+      },
+      "contrast_legibility": {
+        "label": "Contrast and legibility",
+        "improvement": "Raise text/background and control/border contrast while preserving the selected token roles.",
+        "expected_lift": 0.08
+      },
+      "content_density_control": {
+        "label": "Content density control",
+        "improvement": "Reduce competing modules or group dense content into scannable rows, tables, rails, or panels.",
+        "expected_lift": 0.07
+      },
+      "task_focus": {
+        "label": "Task focus",
+        "improvement": "Move decorative or pitch-like content below the operational surface that supports the user's main task.",
+        "expected_lift": 0.08
+      },
+      "keyword_alignment": {
+        "label": "Keyword alignment",
+        "improvement": "Map the strongest brand keywords to visible choices in layout, tone, density, and component emphasis.",
+        "expected_lift": 0.08
+      },
+      "tone_alignment": {
+        "label": "Tone alignment",
+        "improvement": "Adjust copy weight, control styling, and visual temperature to match the intended voice.",
+        "expected_lift": 0.06
+      },
+      "domain_fit": {
+        "label": "Domain fit",
+        "improvement": "Add domain-native structures such as tables, maps, media, timelines, inspectors, or product objects where relevant.",
+        "expected_lift": 0.08
+      },
+      "anti_keyword_avoidance": {
+        "label": "Anti-keyword avoidance",
+        "improvement": "Remove visual tropes that match the brand profile's anti-keywords before polishing details.",
+        "expected_lift": 0.06
+      },
+      "desirability": {
+        "label": "Desirability",
+        "improvement": "Give the primary surface a more intentional visual reward: stronger imagery, tactile controls, or clearer payoff.",
+        "expected_lift": 0.07
+      },
+      "confidence_signal": {
+        "label": "Confidence signal",
+        "improvement": "Add evidence, provenance, precision, or stable UI states that make the surface feel trustworthy.",
+        "expected_lift": 0.07
+      },
+      "warmth_or_energy": {
+        "label": "Warmth or energy",
+        "improvement": "Tune motion, image choice, accent placement, or microcopy energy to the target audience.",
+        "expected_lift": 0.06
+      },
+      "responsive_fit": {
+        "label": "Responsive fit",
+        "improvement": "Verify mobile and desktop fit, then fix overflow, clipped labels, and unstable control sizing.",
+        "expected_lift": 0.08
+      },
+      "token_binding": {
+        "label": "Token binding",
+        "improvement": "Replace local visual constants with design-system tokens and keep semantic roles consistent.",
+        "expected_lift": 0.06
+      },
+      "accessibility_baseline": {
+        "label": "Accessibility baseline",
+        "improvement": "Check contrast, focus states, labels, and target sizes as part of visual polish, not after it.",
+        "expected_lift": 0.07
+      },
+      "interaction_affordance": {
+        "label": "Interaction affordance",
+        "improvement": "Make controls, filters, state chips, and navigation visually legible with icons, state, and hit-area clarity.",
+        "expected_lift": 0.07
+      },
+      "asset_completeness": {
+        "label": "Asset completeness",
+        "improvement": "Use concrete product, place, object, identity, or content assets where the domain expects visual substance.",
+        "expected_lift": 0.08
+      },
+      "distinctiveness": {
+        "label": "Distinctiveness",
+        "improvement": "Introduce one memorable composition or interaction pattern while keeping the rest of the system restrained.",
+        "expected_lift": 0.06
+      },
+      "reference_transformation": {
+        "label": "Reference transformation",
+        "improvement": "Absorb reference morphology without copying palette, copy, IA, or protected asset choices.",
+        "expected_lift": 0.06
+      },
+      "memorability": {
+        "label": "Memorability",
+        "improvement": "Create a recognizable signature in the first viewport through layout, identity asset, or product-native visual.",
+        "expected_lift": 0.06
+      }
+    },
+    "relations": [
+      {
+        "source": "DesignCandidate",
+        "relation": "evaluated_by",
+        "target": "AestheticDimension"
+      },
+      {
+        "source": "AestheticDimension",
+        "relation": "measured_by",
+        "target": "AestheticMetric"
+      },
+      {
+        "source": "AestheticMetric",
+        "relation": "improved_by",
+        "target": "ImprovementAction"
+      },
+      {
+        "source": "AestheticEvaluation",
+        "relation": "gates",
+        "target": "Execution"
+      }
+    ],
+    "context": {
+      "brand_name": "Seoul Alley Mood Map",
+      "system_name": "Alley Sense System",
+      "product_summary": "서울의 골목 장소를 감각 속성과 감정 태그로 기록하고 추천하는 모바일 우선 장소 큐레이션 도구",
+      "audiences": [
+        "혼자 산책하거나 작업할 조용한 장소를 찾는 서울 거주자",
+        "카페, 서점, 작은 공원, 골목길을 분위기 기준으로 저장하고 비교하고 싶은 사용자",
+        "관광 명소보다 시간대, 빛, 소리, 혼잡도 같은 실제 경험 신호를 믿고 싶은 사용자"
+      ],
+      "brand_keywords": [
+        "situated",
+        "quiet",
+        "sensory",
+        "curated",
+        "walkable",
+        "trustworthy",
+        "local"
+      ],
+      "anti_keywords": [
+        "generic-map",
+        "tourism-brochure",
+        "photo-influencer-feed",
+        "commerce-led",
+        "real-estate",
+        "overdecorated",
+        "neon",
+        "glassmorphism",
+        "beige-only-editorial",
+        "gamified"
+      ],
+      "tone_of_voice": [
+        "calm",
+        "observational",
+        "specific",
+        "warm",
+        "non-salesy"
+      ],
+      "product_primitives": [
+        "neighborhood switcher",
+        "time-of-day segmented control",
+        "sensory filter chips",
+        "mood match score",
+        "map pin layer",
+        "place list card",
+        "sensory evidence strip",
+        "place detail sheet",
+        "light sound crowding profile",
+        "emotion tag cluster",
+        "recommendation queue",
+        "ontology inspector panel",
+        "place relationship graph",
+        "add place form",
+        "empty and uncertain evidence states"
+      ]
+    },
+    "interpretation_rule": "Scores represent observed or reviewed response proxies in a declared context; they are not universal beauty claims."
+  }
+}

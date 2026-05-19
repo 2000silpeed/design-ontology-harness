@@ -239,6 +239,67 @@ def build_parser() -> argparse.ArgumentParser:
     )
     visual_compare_parser.add_argument("--json", action="store_true", help="Emit JSON report")
 
+    aesthetic_loop_parser = subparsers.add_parser(
+        "aesthetic-loop",
+        help="Evaluate design aesthetic scores, produce improvement actions, and gate execution",
+    )
+    aesthetic_loop_parser.add_argument("--candidate", default=None, help="JSON design candidate or candidate iterations")
+    aesthetic_loop_parser.add_argument("--project-dir", default=None, help="Optional harness project directory")
+    aesthetic_loop_parser.add_argument("--brand-profile", default=None, help="Optional brand profile JSON for evaluation context")
+    aesthetic_loop_parser.add_argument("--ontology", default=None, help="Optional custom aesthetic ontology JSON")
+    aesthetic_loop_parser.add_argument(
+        "--threshold",
+        type=float,
+        default=0.82,
+        help="Overall score threshold required to open the execution gate (0..1, default 0.82)",
+    )
+    aesthetic_loop_parser.add_argument(
+        "--min-dimension-score",
+        type=float,
+        default=0.70,
+        help="Minimum required score for every aesthetic dimension (0..1, default 0.70)",
+    )
+    aesthetic_loop_parser.add_argument(
+        "--max-iterations",
+        type=int,
+        default=3,
+        help="Maximum candidate iterations to evaluate before blocking (default 3)",
+    )
+    aesthetic_loop_parser.add_argument(
+        "--auto-apply-estimates",
+        action="store_true",
+        help="Forecast follow-up iterations by applying expected lifts from recommended actions",
+    )
+    aesthetic_loop_parser.add_argument("--output", default=None, help="Optional path to write the loop report JSON")
+    aesthetic_loop_parser.add_argument("--json", action="store_true", help="Emit JSON report")
+    aesthetic_loop_parser.add_argument(
+        "--execute-command",
+        default=None,
+        help="Command to run only after the aesthetic gate passes",
+    )
+
+    score_screenshot_parser = subparsers.add_parser(
+        "score-screenshot",
+        help="Generate aesthetic-loop candidate metrics from screenshot image files",
+    )
+    score_screenshot_parser.add_argument(
+        "--screenshot",
+        action="append",
+        dest="screenshots",
+        default=[],
+        help="Screenshot image path. Can be passed multiple times.",
+    )
+    score_screenshot_parser.add_argument("--project-dir", default=None, help="Optional harness project directory")
+    score_screenshot_parser.add_argument("--brand-profile", default=None, help="Optional brand profile JSON")
+    score_screenshot_parser.add_argument("--design-id", default=None, help="Optional candidate design id")
+    score_screenshot_parser.add_argument("--output", default=None, help="Optional path to write candidate JSON")
+    score_screenshot_parser.add_argument("--json", action="store_true", help="Emit full candidate JSON")
+    score_screenshot_parser.add_argument("--run-loop", action="store_true", help="Immediately run aesthetic-loop on the generated candidate")
+    score_screenshot_parser.add_argument("--report-output", default=None, help="Optional loop report JSON path when --run-loop is used")
+    score_screenshot_parser.add_argument("--threshold", type=float, default=0.82)
+    score_screenshot_parser.add_argument("--min-dimension-score", type=float, default=0.70)
+    score_screenshot_parser.add_argument("--max-iterations", type=int, default=3)
+
     rebuild_parser = subparsers.add_parser(
         "rebuild-all-presets",
         help="Walk matrix.json and rebuild every preset from its source_project",
@@ -612,6 +673,133 @@ def main() -> None:
         print(format_visual_comparison_json(report) if args.json else format_visual_comparison(report))
         if not report.ok:
             raise SystemExit(1)
+        return
+
+    if args.command == "aesthetic-loop":
+        import shlex
+        import subprocess
+
+        from .aesthetic_loop import (
+            AESTHETIC_LATEST_REPORT_RELATIVE_PATH,
+            AESTHETIC_ONTOLOGY_RELATIVE_PATH,
+            build_aesthetic_ontology,
+            format_loop_report,
+            load_json,
+            run_self_improvement_loop,
+        )
+
+        project_output_dir = None
+        brand_profile = None
+        if args.project_dir:
+            project_dir = Path(args.project_dir)
+            manifest = load_project(project_dir)
+            project_output_dir = project_dir / manifest.get("build_dir", "build") / "system"
+            if not args.brand_profile:
+                brand_profile = load_brand_profile(project_dir / manifest["brand_profile"])
+
+        if args.brand_profile:
+            brand_profile = load_brand_profile(Path(args.brand_profile))
+
+        candidate_path = Path(args.candidate) if args.candidate else None
+        if candidate_path is None and project_output_dir is not None:
+            default_candidate_path = project_output_dir / "aesthetic" / "candidate.json"
+            if default_candidate_path.exists():
+                candidate_path = default_candidate_path
+        if candidate_path is None:
+            raise SystemExit("Provide --candidate, or create build/system/aesthetic/candidate.json when using --project-dir.")
+
+        candidate_payload = load_json(candidate_path)
+        custom_ontology = load_json(Path(args.ontology)) if args.ontology else None
+        if custom_ontology is None and project_output_dir is not None:
+            ontology_path = project_output_dir / AESTHETIC_ONTOLOGY_RELATIVE_PATH
+            if ontology_path.exists():
+                custom_ontology = load_json(ontology_path)
+        ontology = build_aesthetic_ontology(brand_profile, custom_ontology)
+        report = run_self_improvement_loop(
+            candidate_payload,
+            ontology,
+            threshold=args.threshold,
+            min_dimension_score=args.min_dimension_score,
+            max_iterations=args.max_iterations,
+            auto_apply_estimates=args.auto_apply_estimates,
+        )
+        report_path = Path(args.output) if args.output else None
+        if report_path is None and project_output_dir is not None:
+            report_path = project_output_dir / AESTHETIC_LATEST_REPORT_RELATIVE_PATH
+        if report_path:
+            write_json(report_path, report)
+        print(json.dumps(report, ensure_ascii=False, indent=2) if args.json else format_loop_report(report))
+
+        if not report["ready_to_execute"]:
+            raise SystemExit(1)
+
+        if args.execute_command:
+            completed = subprocess.run(
+                shlex.split(args.execute_command),
+                cwd=Path.cwd(),
+                check=False,
+            )
+            if completed.returncode:
+                raise SystemExit(completed.returncode)
+        return
+
+    if args.command == "score-screenshot":
+        from .aesthetic_loop import (
+            AESTHETIC_LATEST_REPORT_RELATIVE_PATH,
+            build_aesthetic_ontology,
+            format_loop_report,
+            run_self_improvement_loop,
+        )
+        from .screenshot_aesthetic import (
+            format_candidate_json,
+            format_candidate_summary,
+            score_screenshots,
+        )
+
+        project_output_dir = None
+        brand_profile = None
+        if args.project_dir:
+            project_dir = Path(args.project_dir)
+            manifest = load_project(project_dir)
+            project_output_dir = project_dir / manifest.get("build_dir", "build") / "system"
+            if not args.brand_profile:
+                brand_profile = load_brand_profile(project_dir / manifest["brand_profile"])
+        if args.brand_profile:
+            brand_profile = load_brand_profile(Path(args.brand_profile))
+        screenshot_paths = [Path(path) for path in args.screenshots]
+        if not screenshot_paths:
+            raise SystemExit("Provide at least one --screenshot.")
+
+        candidate = score_screenshots(
+            screenshot_paths,
+            brand_profile=brand_profile,
+            design_id=args.design_id,
+        )
+        candidate_path = Path(args.output) if args.output else None
+        if candidate_path is None and project_output_dir is not None:
+            candidate_path = project_output_dir / "aesthetic" / "candidate.json"
+        if candidate_path:
+            write_json(candidate_path, candidate)
+        print(format_candidate_json(candidate) if args.json else format_candidate_summary(candidate))
+
+        if args.run_loop:
+            ontology = build_aesthetic_ontology(brand_profile)
+            report = run_self_improvement_loop(
+                candidate,
+                ontology,
+                threshold=args.threshold,
+                min_dimension_score=args.min_dimension_score,
+                max_iterations=args.max_iterations,
+            )
+            report_path = Path(args.report_output) if args.report_output else None
+            if report_path is None and project_output_dir is not None:
+                report_path = project_output_dir / AESTHETIC_LATEST_REPORT_RELATIVE_PATH
+            if report_path:
+                write_json(report_path, report)
+            print()
+            print(format_loop_report(report))
+            if not report["ready_to_execute"]:
+                raise SystemExit(1)
         return
 
     if args.command == "rebuild-all-presets":
@@ -1301,7 +1489,11 @@ def main() -> None:
             if line.strip()
         ]
         build_blueprint(output_dir, brand_profile, references, documents)
+        from .aesthetic_loop import write_aesthetic_project_artifacts
+
+        aesthetic_paths = write_aesthetic_project_artifacts(output_dir, brand_profile)
         print(f"[synthesize] 블루프린트 재생성 완료 ({output_dir}/blueprint/)")
+        print(f"  -> aesthetic ontology: {aesthetic_paths['ontology_path']}")
         return
 
     if args.command == "run-project":
@@ -1381,6 +1573,9 @@ def main() -> None:
             references=references,
             documents=documents,
         )
+        from .aesthetic_loop import write_aesthetic_project_artifacts
+
+        aesthetic_paths = write_aesthetic_project_artifacts(output_dir, brand_profile)
         write_json(
             build_root / "project_summary.json",
             {
@@ -1411,6 +1606,8 @@ def main() -> None:
 
         print(f"[run-project] 시스템 산출물 생성 완료: {output_dir}/blueprint/")
         print(f"  -> 레퍼런스: {len(references)}개 | 문서: {len(documents)}개")
+        print(f"  -> 심미성 루프: {aesthetic_paths['ontology_path']}")
+        print(f"  -> 후보 템플릿: {aesthetic_paths['candidate_template_path']}")
         print("  -> system_spec.md 를 확인하세요.")
         return
 

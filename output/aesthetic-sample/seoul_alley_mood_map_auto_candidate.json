@@ -1,0 +1,215 @@
+{
+  "schema_version": "aesthetic-candidate/v1",
+  "design_id": "seoul-alley-mood-map-v7-auto",
+  "score_scale": 10,
+  "source_screenshots": [
+    "projects/seoul-alley-mood-map/screenshots/seoul-alley-mood-map-complete-media-icon-v7-desktop.png",
+    "projects/seoul-alley-mood-map/screenshots/seoul-alley-mood-map-complete-media-icon-v7-mobile.png"
+  ],
+  "measurement_protocol": {
+    "method": "automated screenshot heuristic v1",
+    "note": "Scores are generated from pixel-level visual proxies such as palette control, contrast, edge density, layout activity, photo/asset signal, and responsive screenshot coverage. Semantic claims still need human or model review."
+  },
+  "metrics": {
+    "color_harmony": 8.35,
+    "spacing_consistency": 8.35,
+    "typography_balance": 8.35,
+    "composition_order": 8.35,
+    "hierarchy_clarity": 8.35,
+    "contrast_legibility": 8.35,
+    "content_density_control": 8.35,
+    "task_focus": 8.52,
+    "keyword_alignment": 8.88,
+    "tone_alignment": 8.59,
+    "domain_fit": 8.47,
+    "anti_keyword_avoidance": 9.2,
+    "desirability": 8.35,
+    "confidence_signal": 8.5,
+    "warmth_or_energy": 8.35,
+    "responsive_fit": 8.6,
+    "token_binding": 8.16,
+    "accessibility_baseline": 8.42,
+    "interaction_affordance": 8.35,
+    "asset_completeness": 8.35,
+    "distinctiveness": 8.35,
+    "reference_transformation": 8.62,
+    "memorability": 8.35
+  },
+  "automated_metric_notes": {
+    "color_harmony": "Generated from screenshot visual proxies for color_harmony; use as a first-pass gate signal.",
+    "spacing_consistency": "Generated from screenshot visual proxies for spacing_consistency; use as a first-pass gate signal.",
+    "typography_balance": "Generated from screenshot visual proxies for typography_balance; use as a first-pass gate signal.",
+    "composition_order": "Generated from screenshot visual proxies for composition_order; use as a first-pass gate signal.",
+    "hierarchy_clarity": "Generated from screenshot visual proxies for hierarchy_clarity; use as a first-pass gate signal.",
+    "contrast_legibility": "Generated from screenshot visual proxies for contrast_legibility; use as a first-pass gate signal.",
+    "content_density_control": "Generated from screenshot visual proxies for content_density_control; use as a first-pass gate signal.",
+    "task_focus": "Generated from screenshot visual proxies for task_focus; use as a first-pass gate signal.",
+    "keyword_alignment": "Pixel proxy plus brand keyword matching; semantic review is still recommended.",
+    "tone_alignment": "Generated from screenshot visual proxies for tone_alignment; use as a first-pass gate signal.",
+    "domain_fit": "Pixel proxy for structured product surface and visual asset evidence; does not identify domain objects semantically.",
+    "anti_keyword_avoidance": "Generated from screenshot visual proxies for anti_keyword_avoidance; use as a first-pass gate signal.",
+    "desirability": "Generated from screenshot visual proxies for desirability; use as a first-pass gate signal.",
+    "confidence_signal": "Generated from screenshot visual proxies for confidence_signal; use as a first-pass gate signal.",
+    "warmth_or_energy": "Generated from screenshot visual proxies for warmth_or_energy; use as a first-pass gate signal.",
+    "responsive_fit": "Generated from screenshot visual proxies for responsive_fit; use as a first-pass gate signal.",
+    "token_binding": "Screenshot proxy only; confirm with lint-implementation for code-level token binding.",
+    "accessibility_baseline": "Generated from screenshot visual proxies for accessibility_baseline; use as a first-pass gate signal.",
+    "interaction_affordance": "Generated from screenshot visual proxies for interaction_affordance; use as a first-pass gate signal.",
+    "asset_completeness": "Generated from screenshot visual proxies for asset_completeness; use as a first-pass gate signal.",
+    "distinctiveness": "Generated from screenshot visual proxies for distinctiveness; use as a first-pass gate signal.",
+    "reference_transformation": "Generated from screenshot visual proxies for reference_transformation; use as a first-pass gate signal.",
+    "memorability": "Generated from screenshot visual proxies for memorability; use as a first-pass gate signal."
+  },
+  "automated_feature_report": {
+    "aggregate": {
+      "count": 2,
+      "orientations": [
+        "landscape",
+        "portrait"
+      ],
+      "has_mobile_width": true,
+      "has_desktop_width": true,
+      "min_width": 390,
+      "max_width": 1440,
+      "max_height": 3149,
+      "luminance_mean": 0.8236,
+      "luminance_std": 0.2614,
+      "luminance_span": 1.0,
+      "saturation_mean": 0.058,
+      "saturation_std": 0.1305,
+      "neutral_share": 0.8944,
+      "light_neutral_share": 0.7724,
+      "dark_share": 0.0692,
+      "accent_share": 0.0324,
+      "edge_density": 0.1793,
+      "desktop_edge_density": 0.1088,
+      "mobile_edge_density": 0.2498,
+      "active_cell_share": 0.8021,
+      "photo_cell_share": 0.2917
+    },
+    "screenshots": [
+      {
+        "path": "/Users/sungwoon/ai-projects/design-ontology-harness/projects/seoul-alley-mood-map/screenshots/seoul-alley-mood-map-complete-media-icon-v7-desktop.png",
+        "sha256": "d3fa013b2959b7250d5a0d9eb0bcec7ff72308912c60d0799eee55c7bb34a35b",
+        "width": 1440,
+        "height": 1236,
+        "orientation": "landscape",
+        "luminance_mean": 0.8633,
+        "luminance_std": 0.2234,
+        "luminance_span": 1.0,
+        "saturation_mean": 0.0449,
+        "saturation_std": 0.1117,
+        "neutral_share": 0.9321,
+        "light_neutral_share": 0.8493,
+        "dark_share": 0.0432,
+        "accent_share": 0.0228,
+        "edge_density": 0.1088,
+        "active_cell_share": 0.7292,
+        "photo_cell_share": 0.1944,
+        "dominant_colors": [
+          {
+            "hex": "#FFFFFF",
+            "share": 0.2139,
+            "luminance": 1.0
+          },
+          {
+            "hex": "#EFF4F4",
+            "share": 0.2079,
+            "luminance": 0.8958
+          },
+          {
+            "hex": "#F0F6F7",
+            "share": 0.1696,
+            "luminance": 0.9115
+          },
+          {
+            "hex": "#FBFBFD",
+            "share": 0.1235,
+            "luminance": 0.966
+          },
+          {
+            "hex": "#ABB1AE",
+            "share": 0.1059,
+            "luminance": 0.4316
+          },
+          {
+            "hex": "#F6F8FA",
+            "share": 0.1004,
+            "luminance": 0.9363
+          },
+          {
+            "hex": "#EEF6F7",
+            "share": 0.0523,
+            "luminance": 0.908
+          },
+          {
+            "hex": "#FEFFFF",
+            "share": 0.0265,
+            "luminance": 0.9981
+          }
+        ]
+      },
+      {
+        "path": "/Users/sungwoon/ai-projects/design-ontology-harness/projects/seoul-alley-mood-map/screenshots/seoul-alley-mood-map-complete-media-icon-v7-mobile.png",
+        "sha256": "381b3863b6e7c56d122634428cdcf15d16ea65275bbdd26469387c3ab8087ee4",
+        "width": 390,
+        "height": 3149,
+        "orientation": "portrait",
+        "luminance_mean": 0.7839,
+        "luminance_std": 0.2994,
+        "luminance_span": 0.9999,
+        "saturation_mean": 0.0711,
+        "saturation_std": 0.1493,
+        "neutral_share": 0.8567,
+        "light_neutral_share": 0.6954,
+        "dark_share": 0.0952,
+        "accent_share": 0.0419,
+        "edge_density": 0.2498,
+        "active_cell_share": 0.875,
+        "photo_cell_share": 0.3889,
+        "dominant_colors": [
+          {
+            "hex": "#F9FAFC",
+            "share": 0.2162,
+            "luminance": 0.9554
+          },
+          {
+            "hex": "#F4F7F9",
+            "share": 0.1343,
+            "luminance": 0.9259
+          },
+          {
+            "hex": "#EFF2F2",
+            "share": 0.1295,
+            "luminance": 0.8827
+          },
+          {
+            "hex": "#DFE6E8",
+            "share": 0.1278,
+            "luminance": 0.7811
+          },
+          {
+            "hex": "#FFFFFF",
+            "share": 0.1149,
+            "luminance": 1.0
+          },
+          {
+            "hex": "#60584B",
+            "share": 0.1076,
+            "luminance": 0.0997
+          },
+          {
+            "hex": "#B0BDBD",
+            "share": 0.1043,
+            "luminance": 0.493
+          },
+          {
+            "hex": "#FDFDFE",
+            "share": 0.0654,
+            "luminance": 0.9829
+          }
+        ]
+      }
+    ]
+  }
+}
