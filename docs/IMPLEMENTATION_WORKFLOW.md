@@ -264,7 +264,7 @@ uv run design-ontology lint-implementation --target-repo /path/to/implementation
     "preferred_families": ["Deep Reds", "Standard Oranges", "Pastel Oranges"],
     "palette_strategy": {
       "mode": "brand-guided",
-      "candidate_count": 3,
+      "candidate_count": 5,
       "temperature": "warm",
       "contrast": "balanced",
       "diversity": "balanced",
@@ -285,11 +285,15 @@ uv run design-ontology lint-implementation --target-repo /path/to/implementation
 
 이 값이 있으면 하네스는:
 
-- markdown 색상 문서를 파싱하고
-- 브랜드 키워드와 색상 문서의 mood/usage를 함께 보고 palette candidate를 만들고
+- `brand_profile.json`과 `spec.md`에서 앱 주제, 작업 표면, 컴포넌트 신호를 모으고
+- Semantic OS color ontology의 `ColorPattern` / `ColorKeyword`를 매번 검색해 palette candidate를 만들고
+- markdown 색상 문서가 있으면 mood/usage/preferred family를 가중치 증거로 반영하고
 - active palette를 semantic role 힌트와 함께 고정하고
 - seed color pairings와 관련 family를 추가 검색해 support / neutral / state color를 확장하고
+- Semantic OS color ontology에서 spectrum / family / mood_tags / tone_axes와 팔레트 추상화 guardrail을 붙이고
 - `system_spec.md`와 `token_schema.json`에 색상 기준으로 기록합니다.
+
+중요: 자동 모드에서는 미리 만든 팔레트 세트를 그대로 사용하지 않습니다. 매 실행마다 앱 내용으로 온톨로지를 검색하고, 후보 팔레트는 `selection_method=ontology-search-per-run`으로 기록되어야 합니다.
 
 특정 팔레트를 직접 고정하고 싶으면 `selected_colors`와 `palette_roles`를 추가하면 됩니다. 그 경우 selection mode는 `manual`로 기록됩니다.
 `preferred_families`는 hard filter가 아니라 우선순위 bias로 동작하므로, 자동 모드에서도 다른 family 후보가 대안으로 남을 수 있습니다.

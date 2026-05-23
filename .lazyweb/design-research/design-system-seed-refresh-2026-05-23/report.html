@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Design System Seed Refresh Research</title>
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; max-width: 920px; margin: 48px auto; padding: 0 24px; color: #172033; line-height: 1.65; }
+      h1, h2 { line-height: 1.2; }
+      h1 { font-size: 32px; margin-bottom: 8px; }
+      h2 { margin-top: 36px; font-size: 20px; }
+      code { background: #f3f5f8; padding: 2px 5px; border-radius: 4px; }
+      li { margin: 6px 0; }
+      a { color: #2458d3; }
+    </style>
+  </head>
+  <body>
+    <h1>Design System Seed Refresh Research</h1>
+    <p><strong>Date:</strong> 2026-05-23</p>
+    <h2>TL;DR</h2>
+    <p>Cloudscape, Paste, Garden, Helios, Forma 36, Nord, Modus, Shopify Polaris Web Components were promoted as crawler-friendly official seed references after a one-page <code>build-kb</code> smoke test. Existing 0-document professional seeds were moved to the browser-required/source-refresh watchlist.</p>
+    <h2>Implementation Changes</h2>
+    <ul>
+      <li>Added 8 URLs to <code>seeds/professional-design-systems.txt</code>.</li>
+      <li>Removed legacy <code>polaris-react.shopify.com</code> from the browser-required watchlist.</li>
+      <li>Moved 11 currently failing URLs out of the immediate professional pack.</li>
+      <li>Updated benchmark KB with Cloudscape, Garden, Forma 36, Nord, Modus, and SLDS 2.</li>
+      <li>Updated docs and added seed-pack regression tests.</li>
+    </ul>
+    <p><strong>Validation:</strong> after cleanup, the professional pack smoke produced seed 60 / reference 60 / document 60.</p>
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://cloudscape.design/get-started/">Cloudscape</a></li>
+      <li><a href="https://paste.twilio.design/introduction/about-paste">Twilio Paste</a></li>
+      <li><a href="https://garden.zendesk.com/components/">Zendesk Garden</a></li>
+      <li><a href="https://helios.hashicorp.design/">HashiCorp Helios</a></li>
+      <li><a href="https://f36.contentful.com/">Contentful Forma 36</a></li>
+      <li><a href="https://nordhealth.design/components/">Nord</a></li>
+      <li><a href="https://modus.trimble.com/">Trimble Modus</a></li>
+      <li><a href="https://shopify.dev/docs/api/app-home/web-components">Shopify Polaris Web Components</a></li>
+      <li><a href="https://www.salesforce.com/blog/experience-design-with-slds-2/">Salesforce SLDS 2</a></li>
+    </ul>
+  </body>
+</html>

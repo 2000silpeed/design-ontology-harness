@@ -21,8 +21,10 @@
 
 검증:
 
-- 2026-04-13 기준 `uv run design-ontology build-kb --seeds-file seeds/professional-design-systems.txt --max-pages-per-source 1 --max-depth 0` 스모크 테스트 통과
-- 결과: seed 26개 / reference 26개 / document 26개 / seed error 0개
+- 2026-05-23 기준 신규 후보 8개(Cloudscape, Paste, Garden, Helios, Forma 36, Nord, Modus, Shopify Polaris Web Components)를 `uv run design-ontology build-kb --max-pages-per-source 1 --max-depth 0`로 스모크 테스트
+- 결과: seed 8개 / reference 8개 / document 8개 / seed error 0개
+- 같은 날짜의 전체 pack smoke에서 0-document seed 11개를 browser-required watchlist로 이동했다.
+- 정리 후 전체 immediate pack smoke 결과: seed 60개 / reference 60개 / document 60개 / seed error 0개
 
 ## 2. Browser-Required Watchlist
 
@@ -72,7 +74,7 @@ uv run design-ontology run-project --project-dir projects/my-app
 - 지금 당장 KB 품질이 중요한 경우: `professional-design-systems.txt`
 - 브라우저 기반 수집기까지 붙일 계획이 있는 경우: `browser-required-official-design-systems.txt`도 함께 관리
 
-## Current Professional Seed Pack
+## Current Professional Seed Pack Highlights
 
 ### Product / enterprise
 
@@ -88,10 +90,24 @@ uv run design-ontology run-project --project-dir projects/my-app
 - Morningstar Design
 - Cedar Design System
 - Base Web
+- AWS Cloudscape
+- Zendesk Garden
+- HashiCorp Helios
+- Trimble Modus 2.0
+- Twilio Paste
 
 ### Content / communication
 
 - Intuit Content Design System
+- Contentful Forma 36
+
+### Commerce / platform
+
+- Shopify Polaris Web Components
+
+### Healthcare / service
+
+- Nord Design System
 
 ### Government / public service
 

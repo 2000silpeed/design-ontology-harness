@@ -6,7 +6,7 @@ from pathlib import Path
 
 from .authoring import generate_system_pack
 from .benchmark_kb import build_benchmark_context, save_benchmark_report
-from .color_reference import resolve_color_reference
+from .color_reference import resolve_color_reference, resolve_semantic_color_reference
 from .css_pipeline import load_css_extraction
 from .font_reference import resolve_font_system
 from .graph_builders import VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS
@@ -553,6 +553,8 @@ def load_brand_profile(path: Path) -> dict:
             profile["_resolved_color_reference"] = resolved_reference
         if issues:
             profile["_color_reference_issues"] = issues
+    else:
+        profile["_resolved_color_reference"] = resolve_semantic_color_reference(profile)
 
     font_config = profile.get("font_reference")
     if font_config is None or font_config is True:

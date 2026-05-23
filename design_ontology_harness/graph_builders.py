@@ -192,7 +192,75 @@ def build_color_layer(
             if graph.get_node(derived_id) and graph.get_node(source_id):
                 graph.add_edge(OntologyEdge(type=EdgeType.derived_from, source=derived_id, target=source_id))
 
+    _build_semantic_color_ontology_layer(graph, color_ref)
     _build_contrast_pairs(graph, color_ref)
+
+
+def _build_semantic_color_ontology_layer(graph: DesignOntologyGraph, color_ref: dict) -> None:
+    semantic = color_ref.get("semantic_ontology", {}) or {}
+    if not semantic:
+        return
+
+    source = semantic.get("source", {}) or {}
+    source_id = "source:semantic-color-ontology"
+    graph.add_node(OntologyNode(
+        id=source_id,
+        type=NodeType.SourceReference,
+        label="Semantic OS color ontology",
+        meta={
+            "repo": source.get("repo"),
+            "path": source.get("path"),
+            "schema_version": semantic.get("schema_version"),
+            "node_count": semantic.get("node_count"),
+            "edge_count": semantic.get("edge_count"),
+            "copyright_handling": semantic.get("copyright_handling"),
+        },
+    ))
+
+    semantic_token_ids: list[str] = []
+    for item in semantic.get("matched_keywords", []):
+        name = item.get("name")
+        if not name:
+            continue
+        token_id = f"semantic-color:{slugify(name)}"
+        semantic_token_ids.append(token_id)
+        graph.add_node(OntologyNode(
+            id=token_id,
+            type=NodeType.ColorToken,
+            label=name,
+            meta={
+                "hex": item.get("hex"),
+                "tier": "semantic-color-ontology",
+                "role": item.get("role"),
+                "semantic_node_id": item.get("id"),
+                "spectrum": item.get("spectrum"),
+                "family": item.get("family"),
+                "mood_tags": item.get("mood_tags", []),
+                "tone_axes": item.get("tone_axes", []),
+                "source_pages": item.get("source_pages", {}),
+            },
+        ))
+        graph.add_edge(OntologyEdge(type=EdgeType.inspired_by, source=token_id, target=source_id))
+
+    for item in semantic.get("guidelines", []):
+        guideline_id = item.get("id")
+        if not guideline_id:
+            continue
+        node_id = f"governance:semantic-color-{slugify(guideline_id)}"
+        graph.add_node(OntologyNode(
+            id=node_id,
+            type=NodeType.GovernanceRule,
+            label=item.get("label") or guideline_id,
+            meta={
+                "semantic_node_id": guideline_id,
+                "summary": item.get("summary"),
+                "prompt_do": item.get("prompt_do", []),
+                "prompt_avoid": item.get("prompt_avoid", []),
+            },
+        ))
+        graph.add_edge(OntologyEdge(type=EdgeType.inspired_by, source=node_id, target=source_id))
+        for token_id in semantic_token_ids:
+            graph.add_edge(OntologyEdge(type=EdgeType.governs, source=node_id, target=token_id))
 
 
 def _build_contrast_pairs(graph: DesignOntologyGraph, color_ref: dict) -> None:

@@ -121,9 +121,9 @@ uv run design-ontology build-kb \
 - `seeds/professional-design-systems.txt`: 현재 크롤러로 바로 KB 빌드 가능한 공식 디자인 시스템 목록
 - `seeds/browser-required-official-design-systems.txt`: 공식이지만 JS/접근 제약이 있어 브라우저 기반 수집기에 더 적합한 watchlist
 
-현재 professional pack에는 **63개**의 공식 레퍼런스가 들어 있습니다:
-Enterprise(Atlassian, Primer, Carbon, Fluent, Clarity, Workday Canvas, Wise 등), DevTools(Vercel Geist, shadcn/ui, Radix, Mantine, Chakra, Ant, Sentry, DigitalOcean 등), Consumer(Pinterest Gestalt, Uber Base, Grab 등), Government(GOV.UK, NHS, HMRC, DWP, Home Office, VA.gov, CMS, Canada, NSW, Ontario, Queensland, DTA Australia, BC, Singapore 등).
-browser-required pack(27개)에는 Material Design 3, Apple HIG, Adobe Spectrum, Salesforce Lightning, Shopify Polaris, Airbnb DLS, Stripe Elements, Linear Method 등 JS 렌더링이 필요한 레퍼런스가 포함됩니다.
+현재 professional pack에는 **60개**의 공식 레퍼런스가 들어 있습니다:
+Enterprise(Atlassian, Primer, Carbon, Fluent, Clarity, Workday Canvas, Cloudscape, Garden, Modus, Wise 등), DevTools(Vercel Geist, Twilio Paste, HashiCorp Helios, shadcn/ui, Radix, Mantine, Chakra, Ant, Sentry 등), Consumer/Commerce(Pinterest Gestalt, Uber Base, Shopify Polaris Web Components, Grab 등), Government(GOV.UK, NHS, HMRC, Home Office, VA.gov, CMS, Canada, NSW, Ontario, Queensland, BC 등).
+browser-required pack(37개)에는 Material Design 3, Apple HIG, Adobe Spectrum, Salesforce Lightning, Airbnb DLS, Stripe Elements, Linear Method, DigitalOcean, DTA Australia, Design System SG 등 JS 렌더링·접근 제약·소스 재확인이 필요한 레퍼런스가 포함됩니다.
 
 예:
 
@@ -381,7 +381,7 @@ Pinterest-assisted 운영 상세는 [docs/PINTEREST_ASSISTED_WORKFLOW.md](./docs
 
 ## 색상 자동 결정
 
-`brand_profile.json`에 `color_reference`를 설정하면, 색상 마크다운 문서에서 브랜드에 맞는 팔레트를 자동으로 골라줍니다.
+하네스의 색상 결정은 앱의 내용과 브리프를 기준으로 매번 Semantic OS color ontology를 검색해서 고릅니다. `color_reference`를 연결하면 그 문서는 추가 증거가 되지만, 미리 만들어 둔 팔레트 세트를 그대로 쓰는 방식은 금지입니다.
 
 ```json
 {
@@ -400,10 +400,11 @@ Pinterest-assisted 운영 상세는 [docs/PINTEREST_ASSISTED_WORKFLOW.md](./docs
 ```
 
 **결정 과정:**
-1. 브랜드 키워드(calm, editorial 등) → mood 신호 변환 (안정감, 고급스러움 등)
-2. 색상 문서의 각 색상 mood와 매칭 → 점수 산출
-3. primary / accent / surface_tint 역할 배정
-4. semantic states (success, warning, danger, info)까지 자동 확장
+1. `brand_profile.json`과 `spec.md`에서 앱 주제, 업무 표면, 컴포넌트 신호를 모읍니다.
+2. Semantic OS `ColorPattern`을 검색해 이 앱에 맞는 role model을 찾습니다.
+3. Semantic OS `ColorKeyword`를 role/reason/caveat 기준으로 다시 검색해 후보 팔레트를 5개 이상 만듭니다.
+4. 연결된 색상 문서가 있으면 preferred family와 mood 증거로 가중치에 반영합니다.
+5. 선택 결과는 `system_spec.md`, `token_schema.json`, `system_ontology.json`에 `ontology-search-per-run`으로 기록됩니다.
 
 ## 서체 자동 결정
 
@@ -504,13 +505,13 @@ Tier 5: 중단 (에러 기록)
 
 ## 벤치마크 레퍼런스
 
-35개 실서비스 디자인 시스템(Stripe, Vercel, Linear, Toss 등)의 특성 데이터를 내장하고 있습니다. 브랜드 키워드로 유사한 시스템을 찾을 수 있습니다.
+41개 실서비스 디자인 시스템(Stripe, Vercel, Linear, Toss, Cloudscape, Garden 등)의 특성 데이터를 내장하고 있습니다. 브랜드 키워드로 유사한 시스템을 찾을 수 있습니다.
 
 ```bash
 # 키워드로 유사 시스템 검색
 uv run design-ontology benchmark --keywords calm precise
 
-# 전체 35개 시스템 목록
+# 전체 41개 시스템 목록
 uv run design-ontology benchmark
 
 # 브랜드 프로필 기반 자동 매칭 + 리포트 저장
@@ -663,7 +664,7 @@ flowchart TB
         KB_LOAD["KB 로드"] --> SYNTH
         COLOR["color_reference.py\n팔레트 결정"] --> SYNTH
         FONT["font_reference.py\n서체 결정"] --> SYNTH
-        BENCH["benchmark_kb.py\n35개 벤치마크"] --> SYNTH
+        BENCH["benchmark_kb.py\n41개 벤치마크"] --> SYNTH
         VISUAL_REF["visual_reference.py\nmotif / layout / component hints"] --> SYNTH
 
         SYNTH --> AUTH["authoring.py"]
@@ -711,7 +712,7 @@ graph TB
         SYNTH["synthesis.py\n블루프린트"]
         COLOR["color_reference.py\n팔레트 결정"]
         FONT["font_reference.py\n서체 결정"]
-        BENCH["benchmark_kb.py\n35개 벤치마크"]
+        BENCH["benchmark_kb.py\n41개 벤치마크"]
         VISUAL["visual_reference.py\n시각 레퍼런스 해석"]
         VQUERY["visual_queries.py\n검색 query 생성"]
     end
@@ -889,7 +890,7 @@ design_ontology_harness/   코어 프레임워크
   graph_schema.py          온톨로지 그래프 스키마 (22 NodeType, 27 EdgeType)
   graph_builders.py        그래프 빌더 (brand/foundation/color/typo/pattern/a11y/benchmark/generated visual assets)
   graph_spec_sections.py   그래프 기반 spec 섹션 생성 (18-21)
-  benchmark_kb.py          35개 실서비스 벤치마크 KB
+  benchmark_kb.py          41개 실서비스 벤치마크 KB
   color_reference.py       색상 팔레트 자동 결정
   font_reference.py        서체 자동 결정 (25+ 실무 서체 DB)
   spec_analyzer.py         설계서 → UI 패턴 탐지
@@ -912,7 +913,7 @@ projects/                  프로젝트 워크스페이스
 - 온톨로지는 2-tier: `ontology.py`(크롤 증거 키워드 매칭) + `graph_builders.py`(22종 노드 관계 그래프). 그래프는 컬러↔컴포넌트↔패턴↔생성 이미지 계획을 유기적으로 연결합니다.
 - `config/brand_profile.example.json`을 참고해 브랜드 프로필을 작성하세요.
 - 서체 결정은 Google Fonts/GitHub에서 무료로 사용 가능한 서체만 추천합니다.
-- 벤치마크 KB의 35개 시스템은 합성 품질 비교와 키워드 매칭에 활용됩니다.
+- 벤치마크 KB의 41개 시스템은 합성 품질 비교와 키워드 매칭에 활용됩니다.
 
 ## 라이선스
 

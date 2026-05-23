@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Semantic Color Lab</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell" data-theme="blue">
+      <header class="topbar">
+        <a class="brandmark" href="#" aria-label="Semantic Color Lab home">
+          <span class="brandmark-grid" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          <span>
+            <strong>Semantic Color Lab</strong>
+            <small>Semantic OS color ontology</small>
+          </span>
+        </a>
+        <div class="topbar-meta" aria-label="ontology size">
+          <span>137 nodes</span>
+          <span>487 edges</span>
+          <span>v1 package data</span>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="scenario-panel" aria-labelledby="scenario-title">
+          <div class="panel-heading">
+            <p class="eyebrow">Color selection test</p>
+            <h1 id="scenario-title">색상 선택 테스트</h1>
+          </div>
+
+          <div class="scenario-tabs" role="tablist" aria-label="color scenarios">
+            <button class="scenario-tab is-active" type="button" role="tab" aria-selected="true" data-scenario="blue">
+              <span class="tab-swatch-set" aria-hidden="true">
+                <span style="--swatch: #000080"></span>
+                <span style="--swatch: #003153"></span>
+                <span style="--swatch: #d6eaf8"></span>
+              </span>
+              <span>
+                <strong>Deep Blue Web</strong>
+                <small>cold luxury · digital brand</small>
+              </span>
+            </button>
+            <button class="scenario-tab" type="button" role="tab" aria-selected="false" data-scenario="green">
+              <span class="tab-swatch-set" aria-hidden="true">
+                <span style="--swatch: #27503d"></span>
+                <span style="--swatch: #006a4e"></span>
+                <span style="--swatch: #ace1af"></span>
+              </span>
+              <span>
+                <strong>Stable Green UI</strong>
+                <small>service surface · operations</small>
+              </span>
+            </button>
+            <button class="scenario-tab" type="button" role="tab" aria-selected="false" data-scenario="manga">
+              <span class="tab-swatch-set" aria-hidden="true">
+                <span style="--swatch: #ff0000"></span>
+                <span style="--swatch: #f3e5ab"></span>
+                <span style="--swatch: #5f4b8b"></span>
+              </span>
+              <span>
+                <strong>Manga Magazine</strong>
+                <small>pop editorial · issue UX</small>
+              </span>
+            </button>
+          </div>
+
+          <div class="scenario-readout">
+            <p class="readout-label">Active brief</p>
+            <h2 id="briefTitle">딥 블루 cold luxury 웹 팔레트 후보</h2>
+            <p id="briefCopy">
+              딥 블루 계열 브랜드 웹사이트를 원본 조합표가 아니라 화면 역할, 대비 이유, caveat로 재배치합니다.
+            </p>
+            <dl class="brief-facts">
+              <div>
+                <dt>Mode</dt>
+                <dd id="briefMode">brand-guided</dd>
+              </div>
+              <div>
+                <dt>Signal</dt>
+                <dd id="briefSignal">digital_brand_website</dd>
+              </div>
+              <div>
+                <dt>Matched</dt>
+                <dd id="briefMatched">6 palettes · 5 keywords</dd>
+              </div>
+            </dl>
+          </div>
+        </section>
+
+        <section class="preview-panel" aria-labelledby="preview-title">
+          <div class="panel-heading row-heading">
+            <div>
+              <p class="eyebrow">Applied interface</p>
+              <h2 id="preview-title">색상 적용 프리뷰</h2>
+            </div>
+            <span class="contrast-chip" id="contrastChip">balanced contrast</span>
+          </div>
+
+          <div class="product-preview" aria-label="sample interface preview">
+            <aside class="preview-rail" aria-hidden="true">
+              <span class="rail-dot is-primary"></span>
+              <span class="rail-dot"></span>
+              <span class="rail-dot"></span>
+              <span class="rail-line"></span>
+            </aside>
+            <div class="preview-main">
+              <div class="preview-header">
+                <div>
+                  <span class="preview-kicker" id="previewKicker">Audit queue</span>
+                  <h3 id="previewHeadline">계약 위험도 검토</h3>
+                </div>
+                <button class="icon-button" type="button" aria-label="refresh preview">
+                  <span aria-hidden="true">↻</span>
+                </button>
+              </div>
+
+              <div class="metric-grid" aria-hidden="true">
+                <div class="metric-tile">
+                  <span>Risk</span>
+                  <strong id="metricOne">18</strong>
+                </div>
+                <div class="metric-tile">
+                  <span>Ready</span>
+                  <strong id="metricTwo">42</strong>
+                </div>
+                <div class="metric-tile accent-tile">
+                  <span>Signal</span>
+                  <strong id="metricThree">92%</strong>
+                </div>
+              </div>
+
+              <div class="preview-chart" aria-hidden="true">
+                <span style="--bar: 34%"></span>
+                <span style="--bar: 58%"></span>
+                <span style="--bar: 46%"></span>
+                <span style="--bar: 78%"></span>
+                <span style="--bar: 66%"></span>
+                <span style="--bar: 88%"></span>
+              </div>
+
+              <div class="preview-list" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="palette-strip" id="paletteStrip" aria-label="active palette"></div>
+        </section>
+
+        <section class="ontology-panel" aria-labelledby="ontology-title">
+          <div class="panel-heading row-heading">
+            <div>
+              <p class="eyebrow">Ontology match</p>
+              <h2 id="ontology-title">온톨로지 매칭</h2>
+            </div>
+            <span class="source-chip">semantic-color-context-v1</span>
+          </div>
+          <div class="match-list" id="matchList"></div>
+          <div class="warning-panel" id="warningPanel" hidden>
+            <strong>주의 신호</strong>
+            <p id="warningCopy"></p>
+          </div>
+        </section>
+
+        <section class="candidate-panel" aria-labelledby="candidate-title">
+          <div class="panel-heading row-heading">
+            <div>
+              <p class="eyebrow">Target palette bank</p>
+              <h2 id="candidate-title">대상별 후보 팔레트</h2>
+            </div>
+            <span class="source-chip" id="candidateCount">6 palettes · 5 roles each</span>
+          </div>
+          <div class="candidate-grid" id="candidateGrid"></div>
+        </section>
+
+        <section class="spectrum-panel" aria-labelledby="spectrum-title">
+          <div class="panel-heading row-heading">
+            <div>
+              <p class="eyebrow">Semantic spectrum</p>
+              <h2 id="spectrum-title">스펙트럼 지도</h2>
+            </div>
+            <span class="source-chip" id="mapFocus">blue · orange · green</span>
+          </div>
+          <div class="spectrum-layout">
+            <figure class="spectrum-figure">
+              <img src="./assets/semantic-spectrum-map.svg" alt="Semantic spectrum map with blue, red, orange, yellow, green, and violet families" />
+            </figure>
+            <div class="recommendation-list">
+              <h3>Recommended keywords</h3>
+              <div id="recommendationList"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="contract-panel" aria-labelledby="contract-title">
+          <div class="panel-heading row-heading">
+            <div>
+              <p class="eyebrow">Output contract</p>
+              <h2 id="contract-title">색상 후보 출력 규칙</h2>
+            </div>
+            <span class="source-chip">safe palette output</span>
+          </div>
+          <ul class="contract-list">
+            <li>RGB/HEX는 디지털 기준값으로만 취급합니다.</li>
+            <li>RGB/sRGB와 CMYK/print profile은 출력 매체별로 분리합니다.</li>
+            <li>지원 색상 확장 전에 mood tag와 semantic role을 먼저 고정합니다.</li>
+            <li>원천 팔레트 표의 행, 열, 페이지 순서는 재구성하지 않습니다.</li>
+            <li>후보는 role, contrast, caveat, proof condition으로 남깁니다.</li>
+          </ul>
+        </section>
+      </main>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

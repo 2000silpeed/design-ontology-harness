@@ -401,9 +401,16 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
                 },
                 "combination_lists": expanded_palette.get("combination_lists", []),
             },
+            "semantic_ontology": _compact_semantic_color_ontology_for_token_schema(
+                color_reference.get("semantic_ontology", {})
+            ),
+            "semantic_color_selection": _compact_semantic_color_selection_for_token_schema(
+                color_reference.get("semantic_color_selection", {})
+            ),
             "rules": [
                 "컬러 레퍼런스의 mood와 pairings를 semantic token 설계의 출발점으로 사용",
                 "chosen palette는 semantic roles로 번역하고 raw reference color를 그대로 남용하지 않기",
+                "앱 내용 기반 색상 선택은 미리 만든 팔레트 세트가 아니라 Semantic OS ontology 검색으로 매번 수행하기",
                 "seed color만 쓰지 말고 expanded palette에서 surface/text/border/support 역할까지 확장하기",
                 "surface/text/border 대비는 레퍼런스보다 접근성 기준을 우선"
             ],
@@ -430,6 +437,95 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
                 "neutral_bias": color_balance.get("neutral_bias"),
             }
     return schema
+
+
+def _compact_semantic_color_ontology_for_token_schema(semantic_ontology: dict) -> dict:
+    if not semantic_ontology:
+        return {}
+
+    return {
+        "schema_version": semantic_ontology.get("schema_version"),
+        "source": semantic_ontology.get("source", {}),
+        "node_count": semantic_ontology.get("node_count"),
+        "edge_count": semantic_ontology.get("edge_count"),
+        "matched_keywords": [
+            {
+                "id": item.get("id"),
+                "role": item.get("role"),
+                "name": item.get("name"),
+                "hex": item.get("hex"),
+                "spectrum": item.get("spectrum"),
+                "family": item.get("family"),
+                "mood_tags": item.get("mood_tags", []),
+                "tone_axes": item.get("tone_axes", []),
+            }
+            for item in semantic_ontology.get("matched_keywords", [])
+        ],
+        "recommended_keywords": [
+            {
+                "id": item.get("id"),
+                "name": item.get("name"),
+                "hex": item.get("hex"),
+                "spectrum": item.get("spectrum"),
+                "family": item.get("family"),
+                "score": item.get("score"),
+                "reasons": item.get("reasons", []),
+            }
+            for item in semantic_ontology.get("recommended_keywords", [])[:8]
+        ],
+        "guidelines": [
+            {
+                "id": item.get("id"),
+                "label": item.get("label"),
+                "summary": item.get("summary"),
+            }
+            for item in semantic_ontology.get("guidelines", [])
+        ],
+        "rules": semantic_ontology.get("rules", []),
+        "copyright_handling": semantic_ontology.get("copyright_handling", ""),
+    }
+
+
+def _compact_semantic_color_selection_for_token_schema(selection: dict) -> dict:
+    if not selection:
+        return {}
+
+    active = selection.get("active_palette") or {}
+    return {
+        "schema_version": selection.get("schema_version"),
+        "selection_method": selection.get("selection_method"),
+        "matched_pattern": selection.get("matched_pattern"),
+        "role_model": selection.get("role_model", []),
+        "active_palette": _compact_semantic_selection_candidate(active),
+        "candidate_palettes": [
+            _compact_semantic_selection_candidate(candidate)
+            for candidate in selection.get("candidate_palettes", [])[:8]
+        ],
+        "rules": selection.get("rules", []),
+    }
+
+
+def _compact_semantic_selection_candidate(candidate: dict) -> dict:
+    if not candidate:
+        return {}
+    return {
+        "id": candidate.get("id"),
+        "label": candidate.get("label"),
+        "score": candidate.get("score"),
+        "rationale": candidate.get("rationale", [])[:6],
+        "roles": {
+            role: {
+                "name": item.get("name"),
+                "hex": item.get("hex"),
+                "spectrum": item.get("spectrum"),
+                "family": item.get("family"),
+                "score": item.get("score"),
+                "reason": item.get("reason"),
+                "behavior": item.get("behavior"),
+            }
+            for role, item in (candidate.get("roles") or {}).items()
+        },
+    }
 
 
 def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
@@ -1613,6 +1709,71 @@ def _build_color_reference_section(color_reference: dict | None) -> str:
             lines.append(
                 f"  - {combination.get('label')}: {color_summary}"
             )
+
+    semantic_selection = color_reference.get("semantic_color_selection", {}) or {}
+    if semantic_selection:
+        lines.append(
+            "- **Semantic color selection**: "
+            f"{semantic_selection.get('selection_method', 'ontology-search-per-run')}"
+        )
+        pattern = semantic_selection.get("matched_pattern") or {}
+        if pattern:
+            lines.append(
+                f"  - matched pattern: `{pattern.get('id')}` / {pattern.get('label')}"
+            )
+        candidates = semantic_selection.get("candidate_palettes", [])
+        if candidates:
+            lines.append("- **Ontology-searched candidate palettes**:")
+            for candidate in candidates[:5]:
+                role_summary = ", ".join(
+                    f"{role}={item.get('name')}"
+                    for role, item in (candidate.get("roles") or {}).items()
+                )
+                lines.append(
+                    f"  - {candidate.get('id')} ({candidate.get('label')}, score={candidate.get('score')}): "
+                    f"{role_summary}"
+                )
+        rules = semantic_selection.get("rules", [])
+        if rules:
+            lines.append("- **Selection rules**:")
+            for rule in rules[:4]:
+                lines.append(f"  - {rule}")
+
+    semantic_ontology = color_reference.get("semantic_ontology", {}) or {}
+    if semantic_ontology:
+        source = semantic_ontology.get("source", {}) or {}
+        lines.append(
+            "- **Semantic color ontology**: "
+            f"{semantic_ontology.get('node_count', 0)} nodes / "
+            f"{semantic_ontology.get('edge_count', 0)} edges"
+            + (f" from {source.get('repo')}" if source.get("repo") else "")
+        )
+        matched_keywords = semantic_ontology.get("matched_keywords", [])
+        if matched_keywords:
+            lines.append("- **Matched color keywords**:")
+            for item in matched_keywords[:6]:
+                moods = ", ".join(item.get("mood_tags", [])[:3])
+                axes = ", ".join(item.get("tone_axes", [])[:3])
+                lines.append(
+                    f"  - `{item.get('role')}` -> {item.get('name')} {item.get('hex', '')} "
+                    f"/ {item.get('spectrum', '')}.{item.get('family', '')}"
+                    + (f" / mood={moods}" if moods else "")
+                    + (f" / axes={axes}" if axes else "")
+                )
+        recommended_keywords = semantic_ontology.get("recommended_keywords", [])
+        if recommended_keywords:
+            lines.append("- **Ontology keyword recommendations**:")
+            for item in recommended_keywords[:5]:
+                reasons = "; ".join(item.get("reasons", [])[:2])
+                lines.append(
+                    f"  - {item.get('name')} {item.get('hex', '')} / {item.get('spectrum', '')}.{item.get('family', '')}"
+                    + (f" / {reasons}" if reasons else "")
+                )
+        guidelines = semantic_ontology.get("guidelines", [])
+        if guidelines:
+            lines.append("- **Semantic color guardrails**:")
+            for item in guidelines[:5]:
+                lines.append(f"  - {item.get('label')}: {item.get('summary')}")
 
     notes = color_reference.get("notes", [])
     if notes:

@@ -4,6 +4,12 @@ import colorsys
 import re
 from pathlib import Path
 
+from .semantic_color_ontology import build_semantic_color_context
+from .semantic_color_selector import (
+    build_semantic_color_selection,
+    colors_from_semantic_palette,
+)
+
 
 COLOR_HEX_RE = re.compile(r"#(?:[0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})")
 TEXT_TOKEN_RE = re.compile(r"[A-Za-z]+|[가-힣]+")
@@ -250,8 +256,7 @@ def resolve_color_reference(
     issues: list[str] = []
     raw_path = str(reference_config.get("path", "")).strip()
     if not raw_path:
-        issues.append("color_reference.path is missing")
-        return None, issues
+        return resolve_semantic_color_reference(brand_profile or {}, reference_config), issues
 
     source_path = Path(raw_path)
     if not source_path.is_absolute():
@@ -350,6 +355,39 @@ def resolve_color_reference(
     for warning in pitfall_warnings:
         issues.append(f"[pitfall#3-rebrand] {warning}")
 
+    semantic_color_selection = build_semantic_color_selection(
+        brand_profile=profile,
+        strategy=strategy,
+        candidate_count=strategy.get("candidate_count"),
+    )
+    if selection_mode != "manual":
+        semantic_roles = colors_from_semantic_palette(semantic_color_selection.get("active_palette"))
+        if semantic_roles:
+            resolved_roles = semantic_roles
+            resolved_selected = _ordered_unique_colors_any_roles(semantic_roles)
+            active_palette = {
+                "selection_mode": "semantic-ontology",
+                "roles": resolved_roles,
+                "selected_colors": resolved_selected,
+                "candidate_id": (semantic_color_selection.get("active_palette") or {}).get("id"),
+            }
+            selection_mode = "semantic-ontology"
+            expanded_palette = _build_expanded_palette(
+                colors=parsed["colors"],
+                active_palette=active_palette,
+                preferred_families=preferred_families,
+                strategy=strategy,
+                expansion=expansion,
+                brand_profile=profile,
+            )
+
+    semantic_ontology = build_semantic_color_context(
+        parsed_reference=parsed,
+        active_palette=active_palette,
+        brand_profile=profile,
+        strategy=strategy,
+    )
+
     summary = {
         "title": parsed["title"],
         "source_path": parsed["source_path"],
@@ -362,10 +400,72 @@ def resolve_color_reference(
         "expansion": expansion,
         "active_palette": active_palette,
         "palette_candidates": palette_candidates,
+        "semantic_color_selection": semantic_color_selection,
         "expanded_palette": expanded_palette,
+        "semantic_ontology": semantic_ontology,
         "notes": reference_config.get("notes", []),
     }
     return summary, issues
+
+
+def resolve_semantic_color_reference(
+    brand_profile: dict,
+    reference_config: dict | None = None,
+) -> dict:
+    reference_config = reference_config or {}
+    strategy = _normalize_palette_strategy(reference_config.get("palette_strategy", {}))
+    semantic_color_selection = build_semantic_color_selection(
+        brand_profile=brand_profile,
+        strategy=strategy,
+        candidate_count=strategy.get("candidate_count"),
+    )
+    resolved_roles = colors_from_semantic_palette(semantic_color_selection.get("active_palette"))
+    resolved_selected = _ordered_unique_colors_any_roles(resolved_roles)
+    active_palette = {
+        "selection_mode": "semantic-ontology",
+        "roles": resolved_roles,
+        "selected_colors": resolved_selected,
+        "candidate_id": (semantic_color_selection.get("active_palette") or {}).get("id"),
+    }
+    semantic_ontology = build_semantic_color_context(
+        parsed_reference={"title": "Semantic OS color ontology", "colors": []},
+        active_palette=active_palette,
+        brand_profile=brand_profile,
+        strategy=strategy,
+    )
+
+    return {
+        "title": "Semantic OS color ontology",
+        "source_path": None,
+        "families": sorted(
+            {
+                item.get("family")
+                for item in resolved_selected
+                if item.get("family")
+            }
+        ),
+        "selected_colors": resolved_selected,
+        "palette_roles": resolved_roles,
+        "preferred_families": [],
+        "selection_mode": "semantic-ontology",
+        "strategy": strategy,
+        "expansion": _normalize_palette_expansion(reference_config.get("palette_expansion", {})),
+        "active_palette": active_palette,
+        "palette_candidates": [],
+        "semantic_color_selection": semantic_color_selection,
+        "expanded_palette": {
+            "enabled": False,
+            "search_strategy": {
+                "source": "semantic-color-ontology",
+                "selection_method": "ontology-search-per-run",
+            },
+            "supporting_colors": [],
+            "semantic_roles": resolved_roles,
+            "combination_lists": [],
+        },
+        "semantic_ontology": semantic_ontology,
+        "notes": reference_config.get("notes", []),
+    }
 
 
 def _normalize_palette_strategy(raw_strategy: dict | None) -> dict:
@@ -383,7 +483,7 @@ def _normalize_palette_strategy(raw_strategy: dict | None) -> dict:
     strategy["contrast"] = _pick_enum(strategy["contrast"], {"soft", "balanced", "vivid"}, "balanced")
     strategy["diversity"] = _pick_enum(strategy["diversity"], {"cohesive", "balanced", "exploratory"}, "balanced")
     strategy["surface_style"] = _pick_enum(strategy["surface_style"], {"airy", "tinted", "grounded"}, "tinted")
-    strategy["candidate_count"] = max(1, min(5, int(strategy.get("candidate_count", 3) or 3)))
+    strategy["candidate_count"] = max(1, min(8, int(strategy.get("candidate_count", 3) or 3)))
     strategy["active_candidate"] = strategy.get("active_candidate", 1)
     strategy["prefer_moods"] = _normalize_text_list(strategy.get("prefer_moods", []))
     strategy["avoid_moods"] = _normalize_text_list(strategy.get("avoid_moods", []))
@@ -737,6 +837,39 @@ def _ordered_unique_colors_from_roles(roles: dict[str, dict]) -> list[dict]:
     ordered: list[dict] = []
     seen: set[str] = set()
     for role in ["primary", "accent", "surface_tint"]:
+        item = roles.get(role)
+        if not item:
+            continue
+        name = item.get("name", "")
+        if name in seen:
+            continue
+        seen.add(name)
+        ordered.append(item)
+    return ordered
+
+
+def _ordered_unique_colors_any_roles(roles: dict[str, dict]) -> list[dict]:
+    ordered: list[dict] = []
+    seen: set[str] = set()
+    preferred = [
+        "primary",
+        "accent",
+        "surface_tint",
+        "anchor_surface",
+        "anchor_background",
+        "depth_support",
+        "structural_support",
+        "interface_surface",
+        "reading_field",
+        "quiet_background",
+        "paper_field",
+        "action_signal",
+        "fresh_accent",
+        "attention_flash",
+        "proof_accent",
+        "proof_light",
+    ]
+    for role in [*preferred, *roles.keys()]:
         item = roles.get(role)
         if not item:
             continue
