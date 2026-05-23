@@ -394,6 +394,9 @@ KOREAN_TYPOGRAPHY_PROFILES: dict[str, dict[str, str]] = {
         "ui_label_line_height": "1.4-1.5",
         "heading_tracking": "0em",
         "body_tracking": "0em",
+        "display_line_height_min": "1.02",
+        "heading_tracking_min": "-0.02em",
+        "heading_tracking_max": "0.01em",
         "display_scale_bias": "stable",
         "note": "기본 자간/행간이 안정적이라 추가 보정 없이 바로 쓰기 좋다.",
     },
@@ -403,6 +406,9 @@ KOREAN_TYPOGRAPHY_PROFILES: dict[str, dict[str, str]] = {
         "ui_label_line_height": "1.4-1.5",
         "heading_tracking": "-0.01em",
         "body_tracking": "0em",
+        "display_line_height_min": "1.02",
+        "heading_tracking_min": "-0.03em",
+        "heading_tracking_max": "0.01em",
         "display_scale_bias": "stable",
         "note": "현대적 헤딩에는 강하지만 장문 본문은 Pretendard보다 여유를 덜 준다.",
     },
@@ -412,6 +418,9 @@ KOREAN_TYPOGRAPHY_PROFILES: dict[str, dict[str, str]] = {
         "ui_label_line_height": "1.45-1.55",
         "heading_tracking": "-0.01em",
         "body_tracking": "-0.01em",
+        "display_line_height_min": "1.04",
+        "heading_tracking_min": "-0.03em",
+        "heading_tracking_max": "0em",
         "display_scale_bias": "reduce-one-step",
         "note": "글자폭이 넓어 밀집 UI에서는 더 넓은 inline space와 보수적인 display scale이 필요하다.",
     },
@@ -421,6 +430,9 @@ KOREAN_TYPOGRAPHY_PROFILES: dict[str, dict[str, str]] = {
         "ui_label_line_height": "1.4-1.5",
         "heading_tracking": "0em",
         "body_tracking": "0em",
+        "display_line_height_min": "1.02",
+        "heading_tracking_min": "-0.02em",
+        "heading_tracking_max": "0.01em",
         "display_scale_bias": "stable",
         "note": "Pretendard 계열의 안정성을 유지하면서 더 부드러운 톤을 낸다.",
     },
@@ -430,6 +442,9 @@ KOREAN_TYPOGRAPHY_PROFILES: dict[str, dict[str, str]] = {
         "ui_label_line_height": "1.4-1.5",
         "heading_tracking": "-0.02em",
         "body_tracking": "0em",
+        "display_line_height_min": "1.02",
+        "heading_tracking_min": "-0.03em",
+        "heading_tracking_max": "0em",
         "display_scale_bias": "stable",
         "note": "조밀한 UI에서는 tracking 보정이 유효하지만 장문 본문용으로는 여유가 적다.",
     },
@@ -439,6 +454,9 @@ KOREAN_TYPOGRAPHY_PROFILES: dict[str, dict[str, str]] = {
         "ui_label_line_height": "1.4-1.5",
         "heading_tracking": "0em",
         "body_tracking": "0em",
+        "display_line_height_min": "1.02",
+        "heading_tracking_min": "-0.02em",
+        "heading_tracking_max": "0.01em",
         "display_scale_bias": "stable",
         "note": "기업형 제품에서 안정적이며 과한 tracking 보정보다 정확한 weight 운용이 중요하다.",
     },
@@ -448,6 +466,9 @@ KOREAN_TYPOGRAPHY_PROFILES: dict[str, dict[str, str]] = {
         "ui_label_line_height": "avoid-small-serif-ui",
         "heading_tracking": "-0.02em",
         "body_tracking": "0em",
+        "display_line_height_min": "1.08",
+        "heading_tracking_min": "-0.03em",
+        "heading_tracking_max": "0em",
         "display_scale_bias": "reduce-one-step",
         "note": "넓은 획과 글자폭 때문에 헤딩은 짧고 크게, 본문은 충분한 행간과 여백이 필요하다.",
     },
@@ -457,6 +478,9 @@ KOREAN_TYPOGRAPHY_PROFILES: dict[str, dict[str, str]] = {
         "ui_label_line_height": "avoid-small-serif-ui",
         "heading_tracking": "0em",
         "body_tracking": "0em",
+        "display_line_height_min": "1.1",
+        "heading_tracking_min": "-0.02em",
+        "heading_tracking_max": "0.01em",
         "display_scale_bias": "reduce-one-step",
         "note": "전통적 바탕체라 웹 UI보다 문서형 레이아웃에서 더 넓은 measure와 행간이 필요하다.",
     },
@@ -1163,6 +1187,30 @@ def _build_script_guardrails(
     if headline_profile.get("ui_label_line_height") == "avoid-small-serif-ui":
         rules.append(f"{headline_name}는 작은 UI 라벨/배지용으로 쓰지 않고, 그런 슬롯은 sans body font로 분리한다.")
 
+    implementation_constraints = {
+        "headline_display": {
+            "line_height_min": headline_profile.get("display_line_height_min"),
+            "letter_spacing_min": headline_profile.get("heading_tracking_min"),
+            "letter_spacing_max": headline_profile.get("heading_tracking_max"),
+            "recommended_line_height": headline_profile.get("heading_line_height"),
+            "recommended_letter_spacing": headline_profile.get("heading_tracking"),
+            "forced_breaks_policy": "disallow-before-breakpoint-qa",
+        },
+        "ui_label": {
+            "serif_usage": "disallow" if headline_profile.get("ui_label_line_height") == "avoid-small-serif-ui" else "allow-with-review",
+            "body_line_height": body_profile.get("ui_label_line_height"),
+        },
+    }
+    headline_constraints = implementation_constraints["headline_display"]
+    if headline_constraints.get("line_height_min"):
+        rules.append(
+            f"{headline_name} 같은 한글 display 헤딩은 line-height를 {headline_constraints['line_height_min']} 미만으로 낮추지 않는다."
+        )
+    if headline_constraints.get("letter_spacing_min") and headline_constraints.get("letter_spacing_max"):
+        rules.append(
+            f"한글 display 헤딩 tracking은 {headline_constraints['letter_spacing_min']} ~ {headline_constraints['letter_spacing_max']} 범위를 벗어나지 않는다."
+        )
+
     warnings = []
     if headline_ctx.get("avoid_for_kr"):
         warnings.extend(headline_ctx.get("avoid_for_kr", [])[:2])
@@ -1207,9 +1255,62 @@ def _build_script_guardrails(
                 else "기본 스케일을 사용할 수 있지만 한글 문장 기준으로 실제 wrap을 먼저 검증한다."
             ),
         },
+        "implementation_constraints": implementation_constraints,
         "warnings": warnings,
         "rules": rules,
     }
+
+
+def validate_headline_display_guardrails(
+    script_guardrails: dict | None,
+    *,
+    line_height: float | None = None,
+    letter_spacing: str | None = None,
+) -> list[str]:
+    if not isinstance(script_guardrails, dict):
+        return []
+    constraints = ((script_guardrails.get("implementation_constraints") or {}).get("headline_display") or {})
+    issues: list[str] = []
+
+    min_line_height = _parse_float(constraints.get("line_height_min"))
+    if min_line_height is not None and line_height is not None and line_height < min_line_height:
+        issues.append(
+            f"headline line-height {line_height:g} is below the Hangul-safe minimum {min_line_height:g}"
+        )
+
+    tracking_value = _parse_em(letter_spacing)
+    min_tracking = _parse_em(constraints.get("letter_spacing_min"))
+    max_tracking = _parse_em(constraints.get("letter_spacing_max"))
+    if tracking_value is not None and min_tracking is not None and tracking_value < min_tracking:
+        issues.append(
+            f"headline letter-spacing {letter_spacing} is tighter than the Hangul-safe minimum {constraints.get('letter_spacing_min')}"
+        )
+    if tracking_value is not None and max_tracking is not None and tracking_value > max_tracking:
+        issues.append(
+            f"headline letter-spacing {letter_spacing} is looser than the Hangul-safe maximum {constraints.get('letter_spacing_max')}"
+        )
+
+    return issues
+
+
+def _parse_float(value: object) -> float | None:
+    try:
+        if value is None:
+            return None
+        return float(str(value).strip())
+    except (TypeError, ValueError):
+        return None
+
+
+def _parse_em(value: object) -> float | None:
+    if value is None:
+        return None
+    text = str(value).strip()
+    if not text:
+        return None
+    if text.endswith("em"):
+        text = text[:-2]
+    return _parse_float(text)
 
 
 def _pick_korean_script_font(
@@ -1242,6 +1343,9 @@ def _lookup_korean_typography_profile(font: dict | None) -> dict[str, str]:
             "ui_label_line_height": "avoid-small-serif-ui",
             "heading_tracking": "-0.02em",
             "body_tracking": "0em",
+            "display_line_height_min": "1.08",
+            "heading_tracking_min": "-0.03em",
+            "heading_tracking_max": "0em",
             "display_scale_bias": "reduce-one-step",
             "note": "한글 세리프는 넓은 획과 글자폭 때문에 더 보수적인 display scale과 넉넉한 행간이 필요하다.",
         }
@@ -1251,6 +1355,9 @@ def _lookup_korean_typography_profile(font: dict | None) -> dict[str, str]:
         "ui_label_line_height": "1.4-1.5",
         "heading_tracking": "0em",
         "body_tracking": "0em",
+        "display_line_height_min": "1.02",
+        "heading_tracking_min": "-0.02em",
+        "heading_tracking_max": "0.01em",
         "display_scale_bias": "stable",
         "note": "한글 산세리프 기본값을 따르되 실제 문자열 기준으로 wrap을 확인한다.",
     }

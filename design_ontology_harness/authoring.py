@@ -1139,6 +1139,14 @@ def _build_typography_section(typography: dict) -> str:
         scale = script_guardrails.get("scale") or {}
         if scale.get("guidance"):
             lines.append(f"- **Scale guidance**: {scale['guidance']}")
+        constraints = (script_guardrails.get("implementation_constraints") or {}).get("headline_display") or {}
+        if constraints:
+            lines.append(
+                "- **Hangul display safety**: "
+                f"line-height >= {constraints.get('line_height_min', 'n/a')} | "
+                f"tracking {constraints.get('letter_spacing_min', 'n/a')} to {constraints.get('letter_spacing_max', 'n/a')} | "
+                "forced <br /> 금지 until breakpoint QA"
+            )
         for warning in script_guardrails.get("warnings", [])[:3]:
             lines.append(f"- **Hangul warning**: {warning}")
 
