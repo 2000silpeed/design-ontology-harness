@@ -336,7 +336,7 @@ def build_commercial_product_realism_section(graph: DesignOntologyGraph) -> str:
     failure_edges = graph.get_edges_from(policy.id, EdgeType.prevents)
     if failure_edges:
         lines.append("- **Promoted failure patterns**:")
-        for edge in failure_edges[:8]:
+        for edge in failure_edges:
             failure = graph.get_node(edge.target)
             if failure:
                 lines.append(f"  - {failure.label}: {failure.meta.get('prevention', '')}")
