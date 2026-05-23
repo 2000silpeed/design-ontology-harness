@@ -11,7 +11,6 @@ https://www.figma.com/community/design-systems
 
 # ===== Enterprise SaaS =====
 https://www.lightningdesignsystem.com/
-https://polaris-react.shopify.com/
 https://design.intuit.com/
 https://design.hubspot.com/
 https://www.oracle.com/webfolder/ux/middleware/alta/index.html
@@ -40,3 +39,16 @@ https://planetscale.com/docs
 # ===== Accessibility / standards =====
 https://accessibility.digital.gov/
 https://www.w3.org/WAI/ARIA/apg/
+
+# ===== Needs browser, retry, or source refresh (requests smoke failed on 2026-05-23) =====
+https://www.telus.com/en/thorium
+https://design.digitalocean.com/
+https://zeroheight.com/examples/
+https://www.marriott.com/design/
+https://design.vtex.com/
+https://design.trade.gov.uk/
+https://bolt.tegrita.com/
+https://design-system.homeoffice.gov.uk/
+https://design-system.dta.gov.au/
+https://www.designsystem.sg/
+https://www.orbit.kiwi/

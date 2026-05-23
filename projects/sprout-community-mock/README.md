@@ -16,3 +16,6 @@ projects/sprout-community-mock/index.html
 - `styles.css`: playful-soft 기반 파스텔 디자인
 - `mockup.js`: 탭 전환, 반응 버튼, 게시 요청 상태
 - `favicon.svg`: 새싹 마크
+- `assets/*.webp`: Codex 내장 `image_gen` 스킬로 생성한 목업용 이미지
+- `design-system/generated_visual_assets.json`: 생성 이미지 manifest
+- `design-system/system_ontology.json`: 생성 이미지를 `GeneratedVisualAsset` 노드로 승격한 프로젝트 온톨로지

@@ -1,13 +1,27 @@
 import unittest
+import tempfile
+import json
+from pathlib import Path
 
 from design_ontology_harness.graph_builders import build_full_ontology_graph
 from design_ontology_harness.graph_schema import EdgeType, NodeType
 from design_ontology_harness.graph_spec_sections import build_graph_spec_sections
-from design_ontology_harness.synthesis import REFERENCE_ABSORPTION_SCOPE
+from design_ontology_harness.synthesis import (
+    APP_ICON_IDENTITY_POLICY,
+    COLOR_MODE_PARITY_POLICY,
+    COMMERCIAL_PRODUCT_REALISM_POLICY,
+    ICON_REFACTOR_POLICY,
+    MOCKUP_VISUAL_SUBSTANCE_POLICY,
+    REFERENCE_ABSORPTION_SCOPE,
+    RESPONSIVE_RESILIENCE_POLICY,
+    discover_brand_identity_assets,
+    discover_generated_visual_asset_manifests,
+    load_brand_profile,
+)
 
 
 class VisualAssetOntologyTests(unittest.TestCase):
-    def test_generated_visual_assets_are_modeled_for_codex_imagine2(self) -> None:
+    def test_generated_visual_assets_are_modeled_for_codex_imagegen_without_api_fallback(self) -> None:
         graph = build_full_ontology_graph(
             brand_profile={
                 "brand_name": "Checkpoint",
@@ -60,9 +74,21 @@ class VisualAssetOntologyTests(unittest.TestCase):
             token_schema={"categories": {}},
         )
 
-        model = graph.get_node("image-model:imagine2")
+        model = graph.get_node("image-model:codex-imagegen")
         self.assertIsNotNone(model)
         self.assertEqual(model.type, NodeType.ImageGenerationModel)
+        self.assertEqual(model.label, "Codex image_gen skill")
+        self.assertEqual(model.meta["api_fallback"], "disabled")
+        self.assertTrue(model.meta["workspace_copy_required"])
+        self.assertEqual(model.meta["contract_id"], "governance:generated-visual-asset-contract")
+
+        contract = graph.get_node("governance:generated-visual-asset-contract")
+        self.assertIsNotNone(contract)
+        self.assertEqual(contract.type, NodeType.GovernanceRule)
+        self.assertEqual(contract.meta["schema_version"], "visual-asset-manifest/v1")
+        self.assertIn("design-system/generated_visual_assets.json", contract.meta["compatible_manifest_paths"])
+        self.assertIn("sha256", contract.meta["asset_record_required_fields"])
+        self.assertTrue(contract.meta["preserve_originals"])
 
         assets = graph.get_nodes_by_type(NodeType.GeneratedVisualAsset)
         asset_ids = {asset.id for asset in assets}
@@ -72,15 +98,27 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIn("visual-asset:empty-state-illustration", asset_ids)
 
         hero = graph.get_node("visual-asset:hero-image")
-        self.assertEqual(hero.meta["model"], "imagine2")
+        self.assertEqual(hero.meta["model"], "Codex image_gen skill")
+        self.assertEqual(hero.meta["api_fallback"], "disabled")
+        self.assertEqual(hero.meta["fallback_policy"], "no API fallback")
         self.assertIn("visual_reference_report.json", hero.meta["prompt_basis"])
         self.assertEqual(hero.meta["manifest_path"], "public/generated/design-system/manifest.json")
+        self.assertEqual(hero.meta["prompt_pack_path"], "public/generated/design-system/imagegen-prompts.md")
+        self.assertEqual(hero.meta["manifest_schema"], "visual-asset-manifest/v1")
+        self.assertIn("original_png_path", hero.meta["asset_record_required_fields"])
+        self.assertTrue(hero.meta["workspace_copy_required"])
+        self.assertTrue(hero.meta["original_preservation_required"])
 
         model_edges = graph.get_edges_from("visual-asset:hero-image", EdgeType.generated_with)
-        self.assertEqual(model_edges[0].target, "image-model:imagine2")
+        self.assertEqual(model_edges[0].target, "image-model:codex-imagegen")
 
         target_edges = graph.get_edges_from("visual-asset:hero-image", EdgeType.intended_for)
         self.assertIn("component:hero-section", {edge.target for edge in target_edges})
+
+        governance_edges = graph.get_edges_from("governance:generated-visual-asset-contract", EdgeType.governs)
+        self.assertIn("visual-asset:hero-image", {edge.target for edge in governance_edges})
+        prevention_edges = graph.get_edges_from("governance:generated-visual-asset-contract", EdgeType.prevents)
+        self.assertIn("failure-pattern:generated-image-untracked-asset", {edge.target for edge in prevention_edges})
 
     def test_generated_visual_asset_plan_is_rendered_in_system_spec_sections(self) -> None:
         graph = build_full_ontology_graph(
@@ -103,16 +141,399 @@ class VisualAssetOntologyTests(unittest.TestCase):
         sections = build_graph_spec_sections(graph)
 
         self.assertIn("Generated Visual Asset Plan", sections)
-        self.assertIn("imagine2", sections)
+        self.assertIn("Codex image_gen skill", sections)
+        self.assertIn("no API fallback", sections)
         self.assertIn("public/generated/design-system/manifest.json", sections)
+        self.assertIn("visual-asset-manifest/v1", sections)
+        self.assertIn("design-system/generated_visual_assets.json", sections)
+        self.assertIn("workspace copy required", sections)
+
+    def test_sourced_visual_asset_fallback_is_modeled_with_license_policy(self) -> None:
+        graph = build_full_ontology_graph(
+            brand_profile={"brand_name": "Checkpoint"},
+            blueprint={"principles": []},
+            component_inventory={
+                "families": [{"family": "marketing", "components": ["hero-section"]}],
+                "components": [
+                    {
+                        "name": "hero-section",
+                        "family": "marketing",
+                        "role": "Landing hero",
+                        "supports_primitive": "landing narrative",
+                    }
+                ],
+            },
+            token_schema={"categories": {}},
+        )
+
+        contract = graph.get_node("governance:sourced-visual-asset-fallback-contract")
+        self.assertIsNotNone(contract)
+        self.assertEqual(contract.type, NodeType.GovernanceRule)
+        self.assertEqual(contract.meta["fallback_policy"], "license-verified sourced visual fallback")
+        self.assertFalse(contract.meta["hotlinking_allowed"])
+        self.assertIn("source_url", contract.meta["asset_record_required_fields"])
+        self.assertIn("openverse", contract.meta["provider_allowlist"])
+
+        provider = graph.get_node("visual-asset-provider:openverse")
+        self.assertIsNotNone(provider)
+        self.assertEqual(provider.type, NodeType.FreeSourcedVisualProvider)
+        self.assertEqual(provider.meta["tier"], "free-sourced")
+        self.assertTrue(provider.meta["license_metadata_required"])
+
+        licensed_provider = graph.get_node("visual-asset-provider:adobe-stock")
+        self.assertIsNotNone(licensed_provider)
+        self.assertEqual(licensed_provider.type, NodeType.LicensedVisualProvider)
+        self.assertTrue(licensed_provider.meta["license_proof_required"])
+
+        reference_provider = graph.get_node("visual-asset-provider:lazyweb")
+        self.assertIsNotNone(reference_provider)
+        self.assertEqual(reference_provider.type, NodeType.ReferenceOnlyProvider)
+        self.assertFalse(reference_provider.meta["asset_copy_allowed"])
+
+        license_policy = graph.get_node("license-policy:verified-free-visual-asset")
+        self.assertIsNotNone(license_policy)
+        self.assertEqual(license_policy.type, NodeType.LicensePolicy)
+        self.assertIn("unknown license", license_policy.meta["denied"])
+
+        paid_policy = graph.get_node("license-policy:paid-visual-provider-proof")
+        self.assertIsNotNone(paid_policy)
+        self.assertIn("license_proof", paid_policy.meta["required_metadata"])
+
+        reference_policy = graph.get_node("license-policy:reference-only-provider-no-runtime-assets")
+        self.assertIsNotNone(reference_policy)
+        self.assertIn("runtime image asset", reference_policy.meta["denied"])
+
+        sourced = graph.get_node("sourced-visual-asset:hero-image-fallback")
+        self.assertIsNotNone(sourced)
+        self.assertEqual(sourced.type, NodeType.SourcedVisualAsset)
+        self.assertEqual(sourced.meta["acquisition_mode"], "sourced")
+        self.assertFalse(sourced.meta["hotlinking_allowed"])
+        self.assertEqual(sourced.meta["candidate_manifest_path"], "public/generated/design-system/sourced-visual-candidates.json")
+
+        provider_edges = graph.get_edges_from("sourced-visual-asset:hero-image-fallback", EdgeType.sourced_from)
+        self.assertIn("visual-asset-provider:openverse", {edge.target for edge in provider_edges})
+
+        license_edges = graph.get_edges_from("sourced-visual-asset:hero-image-fallback", EdgeType.licensed_under)
+        self.assertIn("license-policy:verified-free-visual-asset", {edge.target for edge in license_edges})
+
+        failure = graph.get_node("failure-pattern:unverified-search-image")
+        self.assertIsNotNone(failure)
+        self.assertEqual(failure.type, NodeType.ImplementationFailurePattern)
+
+        sections = build_graph_spec_sections(graph)
+        self.assertIn("Sourced fallback", sections)
+        self.assertIn("Openverse", sections)
+        self.assertIn("Licensed providers require proof", sections)
+        self.assertIn("Reference-only providers", sections)
+        self.assertIn("license metadata required", sections)
+        self.assertIn("stock/search images are not valid identity assets", sections)
+
+    def test_project_visual_asset_manifest_is_auto_discovered_from_brand_profile_path(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            project_dir = Path(tmp)
+            (project_dir / "public" / "generated" / "design-system").mkdir(parents=True)
+            (project_dir / "brand_profile.json").write_text(
+                json.dumps({
+                    "brand_name": "World Cup Hub",
+                    "system_name": "World Cup Hub System",
+                    "product_summary": "월드컵 허브",
+                    "audiences": [],
+                    "brand_keywords": [],
+                    "anti_keywords": [],
+                    "tone_of_voice": [],
+                    "visual_keywords": [],
+                    "interaction_keywords": [],
+                    "platforms": ["web"],
+                    "accessibility_targets": [],
+                    "product_primitives": [],
+                }),
+                encoding="utf-8",
+            )
+            manifest = {
+                "schema_version": "visual-asset-manifest/v1",
+                "project": "world-cup-hub",
+                "brand": "World Cup Hub",
+                "generator": {"id": "image-model:codex-imagegen"},
+                "source_session": {
+                    "id": "session-1",
+                    "default_directory": "/Users/example/.codex/generated_images/session-1",
+                    "preserve_originals": True,
+                },
+                "assets": [
+                    {
+                        "id": "visual-asset:world-cup-command-center",
+                        "label": "World Cup command center",
+                        "slot": "hero-image",
+                        "status": "integrated",
+                        "asset_path": "assets/world-cup-command-center.webp",
+                        "original_png_path": "/Users/example/.codex/generated_images/session-1/source.png",
+                        "format": "webp",
+                        "dimensions": {"width": 1672, "height": 941, "aspect_ratio": "16:9"},
+                        "size_kb": 188,
+                        "sha256": "abc123",
+                        "intended_for": ["component:hero-board"],
+                        "alt_text": "야간 경기장 커맨드 센터",
+                        "prompt_summary": "World Cup dashboard hero image",
+                    }
+                ],
+            }
+            (project_dir / "public" / "generated" / "design-system" / "manifest.json").write_text(
+                json.dumps(manifest),
+                encoding="utf-8",
+            )
+
+            discovered = discover_generated_visual_asset_manifests(project_dir)
+            self.assertEqual(len(discovered), 1)
+            self.assertEqual(discovered[0]["path"], "public/generated/design-system/manifest.json")
+            self.assertEqual(discovered[0]["assets"][0]["asset_path"], "assets/world-cup-command-center.webp")
+
+            profile = load_brand_profile(project_dir / "brand_profile.json")
+            self.assertIn("_generated_visual_asset_manifests", profile)
+            self.assertEqual(profile["_generated_visual_asset_manifests"][0]["source_session"]["id"], "session-1")
+
+    def test_project_app_icon_is_auto_discovered_as_identity_asset(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            project_dir = Path(tmp)
+            (project_dir / "assets").mkdir()
+            (project_dir / "assets" / "app-icon.svg").write_text("<svg></svg>", encoding="utf-8")
+            (project_dir / "site.webmanifest").write_text(
+                json.dumps({"icons": [{"src": "./assets/app-icon.svg", "sizes": "any", "type": "image/svg+xml"}]}),
+                encoding="utf-8",
+            )
+
+            discovered = discover_brand_identity_assets(project_dir)
+            self.assertEqual(len(discovered), 1)
+            self.assertEqual(discovered[0]["id"], "identity-asset:app-icon")
+            self.assertEqual(discovered[0]["asset_path"], "assets/app-icon.svg")
+            self.assertIn("web app manifest", discovered[0]["targets"])
+
+            (project_dir / "brand_profile.json").write_text(
+                json.dumps({
+                    "brand_name": "World Cup Hub",
+                    "system_name": "World Cup Hub System",
+                    "product_summary": "월드컵 허브",
+                    "audiences": [],
+                    "brand_keywords": [],
+                    "anti_keywords": [],
+                    "tone_of_voice": [],
+                    "visual_keywords": [],
+                    "interaction_keywords": [],
+                    "platforms": ["web"],
+                    "accessibility_targets": [],
+                    "product_primitives": [],
+                }),
+                encoding="utf-8",
+            )
+            profile = load_brand_profile(project_dir / "brand_profile.json")
+            self.assertEqual(profile["_identity_assets"][0]["asset_path"], "assets/app-icon.svg")
+
+    def test_discovered_manifest_assets_are_promoted_to_graph_and_spec(self) -> None:
+        manifest = {
+            "path": "public/generated/design-system/manifest.json",
+            "schema_version": "visual-asset-manifest/v1",
+            "project": "world-cup-hub",
+            "brand": "World Cup Hub",
+            "source_session": {"id": "session-1", "default_directory": "/Users/example/.codex/generated_images/session-1"},
+            "assets": [
+                {
+                    "id": "visual-asset:world-cup-command-center",
+                    "label": "World Cup command center",
+                    "slot": "hero-image",
+                    "status": "integrated",
+                    "asset_path": "assets/world-cup-command-center.webp",
+                    "original_png_path": "/Users/example/.codex/generated_images/session-1/source.png",
+                    "format": "webp",
+                    "dimensions": {"width": 1672, "height": 941, "aspect_ratio": "16:9"},
+                    "size_kb": 188,
+                    "sha256": "abc123",
+                    "intended_for": ["component:hero-board"],
+                    "alt_text": "야간 경기장 커맨드 센터",
+                    "prompt_summary": "World Cup dashboard hero image",
+                }
+            ],
+        }
+        graph = build_full_ontology_graph(
+            brand_profile={
+                "brand_name": "World Cup Hub",
+                "_generated_visual_asset_manifests": [manifest],
+            },
+            blueprint={"principles": [], "generated_visual_assets": [manifest]},
+            component_inventory={
+                "families": [{"family": "marketing", "components": ["hero-board"]}],
+                "components": [{"name": "hero-board", "family": "marketing", "role": "Hero board"}],
+            },
+            token_schema={"categories": {}},
+        )
+
+        asset = graph.get_node("visual-asset:world-cup-command-center")
+        self.assertIsNotNone(asset)
+        self.assertEqual(asset.type, NodeType.GeneratedVisualAsset)
+        self.assertTrue(asset.meta["integrated"])
+        self.assertEqual(asset.meta["asset_path"], "assets/world-cup-command-center.webp")
+        self.assertEqual(asset.meta["alt_text"], "야간 경기장 커맨드 센터")
+        self.assertEqual(asset.meta["source_session_id"], "session-1")
+
+        target_edges = graph.get_edges_from("visual-asset:world-cup-command-center", EdgeType.intended_for)
+        self.assertIn("component:hero-board", {edge.target for edge in target_edges})
+
+        sections = build_graph_spec_sections(graph)
+        self.assertIn("Integrated Assets", sections)
+        self.assertIn("assets/world-cup-command-center.webp", sections)
+        self.assertIn("야간 경기장 커맨드 센터", sections)
+
+    def test_sourced_manifest_assets_are_promoted_to_graph_and_spec(self) -> None:
+        manifest = {
+            "path": "public/generated/design-system/manifest.json",
+            "schema_version": "visual-asset-manifest/v1",
+            "project": "world-cup-hub",
+            "brand": "World Cup Hub",
+            "assets": [
+                {
+                    "id": "sourced-visual-asset:stadium-entrance-photo",
+                    "label": "Stadium entrance photo",
+                    "slot": "card-thumbnail",
+                    "status": "integrated",
+                    "acquisition_mode": "sourced",
+                    "asset_path": "assets/stadium-entrance.webp",
+                    "source_url": "https://openverse.org/image/example",
+                    "download_url": "https://images.example/stadium.jpg",
+                    "provider": "openverse",
+                    "author": "Example Photographer",
+                    "license": {"id": "cc0", "label": "CC0"},
+                    "attribution_required": False,
+                    "retrieved_at": "2026-05-17",
+                    "format": "webp",
+                    "dimensions": {"width": 1200, "height": 900, "aspect_ratio": "4:3"},
+                    "size_kb": 144,
+                    "sha256": "def456",
+                    "intended_for": ["component:venue-card"],
+                    "alt_text": "경기장 출입구 외부 사진",
+                    "selection_reason": "Real-world venue texture for a match card.",
+                }
+            ],
+        }
+        graph = build_full_ontology_graph(
+            brand_profile={
+                "brand_name": "World Cup Hub",
+                "_generated_visual_asset_manifests": [manifest],
+            },
+            blueprint={"principles": [], "generated_visual_assets": [manifest]},
+            component_inventory={
+                "families": [{"family": "marketing", "components": ["venue-card"]}],
+                "components": [{"name": "venue-card", "family": "marketing", "role": "Venue card"}],
+            },
+            token_schema={"categories": {}},
+        )
+
+        asset = graph.get_node("sourced-visual-asset:stadium-entrance-photo")
+        self.assertIsNotNone(asset)
+        self.assertEqual(asset.type, NodeType.SourcedVisualAsset)
+        self.assertTrue(asset.meta["integrated"])
+        self.assertEqual(asset.meta["acquisition_mode"], "sourced")
+        self.assertEqual(asset.meta["asset_path"], "assets/stadium-entrance.webp")
+        self.assertEqual(asset.meta["source_url"], "https://openverse.org/image/example")
+        self.assertEqual(asset.meta["provider"], "openverse")
+        self.assertEqual(asset.meta["license"], "CC0")
+        self.assertFalse(asset.meta["hotlinking_allowed"])
+
+        provider_edges = graph.get_edges_from("sourced-visual-asset:stadium-entrance-photo", EdgeType.sourced_from)
+        self.assertIn("visual-asset-provider:openverse", {edge.target for edge in provider_edges})
+
+        license_edges = graph.get_edges_from("sourced-visual-asset:stadium-entrance-photo", EdgeType.licensed_under)
+        self.assertIn("license-policy:verified-free-visual-asset", {edge.target for edge in license_edges})
+        self.assertIn("license-policy:cc0", {edge.target for edge in license_edges})
+
+        target_edges = graph.get_edges_from("sourced-visual-asset:stadium-entrance-photo", EdgeType.intended_for)
+        self.assertIn("component:venue-card", {edge.target for edge in target_edges})
+
+        sections = build_graph_spec_sections(graph)
+        self.assertIn("Integrated Assets", sections)
+        self.assertIn("sourced", sections)
+        self.assertIn("assets/stadium-entrance.webp", sections)
+        self.assertIn("https://openverse.org/image/example", sections)
+        self.assertIn("경기장 출입구 외부 사진", sections)
+
+    def test_paid_provider_manifest_requires_license_proof_policy(self) -> None:
+        manifest = {
+            "path": "public/generated/design-system/manifest.json",
+            "schema_version": "visual-asset-manifest/v1",
+            "project": "brand-site",
+            "brand": "Brand Site",
+            "assets": [
+                {
+                    "id": "sourced-visual-asset:licensed-hero-photo",
+                    "label": "Licensed hero photo",
+                    "slot": "hero-image",
+                    "status": "integrated",
+                    "acquisition_mode": "sourced",
+                    "asset_path": "assets/licensed-hero.webp",
+                    "source_url": "https://stock.adobe.com/images/example",
+                    "download_url": "https://stock.adobe.com/download/example",
+                    "provider": "adobe-stock",
+                    "author": "Stock Photographer",
+                    "license": "Adobe Stock Standard License",
+                    "license_proof": "adobe-stock-license-123",
+                    "usage_scope": "website mockup",
+                    "licensed_to": "Brand Site",
+                    "attribution_required": False,
+                    "retrieved_at": "2026-05-17",
+                    "sha256": "abc456",
+                    "intended_for": ["component:hero-section"],
+                    "alt_text": "브랜드 사이트 히어로 이미지",
+                    "selection_reason": "Production-grade licensed stock for a hero.",
+                }
+            ],
+        }
+        graph = build_full_ontology_graph(
+            brand_profile={"brand_name": "Brand Site", "_generated_visual_asset_manifests": [manifest]},
+            blueprint={"principles": [], "generated_visual_assets": [manifest]},
+            component_inventory={
+                "families": [{"family": "marketing", "components": ["hero-section"]}],
+                "components": [{"name": "hero-section", "family": "marketing", "role": "Hero"}],
+            },
+            token_schema={"categories": {}},
+        )
+
+        asset = graph.get_node("sourced-visual-asset:licensed-hero-photo")
+        self.assertIsNotNone(asset)
+        self.assertEqual(asset.type, NodeType.SourcedVisualAsset)
+        self.assertEqual(asset.meta["provider_tier"], "licensed")
+        self.assertTrue(asset.meta["license_proof_required"])
+        self.assertEqual(asset.meta["license_proof"], "adobe-stock-license-123")
+
+        provider = graph.get_node("visual-asset-provider:adobe-stock")
+        self.assertIsNotNone(provider)
+        self.assertEqual(provider.type, NodeType.LicensedVisualProvider)
+
+        license_edges = graph.get_edges_from("sourced-visual-asset:licensed-hero-photo", EdgeType.licensed_under)
+        self.assertIn("license-policy:paid-visual-provider-proof", {edge.target for edge in license_edges})
 
     def test_feedback_failure_patterns_are_promoted_to_governance_nodes(self) -> None:
         graph = build_full_ontology_graph(
-            brand_profile={"brand_name": "Mercer"},
+            brand_profile={
+                "brand_name": "Mercer",
+                "_identity_assets": [
+                    {
+                        "id": "identity-asset:app-icon",
+                        "label": "Mercer app icon",
+                        "slot": "app-icon",
+                        "asset_path": "assets/app-icon.svg",
+                        "format": "svg",
+                        "targets": ["favicon", "app shell brand mark", "web app manifest"],
+                        "integrated": True,
+                    }
+                ],
+            },
             blueprint={
                 "principles": [],
                 "governance": {
                     "reference_absorption_scope": REFERENCE_ABSORPTION_SCOPE,
+                    "color_mode_parity_policy": COLOR_MODE_PARITY_POLICY,
+                    "responsive_resilience_policy": RESPONSIVE_RESILIENCE_POLICY,
+                    "icon_refactor_policy": ICON_REFACTOR_POLICY,
+                    "app_icon_identity_policy": APP_ICON_IDENTITY_POLICY,
+                    "mockup_visual_substance_policy": MOCKUP_VISUAL_SUBSTANCE_POLICY,
+                    "commercial_product_realism_policy": COMMERCIAL_PRODUCT_REALISM_POLICY,
                     "feedback_promotion_policy": REFERENCE_ABSORPTION_SCOPE["promotion_policy"],
                 },
             },
@@ -132,6 +553,161 @@ class VisualAssetOntologyTests(unittest.TestCase):
 
         prevention_edges = graph.get_edges_from("governance:reference-absorption-scope", EdgeType.prevents)
         self.assertIn("failure-pattern:token-bound-reference-palette-mixing", {edge.target for edge in prevention_edges})
+
+        responsive = graph.get_node("governance:responsive-resilience")
+        self.assertIsNotNone(responsive)
+        self.assertEqual(responsive.type, NodeType.GovernanceRule)
+        self.assertIn(320, responsive.meta["viewport_contract"]["required_widths_px"])
+        self.assertTrue(any("Horizontal rails" in item for item in responsive.meta["control_rules"]))
+
+        mobile_overflow = graph.get_node("failure-pattern:mobile-control-overflow")
+        self.assertIsNotNone(mobile_overflow)
+        self.assertEqual(mobile_overflow.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("DS040" in item for item in mobile_overflow.meta["technical_controls"]))
+
+        rail_clipping = graph.get_node("failure-pattern:horizontal-rail-label-clipping")
+        self.assertIsNotNone(rail_clipping)
+        self.assertEqual(rail_clipping.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("scrollWidth<=clientWidth" in item for item in rail_clipping.meta["technical_controls"]))
+
+        responsive_edges = graph.get_edges_from("governance:responsive-resilience", EdgeType.prevents)
+        self.assertIn("failure-pattern:mobile-control-overflow", {edge.target for edge in responsive_edges})
+        self.assertIn("failure-pattern:horizontal-rail-label-clipping", {edge.target for edge in responsive_edges})
+
+        color_mode_policy = graph.get_node("governance:color-mode-parity")
+        self.assertIsNotNone(color_mode_policy)
+        self.assertEqual(color_mode_policy.type, NodeType.GovernanceRule)
+        self.assertEqual(color_mode_policy.meta["default_mode"], "light")
+
+        light_mode = graph.get_node("color-mode:light")
+        dark_mode = graph.get_node("color-mode:dark")
+        self.assertIsNotNone(light_mode)
+        self.assertIsNotNone(dark_mode)
+        self.assertEqual(light_mode.type, NodeType.ColorMode)
+        self.assertTrue(light_mode.meta["default"])
+        self.assertFalse(dark_mode.meta["default"])
+
+        dark_only_failure = graph.get_node("failure-pattern:dark-only-implementation")
+        self.assertIsNotNone(dark_only_failure)
+        self.assertEqual(dark_only_failure.type, NodeType.ImplementationFailurePattern)
+
+        color_mode_edges = graph.get_edges_from("governance:color-mode-parity", EdgeType.prevents)
+        self.assertIn("failure-pattern:dark-only-implementation", {edge.target for edge in color_mode_edges})
+
+        icon_policy = graph.get_node("governance:emoji-to-svg-refactor")
+        self.assertIsNotNone(icon_policy)
+        self.assertEqual(icon_policy.type, NodeType.GovernanceRule)
+        self.assertIn("button", icon_policy.meta["targets"])
+
+        emoji_failure = graph.get_node("failure-pattern:emoji-ui-affordance")
+        self.assertIsNotNone(emoji_failure)
+        self.assertEqual(emoji_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("DS050" in item for item in emoji_failure.meta["technical_controls"]))
+
+        icon_edges = graph.get_edges_from("governance:emoji-to-svg-refactor", EdgeType.prevents)
+        self.assertIn("failure-pattern:emoji-ui-affordance", {edge.target for edge in icon_edges})
+
+        app_icon_policy = graph.get_node("governance:brand-app-icon-identity")
+        self.assertIsNotNone(app_icon_policy)
+        self.assertEqual(app_icon_policy.type, NodeType.GovernanceRule)
+        self.assertTrue(any("deterministic SVG" in item for item in app_icon_policy.meta["implementation_rules"]))
+
+        app_icon = graph.get_node("identity-asset:app-icon")
+        self.assertIsNotNone(app_icon)
+        self.assertEqual(app_icon.type, NodeType.BrandIdentityAsset)
+        self.assertTrue(app_icon.meta["required"])
+        self.assertTrue(app_icon.meta["integrated"])
+        self.assertEqual(app_icon.meta["asset_path"], "assets/app-icon.svg")
+        self.assertIn("favicon", app_icon.meta["targets"])
+
+        app_icon_failure = graph.get_node("failure-pattern:generic-initials-app-icon")
+        self.assertIsNotNone(app_icon_failure)
+        self.assertEqual(app_icon_failure.type, NodeType.ImplementationFailurePattern)
+
+        app_icon_edges = graph.get_edges_from("governance:brand-app-icon-identity", EdgeType.prevents)
+        self.assertIn("failure-pattern:generic-initials-app-icon", {edge.target for edge in app_icon_edges})
+
+        visual_policy = graph.get_node("governance:mockup-visual-substance")
+        self.assertIsNotNone(visual_policy)
+        self.assertEqual(visual_policy.type, NodeType.GovernanceRule)
+        self.assertTrue(any("visual asset" in item for item in visual_policy.meta["required_signals"]))
+        self.assertTrue(any("image_gen" in item for item in visual_policy.meta["image_acquisition_order"]))
+
+        image_free_failure = graph.get_node("failure-pattern:image-free-commercial-mockup")
+        self.assertIsNotNone(image_free_failure)
+        self.assertEqual(image_free_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("Mockup Visual Substance" in item for item in image_free_failure.meta["technical_controls"]))
+
+        placeholder_failure = graph.get_node("failure-pattern:placeholder-gradient-as-image")
+        self.assertIsNotNone(placeholder_failure)
+        self.assertEqual(placeholder_failure.type, NodeType.ImplementationFailurePattern)
+
+        visual_edges = graph.get_edges_from("governance:mockup-visual-substance", EdgeType.prevents)
+        self.assertIn("failure-pattern:image-free-commercial-mockup", {edge.target for edge in visual_edges})
+        self.assertIn("failure-pattern:placeholder-gradient-as-image", {edge.target for edge in visual_edges})
+
+        realism_policy = graph.get_node("governance:commercial-product-realism")
+        self.assertIsNotNone(realism_policy)
+        self.assertEqual(realism_policy.type, NodeType.GovernanceRule)
+        self.assertIn("first-viewport task surface", realism_policy.meta["required_signals"])
+        self.assertTrue(any("national flag identity marks" in item for item in realism_policy.meta["required_signals"]))
+        self.assertTrue(any("reference-backed domain morphology" in item for item in realism_policy.meta["required_signals"]))
+        successful_pattern_ids = {item["id"] for item in realism_policy.meta["successful_patterns"]}
+        self.assertIn("same-domain-reference-before-redesign", successful_pattern_ids)
+        self.assertIn("score-ticker-as-scan-surface", successful_pattern_ids)
+        self.assertIn("national-flag-code-identity", successful_pattern_ids)
+        self.assertIn("source-ledger-and-sample-labeling", successful_pattern_ids)
+        self.assertIn("editorial-insight-side-rail", successful_pattern_ids)
+        self.assertIn("dual-mode-screenshot-qa", successful_pattern_ids)
+        self.assertIn("brand-app-icon-as-required-identity", successful_pattern_ids)
+        self.assertTrue(any("country-based sports competitions" in item for item in realism_policy.meta["implementation_rules"]))
+        self.assertTrue(any("Flag colors and domain identity marks" in item for item in realism_policy.meta["implementation_rules"]))
+        self.assertTrue(any("same-domain commercial references" in item for item in realism_policy.meta["implementation_rules"]))
+
+        pitch_deck_failure = graph.get_node("failure-pattern:pitch-deck-dashboard-shell")
+        self.assertIsNotNone(pitch_deck_failure)
+        self.assertEqual(pitch_deck_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("Commercial Product Realism" in item for item in pitch_deck_failure.meta["technical_controls"]))
+
+        reference_free_failure = graph.get_node("failure-pattern:reference-free-realism-refactor")
+        self.assertIsNotNone(reference_free_failure)
+        self.assertEqual(reference_free_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("Reference Intelligence" in item for item in reference_free_failure.meta["technical_controls"]))
+
+        generic_badge_failure = graph.get_node("failure-pattern:generic-national-team-badges")
+        self.assertIsNotNone(generic_badge_failure)
+        self.assertEqual(generic_badge_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("icon_refactor_policy" in item for item in generic_badge_failure.meta["technical_controls"]))
+
+        untokenized_identity_failure = graph.get_node("failure-pattern:untokenized-domain-identity-colors")
+        self.assertIsNotNone(untokenized_identity_failure)
+        self.assertEqual(untokenized_identity_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("DS003" in item for item in untokenized_identity_failure.meta["technical_controls"]))
+
+        realism_edges = graph.get_edges_from("governance:commercial-product-realism", EdgeType.prevents)
+        self.assertIn("failure-pattern:pitch-deck-dashboard-shell", {edge.target for edge in realism_edges})
+        self.assertIn("failure-pattern:reference-free-realism-refactor", {edge.target for edge in realism_edges})
+        self.assertIn("failure-pattern:generic-national-team-badges", {edge.target for edge in realism_edges})
+        self.assertIn("failure-pattern:untokenized-domain-identity-colors", {edge.target for edge in realism_edges})
+
+        sections = build_graph_spec_sections(graph)
+        self.assertIn("Color Mode Parity", sections)
+        self.assertIn("dark-only-implementation", sections)
+        self.assertIn("Brand Identity Assets", sections)
+        self.assertIn("Mercer app icon", sections)
+        self.assertIn("assets/app-icon.svg", sections)
+        self.assertIn("generic-initials-app-icon", sections)
+        self.assertIn("Mockup Visual Substance", sections)
+        self.assertIn("image-free-commercial-mockup", sections)
+        self.assertIn("placeholder-gradient-as-image", sections)
+        self.assertIn("Commercial Product Realism", sections)
+        self.assertIn("pitch-deck-dashboard-shell", sections)
+        self.assertIn("reference-free-realism-refactor", sections)
+        self.assertIn("generic-national-team-badges", sections)
+        self.assertIn("Successful reusable patterns", sections)
+        self.assertIn("score-ticker-as-scan-surface", sections)
+        self.assertIn("national-flag-code-identity", sections)
+        self.assertIn("untokenized-domain-identity-colors", sections)
 
 
 if __name__ == "__main__":

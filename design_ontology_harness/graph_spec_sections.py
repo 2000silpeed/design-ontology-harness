@@ -1,4 +1,4 @@
-"""Generate system_spec.md sections 18-20 from the ontology graph."""
+"""Generate system_spec.md graph-backed sections from the ontology graph."""
 
 from __future__ import annotations
 
@@ -75,6 +75,41 @@ def build_contrast_audit_section(graph: DesignOntologyGraph) -> str:
     return "\n".join(rows)
 
 
+def build_color_mode_parity_section(graph: DesignOntologyGraph) -> str:
+    modes = graph.get_nodes_by_type(NodeType.ColorMode)
+    policy = graph.get_node("governance:color-mode-parity")
+    if not modes and not policy:
+        return "No color mode parity policy defined."
+
+    lines: list[str] = []
+    if policy:
+        lines.append(f"- **Policy**: {policy.meta.get('rule', 'Light and dark modes are required.')}")
+        lines.append(f"- **Default mode**: `{policy.meta.get('default_mode', 'light')}`")
+        rules = policy.meta.get("implementation_rules") or []
+        if rules:
+            lines.append("- **Implementation rules**:")
+            for rule in rules[:6]:
+                lines.append(f"  - {rule}")
+        failure_edges = graph.get_edges_from(policy.id, EdgeType.prevents)
+        if failure_edges:
+            lines.append("- **Promoted failure patterns**:")
+            for edge in failure_edges[:6]:
+                failure = graph.get_node(edge.target)
+                if failure:
+                    lines.append(f"  - {failure.label}: {failure.meta.get('prevention', '')}")
+        lines.append("")
+
+    if modes:
+        lines.append("| Mode | Required | Default |")
+        lines.append("|------|----------|---------|")
+        for mode in sorted(modes, key=lambda node: node.label):
+            required = "yes" if mode.meta.get("required") else "no"
+            default = "yes" if mode.meta.get("default") else "no"
+            lines.append(f"| {mode.label} | {required} | {default} |")
+
+    return "\n".join(lines)
+
+
 def build_pattern_catalog_section(graph: DesignOntologyGraph) -> str:
     layout_patterns = graph.get_nodes_by_type(NodeType.LayoutPattern)
     interaction_patterns = graph.get_nodes_by_type(NodeType.InteractionPattern)
@@ -116,20 +151,94 @@ def build_pattern_catalog_section(graph: DesignOntologyGraph) -> str:
 
 def build_generated_visual_asset_section(graph: DesignOntologyGraph) -> str:
     assets = graph.get_nodes_by_type(NodeType.GeneratedVisualAsset)
-    if not assets:
+    sourced_assets = graph.get_nodes_by_type(NodeType.SourcedVisualAsset)
+    all_assets = assets + sourced_assets
+    if not all_assets:
         return "No generated visual asset slots defined."
 
-    rows: list[str] = []
-    rows.append("| Asset Slot | Model | Intended For | Manifest |")
-    rows.append("|------------|-------|--------------|----------|")
+    lines: list[str] = []
+    contract = graph.get_node("governance:generated-visual-asset-contract")
+    if contract:
+        lines.append(
+            f"- **Contract**: `{contract.meta.get('schema_version', 'visual-asset-manifest/v1')}` / "
+            f"preferred manifest `{contract.meta.get('preferred_manifest_path', 'public/generated/design-system/manifest.json')}`"
+        )
+        compatible_paths = contract.meta.get("compatible_manifest_paths") or []
+        if compatible_paths:
+            lines.append(f"- **Compatible paths**: {', '.join(f'`{path}`' for path in compatible_paths)}")
+        lines.append(
+            "- **Execution**: built-in Codex `image_gen`; workspace copy required; original generated PNG preserved in manifest; API fallback disabled."
+        )
+        required_fields = contract.meta.get("asset_record_required_fields") or []
+        if required_fields:
+            lines.append(f"- **Required asset record fields**: {', '.join(f'`{field}`' for field in required_fields[:14])}")
+        lines.append("")
 
-    for asset in sorted(assets, key=lambda n: n.label):
-        model = "—"
-        for edge in graph.get_edges_from(asset.id, EdgeType.generated_with):
-            node = graph.get_node(edge.target)
-            if node:
-                model = node.label
-                break
+    sourced_contract = graph.get_node("governance:sourced-visual-asset-fallback-contract")
+    if sourced_contract:
+        lines.append(
+            f"- **Sourced fallback**: {sourced_contract.meta.get('fallback_policy', 'license-verified sourced visual fallback')} / "
+            f"candidate manifest `{sourced_contract.meta.get('candidate_manifest_path', 'public/generated/design-system/sourced-visual-candidates.json')}`"
+        )
+        provider_allowlist = sourced_contract.meta.get("provider_allowlist") or []
+        if provider_allowlist:
+            lines.append(f"- **Allowed visual providers**: {', '.join(f'`{provider}`' for provider in provider_allowlist[:8])}")
+        licensed_providers = sourced_contract.meta.get("licensed_provider_allowlist") or []
+        if licensed_providers:
+            lines.append(
+                f"- **Licensed providers require proof**: {', '.join(f'`{provider}`' for provider in licensed_providers[:8])}"
+            )
+        reference_only = sourced_contract.meta.get("reference_only_providers") or sourced_contract.meta.get("reference_only_excluded") or []
+        if reference_only:
+            lines.append(
+                f"- **Reference-only providers**: {', '.join(f'`{provider}`' for provider in reference_only[:8])}; morphology only, no runtime asset copy."
+            )
+        lines.append(
+            "- **Sourced execution**: license metadata required; workspace copy required; runtime hotlinking disabled; stock/search images are not valid identity assets."
+        )
+        required_fields = sourced_contract.meta.get("asset_record_required_fields") or []
+        if required_fields:
+            lines.append(f"- **Required sourced record fields**: {', '.join(f'`{field}`' for field in required_fields[:16])}")
+        lines.append("")
+
+    integrated_assets = [
+        asset for asset in all_assets
+        if asset.meta.get("integrated") or asset.meta.get("asset_path")
+    ]
+    if integrated_assets:
+        lines.append("### Integrated Assets")
+        lines.append("")
+        lines.append("| Asset | Mode | Slot | Workspace Path | Source | Alt Text |")
+        lines.append("|-------|------|------|----------------|--------|----------|")
+        for asset in sorted(integrated_assets, key=lambda n: n.label):
+            mode = asset.meta.get("acquisition_mode", "generated")
+            slot = asset.meta.get("slot", "—")
+            path = asset.meta.get("asset_path", "—")
+            source_url = asset.meta.get("source_url", "—")
+            alt_text = asset.meta.get("alt_text", "—")
+            lines.append(f"| {asset.label} | {mode} | {slot} | `{path}` | {source_url} | {alt_text} |")
+        lines.append("")
+
+    rows: list[str] = []
+    rows.append("| Asset Slot | Mode | Source | Intended For | Manifest | Policy |")
+    rows.append("|------------|------|--------|--------------|----------|--------|")
+
+    for asset in sorted(all_assets, key=lambda n: n.label):
+        mode = asset.meta.get("acquisition_mode") or ("sourced" if asset.type == NodeType.SourcedVisualAsset else "generated")
+        source = "—"
+        if asset.type == NodeType.SourcedVisualAsset:
+            providers = []
+            for edge in graph.get_edges_from(asset.id, EdgeType.sourced_from):
+                node = graph.get_node(edge.target)
+                if node:
+                    providers.append(node.label)
+            source = ", ".join(providers[:4]) if providers else "license-verified source"
+        else:
+            for edge in graph.get_edges_from(asset.id, EdgeType.generated_with):
+                node = graph.get_node(edge.target)
+                if node:
+                    source = node.label
+                    break
 
         targets: list[str] = []
         for edge in graph.get_edges_from(asset.id, EdgeType.intended_for):
@@ -138,10 +247,198 @@ def build_generated_visual_asset_section(graph: DesignOntologyGraph) -> str:
                 targets.append(node.label)
 
         manifest = asset.meta.get("manifest_path", "—")
-        intended_for = ", ".join(targets[:6]) if targets else asset.meta.get("activation", "optional")
-        rows.append(f"| {asset.label} | {model} | {intended_for} | `{manifest}` |")
+        failure_policy = asset.meta.get("fallback_policy", "—")
+        intended_for = ", ".join(targets[:6]) if targets else ", ".join(asset.meta.get("intended_for", [])[:6])
+        if not intended_for:
+            intended_for = asset.meta.get("activation", "optional")
+        rows.append(f"| {asset.label} | {mode} | {source} | {intended_for} | `{manifest}` | {failure_policy} |")
 
-    return "\n".join(rows)
+    lines.extend(rows)
+    return "\n".join(lines)
+
+
+def build_brand_identity_asset_section(graph: DesignOntologyGraph) -> str:
+    assets = graph.get_nodes_by_type(NodeType.BrandIdentityAsset)
+    if not assets:
+        return "No brand identity assets defined."
+
+    lines: list[str] = []
+    policy = graph.get_node("governance:brand-app-icon-identity")
+    if policy:
+        lines.append(f"- **Policy**: {policy.meta.get('rule', 'Brand-specific app icon required.')}")
+        rules = policy.meta.get("implementation_rules") or []
+        if rules:
+            lines.append("- **Implementation rules**:")
+            for rule in rules[:6]:
+                lines.append(f"  - {rule}")
+        failure_edges = graph.get_edges_from(policy.id, EdgeType.prevents)
+        if failure_edges:
+            lines.append("- **Promoted failure patterns**:")
+            for edge in failure_edges[:6]:
+                failure = graph.get_node(edge.target)
+                if failure:
+                    lines.append(f"  - {failure.label}: {failure.meta.get('prevention', '')}")
+        lines.append("")
+
+    lines.append("| Asset | Required | Workspace Path | Targets | Formats |")
+    lines.append("|-------|----------|----------------|---------|---------|")
+    for asset in sorted(assets, key=lambda n: n.label):
+        required = "yes" if asset.meta.get("required") else "no"
+        path = asset.meta.get("asset_path") or asset.meta.get("favicon_path") or "—"
+        targets = ", ".join(asset.meta.get("targets", [])[:6]) or "—"
+        formats = ", ".join(asset.meta.get("formats", [])[:4]) or "—"
+        lines.append(f"| {asset.label} | {required} | `{path}` | {targets} | {formats} |")
+
+    return "\n".join(lines)
+
+
+def build_commercial_product_realism_section(graph: DesignOntologyGraph) -> str:
+    policy = graph.get_node("governance:commercial-product-realism")
+    if not policy:
+        return "No commercial product realism policy defined."
+
+    lines: list[str] = []
+    lines.append(f"- **Policy**: {policy.meta.get('rule', 'Product UI should lead with operational substance.')}")
+
+    applies_to = policy.meta.get("applies_to") or []
+    if applies_to:
+        lines.append(f"- **Applies to**: {', '.join(applies_to[:8])}")
+
+    diagnosis = policy.meta.get("diagnosis") or []
+    if diagnosis:
+        lines.append("- **Why AI-looking screens fail**:")
+        for item in diagnosis[:4]:
+            lines.append(f"  - {item}")
+
+    required_signals = policy.meta.get("required_signals") or []
+    if required_signals:
+        lines.append("- **Required realism signals**:")
+        for item in required_signals[:8]:
+            lines.append(f"  - {item}")
+
+    successful_patterns = policy.meta.get("successful_patterns") or []
+    if successful_patterns:
+        lines.append("- **Successful reusable patterns**:")
+        for pattern in successful_patterns[:10]:
+            pattern_id = pattern.get("id", "successful-pattern")
+            rule = pattern.get("rule", "")
+            implementation = pattern.get("implementation", "")
+            verification = pattern.get("verification", "")
+            detail = "; ".join(part for part in (rule, implementation, verification) if part)
+            lines.append(f"  - {pattern_id}: {detail}")
+
+    rules = policy.meta.get("implementation_rules") or []
+    if rules:
+        lines.append("- **Implementation rules**:")
+        for rule in rules[:10]:
+            lines.append(f"  - {rule}")
+
+    failure_edges = graph.get_edges_from(policy.id, EdgeType.prevents)
+    if failure_edges:
+        lines.append("- **Promoted failure patterns**:")
+        for edge in failure_edges[:8]:
+            failure = graph.get_node(edge.target)
+            if failure:
+                lines.append(f"  - {failure.label}: {failure.meta.get('prevention', '')}")
+
+    return "\n".join(lines)
+
+
+def build_mockup_visual_substance_section(graph: DesignOntologyGraph) -> str:
+    policy = graph.get_node("governance:mockup-visual-substance")
+    if not policy:
+        return "No mockup visual substance policy defined."
+
+    lines: list[str] = []
+    lines.append(f"- **Policy**: {policy.meta.get('rule', 'Use relevant visual assets in mockups.')}")
+
+    applies_to = policy.meta.get("applies_to") or []
+    if applies_to:
+        lines.append(f"- **Applies to**: {', '.join(applies_to[:10])}")
+
+    diagnosis = policy.meta.get("diagnosis") or []
+    if diagnosis:
+        lines.append("- **Why image-free mockups fail**:")
+        for item in diagnosis[:4]:
+            lines.append(f"  - {item}")
+
+    required_signals = policy.meta.get("required_signals") or []
+    if required_signals:
+        lines.append("- **Required visual substance signals**:")
+        for item in required_signals[:8]:
+            lines.append(f"  - {item}")
+
+    acquisition_order = policy.meta.get("image_acquisition_order") or []
+    if acquisition_order:
+        lines.append("- **Image acquisition order**:")
+        for item in acquisition_order[:6]:
+            lines.append(f"  - {item}")
+
+    rules = policy.meta.get("implementation_rules") or []
+    if rules:
+        lines.append("- **Implementation rules**:")
+        for rule in rules[:10]:
+            lines.append(f"  - {rule}")
+
+    failure_edges = graph.get_edges_from(policy.id, EdgeType.prevents)
+    if failure_edges:
+        lines.append("- **Promoted failure patterns**:")
+        for edge in failure_edges[:8]:
+            failure = graph.get_node(edge.target)
+            if failure:
+                lines.append(f"  - {failure.label}: {failure.meta.get('prevention', '')}")
+
+    return "\n".join(lines)
+
+
+def build_reference_intelligence_section(graph: DesignOntologyGraph) -> str:
+    providers = graph.get_nodes_by_type(NodeType.ReferenceProvider)
+    cards = graph.get_nodes_by_type(NodeType.DesignContextCard)
+    pack_nodes = graph.get_nodes_by_type(NodeType.DesignContextPack)
+    if not providers and not cards and not pack_nodes:
+        return "No reference intelligence pack defined."
+
+    lines: list[str] = []
+    if pack_nodes:
+        pack = pack_nodes[0]
+        lines.append(
+            f"- **Activation**: {pack.meta.get('activation_state', 'planned')} / "
+            f"research gaps: {pack.meta.get('research_gap_count', 0)}"
+        )
+        if pack.meta.get("allowed"):
+            lines.append(f"- **Allowed from references**: {', '.join(pack.meta.get('allowed', [])[:6])}")
+        if pack.meta.get("denied"):
+            lines.append(f"- **Denied from references**: {', '.join(pack.meta.get('denied', [])[:6])}")
+        lines.append("")
+
+    if providers:
+        lines.append("| Provider | Status | Access | Role |")
+        lines.append("|----------|--------|--------|------|")
+        for provider in sorted(providers, key=lambda node: node.label):
+            lines.append(
+                f"| {provider.label} | {provider.meta.get('status', 'n/a')} | "
+                f"{provider.meta.get('access_mode', 'n/a')} | {provider.meta.get('truth_role', 'reference')} |"
+            )
+        lines.append("")
+
+    if cards:
+        lines.append("| Context | Provider | Provenance | Allowed Use |")
+        lines.append("|---------|----------|------------|-------------|")
+        for card in sorted(cards, key=lambda node: node.label)[:12]:
+            provider_edges = graph.get_edges_from(card.id, EdgeType.provided_by)
+            provider = "—"
+            if provider_edges:
+                provider_node = graph.get_node(provider_edges[0].target)
+                if provider_node:
+                    provider = provider_node.label
+            flows = ", ".join(card.meta.get("flows", [])[:3]) or "general"
+            morphology = ", ".join(card.meta.get("morphology", [])[:3]) or "general"
+            lines.append(
+                f"| {card.label} | {provider} | {card.meta.get('provenance_level', 'planned')} | "
+                f"flows: {flows}; morphology: {morphology} |"
+            )
+
+    return "\n".join(lines)
 
 
 def build_graph_spec_sections(graph: DesignOntologyGraph) -> str:
@@ -149,15 +446,35 @@ def build_graph_spec_sections(graph: DesignOntologyGraph) -> str:
 
 {build_component_token_map_section(graph)}
 
-## 19. Contrast Audit
+## 19. Color Mode Parity
+
+{build_color_mode_parity_section(graph)}
+
+## 20. Contrast Audit
 
 {build_contrast_audit_section(graph)}
 
-## 20. Pattern Catalog
+## 21. Pattern Catalog
 
 {build_pattern_catalog_section(graph)}
 
-## 21. Generated Visual Asset Plan
+## 22. Brand Identity Assets
+
+{build_brand_identity_asset_section(graph)}
+
+## 23. Generated Visual Asset Plan
 
 {build_generated_visual_asset_section(graph)}
+
+## 24. Mockup Visual Substance
+
+{build_mockup_visual_substance_section(graph)}
+
+## 25. Reference Intelligence Pack
+
+{build_reference_intelligence_section(graph)}
+
+## 26. Commercial Product Realism
+
+{build_commercial_product_realism_section(graph)}
 """

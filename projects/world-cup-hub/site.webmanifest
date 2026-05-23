@@ -1,0 +1,17 @@
+{
+  "name": "World Cup Hub",
+  "short_name": "World Cup Hub",
+  "description": "월드컵 일정, 결과, 승부예측, 팬 의견을 한 화면에서 다루는 스포츠 데이터 허브",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#061116",
+  "theme_color": "#0F4C81",
+  "icons": [
+    {
+      "src": "./assets/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

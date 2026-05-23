@@ -1,0 +1,64 @@
+{
+  "assets": [
+    {
+      "id": "generated-place-photo:seochon-paper-alley",
+      "asset_path": "assets/generated/seochon-paper-alley-photo.png",
+      "acquisition_mode": "generated",
+      "generator": "Codex imagegen skill / built-in image_gen",
+      "intended_for": "place detail primary photo slot",
+      "runtime_surface": "place-media-evidence",
+      "alt_text": "나무 서점과 식물이 있는 조용한 서촌 골목 사진",
+      "sha256": "bee5842872ecf0f0c1e171f3d249fa5735ebf22ec1ebb544ad99b1a7de4a2606",
+      "source_image_preserved_at": "/Users/sungwoon/.codex/generated_images/019e35eb-df58-7de0-9431-684878ddb97f/ig_097403f6988f2906016a09c2caca74819182c2ea27283264a7.png",
+      "prompt_summary": "Photorealistic quiet Seoul alley near a small bookshop, late afternoon, paper and old wood texture, no readable brand text."
+    },
+    {
+      "id": "generated-texture:seochon-paper-wood",
+      "asset_path": "assets/generated/seochon-paper-wood-texture.png",
+      "acquisition_mode": "generated",
+      "generator": "Codex imagegen skill / built-in image_gen",
+      "intended_for": "place detail texture evidence and texture card",
+      "runtime_surface": "place-media-evidence",
+      "alt_text": "오래된 목재와 종이 포스터 질감 사진",
+      "sha256": "f9e166f9d2b2a8b2f39154499df0fe0ad19654e08d66059b44f58c16c82e6174",
+      "source_image_preserved_at": "/Users/sungwoon/.codex/generated_images/019e35eb-df58-7de0-9431-684878ddb97f/ig_097403f6988f2906016a09c59db5c08191861c257872573d84.png",
+      "prompt_summary": "Photorealistic close-up of aged paper posters and warm old wood texture on a Seoul alley bookshop facade."
+    },
+    {
+      "id": "generated-texture:seochon-brick-pavement",
+      "asset_path": "assets/generated/seochon-brick-pavement-texture.png",
+      "acquisition_mode": "generated",
+      "generator": "Codex imagegen skill / built-in image_gen",
+      "intended_for": "place detail texture card",
+      "runtime_surface": "place-media-evidence",
+      "alt_text": "오래된 벽돌과 좁은 골목 바닥 질감",
+      "sha256": "5fcec6588a6b5ec62a0645f02d19efb6b81cd19c81d6a774599dd3cf3cd74d0e",
+      "source_image_preserved_at": "/Users/sungwoon/.codex/generated_images/019e35eb-df58-7de0-9431-684878ddb97f/ig_097403f6988f2906016a09c66349a081918ebd11be9fb12e3a.png",
+      "prompt_summary": "Photorealistic close-up of old brick wall and narrow Seoul alley pavement."
+    },
+    {
+      "id": "generated-texture:seochon-plant-shadow",
+      "asset_path": "assets/generated/seochon-plant-shadow-texture.png",
+      "acquisition_mode": "generated",
+      "generator": "Codex imagegen skill / built-in image_gen",
+      "intended_for": "place detail texture card",
+      "runtime_surface": "place-media-evidence",
+      "alt_text": "화분 식물과 골목 벽에 생긴 부드러운 그림자",
+      "sha256": "f5d0bf11fee15276261fb5d56339b9f0adea7dc44b000363f09d077469fc778c",
+      "source_image_preserved_at": "/Users/sungwoon/.codex/generated_images/019e35eb-df58-7de0-9431-684878ddb97f/ig_097403f6988f2906016a09c6b82efc8191ab5c9df42cc33017.png",
+      "prompt_summary": "Photorealistic close-up of potted green plants casting soft shadows beside a quiet Seoul alley wall."
+    },
+    {
+      "id": "generated-weather-photo:seochon-rain-alley",
+      "asset_path": "assets/generated/seochon-rain-alley-photo.png",
+      "acquisition_mode": "generated",
+      "generator": "Codex imagegen skill / built-in image_gen",
+      "intended_for": "place detail weather evidence slot",
+      "runtime_surface": "place-media-evidence",
+      "alt_text": "비가 온 뒤 젖은 좁은 서울 골목 사진",
+      "sha256": "e6643e6a8f3190a50ba6f16125005e9d49d267a7e2972b024371a645192314af",
+      "source_image_preserved_at": "/Users/sungwoon/.codex/generated_images/019e35eb-df58-7de0-9431-684878ddb97f/ig_097403f6988f2906016a09c7213380819191405425d183f36d.png",
+      "prompt_summary": "Photorealistic narrow Seoul alley just after light rain, wet pavement and quiet storefronts."
+    }
+  ]
+}

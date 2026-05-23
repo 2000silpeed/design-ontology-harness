@@ -1,0 +1,29 @@
+{
+  "design_id": "signal-desk-landing-strong",
+  "score_scale": 10,
+  "metrics": {
+    "color_harmony": 8.8,
+    "spacing_consistency": 8.5,
+    "typography_balance": 8.4,
+    "composition_order": 8.6,
+    "hierarchy_clarity": 8.7,
+    "contrast_legibility": 8.5,
+    "content_density_control": 8.2,
+    "task_focus": 8.6,
+    "keyword_alignment": 8.7,
+    "tone_alignment": 8.4,
+    "domain_fit": 8.5,
+    "anti_keyword_avoidance": 8.8,
+    "desirability": 8.3,
+    "confidence_signal": 8.6,
+    "warmth_or_energy": 8.0,
+    "responsive_fit": 8.4,
+    "token_binding": 9.0,
+    "accessibility_baseline": 8.3,
+    "interaction_affordance": 8.5,
+    "asset_completeness": 8.2,
+    "distinctiveness": 8.0,
+    "reference_transformation": 8.5,
+    "memorability": 8.0
+  }
+}

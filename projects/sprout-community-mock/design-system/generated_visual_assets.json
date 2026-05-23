@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "project": "sprout-community-mock",
+  "brand": "새싹광장",
+  "generator": {
+    "id": "image-model:codex-imagegen",
+    "label": "Codex image_gen skill",
+    "runtime": "Codex built-in image_gen",
+    "api_fallback": "disabled",
+    "failure_policy": "no API fallback"
+  },
+  "source_session": {
+    "id": "019e1507-34d5-7792-a649-fce2980656b8",
+    "default_directory": "/Users/sungwoon/.codex/generated_images/019e1507-34d5-7792-a649-fce2980656b8",
+    "preserve_originals": true
+  },
+  "assets": [
+    {
+      "id": "visual-asset:hero-classroom-garden",
+      "label": "Hero classroom garden",
+      "slot": "hero-image",
+      "status": "integrated",
+      "asset_path": "assets/hero-classroom-garden.webp",
+      "original_png_path": "/Users/sungwoon/.codex/generated_images/019e1507-34d5-7792-a649-fce2980656b8/ig_0c0f52e562273d84016a01c813f87481919f7b84ded3476e2c.png",
+      "format": "webp",
+      "dimensions": {
+        "width": 1672,
+        "height": 941,
+        "aspect_ratio": "16:9"
+      },
+      "size_kb": 108,
+      "sha256": "adcdf29713285d46dbc1a15785fb793ed0cdb3ac309b869a6763dcde5ee415c4",
+      "intended_for": [
+        "component:welcome-band"
+      ],
+      "alt_text": "화분과 색연필, 공책이 놓인 밝은 교실 정원",
+      "prompt_summary": "Elementary school class community hero illustration with classroom garden, notebooks, sprouting plants, colored pencils, pastel mint/coral/sky/cream palette, quiet left-side text space."
+    },
+    {
+      "id": "visual-asset:science-ice-observation",
+      "label": "Science ice observation",
+      "slot": "feed-card-image",
+      "status": "integrated",
+      "asset_path": "assets/science-ice-observation.webp",
+      "original_png_path": "/Users/sungwoon/.codex/generated_images/019e1507-34d5-7792-a649-fce2980656b8/ig_0c0f52e562273d84016a01c853bc3c819197482b72c533f0c2.png",
+      "format": "webp",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086,
+        "aspect_ratio": "4:3"
+      },
+      "size_kb": 104,
+      "sha256": "d4c93d74efc3090e3ceeb61d70a93e86e0caa4652f784634377c17c7f1d86065",
+      "intended_for": [
+        "component:learning-card",
+        "component:feed-post-card"
+      ],
+      "alt_text": "얼음과 물방울을 관찰하는 과학 책상 그림",
+      "prompt_summary": "Cute educational feed-card illustration of ice and water observation on a tidy elementary science desk, pastel child-friendly style."
+    },
+    {
+      "id": "visual-asset:gallery-ocean-poster",
+      "label": "Clean ocean poster",
+      "slot": "gallery-artwork",
+      "status": "integrated",
+      "asset_path": "assets/gallery-ocean-poster.webp",
+      "original_png_path": "/Users/sungwoon/.codex/generated_images/019e1507-34d5-7792-a649-fce2980656b8/ig_0c0f52e562273d84016a01c89f2b5881918b45431c4abda7dc.png",
+      "format": "webp",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086,
+        "aspect_ratio": "4:3"
+      },
+      "size_kb": 236,
+      "sha256": "33674907ecb7878e06938065dc42b24ea38951a00371710da601f81dd9f2cf41",
+      "intended_for": [
+        "component:learning-card",
+        "component:art-card"
+      ],
+      "alt_text": "깨끗한 바다와 해변을 종이 오리기처럼 표현한 환경 포스터",
+      "prompt_summary": "Cheerful classroom-art environmental poster illustration with clean blue ocean path, paper collage texture, hopeful fresh palette."
+    },
+    {
+      "id": "visual-asset:gallery-sprout-map",
+      "label": "Neighborhood sprout map",
+      "slot": "gallery-artwork",
+      "status": "integrated",
+      "asset_path": "assets/gallery-sprout-map.webp",
+      "original_png_path": "/Users/sungwoon/.codex/generated_images/019e1507-34d5-7792-a649-fce2980656b8/ig_0c0f52e562273d84016a01c8e7dd2081919f17d5d538380646.png",
+      "format": "webp",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086,
+        "aspect_ratio": "4:3"
+      },
+      "size_kb": 260,
+      "sha256": "22d63ff84c130a62ed06057555cba01f8e1313572e8f39312a546596c1cef385",
+      "intended_for": [
+        "component:art-card"
+      ],
+      "alt_text": "학교와 텃밭을 새싹 표시로 꾸민 동네 지도 작품",
+      "prompt_summary": "Top-down neighborhood sprout map craft collage with school, garden paths, sprout markers, paper roads, colored pins, pastel child-friendly style."
+    },
+    {
+      "id": "visual-asset:gallery-kindness-card",
+      "label": "Kindness card artwork",
+      "slot": "gallery-artwork",
+      "status": "integrated",
+      "asset_path": "assets/gallery-kindness-card.webp",
+      "original_png_path": "/Users/sungwoon/.codex/generated_images/019e1507-34d5-7792-a649-fce2980656b8/ig_0c0f52e562273d84016a01c94919f88191a232662b0605ec72.png",
+      "format": "webp",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086,
+        "aspect_ratio": "4:3"
+      },
+      "size_kb": 144,
+      "sha256": "48ee7df28b088f9877a0f382270d2df257cde306ce7a9b0c397719f70fd9ae96",
+      "intended_for": [
+        "component:art-card"
+      ],
+      "alt_text": "하트와 잎사귀 장식이 있는 따뜻한 손글씨 카드 작품",
+      "prompt_summary": "Warm handmade kindness card illustration with pastel paper cards, hearts, leaf stickers, envelope, colored pencils, supportive elementary classroom mood."
+    }
+  ]
+}

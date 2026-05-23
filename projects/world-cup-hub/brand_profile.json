@@ -1,0 +1,313 @@
+{
+  "brand_name": "World Cup Hub",
+  "system_name": "World Cup Hub System",
+  "product_summary": "월드컵 일정, 경기 결과, 승부예측, 팬 의견을 한 화면에서 다루는 한국어 스포츠 데이터 커뮤니티",
+  "audiences": [
+    "한국 축구 팬 - 대표팀 경기 시간, 조별리그 흐름, 주요 경기 결과를 빠르게 확인하고 싶은 사용자",
+    "해외축구 팬 - 전 조의 일정과 순위를 비교하면서 빅매치와 이변 가능성을 보고 싶은 사용자",
+    "스포츠 콘텐츠 운영자 - 경기 전 예측과 경기 후 결과 요약, 팬 반응을 빠르게 정리해야 하는 사용자",
+    "친구 모임/커뮤니티 운영자 - 승부예측을 모아 보고 의견을 나누는 가벼운 토론 공간이 필요한 사용자"
+  ],
+  "brand_keywords": [
+    "world-cup",
+    "football",
+    "soccer",
+    "tournament",
+    "fixtures",
+    "match-results",
+    "prediction",
+    "fan-opinion",
+    "korean",
+    "live-operations",
+    "schedule",
+    "standings",
+    "bracket",
+    "data-rich",
+    "editorial",
+    "community",
+    "trustworthy",
+    "fast-scanning"
+  ],
+  "anti_keywords": [
+    "betting-first",
+    "gambling",
+    "casino",
+    "fantasy-only",
+    "generic-news-site",
+    "marketing-landing",
+    "decorative-cards",
+    "single-hue-blue",
+    "childish",
+    "black-box-ai",
+    "misinformation"
+  ],
+  "tone_of_voice": [
+    "clear",
+    "confident",
+    "fan-friendly",
+    "data-driven",
+    "balanced",
+    "conversational"
+  ],
+  "visual_keywords": [
+    "stadium floodlight contrast",
+    "broadcast scoreboard precision",
+    "tournament command center",
+    "green pitch signal accents",
+    "red knockout urgency",
+    "warm gold trophy highlight",
+    "dense but calm match table",
+    "editorial sports typography",
+    "community pulse without clutter"
+  ],
+  "interaction_keywords": [
+    "fast date filtering",
+    "group filter chips",
+    "timezone-aware kickoff",
+    "match detail drawer",
+    "prediction sliders",
+    "confidence badges",
+    "poll voting",
+    "result update states",
+    "comment composer",
+    "moderated discussion",
+    "save favorite team",
+    "shareable match card"
+  ],
+  "platforms": [
+    "web",
+    "mobile-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "keyboard-friendly filters and tabs",
+    "color-blind safe result and prediction states",
+    "Korean text legibility at dense table sizes"
+  ],
+  "product_primitives": [
+    "app shell",
+    "top navigation",
+    "tournament status strip",
+    "match schedule table",
+    "match card",
+    "date rail",
+    "group filter chip",
+    "team badge",
+    "kickoff time cell",
+    "venue label",
+    "result scoreline",
+    "standings table",
+    "bracket preview",
+    "prediction panel",
+    "probability bar",
+    "confidence badge",
+    "poll option",
+    "opinion composer",
+    "discussion thread",
+    "moderation badge",
+    "news note",
+    "favorite team selector",
+    "search field",
+    "empty state",
+    "status badge",
+    "toast",
+    "modal dialog",
+    "data source footnote"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "data table",
+      "sports",
+      "dashboard",
+      "community",
+      "poll",
+      "schedule"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "casino",
+      "betting",
+      "commerce-checkout",
+      "marketing-only"
+    ]
+  },
+  "seeds": [
+    {
+      "title": "FIFA World Cup 2026 match schedule",
+      "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums",
+      "kind": "reference-docs",
+      "notes": "Official tournament schedule, fixtures, venues and results page"
+    },
+    {
+      "title": "FIFA",
+      "url": "https://www.fifa.com",
+      "kind": "visual-reference",
+      "notes": "Official tournament visual language and sports event hierarchy"
+    },
+    {
+      "title": "Premier League",
+      "url": "https://www.premierleague.com",
+      "kind": "visual-reference",
+      "notes": "Dense fixtures, table, match center and club data presentation"
+    },
+    {
+      "title": "UEFA",
+      "url": "https://www.uefa.com",
+      "kind": "visual-reference",
+      "notes": "Tournament draw, fixtures and knockout communication"
+    },
+    {
+      "title": "BBC Sport Football",
+      "url": "https://www.bbc.com/sport/football",
+      "kind": "visual-reference",
+      "notes": "Editorial match-center scanning and live commentary patterns"
+    }
+  ],
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Deep Blues",
+      "Standard Greens",
+      "Deep Reds",
+      "Pantone Trend Yellows",
+      "Deep Neutrals"
+    ],
+    "palette_roles": {
+      "primary": "Classic Blue",
+      "accent": "Emerald Green",
+      "surface_tint": "Amber",
+      "danger": "Crimson",
+      "neutral_anchor": "Prussian Blue"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "balanced",
+      "contrast": "vivid",
+      "diversity": "balanced",
+      "surface_style": "grounded",
+      "prefer_moods": [
+        "스포츠",
+        "신뢰감",
+        "토너먼트",
+        "경기장",
+        "데이터",
+        "명료함",
+        "긴장감"
+      ],
+      "avoid_moods": [
+        "베팅",
+        "카지노",
+        "과한 네온",
+        "단색 파랑",
+        "장식적",
+        "유아적"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 12,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Classic Blue and Prussian Blue anchor the broadcast-grade data surface.",
+      "Emerald Green is reserved for pitch, active schedule, and positive probability signals.",
+      "Amber marks trophy, host, and attention states without turning the UI into a yellow theme.",
+      "Crimson is used for knockout urgency, live alerts, and negative result deltas."
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Space Grotesk",
+      "weights": [
+        500,
+        600,
+        700
+      ],
+      "notes": "경기명, 날짜, 그룹명, 예측 확률 같은 스포츠 데이터 헤더에 사용한다."
+    },
+    "body": {
+      "name": "Inter",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "일정표, 결과 테이블, 토론 피드의 작은 텍스트 판독성을 우선한다."
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "notes": "한국어 본문, 버튼, 의견 작성 UI의 기본 서체로 사용한다."
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "킥오프 시간, 경기 번호, 데이터 freshness, odds-free prediction metric에 제한적으로 사용한다."
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "sports match center dashboard fixtures table dark",
+      "football tournament schedule app standings prediction community",
+      "broadcast scoreboard sports data web interface"
+    ],
+    "sources": [],
+    "preferred_count": 12,
+    "weights": {
+      "layout": 0.35,
+      "component_shape": 0.25,
+      "color_balance": 0.2,
+      "typography_mood": 0.1,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "compact fixture rows",
+      "clear active date state",
+      "prediction state separated from betting language",
+      "community input with moderation affordance"
+    ],
+    "avoid_patterns": [
+      "casino odds boards",
+      "single giant hero section",
+      "decorative card stack",
+      "unreadable tiny flags"
+    ],
+    "notes": [
+      "이 프로젝트는 디자인 하네스 산출물을 기준으로 실제 정적 MVP를 별도 구현한다.",
+      "초기 구현은 live API가 아닌 정적 seed data를 사용하고, data source footnote를 노출한다."
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "필요하면 추후 스포츠 대시보드 레퍼런스를 수동 저장해 visual_reference.sources에 고정한다."
+      ]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "design_id": "signal-desk-landing-weak",
+  "score_scale": 10,
+  "metrics": {
+    "color_harmony": 7.8,
+    "spacing_consistency": 7.4,
+    "typography_balance": 7.2,
+    "composition_order": 7.0,
+    "hierarchy_clarity": 4.0,
+    "contrast_legibility": 6.0,
+    "content_density_control": 4.8,
+    "task_focus": 4.2,
+    "keyword_alignment": 6.8,
+    "tone_alignment": 7.0,
+    "domain_fit": 5.0,
+    "anti_keyword_avoidance": 6.0,
+    "desirability": 6.2,
+    "confidence_signal": 5.4,
+    "warmth_or_energy": 6.5,
+    "responsive_fit": 7.0,
+    "token_binding": 8.0,
+    "accessibility_baseline": 6.4,
+    "interaction_affordance": 5.8,
+    "asset_completeness": 4.6,
+    "distinctiveness": 5.2,
+    "reference_transformation": 7.0,
+    "memorability": 5.0
+  }
+}

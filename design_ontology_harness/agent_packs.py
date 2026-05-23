@@ -3,6 +3,20 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from .graph_builders import (
+    FREE_SOURCED_VISUAL_PROVIDER_RULES,
+    LICENSED_VISUAL_PROVIDER_RULES,
+    REFERENCE_ONLY_PROVIDER_RULES,
+    SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH,
+    SOURCED_VISUAL_ASSET_FALLBACK_POLICY,
+    SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+    VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
+    VISUAL_ASSET_MANIFEST_PATH,
+    VISUAL_ASSET_MANIFEST_REQUIRED_FIELDS,
+    VISUAL_ASSET_MANIFEST_SCHEMA,
+    VISUAL_ASSET_PROMPT_PACK_PATH,
+    VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+)
 from .utils import ensure_dir
 
 
@@ -136,13 +150,16 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
         "interface": {
             "displayName": "Design System Harness",
             "shortDescription": "Apply design-system artifacts inside a real implementation repo",
-            "longDescription": "Provides Codex skills for reading design-system artifacts, implementing tokens/components, and creating brand-aligned generated imagery with imagine2 when image generation is available.",
+            "longDescription": "Provides Codex skills for reading design-system artifacts, implementing tokens/components, creating brand-aligned generated imagery with the built-in Codex image_gen skill, and using license-verified sourced visual fallback when generation is unavailable or real-world photography is more appropriate. API and CLI image fallbacks are disabled.",
             "developerName": "Design Ontology Harness",
             "category": "Coding",
             "capabilities": ["Interactive", "Write"],
             "defaultPrompt": [
                 "Implement UI changes using the local design-system artifacts and component inventory",
-                "When a screen needs professional imagery, use the visual asset skill to generate brand-aligned images",
+                "Ship normal light mode and dark mode together unless a single mode is explicitly requested",
+                "When a screen needs professional imagery, use Codex image_gen first; if unavailable, use license-verified sourced visual fallback without API fallback",
+                "Treat favicon, app-shell mark, and web manifest icon as required brand-specific identity assets",
+                "For dashboards, tools, sports/data, and community products, lead with operational product surfaces instead of pitch-deck heroes or homogeneous card walls",
             ],
             "screenshots": [],
             "brandColor": "#6B7B8D",
@@ -258,6 +275,67 @@ If `system_spec.md` or `token_schema.json` contains typography `script_guardrail
 """
 
 
+def _responsive_resilience_guidance() -> str:
+    return """
+## Responsive resilience
+
+Treat mobile fit as a contract, not a final polish pass.
+
+- Verify changed screens at 320, 360, 390, 430, 768, and desktop widths.
+- A screen is not complete if `document.documentElement.scrollWidth > window.innerWidth`.
+- Buttons, CTAs, tabs, chips, and toolbar actions must keep `max-inline-size: 100%`; controls inside flex/grid parents need `min-inline-size: 0`.
+- Avoid fixed `width` / `min-width` px values on button-like controls. If a large CTA width is intentional, add a <=480px wrap or stack fallback.
+- Action rows must use `flex-wrap: wrap` or switch to a vertical stack on narrow viewports.
+- Do not use `width: 100vw` inside padded containers, and do not hide `overflow-x` on `body` as the fix for an overflowing control.
+- Test Korean CTA labels with realistic copy; prefer wrapping or stacking over clipping and `white-space: nowrap`.
+"""
+
+
+def _color_mode_parity_guidance() -> str:
+    return """
+## Color mode parity
+
+Normal light mode and dark mode travel together unless the user explicitly asks for a single-mode artifact.
+
+- Use light mode as the default `:root` or app-default token set.
+- Add dark mode as an override such as `[data-theme="dark"]`, a theme provider, or equivalent framework mode.
+- Components consume the same semantic variables in both modes; only token values change.
+- Do not ship dark-only dashboards, tools, landing pages, or prototypes.
+- Verify both modes with screenshots or DOM checks when the implementation has a visible UI shell.
+"""
+
+
+def _commercial_product_realism_guidance() -> str:
+    return """
+## Commercial product realism
+
+For dashboards, tools, sports/data products, and community products, the first viewport should feel like an operated product, not a pitch deck.
+
+- Lead with the active task surface: status strip, filters/date rail, table/list rows, next item, source/update label, or primary workflow.
+- Do not open product UIs with an oversized marketing hero, generic slogan, and equally weighted feature cards unless the user explicitly asks for a landing page.
+- Avoid homogeneous card walls. Promote one primary workflow module, compress secondary information into rows/tables/rails, and vary density only when the information architecture justifies it.
+- Exact numbers, predictions, rankings, poll counts, odds, or operational claims need source/update context or a visible sample/demo label.
+- Generated or decorative imagery must support the domain object, venue, person, product, or state; it must not outrank data, navigation, controls, or the first operational surface.
+- Include realistic state texture: live/final/upcoming/delayed/empty/error/source-updated as appropriate for the domain.
+"""
+
+
+def _emoji_to_svg_refactor_guidance() -> str:
+    return """
+## Emoji-to-SVG refactor
+
+When refactoring existing UI, do not merely report emoji UI affordances. Replace them.
+
+- Scan buttons, cards, badges, tabs, nav items, status indicators, empty states, toasts, and banners for emoji-looking icons or visual markers.
+- Prefer the project's existing icon library when it is already installed and visually compatible.
+- Reuse existing local SVG/icon components when available.
+- If no suitable icon exists, create a simple local SVG file or SVG component in the nearest existing icons/assets directory.
+- Bind SVG stroke/fill to `currentColor` or design tokens, not hard-coded colors.
+- Decorative icons use `aria-hidden="true"`; semantic icons need an accessible label or adjacent visible text.
+- Do not replace user-generated emoji content, chat text, blog body, or emoji-picker data.
+"""
+
+
 def _claude_architect_skill(artifact_dir: str) -> str:
     return f"""---
 name: design-system-architect
@@ -288,6 +366,8 @@ When this skill is active:
 9. Prefer incremental rollout plans over full-shell rewrites.
 10. If `token_schema.json` contains a curated color reference or palette roles, treat that as the starting point for semantic color decisions.
 11. If typography artifacts include script guardrails, account for their line-break and type-scale rules before proposing hero or landing compositions.
+12. Treat responsive resilience as a planning constraint: buttons and action groups need a mobile wrap/stack strategy before implementation begins.
+13. For dashboard/tool/data/community products, plan the first viewport around the operational task surface before considering hero imagery or feature cards.
 
 If any artifact file is missing, say exactly which file is missing and recommend syncing artifacts from the harness repo before implementation.
 """
@@ -322,12 +402,14 @@ Implementation rules:
 - Reuse or extend primitives before adding net-new components.
 - Preserve existing features, navigation entry points, and data flows unless removal is explicitly requested.
 - Keep supported themes, breakpoints, and critical interaction states working while refactoring.
-- Prefer semantic tokens over one-off hardcoded colors so theme support survives future changes.
+- Use semantic tokens only; raw color values belong in `{artifact_dir}` token artifacts, not implementation files.
+- Always include both normal light mode and dark mode unless the task explicitly asks for one mode only.
 - Default to the smallest viable surface refactor; do not rewrite the whole shell unless the task explicitly calls for it.
 - If `token_schema.json` includes a curated color reference or palette roles, align color decisions to that input before inventing a new palette.
 - Visual references are morphology inputs only. Do not absorb reference palettes, type scales, navigation labels, domain IA, or product copy.
 - Token binding is necessary but not sufficient: never recombine `--ds-*` roles into a new reference-like palette.
 - If user/reviewer feedback exposes a repeatable failure pattern, promote it into governance docs or lint rules before calling the screen complete.
+- For dashboards, tools, sports/data products, and community products, lead with operational substance instead of pitch-deck hero composition.
 - Update nearby documentation or tests when implementation meaningfully changes.
 - NEVER change layout properties (display, flex-direction, grid-template, position, width, height).
 - NEVER change font-size or line-height to "fit the token scale." Existing sizes are tuned to the layout. Only replace when the token resolves to the exact same px. If no match, keep original + TODO.
@@ -337,6 +419,14 @@ Implementation rules:
 - **NEVER use bare library components (e.g., default `<Button>` from a UI lib) without binding design tokens.** Every component must have its colors, spacing, radius, and typography wired to the token system. If you import from a library, wrap it and override styles with CSS variables from the token schema.
 
 {_script_aware_typography_guidance()}
+
+{_color_mode_parity_guidance()}
+
+{_commercial_product_realism_guidance()}
+
+{_responsive_resilience_guidance()}
+
+{_emoji_to_svg_refactor_guidance()}
 
 When finishing:
 
@@ -375,6 +465,8 @@ Always:
 8. Recommend incremental rollout steps before proposing a shell-level rewrite.
 9. If the token schema includes curated palette roles, use those roles as the default color direction in the plan.
 10. If typography script guardrails exist, reflect them in line length, headline scale, and Korean copy layout decisions.
+11. Include the mobile overflow prevention strategy for button/action groups when planning responsive screens.
+12. For dashboard/tool/data/community products, make the first viewport task-led and provenance-aware, not a marketing hero plus card wall.
 
 You are primarily a planning and alignment agent, not an implementation agent.
 """
@@ -405,15 +497,21 @@ Implementation rules:
 - Use the token schema to name and organize variables or theme values.
 - Use the component inventory to decide whether to create, extend, or defer a component.
 - Preserve existing feature surfaces and task-completion paths unless the user explicitly wants a structural redesign.
-- Maintain supported themes and responsive layouts; avoid introducing hardcoded colors that only work in one mode.
+- Maintain supported themes and responsive layouts; do not introduce hardcoded color values in implementation files.
 - Prefer local, reversible refactors over all-at-once shell rewrites.
 - If token_schema includes curated palette roles or selected reference colors, preserve that color direction while implementing.
 - If the request falls outside the current system artifacts, state the gap clearly instead of inventing an ungrounded pattern.
+- Treat favicon, app-shell mark, and web manifest icon as required brand-specific identity assets, not generic initials tiles.
+- For dashboards, tools, sports/data products, and community products, lead with operational product state, filters, tables/lists, and provenance before decorative imagery.
 - NEVER change layout properties, element sizes, or text-flow properties (font-size, line-height, white-space, word-break) unless explicitly requested.
 - NEVER change font-size to match a token scale — existing sizes are already tuned to the layout. Only replace when the token is the exact same px value. "Fitting the scale" is a design change, not a refactor.
 - When replacing spacing/sizing values with tokens, only use exact matches — never round to the nearest token value.
 
 {_script_aware_typography_guidance()}
+
+{_commercial_product_realism_guidance()}
+
+{_responsive_resilience_guidance()}
 """
 
 
@@ -476,14 +574,28 @@ AI가 생성한 UI 코드나 급하게 만든 프로토타입을, 디자인 시�
 - 안티 키워드에 해당하는 시각적 패턴 (예: "noisy" 안티키워드인데 과한 그림자/애니메이션)
 - 브랜드 키워드와 충돌하는 인터랙션 (예: "calm"인데 bounce 애니메이션)
 
+**이모지 UI 위반**
+- 버튼, 카드, 배지, 탭, 네비게이션, 상태 표시, empty state에 이모지가 아이콘처럼 쓰임
+- 이모지를 그대로 두거나 텍스트 glyph로 스타일링하는 임시 처리
+
+**상용 제품 리얼리즘 위반**
+- 대시보드/도구/데이터 제품이 실제 작업 표면보다 큰 히어로, 슬로건, 균일한 카드벽으로 시작함
+- 정확한 수치, 예측, 순위, 운영 상태가 출처/업데이트 시각/샘플 라벨 없이 확정 데이터처럼 보임
+- 생성 이미지가 표, 필터, 상태, 내비게이션보다 더 큰 비중을 차지함
+
+{_emoji_to_svg_refactor_guidance()}
+
+{_commercial_product_realism_guidance()}
+
 ### Phase 3: 리팩토링 실행
 
 탐지된 문제를 **우선순위 순서**로 수정합니다:
 
 1. **접근성 위반** (가장 먼저 — 법적/윤리적 요구사항)
-2. **토큰 하드코딩** (시스템의 기반)
-3. **컴포넌트 구조** (누락된 상태/파트 추가)
-4. **브랜드 정합성** (시각적 미세 조정)
+2. **이모지 UI 교체** (버튼/카드/상태 아이콘을 SVG 파일·컴포넌트 또는 아이콘 라이브러리로 교체)
+3. **토큰 하드코딩** (시스템의 기반)
+4. **컴포넌트 구조** (누락된 상태/파트 추가)
+5. **브랜드 정합성** (시각적 미세 조정)
 
 각 수정은:
 - 한 파일씩 순차적으로 처리
@@ -684,7 +796,10 @@ These artifacts are your source of truth. If any core file is missing, report wh
 2. **Hardcoded tokens**: colors (#hex, rgb, tailwind color classes), spacing (px values not on scale), font sizes, border-radius, shadows → replace with semantic tokens
 3. **Missing component states**: components that lack states defined in the spec (disabled, loading, error, hover, focus)
 4. **Missing anatomy parts**: components missing required parts from the spec (e.g., button without loading spinner slot)
-5. **Brand misalignment**: visual patterns that conflict with brand keywords or match anti-keywords
+5. **Emoji UI affordances**: emoji glyphs used as button/card/badge/status/nav icons → replace with SVG files/components or an approved icon library
+6. **Brand misalignment**: visual patterns that conflict with brand keywords or match anti-keywords
+
+{_emoji_to_svg_refactor_guidance()}
 
 ## Rules
 
@@ -823,6 +938,10 @@ system_spec.md의 Typography System에서:
 
 {_script_aware_typography_guidance()}
 
+{_commercial_product_realism_guidance()}
+
+{_responsive_resilience_guidance()}
+
 #### 3-3. 여백과 리듬
 
 spacing scale을 활용해 시각적 리듬을 만듭니다:
@@ -843,7 +962,7 @@ spacing scale을 활용해 시각적 리듬을 만듭니다:
 
 화면 유형별 레이아웃 패턴:
 ```
-대시보드:    상단 히어로/요약 → 통계 카드 그리드 → 데이터 테이블
+대시보드:    운영 헤더/상태 스트립 → 필터/날짜 레일 → 핵심 표·리스트 → 보조 요약 카드
 목록/피드:   상단 필터/검색 → 반복 카드/행 → 페이지네이션
 상세 페이지:  헤더(제목+메타) → 메인 콘텐츠 → 사이드 정보 → 관련 항목
 설정:       좌측 메뉴 → 우측 폼 섹션
@@ -954,8 +1073,13 @@ Refactoring: `color: #3b82f6` → `color: var(--accent)` (same layout, different
 - Components follow the spec — all anatomy parts, all states, all accessibility attributes
 - Anti-keywords are hard constraints — if "cluttered" is anti, ensure generous whitespace
 - Brand keywords drive visual decisions — "bold" means strong contrast, "calm" means subtle transitions
+- Commercial product realism matters — operational product screens lead with real workflow state, filters, data rows, and provenance before hero imagery or feature-card grids
 
 {_script_aware_typography_guidance()}
+
+{_commercial_product_realism_guidance()}
+
+{_responsive_resilience_guidance()}
 
 ## What to preserve from existing code
 
@@ -1005,6 +1129,10 @@ Read these files first when they exist:
 6. Produce a concise, incremental implementation plan the coding agent can follow.
 7. Use curated palette roles from the token schema as the default color direction when available.
 8. If typography script guardrails exist, incorporate them into headline scale, measure, and Korean copy wrapping decisions up front.
+9. Plan button/action-group mobile behavior up front: wrap, stack, or prove it fits at 320px without horizontal scroll.
+10. Plan light/default and dark mode token coverage up front; light is the default mode.
+11. Treat the app icon as a required brand identity asset, not a generic initials tile.
+12. For dashboard/tool/data/community products, plan the first viewport around operational state, filters, data rows, and provenance before hero imagery.
 """
 
 
@@ -1036,17 +1164,29 @@ Read these files first when they exist:
 4. Reuse or extend primitives before adding net-new components.
 5. Preserve existing features, entry points, and task flows unless removal is explicitly requested.
 6. Keep supported themes and responsive layouts working during refactors.
-7. Use semantic tokens before introducing hardcoded surface or text colors.
+7. Use semantic tokens only; keep raw surface or text color values in design-system artifacts.
 8. Update nearby documentation or tests when behavior or structure changes.
 9. Respect curated palette roles and reference colors recorded in the token schema when choosing UI colors.
 10. Visual references are morphology inputs only; do not absorb reference palettes, type scales, navigation labels, domain IA, or product copy.
 11. Token binding is necessary but not sufficient: never recombine `--ds-*` roles into a new reference-like palette.
 12. Promote repeatable user/reviewer feedback into governance docs or lint rules before calling a screen complete.
-13. **NEVER use emojis as UI icons, state indicators, or button decorations** (no 🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊). Always implement SVG icon components or import from Lucide / Heroicons / Phosphor / Tabler. Emojis only belong in user-generated content, never in system UI.
-14. **NEVER leave half-finished components** ("TODO", "placeholder", "temp"). Read `{artifact_dir}/components/component_specs.md` and implement the full anatomy, states, and token bindings.
-15. **NEVER use bare library components without token binding.** If you import from a UI library, wrap it and override colors, spacing, radius, and typography using tokens from the schema.
+13. **ALWAYS ship normal light mode and dark mode together** unless the user explicitly asks for one mode only. Light mode is the default token set; dark mode is an override.
+14. **NEVER use emojis as UI icons, state indicators, or button decorations** (no 🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊). Always implement SVG icon components or import from Lucide / Heroicons / Phosphor / Tabler. Emojis only belong in user-generated content, never in system UI.
+15. **NEVER leave half-finished components** ("TODO", "placeholder", "temp"). Read `{artifact_dir}/components/component_specs.md` and implement the full anatomy, states, and token bindings.
+16. **NEVER use bare library components without token binding.** If you import from a UI library, wrap it and override colors, spacing, radius, and typography using tokens from the schema.
+17. **NEVER ship generic initials tiles as final app icons.** Favicon, app-shell marks, and web manifests need brand-specific SVG identity assets.
+18. **NEVER let dashboard/tool/data/community products open like pitch decks** unless the user explicitly asks for a landing page. Lead with operational state, filters, tables/lists, and source/update context.
+19. **NEVER treat image-free commercial mockups as complete** when the product, place, object, article, game, venue, or content model naturally needs visual assets. Use generated, sourced, user-provided, or deterministic identity imagery with manifest records.
 
 {_script_aware_typography_guidance()}
+
+{_color_mode_parity_guidance()}
+
+{_commercial_product_realism_guidance()}
+
+{_responsive_resilience_guidance()}
+
+{_emoji_to_svg_refactor_guidance()}
 
 ## Output Expectations
 
@@ -1057,14 +1197,31 @@ Read these files first when they exist:
 
 
 def _codex_visual_asset_skill(artifact_dir: str) -> str:
+    compatible_manifest_paths = "\n".join(
+        f"   - `{path}`" for path in VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS
+    )
+    manifest_fields = "\n".join(
+        f"   - `{field}`" for field in VISUAL_ASSET_MANIFEST_REQUIRED_FIELDS
+    )
+    asset_record_fields = "\n".join(
+        f"   - `{field}`" for field in VISUAL_ASSET_RECORD_REQUIRED_FIELDS
+    )
+    sourced_asset_record_fields = "\n".join(
+        f"   - `{field}`" for field in SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS
+    )
+    free_provider_list = ", ".join(f"`{provider['label']}`" for provider in FREE_SOURCED_VISUAL_PROVIDER_RULES)
+    licensed_provider_list = ", ".join(f"`{provider['label']}`" for provider in LICENSED_VISUAL_PROVIDER_RULES)
+    reference_only_provider_list = ", ".join(f"`{provider['label']}`" for provider in REFERENCE_ONLY_PROVIDER_RULES)
     return f"""---
 name: design-system-visual-assets
-description: Generate and integrate professional brand-aligned imagery for Codex implementations. Use when a screen, landing page, empty state, editorial hero, or product section needs raster imagery that matches the local design-system artifacts.
+description: Generate or source professional brand-aligned imagery for Codex implementations. Use when a screen, landing page, empty state, editorial hero, or product section needs raster imagery that matches the local design-system artifacts.
 ---
 
 # Design System Visual Assets
 
-Use this skill when the implementation would look more professional with generated raster imagery instead of flat placeholder blocks, generic gradients, emoji, or stock-like decoration.
+Use this skill when the implementation would look more professional with generated or sourced raster imagery instead of flat placeholder blocks, generic gradients, emoji, or stock-like decoration.
+
+For website, app, landing, product, editorial, portfolio, venue, sports, game, commerce, or content-led mockups, treat relevant visual assets as part of completeness. Image-free card walls, gradient media blocks, empty framed placeholders, and purely atmospheric panels should be replaced with concrete product/place/object/state/content imagery unless the user explicitly requests a text-only wireframe.
 
 ## Required Inputs
 
@@ -1087,38 +1244,96 @@ Generate imagery for:
 - product, venue, object, or media cards that benefit from real visual substance
 - empty states, onboarding panels, or feature sections where illustration clarifies the product
 - case-study or article covers where the system spec calls for editorial treatment
+- sports, travel, food, real-estate, portfolio, game, commerce, and brand/product mockups where visual subject matter makes the screen feel complete
 
 Do not generate imagery for:
 
 - icons, logos, button glyphs, tabs, toggles, or status markers
+- app icons, favicons, or app-shell brand marks; these are deterministic brand identity assets, not generated raster imagery
 - components that should be built with CSS, SVG primitives, or an icon library
+- dashboard/tool/data-product first viewports where users need tables, schedules, filters, live state, or provenance before decorative visuals
 - copyrighted characters, real brands, real people, or identifiable private locations unless the user explicitly provided licensed source material
 - purely atmospheric blurred backgrounds that do not reveal the product, state, place, or object
 
-## imagine2 Workflow
+## Acquisition Order
 
-When Codex exposes image-generation tooling or a model selector:
+1. Prefer Codex built-in `image_gen` when a brand-specific synthetic image is appropriate.
+2. Use sourced visual fallback when `image_gen` is unavailable, fails, or the screen needs real-world photographic evidence more than generated imagery.
+3. Use user-supplied licensed imagery when provided and relevant.
+4. Use deterministic SVG identity assets for app icons, logos, flags, diagrams, and UI glyphs.
+5. If no image path can meet the manifest and license contract, leave a prompt/candidate pack and report why imagery was not integrated; do not silently ship an image-free mockup.
 
-1. Select `imagine2`.
-2. Generate 2-4 candidates for each major image slot.
+Never switch to CLI, SDK runner, or OpenAI image API fallback unless the user explicitly asks for that different path.
+
+## Codex Imagegen Workflow
+
+When Codex exposes the built-in `image_gen` tool through the installed imagegen skill:
+
+1. Use the built-in `image_gen` path. Do not invoke CLI mode, SDK runners, or OpenAI API fallback.
+2. Generate 2-4 candidates for each major image slot with one built-in call per candidate or variant.
 3. Base prompts on the artifact files, not on generic style words.
 4. Include concrete subject matter, composition, camera/illustration treatment, palette constraints, density, material language, and anti-keywords.
 5. Prefer usable aspect ratios:
    - hero: `16:9`, `3:2`, or wide responsive crop
    - card thumbnail: `4:3` or `1:1`
    - editorial cover: `4:5` or `3:4`
-6. Save accepted assets under `public/generated/design-system/` when the app has a `public/` directory; otherwise use the closest existing static asset directory.
-7. Write or update `public/generated/design-system/manifest.json` with:
-   - filename
-   - model: `imagine2`
-   - prompt
-   - intended_slot
-   - source_artifacts
-   - created_at
-   - alt_text
-   - review_notes
+6. Copy accepted project-bound assets into the workspace before code references them. Preserve the original `$CODEX_HOME/generated_images/<session-id>/...` PNG path in the manifest when available, but never make runtime code depend on that agent-local path.
+7. Write or update the visual asset manifest using schema `{VISUAL_ASSET_MANIFEST_SCHEMA}`.
 
-If image-generation tooling is unavailable, do not pretend an image was generated. Instead, create a ready-to-run prompt pack at `public/generated/design-system/imagine2-prompts.md` or the nearest existing docs/assets directory.
+Preferred manifest path:
+
+- `{VISUAL_ASSET_MANIFEST_PATH}`
+
+Compatible manifest paths:
+
+{compatible_manifest_paths}
+
+Required top-level manifest fields:
+
+{manifest_fields}
+
+Required asset record fields:
+
+{asset_record_fields}
+
+If the built-in imagegen path is unavailable or fails, do not pretend an image was generated and do not call an API fallback. Move to the sourced visual fallback below, or create a ready-to-run prompt pack at `{VISUAL_ASSET_PROMPT_PACK_PATH}` or the nearest existing docs/assets directory, then report that generation was skipped.
+
+## Sourced Visual Fallback
+
+Use this fallback for free/rights-clear visual search, not for another image generation provider.
+
+Provider tiers:
+
+- Free sourced providers: {free_provider_list}
+- Licensed providers: {licensed_provider_list}
+- Reference-only providers: {reference_only_provider_list}
+
+Tier rules:
+
+- Free sourced provider images can become runtime assets only when per-asset license metadata is recorded.
+- Licensed provider images can become runtime assets only when user-supplied purchase/license proof, usage scope, and licensed-to metadata are recorded.
+- Reference-only provider images are for morphology, density, hierarchy, and flow research only. Do not copy them into runtime assets.
+
+Selection rules:
+
+1. Search for 3-8 candidates that match the product domain, subject, crop, and visual role.
+2. Reject any candidate without source URL, download URL, provider, author/creator, license label, and attribution requirement.
+3. Reject paid-provider results unless the user supplied license proof or the asset is already licensed for this project.
+4. Reject reference-only results as runtime assets; summarize their morphology only.
+5. Reject results with unclear rights, recognizable private people, copyrighted characters, third-party logos, or brand endorsement risk unless the user supplied permission.
+6. Copy the accepted asset into the workspace before implementation references it. Do not hotlink remote search/CDN URLs.
+7. Record source metadata in `{VISUAL_ASSET_MANIFEST_PATH}` with acquisition mode `sourced`.
+8. Optionally keep reviewed-but-not-used candidates in `{SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH}`.
+
+Sourced fallback policy:
+
+- `{SOURCED_VISUAL_ASSET_FALLBACK_POLICY}`
+
+Required sourced asset record fields:
+
+{sourced_asset_record_fields}
+
+Sourced visual assets are still not valid replacements for icons, logos, app icons, favicons, button glyphs, status markers, or flags unless the exact asset license and identity use are explicitly approved.
 
 ## Prompt Recipe
 
@@ -1141,21 +1356,26 @@ For Korean-first products, include Hangul-safe composition constraints:
 - Provide meaningful `alt` text for content images; use empty alt only for truly decorative images.
 - Use CSS/object-fit and art direction so the important subject remains visible on mobile and desktop.
 - Do not let images replace accessible text, data, controls, or navigation.
+- Do not let images outrank the operational product surface in dashboards, tools, sports/data products, or community products.
 - Keep palette and crop behavior aligned with tokens and responsive breakpoints.
+- Keep generated and sourced assets in the same manifest, but distinguish them with `acquisition_mode`.
+- For sourced assets, include visible or documented attribution whenever `attribution_required` is true.
+- Every integrated raster image needs a manifest record before runtime code references it.
+- Define stable aspect ratios, object-fit/object-position, and mobile crop behavior so imagery does not obscure Korean text or controls.
 - Verify desktop and mobile screenshots after integration; check that images render, crop cleanly, and do not obscure text.
 
 ## Output Expectations
 
-- List the generated assets and their intended slots.
-- Mention the `imagine2` prompt basis: which artifacts and brand signals were used.
-- Mention any manual review needed for licensing, realism, or content fit.
+- List generated and/or sourced assets and their intended slots.
+- Mention the Codex `image_gen` prompt basis or the sourced visual query/provider basis.
+- Mention any manual review needed for licensing, attribution, realism, or content fit.
 """
 
 
 def _codex_plugin_openai_yaml() -> str:
     return """display_name: Design System Harness
 short_description: Apply local design-system artifacts and brand imagery inside implementation repos
-default_prompt: Implement UI changes using the design-system artifacts in this repository; use imagine2-backed visual assets when the screen needs professional imagery
+default_prompt: Implement UI changes using the design-system artifacts in this repository; lead dashboard/tool/data products with operational surfaces; use Codex image_gen first for professional imagery, then license-verified sourced visual fallback when needed, without API fallback
 """
 
 

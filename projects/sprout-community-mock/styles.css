@@ -476,22 +476,33 @@ svg {
 }
 
 .welcome-band {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 34%);
-  gap: 18px;
-  align-items: center;
+  position: relative;
+  display: block;
   min-height: 172px;
   margin-bottom: 18px;
   overflow: hidden;
   border: 1px solid rgba(32, 68, 58, 0.16);
   border-radius: var(--radius-md);
-  background:
-    linear-gradient(90deg, rgba(152, 255, 152, 0.42), rgba(255, 218, 185, 0.58)),
-    var(--color-canvas-warm);
+  background: var(--color-canvas-warm);
+}
+
+.welcome-band::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 248, 220, 0.96) 0%,
+    rgba(255, 248, 220, 0.84) 46%,
+    rgba(255, 248, 220, 0.2) 78%
+  );
+  content: "";
 }
 
 .welcome-copy {
+  position: relative;
+  z-index: 1;
   min-width: 0;
+  max-width: min(610px, 58%);
   padding: 24px;
 }
 
@@ -513,9 +524,11 @@ svg {
 }
 
 .welcome-art {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 160px;
-  padding-inline-end: 12px;
+  height: 100%;
+  object-fit: cover;
 }
 
 .home-layout {
@@ -690,10 +703,12 @@ svg {
   background: var(--color-surface-sky);
 }
 
-.learning-card svg {
+.learning-card img {
   display: block;
   width: 100%;
+  aspect-ratio: 4 / 3;
   height: auto;
+  object-fit: cover;
 }
 
 .reaction-row {
@@ -975,29 +990,19 @@ svg {
 }
 
 .art-thumb {
-  min-height: 170px;
+  margin: 0;
+  overflow: hidden;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
+  background: var(--color-surface-sky);
 }
 
-.poster-a {
-  background:
-    linear-gradient(135deg, transparent 0 42%, rgba(255, 255, 255, 0.68) 42% 54%, transparent 54%),
-    linear-gradient(180deg, #cdefff, #69bfe3);
-}
-
-.poster-b {
-  background:
-    linear-gradient(90deg, rgba(32, 68, 58, 0.1) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(32, 68, 58, 0.1) 1px, transparent 1px),
-    linear-gradient(180deg, #eaffed, #fff8dc);
-  background-size: 28px 28px, 28px 28px, auto;
-}
-
-.poster-c {
-  background:
-    linear-gradient(90deg, #f88379 0 18%, transparent 18%),
-    linear-gradient(180deg, #fff0e7, #ded7ff);
+.art-thumb img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  object-fit: cover;
 }
 
 .safety-card {
@@ -1084,13 +1089,24 @@ svg {
   }
 
   .welcome-band {
-    grid-template-columns: 1fr;
+    min-height: 250px;
   }
 
   .welcome-art {
-    max-width: 360px;
-    margin-inline: auto;
-    padding: 0 12px 12px;
+    object-position: 60% center;
+  }
+
+  .welcome-band::after {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 248, 220, 0.96) 0%,
+      rgba(255, 248, 220, 0.78) 56%,
+      rgba(255, 248, 220, 0.32) 100%
+    );
+  }
+
+  .welcome-copy {
+    max-width: 100%;
   }
 
   .club-grid,

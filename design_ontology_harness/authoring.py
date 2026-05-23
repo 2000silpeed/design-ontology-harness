@@ -5,7 +5,20 @@ from pathlib import Path
 from .advanced_components import catalog_entries, get_advanced_component, recommend_advanced_components
 from .models import DocumentRecord, ReferenceLink
 from .utils import ensure_dir, write_json
-from .graph_builders import build_full_ontology_graph
+from .graph_builders import (
+    SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH,
+    SOURCED_VISUAL_ASSET_CONTRACT_ID,
+    SOURCED_VISUAL_ASSET_FALLBACK_POLICY,
+    SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+    VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
+    VISUAL_ASSET_CONTRACT_ID,
+    VISUAL_ASSET_MANIFEST_PATH,
+    VISUAL_ASSET_MANIFEST_REQUIRED_FIELDS,
+    VISUAL_ASSET_MANIFEST_SCHEMA,
+    VISUAL_ASSET_PROMPT_PACK_PATH,
+    VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+    build_full_ontology_graph,
+)
 from .graph_spec_sections import build_graph_spec_sections
 
 REQUIRED_PROFILE_KEYS = {
@@ -67,8 +80,13 @@ ONTOLOGY_RELATIONS = [
     {"id": "applies_to", "from": "AccessibilityRule", "to": "ComponentFamily"},
     {"id": "inspired_by", "from": "Brand", "to": "SourceReference"},
     {"id": "generated_with", "from": "GeneratedVisualAsset", "to": "ImageGenerationModel"},
+    {"id": "sourced_from", "from": "SourcedVisualAsset", "to": "FreeSourcedVisualProvider"},
+    {"id": "sourced_from", "from": "SourcedVisualAsset", "to": "LicensedVisualProvider"},
+    {"id": "licensed_under", "from": "SourcedVisualAsset", "to": "LicensePolicy"},
     {"id": "grounded_in", "from": "GeneratedVisualAsset", "to": "Brand"},
+    {"id": "grounded_in", "from": "SourcedVisualAsset", "to": "Brand"},
     {"id": "intended_for", "from": "GeneratedVisualAsset", "to": "Component"},
+    {"id": "intended_for", "from": "SourcedVisualAsset", "to": "Component"},
     {"id": "enforces", "from": "GovernanceRule", "to": "TokenCategory"},
     {"id": "prevents", "from": "GovernanceRule", "to": "ImplementationFailurePattern"},
 ]
@@ -216,6 +234,7 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
     color_reference = brand_profile.get("_resolved_color_reference")
     font_system = brand_profile.get("_resolved_font_system")
     visual_reference = brand_profile.get("_resolved_visual_reference")
+    responsive_policy = (blueprint.get("governance") or {}).get("responsive_resilience_policy") or {}
 
     schema = {
         "naming": {
@@ -256,6 +275,23 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
             "spacing": {
                 "scale": [0, 2, 4, 8, 12, 16, 24, 32, 48, 64, 96],
                 "density_modes": ["comfortable", "compact"] if calm_system else ["default", "dense"],
+            },
+            "layout": {
+                "breakpoints_px": responsive_policy.get("viewport_contract", {}).get(
+                    "required_widths_px",
+                    [320, 360, 390, 430, 768, 1024, 1440],
+                ),
+                "container_rules": [
+                    "모든 section/container는 box-sizing: border-box 기준으로 320px viewport에서 overflow-x 없이 맞아야 함",
+                    "grid/flex children에는 필요한 경우 min-width: 0 또는 min-inline-size: 0을 명시",
+                    "repeat(N, 1fr) 고정 grid는 모바일에서 1열 또는 minmax(0, 1fr) fallback을 제공",
+                    "padded container 내부에서 width: 100vw 사용 금지",
+                ],
+                "control_rules": responsive_policy.get("control_rules", []),
+                "viewport_pass_condition": responsive_policy.get("viewport_contract", {}).get(
+                    "pass_condition",
+                    "scrollWidth <= innerWidth and primary controls stay reachable.",
+                ),
             },
             "radius": {
                 "scale": ["none", "sm", "md", "lg", "xl", "pill"],
@@ -365,9 +401,16 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
                 },
                 "combination_lists": expanded_palette.get("combination_lists", []),
             },
+            "semantic_ontology": _compact_semantic_color_ontology_for_token_schema(
+                color_reference.get("semantic_ontology", {})
+            ),
+            "semantic_color_selection": _compact_semantic_color_selection_for_token_schema(
+                color_reference.get("semantic_color_selection", {})
+            ),
             "rules": [
                 "컬러 레퍼런스의 mood와 pairings를 semantic token 설계의 출발점으로 사용",
                 "chosen palette는 semantic roles로 번역하고 raw reference color를 그대로 남용하지 않기",
+                "앱 내용 기반 색상 선택은 미리 만든 팔레트 세트가 아니라 Semantic OS ontology 검색으로 매번 수행하기",
                 "seed color만 쓰지 말고 expanded palette에서 surface/text/border/support 역할까지 확장하기",
                 "surface/text/border 대비는 레퍼런스보다 접근성 기준을 우선"
             ],
@@ -394,6 +437,95 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
                 "neutral_bias": color_balance.get("neutral_bias"),
             }
     return schema
+
+
+def _compact_semantic_color_ontology_for_token_schema(semantic_ontology: dict) -> dict:
+    if not semantic_ontology:
+        return {}
+
+    return {
+        "schema_version": semantic_ontology.get("schema_version"),
+        "source": semantic_ontology.get("source", {}),
+        "node_count": semantic_ontology.get("node_count"),
+        "edge_count": semantic_ontology.get("edge_count"),
+        "matched_keywords": [
+            {
+                "id": item.get("id"),
+                "role": item.get("role"),
+                "name": item.get("name"),
+                "hex": item.get("hex"),
+                "spectrum": item.get("spectrum"),
+                "family": item.get("family"),
+                "mood_tags": item.get("mood_tags", []),
+                "tone_axes": item.get("tone_axes", []),
+            }
+            for item in semantic_ontology.get("matched_keywords", [])
+        ],
+        "recommended_keywords": [
+            {
+                "id": item.get("id"),
+                "name": item.get("name"),
+                "hex": item.get("hex"),
+                "spectrum": item.get("spectrum"),
+                "family": item.get("family"),
+                "score": item.get("score"),
+                "reasons": item.get("reasons", []),
+            }
+            for item in semantic_ontology.get("recommended_keywords", [])[:8]
+        ],
+        "guidelines": [
+            {
+                "id": item.get("id"),
+                "label": item.get("label"),
+                "summary": item.get("summary"),
+            }
+            for item in semantic_ontology.get("guidelines", [])
+        ],
+        "rules": semantic_ontology.get("rules", []),
+        "copyright_handling": semantic_ontology.get("copyright_handling", ""),
+    }
+
+
+def _compact_semantic_color_selection_for_token_schema(selection: dict) -> dict:
+    if not selection:
+        return {}
+
+    active = selection.get("active_palette") or {}
+    return {
+        "schema_version": selection.get("schema_version"),
+        "selection_method": selection.get("selection_method"),
+        "matched_pattern": selection.get("matched_pattern"),
+        "role_model": selection.get("role_model", []),
+        "active_palette": _compact_semantic_selection_candidate(active),
+        "candidate_palettes": [
+            _compact_semantic_selection_candidate(candidate)
+            for candidate in selection.get("candidate_palettes", [])[:8]
+        ],
+        "rules": selection.get("rules", []),
+    }
+
+
+def _compact_semantic_selection_candidate(candidate: dict) -> dict:
+    if not candidate:
+        return {}
+    return {
+        "id": candidate.get("id"),
+        "label": candidate.get("label"),
+        "score": candidate.get("score"),
+        "rationale": candidate.get("rationale", [])[:6],
+        "roles": {
+            role: {
+                "name": item.get("name"),
+                "hex": item.get("hex"),
+                "spectrum": item.get("spectrum"),
+                "family": item.get("family"),
+                "score": item.get("score"),
+                "reason": item.get("reason"),
+                "behavior": item.get("behavior"),
+            }
+            for role, item in (candidate.get("roles") or {}).items()
+        },
+    }
 
 
 def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
@@ -665,18 +797,173 @@ def build_system_ontology(
             principle_id = f"principle:{slugify_text(principle['keyword'])}"
             edges.append({"type": "constrains", "from": principle_id, "to": token_category_id})
 
-    image_model_id = "image-model:imagine2"
+    image_model_id = "image-model:codex-imagegen"
     visual_asset_id = "visual-asset:brand-aligned-raster"
-    nodes.append({"id": image_model_id, "type": "ImageGenerationModel", "label": "imagine2"})
+    sourced_visual_asset_id = "sourced-visual-asset:brand-aligned-raster-fallback"
+    visual_asset_contract_id = VISUAL_ASSET_CONTRACT_ID
+    sourced_visual_asset_contract_id = SOURCED_VISUAL_ASSET_CONTRACT_ID
+    nodes.append({
+        "id": visual_asset_contract_id,
+        "type": "GovernanceRule",
+        "label": "Generated visual asset contract",
+        "meta": {
+            "schema_version": VISUAL_ASSET_MANIFEST_SCHEMA,
+            "preferred_manifest_path": VISUAL_ASSET_MANIFEST_PATH,
+            "compatible_manifest_paths": VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
+            "prompt_pack_path": VISUAL_ASSET_PROMPT_PACK_PATH,
+            "default_source_directory": "$CODEX_HOME/generated_images/<session-id>",
+            "preserve_originals": True,
+            "workspace_copy_required": True,
+            "runtime_code_must_not_reference_codex_home": True,
+            "api_fallback": "disabled",
+            "failure_policy": "no API fallback",
+            "manifest_required_fields": VISUAL_ASSET_MANIFEST_REQUIRED_FIELDS,
+            "asset_record_required_fields": VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+        },
+    })
+    nodes.append({
+        "id": image_model_id,
+        "type": "ImageGenerationModel",
+        "label": "Codex image_gen skill",
+        "meta": {
+            "runtime": "Codex built-in image_gen skill",
+            "default_path": True,
+            "api_fallback": "disabled",
+            "fallback_policy": "no API fallback",
+            "failure_behavior": "If Codex image_gen fails, do not invoke CLI or OpenAI API fallback.",
+            "source_session_tracking": True,
+            "default_source_directory": "$CODEX_HOME/generated_images/<session-id>",
+            "workspace_copy_required": True,
+            "contract_id": visual_asset_contract_id,
+        },
+    })
+    nodes.append({
+        "id": sourced_visual_asset_contract_id,
+        "type": "GovernanceRule",
+        "label": "Sourced visual asset fallback contract",
+        "meta": {
+            "schema_version": VISUAL_ASSET_MANIFEST_SCHEMA,
+            "preferred_manifest_path": VISUAL_ASSET_MANIFEST_PATH,
+            "candidate_manifest_path": SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH,
+            "compatible_manifest_paths": VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
+            "fallback_policy": SOURCED_VISUAL_ASSET_FALLBACK_POLICY,
+            "fallback_for": visual_asset_contract_id,
+            "api_fallback": "disabled",
+            "hotlinking_allowed": False,
+            "workspace_copy_required": True,
+            "license_metadata_required": True,
+            "asset_record_required_fields": SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+        },
+    })
+    nodes.append({
+        "id": "visual-asset-provider:openverse",
+        "type": "FreeSourcedVisualProvider",
+        "label": "Openverse",
+        "meta": {
+            "provider_id": "openverse",
+            "tier": "free-sourced",
+            "kind": "free-image-search",
+            "license_metadata_required": True,
+            "license_proof_required": False,
+            "workspace_copy_required": True,
+        },
+    })
+    nodes.append({
+        "id": "visual-asset-provider:adobe-stock",
+        "type": "LicensedVisualProvider",
+        "label": "Adobe Stock",
+        "meta": {
+            "provider_id": "adobe-stock",
+            "tier": "licensed",
+            "kind": "paid-stock-provider",
+            "license_metadata_required": True,
+            "license_proof_required": True,
+            "workspace_copy_required": True,
+        },
+    })
+    nodes.append({
+        "id": "visual-asset-provider:lazyweb",
+        "type": "ReferenceOnlyProvider",
+        "label": "Lazyweb",
+        "meta": {
+            "provider_id": "lazyweb",
+            "tier": "reference-only",
+            "kind": "design-reference-corpus",
+            "asset_copy_allowed": False,
+            "workspace_copy_required": False,
+        },
+    })
+    nodes.append({
+        "id": "license-policy:verified-free-visual-asset",
+        "type": "LicensePolicy",
+        "label": "Verified free visual asset license",
+        "meta": {
+            "required_metadata": [
+                "source_url",
+                "download_url",
+                "provider",
+                "author",
+                "license",
+                "attribution_required",
+                "sha256",
+            ],
+        },
+    })
     nodes.append(
         {
             "id": visual_asset_id,
             "type": "GeneratedVisualAsset",
             "label": "Brand-aligned raster image",
+            "meta": {
+                "model": "Codex image_gen skill",
+                "api_fallback": "disabled",
+                "fallback_policy": "no API fallback",
+                "manifest_path": VISUAL_ASSET_MANIFEST_PATH,
+                "compatible_manifest_paths": VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS,
+                "manifest_schema": VISUAL_ASSET_MANIFEST_SCHEMA,
+                "manifest_required_fields": VISUAL_ASSET_MANIFEST_REQUIRED_FIELDS,
+                "asset_record_required_fields": VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+                "prompt_pack_path": VISUAL_ASSET_PROMPT_PACK_PATH,
+                "alt_text_required": True,
+                "prompt_summary_required": True,
+                "sha256_required": True,
+                "original_preservation_required": True,
+                "workspace_copy_required": True,
+                "source_session_tracking": True,
+                "contract_id": visual_asset_contract_id,
+            },
         }
     )
+    nodes.append(
+        {
+            "id": sourced_visual_asset_id,
+            "type": "SourcedVisualAsset",
+            "label": "Brand-aligned sourced visual fallback",
+            "meta": {
+                "acquisition_mode": "sourced",
+                "fallback_for": visual_asset_id,
+                "fallback_policy": SOURCED_VISUAL_ASSET_FALLBACK_POLICY,
+                "candidate_manifest_path": SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH,
+                "manifest_path": VISUAL_ASSET_MANIFEST_PATH,
+                "manifest_schema": VISUAL_ASSET_MANIFEST_SCHEMA,
+                "asset_record_required_fields": SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
+                "hotlinking_allowed": False,
+                "workspace_copy_required": True,
+                "license_metadata_required": True,
+                "contract_id": sourced_visual_asset_contract_id,
+            },
+        }
+    )
+    edges.append({"type": "governs", "from": visual_asset_contract_id, "to": image_model_id})
+    edges.append({"type": "governs", "from": visual_asset_contract_id, "to": visual_asset_id})
+    edges.append({"type": "governs", "from": sourced_visual_asset_contract_id, "to": sourced_visual_asset_id})
+    edges.append({"type": "governs", "from": sourced_visual_asset_contract_id, "to": "visual-asset-provider:openverse"})
+    edges.append({"type": "governs", "from": sourced_visual_asset_contract_id, "to": "license-policy:verified-free-visual-asset"})
     edges.append({"type": "generated_with", "from": visual_asset_id, "to": image_model_id})
+    edges.append({"type": "sourced_from", "from": sourced_visual_asset_id, "to": "visual-asset-provider:openverse"})
+    edges.append({"type": "licensed_under", "from": sourced_visual_asset_id, "to": "license-policy:verified-free-visual-asset"})
     edges.append({"type": "grounded_in", "from": visual_asset_id, "to": brand_id})
+    edges.append({"type": "grounded_in", "from": sourced_visual_asset_id, "to": brand_id})
 
     component_meta_by_name = {
         component.get("name"): component
@@ -762,6 +1049,12 @@ def build_system_ontology(
             "AccessibilityRule",
             "GeneratedVisualAsset",
             "ImageGenerationModel",
+            "SourcedVisualAsset",
+            "VisualAssetProvider",
+            "FreeSourcedVisualProvider",
+            "LicensedVisualProvider",
+            "ReferenceOnlyProvider",
+            "LicensePolicy",
             "GovernanceRule",
             "ImplementationFailurePattern",
         ],
@@ -791,9 +1084,10 @@ def build_system_spec_markdown(
         f"- **{foundation['name']}** ({foundation['priority']}): signal {foundation['signal_count']}"
         for foundation in foundations
     )
+    governance = blueprint.get("governance", {})
     implementation_guardrail_lines = "\n".join(
         f"- {line}"
-        for line in blueprint.get("governance", {}).get("implementation_guardrails", [])
+        for line in governance.get("implementation_guardrails", [])
     ) or "- No implementation guardrails defined."
     family_lines = "\n".join(
         (
@@ -829,15 +1123,18 @@ def build_system_spec_markdown(
     visual_reference = brand_profile.get("_resolved_visual_reference")
     color_reference_lines = _build_color_reference_section(color_reference)
     visual_reference_lines = _build_visual_reference_section(visual_reference)
+    design_context_lines = _build_design_context_pack_section(
+        blueprint.get("design_context_pack") or brand_profile.get("_design_context_pack")
+    )
     validation_lines = "\n".join(
         [f"- Error: {message}" for message in validation.get("errors", [])]
         + [f"- Warning: {message}" for message in validation.get("warnings", [])]
     ) or "- No validation issues."
     ai_synthesis_lines = "\n".join(
         f"- **{principle['rule']}**: {principle['detail']}"
-        for principle in blueprint.get("governance", {}).get("ai_synthesis_principles", [])
+        for principle in governance.get("ai_synthesis_principles", [])
     ) or "- No AI synthesis principles defined."
-    reference_scope = blueprint.get("governance", {}).get("reference_absorption_scope", {})
+    reference_scope = governance.get("reference_absorption_scope", {})
     allowed_reference_lines = "\n".join(
         f"  - {item}" for item in reference_scope.get("allowed", [])
     ) or "  - No allowed reference scope defined."
@@ -849,7 +1146,7 @@ def build_system_spec_markdown(
         for item in reference_scope.get("failure_patterns", [])
     ) or "  - No promoted failure patterns defined."
     promotion_policy = (
-        blueprint.get("governance", {}).get("feedback_promotion_policy")
+        governance.get("feedback_promotion_policy")
         or reference_scope.get("promotion_policy", {})
     )
     promotion_policy_line = (
@@ -861,6 +1158,149 @@ def build_system_spec_markdown(
         "rule",
         "References are advisory and never replace token/component/product IA authority.",
     )
+    color_mode_policy = governance.get("color_mode_parity_policy", {})
+    color_mode_rules = "\n".join(
+        f"- {item}" for item in color_mode_policy.get("implementation_rules", [])
+    ) or "- No color mode parity rules defined."
+    color_mode_failures = "\n".join(
+        f"- **{item.get('id', 'dark-only-implementation')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in color_mode_policy.get("failure_patterns", [])
+    ) or "- No color mode failure patterns defined."
+    color_mode_section = f"""### Color Mode Parity
+
+- **Rule**: {color_mode_policy.get('rule', 'Every product UI needs light and dark modes.')}
+- **Required modes**: {', '.join(color_mode_policy.get('required_modes', ['light', 'dark']))}
+- **Default mode**: {color_mode_policy.get('default_mode', 'light')}
+- **Implementation rules**:
+{color_mode_rules}
+- **Promoted color mode failure patterns**:
+{color_mode_failures}"""
+    responsive_policy = governance.get("responsive_resilience_policy", {})
+    responsive_contract = responsive_policy.get("viewport_contract", {})
+    responsive_widths = responsive_contract.get("required_widths_px", [320, 360, 390, 430, 768, 1024, 1440])
+    responsive_control_lines = "\n".join(
+        f"- {item}" for item in responsive_policy.get("control_rules", [])
+    ) or "- No responsive control rules defined."
+    responsive_failure_lines = "\n".join(
+        f"- **{item.get('id', 'responsive-failure')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in responsive_policy.get("failure_patterns", [])
+    ) or "- No responsive failure patterns defined."
+    responsive_section = f"""### Responsive Resilience
+
+- **Viewport contract**: verify {', '.join(str(width) + 'px' for width in responsive_widths)}.
+- **Pass condition**: {responsive_contract.get('pass_condition', 'scrollWidth <= innerWidth and primary controls stay reachable.')}
+- **Control rules**:
+{responsive_control_lines}
+- **Promoted responsive failure patterns**:
+{responsive_failure_lines}"""
+    icon_policy = governance.get("icon_refactor_policy", {})
+    icon_targets = ", ".join(icon_policy.get("targets", [])) or "button, card, badge, navigation, status UI"
+    icon_replacement_lines = "\n".join(
+        f"- {item}" for item in icon_policy.get("replacement_order", [])
+    ) or "- Use existing icon library, local SVG components, or create a minimal SVG asset."
+    icon_rule_lines = "\n".join(
+        f"- {item}" for item in icon_policy.get("implementation_rules", [])
+    ) or "- No icon refactor implementation rules defined."
+    icon_failure_lines = "\n".join(
+        f"- **{item.get('id', 'emoji-ui-affordance')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in icon_policy.get("failure_patterns", [])
+    ) or "- No icon refactor failure patterns defined."
+    icon_refactor_section = f"""### Emoji-to-SVG Refactor
+
+- **Rule**: {icon_policy.get('rule', 'Replace emoji UI affordances with SVG icons during refactors.')}
+- **Targets**: {icon_targets}
+- **Replacement order**:
+{icon_replacement_lines}
+- **Implementation rules**:
+{icon_rule_lines}
+- **Promoted icon failure patterns**:
+{icon_failure_lines}"""
+    app_icon_policy = governance.get("app_icon_identity_policy", {})
+    app_icon_assets = "\n".join(
+        f"- **{item.get('label', 'Brand app icon')}**: targets {', '.join(item.get('targets', []))}; formats {', '.join(item.get('formats', []))}"
+        for item in app_icon_policy.get("required_assets", [])
+    ) or "- No app icon identity assets defined."
+    app_icon_rules = "\n".join(
+        f"- {item}" for item in app_icon_policy.get("implementation_rules", [])
+    ) or "- No app icon implementation rules defined."
+    app_icon_failures = "\n".join(
+        f"- **{item.get('id', 'generic-initials-app-icon')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in app_icon_policy.get("failure_patterns", [])
+    ) or "- No app icon failure patterns defined."
+    app_icon_section = f"""### Brand App Icon Identity
+
+- **Rule**: {app_icon_policy.get('rule', 'Every app or website implementation must include a brand-specific app icon identity asset.')}
+- **Required assets**:
+{app_icon_assets}
+- **Implementation rules**:
+{app_icon_rules}
+- **Promoted app icon failure patterns**:
+{app_icon_failures}"""
+    visual_substance_policy = governance.get("mockup_visual_substance_policy", {})
+    visual_substance_applies_to = ", ".join(visual_substance_policy.get("applies_to", [])) or "website, landing, product, venue, editorial, content-led mockups"
+    visual_substance_diagnosis_lines = "\n".join(
+        f"- {item}" for item in visual_substance_policy.get("diagnosis", [])
+    ) or "- No mockup visual substance diagnosis defined."
+    visual_substance_signal_lines = "\n".join(
+        f"- {item}" for item in visual_substance_policy.get("required_signals", [])
+    ) or "- No mockup visual substance signals defined."
+    visual_substance_order_lines = "\n".join(
+        f"- {item}" for item in visual_substance_policy.get("image_acquisition_order", [])
+    ) or "- Use user-supplied, generated, sourced, or deterministic identity assets as appropriate."
+    visual_substance_rule_lines = "\n".join(
+        f"- {item}" for item in visual_substance_policy.get("implementation_rules", [])
+    ) or "- No mockup visual substance implementation rules defined."
+    visual_substance_failure_lines = "\n".join(
+        f"- **{item.get('id', 'mockup-visual-substance-failure')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in visual_substance_policy.get("failure_patterns", [])
+    ) or "- No mockup visual substance failure patterns defined."
+    visual_substance_section = f"""### Mockup Visual Substance
+
+- **Rule**: {visual_substance_policy.get('rule', 'Commercial mockups should use relevant visual assets by default.')}
+- **Applies to**: {visual_substance_applies_to}
+- **Why image-free mockups fail**:
+{visual_substance_diagnosis_lines}
+- **Required visual substance signals**:
+{visual_substance_signal_lines}
+- **Image acquisition order**:
+{visual_substance_order_lines}
+- **Implementation rules**:
+{visual_substance_rule_lines}
+- **Promoted visual substance failure patterns**:
+{visual_substance_failure_lines}"""
+    commercial_policy = governance.get("commercial_product_realism_policy", {})
+    commercial_applies_to = ", ".join(commercial_policy.get("applies_to", [])) or "dashboard, tool, data product, operational UI"
+    commercial_diagnosis_lines = "\n".join(
+        f"- {item}" for item in commercial_policy.get("diagnosis", [])
+    ) or "- No commercial realism diagnosis defined."
+    commercial_signal_lines = "\n".join(
+        f"- {item}" for item in commercial_policy.get("required_signals", [])
+    ) or "- No commercial realism signals defined."
+    commercial_success_lines = "\n".join(
+        f"- **{item.get('id', 'successful-pattern')}**: {item.get('rule', '')} Implementation: {item.get('implementation', '')} Verification: {item.get('verification', '')}"
+        for item in commercial_policy.get("successful_patterns", [])
+    ) or "- No commercial realism success patterns defined."
+    commercial_rule_lines = "\n".join(
+        f"- {item}" for item in commercial_policy.get("implementation_rules", [])
+    ) or "- No commercial realism implementation rules defined."
+    commercial_failure_lines = "\n".join(
+        f"- **{item.get('id', 'commercial-product-realism-failure')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in commercial_policy.get("failure_patterns", [])
+    ) or "- No commercial realism failure patterns defined."
+    commercial_section = f"""### Commercial Product Realism
+
+- **Rule**: {commercial_policy.get('rule', 'Product UI should lead with operational substance rather than presentation-only composition.')}
+- **Applies to**: {commercial_applies_to}
+- **Why AI-looking screens fail**:
+{commercial_diagnosis_lines}
+- **Required realism signals**:
+{commercial_signal_lines}
+- **Successful reusable patterns**:
+{commercial_success_lines}
+- **Implementation rules**:
+{commercial_rule_lines}
+- **Promoted realism failure patterns**:
+{commercial_failure_lines}"""
     concept_lines = "\n".join(
         f"- **{target['concept_id']}**: {target['count']}"
         for target in blueprint.get("ontology_targets", [])
@@ -916,6 +1356,10 @@ def build_system_spec_markdown(
 
 {visual_reference_lines}
 
+### Design Context Pack
+
+{design_context_lines}
+
 ## 8. Component Strategy
 
 - **Product primitives**: {', '.join(brand_profile.get('product_primitives', []))}
@@ -933,6 +1377,18 @@ def build_system_spec_markdown(
 ## 9. Implementation Guardrails
 
 {implementation_guardrail_lines}
+
+{color_mode_section}
+
+{responsive_section}
+
+{icon_refactor_section}
+
+{app_icon_section}
+
+{visual_substance_section}
+
+{commercial_section}
 
 ## 10. Reference Absorption Rule
 
@@ -1262,6 +1718,71 @@ def _build_color_reference_section(color_reference: dict | None) -> str:
                 f"  - {combination.get('label')}: {color_summary}"
             )
 
+    semantic_selection = color_reference.get("semantic_color_selection", {}) or {}
+    if semantic_selection:
+        lines.append(
+            "- **Semantic color selection**: "
+            f"{semantic_selection.get('selection_method', 'ontology-search-per-run')}"
+        )
+        pattern = semantic_selection.get("matched_pattern") or {}
+        if pattern:
+            lines.append(
+                f"  - matched pattern: `{pattern.get('id')}` / {pattern.get('label')}"
+            )
+        candidates = semantic_selection.get("candidate_palettes", [])
+        if candidates:
+            lines.append("- **Ontology-searched candidate palettes**:")
+            for candidate in candidates[:5]:
+                role_summary = ", ".join(
+                    f"{role}={item.get('name')}"
+                    for role, item in (candidate.get("roles") or {}).items()
+                )
+                lines.append(
+                    f"  - {candidate.get('id')} ({candidate.get('label')}, score={candidate.get('score')}): "
+                    f"{role_summary}"
+                )
+        rules = semantic_selection.get("rules", [])
+        if rules:
+            lines.append("- **Selection rules**:")
+            for rule in rules[:4]:
+                lines.append(f"  - {rule}")
+
+    semantic_ontology = color_reference.get("semantic_ontology", {}) or {}
+    if semantic_ontology:
+        source = semantic_ontology.get("source", {}) or {}
+        lines.append(
+            "- **Semantic color ontology**: "
+            f"{semantic_ontology.get('node_count', 0)} nodes / "
+            f"{semantic_ontology.get('edge_count', 0)} edges"
+            + (f" from {source.get('repo')}" if source.get("repo") else "")
+        )
+        matched_keywords = semantic_ontology.get("matched_keywords", [])
+        if matched_keywords:
+            lines.append("- **Matched color keywords**:")
+            for item in matched_keywords[:6]:
+                moods = ", ".join(item.get("mood_tags", [])[:3])
+                axes = ", ".join(item.get("tone_axes", [])[:3])
+                lines.append(
+                    f"  - `{item.get('role')}` -> {item.get('name')} {item.get('hex', '')} "
+                    f"/ {item.get('spectrum', '')}.{item.get('family', '')}"
+                    + (f" / mood={moods}" if moods else "")
+                    + (f" / axes={axes}" if axes else "")
+                )
+        recommended_keywords = semantic_ontology.get("recommended_keywords", [])
+        if recommended_keywords:
+            lines.append("- **Ontology keyword recommendations**:")
+            for item in recommended_keywords[:5]:
+                reasons = "; ".join(item.get("reasons", [])[:2])
+                lines.append(
+                    f"  - {item.get('name')} {item.get('hex', '')} / {item.get('spectrum', '')}.{item.get('family', '')}"
+                    + (f" / {reasons}" if reasons else "")
+                )
+        guidelines = semantic_ontology.get("guidelines", [])
+        if guidelines:
+            lines.append("- **Semantic color guardrails**:")
+            for item in guidelines[:5]:
+                lines.append(f"  - {item.get('label')}: {item.get('summary')}")
+
     notes = color_reference.get("notes", [])
     if notes:
         lines.append(f"- **Notes**: {', '.join(str(item) for item in notes)}")
@@ -1344,6 +1865,57 @@ def _build_visual_reference_section(visual_reference: dict | None) -> str:
     return "\n".join(lines)
 
 
+def _build_design_context_pack_section(design_context_pack: dict | None) -> str:
+    if not design_context_pack:
+        return "- No design context pack generated. Connect visual_reference sources or provider plans to ground reference research."
+
+    lines = [
+        f"- **Activation**: {design_context_pack.get('activation_state', 'planned')}",
+        f"- **Schema**: {design_context_pack.get('schema_version', 'design-context-pack/v1')}",
+        f"- **Rule**: {(design_context_pack.get('absorption_policy') or {}).get('rule', 'References stay advisory.')}",
+    ]
+
+    providers = design_context_pack.get("providers", []) or []
+    if providers:
+        lines.append("- **Providers**:")
+        for provider in providers[:6]:
+            lines.append(
+                f"  - `{provider.get('provider_id')}`: {provider.get('status')} / "
+                f"{provider.get('access_mode')} / {provider.get('truth_role')}"
+            )
+
+    flow_index = design_context_pack.get("flow_index", []) or []
+    if flow_index:
+        lines.append("- **Flow coverage**:")
+        for item in flow_index[:6]:
+            providers_text = ", ".join(item.get("providers", [])[:3]) or "no selected provider evidence"
+            lines.append(
+                f"  - {item.get('flow')}: {item.get('status')} "
+                f"({item.get('context_count', 0)} context cards; {providers_text})"
+            )
+
+    cards = design_context_pack.get("context_cards", []) or []
+    if cards:
+        lines.append("- **Context cards**:")
+        for card in cards[:5]:
+            flows = ", ".join(card.get("flows", [])[:3]) or "general"
+            morphology = ", ".join(card.get("morphology", [])[:3]) or "general"
+            lines.append(
+                f"  - `{card.get('context_id')}` ({card.get('kind')}, {card.get('provenance_level')}): "
+                f"{card.get('label')} / flows: {flows} / morphology: {morphology}"
+            )
+
+    gaps = design_context_pack.get("research_gaps", []) or []
+    if gaps:
+        lines.append("- **Research gaps**:")
+        for gap in gaps[:4]:
+            lines.append(
+                f"  - {gap.get('id')} ({gap.get('severity')}): {gap.get('recommended_action')}"
+            )
+
+    return "\n".join(lines)
+
+
 def _build_quick_start_section(
     brand_profile: dict,
     token_schema: dict,
@@ -1387,9 +1959,11 @@ def _build_do_dont_section(brand_profile: dict, blueprint: dict) -> str:
     if brand_keywords:
         lines.append(f"- 모든 시각적 선택에서 **{', '.join(brand_keywords[:3])}** 기준을 적용")
     lines.append("- semantic token을 통해 컬러를 적용 (하드코딩 금지)")
+    lines.append("- 일반(light) 모드와 dark 모드를 같은 semantic token 역할로 함께 구현")
     lines.append("- 접근성 기준을 모든 text/surface 조합에서 먼저 검증")
     lines.append("- 컴포넌트 변형 추가 전 기존 variant로 해결 가능한지 먼저 확인")
     lines.append("- 아이콘은 SVG 컴포넌트 또는 Lucide/Heroicons/Phosphor/Tabler 등 라이브러리로 구현")
+    lines.append("- 앱 아이콘은 브랜드 특정 SVG identity asset으로 구현하고 favicon/manifest/app shell에 연결")
     lines.append("- component_specs.md의 anatomy/states/token binding을 그대로 따라 완전히 구현")
 
     lines.append("\n### DON'T\n")
@@ -1399,6 +1973,7 @@ def _build_do_dont_section(brand_profile: dict, blueprint: dict) -> str:
     lines.append("- hex 값을 임의로 생성하지 않음 (반드시 레퍼런스에서 가져오기)")
     lines.append("- 토큰명을 임의로 발명하지 않음 (네이밍 패턴에서 도출)")
     lines.append("- 한 레퍼런스의 비주얼을 그대로 복제하지 않음")
+    lines.append("- 다크모드만 구현하고 일반 모드를 빠뜨리지 않음")
     lines.append("- 기존 기능 진입점을 승인 없이 제거하지 않음")
     lines.append("- **이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 아이콘/버튼/상태 표시로 절대 쓰지 않음** — 본문 콘텐츠에만 허용")
     lines.append("- '임시 버튼', 'TODO 컴포넌트', '플레이스홀더 카드' 같은 반쪽 구현을 남기지 않음")

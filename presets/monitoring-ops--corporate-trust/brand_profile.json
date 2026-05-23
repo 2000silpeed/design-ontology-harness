@@ -1,0 +1,217 @@
+{
+  "brand_name": "Seoul Alley Mood Map",
+  "system_name": "Alley Sense System",
+  "product_summary": "서울의 골목 장소를 감각 속성과 감정 태그로 기록하고 추천하는 모바일 우선 장소 큐레이션 도구",
+  "audiences": [
+    "혼자 산책하거나 작업할 조용한 장소를 찾는 서울 거주자",
+    "카페, 서점, 작은 공원, 골목길을 분위기 기준으로 저장하고 비교하고 싶은 사용자",
+    "관광 명소보다 시간대, 빛, 소리, 혼잡도 같은 실제 경험 신호를 믿고 싶은 사용자"
+  ],
+  "brand_keywords": [
+    "situated",
+    "quiet",
+    "sensory",
+    "curated",
+    "walkable",
+    "trustworthy",
+    "local"
+  ],
+  "anti_keywords": [
+    "generic-map",
+    "tourism-brochure",
+    "photo-influencer-feed",
+    "commerce-led",
+    "real-estate",
+    "overdecorated",
+    "neon",
+    "glassmorphism",
+    "beige-only-editorial",
+    "gamified"
+  ],
+  "tone_of_voice": [
+    "calm",
+    "observational",
+    "specific",
+    "warm",
+    "non-salesy"
+  ],
+  "visual_keywords": [
+    "mobile-first place companion",
+    "compact sensory metadata",
+    "quiet geographic grid",
+    "real texture evidence",
+    "time-of-day atmosphere",
+    "low elevation surfaces",
+    "scan-first recommendation cards"
+  ],
+  "interaction_keywords": [
+    "filter-first exploration",
+    "save and compare",
+    "time-of-day switching",
+    "mood-to-place matching",
+    "confidence labels",
+    "touch-safe controls",
+    "recoverable edits"
+  ],
+  "platforms": [
+    "mobile web",
+    "desktop browser preview"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "44px minimum touch target",
+    "16px minimum form text",
+    "reduced motion friendly",
+    "map alternatives through list and table views"
+  ],
+  "product_primitives": [
+    "neighborhood switcher",
+    "time-of-day segmented control",
+    "sensory filter chips",
+    "mood match score",
+    "map pin layer",
+    "place list card",
+    "sensory evidence strip",
+    "place detail sheet",
+    "light sound crowding profile",
+    "emotion tag cluster",
+    "recommendation queue",
+    "ontology inspector panel",
+    "place relationship graph",
+    "add place form",
+    "empty and uncertain evidence states"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "mobile",
+      "accessibility",
+      "maps",
+      "data visualization",
+      "design token"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "ecommerce",
+      "real-estate",
+      "travel-booking"
+    ]
+  },
+  "seeds": [
+    {
+      "url": "local:projects/seoul-alley-mood-map/spec.md",
+      "kind": "product-spec",
+      "title": "Seoul Alley Mood Map ontology input spec",
+      "notes": "Defines sensory place entities, recommendation attributes, and UI component boundaries."
+    }
+  ],
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Natural Blues",
+      "Natural Greens",
+      "Pastel Yellows",
+      "Deep Blues",
+      "Natural Oranges"
+    ],
+    "palette_roles": {
+      "primary": "Ocean Blue",
+      "accent": "Fern Green",
+      "surface_tint": "Naples Yellow"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "cool",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "차분함",
+        "안정감",
+        "자연스러움",
+        "사색적",
+        "신뢰감",
+        "따뜻함",
+        "방향성"
+      ],
+      "avoid_moods": [
+        "화려함",
+        "네온",
+        "강한 쇼핑몰",
+        "럭셔리",
+        "귀여움",
+        "단색 지배",
+        "베이지"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 8,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Green/blue should express orientation and trust; warm accents should suggest street light or brick texture without turning the UI into a beige editorial theme.",
+      "Place photos or texture thumbnails may carry atmospheric richness; interface chrome must stay quiet and legible.",
+      "Do not copy the palette of tourism, booking, or real-estate references."
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "mobile map saved places sensory tags",
+      "quiet local discovery app cards",
+      "mobile place detail atmosphere metadata",
+      "knowledge graph inspector panel UI"
+    ],
+    "sources": [],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.35,
+      "component_shape": 0.2,
+      "color_balance": 0.1,
+      "typography_mood": 0.15,
+      "surface_style": 0.2
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "list alternative to the map",
+      "sensory metadata visible on cards",
+      "place confidence and evidence state",
+      "ontology inspector that exposes relations without feeling like an engineering dashboard"
+    ],
+    "avoid_patterns": [
+      "full-screen marketing hero",
+      "nested cards",
+      "large decorative gradients",
+      "tour package cards",
+      "price or booking language",
+      "photo feed dominance",
+      "one-hue beige atmosphere"
+    ],
+    "notes": [
+      "No external screenshot is authoritative in this first test run.",
+      "External or Lazyweb references may inform density and component morphology only; color, typography, IA, and copy stay governed by this profile and generated system docs.",
+      "The ontology inspector is a product-facing transparency panel, not a developer console."
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "Pinterest is query assistance only.",
+        "Final visual analysis input must be local files listed in visual_reference.sources."
+      ]
+    }
+  }
+}

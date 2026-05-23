@@ -1,0 +1,50 @@
+{
+  "design_id": "seoul-alley-mood-map-v7",
+  "score_scale": 10,
+  "source_screenshots": [
+    "projects/seoul-alley-mood-map/screenshots/seoul-alley-mood-map-complete-media-icon-v7-desktop.png",
+    "projects/seoul-alley-mood-map/screenshots/seoul-alley-mood-map-complete-media-icon-v7-mobile.png"
+  ],
+  "measurement_protocol": {
+    "method": "single reviewer visual pass from saved desktop and mobile screenshots",
+    "note": "Scores are screenshot-review inputs for the loop gate, not yet automated computer-vision scoring."
+  },
+  "metrics": {
+    "color_harmony": 8.4,
+    "spacing_consistency": 8.1,
+    "typography_balance": 8.0,
+    "composition_order": 8.2,
+    "hierarchy_clarity": 8.3,
+    "contrast_legibility": 8.0,
+    "content_density_control": 7.8,
+    "task_focus": 8.5,
+    "keyword_alignment": 9.0,
+    "tone_alignment": 8.8,
+    "domain_fit": 9.0,
+    "anti_keyword_avoidance": 8.7,
+    "desirability": 8.3,
+    "confidence_signal": 8.6,
+    "warmth_or_energy": 8.1,
+    "responsive_fit": 8.5,
+    "token_binding": 8.2,
+    "accessibility_baseline": 8.0,
+    "interaction_affordance": 8.5,
+    "asset_completeness": 8.8,
+    "distinctiveness": 8.2,
+    "reference_transformation": 8.4,
+    "memorability": 8.1
+  },
+  "review_notes": {
+    "strengths": [
+      "Map, recommendation queue, place detail, and ontology inspector form a coherent product surface.",
+      "Palette feels quiet, local, and sensory without becoming a generic beige travel UI.",
+      "Real place photos and sensory evidence give the interface concrete substance.",
+      "Mobile layout preserves the same workflow and keeps controls readable."
+    ],
+    "risks": [
+      "The dense desktop map/list/detail composition is effective but close to the upper limit for first-scan complexity.",
+      "Some small metadata labels and relation rows could use more breathing room or stronger typographic contrast.",
+      "The distinctive signature is solid but still mostly expressed through structure rather than a memorable brand mark."
+    ]
+  }
+}

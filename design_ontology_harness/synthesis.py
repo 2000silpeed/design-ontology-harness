@@ -6,10 +6,12 @@ from pathlib import Path
 
 from .authoring import generate_system_pack
 from .benchmark_kb import build_benchmark_context, save_benchmark_report
-from .color_reference import resolve_color_reference
+from .color_reference import resolve_color_reference, resolve_semantic_color_reference
 from .css_pipeline import load_css_extraction
 from .font_reference import resolve_font_system
+from .graph_builders import VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS
 from .models import DocumentRecord, ReferenceLink
+from .reference_context import build_design_context_pack
 from .utils import ensure_dir, write_json
 from .visual_reference import resolve_visual_reference
 
@@ -32,12 +34,37 @@ AI_SYNTHESIS_PRINCIPLES = [
     {
         "id": "no_emoji_as_ui",
         "rule": "이모지를 UI 요소로 쓰지 않는다",
-        "detail": "AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 반드시 SVG 아이콘 컴포넌트를 직접 구현하거나, 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)를 import해서 사용한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다. 이 규칙은 AI가 UI를 만들 때 가장 자주 저지르는 실수이므로 엄격히 적용한다.",
+        "detail": "AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 반드시 SVG 파일/아이콘 컴포넌트 또는 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)를 사용한다. 리팩토링 중 카드, 버튼, 배지, 탭, 상태 표시, empty state에서 이모지를 발견하면 그대로 두지 말고 적절한 SVG 아이콘으로 교체한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다.",
     },
     {
         "id": "implement_components_directly",
         "rule": "컴포넌트를 직접 구현한다",
         "detail": "AI는 '임시 버튼', '플레이스홀더 카드', 'TODO 컴포넌트' 같은 반쪽 구현을 남기지 않는다. system_spec.md의 Component Strategy와 component_specs.md에 정의된 구조(anatomy), 상태(states), 토큰 바인딩, 접근성 규칙을 그대로 따라 완전한 컴포넌트를 구현한다. 기존 라이브러리 컴포넌트를 그냥 import해서 쓰는 대신, 디자인 시스템 토큰으로 스타일을 명시적으로 바인딩한다.",
+    },
+    {
+        "id": "operational_surface_over_pitch_deck",
+        "rule": "상용 제품 화면처럼 구성한다",
+        "detail": "AI는 대시보드, 도구, 데이터 제품, 커뮤니티 제품을 피치덱식 히어로와 균일한 장식 카드 묶음으로 시작하지 않는다. 첫 화면은 사용자가 실제로 확인하거나 조작해야 하는 상태, 필터, 표/리스트, 출처, 업데이트 시각, 핵심 액션을 먼저 보여준다.",
+    },
+    {
+        "id": "licensed_visual_assets_only",
+        "rule": "검색 이미지는 라이선스가 검증될 때만 사용한다",
+        "detail": "AI는 image_gen을 사용할 수 없거나 실제 사진성이 더 중요한 경우에만 sourced visual fallback을 사용한다. 무료 provider는 per-asset license metadata가 필요하고, paid provider는 license_proof/usage_scope/licensed_to가 필요하다. Reference-only provider는 형태와 밀도 참고만 가능하며 이미지를 구현 에셋으로 복사하지 않는다. source_url, download_url, provider, author, license, attribution_required, sha256, alt_text를 manifest에 기록하지 못하는 이미지는 구현에 넣지 않는다. 런타임 hotlink와 stock/search 이미지를 앱 아이콘·로고·상태 아이콘으로 쓰는 것을 금지한다.",
+    },
+    {
+        "id": "visual_substance_in_mockups",
+        "rule": "목업은 관련 이미지를 적극적으로 사용한다",
+        "detail": "AI는 사이트, 앱, 랜딩, 제품 소개, 콘텐츠 카드, 스포츠/장소/상품/포트폴리오 목업을 이미지 없는 카드와 그라디언트 블록만으로 끝내지 않는다. 도메인 실체를 드러내는 생성 이미지, 라이선스 검증 이미지, 사용자 제공 이미지, 브랜드 identity asset을 적극적으로 배치하고 manifest/alt/crop/반응형 검증까지 완료한다. 단 대시보드·운영 UI에서는 이미지가 표, 필터, 상태, 출처 같은 핵심 작업 표면을 밀어내지 않게 한다.",
+    },
+    {
+        "id": "no_homogeneous_card_wall",
+        "rule": "카드벽을 기본 레이아웃으로 쓰지 않는다",
+        "detail": "AI는 페이지 섹션 전체를 카드 안에 다시 넣거나, 동일한 radius/shadow/padding을 가진 카드 묶음으로 화면을 채우지 않는다. 반복되는 객체에는 카드가 가능하지만, 1차 작업 표면은 canvas, map, table, row list, rail, inspector, sheet 같은 도메인 구조로 먼저 만든다.",
+    },
+    {
+        "id": "active_svg_visual_affordances",
+        "rule": "아이콘과 도메인 그림은 완성 조건이다",
+        "detail": "AI는 필터, 상태, 액션, 추천 근거, 도메인 객체에 SVG 아이콘이나 deterministic SVG/이미지 자산을 적극적으로 연결한다. 도메인이 장소·상품·콘텐츠·게임·스포츠처럼 시각 실체를 갖는 경우, 텍스트와 테두리만으로 완료 처리하지 않는다.",
     },
 ]
 
@@ -75,6 +102,417 @@ REFERENCE_ABSORPTION_SCOPE = {
         "rule": "When implementation review identifies a repeatable design-system failure, promote it into governance, generated artifacts, and lint checks before treating the current screen as complete.",
         "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md"],
     },
+}
+
+RESPONSIVE_RESILIENCE_POLICY = {
+    "id": "responsive-resilience",
+    "rule": "Every generated or refactored UI must preserve horizontal fit at mobile widths before visual polish is considered complete.",
+    "viewport_contract": {
+        "required_widths_px": [320, 360, 390, 430, 768, 1024, 1440],
+        "pass_condition": "document.documentElement.scrollWidth <= window.innerWidth and all primary controls remain reachable without horizontal scrolling.",
+    },
+    "control_rules": [
+        "Buttons, CTA groups, tabs, filter chips, and toolbar actions must not rely on fixed px widths or mobile-hostile min-width values.",
+        "Every button-like control needs max-inline-size: 100%; controls inside flex/grid parents need min-inline-size: 0 so labels can shrink or wrap.",
+        "Action rows must wrap or stack at narrow widths; two-button rows need a <=480px fallback before implementation is complete.",
+        "Long Korean CTA labels must be tested with real copy. Prefer wrapping/stacking over clipping, overflow hidden, or forcing white-space: nowrap.",
+        "Horizontal rails, tickers, score strips, and carousels must not reveal partially clipped text. Either size cards so visible items are complete, or use compact labels such as icon+code in the rail and move full names to the detailed surface.",
+        "Do not use width: 100vw inside padded containers; it commonly creates horizontal scroll. Use width: 100%, max-width: 100%, or a documented full-bleed pattern.",
+        "Never hide body overflow-x as the fix for a layout bug; remove the overflowing width/min-width instead.",
+    ],
+    "failure_patterns": [
+        {
+            "id": "mobile-control-overflow",
+            "trigger": "A button, CTA, tab, chip, or action group extends beyond a 320-430px viewport or requires sideways scrolling.",
+            "rule": "Controls must fit, wrap, or stack within their container at mobile widths.",
+            "prevention": "Ban fixed/min-width px sizing on button-like controls unless paired with max-inline-size: 100%, min-inline-size: 0, and a mobile wrap/stack fallback.",
+            "technical_controls": ["system_spec.md Responsive Resilience", "components/component_specs.md button notes", "lint-implementation DS040", "lint-implementation DS042", "viewport screenshot QA"],
+        },
+        {
+            "id": "viewport-horizontal-overflow",
+            "trigger": "The page has horizontal scroll at mobile widths because a section, grid, or full-bleed element exceeds the viewport.",
+            "rule": "No generated screen is complete while scrollWidth exceeds innerWidth on supported mobile viewports.",
+            "prevention": "Avoid 100vw in padded containers, use minmax(0, 1fr) for grids, set min-width: 0 on flex/grid children, and verify 320/360/390/430px screenshots.",
+            "technical_controls": ["system_spec.md viewport contract", "lint-implementation DS041", "lint-implementation DS043", "Playwright mobile viewport check"],
+        },
+        {
+            "id": "horizontal-rail-label-clipping",
+            "trigger": "A horizontal ticker, score strip, carousel, or date rail shows ellipsized/cropped labels or exposes a partial next card with clipped readable text.",
+            "rule": "Scrollable rails may hint that more content exists, but visible text inside each rendered item must be complete and legible.",
+            "prevention": "Use whole-card column math at tablet/desktop breakpoints; at mobile widths show one full card or remove full names from the rail. Split dense scan labels from descriptive names, and preserve full names in aria-labels or detail panels.",
+            "technical_controls": ["system_spec.md Responsive Resilience", "component_specs.md rail/ticker notes", "viewport screenshot QA", "Playwright element scrollWidth<=clientWidth checks"],
+        },
+    ],
+    "outputs": ["design_system_blueprint.governance", "system_spec.md", "token_schema.json", "component_specs.md", "IMPLEMENTATION_CONTRACT.md", "lint-implementation"],
+}
+
+COLOR_MODE_PARITY_POLICY = {
+    "id": "color-mode-parity",
+    "rule": "Every generated or refactored product UI must ship a normal light mode and a dark mode unless the user explicitly requests a single-mode artifact.",
+    "required_modes": ["light", "dark"],
+    "default_mode": "light",
+    "implementation_rules": [
+        "Use light mode as the default :root or app-default token set; dark mode must be an override such as [data-theme=\"dark\"].",
+        "Do not build dark-only surfaces for dashboards, tools, landing pages, or prototypes unless explicitly requested.",
+        "Every semantic surface/text/border/accent role needs a light and dark value or a documented derivation.",
+        "Theme toggles, preview links, screenshots, or QA scripts must verify both modes when the implementation has a UI shell.",
+        "Do not solve dark mode by inverting the entire page; define mode-specific semantic tokens and keep imagery/icons legible in both modes.",
+    ],
+    "failure_patterns": [
+        {
+            "id": "dark-only-implementation",
+            "trigger": "A generated UI defines only dark surfaces or color-scheme: dark without a light/default token mode.",
+            "rule": "Normal light mode is required alongside dark mode.",
+            "prevention": "Define :root light tokens, add [data-theme=\"dark\"] overrides, and verify both modes before completion.",
+            "technical_controls": ["system_spec.md Color Mode Parity", "system_ontology.json ColorMode", "lint-implementation DS060", "light/dark screenshot QA"],
+        },
+        {
+            "id": "theme-token-drift",
+            "trigger": "Light and dark modes use unrelated local colors instead of paired semantic roles.",
+            "rule": "Mode values must map through the same semantic token roles.",
+            "prevention": "Keep mode differences inside artifact token files such as design-system/tokens.css; components should consume the same semantic variables in both modes.",
+            "technical_controls": ["token_schema.json semantic roles", "IMPLEMENTATION_CONTRACT.md", "lint-implementation DS061"],
+        },
+    ],
+    "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "token_schema.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "lint-implementation"],
+}
+
+ICON_REFACTOR_POLICY = {
+    "id": "emoji-to-svg-refactor",
+    "rule": "During UI refactors, emoji-looking UI affordances must be replaced with SVG-based icons instead of preserved as text glyphs.",
+    "targets": ["button", "card", "badge", "tab", "navigation item", "status indicator", "empty state", "toast", "banner"],
+    "replacement_order": [
+        "Use the project's existing icon library when one is already installed and stylistically compatible.",
+        "Reuse existing local SVG/icon components when available.",
+        "Create a simple local SVG file or SVG component when no suitable icon exists.",
+    ],
+    "implementation_rules": [
+        "Keep SVG stroke/fill bound to currentColor or design tokens, not hard-coded palette values.",
+        "Decorative SVG icons use aria-hidden=\"true\"; semantic icons get an accessible label or adjacent text.",
+        "Store new SVG assets in the nearest existing icons/assets directory; create a minimal icons directory only when none exists.",
+        "Do not replace user-generated emoji content, chat text, blog body, or emoji-picker data.",
+        "Do not use emoji as a placeholder while searching for a proper icon.",
+    ],
+    "failure_patterns": [
+        {
+            "id": "emoji-ui-affordance",
+            "trigger": "A button, card, nav item, badge, status indicator, or empty state uses an emoji as its icon or visual marker.",
+            "rule": "UI affordances must use SVG files/components or an approved icon library, never emoji glyphs.",
+            "prevention": "Replace the emoji with an appropriate existing icon, imported icon, or locally authored SVG with token-bound color and accessible semantics.",
+            "technical_controls": ["component_specs.md Non-negotiable", "design-system-refactor skill", "lint-implementation DS050"],
+        },
+        {
+            "id": "icon-starved-control-surface",
+            "trigger": "An interactive surface has filters, actions, badges, or status chips but almost no SVG/icon affordances.",
+            "rule": "Icons are part of scanability for controls and state, not optional decoration.",
+            "prevention": "Add token-bound SVG icons to filters, actions, status, and repeated scan surfaces while keeping accessible text labels.",
+            "technical_controls": ["IMPLEMENTATION_CONTRACT.md", "component_specs.md icon notes", "lint-implementation DS071"],
+        }
+    ],
+    "outputs": ["system_spec.md", "component_specs.md", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "lint-implementation"],
+}
+
+APP_ICON_IDENTITY_POLICY = {
+    "id": "brand-app-icon-identity",
+    "rule": "Every app or website implementation must include a brand-specific app icon identity asset; generic initial-letter tiles are not acceptable as final app icons.",
+    "required_assets": [
+        {
+            "id": "identity-asset:app-icon",
+            "label": "Brand app icon",
+            "required": True,
+            "formats": ["svg source", "favicon", "web app manifest icon when applicable"],
+            "targets": ["favicon", "app shell brand mark", "web app manifest", "mobile home-screen icon"],
+            "description": "A compact identity mark that encodes the product domain, brand palette, and interaction posture without relying on generic initials.",
+        }
+    ],
+    "implementation_rules": [
+        "Do not ship a plain initials tile such as WC, AI, DS, or App as the final app icon unless the brand system explicitly defines that lettermark.",
+        "The app icon must use the brand palette, visual keywords, and product primitives as evidence for shape language.",
+        "Use a deterministic SVG source for the primary app icon; generated raster imagery may support marketing visuals but must not replace the identity icon source.",
+        "Wire the app icon into favicon/link metadata and the visible app-shell brand mark when the implementation has one.",
+        "Keep small-size legibility: the icon must remain recognizable at 32px and in a 44px navigation mark.",
+    ],
+    "failure_patterns": [
+        {
+            "id": "generic-initials-app-icon",
+            "trigger": "A favicon, app-shell mark, or web app icon uses generic initials or placeholder text instead of a brand-specific identity asset.",
+            "rule": "App icons are required brand identity assets, not temporary text badges.",
+            "prevention": "Create or reuse a brand-specific SVG app icon, wire it to favicon/manifest/app-shell surfaces, and document it in the ontology.",
+            "technical_controls": ["system_spec.md Brand Identity Assets", "system_ontology.json BrandIdentityAsset", "IMPLEMENTATION_CONTRACT.md", "lint-implementation DS077", "viewport screenshot QA"],
+        }
+    ],
+    "outputs": ["brand_profile", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "lint-implementation"],
+}
+
+MOCKUP_VISUAL_SUBSTANCE_POLICY = {
+    "id": "mockup-visual-substance",
+    "rule": "Commercial mockups should use meaningful visual assets by default; image-free screens are incomplete when the product, content, place, object, or story needs visual substance.",
+    "applies_to": [
+        "website mockup",
+        "landing page",
+        "product page",
+        "commerce",
+        "editorial/content surface",
+        "portfolio",
+        "venue/place page",
+        "sports hub",
+        "travel/food/real-estate",
+        "game or interactive experience",
+        "empty state/onboarding",
+    ],
+    "diagnosis": [
+        "Image-free mockups often look unfinished because cards, hero sections, editorial modules, and content surfaces have no concrete subject matter.",
+        "Gradient blocks, abstract blobs, and homogeneous placeholder panels read as AI-generated polish rather than a real product or brand surface.",
+        "Professional sites usually reveal an actual product, place, person, object, state, gameplay, article subject, or brand identity asset early in the experience.",
+    ],
+    "required_signals": [
+        "at least one relevant visual asset when the first viewport is a landing, brand, product, venue, editorial, portfolio, game, or content-led surface",
+        "real content thumbnails or product/place/object imagery where repeated cards represent visual entities",
+        "image_gen, sourced visual fallback, user-supplied assets, or deterministic SVG identity assets selected according to the visual asset acquisition contract",
+        "deterministic inline SVG visuals include visible labels/legends or title/desc plus data-subject anchors when they represent places, products, diagrams, maps, or scenes",
+        "manifest entry with acquisition_mode, asset_path, intended_for, alt_text, sha256, crop/focal notes when applicable",
+        "responsive crop and light/dark legibility verified by screenshots or DOM checks",
+    ],
+    "image_acquisition_order": [
+        "Use user-supplied licensed imagery when provided and relevant.",
+        "Use Codex image_gen for brand-specific synthetic raster imagery.",
+        "Use sourced visual fallback when real-world photography is more appropriate or image_gen is unavailable.",
+        "Use deterministic SVG/identity assets for app icons, logos, flags, diagrams, and UI glyphs.",
+    ],
+    "implementation_rules": [
+        "Do not ship a commercial website/app mockup with only text, bordered cards, gradients, and empty media placeholders when the domain naturally needs imagery.",
+        "Hero, product, venue, editorial, portfolio, and game surfaces need a concrete visual subject, not a purely atmospheric background.",
+        "Repeated content cards should use thumbnails or compact visual identity when the item represents a place, person, product, match, article, media, or object.",
+        "Empty states and onboarding panels can use illustration, but the illustration must clarify the product state rather than decorate a blank panel.",
+        "Path-only inline SVGs with generic map/sketch/illustration classes do not count as visual substance unless the visual is semantically anchored with labels, legend, title/desc, or data-subject landmarks.",
+        "Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.",
+        "Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.",
+        "A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.",
+        "Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.",
+        "Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.",
+        "Every integrated raster image must be represented in the visual asset manifest before product code references it.",
+    ],
+    "failure_patterns": [
+        {
+            "id": "image-free-commercial-mockup",
+            "trigger": "A site, app, landing, product, venue, editorial, portfolio, game, or content-led mockup ships with no meaningful visual asset despite obvious visual subject matter.",
+            "rule": "Visual substance is part of mockup completeness, not optional decoration.",
+            "prevention": "Add relevant generated, sourced, user-supplied, or deterministic visual assets and record them in the manifest before calling the mockup complete.",
+            "technical_controls": ["system_spec.md Mockup Visual Substance", "system_ontology.json GovernanceRule", "design-system-visual-assets skill", "lint-implementation DS072", "viewport screenshot QA"],
+        },
+        {
+            "id": "placeholder-gradient-as-image",
+            "trigger": "A hero, card, or editorial module uses only gradients, abstract blobs, empty frames, or generic decorative panels where a real visual subject is expected.",
+            "rule": "A visual slot must reveal the actual product, place, object, state, content, or brand identity.",
+            "prevention": "Replace placeholder media with image_gen, sourced, user-supplied, or deterministic SVG assets that match the domain and slot.",
+            "technical_controls": ["Generated Visual Asset Plan", "visual manifest review", "visual QA screenshots"],
+        },
+        {
+            "id": "low-information-inline-svg-visual",
+            "trigger": "A domain visual is an unlabeled path-only SVG map, sketch, scene, or illustration that does not expose the actual place, product, object, state, or data relationship.",
+            "rule": "Deterministic SVG visuals need semantic anchors; otherwise they are decorative placeholders, not visual substance.",
+            "prevention": "Add visible labels, legend, title/desc, and data-subject landmarks, or replace the slot with a stronger generated, sourced, or user-supplied asset.",
+            "technical_controls": ["lint-implementation DS073", "system_spec.md Mockup Visual Substance", "visual QA screenshots"],
+        },
+        {
+            "id": "amateur-ad-hoc-illustration",
+            "trigger": "A mockup uses an improvised sketch/doodle/hand-drawn SVG as the main domain visual and the result reads amateur or meaningless.",
+            "rule": "A bad drawing does not become acceptable because it is labeled; low-confidence illustration should be removed or replaced.",
+            "prevention": "Use image_gen, a sourced/user-supplied asset, a reference-backed illustration, or a clean product schematic/data visualization. Do not ship rough path art as visual substance.",
+            "technical_controls": ["lint-implementation DS074", "visual QA screenshots", "implementation feedback promotion"],
+        },
+        {
+            "id": "ambiguous-mock-runtime-surface",
+            "trigger": "A mockup shows a schematic, placeholder map, or abstract visual surface without clarifying what runtime app surface it represents.",
+            "rule": "Even a mockup must make the production representation legible.",
+            "prevention": "Mark the surface as a map SDK layer, generated/sourced media, chart/table, product schematic, or explicit loading/empty state; avoid ambiguous decorative stand-ins.",
+            "technical_controls": ["lint-implementation DS075", "IMPLEMENTATION_CONTRACT.md", "visual QA screenshots"],
+        },
+        {
+            "id": "media-runtime-surface-without-asset",
+            "trigger": "A place, product, article, or content detail declares a media/photo runtime surface but renders only CSS patterns, gradients, or generic blocks.",
+            "rule": "Runtime media surfaces need actual media assets or explicit empty/loading states.",
+            "prevention": "Bind a generated, sourced, or user-supplied image/video asset with alt text and manifest metadata, or render a clear empty/loading state instead of fake visual texture.",
+            "technical_controls": ["lint-implementation DS076", "visual asset manifest", "image_gen or sourced asset pipeline"],
+        },
+        {
+            "id": "media-tile-without-asset",
+            "trigger": "One or more place-photo, texture-card, media-card, evidence-card, or thumbnail-card slots remain CSS-only after the surrounding media surface has been implemented.",
+            "rule": "Every visible media/evidence tile needs its own asset or an explicit empty/loading/pending state.",
+            "prevention": "Attach generated, sourced, or user-supplied media to each tile, or mark the tile as an intentional empty/loading/pending state with clear copy.",
+            "technical_controls": ["lint-implementation DS078", "visual asset manifest", "viewport screenshot QA"],
+        },
+        {
+            "id": "unmanifested-mockup-image",
+            "trigger": "A mockup references a raster image in HTML/CSS/JS without a visual asset manifest record.",
+            "rule": "Integrated raster assets must be traceable.",
+            "prevention": "Record acquisition_mode, asset_path, intended_for, alt_text, sha256, and source/prompt metadata before wiring the asset.",
+            "technical_controls": ["public/generated/design-system/manifest.json", "design-system/generated_visual_assets.json", "system_ontology.json SourcedVisualAsset/GeneratedVisualAsset"],
+        },
+    ],
+    "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "visual QA", "compare-visuals"],
+}
+
+COMMERCIAL_PRODUCT_REALISM_POLICY = {
+    "id": "commercial-product-realism",
+    "rule": "Product and data UIs must feel operated, not generated: lead with real workflow state, data density, provenance, and asymmetric hierarchy instead of pitch-deck hero composition.",
+    "applies_to": [
+        "dashboard",
+        "tool",
+        "sports data product",
+        "community product",
+        "operational surface",
+        "B2B/SaaS product UI",
+    ],
+    "diagnosis": [
+        "AI-looking screens often use a large cinematic hero, symmetric card grids, generic metric tiles, and equally polished panels before the actual task surface appears.",
+        "Commercial sports and data products feel more credible because they expose compact live modules, filters, list/table rows, timestamps, source labels, status variation, and editorial or utility rails.",
+        "Generated raster imagery becomes suspicious when it dominates a workflow screen and is not tied to actual product state, team identity, venue context, or inspectable content.",
+    ],
+    "required_signals": [
+        "first-viewport task surface",
+        "compact data/list/table module where the domain expects scanning",
+        "clear primary action or filter path",
+        "status variation such as live, final, upcoming, delayed, empty, error, or source-updated",
+        "source labels, timestamps, sample/demo labels, or data provenance for exact numbers",
+        "domain-specific identity assets such as team crests, app icon, venue/match labels, or object imagery when applicable",
+        "national flag identity marks for country-based tournaments, paired with code/name text for scanability and accessibility",
+        "reference-backed domain morphology such as score strips, compact rails, tables, tabs, and editorial sidebars before major realism refactors",
+    ],
+    "successful_patterns": [
+        {
+            "id": "same-domain-reference-before-redesign",
+            "rule": "Before a realism pass, collect same-domain commercial references and current-state screenshots.",
+            "implementation": "Use reference screenshots to extract morphology only: module order, density, rail/table rhythm, status texture, and hierarchy.",
+            "verification": "A research report or design-context pack exists, and implementation notes name what was absorbed and what was not copied.",
+        },
+        {
+            "id": "operational-header-before-hero-media",
+            "rule": "Sports/data products open with operational status and task controls, not a cinematic hero.",
+            "implementation": "Use compact status strips, date/filter rails, next match/current item, source labels, and primary task surfaces above decorative imagery.",
+            "verification": "First viewport contains inspectable data/state modules before or alongside any generated visual context.",
+        },
+        {
+            "id": "score-ticker-as-scan-surface",
+            "rule": "Match tickers are scan surfaces; they should favor compact identity and state over full descriptive copy.",
+            "implementation": "Use flag/code or icon/code labels, status chips, short prediction/result labels, and whole-card scroll math. Move full names and explanations to detail panels or aria-labels.",
+            "verification": "Ticker item text does not clip at 390, 1024, or 1440px, and full match names remain available in detail views or accessibility labels.",
+        },
+        {
+            "id": "national-flag-code-identity",
+            "rule": "Country-based tournament UIs use national flag identity marks plus team codes/names as the primary recognition layer.",
+            "implementation": "Use deterministic local SVG/CSS flag marks or licensed flag assets; pair with FIFA/IOC-style codes in dense rails and names in detailed surfaces.",
+            "verification": "No emoji flags are used as UI icons; flag colors are represented through design-system tokens such as --ds-color-* rather than local raw colors.",
+        },
+        {
+            "id": "source-ledger-and-sample-labeling",
+            "rule": "Exact-looking sports metrics, predictions, and schedules need visible provenance.",
+            "implementation": "Add source ledger, updated-at labels, sample/demo labels, and clear separation between official fixtures/results and MVP sample predictions/opinions.",
+            "verification": "Numbers and predictions have source/update/sample context in the first screen or nearby metadata.",
+        },
+        {
+            "id": "editorial-insight-side-rail",
+            "rule": "Sports hubs benefit from an asymmetric side rail for context, fan pulse, and editorial watch points.",
+            "implementation": "Pair the primary schedule/table with a sticky or stacked rail containing selected match, country tracking, fan reaction, and group implication cards.",
+            "verification": "Primary task remains dominant while the rail provides contextual depth without becoming a homogeneous card wall.",
+        },
+        {
+            "id": "visual-context-secondary",
+            "rule": "Generated or atmospheric imagery supports venue/domain context but does not replace the product workflow.",
+            "implementation": "Keep generated images small or secondary in operational products; use them to reinforce venue/command-center mood after schedule/status surfaces are visible.",
+            "verification": "The image is not the largest first-viewport object in dashboards/tools unless the user explicitly requests a landing page.",
+        },
+        {
+            "id": "dual-mode-screenshot-qa",
+            "rule": "Light mode is the default product mode and dark mode remains available; both need screenshot QA.",
+            "implementation": "Bind components to paired semantic tokens and capture at least light mode plus dark mode when theme support exists.",
+            "verification": "The implementation includes :root light tokens, dark overrides, and viewport screenshots or checks for both modes.",
+        },
+        {
+            "id": "brand-app-icon-as-required-identity",
+            "rule": "App icon identity is part of product completeness, not optional polish.",
+            "implementation": "Create or discover a brand-specific deterministic SVG app icon, wire favicon/manifest/app-shell, and avoid generic initials such as WC unless explicitly defined by the brand.",
+            "verification": "BrandIdentityAsset is present in the ontology and the icon is visible in browser/app shell surfaces.",
+        },
+    ],
+    "implementation_rules": [
+        "For dashboards, tools, sports/data products, and community products, do not make the first screen read like a marketing landing page unless the user explicitly asks for a landing page.",
+        "Replace oversized hero pitches with an operational header: current status, primary workflow, filters/date rail, next item, or live summary.",
+        "Use compact rows, tables, rails, tabs, and status chips when the domain task is scanning or comparison; reserve large cards for true summaries or repeated content items.",
+        "Avoid homogeneous card walls where every module has the same weight, radius, tint, icon treatment, and spacing. Create an explicit hierarchy between primary task, secondary rail, and supporting modules.",
+        "Exact metrics, model outputs, poll counts, odds, rankings, or match data need source/update context or a visible sample/demo label.",
+        "Generated or decorative imagery must support the domain object, venue, person, product, or state. It must not replace data, navigation, controls, or the first operational surface.",
+        "Use asymmetry and real product rhythm: some dense modules, some editorial/context rails, some compact controls, and visible state variation.",
+        "For country-based sports competitions, represent teams with deterministic SVG/CSS flag marks plus text codes or names. Do not use platform emoji flags as UI icons, and do not default to generic colored letter badges when national identity is the primary domain signal.",
+        "Flag colors and domain identity marks are design-system tokens. Do not create implementation-local --flag-* or raw color values in component CSS; use --ds-color-* or generated asset metadata.",
+        "When a product UI is judged AI-looking, gather at least two same-domain commercial references and convert only observed morphology into the implementation: module order, density, status texture, rail/table patterns, and state hierarchy. Do not copy competitor copy, data, palette, or navigation taxonomy.",
+    ],
+    "failure_patterns": [
+        {
+            "id": "pitch-deck-dashboard-shell",
+            "trigger": "A dashboard, tool, sports/data, or community UI opens with an oversized marketing hero, broad slogan, and feature cards before the real workflow or data surface.",
+            "rule": "Operational products must lead with the user's live task or inspectable product state, not a pitch-deck composition.",
+            "prevention": "Start with a compact command header, status strip, active filters/date rail, table/list, or primary workflow module; move marketing copy lower or remove it.",
+            "technical_controls": ["system_spec.md Commercial Product Realism", "system_ontology.json GovernanceRule", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "visual QA"],
+        },
+        {
+            "id": "homogeneous-card-wall",
+            "trigger": "The first viewport is dominated by equally weighted cards with similar radius, shadow, icon chips, label style, and spacing.",
+            "rule": "Commercial product UIs need hierarchy, density variation, and task-led asymmetry.",
+            "prevention": "Promote one primary workflow module, compress secondary data into rows/tables/rails, and vary module scale only when the information architecture justifies it.",
+            "technical_controls": ["system_spec.md Component Strategy", "component_specs.md module hierarchy notes", "lint-implementation DS070", "visual QA"],
+        },
+        {
+            "id": "unverified-redesign-screenshot",
+            "trigger": "A redesign or visual-feedback response claims improvement while the baseline screenshot was overwritten, cached, or byte-identical to the revised screenshot.",
+            "rule": "Visual feedback is not closed until before/after screenshots are preserved and compared.",
+            "prevention": "Capture baseline and revised screenshots under distinct filenames, run compare-visuals, and cite hashes plus changed-pixel ratio before claiming a visual change.",
+            "technical_controls": ["compare-visuals", "visual QA screenshots", "implementation feedback promotion"],
+        },
+        {
+            "id": "decorative-ai-hero-over-data",
+            "trigger": "A cinematic generated image or decorative visual dominates a product workflow where users need schedules, results, controls, or status first.",
+            "rule": "Generated imagery supports product context but does not outrank the operational surface.",
+            "prevention": "Make imagery secondary, domain-specific, and connected to real content; prioritize score strips, tables, filters, or domain objects in the first viewport.",
+            "technical_controls": ["system_spec.md Generated Visual Asset Plan", "system_spec.md Commercial Product Realism", "image manifest review"],
+        },
+        {
+            "id": "synthetic-metric-copy",
+            "trigger": "The UI shows precise-looking numbers, predictions, rankings, poll counts, or operational claims without source, timestamp, sample/demo labeling, or data provenance.",
+            "rule": "Credible product data must expose provenance or clearly identify itself as sample/demo data.",
+            "prevention": "Add source/update labels, sample badges, data-footnote components, or remove exact-looking fabricated values until real data is available.",
+            "technical_controls": ["system_spec.md Content/Data Provenance", "component_specs.md data footnote", "copy review"],
+        },
+        {
+            "id": "missing-operational-state-texture",
+            "trigger": "Lists, cards, schedules, feeds, or dashboards have only ideal/default states and no live/final/empty/error/delayed/source-updated variation.",
+            "rule": "Commercial interfaces reveal operational state texture through varied statuses and edge cases.",
+            "prevention": "Design and implement realistic domain states before final visual polish; include at least the states required by component_specs.md and product primitives.",
+            "technical_controls": ["component_specs.md states", "system_ontology.json ComponentState", "scenario QA"],
+        },
+        {
+            "id": "reference-free-realism-refactor",
+            "trigger": "A screen receives 'AI-looking' or 'not commercial enough' feedback and the next iteration changes styling from taste alone without collecting same-domain commercial references.",
+            "rule": "Commercial realism fixes must be evidence-backed: reference data informs morphology, while ontology tokens, component specs, and product goals remain authoritative.",
+            "prevention": "Capture a current-state screenshot, collect at least two same-domain references, summarize observed patterns, and implement the relevant density, rail, table, status, or hierarchy changes without copying protected content.",
+            "technical_controls": ["Reference Intelligence", "Commercial Product Realism", "visual QA screenshots", "implementation feedback promotion"],
+        },
+        {
+            "id": "generic-national-team-badges",
+            "trigger": "A country-based sports UI represents national teams only as generic colored badges, initials, or abstract crests while flags are the expected recognition layer.",
+            "rule": "National-team products should expose flag identity marks as the primary visual cue, with text codes/names retained for scanability and accessibility.",
+            "prevention": "Use local deterministic SVG/CSS flag marks or licensed flag assets paired with team codes. Avoid emoji flags and avoid replacing readable text with image-only flags.",
+            "technical_controls": ["Commercial Product Realism", "Brand Identity Assets", "icon_refactor_policy", "visual QA screenshots"],
+        },
+        {
+            "id": "untokenized-domain-identity-colors",
+            "trigger": "A UI introduces local flag, team, league, venue, or domain identity colors directly inside implementation CSS instead of design-system tokens.",
+            "rule": "Domain identity colors are still governed design tokens; component CSS consumes token roles rather than inventing local palette variables.",
+            "prevention": "Promote domain identity colors into token files as --ds-color-* or documented asset metadata, then bind components to those variables.",
+            "technical_controls": ["lint-implementation DS003", "token_schema.json", "Commercial Product Realism", "Brand Identity Assets"],
+        },
+    ],
+    "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "visual QA", "compare-visuals"],
 }
 
 KEYWORD_PRINCIPLES = {
@@ -115,6 +553,8 @@ def load_brand_profile(path: Path) -> dict:
             profile["_resolved_color_reference"] = resolved_reference
         if issues:
             profile["_color_reference_issues"] = issues
+    else:
+        profile["_resolved_color_reference"] = resolve_semantic_color_reference(profile)
 
     font_config = profile.get("font_reference")
     if font_config is None or font_config is True:
@@ -127,8 +567,102 @@ def load_brand_profile(path: Path) -> dict:
             profile["_resolved_visual_reference"] = resolved_visual_reference
         if issues:
             profile["_visual_reference_issues"] = issues
+        profile["_design_context_pack"] = build_design_context_pack(
+            profile,
+            resolved_visual_reference if resolved_visual_reference else {},
+        )
+
+    generated_visual_asset_manifests = discover_generated_visual_asset_manifests(path.parent)
+    if generated_visual_asset_manifests:
+        profile["_generated_visual_asset_manifests"] = generated_visual_asset_manifests
+
+    identity_assets = discover_brand_identity_assets(path.parent, profile)
+    if identity_assets:
+        profile["_identity_assets"] = identity_assets
 
     return profile
+
+
+def discover_brand_identity_assets(project_dir: Path, profile: dict | None = None) -> list[dict]:
+    """Discover project-local brand identity assets that should be promoted into ontology."""
+    profile = profile or {}
+    assets: list[dict] = []
+    seen_ids: set[str] = set()
+
+    for asset in profile.get("identity_assets", []):
+        if not isinstance(asset, dict):
+            continue
+        asset_id = str(asset.get("id") or "identity-asset:app-icon")
+        seen_ids.add(asset_id)
+        assets.append(asset)
+
+    app_icon_candidates = [
+        "assets/app-icon.svg",
+        "public/app-icon.svg",
+        "app-icon.svg",
+        "favicon.svg",
+    ]
+    manifest_candidates = [
+        "site.webmanifest",
+        "manifest.webmanifest",
+        "public/site.webmanifest",
+        "public/manifest.webmanifest",
+    ]
+    app_icon_path = next((path for path in app_icon_candidates if (project_dir / path).exists()), None)
+    if app_icon_path and "identity-asset:app-icon" not in seen_ids:
+        manifest_path = next((path for path in manifest_candidates if (project_dir / path).exists()), None)
+        targets = ["favicon", "app shell brand mark"]
+        if manifest_path:
+            targets.append("web app manifest")
+        assets.append({
+            "id": "identity-asset:app-icon",
+            "label": "Brand app icon",
+            "slot": "app-icon",
+            "required": True,
+            "integrated": True,
+            "asset_path": app_icon_path,
+            "manifest_path": manifest_path,
+            "format": "svg",
+            "targets": targets,
+            "description": "Project-local app icon discovered from common brand identity asset paths.",
+            "discovered_from": "common-app-icon-path",
+        })
+
+    return assets
+
+
+def discover_generated_visual_asset_manifests(project_dir: Path) -> list[dict]:
+    """Load project-local generated or sourced visual asset manifests for ontology promotion."""
+    manifests: list[dict] = []
+    seen_paths: set[Path] = set()
+
+    for relative_path in VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS:
+        manifest_path = (project_dir / relative_path).resolve()
+        if manifest_path in seen_paths or not manifest_path.exists():
+            continue
+        seen_paths.add(manifest_path)
+        try:
+            raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(raw_manifest, dict):
+            continue
+        assets = raw_manifest.get("assets")
+        if not isinstance(assets, list) or not assets:
+            continue
+
+        manifests.append({
+            "path": relative_path,
+            "absolute_path": str(manifest_path),
+            "schema_version": raw_manifest.get("schema_version"),
+            "project": raw_manifest.get("project"),
+            "brand": raw_manifest.get("brand"),
+            "generator": raw_manifest.get("generator") or {},
+            "source_session": raw_manifest.get("source_session") or {},
+            "assets": [asset for asset in assets if isinstance(asset, dict)],
+        })
+
+    return manifests
 
 
 def build_blueprint(
@@ -179,6 +713,9 @@ def build_blueprint(
         "color_reference": brand_profile.get("_resolved_color_reference"),
         "visual_reference": brand_profile.get("_resolved_visual_reference"),
         "visual_reference_issues": brand_profile.get("_visual_reference_issues", []),
+        "design_context_pack": brand_profile.get("_design_context_pack"),
+        "identity_assets": brand_profile.get("_identity_assets", []),
+        "generated_visual_assets": brand_profile.get("_generated_visual_asset_manifests", []),
         "visual_language": (brand_profile.get("_resolved_visual_reference") or {}).get("visual_motifs"),
         "layout_cues": (brand_profile.get("_resolved_visual_reference") or {}).get("layout_cues"),
         "component_style_hints": (brand_profile.get("_resolved_visual_reference") or {}).get("component_style_hints"),
@@ -203,18 +740,36 @@ def build_blueprint(
                 "기존 핵심 화면, 진입점, 작업 흐름은 명시적 승인 없이 제거하거나 숨기지 않음",
                 "전면 셸 리라이트보다 토큰 -> primitive -> feature surface 순서의 점진적 롤아웃을 우선",
                 "새 시각 규칙은 지원 대상 테마와 breakpoint 전체에서 먼저 검증",
+                "일반(light) 모드와 dark 모드를 함께 제공하고, light를 기본 :root 또는 앱 기본값으로 둠",
+                "모바일 320/360/390/430px에서 horizontal scroll 또는 버튼/CTA 잘림이 있으면 완료로 보지 않음",
+                "버튼·CTA·탭·필터칩·툴바 액션은 fixed width/min-width에 의존하지 않고 wrap 또는 stack fallback을 가져야 함",
+                "padded container 안에서 width: 100vw를 쓰지 않음 — width: 100%, max-width: 100%, documented full-bleed 패턴을 우선",
                 "기존 데이터 밀도와 업무 완료 경로를 유지한 상태에서 시각 품질을 높이는 방향을 우선",
                 "기능 위치 변경, 정보 구조 변경, 패널 제거는 별도의 migration plan이 있을 때만 수행",
                 "레퍼런스는 형태·밀도·컴포넌트 비례만 흡수하고, 색 조합·폰트 스케일·도메인 IA는 토큰과 제품 온톨로지를 따른다",
                 "토큰을 사용하더라도 status/tint/info 역할을 섞어 레퍼런스처럼 보이는 새 팔레트를 만들지 않는다",
                 "구현 중 사용자·리뷰어가 반복 가능한 실패 패턴을 지적하면 현재 화면 수정에 그치지 않고 governance/contract/linter로 승격한다",
                 "script_guardrails가 있으면 한글 display 헤딩의 min/max line-height·tracking 안전값을 구현 기본값으로 강제",
-                "아이콘 자리에 이모지(🎨 ✅ 🔥 등)를 넣지 않음 — SVG 아이콘 또는 아이콘 라이브러리만 사용",
+                "상용 제품형 화면은 피치덱식 히어로/균일 카드벽보다 실제 작업 표면, 데이터 밀도, 상태, 필터, 출처를 첫 화면에 우선 배치한다",
+                "데이터·스포츠·운영 UI에서 정확한 수치, 예측, 순위, 투표수는 출처/업데이트 시각/샘플 라벨 없이 확정값처럼 보이게 하지 않는다",
+                "사이트·앱·랜딩·제품·장소·콘텐츠·게임 목업은 도메인 실체를 보여주는 이미지/미디어/identity asset을 적극적으로 사용하고, 이미지 없는 카드·그라디언트만으로 완성 처리하지 않는다",
+                "생성 이미지와 장식 비주얼은 도메인 맥락을 보조해야 하며 일정, 결과, 표, 필터, 상태 같은 핵심 작업 표면을 압도하지 않는다",
+                "Codex image_gen이 실패하거나 실제 사진성이 더 중요해 sourced visual fallback을 사용할 때는 라이선스/저작자/출처/attribution/sha256을 manifest에 기록하고 프로젝트 에셋으로 복사한 뒤 사용한다",
+                "유료 stock provider는 구매·구독·프로젝트 라이선스 증빙이 없으면 구현 에셋으로 승격하지 않고, reference-only provider는 형태·밀도·flow 참고로만 사용한다",
+                "라이선스 메타데이터가 없는 검색 이미지를 사용하지 않고, 런타임 코드가 원격 검색/CDN URL을 hotlink하지 않는다",
+                "아이콘 자리에 이모지(🎨 ✅ 🔥 등)를 넣지 않음 — 리팩토링 중 발견하면 SVG 파일/아이콘 컴포넌트 또는 아이콘 라이브러리로 교체",
+                "favicon, 앱 셸 브랜드 마크, 웹 manifest에는 브랜드 특정 앱 아이콘을 사용하고 일반 이니셜 타일을 최종 아이콘으로 남기지 않음",
                 "컴포넌트는 component_specs.md의 anatomy/states/token binding을 그대로 따라 완전히 구현",
                 "'TODO 컴포넌트', '임시 버튼', '플레이스홀더 카드' 같은 반쪽 구현을 남기지 않음"
             ],
             "ai_synthesis_principles": AI_SYNTHESIS_PRINCIPLES,
             "reference_absorption_scope": REFERENCE_ABSORPTION_SCOPE,
+            "color_mode_parity_policy": COLOR_MODE_PARITY_POLICY,
+            "responsive_resilience_policy": RESPONSIVE_RESILIENCE_POLICY,
+            "icon_refactor_policy": ICON_REFACTOR_POLICY,
+            "app_icon_identity_policy": APP_ICON_IDENTITY_POLICY,
+            "mockup_visual_substance_policy": MOCKUP_VISUAL_SUBSTANCE_POLICY,
+            "commercial_product_realism_policy": COMMERCIAL_PRODUCT_REALISM_POLICY,
             "feedback_promotion_policy": REFERENCE_ABSORPTION_SCOPE["promotion_policy"],
         },
         "ontology_targets": prioritized_concepts,
@@ -223,6 +778,8 @@ def build_blueprint(
 
     if blueprint["visual_reference"]:
         write_json(blueprint_dir / "visual_reference_report.json", blueprint["visual_reference"])
+    if blueprint.get("design_context_pack"):
+        write_json(blueprint_dir / "design_context_pack.json", blueprint["design_context_pack"])
     save_benchmark_report(output_dir, brand_profile)
     write_json(blueprint_dir / "design_system_blueprint.json", blueprint)
     generate_system_pack(output_dir, brand_profile, blueprint, references, documents)

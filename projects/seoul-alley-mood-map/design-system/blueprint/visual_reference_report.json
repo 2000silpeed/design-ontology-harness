@@ -1,0 +1,345 @@
+{
+  "mode": "local-images",
+  "query": [
+    "mobile map saved places sensory tags",
+    "quiet local discovery app cards",
+    "mobile place detail atmosphere metadata",
+    "knowledge graph inspector panel UI"
+  ],
+  "preferred_count": 8,
+  "weights": {
+    "layout": 0.35,
+    "component_shape": 0.2,
+    "color_balance": 0.1,
+    "typography_mood": 0.15,
+    "surface_style": 0.2
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "No external screenshot is authoritative in this first test run.",
+    "External or Lazyweb references may inform density and component morphology only; color, typography, IA, and copy stay governed by this profile and generated system docs.",
+    "The ontology inspector is a product-facing transparency panel, not a developer console."
+  ],
+  "must_include": [
+    "list alternative to the map",
+    "sensory metadata visible on cards",
+    "place confidence and evidence state",
+    "ontology inspector that exposes relations without feeling like an engineering dashboard"
+  ],
+  "avoid_patterns": [
+    "full-screen marketing hero",
+    "nested cards",
+    "large decorative gradients",
+    "tour package cards",
+    "price or booking language",
+    "photo feed dominance",
+    "one-hue beige atmosphere"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "dense",
+      "confidence": 0.27,
+      "evidence": [
+        "dashboard x0.9",
+        "control x0.9"
+      ],
+      "candidates": [
+        {
+          "value": "dense",
+          "score": 4.5
+        },
+        {
+          "value": "airy",
+          "score": 0.5
+        },
+        {
+          "value": "balanced",
+          "score": 0.2
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.13,
+      "evidence": [
+        "editorial x0.1"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 0.1
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "typography_mood": {
+      "value": "utilitarian",
+      "confidence": 0.24,
+      "evidence": [
+        "dashboard x0.9",
+        "control x0.9"
+      ],
+      "candidates": [
+        {
+          "value": "utilitarian",
+          "score": 4.5
+        },
+        {
+          "value": "editorial",
+          "score": 0.3
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "corner_style": {
+      "value": "medium",
+      "confidence": 0.15,
+      "evidence": [
+        "card x0.9"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image geometry was available."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.28,
+      "evidence": [
+        "grid x0.8",
+        "filter x1.35",
+        "score x0.9"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.21,
+      "evidence": [
+        "dashboard x0.9"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.",
+      "confidence": 0.15,
+      "evidence": [
+        "surface=tinted",
+        "density=dense",
+        "corner=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "navigation": {
+      "direction": "navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.",
+      "confidence": 0.15,
+      "evidence": [
+        "Data review surface"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "typography": {
+      "direction": "정보 밀도에 맞춰 type scale 차이를 줄이고 table/list label의 정렬 정확도를 우선한다.",
+      "confidence": 0.13,
+      "evidence": [
+        "typography_mood=utilitarian"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.17,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=dense"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.29,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.28)",
+        "layout=dashboard-grid (0.21)",
+        "grid x0.8",
+        "filter x1.35"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Data review surface",
+    "recommended_direction": [
+      "layout는 Data review surface 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 utilitarian 축 유지",
+      "density는 dense 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "full-screen marketing hero",
+      "nested cards",
+      "large decorative gradients",
+      "tour package cards",
+      "price or booking language",
+      "photo feed dominance",
+      "one-hue beige atmosphere"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "Seoul Alley Mood Map",
+    "system_name": "Alley Sense System",
+    "brand_keywords": [
+      "situated",
+      "quiet",
+      "sensory",
+      "curated",
+      "walkable",
+      "trustworthy",
+      "local"
+    ],
+    "anti_keywords": [
+      "generic-map",
+      "tourism-brochure",
+      "photo-influencer-feed",
+      "commerce-led",
+      "real-estate",
+      "overdecorated",
+      "neon",
+      "glassmorphism",
+      "beige-only-editorial",
+      "gamified"
+    ],
+    "visual_keywords": [
+      "mobile-first place companion",
+      "compact sensory metadata",
+      "quiet geographic grid",
+      "real texture evidence",
+      "time-of-day atmosphere",
+      "low elevation surfaces",
+      "scan-first recommendation cards"
+    ],
+    "interaction_keywords": [
+      "filter-first exploration",
+      "save and compare",
+      "time-of-day switching",
+      "mood-to-place matching",
+      "confidence labels",
+      "touch-safe controls",
+      "recoverable edits"
+    ],
+    "product_primitives": [
+      "neighborhood switcher",
+      "time-of-day segmented control",
+      "sensory filter chips",
+      "mood match score",
+      "map pin layer",
+      "place list card",
+      "sensory evidence strip",
+      "place detail sheet",
+      "light sound crowding profile",
+      "emotion tag cluster",
+      "recommendation queue",
+      "ontology inspector panel",
+      "place relationship graph",
+      "add place form",
+      "empty and uncertain evidence states"
+    ]
+  }
+}

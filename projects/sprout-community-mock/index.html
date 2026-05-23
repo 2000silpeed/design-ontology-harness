@@ -158,14 +158,14 @@
               <h2 id="home-heading">오늘은 친구의 멋진 점을 하나 찾아보기</h2>
               <p>칭찬은 선생님 확인 뒤 우리 반 광장에 올라가요.</p>
             </div>
-            <svg class="welcome-art" viewBox="0 0 260 160" role="img" aria-label="책과 새싹 그림">
-              <rect x="24" y="34" width="92" height="92" rx="8" fill="#FFF8DC" stroke="#20443A" stroke-width="5" />
-              <path d="M48 60h42M48 80h46M48 100h32" stroke="#F88379" stroke-width="6" stroke-linecap="round" />
-              <path d="M146 118c30 0 54-24 54-54-30 0-54 24-54 54Z" fill="#98FF98" stroke="#20443A" stroke-width="5" />
-              <path d="M170 120V62" stroke="#20443A" stroke-width="6" stroke-linecap="round" />
-              <path d="M150 126h70" stroke="#B0E0E6" stroke-width="9" stroke-linecap="round" />
-              <path d="M130 42h78" stroke="#FFDAB9" stroke-width="10" stroke-linecap="round" />
-            </svg>
+            <img
+              class="welcome-art"
+              src="./assets/hero-classroom-garden.webp"
+              width="1672"
+              height="941"
+              alt="화분과 색연필, 공책이 놓인 밝은 교실 정원"
+              fetchpriority="high"
+            />
           </div>
 
           <div class="home-layout">
@@ -209,16 +209,14 @@
                 <p class="post-text">
                   오늘 과학 시간에 물이 얼 때 부피가 커지는 걸 배웠어요. 우리 모둠은 얼음 관찰표를 더 예쁘게 정리해 보기로 했어요.
                 </p>
-                <figure class="learning-card" aria-label="독서 지도와 관찰 메모 그림">
-                  <svg viewBox="0 0 560 210" role="img" aria-label="파스텔 관찰 메모">
-                    <rect width="560" height="210" rx="8" fill="#EEF8FF" />
-                    <rect x="34" y="34" width="140" height="130" rx="8" fill="#FFFFFF" stroke="#20443A" stroke-width="4" />
-                    <rect x="210" y="34" width="132" height="54" rx="8" fill="#FFDAB9" />
-                    <rect x="210" y="110" width="132" height="54" rx="8" fill="#98FF98" />
-                    <path d="M386 152c46 0 82-37 82-82-46 0-82 36-82 82Z" fill="#F88379" opacity=".72" />
-                    <path d="M402 156V76" stroke="#20443A" stroke-width="6" stroke-linecap="round" />
-                    <path d="M58 68h88M58 96h74M58 124h94" stroke="#F88379" stroke-width="6" stroke-linecap="round" />
-                  </svg>
+                <figure class="learning-card">
+                  <img
+                    src="./assets/science-ice-observation.webp"
+                    width="1448"
+                    height="1086"
+                    alt="얼음과 물방울을 관찰하는 과학 책상 그림"
+                    loading="lazy"
+                  />
                 </figure>
                 <div class="reaction-row" aria-label="게시물 반응">
                   <button class="reaction-button" type="button" data-reaction>
@@ -248,6 +246,15 @@
                 <p class="post-text">
                   미술 시간에 만든 바다 포스터예요. 제목은 "쓰레기 없는 파란 길"입니다. 다음에는 친구들이 만든 표어도 같이 붙이고 싶어요.
                 </p>
+                <figure class="learning-card">
+                  <img
+                    src="./assets/gallery-ocean-poster.webp"
+                    width="1448"
+                    height="1086"
+                    alt="깨끗한 바다와 해변을 종이 오리기처럼 표현한 환경 포스터"
+                    loading="lazy"
+                  />
+                </figure>
                 <div class="comment-preview">
                   <span class="avatar avatar-lavender">솔</span>
                   <p><strong>솔잎 탐정</strong> 글자가 잘 보여서 캠페인 포스터 같아요.</p>
@@ -373,19 +380,43 @@
           </div>
           <div class="gallery-grid">
             <article class="art-card">
-              <div class="art-thumb poster-a" aria-hidden="true"></div>
+              <figure class="art-thumb">
+                <img
+                  src="./assets/gallery-ocean-poster.webp"
+                  width="1448"
+                  height="1086"
+                  alt="깨끗한 바다 길을 표현한 환경 포스터 작품"
+                  loading="lazy"
+                />
+              </figure>
               <h3>쓰레기 없는 파란 길</h3>
               <p>비눗방울 작가 · 환경 포스터</p>
               <span class="status-pill">공개됨</span>
             </article>
             <article class="art-card">
-              <div class="art-thumb poster-b" aria-hidden="true"></div>
+              <figure class="art-thumb">
+                <img
+                  src="./assets/gallery-sprout-map.webp"
+                  width="1448"
+                  height="1086"
+                  alt="학교와 텃밭을 새싹 표시로 꾸민 동네 지도 작품"
+                  loading="lazy"
+                />
+              </figure>
               <h3>우리 동네 새싹 지도</h3>
               <p>도토리 기자 · 관찰 지도</p>
               <span class="status-pill mint">확인 중</span>
             </article>
             <article class="art-card">
-              <div class="art-thumb poster-c" aria-hidden="true"></div>
+              <figure class="art-thumb">
+                <img
+                  src="./assets/gallery-kindness-card.webp"
+                  width="1448"
+                  height="1086"
+                  alt="하트와 잎사귀 장식이 있는 따뜻한 손글씨 카드 작품"
+                  loading="lazy"
+                />
+              </figure>
               <h3>친구에게 보내는 말</h3>
               <p>솔잎 탐정 · 손글씨 카드</p>
               <span class="status-pill">공개됨</span>

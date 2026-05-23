@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" role="img" aria-labelledby="title desc">
+  <title id="title">Semantic color spectrum map</title>
+  <desc id="desc">A compact map of color families grouped by semantic warmth and depth.</desc>
+  <rect width="860" height="420" fill="#FBFCFA"/>
+  <g fill="#151812" font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <text x="36" y="46" font-size="22" font-weight="760">Semantic Spectrum Map</text>
+    <text x="36" y="74" font-size="13" fill="#5B6259">family · depth · surface behavior</text>
+  </g>
+  <g transform="translate(36 112)">
+    <rect x="0" y="0" width="238" height="84" rx="8" fill="#E9EFF8" stroke="#D4DAE3"/>
+    <circle cx="42" cy="42" r="24" fill="#000080"/>
+    <circle cx="92" cy="42" r="24" fill="#4F6FAF"/>
+    <circle cx="142" cy="42" r="24" fill="#A7C7E7"/>
+    <text x="184" y="34" font-size="15" font-weight="760" fill="#151812">Blue</text>
+    <text x="184" y="56" font-size="12" fill="#596257">trust · focus</text>
+  </g>
+  <g transform="translate(310 112)">
+    <rect x="0" y="0" width="238" height="84" rx="8" fill="#FFF0E9" stroke="#E8D5CA"/>
+    <circle cx="42" cy="42" r="24" fill="#FF2400"/>
+    <circle cx="92" cy="42" r="24" fill="#FF0000"/>
+    <circle cx="142" cy="42" r="24" fill="#E44327"/>
+    <text x="184" y="34" font-size="15" font-weight="760" fill="#151812">Red</text>
+    <text x="184" y="56" font-size="12" fill="#596257">energy · signal</text>
+  </g>
+  <g transform="translate(584 112)">
+    <rect x="0" y="0" width="238" height="84" rx="8" fill="#FFF3E3" stroke="#E8D8BC"/>
+    <circle cx="42" cy="42" r="24" fill="#CC7722"/>
+    <circle cx="92" cy="42" r="24" fill="#F28500"/>
+    <circle cx="142" cy="42" r="24" fill="#FFD7A0"/>
+    <text x="184" y="34" font-size="15" font-weight="760" fill="#151812">Orange</text>
+    <text x="184" y="56" font-size="12" fill="#596257">warmth · motion</text>
+  </g>
+  <g transform="translate(36 230)">
+    <rect x="0" y="0" width="238" height="84" rx="8" fill="#FFF7D9" stroke="#E8DDAE"/>
+    <circle cx="42" cy="42" r="24" fill="#A97132"/>
+    <circle cx="92" cy="42" r="24" fill="#FFBF00"/>
+    <circle cx="142" cy="42" r="24" fill="#EEDC82"/>
+    <text x="184" y="34" font-size="15" font-weight="760" fill="#151812">Yellow</text>
+    <text x="184" y="56" font-size="12" fill="#596257">value · luxury</text>
+  </g>
+  <g transform="translate(310 230)">
+    <rect x="0" y="0" width="238" height="84" rx="8" fill="#EBF5EA" stroke="#D2DEC9"/>
+    <circle cx="42" cy="42" r="24" fill="#ACE1AF"/>
+    <circle cx="92" cy="42" r="24" fill="#355E3B"/>
+    <circle cx="142" cy="42" r="24" fill="#98FF98"/>
+    <text x="184" y="34" font-size="15" font-weight="760" fill="#151812">Green</text>
+    <text x="184" y="56" font-size="12" fill="#596257">nature · calm</text>
+  </g>
+  <g transform="translate(584 230)">
+    <rect x="0" y="0" width="238" height="84" rx="8" fill="#F1ECF7" stroke="#DCD1E7"/>
+    <circle cx="42" cy="42" r="24" fill="#967BB6"/>
+    <circle cx="92" cy="42" r="24" fill="#702963"/>
+    <circle cx="142" cy="42" r="24" fill="#C8A2C8"/>
+    <text x="184" y="34" font-size="15" font-weight="760" fill="#151812">Violet</text>
+    <text x="184" y="56" font-size="12" fill="#596257">depth · nuance</text>
+  </g>
+  <g transform="translate(36 356)">
+    <rect x="0" y="0" width="786" height="1" fill="#D6DBD1"/>
+    <text x="0" y="34" font-size="12" fill="#596257">semantic roles are selected before support colors are expanded</text>
+    <text x="516" y="34" font-size="12" fill="#596257">RGB references stay medium-specific</text>
+  </g>
+</svg>
