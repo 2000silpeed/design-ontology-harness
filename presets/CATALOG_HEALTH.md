@@ -1,14 +1,14 @@
 # Catalog Health Report
 
-> Generated at `2026-05-18T12:30:47Z` · harness `0.1.0`
+> Generated at `2026-05-25T12:30:45Z` · harness `0.1.0`
 
 ## Overview
 
-- 누적 프리셋: **20**
-- Tier 분포: P0 5 · P1 5 · P2 5 · P3 5
-- 셀 커버리지: 20/40 (= 50%)
+- 누적 프리셋: **21**
+- Tier 분포: P0 5 · P1 5 · P2 5 · P3 6
+- 셀 커버리지: 21/40 (= 52%)
 - Snapshot drift: 0건
-- Deprecation 후보: 20건
+- Deprecation 후보: 21건
 - Deprecated 프리셋: 0건
 - Prune eligible: 0건 (deprecated ≥ 90일 + hits 0)
 
@@ -19,7 +19,6 @@
 | 3 | `commerce--minimal-tech` |
 | 6 | `marketing-landing--playful-soft` |
 | 8 | `document-content--corporate-trust` |
-| 9 | `monitoring-ops--corporate-trust` |
 | 10 | `canvas-tool--bold-confident` |
 
 ## Empty Cells (full list)
@@ -29,7 +28,6 @@
 | `commerce--minimal-tech` | 3 |
 | `marketing-landing--playful-soft` | 6 |
 | `document-content--corporate-trust` | 8 |
-| `monitoring-ops--corporate-trust` | 9 |
 | `canvas-tool--bold-confident` | 10 |
 | `canvas-tool--corporate-trust` | — |
 | `canvas-tool--editorial-warm` | — |
@@ -70,6 +68,7 @@
 | `marketing-landing--bold-confident` | P0 | 0 | 0 | 0 | OK | zero_hits |
 | `marketing-landing--editorial-warm` | P3 | 0 | 0 | 0 | OK | zero_hits |
 | `marketing-landing--minimal-tech` | P2 | 0 | 0 | 0 | OK | zero_hits |
+| `monitoring-ops--corporate-trust` | P3 | 0 | 0 | 0 | OK | zero_hits |
 | `monitoring-ops--minimal-tech` | P1 | 0 | 0 | 0 | OK | zero_hits |
 
 ## Deprecated
@@ -105,6 +104,7 @@
 | `marketing-landing--bold-confident` | P0 | maintainer | 0.1.0 | 0 | OK | 0 | 0 | · |
 | `marketing-landing--editorial-warm` | P3 | @bob-external | 0.1.0 | 0 | OK | 0 | 0 | · |
 | `marketing-landing--minimal-tech` | P2 | maintainer | 0.1.0 | 0 | OK | 0 | 0 | · |
+| `monitoring-ops--corporate-trust` | P3 | codex | 0.1.0 | 0 | OK | 0 | 0 | · |
 | `monitoring-ops--minimal-tech` | P1 | maintainer | 0.1.0 | 0 | OK | 0 | 0 | · |
 
 ## Sources
