@@ -1,0 +1,30 @@
+{
+  "note": "Real species imagery generated with GPT Image 2 (model gpt_image_2) for the Mycelia screens. Download with fetch_assets.sh once the asset CDN host is reachable, then re-render with ../render_html.py.",
+  "image_model": "gpt_image_2",
+  "assets": [
+    {
+      "file": "find-photo.png",
+      "job_id": "f35148c2-869a-44e7-bc1a-181914c033ac",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_37XU7HdBvFWh8QGwCwQd5JqMQ8r/hf_20260617_230304_f35148c2-869a-44e7-bc1a-181914c033ac.png",
+      "use": "identify uploaded-photo panel (realistic forest-floor chanterelle)"
+    },
+    {
+      "file": "chanterelle.png",
+      "job_id": "10c8e072-08a3-47aa-a3f3-da10b9bf67f0",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_37XU7HdBvFWh8QGwCwQd5JqMQ8r/hf_20260617_230255_10c8e072-08a3-47aa-a3f3-da10b9bf67f0.png",
+      "use": "identify top candidate thumb, logbook species-detail hero, field-map sighting thumb (Cantharellus cibarius botanical illustration)"
+    },
+    {
+      "file": "false-chanterelle.png",
+      "job_id": "cb49b7cf-9dc0-453f-864c-5344db48d0e6",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_37XU7HdBvFWh8QGwCwQd5JqMQ8r/hf_20260617_230258_cb49b7cf-9dc0-453f-864c-5344db48d0e6.png",
+      "use": "identify candidate 2 thumb (Hygrophoropsis aurantiaca)"
+    },
+    {
+      "file": "jack-o-lantern.png",
+      "job_id": "ca089af8-61ef-43ec-878c-3c7d23c60f11",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_37XU7HdBvFWh8QGwCwQd5JqMQ8r/hf_20260617_230301_ca089af8-61ef-43ec-878c-3c7d23c60f11.png",
+      "use": "identify candidate 3 thumb (Omphalotus olearius)"
+    }
+  ]
+}
