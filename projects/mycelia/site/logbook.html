@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="app.css">
+<title>Mycelia — Logbook</title></head>
+<body>
+<header class="app-header">
+  <span class="brand">
+    <svg class="mark" viewBox="0 0 52 52"><path d="M4 27 a22 15 0 0 1 44 0 z" fill="#2A2622"/><rect x="20" y="26" width="12" height="18" rx="4" fill="#FBF7EE" stroke="#2A2622" stroke-width="2.5"/></svg>
+    <span class="word">Mycelia</span>
+  </span>
+  <nav class="nav"><a>Identify</a><a>Field Map</a><a class="active">Logbook</a><a>Community</a></nav>
+</header>
+
+<main class="page">
+  <div class="split" style="grid-template-columns:512px 1fr;">
+    <!-- timeline -->
+    <div>
+      <h1 class="title">My logbook</h1>
+      <p class="subtitle" style="margin-bottom:16px;">24 finds logged</p>
+      <div class="timeline">
+        <div class="row active">
+          <span class="find-thumb inset" style="display:flex;align-items:center;justify-content:center;"><svg width="30" height="30" viewBox="0 0 52 52"><path d="M6 27 a20 13 0 0 1 40 0 z" fill="#2A2622"/><rect x="21" y="26" width="10" height="15" rx="3" fill="#FBF7EE" stroke="#2A2622" stroke-width="2"/></svg></span>
+          <div><div class="find-name">Golden chanterelle</div><div class="muted" style="font-size:13px;">Pine ridge</div></div>
+          <span class="date">14 Jun 2026</span>
+        </div>
+        <div class="row">
+          <span class="find-thumb inset" style="display:flex;align-items:center;justify-content:center;"><svg width="30" height="30" viewBox="0 0 52 52"><path d="M6 27 a20 13 0 0 1 40 0 z" fill="#2A2622"/><rect x="21" y="26" width="10" height="15" rx="3" fill="#FBF7EE" stroke="#2A2622" stroke-width="2"/></svg></span>
+          <div><div class="find-name">Birch bolete</div><div class="muted" style="font-size:13px;">River birch stand</div></div>
+          <span class="date">02 Jun 2026</span>
+        </div>
+        <div class="row">
+          <span class="find-thumb inset" style="display:flex;align-items:center;justify-content:center;"><svg width="30" height="30" viewBox="0 0 52 52"><path d="M6 27 a20 13 0 0 1 40 0 z" fill="#2A2622"/><rect x="21" y="26" width="10" height="15" rx="3" fill="#FBF7EE" stroke="#2A2622" stroke-width="2"/></svg></span>
+          <div><div class="find-name">Fly agaric</div><div class="muted" style="font-size:13px;">Spruce edge</div></div>
+          <span class="date">28 May 2026</span>
+        </div>
+        <div class="row">
+          <span class="find-thumb inset" style="display:flex;align-items:center;justify-content:center;"><svg width="30" height="30" viewBox="0 0 52 52"><path d="M6 27 a20 13 0 0 1 40 0 z" fill="#2A2622"/><rect x="21" y="26" width="10" height="15" rx="3" fill="#FBF7EE" stroke="#2A2622" stroke-width="2"/></svg></span>
+          <div><div class="find-name">Morel</div><div class="muted" style="font-size:13px;">Old orchard</div></div>
+          <span class="date">19 Apr 2026</span>
+        </div>
+        <div class="row" style="border-bottom:none;">
+          <span class="find-thumb inset" style="display:flex;align-items:center;justify-content:center;"><svg width="30" height="30" viewBox="0 0 52 52"><path d="M6 27 a20 13 0 0 1 40 0 z" fill="#2A2622"/><rect x="21" y="26" width="10" height="15" rx="3" fill="#FBF7EE" stroke="#2A2622" stroke-width="2"/></svg></span>
+          <div><div class="find-name">Oyster mushroom</div><div class="muted" style="font-size:13px;">Fallen beech</div></div>
+          <span class="date">11 Apr 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- species detail -->
+    <div class="card" style="padding:32px;">
+      <div class="detail">
+        <div>
+          <div class="inset" style="height:300px;display:flex;align-items:center;justify-content:center;">
+            <svg width="200" height="200" viewBox="0 0 52 52"><path d="M3 28 a23 16 0 0 1 46 0 z" fill="#2A2622"/><rect x="19" y="27" width="14" height="20" rx="5" fill="#FBF7EE" stroke="#2A2622" stroke-width="2.5"/></svg>
+          </div>
+          <h2 class="serif" style="font-weight:700;font-size:34px;margin-top:20px;">Cantharellus cibarius</h2>
+          <div class="muted" style="font-size:17px;margin:4px 0 14px;">Golden chanterelle</div>
+          <span class="chip success">Edible · verified</span>
+        </div>
+        <div>
+          <div class="tax-row"><div class="k">Family</div><div class="v">Cantharellaceae</div></div>
+          <div class="tax-row"><div class="k">Genus</div><div class="v">Cantharellus</div></div>
+          <div class="tax-row"><div class="k">Cap</div><div class="v">5–10 cm, egg-yellow, wavy</div></div>
+          <div class="tax-row"><div class="k">Habitat</div><div class="v">Conifer & beech floor</div></div>
+          <div class="tax-row"><div class="k">Season</div><div class="v">Jun – Oct</div></div>
+        </div>
+      </div>
+      <div style="text-align:right;margin-top:20px;"><button class="btn">Add observation</button></div>
+
+      <div style="margin-top:24px;">
+        <h4 style="font-size:14px;margin-bottom:12px;">Seasonal availability</h4>
+        <div class="bars">
+          <div class="bar none"><i style="height:2px"></i><span>J</span></div>
+          <div class="bar none"><i style="height:2px"></i><span>F</span></div>
+          <div class="bar none"><i style="height:2px"></i><span>M</span></div>
+          <div class="bar none"><i style="height:2px"></i><span>A</span></div>
+          <div class="bar low"><i style="height:16px"></i><span>M</span></div>
+          <div class="bar"><i style="height:48px"></i><span>J</span></div>
+          <div class="bar"><i style="height:64px"></i><span>J</span></div>
+          <div class="bar"><i style="height:80px"></i><span>A</span></div>
+          <div class="bar"><i style="height:80px"></i><span>S</span></div>
+          <div class="bar"><i style="height:64px"></i><span>O</span></div>
+          <div class="bar low"><i style="height:16px"></i><span>N</span></div>
+          <div class="bar none"><i style="height:2px"></i><span>D</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body></html>
