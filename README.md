@@ -26,7 +26,14 @@
 3. 색상, 서체를 어떻게 골라야 할지 모름 → **브랜드 키워드 기반으로 자동 결정**
 4. 만들어진 스펙을 실제 코드에 적용하는 게 어려움 → **AI 에이전트가 자동 적용**
 
-## 전체 워크플로우
+## 두 가지 워크플로우
+
+이 하네스는 두 방향을 지원합니다.
+
+- **spec-first (기본 합성 흐름, 아래 다이어그램):** `spec + 공식 KB → synthesis → blueprint`. 이미지는 advisory 보조 신호.
+- **image-first (사이트 디자인 요청용):** 프로젝트 파악 → 컨셉 → 색상조합 → **GPT Image 2로 기능별 화면 생성** → 그 이미지에서 디자인 시스템 역도출. 온톨로지는 grounding 용도로만 쓰고 기존 프리셋·프로젝트(test case)는 답습하지 않습니다. → **[docs/SITE_DESIGN_WORKFLOW.md](./docs/SITE_DESIGN_WORKFLOW.md)** / `init-site-design` · `check-site-design` CLI · `site-design` 스킬. 시연 산출물: [`projects/mycelia`](./projects/mycelia).
+
+## 전체 워크플로우 (spec-first)
 
 ```mermaid
 flowchart TB

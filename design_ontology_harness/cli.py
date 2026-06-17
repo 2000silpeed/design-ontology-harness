@@ -14,6 +14,11 @@ from .kb import build_knowledge_base, load_knowledge_base
 from .models import DocumentRecord, ReferenceLink
 from .pinterest_capture import capture_pinterest_candidates
 from .scaffold import load_project, resolve_kb_dir, scaffold_project
+from .site_design import (
+    check_site_design,
+    format_check_report,
+    scaffold_site_design_project,
+)
 from .pinterest_assist import build_pinterest_assist_bundle
 from .preset_builder import BuildRequest, PRESETS_ROOT, build_preset
 from .preset_matcher.engine import MatchQuery, format_results, match_presets
@@ -83,6 +88,29 @@ def build_parser() -> argparse.ArgumentParser:
     )
     init_parser.add_argument("--kb-dir", default=None, help="Optional default knowledge base path to store in the project manifest")
     init_parser.add_argument("--force", action="store_true", help="Allow writing into a non-empty directory")
+
+    site_init_parser = subparsers.add_parser(
+        "init-site-design",
+        help="Scaffold an image-first site design project (concept → color set → screens → derived system)",
+    )
+    site_init_parser.add_argument("--project-dir", required=True, help="Directory for the new project")
+    site_init_parser.add_argument("--brand-name", required=True, help="Brand or product name")
+    site_init_parser.add_argument("--product-summary", default=None, help="One-line product summary")
+    site_init_parser.add_argument("--concept", default=None, help="Optional starting design concept name")
+    site_init_parser.add_argument(
+        "--surface",
+        action="append",
+        dest="surfaces",
+        default=[],
+        help="A feature surface (screen) to design. Pass multiple times.",
+    )
+    site_init_parser.add_argument("--force", action="store_true", help="Allow writing into a non-empty directory")
+
+    site_check_parser = subparsers.add_parser(
+        "check-site-design",
+        help="Validate screens↔plan↔derived tokens and flag tokens copied from existing presets/projects/fixtures",
+    )
+    site_check_parser.add_argument("--project-dir", required=True, help="Site design project directory")
 
     agent_pack_parser = subparsers.add_parser("init-agent-pack", help="Scaffold Codex and/or Claude Code integrations into an implementation repo")
     agent_pack_parser.add_argument("--target-repo", required=True, help="Implementation repository path")
@@ -583,6 +611,27 @@ def main() -> None:
     args = build_parser().parse_args()
     raw_output = getattr(args, "output_dir", None)
     output_dir = ensure_dir(Path(raw_output)) if raw_output else None
+
+    if args.command == "init-site-design":
+        result = scaffold_site_design_project(
+            project_dir=Path(args.project_dir),
+            brand_name=args.brand_name,
+            product_summary=args.product_summary,
+            concept=args.concept,
+            surfaces=args.surfaces,
+            force=args.force,
+        )
+        print(f"[init-site-design] scaffolded {result['project_dir']} ({result['workflow']})")
+        print(f"  surfaces: {', '.join(result['surfaces'])}")
+        print("  next: fill concept_brief.md + color_set.json, then generate screens with GPT Image 2")
+        return
+
+    if args.command == "check-site-design":
+        report = check_site_design(Path(args.project_dir))
+        print(format_check_report(report))
+        if not report.ok:
+            raise SystemExit(1)
+        return
 
     if args.command == "build-preset":
         color_modes = [m.strip() for m in args.color_modes.split(",") if m.strip()]

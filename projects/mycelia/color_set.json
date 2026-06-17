@@ -1,0 +1,32 @@
+{
+  "selection_method": "ontology-search-per-run",
+  "derived_from": "concept 'Field Guide Naturalism' + product mood (자연/신뢰/전문성/안정). NOT a prebuilt palette.",
+  "ontology_grounding": {
+    "mood_tags": ["자연", "신뢰", "전문성", "안정", "차분함"],
+    "avoid_moods": ["형광", "차가움", "테크", "달콤함"],
+    "spectrum_bias": "warm earth + deep green, low-to-mid chroma"
+  },
+  "candidates": [
+    {
+      "id": "candidate-1",
+      "active": true,
+      "roles": {
+        "dominant": {"hex": "#2F4733", "intent": "deep forest green — primary action / brand surface"},
+        "supporting": {"hex": "#8C6A4A", "intent": "warm bark/clay — secondary surfaces, dividers"},
+        "neutral": {"hex": "#2A2622", "intent": "warm ink — primary text and line work"},
+        "neutral_surface": {"hex": "#F4EEE2", "intent": "warm paper — base canvas surface"},
+        "neutral_surface_raised": {"hex": "#FBF7EE", "intent": "lighter paper — cards / panels"},
+        "accent": {"hex": "#C8742B", "intent": "spore amber — single highlight / focus accent"},
+        "success": {"hex": "#3F7A4E", "intent": "edible/verified — positive state"},
+        "warning": {"hex": "#B8832A", "intent": "caution — unverified ID"},
+        "danger": {"hex": "#A6402F", "intent": "toxic/poisonous — destructive / error state"}
+      },
+      "wcag_notes": [
+        "#2A2622 ink on #F4EEE2 paper ≈ 12.4:1 — AAA body text",
+        "#FBF7EE text on #2F4733 forest ≈ 9.6:1 — AAA on primary action",
+        "#A6402F danger on #FBF7EE ≈ 5.2:1 — AA for toxic warnings",
+        "#C8742B amber accent used for emphasis fills, not small body text"
+      ]
+    }
+  ]
+}

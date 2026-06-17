@@ -1,0 +1,75 @@
+{
+  "system_name": "Mycelia System",
+  "concept": "Field Guide Naturalism",
+  "derived_from": "generated-screens",
+  "provenance": {
+    "method": "image-first reverse-derivation",
+    "image_model": "gpt_image_2",
+    "source_screens": [
+      {"surface": "identify", "job_id": "ec548881-1c86-4078-b2a8-d8777e328180"},
+      {"surface": "field-map", "job_id": "ce923932-56d6-4f30-8ef4-f5ac5e5b8f81"},
+      {"surface": "logbook", "job_id": "63e4f0e8-1204-4ead-b84d-bbee30c6ebc9"}
+    ],
+    "note": "Tokens trace to the chosen color_set and the composition rendered across the three screens. Not copied from any preset/project/fixture."
+  },
+  "color": {
+    "base": {
+      "ink": {"value": "#2A2622", "source_screen": "all", "use": "primary text, line work"},
+      "paper": {"value": "#F4EEE2", "source_screen": "all", "use": "app canvas / base surface"},
+      "paper-raised": {"value": "#FBF7EE", "source_screen": "all", "use": "cards, panels, sheets"},
+      "bark": {"value": "#8C6A4A", "source_screen": "all", "use": "dividers, secondary surfaces, muted text"}
+    },
+    "brand": {
+      "forest": {"value": "#2F4733", "source_screen": "all", "use": "primary action, brand surface, data"},
+      "spore": {"value": "#C8742B", "source_screen": "identify,field-map,logbook", "use": "single accent: active nav/tab, selected pin"}
+    },
+    "semantic": {
+      "action": {"value": "#2F4733", "derived_from": "brand.forest", "use": "primary button fill"},
+      "action-on": {"value": "#FBF7EE", "derived_from": "base.paper-raised", "use": "label on action"},
+      "accent": {"value": "#C8742B", "derived_from": "brand.spore"},
+      "success": {"value": "#3F7A4E", "source_screen": "identify,logbook", "use": "verified / edible chip"},
+      "warning": {"value": "#B8832A", "source_screen": "identify", "use": "unverified ID"},
+      "danger": {"value": "#A6402F", "source_screen": "identify", "use": "toxic / poisonous chip, errors"},
+      "border": {"value": "#8C6A4A", "derived_from": "base.bark", "use": "hairline borders / dividers"},
+      "text": {"value": "#2A2622", "derived_from": "base.ink"},
+      "text-muted": {"value": "#6E5A45", "derived_from": "base.bark", "use": "secondary text"}
+    },
+    "contrast_pairs": [
+      {"fg": "#2A2622", "bg": "#F4EEE2", "ratio": "~12.4:1", "rating": "AAA"},
+      {"fg": "#FBF7EE", "bg": "#2F4733", "ratio": "~9.6:1", "rating": "AAA"},
+      {"fg": "#A6402F", "bg": "#FBF7EE", "ratio": "~5.2:1", "rating": "AA"}
+    ]
+  },
+  "typography": {
+    "rationale": "Screens render an elegant humanist serif for the wordmark/species names and a clean humanist sans for UI/body — an archival field-guide voice, not a tech-sans voice.",
+    "families": {
+      "display": {"family": "Spectral", "fallback": "Georgia, serif", "use": "wordmark, species Latin names, page titles", "source_screen": "all"},
+      "body": {"family": "Source Sans 3", "fallback": "system-ui, sans-serif", "use": "UI labels, body, tables", "source_screen": "all"},
+      "mono": {"family": "Spline Sans Mono", "fallback": "ui-monospace, monospace", "use": "coordinates, confidence %, dates"}
+    },
+    "pairs_with": [{"heading": "Spectral", "body": "Source Sans 3"}],
+    "scale": {
+      "display-1": {"size": "44px", "line": "52px", "family": "display", "weight": 600},
+      "title-1": {"size": "28px", "line": "36px", "family": "display", "weight": 600},
+      "title-2": {"size": "20px", "line": "28px", "family": "display", "weight": 600},
+      "body": {"size": "15px", "line": "24px", "family": "body", "weight": 400},
+      "label": {"size": "13px", "line": "18px", "family": "body", "weight": 500},
+      "caption": {"size": "12px", "line": "16px", "family": "mono", "weight": 400}
+    }
+  },
+  "spacing": {"unit": "4px", "scale": [0, 4, 8, 12, 16, 20, 24, 32, 40, 56, 72]},
+  "radius": {
+    "rationale": "Screens read as gently rounded paper cards, not sharp tech panels nor pills.",
+    "sm": "4px", "md": "8px", "lg": "12px", "card": "10px", "pill": "999px"
+  },
+  "elevation": {
+    "rationale": "Flat paper with hairline borders; the only real lift is the floating map sighting card.",
+    "flat": "none / 1px hairline border (#8C6A4A at low alpha)",
+    "raised-card": "0 1px 0 rgba(42,38,34,0.04), 1px hairline border",
+    "floating": "0 8px 24px rgba(42,38,34,0.12)"
+  },
+  "motion": {
+    "rationale": "Calm, no-surprise transitions.",
+    "duration-fast": "120ms", "duration-base": "200ms", "easing": "cubic-bezier(0.2, 0, 0, 1)"
+  }
+}

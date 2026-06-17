@@ -1,0 +1,60 @@
+{
+  "concept": "Field Guide Naturalism",
+  "image_model": "gpt_image_2",
+  "image_params": {"aspect_ratio": "16:9", "resolution": "2k", "quality": "high"},
+  "asset_note": "Generated PNGs live in the GPT Image 2 asset CDN. This sandbox's network egress blocks the CDN host, so binaries are not committed; each screen records its remote url + job_id as provenance. The resource links were surfaced to the user.",
+  "screens": [
+    {
+      "surface": "identify",
+      "file": "generated/identify.png",
+      "components": [
+        "app header (ink mushroom emblem + 'Mycelia' serif wordmark + sans nav)",
+        "uploaded photo panel",
+        "ranked candidate species cards (ink illustration, serif Latin name, common name)",
+        "confidence progress bar (forest green)",
+        "edibility chips (verified green / poisonous brick-red)",
+        "primary button 'Save to logbook'",
+        "active tab underline (spore amber)"
+      ],
+      "job_id": "ec548881-1c86-4078-b2a8-d8777e328180",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_37XU7HdBvFWh8QGwCwQd5JqMQ8r/hf_20260617_222641_ec548881-1c86-4078-b2a8-d8777e328180.png",
+      "status": "generated",
+      "prompt": "High-fidelity desktop web app UI screenshot, 16:9. Mushroom IDENTIFICATION RESULT screen for 'Mycelia'. Field Guide Naturalism concept; paper #F4EEE2 / panels #FBF7EE / ink #2A2622; serif wordmark + sans nav; uploaded photo left, ranked candidate species cards right with ink illustrations, serif Latin names, confidence bars in forest green #2F4733; toxic chip #A6402F, verified chip #3F7A4E; primary button forest green; single spore-amber #C8742B accent on active tab; bark #8C6A4A dividers. earthy/archival/precise/calm. No neon/glass/tailwind-blue/emoji/dark/gradients."
+    },
+    {
+      "surface": "field-map",
+      "file": "generated/field-map.png",
+      "components": [
+        "app header (consistent)",
+        "left filter sidebar (Season / Habitat / Edibility, ink-outlined checkboxes + segmented chips)",
+        "muted topographic map (paper/sage/bark, not blue)",
+        "ink mushroom-marker pins (verified forest green / selected spore amber)",
+        "floating sighting detail card (ink thumbnail, serif species, date, contributor, verified chip)"
+      ],
+      "job_id": "ce923932-56d6-4f30-8ef4-f5ac5e5b8f81",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_37XU7HdBvFWh8QGwCwQd5JqMQ8r/hf_20260617_222644_ce923932-56d6-4f30-8ef4-f5ac5e5b8f81.png",
+      "status": "generated",
+      "prompt": "High-fidelity desktop web app UI screenshot, 16:9. FIELD MAP screen for 'Mycelia'. Field Guide Naturalism; paper #F4EEE2 / panels #FBF7EE / ink #2A2622; consistent header; left filters (Season/Habitat/Edibility) ink-outlined; muted topographic map in paper/sage/bark (not google-maps blue); ink mushroom pins forest green #2F4733 verified / spore-amber #C8742B selected; floating sighting card with ink thumbnail, serif species, date, contributor, verified chip #3F7A4E; bark #8C6A4A dividers. earthy/archival/precise/calm. No neon/glass/tailwind-blue/emoji/dark/gradients."
+    },
+    {
+      "surface": "logbook",
+      "file": "generated/logbook.png",
+      "components": [
+        "app header (consistent)",
+        "left logged-finds timeline (ink thumbnail, date, location; bark hairline dividers)",
+        "right species detail panel (field-guide page layout)",
+        "large ink mushroom illustration",
+        "large serif Latin + common name",
+        "taxonomy table",
+        "edibility row with verified chip (green)",
+        "seasonal availability bar chart (forest green + bark)",
+        "primary button 'Add observation'",
+        "active nav item accent (spore amber)"
+      ],
+      "job_id": "63e4f0e8-1204-4ead-b84d-bbee30c6ebc9",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_37XU7HdBvFWh8QGwCwQd5JqMQ8r/hf_20260617_222647_63e4f0e8-1204-4ead-b84d-bbee30c6ebc9.png",
+      "status": "generated",
+      "prompt": "High-fidelity desktop web app UI screenshot, 16:9. Foraging LOGBOOK + SPECIES ENCYCLOPEDIA DETAIL for 'Mycelia'. Field Guide Naturalism; paper #F4EEE2 / cards #FBF7EE / ink #2A2622; consistent header; left logged-finds timeline (ink thumbnails, dates, locations, bark #8C6A4A dividers); right field-guide detail page with large ink mushroom illustration, large serif Latin + common name, taxonomy table, edibility row with verified chip #3F7A4E, habitat sans body, seasonal bar chart in forest green #2F4733 + bark; primary button 'Add observation' forest green; spore-amber #C8742B accent on active nav. earthy/archival/precise/calm. No neon/glass/tailwind-blue/emoji/dark/gradients."
+    }
+  ]
+}

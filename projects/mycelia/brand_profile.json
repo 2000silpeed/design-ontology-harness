@@ -1,0 +1,33 @@
+{
+  "brand_name": "Mycelia",
+  "system_name": "Mycelia System",
+  "product_summary": "시민과학 버섯 채집가를 위한 사진 식별 + 야외 채집 기록 + 종 도감 커뮤니티",
+  "audiences": [
+    "Describe your primary users"
+  ],
+  "brand_keywords": [
+    "clear",
+    "distinctive",
+    "trustworthy"
+  ],
+  "anti_keywords": [
+    "generic",
+    "noisy",
+    "default-tailwind"
+  ],
+  "tone_of_voice": [
+    "clear",
+    "confident"
+  ],
+  "feature_surfaces": [
+    "identify",
+    "field-map",
+    "logbook"
+  ],
+  "platforms": [
+    "web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ]
+}
