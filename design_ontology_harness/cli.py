@@ -12,6 +12,13 @@ from .component_specs import generate_component_specs, write_component_specs
 from .css_pipeline import run_and_save as run_css_extraction
 from .kb import build_knowledge_base, load_knowledge_base
 from .models import DocumentRecord, ReferenceLink
+from .omnigen_references import (
+    DEFAULT_CATEGORIES as OMNIGEN_DEFAULT_CATEGORIES,
+    DEFAULT_OMNIGEN_VAULT_DIR,
+    DEFAULT_REFERENCE_DIR as OMNIGEN_DEFAULT_REFERENCE_DIR,
+    select_omnigen_references,
+    sync_omnigen_sources,
+)
 from .pinterest_capture import capture_pinterest_candidates
 from .scaffold import load_project, resolve_kb_dir, scaffold_project
 from .pinterest_assist import build_pinterest_assist_bundle
@@ -152,6 +159,33 @@ def build_parser() -> argparse.ArgumentParser:
     sync_target.add_argument("--project-dir", default=None, help="Optional project directory created by init")
     sync_parser.add_argument("--output-dir", default=None, help="Optional directory containing the pinterest manifests")
 
+    omnigen_parser = subparsers.add_parser("select-omnigen-references", help="Select local Omnigen vault images as advisory visual references")
+    omnigen_target = omnigen_parser.add_mutually_exclusive_group(required=True)
+    omnigen_target.add_argument("--brand-profile", default=None, help="Path to a JSON brand profile")
+    omnigen_target.add_argument("--project-dir", default=None, help="Optional project directory created by init")
+    omnigen_parser.add_argument("--vault-dir", default=str(DEFAULT_OMNIGEN_VAULT_DIR), help="Omnigen vault directory containing index.sqlite")
+    omnigen_parser.add_argument("--query", default=None, help="Search terms used to score Omnigen image metadata")
+    omnigen_parser.add_argument(
+        "--category",
+        action="append",
+        dest="categories",
+        default=[],
+        help=f"Omnigen category to search. Defaults to: {', '.join(OMNIGEN_DEFAULT_CATEGORIES)}",
+    )
+    omnigen_parser.add_argument("--count", type=int, default=12, help="Number of selected references to keep")
+    omnigen_parser.add_argument("--orientation", choices=["any", "landscape", "portrait"], default="any")
+    omnigen_parser.add_argument("--max-per-subject", type=int, default=2, help="Diversity cap before backfilling")
+    omnigen_parser.add_argument("--min-rating", type=int, default=None, help="Optional minimum Omnigen rating")
+    omnigen_parser.add_argument("--max-ocr-chars", type=int, default=None, help="Optional OCR text cap to avoid text-heavy generated UI")
+    omnigen_parser.add_argument("--link-mode", choices=["symlink", "copy", "absolute"], default="symlink")
+    omnigen_parser.add_argument(
+        "--reference-dir",
+        default=OMNIGEN_DEFAULT_REFERENCE_DIR,
+        help="Project-local directory for symlinks/copies. Defaults inside ignored build/.",
+    )
+    omnigen_parser.add_argument("--sync-sources", action="store_true", help="Update brand_profile.visual_reference.sources with the selected references")
+    omnigen_parser.add_argument("--output-dir", default=None, help="Optional directory for omnigen_reference_selection.json")
+
     analyze_parser = subparsers.add_parser("analyze-spec", help="Analyze a product spec to auto-detect needed UI components")
     analyze_parser.add_argument("--spec-file", required=True, help="Path to a product spec file (markdown, text)")
     analyze_parser.add_argument("--project-dir", default=None, help="Optional: update this project's brand_profile with detected primitives")
@@ -168,7 +202,12 @@ def build_parser() -> argparse.ArgumentParser:
     comp_parser.add_argument("--kb-dir", default=None, help="Optional override for the knowledge base path")
 
     bench_parser = subparsers.add_parser("benchmark", help="Show benchmark references matching brand keywords")
-    bench_parser.add_argument("--keywords", nargs="+", default=[], help="Brand keywords to match against 35 real-world design systems")
+    bench_parser.add_argument(
+        "--keywords",
+        nargs="+",
+        default=[],
+        help="Brand keywords to match against curated real-world design systems",
+    )
     bench_parser.add_argument("--brand-profile", default=None, help="Optional brand profile JSON to auto-extract keywords")
     bench_parser.add_argument("--output-dir", default=None, help="Optional directory to save benchmark report")
 
@@ -1447,6 +1486,68 @@ def main() -> None:
         print(f"  -> promoted {assist_bundle['plan']['capture_progress']['promoted_count']}")
         return
 
+    if args.command == "select-omnigen-references":
+        brand_profile_path, project_dir, manifest = _resolve_brand_profile_target(
+            brand_profile_arg=args.brand_profile,
+            project_dir_arg=args.project_dir,
+        )
+        raw_profile = json.loads(brand_profile_path.read_text(encoding="utf-8"))
+        visuals_dir = _resolve_support_output_dir(
+            raw_output=args.output_dir,
+            project_dir=project_dir,
+            manifest=manifest,
+            folder_name="visuals",
+        )
+        query = args.query or _omnigen_query_from_profile(raw_profile)
+        selection_manifest = select_omnigen_references(
+            vault_dir=Path(args.vault_dir),
+            project_dir=project_dir or brand_profile_path.parent,
+            query=query,
+            categories=args.categories or None,
+            count=args.count,
+            orientation=args.orientation,
+            max_per_subject=args.max_per_subject,
+            min_rating=args.min_rating,
+            max_ocr_chars=args.max_ocr_chars,
+            link_mode=args.link_mode,
+            reference_dir=args.reference_dir,
+        )
+        write_json(visuals_dir / "omnigen_reference_selection.json", selection_manifest)
+
+        sync_result = None
+        if args.sync_sources:
+            sync_result = sync_omnigen_sources(
+                raw_brand_profile=raw_profile,
+                selection_manifest=selection_manifest,
+                base_dir=project_dir or brand_profile_path.parent,
+            )
+            write_json(brand_profile_path, raw_profile)
+
+        print(
+            f"[select-omnigen-references] {selection_manifest['selected_count']}개 reference 선택 완료: "
+            f"{visuals_dir}/omnigen_reference_selection.json"
+        )
+        print(
+            f"  -> query: {selection_manifest['query'] or '(profile-derived)'} | "
+            f"categories: {', '.join(selection_manifest['categories'])}"
+        )
+        print(
+            f"  -> candidates {selection_manifest['scored_candidate_count']} / "
+            f"selected {selection_manifest['selected_count']} | link_mode {args.link_mode}"
+        )
+        for item in selection_manifest["selected"][: min(8, selection_manifest["selected_count"])]:
+            print(
+                f"     - #{item['rank']:02d} {item.get('subject', 'reference')} "
+                f"({item.get('category')}, score {item.get('score')})"
+            )
+        if sync_result:
+            print(
+                f"  -> visual_reference.sources 동기화: "
+                f"{sync_result['managed_source_count']}개 Omnigen source 반영"
+            )
+            print(f"  -> {brand_profile_path} 업데이트 완료")
+        return
+
     if args.command == "init":
         result = scaffold_project(
             project_dir=Path(args.project_dir),
@@ -1697,6 +1798,30 @@ def _warn_placeholder_profile(profile: dict) -> None:
     if found:
         print(f"[warning] brand_profile.json에 아직 기본값이 남아 있는 항목: {', '.join(found)}")
         print("  -> 실제 브랜드 정보를 입력해야 의미 있는 산출물이 나옵니다.")
+
+
+def _omnigen_query_from_profile(profile: dict) -> str:
+    parts: list[str] = []
+    for key in (
+        "product_summary",
+        "brand_keywords",
+        "visual_keywords",
+        "product_primitives",
+        "platforms",
+    ):
+        value = profile.get(key)
+        if isinstance(value, str):
+            parts.append(value)
+        elif isinstance(value, list):
+            parts.extend(str(item) for item in value if isinstance(item, str))
+    visual_reference = profile.get("visual_reference")
+    if isinstance(visual_reference, dict):
+        query = visual_reference.get("query")
+        if isinstance(query, str):
+            parts.append(query)
+        elif isinstance(query, list):
+            parts.extend(str(item) for item in query if isinstance(item, str))
+    return " ".join(parts)
 
 
 def _resolve_brand_profile_target(

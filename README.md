@@ -1,113 +1,235 @@
 # Design Ontology Harness
 
-다른 회사의 디자인 시스템을 참고해서, **우리 브랜드에 맞는 디자인 시스템 설계도**를 자동으로 만들고, 그 설계도를 기반으로 **AI가 만든 UI를 프로 수준으로 재구성**해주는 도구입니다.
+`design-ontology-harness`는 디자인 시스템을 새로 만들거나, 기존 프리셋을 확장하거나, AI가 만든 화면을 더 제품답게 재구성하기 위한 **디자인 시스템 합성 하네스**입니다.
 
-> **그냥 프리셋을 쓰고 싶다면 →** [`design-ontology-plugin`](https://github.com/2000silpeed/design-ontology-plugin) 레포로 가세요. 20종 프리셋 카탈로그 + `/design-start` 4단계 질문 UX + Next·raw-CSS 어댑터가 `/plugin install design-ontology` 한 줄로 설치됩니다.
->
-> 이 harness 레포는 **프리셋 생성기**이자 **공급원**입니다. 프리셋을 새로 만들거나, 커스터마이징하거나, 내부적으로 KB·블루프린트 파이프라인을 돌리려는 고급 사용자·메인테이너를 위한 문서입니다.
->
-> **피드백·이슈는 plugin 레포 이슈 트래커로** ([preset-feedback / new-preset / bug-report 템플릿](https://github.com/2000silpeed/design-ontology-plugin/issues/new/choose)). 새 P3 프리셋 기여는 [`docs/CONTRIBUTING_PRESETS.md`](./docs/CONTRIBUTING_PRESETS.md).
+처음에는 공식 디자인 시스템 문서를 크롤링해 KB를 만들고, 브랜드 프로필과 설계서를 합성하는 도구였습니다. 지금은 여기에 **이미지 에셋 기반 레퍼런스 추출**이 붙었습니다. 즉, 공식 KB와 제품 브리프를 기본 진실 소스로 두면서도, 로컬 스크린샷, Figma export, Pinterest-assisted capture, Omnigen vault 같은 이미지 풀에서 화면 밀도, 레이아웃 리듬, 컴포넌트 형태, 표면 처리 힌트를 뽑아 디자인 시스템 산출물에 반영할 수 있습니다.
 
-## 플러그인 vs 하네스 — 언제 어느 쪽?
+> 최종 사용자가 이미 만들어진 프리셋을 쓰는 목적이라면 [`design-ontology-plugin`](https://github.com/2000silpeed/design-ontology-plugin)을 쓰는 편이 빠릅니다. 이 레포는 프리셋을 만들고, 검증하고, 배포용 산출물로 승격시키는 공급원에 가깝습니다.
 
-| 쓰려는 것 | 추천 경로 |
-|-----------|-----------|
-| 이미 있는 프리셋으로 빠르게 시작 | **plugin** (`/plugin install design-ontology`) |
-| 자연어 / 4단계 질문으로 프리셋 고르기 | **plugin** (`/design-start`) |
-| 새 브랜드 프로필로 프리셋 처음부터 합성 | **harness** (`run-project`) |
-| 기존 프리셋을 복사해 커스터마이징 | **harness** (`customize-preset`) → `run-project` |
-| 프리셋 산출물을 플러그인에 싱크 | **harness** (`scripts/sync-plugin-presets.sh`) |
-| 공식 KB 크롤 + CSS 토큰 추출 | **harness** (`build-kb`) |
+## 지금 할 수 있는 일
 
-## 이 도구가 해결하는 문제
+- 공식 디자인 시스템 사이트를 크롤링해 재사용 가능한 KB를 만든다.
+- `brand_profile.json`과 `spec.md`를 읽어 제품 맞춤형 디자인 시스템 설계도를 만든다.
+- 로컬 이미지, 스크린샷, Omnigen vault 이미지에서 visual motif와 layout cue를 추출한다.
+- 이미지 레퍼런스를 색상/서체/IA의 진실 소스로 쓰지 않도록 권한 경계를 기록한다.
+- `system_spec.md`, `token_schema.json`, `component_inventory.json`, `component_specs.md`, `system_ontology.json`을 생성한다.
+- 생성된 시스템을 preset으로 승격하고, 구현 레포에 `STYLE.md`, `DESIGN.md`, CSS variables, 구현 계약서를 설치한다.
+- 구현 결과를 lint, screenshot QA, visual comparison으로 점검한다.
 
-1. AI가 UI를 만들면 Tailwind 기본 색상 + shadow 떡칠 + 이모지 아이콘 → **어떤 제품이든 똑같이 생김**
-2. 디자인 시스템을 만들고 싶은데 어디서 시작해야 할지 모름 → **설계서만 넣으면 자동 생성**
-3. 색상, 서체를 어떻게 골라야 할지 모름 → **브랜드 키워드 기반으로 자동 결정**
-4. 만들어진 스펙을 실제 코드에 적용하는 게 어려움 → **AI 에이전트가 자동 적용**
+## 최근 확장 요약
 
-## 전체 워크플로우
+이번 README는 아래 변화까지 현재 기준으로 반영합니다.
+
+| 변화 | 반영된 파일/명령 |
+|---|---|
+| 이미지 레퍼런스가 1차 입력 모델로 승격 | `brand_profile.visual_reference`, `analyze-visuals` |
+| Omnigen vault에서 프로젝트별 UI 레퍼런스 선별 | `omnigen_references.py`, `select-omnigen-references` |
+| provider-neutral reference layer 추가 | `reference_context.py`, `design_context_pack.json` |
+| Pinterest-assisted 검색/캡처/선택 흐름 추가 | `generate-visual-queries`, `capture-pinterest`, `select-pinterest-candidates` |
+| 이미지 에셋 governance 확장 | `GeneratedVisualAsset`, `SourcedVisualAsset`, `LicensePolicy` |
+| `system_spec.md` 후반 섹션 확장 | 22-26번 섹션 |
+| ontology graph 확장 | 현재 34개 `NodeType`, 34개 `EdgeType` |
+| 상업용 목업 완성도 규칙 추가 | Mockup Visual Substance, Commercial Product Realism |
+| Omnigen CRM 샘플 프로젝트 추가 | `projects/omnigen-crm-demo` |
+| 절차 설명 HTML과 사용설명서 추가 | `demo-report.html`, `USER_GUIDE.md` |
+
+## Plugin vs Harness
+
+| 목적 | 추천 경로 |
+|---|---|
+| 이미 있는 디자인 프리셋을 빠르게 적용 | `design-ontology-plugin` |
+| `/design-start` 같은 질문형 UX로 프리셋 선택 | `design-ontology-plugin` |
+| 새 브랜드와 제품 설계서로 디자인 시스템 합성 | 이 harness |
+| 로컬 이미지/Omnigen vault를 레퍼런스로 연결 | 이 harness |
+| 새 preset을 만들고 plugin 레포로 싱크 | 이 harness |
+| KB, ontology, visual reference 파이프라인을 유지보수 | 이 harness |
+
+## 전체 흐름
 
 ```mermaid
 flowchart TB
-    subgraph PREPARE["1. 준비"]
-        SEED["시드 URL\n참고할 디자인 시스템"] -->|build-kb| KB["지식베이스(KB)"]
-        VISUAL_REF["로컬 시각 레퍼런스\n스크린샷 / saved images"] --> VISUAL_PREP["visual query / visual analysis"]
-        SPEC["설계서\nspec.md / PRD"] --> ANALYZE["설계서 해석"]
+    subgraph INPUT["입력"]
+        SEEDS["공식 디자인 시스템 URL"] --> KB["Knowledge Base"]
+        CSS["공식 CSS / token 파일"] --> KB
+        SPEC["spec.md / PRD"] --> SYNTH["Synthesis Engine"]
+        BRAND["brand_profile.json"] --> SYNTH
+        COLOR["color_reference.md"] --> SYNTH
+        FONT["font reference DB"] --> SYNTH
+        IMAGES["local images / screenshots / Figma export"] --> VISUAL["Visual Reference Analysis"]
+        OMNI["Omnigen vault index.sqlite"] --> SELECT["select-omnigen-references"]
+        SELECT --> VISUAL
+        PIN["Pinterest-assisted capture"] --> VISUAL
     end
 
-    subgraph GENERATE["2. 자동 생성"]
-        KB --> SYNTH["합성 엔진"]
-        BRAND["브랜드 프로필"] --> SYNTH
-        VISUAL_PREP -->|advisory hints| SYNTH
-        ANALYZE -->|컴포넌트 탐지| SYNTH
-        COLOR_REF["색상 레퍼런스"] -->|팔레트 결정| SYNTH
-        SYNTH --> GRAPH["온톨로지 그래프\n22노드 × 27관계"]
-        SYNTH --> OUTPUT["산출물"]
-        GRAPH -->|18-21섹션| OUTPUT
+    KB --> SYNTH
+    VISUAL --> CONTEXT["Design Context Pack"]
+    CONTEXT --> SYNTH
+
+    subgraph OUTPUT["디자인 시스템 산출물"]
+        SPECOUT["system_spec.md"]
+        TOKENS["token_schema.json"]
+        COMPS["component_inventory.json / component_specs.md"]
+        GRAPH["system_ontology.json"]
+        ASSETS["visual asset governance"]
     end
 
-    subgraph OUTPUT_DETAIL["산출물"]
-        SYS_SPEC["system_spec.md\n21섹션 설계 스펙"]
-        TOKEN["token_schema.json\n토큰 체계"]
-        ONTOLOGY["system_ontology.json\n관계 그래프"]
-        COMP_SPEC["component_specs.md\n컴포넌트 상세"]
-        STYLE["STYLE.md / DESIGN.md\n에이전트용 스타일 캡슐"]
+    SYNTH --> OUTPUT
+
+    subgraph APPLY["적용"]
+        PRESET["build-preset"]
+        INSTALL["install-preset"]
+        AGENT["STYLE.md / DESIGN.md / IMPLEMENTATION_CONTRACT.md"]
+        QA["lint-implementation / compare-visuals / screenshot QA"]
     end
 
-    subgraph APPLY["3. 적용"]
-        OUTPUT --> PRESET["프리셋 승격\nbuild-preset"]
-        PRESET --> INSTALL["구현 repo 설치\ninstall-preset"]
-        INSTALL --> AGENT_PACK["에이전트 팩"]
-        AGENT_PACK --> REFACTOR["/design-refactor\n토큰 교체"]
-        AGENT_PACK --> REBUILD["/design-rebuild\n전체 재구성"]
-    end
-
-    OUTPUT --> OUTPUT_DETAIL
+    OUTPUT --> PRESET --> INSTALL --> AGENT --> QA
 ```
 
-## 핵심 개념
+## 입력 권한 모델
 
-| 용어 | 의미 |
-|------|------|
-| **시드 URL** | 참고할 디자인 시스템의 웹 주소 (Carbon, Primer, GOV.UK 등) |
-| **지식베이스(KB)** | 시드에서 수집한 정보를 정리한 저장소. 한 번 만들면 여러 프로젝트에서 재사용 |
-| **브랜드 프로필** | 우리 제품의 정체성을 정의한 JSON (브랜드명, 키워드, 톤, 대상 사용자 등) |
-| **시각 레퍼런스** | 로컬 스크린샷/레퍼런스 이미지를 분석해 visual motif, density, layout cue를 보강하는 입력 |
-| **색상 레퍼런스** | 선택 가능한 색상 목록이 담긴 마크다운. 브랜드 키워드와 mood 매칭으로 팔레트를 자동 결정 |
-| **서체 엔진** | 25+ 실무 서체 DB에서 브랜드/제품 유형에 맞는 서체 조합을 자동 선택 |
-| **Style Capsule** | `STYLE.md` / `DESIGN.md`로 생성되는 짧은 실행 브리프. 에이전트가 구현 전 가장 먼저 읽는 스타일 요약 |
-| **Implementation Contract** | 구현 repo의 `design-system/IMPLEMENTATION_CONTRACT.md`. 외부 레퍼런스 흡수 범위와 토큰 적용 금지선을 명시 |
-| **Rebuild** | 기존 화면의 기능은 보존하되, 디자인 시스템 기반으로 비주얼을 새로 구성하는 것 |
+이 하네스에서 가장 중요한 원칙은 “무엇을 어디까지 믿을 것인가”입니다. 이미지 레퍼런스가 들어와도 최종 시스템의 기준은 제품과 브랜드입니다.
 
-## 입력 구조: 공식 KB + Visual References
+| 입력 | 역할 | 권한 |
+|---|---|---|
+| `spec.md`, PRD | 제품 기능, 화면, 사용자 흐름 | 가장 높음 |
+| `brand_profile.json` | 브랜드 정체성, 금지어, 플랫폼, 접근성 목표 | 가장 높음 |
+| 공식 KB | 컴포넌트 구조, 상태, 접근성, 디자인 토큰 근거 | 높음 |
+| `color_reference.md` | 팔레트 후보와 semantic color 검색 근거 | 높음 |
+| font reference DB | 브랜드/제품 유형에 맞는 서체 후보 | 높음 |
+| 로컬 이미지, screenshots, Omnigen | 밀도, 표면감, 컴포넌트 형태, 레이아웃 리듬 | 보조 |
+| Pinterest/Lazyweb/Figma provider | 검색 후보, 비교 조사, export된 화면 맥락 | 보조 |
 
-이 하네스는 입력을 두 층으로 나눠서 다룹니다.
+이미지 레퍼런스가 해도 되는 일:
 
-- **구조적 truth source**: 공식 KB, `spec.md`, `brand_profile.json`, `color_reference`
-- **시각 보조 입력**: `visual_reference`에 연결한 로컬 이미지, 스크린샷, 수집한 레퍼런스
+- component morphology
+- layout density
+- panel/card proportion
+- hierarchy rhythm
+- interaction affordance pattern
+- flow pattern label
 
-중요한 원칙은 다음과 같습니다.
+이미지 레퍼런스가 하면 안 되는 일:
 
-- 공식 KB와 spec은 컴포넌트 구조, 상태, 접근성, 토큰 정책의 근거입니다.
-- visual reference는 density, surface language, corner bias, CTA prominence 같은 조형 힌트를 보강합니다.
-- image-derived signal은 `observed`, `inferred`, `unverified` provenance 레벨을 함께 남깁니다.
-- Pinterest는 필수 의존성이 아니라 **선택적 검색 보조 레이어**입니다. 직접 크롤링보다 검색어 생성과 사용자의 수동 수집을 우선합니다.
-- Pinterest 보조 수집에서는 raw asset 다운로드보다 screenshot/reference URL 기록을 우선하고, 수집물이 재배포 가능한 에셋이라고 가정하지 않습니다.
-- `system_spec.md`와 `component_specs.md`에서 image-derived hints는 advisory signal로만 취급됩니다.
-- 구현 단계에서는 외부 이미지를 색상/폰트/IA 소스로 쓰지 않습니다. `STYLE.md` / `DESIGN.md`와 `IMPLEMENTATION_CONTRACT.md`가 이 경계를 반복해서 고정합니다.
+- 최종 color palette 결정
+- typography scale 결정
+- 제품 IA 결정
+- product copy 복사
+- 외부 이미지를 재배포 가능한 에셋처럼 취급
+- 상표, 아이콘, 인물, 사진을 라이선스 없이 구현물에 복사
+
+이 규칙은 `design_context_pack.json`, `system_spec.md`, `system_ontology.json`, `IMPLEMENTATION_CONTRACT.md`, `lint-implementation`에 반복해서 기록됩니다.
+
+## 이미지 에셋 기반 추출
+
+이미지 레이어는 “예쁜 분위기 참고”가 아니라, 산출물에 남는 구조화된 research layer입니다.
+
+### 1. Omnigen vault 선별
+
+`design_ontology_harness/omnigen_references.py`는 로컬 Omnigen vault의 `index.sqlite`를 읽고, 프로젝트 쿼리와 카테고리에 맞는 이미지를 소량만 고릅니다.
+
+기본 vault 위치:
+
+```text
+~/.omnigen-vault
+```
+
+기본 검색 카테고리:
+
+```text
+web-design, app-design, mobile-design
+```
+
+선별 시 참고하는 값:
+
+- `subject`, `style`, `palette`, `composition`, `mood`, `prompt`, `revised_prompt`
+- `tags`, `rating`, `ocr_char_count`
+- `width`, `height`, `orientation`
+- `sha256`, `phash`, thumbnail path
+- 프로젝트 query와 `brand_profile`의 제품/브랜드 키워드
+
+선별 결과는 프로젝트 안에 metadata manifest로 남고, 이미지는 기본적으로 `build/visuals/omnigen-selected/`에 symlink됩니다. 그래서 하네스 본체나 public plugin 배포물에 이미지 원본이 섞이지 않습니다.
+
+```bash
+uv run design-ontology select-omnigen-references \
+  --project-dir projects/my-app \
+  --vault-dir ~/.omnigen-vault \
+  --query "analytics dashboard crm contacts settings table" \
+  --category app-design \
+  --category web-design \
+  --count 12 \
+  --sync-sources
+```
+
+link mode는 세 가지입니다.
+
+| mode | 의미 | 권장 상황 |
+|---|---|---|
+| `symlink` | `build/visuals/omnigen-selected/`에 링크만 생성 | 기본 개발 흐름 |
+| `copy` | 선택 이미지를 build 안으로 복사 | vault 변경과 분리된 로컬 실험 |
+| `absolute` | vault 원본 경로를 그대로 참조 | build 안에 파일을 만들고 싶지 않을 때 |
+
+자세한 운영 규칙은 [docs/OMNIGEN_REFERENCE_PACKS.md](./docs/OMNIGEN_REFERENCE_PACKS.md)를 참고하세요.
+
+### 2. Visual Reference 분석
+
+`design_ontology_harness/visual_reference.py`는 `brand_profile.visual_reference.sources`에 연결된 이미지와 폴더를 분석합니다.
+
+추출되는 대표 신호:
+
+- 이미지 수, 선택 이미지 수, source coverage
+- 파일 경로, provider, sha256, 크기, 비율
+- density: `dense`, `balanced`, `airy`
+- surface style: `flat`, `tinted`, `elevated` 등
+- corner style, typography mood, color balance
+- layout cue: dashboard grid, split-pane, table-heavy, card stack 등
+- component style hint: cards, navigation, data display, forms, typography
+- candidate component archetype
+- reference mood summary
+
+분석 명령:
+
+```bash
+uv run design-ontology analyze-visuals \
+  --project-dir projects/my-app
+```
+
+생성 파일:
+
+```text
+projects/my-app/build/visuals/
+  visual_reference_report.json
+  visual_motifs.json
+  layout_cues.json
+  component_style_hints.json
+  candidate_component_archetypes.json
+  reference_mood_summary.json
+  design_context_pack.json
+```
+
+### 3. Reference Intelligence Pack
+
+`design_ontology_harness/reference_context.py`는 provider가 달라도 같은 구조로 reference context를 정리합니다.
+
+지원하는 provider 모델:
+
+- `local-images`
+- `uploaded-screenshots`
+- `pinterest`
+- `lazyweb`
+- `figma`
+- `omnigen-vault` source entry
+
+이 레이어의 핵심 산출물은 `design_context_pack.json`입니다. 여기에는 provider 상태, context card, flow index, morphology index, research gap, absorption policy가 들어갑니다.
 
 ## 빠른 시작
 
-### 1단계: 설치
+### 1. 설치
 
 ```bash
 uv sync
 ```
 
-### 2단계: 지식베이스 만들기
-
-참고할 디자인 시스템 사이트들을 수집합니다. 한 번만 하면 됩니다.
+### 2. KB 만들기
 
 ```bash
 uv run design-ontology build-kb \
@@ -116,16 +238,7 @@ uv run design-ontology build-kb \
   --seed-url https://primer.style
 ```
 
-바로 쓸 수 있는 공식 seed pack도 포함되어 있습니다.
-
-- `seeds/professional-design-systems.txt`: 현재 크롤러로 바로 KB 빌드 가능한 공식 디자인 시스템 목록
-- `seeds/browser-required-official-design-systems.txt`: 공식이지만 JS/접근 제약이 있어 브라우저 기반 수집기에 더 적합한 watchlist
-
-현재 professional pack에는 **60개**의 공식 레퍼런스가 들어 있습니다:
-Enterprise(Atlassian, Primer, Carbon, Fluent, Clarity, Workday Canvas, Cloudscape, Garden, Modus, Wise 등), DevTools(Vercel Geist, Twilio Paste, HashiCorp Helios, shadcn/ui, Radix, Mantine, Chakra, Ant, Sentry 등), Consumer/Commerce(Pinterest Gestalt, Uber Base, Shopify Polaris Web Components, Grab 등), Government(GOV.UK, NHS, HMRC, Home Office, VA.gov, CMS, Canada, NSW, Ontario, Queensland, BC 등).
-browser-required pack(37개)에는 Material Design 3, Apple HIG, Adobe Spectrum, Salesforce Lightning, Airbnb DLS, Stripe Elements, Linear Method, DigitalOcean, DTA Australia, Design System SG 등 JS 렌더링·접근 제약·소스 재확인이 필요한 레퍼런스가 포함됩니다.
-
-예:
+공식 seed pack을 써도 됩니다.
 
 ```bash
 uv run design-ontology build-kb \
@@ -133,34 +246,59 @@ uv run design-ontology build-kb \
   --seeds-file seeds/professional-design-systems.txt
 ```
 
-설명은 [docs/SEED_PACKS.md](./docs/SEED_PACKS.md)에서 볼 수 있습니다.
+관련 문서:
 
-### 3단계: 프로젝트 만들기
+- [docs/SEED_PACKS.md](./docs/SEED_PACKS.md)
+- [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)
+
+### 3. 프로젝트 만들기
 
 ```bash
 uv run design-ontology init \
   --project-dir projects/my-app \
   --brand-name "My App" \
-  --product-summary "팀 협업을 위한 프로젝트 관리 도구"
+  --product-summary "B2B 팀을 위한 운영 대시보드" \
+  --kb-dir ../../kb/default
 ```
 
-생성된 `brand_profile.json`을 열어 브랜드 정보를 채워 넣으세요.
+생성된 파일:
 
-### 4단계: 로컬 시각 레퍼런스 연결
+```text
+projects/my-app/
+  brand_profile.json
+  spec.md
+  project_manifest.json
+  agent_brief.md
+  seeds/seed_urls.txt
+```
 
-`brand_profile.json`의 `visual_reference.sources`에 로컬 이미지나 스크린샷 경로를 넣으면, 공식 KB와 별도로 visual direction을 분석할 수 있습니다.
+`brand_profile.json`에서 다음 값을 채우면 결과가 좋아집니다.
+
+- `brand_keywords`
+- `anti_keywords`
+- `tone_of_voice`
+- `visual_keywords`
+- `interaction_keywords`
+- `product_primitives`
+- `accessibility_targets`
+- `color_reference`
+- `visual_reference`
+
+### 4. 이미지 레퍼런스 연결
+
+가장 단순한 로컬 이미지 설정:
 
 ```json
 {
   "visual_reference": {
     "mode": "local-images",
     "query": [
-      "editorial dashboard",
-      "premium app UI"
+      "dense analytics dashboard",
+      "crm contacts table ui"
     ],
     "sources": [
-      "references/editorial-dashboard",
-      "references/landing-hero-01.png"
+      "references/visual",
+      "references/dashboard-example.png"
     ],
     "preferred_count": 12,
     "extraction_policy": "advisory-only"
@@ -168,7 +306,19 @@ uv run design-ontology init \
 }
 ```
 
-원하면 설계서와 브랜드 프로필을 바탕으로 이미지 검색용 query set도 먼저 생성할 수 있습니다.
+Omnigen vault에서 바로 고르는 설정:
+
+```bash
+uv run design-ontology select-omnigen-references \
+  --project-dir projects/my-app \
+  --query "crm analytics dashboard contacts settings table kpi" \
+  --category app-design \
+  --category web-design \
+  --count 12 \
+  --sync-sources
+```
+
+Pinterest-assisted 검색 후보를 만들고 싶다면:
 
 ```bash
 uv run design-ontology generate-visual-queries \
@@ -177,744 +327,290 @@ uv run design-ontology generate-visual-queries \
   --sync-brand-profile
 ```
 
-이 명령은 query set뿐 아니라 아래 보조 수집 산출물도 함께 생성합니다.
-
-- `build/visuals/pinterest_assist_plan.json`
-- `build/visuals/pinterest_candidate_manifest.json`
-- `build/visuals/pinterest_selection_manifest.json`
-
-Pinterest-assisted 캡처 후보를 명시적으로 선택하고 최종 visual source로 승격하려면:
+선택한 후보를 source로 승격:
 
 ```bash
 uv run design-ontology select-pinterest-candidates \
   --project-dir projects/my-app \
   --candidate q03-c02 \
-  --candidate q05-c02 \
+  --candidate q05-c01 \
   --sync-sources
 ```
 
-로컬 이미지를 넣은 뒤에는 visual layer만 별도로 점검할 수도 있습니다.
+### 5. Visual layer 점검
 
 ```bash
 uv run design-ontology analyze-visuals \
   --project-dir projects/my-app
 ```
 
-이 단계는 선택 사항이지만, dashboard/landing처럼 조형 언어가 중요한 프로젝트에는 권장됩니다.
-
-### 5단계: 설계서 작성
-
-`projects/my-app/spec.md`에 제품의 화면 구성을 작성합니다.
-
-```markdown
-# My App 상세 설계서
-
-## 메인 대시보드
-- 좌측 사이드바 네비게이션
-- 통계 카드로 주요 지표 표시
-- 데이터 테이블로 목록 표시
-
-## 설정 화면
-- 프로필 편집 폼
-- 알림 설정 (체크박스)
-```
-
-이 파일이 있으면 `run-project` 시 **필요한 UI 컴포넌트를 자동으로 탐지**합니다.
-
-### 6단계: 설계도 생성
+### 6. 디자인 시스템 합성
 
 ```bash
 uv run design-ontology run-project \
-  --project-dir projects/my-app \
-  --kb-dir kb/default
+  --project-dir projects/my-app
 ```
 
-### 결과 확인
-
-`projects/my-app/build/system/` 아래에 생성됩니다.
-
-| 파일 | 내용 |
-|------|------|
-| `blueprint/system_spec.md` | 디자인 원칙, 색상 팔레트, 서체 추천, 컴포넌트 정책 |
-| `blueprint/token_schema.json` | 색상·여백·타이포 등 토큰 계층 구조 |
-| `blueprint/component_inventory.json` | 컴포넌트 패밀리와 상태 정의 |
-| `blueprint/system_ontology.json` | 22종 노드 × 27종 관계의 온톨로지 그래프 |
-| `components/component_specs.md` | 컴포넌트별 상세 스펙 (구조, 상태, 토큰, 접근성, 브랜드 적용) |
-| `components/component_specs.json` | 같은 내용의 JSON (에이전트용) |
-
-### 7단계: 프리셋으로 승격하고 구현 repo에 설치
-
-`run-project` 산출물은 하네스 내부 설계도입니다. 실제 앱 repo에서 바로 쓰려면 프리셋으로 승격한 뒤 adapter로 설치합니다.
+### 7. Preset으로 승격
 
 ```bash
 uv run design-ontology build-preset \
   --project projects/my-app \
-  --preset-id conversation-copilot--corporate-trust \
-  --owner maintainer \
+  --preset-id dashboard--operational \
+  --owner your-handle \
   --tier P3 \
-  --color-modes light \
-  --default-color-mode light \
-  --tags ko,enterprise,copilot
+  --tags "dashboard,crm,ko"
+```
 
+### 8. 구현 레포에 설치
+
+```bash
 uv run design-ontology install-preset \
-  --preset-id conversation-copilot--corporate-trust \
-  --target-repo /path/to/implementation-repo \
-  --adapter raw-css-variables \
-  --color-mode light \
+  --preset-id dashboard--operational \
+  --target-repo /path/to/app \
+  --adapter nextjs-tailwind-shadcn \
   --locale ko
 ```
 
-설치 후 구현 repo의 `design-system/`에는 다음이 들어갑니다.
-
-| 파일 | 용도 |
-|------|------|
-| `IMPLEMENTATION_CONTRACT.md` | 외부 레퍼런스 흡수 범위, 토큰 바인딩 규칙, lint preflight |
-| `STYLE.md` | 사람이 읽기 쉬운 스타일 캡슐 |
-| `DESIGN.md` | Codex/Claude 같은 에이전트가 먼저 읽는 agent-ready 스타일 캡슐 |
-| `tokens.css` / `fonts.css` | adapter가 만든 실제 CSS 변수와 로케일 서체 |
-| `system_spec.md`, `token_schema.json`, `component_inventory.json` | 원본 설계 기준 |
-| `components/component_specs.*` | 컴포넌트 anatomy, states, token binding |
-
-`component_inventory.json`에는 기본 컴포넌트뿐 아니라
-`advanced_component_catalog`와 `advanced_recommendations`도 포함될 수 있습니다.
-사용자가 `policy-matrix`, `citation-drawer`, `approval-rail` 같은 이름을 몰라도
-하네스가 제품 문맥에서 고급 컴포넌트 후보를 추천하고, `STYLE.md` / `DESIGN.md`의
-**Advanced Component Menu**로 구현 에이전트에게 노출합니다. 자세한 기준은
-[`docs/ADVANCED_COMPONENT_CATALOG.md`](./docs/ADVANCED_COMPONENT_CATALOG.md)를 참고하세요.
-
-구현 에이전트에게는 이렇게 지시합니다.
+설치 후 구현 레포에는 보통 아래 산출물이 들어갑니다.
 
 ```text
-design-system/IMPLEMENTATION_CONTRACT.md,
-design-system/STYLE.md,
-design-system/token_schema.json,
-design-system/components/component_specs.md 기준으로 화면을 리팩해줘.
-
-외부 참고 이미지는 형태, 밀도, 컴포넌트 비례만 반영하고
-색상, 폰트, IA, 카피는 온톨로지와 토큰을 우선해.
-작업 후 lint-implementation까지 돌려줘.
+design-system/
+  STYLE.md
+  DESIGN.md
+  IMPLEMENTATION_CONTRACT.md
+  INSTALLED.json
+  blueprint/
+  components/
+  ontology/
 ```
 
+## 주요 산출물
+
+| 경로 | 설명 |
+|---|---|
+| `build/visuals/omnigen_reference_selection.json` | Omnigen vault에서 고른 이미지 목록과 score, source metadata |
+| `build/visuals/visual_reference_report.json` | 이미지 레퍼런스 전체 분석 보고서 |
+| `build/visuals/visual_motifs.json` | density, surface, typography mood, color balance |
+| `build/visuals/layout_cues.json` | 레이아웃 패턴 후보와 confidence |
+| `build/visuals/component_style_hints.json` | 카드, 네비게이션, 데이터 표시 등 컴포넌트별 조형 힌트 |
+| `build/visuals/design_context_pack.json` | provider-neutral reference intelligence |
+| `build/system/blueprint/system_spec.md` | 사람이 읽는 디자인 시스템 설계서 |
+| `build/system/blueprint/token_schema.json` | 색상, 서체, spacing, radius, motion, elevation token |
+| `build/system/blueprint/component_inventory.json` | 구현해야 할 컴포넌트 목록과 역할 |
+| `build/system/components/component_specs.md` | 컴포넌트 구조, 상태, 토큰 바인딩, 접근성 규칙 |
+| `build/system/blueprint/system_ontology.json` | typed ontology graph |
+| `build/system/blueprint/design_context_pack.json` | 합성된 시스템 쪽으로 복사된 reference intelligence |
+| `build/system/blueprint/aesthetic_ontology.json` | aesthetic loop 평가 기준 |
+
+`system_spec.md`는 현재 26개 섹션까지 생성됩니다. 특히 최근에 추가된 뒤쪽 섹션이 중요합니다.
+
+| 섹션 | 의미 |
+|---|---|
+| 22. Brand Identity Assets | 앱 아이콘, 브랜드 식별 에셋, SVG/PNG medium override |
+| 23. Generated Visual Asset Plan | AI 생성 이미지가 필요한 위치와 prompt/manifest 원칙 |
+| 24. Mockup Visual Substance | 이미지 없는 목업을 미완성으로 보는 기준 |
+| 25. Reference Intelligence Pack | provider, context card, 허용/금지 흡수 범위 |
+| 26. Commercial Product Realism | 상업용 제품 목업의 현실감, 데이터/콘텐츠/에셋 완성도 |
+
+`graph_schema.py` 기준 ontology graph는 현재 34개 `NodeType`, 34개 `EdgeType`을 갖습니다. 이미지 에셋과 reference intelligence 확장 때문에 `GeneratedVisualAsset`, `SourcedVisualAsset`, `VisualAssetProvider`, `LicensePolicy`, `ReferenceProvider`, `DesignContextPack`, `DesignContextCard`, `ImplementationFailurePattern` 같은 노드가 포함됩니다.
+
+## 합성 엔진이 결정하는 것
+
+이미지 레퍼런스가 들어와도 최종 디자인 시스템은 여러 레이어를 합쳐서 결정됩니다.
+
+| 레이어 | 담당 모듈 | 결과 |
+|---|---|---|
+| 설계서 분석 | `spec_analyzer.py`, `component_specs.py` | 필요한 화면, 컴포넌트, 상태, product primitive |
+| 색상 결정 | `color_reference.py`, `semantic_color_selector.py` | brand-guided palette, semantic roles, contrast pairs |
+| 서체 결정 | `font_reference.py` | heading/body/UI/mono pairing, locale pairing |
+| CSS 근거 | `css_pipeline.py`, `typo_extractor.py` | 공식 시스템의 변수, 브랜드 컬러, typography evidence |
+| 컴포넌트 전략 | `advanced_components.py`, `component_specs.py` | component inventory, anatomy, states, token binding |
+| 온톨로지 | `graph_schema.py`, `graph_builders.py` | token, component, pattern, asset, governance 관계 |
+| 스타일 캡슐 | `style_capsule.py`, `agent_packs.py` | 구현 에이전트가 먼저 읽는 `STYLE.md`, `DESIGN.md` |
+| 품질 게이트 | `implementation_linter.py`, `aesthetic_loop.py`, `visual_evidence.py` | token 위반, visual diff, aesthetic score 점검 |
+
+색상은 매번 semantic color ontology와 브랜드 키워드를 함께 검색해서 고릅니다. 미리 정해 둔 palette preset을 그대로 끼우는 방식이 아니라, 제품 맥락과 `color_reference` 근거를 결합합니다.
+
+서체는 제품 유형, 톤, 플랫폼, locale을 보고 고릅니다. 한국어 구현에는 locale pairing이 중요하므로, preset 설치 시 `--locale ko`를 함께 쓰는 흐름을 권장합니다.
+
+## 구현과 검증
+
+`install-preset` 이후 구현 레포에는 디자인 시스템 산출물과 실행 계약이 들어갑니다. 에이전트나 사람이 화면을 고칠 때는 이 계약이 외부 레퍼런스보다 우선합니다.
+
+검증 흐름:
+
 ```bash
-uv run design-ontology lint-implementation --target-repo /path/to/implementation-repo
-```
+uv run design-ontology lint-implementation \
+  --target-repo /path/to/app
 
-## 설계서에서 컴포넌트 자동 탐지
+uv run design-ontology compare-visuals \
+  --before baseline.png \
+  --after revised.png
 
-설계서를 넣으면 어떤 컴포넌트가 필요한지 자동으로 파악합니다.
-
-```bash
-# 설계서만 분석
-uv run design-ontology analyze-spec --spec-file spec.md
-
-# 설계서 + KB + 브랜드 → 상세 컴포넌트 스펙 생성
-uv run design-ontology build-components \
-  --spec-file spec.md \
+uv run design-ontology aesthetic-loop \
   --project-dir projects/my-app \
-  --kb-dir kb/default
+  --candidate candidate.json
 ```
 
-`analyze-spec` 결과 예시:
+검증에서 보는 것:
 
+- 하드코딩 색상/서체 대신 token을 쓰는지
+- 외부 이미지 레퍼런스를 구현 에셋으로 잘못 복사하지 않았는지
+- 작은 화면에서 버튼, 탭, 카드, 테이블 텍스트가 깨지지 않는지
+- 이미지가 필요한 목업인데 빈 카드와 gradient placeholder만 남기지 않았는지
+- generated/sourced asset manifest에 prompt, source, license, alt text가 남는지
+
+## Omnigen CRM 데모
+
+이번 확장을 검증하기 위해 `projects/omnigen-crm-demo` 샘플을 만들었습니다.
+
+데모가 보여주는 것:
+
+- `~/.omnigen-vault`에서 CRM/dashboard 관련 UI 이미지를 선별
+- 선별 이미지를 `visual_reference.sources`에 동기화
+- `analyze-visuals`로 dense dashboard, flat card, split-pane, data table cue 추출
+- `run-project`로 디자인 시스템 산출물 생성
+- 산출물을 바탕으로 인터랙티브 CRM 목업 작성
+- 절차와 샘플 이미지를 HTML 설명 자료로 정리
+
+![Omnigen CRM mockup](./projects/omnigen-crm-demo/mockup/mockup-desktop.png)
+
+주요 파일:
+
+| 파일 | 설명 |
+|---|---|
+| [projects/omnigen-crm-demo/brand_profile.json](./projects/omnigen-crm-demo/brand_profile.json) | CRM 제품 브리프, visual_reference, Omnigen source |
+| [projects/omnigen-crm-demo/spec.md](./projects/omnigen-crm-demo/spec.md) | 화면/기능 설계서 |
+| [projects/omnigen-crm-demo/mockup/index.html](./projects/omnigen-crm-demo/mockup/index.html) | 인터랙티브 CRM 목업 |
+| [projects/omnigen-crm-demo/demo-report.html](./projects/omnigen-crm-demo/demo-report.html) | 절차, 산출물, 샘플 이미지를 정리한 HTML 보고서 |
+| [projects/omnigen-crm-demo/USER_GUIDE.md](./projects/omnigen-crm-demo/USER_GUIDE.md) | 목업 사용설명서 |
+
+생성 후 확인할 경로:
+
+```text
+projects/omnigen-crm-demo/build/visuals/omnigen_reference_selection.json
+projects/omnigen-crm-demo/build/visuals/visual_reference_report.json
+projects/omnigen-crm-demo/build/system/blueprint/system_spec.md
 ```
-[analyze-spec] 15개 UI 패턴 감지:
-  [15] forms:              폼, 양식, 드롭다운, 체크박스...
-  [10] data tables:        테이블, 목록, 필터...
-  [ 8] workspace navigation: 사이드바, 메뉴, 워크스페이스...
-  [ 7] rich text editor:   에디터, 마크다운, 리치텍스트...
-  ...
-  총 64개 컴포넌트 도출
-```
 
-각 컴포넌트마다 아래 내용이 생성됩니다:
-
-- **구조 (Anatomy)**: 필수 파트 목록 (container, label, icon 등)
-- **상태 (States)**: default, hover, active, disabled, loading, error 등
-- **토큰 바인딩**: surface, text, border, radius, padding, font 토큰 매핑
-- **접근성**: role, aria, label, focus 관리 규칙
-- **브랜드 적용**: 브랜드 키워드별 구체적 행동 지침
-- **Visual adaptation hints**: 카드 elevation, border/fill, CTA prominence, filter/nav density, chart framing
-- **레퍼런스 근거**: KB에서 매칭된 참고 자료 (BBC, Carbon 등)
-
-## Visual Reference Quick Start
-
-로컬 이미지 기반으로 바로 시작하는 가장 짧은 흐름입니다.
+데모를 로컬에서 열기:
 
 ```bash
-# 1) KB는 먼저 한 번 구축
-uv run design-ontology build-kb --kb-dir kb/default --seeds-file seeds/professional-design-systems.txt
-
-# 2) 프로젝트 생성
-uv run design-ontology init --project-dir projects/my-app --brand-name "My App" --kb-dir ../../kb/default
-
-# 3) brand_profile.json 에 visual_reference.sources 추가
-
-# 4) 시각 분석만 먼저 확인
-uv run design-ontology analyze-visuals --project-dir projects/my-app
-
-# 5) 필요하면 검색 query 생성
-uv run design-ontology generate-visual-queries --project-dir projects/my-app --spec projects/my-app/spec.md
-
-# 5-1) Pinterest-assisted 후보 선택 후 sources 동기화
-uv run design-ontology select-pinterest-candidates \
-  --project-dir projects/my-app \
-  --candidate q03-c02 \
-  --candidate q05-c02 \
-  --sync-sources
-
-# 6) 최종 산출물 생성
-uv run design-ontology run-project --project-dir projects/my-app
+python3 -m http.server 8765 --bind 127.0.0.1
 ```
 
-생성되는 visual 산출물:
-
-- `build/visuals/visual_reference_report.json`
-- `build/visuals/visual_motifs.json`
-- `build/visuals/layout_cues.json`
-- `build/visuals/component_style_hints.json`
-- `build/visuals/visual_query_suggestions.json`
-- `build/visuals/pinterest_assist_plan.json`
-- `build/visuals/pinterest_candidate_manifest.json`
-- `build/visuals/pinterest_selection_manifest.json`
-
-Pinterest-assisted 운영 상세는 [docs/PINTEREST_ASSISTED_WORKFLOW.md](./docs/PINTEREST_ASSISTED_WORKFLOW.md)에서 볼 수 있습니다.
-
-## 색상 자동 결정
-
-하네스의 색상 결정은 앱의 내용과 브리프를 기준으로 매번 Semantic OS color ontology를 검색해서 고릅니다. `color_reference`를 연결하면 그 문서는 추가 증거가 되지만, 미리 만들어 둔 팔레트 세트를 그대로 쓰는 방식은 금지입니다.
-
-```json
-{
-  "color_reference": {
-    "path": "docs/color-reference.md",
-    "preferred_families": ["Deep Reds", "Standard Oranges"],
-    "palette_strategy": {
-      "mode": "brand-guided",
-      "temperature": "warm",
-      "contrast": "balanced",
-      "prefer_moods": ["세련됨", "신뢰감"],
-      "avoid_moods": ["달콤함", "귀여움"]
-    }
-  }
-}
+```text
+http://127.0.0.1:8765/projects/omnigen-crm-demo/mockup/index.html
+http://127.0.0.1:8765/projects/omnigen-crm-demo/demo-report.html
 ```
 
-**결정 과정:**
-1. `brand_profile.json`과 `spec.md`에서 앱 주제, 업무 표면, 컴포넌트 신호를 모읍니다.
-2. Semantic OS `ColorPattern`을 검색해 이 앱에 맞는 role model을 찾습니다.
-3. Semantic OS `ColorKeyword`를 role/reason/caveat 기준으로 다시 검색해 후보 팔레트를 5개 이상 만듭니다.
-4. 연결된 색상 문서가 있으면 preferred family와 mood 증거로 가중치에 반영합니다.
-5. 선택 결과는 `system_spec.md`, `token_schema.json`, `system_ontology.json`에 `ontology-search-per-run`으로 기록됩니다.
+목업에서 동작하는 기능:
 
-## 서체 자동 결정
+- `New contact`: 테이블에 새 연락처 추가
+- `Export`: 현재 필터 결과 CSV 저장
+- 상단 검색: 연락처, 회사, 담당자, 상태 기준 필터
+- `Status`, `Owner`, `Stage`: 테이블 조건 필터
+- saved view tab: 보기 전환
+- `Save view`: toast 표시
+- Pipeline 기간 버튼: 범위 전환
+- Data quality queue `Open`: 상세 행 토글
+- Activity feed `View all`: 활동 목록 확장/접기
+- Settings switch: 클릭 또는 키보드 토글
+- 왼쪽 내비게이션: active 상태와 상단 제목 변경
 
-브랜드 프로필을 로드하면 서체도 자동으로 결정됩니다.
+## CLI 명령 요약
 
-25+ 실무 서체 DB에서 선택:
-- **Geometric Sans**: Inter, DM Sans, Plus Jakarta Sans, Space Grotesk
-- **Humanist Sans**: Pretendard, Noto Sans, IBM Plex Sans, Wanted Sans
-- **Serif Display**: Playfair Display, EB Garamond, Lora
-- **Monospace**: JetBrains Mono, Fira Code, IBM Plex Mono
+| 명령 | 용도 |
+|---|---|
+| `build-kb` | seed URL 또는 seed file에서 KB 생성 |
+| `init` | harness project scaffold 생성 |
+| `run-project` | KB, brand profile, spec, visual reference를 합성해 시스템 산출물 생성 |
+| `analyze-spec` | 설계서에서 필요한 컴포넌트와 product primitive 탐지 |
+| `analyze-visuals` | 로컬 이미지/스크린샷 기반 visual reference 분석 |
+| `generate-visual-queries` | 브랜드와 spec 기반 이미지 검색 query 생성 |
+| `capture-pinterest` | Pinterest 검색 결과 tile을 로컬 후보로 캡처 |
+| `select-pinterest-candidates` | 캡처 후보를 selection manifest에 고정 |
+| `sync-pinterest-selection` | 선택된 Pinterest 후보를 `visual_reference.sources`에 반영 |
+| `select-omnigen-references` | 로컬 Omnigen vault에서 프로젝트별 이미지 레퍼런스 선별 |
+| `extract-css` | CSS에서 토큰, 브랜드 컬러, typography 후보 추출 |
+| `build-components` | spec, KB, brand profile 기반 컴포넌트 상세 스펙 생성 |
+| `benchmark` | 브랜드 키워드와 맞는 참고 디자인 시스템 추천 |
+| `build-preset` | 프로젝트 산출물을 `presets/<id>/`로 승격 |
+| `install-preset` | preset을 구현 레포에 설치 |
+| `match-preset` | 사용자 신호에 맞는 preset 추천 |
+| `validate-presets` | preset 구조와 버전 계약 검증 |
+| `lint-previews` | preset preview 문서 규칙 검사 |
+| `lint-implementation` | 구현 레포에서 token binding, 금지 패턴 검사 |
+| `compare-visuals` | before/after screenshot 변화량 검증 |
+| `aesthetic-loop` | 디자인 후보의 aesthetic score 평가와 개선 action 생성 |
+| `score-screenshot` | screenshot에서 aesthetic-loop 후보 metrics 생성 |
+| `init-agent-pack` | 구현 레포용 agent instruction pack 생성 |
+| `customize-preset` | 기존 preset을 프로젝트로 복사해 재합성 준비 |
+| `rebuild-all-presets` | matrix 기반 전체 preset 재생성 |
+| `catalog-health` | preset catalog 건강도와 drift 점검 |
+| `promote-preset` | lifecycle gate 통과 후 preset tier 승격 |
+| `deprecate-preset` | preset deprecated 처리 |
+| `prune-preset` | 조건을 만족한 deprecated preset 제거 |
+| `build-sources` | preset별 source metadata 생성 |
 
-**결정 기준:**
-- 브랜드 키워드 → 서체 성격 매칭 (editorial → serif heading, calm → humanist body)
-- 제품 유형 자동 추론 → 서체 전략 (dashboard → tabular figures, editorial → serif+sans 대비)
-- 한글 서체 자동 페어링 (Pretendard, Wanted Sans, Noto Sans KR 등)
-- type scale 프리셋 (compact/default/editorial/display)
+## 배포 전략
 
-## AI 에이전트 연동
+이미지 corpus는 무겁고, 저작권과 재배포 조건도 제각각입니다. 그래서 이 레포의 기본 원칙은 다음과 같습니다.
 
-생성된 스펙을 구현 프로젝트에서 AI가 활용할 수 있도록 에이전트 팩을 설치합니다.
+- harness에는 코드, 스키마, 문서, metadata, preset 산출물만 둔다.
+- Omnigen 원본 이미지나 대형 스크린샷 묶음은 public package에 넣지 않는다.
+- 프로젝트별로 필요한 이미지만 `build/visuals/` 아래에 symlink하거나 복사한다.
+- `build/` 산출물은 로컬 실험 결과로 취급하고, 재현 가능한 manifest를 남긴다.
+- reference-only 이미지는 구현 에셋으로 복사하지 않는다.
+- 실제 제품에 들어갈 이미지는 `GeneratedVisualAsset` 또는 `SourcedVisualAsset`로 manifest와 license metadata를 갖춰야 한다.
 
-```bash
-uv run design-ontology init-agent-pack \
-  --target-repo /path/to/my-project \
-  --artifact-dir design-system \
-  --targets codex,claude
+이 방식이면 사용자는 가벼운 harness/plugin을 설치하고, 필요한 경우 자기 로컬 vault나 별도 reference pack을 연결할 수 있습니다.
+
+## 코드 구조
+
+```text
+design_ontology_harness/
+  cli.py                       CLI entry point
+  scaffold.py                  project scaffold
+  crawler.py                   공식 문서 수집
+  kb.py                        KB 로드/저장
+  css_pipeline.py              CSS token extraction
+  color_reference.py           semantic color selection
+  font_reference.py            font pairing
+  visual_reference.py          local image reference analysis
+  omnigen_references.py        Omnigen vault selection/sync
+  visual_queries.py            image-search query generation
+  pinterest_assist.py          Pinterest assist manifests
+  pinterest_capture.py         Playwright capture support
+  reference_context.py         Design Context Pack
+  synthesis.py                 blueprint synthesis
+  authoring.py                 system_spec/token/component 문서 생성
+  graph_schema.py              typed ontology schema
+  graph_builders.py            system ontology graph builder
+  graph_spec_sections.py       graph-backed spec sections 18-26
+  component_specs.py           detailed component spec builder
+  preset_builder.py            project -> preset promotion
+  preset_installer.py          preset -> implementation repo install
+  implementation_linter.py     implementation contract lint
+  aesthetic_loop.py            aesthetic scoring loop
+  agent_packs.py               agent instructions
 ```
 
-### 생성되는 스킬 4종
-
-| 스킬 | 명령 | 용도 |
-|------|------|------|
-| **Rebuild** | `/design-rebuild` | 화면을 스펙 기반으로 **새로 구성**. 기능은 보존, 비주얼 전체 재설계. 드라마틱한 변화. |
-| **Refactor** | `/design-refactor` | 기존 코드에 **토큰만 교체**. 레이아웃 안 깨짐. 안전한 점진 적용. |
-| **Implement** | 자동 | 새 컴포넌트를 스펙에 맞게 구현 |
-| **Architect** | 자동 | 토큰 구조, 롤아웃 순서 계획 |
-
-Codex target을 함께 생성하면 추가로 **Visual Assets** 스킬이 포함됩니다. 이 스킬은 Codex에서 이미지 생성 기능을 사용할 수 있을 때 `imagine2` 모델로 브랜드/토큰/visual reference에 맞는 히어로, 카드, 에디토리얼 이미지를 만들고 `public/generated/design-system/manifest.json`에 prompt와 alt text를 기록하도록 안내합니다. 온톨로지에도 `GeneratedVisualAsset` / `ImageGenerationModel` 노드와 `generated_with`, `grounded_in`, `intended_for` 관계가 기록됩니다.
-
-에이전트 팩은 구현 전에 아래 순서를 따르도록 생성됩니다.
-
-1. `design-system/IMPLEMENTATION_CONTRACT.md`
-2. `design-system/STYLE.md` 또는 `design-system/DESIGN.md`
-3. `design-system/system_spec.md`
-4. `design-system/token_schema.json`
-5. `design-system/component_inventory.json`
-6. `design-system/components/component_specs.*`
-
-즉 Pinterest, Refero, 스크린샷 같은 외부 시각 자료는 “모양 참고”로만 들어가고, 색상 조합·폰트·정보구조·카피는 온톨로지 산출물이 계속 우선합니다.
-
-### Rebuild vs Refactor
-
-```
-Rebuild:  기존 화면 분석 → 기능만 추출 → 스펙 기반으로 처음부터 다시 구성
-          색상, 서체, 레이아웃, 여백, 컴포넌트 구조 모두 재설계
-          → "다른 제품처럼" 보일 정도로 달라짐
-
-Refactor: 기존 코드 유지 → color: #3b82f6 → color: var(--accent) 교체
-          레이아웃, font-size, spacing 안 건드림
-          → 겉보기엔 비슷하지만 토큰 체계가 잡힘
-```
-
-### Refactor 안전 규칙
-
-- **font-size는 바꾸지 않음** — 기존 크기가 레이아웃에 맞춰져 있음. 토큰 스케일에 끼워 맞추면 줄바꿈이 깨짐.
-- **spacing은 정확히 같은 값만 교체** — 14px을 16px 토큰으로 반올림하면 안 됨
-- **레이아웃 속성 변경 금지** — display, width, height, position, flex-direction
-- 확신 없으면 TODO 주석으로 남김
-
-## CSS 추출 파이프라인
-
-크롤링된 CSS에서 디자인 토큰을 자동으로 추출합니다.
-
-```bash
-# CSS 파일에서 직접 추출
-uv run design-ontology extract-css --css-dir ./css --output-dir data
-
-# 크롤링 시 자동 실행: HTML의 <link rel="stylesheet"> → 8개 병렬 다운로드 → 추출
-```
-
-**추출 항목:**
-- **var_resolver**: CSS `var()` 체인 재귀 해결 + 순환 참조 감지
-- **brand_candidates**: 시멘틱 변수 + selector 역할 + 빈도 기반 브랜드 색상 추출
-- **typo_extractor**: 커스텀 프로퍼티에서 타이포그래피 스케일 자동 추출 (heading/text/display 분류)
-- **alias_layer**: 시멘틱 토큰 tier 분류 (core → util → action → component)
-
-## 5-tier Fallback 크롤링
-
-JS 렌더링이나 접근 제한이 있는 사이트도 단계적으로 시도합니다.
-
-```
-Tier 1: httpx 기본 요청
-Tier 2: Mobile UA (iPhone Safari)
-Tier 3: Jina Reader (r.jina.ai)
-Tier 4: Playwright (headless Chrome)
-Tier 5: 중단 (에러 기록)
-```
-
-## 벤치마크 레퍼런스
-
-41개 실서비스 디자인 시스템(Stripe, Vercel, Linear, Toss, Cloudscape, Garden 등)의 특성 데이터를 내장하고 있습니다. 브랜드 키워드로 유사한 시스템을 찾을 수 있습니다.
-
-```bash
-# 키워드로 유사 시스템 검색
-uv run design-ontology benchmark --keywords calm precise
-
-# 전체 41개 시스템 목록
-uv run design-ontology benchmark
-
-# 브랜드 프로필 기반 자동 매칭 + 리포트 저장
-uv run design-ontology benchmark --brand-profile brand_profile.json --output-dir data
-```
-
-합성 시 자동으로 매칭된 벤치마크 컨텍스트가 blueprint에 포함됩니다.
-
-## 산출물 21섹션 구성
-
-`system_spec.md`는 아래 21개 섹션으로 구성됩니다.
-
-| 번호 | 섹션 | 내용 |
-|------|------|------|
-| 1 | Positioning | 브랜드, 제품, 대상, 플랫폼, 접근성 |
-| 2 | Identity Guardrails | 키워드, 안티키워드, 톤, 시각/인터랙션 방향 |
-| 3 | Design Principles | 브랜드 키워드 기반 원칙 |
-| 4 | Foundation Priorities | 온톨로지에서 도출한 기초 우선순위 |
-| 5 | Token Strategy | 토큰 계층, 타이포, 스페이싱, 서체 |
-| 6 | Color Reference | 팔레트 결정, semantic role, 확장 |
-| 7 | Visual Reference Signals | 시각 레퍼런스 기반 톤/밀도/이미지 방향 |
-| 8 | Component Strategy | 제품 primitive → 컴포넌트 패밀리 |
-| 9 | Implementation Guardrails | 안전한 적용을 위한 규칙 |
-| 10 | Reference Absorption Rule | 레퍼런스 활용 원칙 |
-| 11 | AI Synthesis Principles | hex 미생성, 토큰명 미생성, 팩트 기반 해석 |
-| 12 | Ontology Targets | 핵심 개념 신호 |
-| 13 | Profile Validation | 프로필 검증 결과 |
-| 14 | Quick Start | 시작 가이드, 적용 순서, 우선순위 |
-| 15 | DO / DON'T | 브랜드 키워드 기반 구체적 규칙 |
-| 16 | Drop-in CSS | 즉시 사용 가능한 `:root` CSS 변수 |
-| 17 | CSS Extraction Summary | 크롤링 CSS 분석 결과 요약 |
-| 18 | **Component-Token Map** | 컴포넌트별 사용 토큰 테이블 (그래프 기반) |
-| 19 | **Contrast Audit** | surface/text 조합별 대비 비율 + AA/AAA 판정 |
-| 20 | **Pattern Catalog** | 레이아웃/인터랙션 패턴 + 구성 컴포넌트 |
-| 21 | **Generated Visual Asset Plan** | imagine2 기반 생성 이미지 슬롯 + manifest/alt text 계획 |
-
-## Style Capsule
-
-`STYLE.md`와 `DESIGN.md`는 Refero류 스타일 카드의 장점을 하네스 방식으로 흡수한 산출물입니다. 차이는 명확합니다. 외부 reference에서 취향을 가져오는 문서가 아니라, 이미 생성된 온톨로지/토큰/컴포넌트 스펙을 짧게 압축해 구현 에이전트가 실수하지 않게 만드는 문서입니다.
-
-포함 내용:
-
-- Authority order: 제품 IA → 토큰 → 컴포넌트 스펙 → 시스템 스펙 → 외부 레퍼런스
-- Voice and boundaries: 브랜드 키워드, tone, anti-keyword
-- Color roles: `--ds-color-*` 토큰과 HEX, source, usage
-- Typography: font role, type scale, 한글 wrap guardrails
-- Spacing and shape: spacing scale, density, radius bias
-- Component priorities: family, states, signature components
-- Reference governance: 허용/금지되는 reference 흡수 범위
-- Agent preflight: `lint-implementation` 실행 명령
-
-핵심 규칙:
-
-- visual reference는 component morphology, layout density, panel/card proportion, hierarchy rhythm만 반영합니다.
-- color palette, palette composition, typography scale, domain IA, product copy는 reference에서 가져오지 않습니다.
-- 토큰을 사용했더라도 `--ds-*` color role을 섞어 reference처럼 보이는 새 팔레트를 만들면 실패입니다.
-
-자세한 설명은 [docs/STYLE_CAPSULE.md](./docs/STYLE_CAPSULE.md)를 참고하세요.
-
-## 온톨로지 그래프
-
-`system_ontology.json`은 단순 키워드 매칭이 아닌 **22종 노드 × 27종 관계**의 진짜 그래프입니다.
-
-**노드 타입 (22종):**
-
-| 카테고리 | 노드 |
-|---------|------|
-| 브랜드 | Brand, Principle |
-| 컬러 | ColorPalette, ColorToken, ColorMode |
-| 타이포 | FontFamily, TypeScaleEntry |
-| 토큰 | SpacingToken, RadiusToken, MotionToken, ElevationToken |
-| 컴포넌트 | ComponentFamily, Component, ComponentState |
-| 패턴 | LayoutPattern, InteractionPattern |
-| 기타 | AccessibilityRule, ProductPrimitive, SourceReference, BenchmarkSystem, GeneratedVisualAsset, ImageGenerationModel |
-
-**엣지 타입 (27종):**
-
-```
-Brand ──expresses──▶ Principle ──constrains──▶ TokenCategory
-Brand ──inspired_by──▶ BenchmarkSystem ──references_font──▶ FontFamily
-ColorToken ──belongs_to_palette──▶ ColorPalette
-ColorToken ──derived_from──▶ ColorToken (CSS var chain)
-ColorToken ──contrast_pair──▶ ColorToken (WCAG ratio)
-ColorToken ──overrides_in_mode──▶ ColorMode
-FontFamily ──pairs_with──▶ FontFamily (heading↔body)
-TypeScaleEntry ──uses_font──▶ FontFamily
-Component ──member_of_family──▶ ComponentFamily
-Component ──uses_token──▶ ColorToken
-Component ──implements──▶ InteractionPattern
-LayoutPattern ──composed_of──▶ Component
-ComponentFamily ──requires──▶ AccessibilityRule
-BenchmarkSystem ──similar_to──▶ BenchmarkSystem (Jaccard)
-GeneratedVisualAsset ──generated_with──▶ ImageGenerationModel
-GeneratedVisualAsset ──grounded_in──▶ Brand/Principle/ColorToken/SourceReference
-GeneratedVisualAsset ──intended_for──▶ Component/ComponentFamily
-...
-```
-
-**그래프 쿼리:**
-
-```python
-from design_ontology_harness.graph_schema import DesignOntologyGraph, NodeType, EdgeType
-
-graph = build_full_ontology_graph(brand_profile, blueprint, component_inventory, token_schema)
-
-# 특정 타입의 모든 노드
-colors = graph.get_nodes_by_type(NodeType.ColorToken)
-
-# 특정 노드에서 나가는 엣지
-edges = graph.get_edges_from("brand:my-app", EdgeType.expresses)
-
-# 이웃 노드 탐색
-neighbors = graph.get_neighbors("component:primary-button")
-```
-
-## CLI 명령어 전체 목록
-
-| 명령어 | 용도 | 핵심 옵션 |
-|--------|------|-----------|
-| `build-kb` | 지식베이스 만들기 | `--kb-dir`, `--seed-url`, `--seeds-file` |
-| `init` | 프로젝트 초기화 | `--project-dir`, `--brand-name` |
-| `analyze-visuals` | 로컬 visual reference 단독 분석 | `--project-dir` or `--brand-profile` |
-| `generate-visual-queries` | 이미지 검색용 query 생성 | `--project-dir` or `--brand-profile`, `--spec`, `--sync-brand-profile` |
-| `run-project` | 설계도 + 컴포넌트 스펙 생성 | `--project-dir`, `--kb-dir` |
-| `analyze-spec` | 설계서에서 UI 패턴 자동 탐지 | `--spec-file`, `--project-dir` |
-| `build-components` | 상세 컴포넌트 스펙 생성 | `--spec-file`, `--project-dir`, `--kb-dir` |
-| `extract-css` | CSS에서 디자인 토큰 추출 | `--css-dir`, `--html-file` |
-| `benchmark` | 벤치마크 레퍼런스 검색 | `--keywords`, `--brand-profile` |
-| `build-preset` | 프로젝트 산출물을 `presets/<id>/`로 승격하고 `STYLE.md` / `DESIGN.md` 생성 | `--project`, `--preset-id`, `--owner`, `--tier` |
-| `install-preset` | 프리셋을 실제 구현 repo의 `design-system/`에 설치 | `--preset-id`, `--target-repo`, `--adapter`, `--locale` |
-| `lint-implementation` | 구현 repo의 hardcoded color / palette recomposition 위반 검사 | `--target-repo` |
-| `run` | KB 없이 한번에 실행 | `--seed-url`, `--brand-profile` |
-| `synthesize` | 기존 크롤 결과로 재생성 | `--output-dir`, `--brand-profile` |
-| `extract-seed` | 시드에서 링크만 추출 | `--seed-url` |
-| `init-agent-pack` | AI 에이전트 팩 생성 | `--target-repo`, `--targets` |
-
-## 데이터 흐름 상세
-
-```mermaid
-flowchart TB
-    subgraph KB["지식베이스 빌드 (build-kb)"]
-        S1["시드 URL"] --> SEED["시드 파싱\n링크 추출"]
-        SEED --> CRAWL["5-tier 크롤링\n+ CSS 병렬 다운로드"]
-        CRAWL --> CSS_EX["CSS 추출 파이프라인\nvar/brand/typo/alias"]
-        CRAWL --> ONT["개념 매칭\n문서→개념 증거"]
-    end
-
-    subgraph PROJECT["프로젝트 실행 (run-project)"]
-        BP["브랜드 프로필"] --> SYNTH["블루프린트 합성"]
-        KB_LOAD["KB 로드"] --> SYNTH
-        COLOR["color_reference.py\n팔레트 결정"] --> SYNTH
-        FONT["font_reference.py\n서체 결정"] --> SYNTH
-        BENCH["benchmark_kb.py\n41개 벤치마크"] --> SYNTH
-        VISUAL_REF["visual_reference.py\nmotif / layout / component hints"] --> SYNTH
-
-        SYNTH --> AUTH["authoring.py"]
-        AUTH --> GRAPH["graph_builders.py\n온톨로지 그래프 구축"]
-        GRAPH --> GRAPH_SEC["graph_spec_sections.py\n18-21섹션 도출"]
-
-        AUTH --> SYS["system_spec.md\n(21섹션)"]
-        AUTH --> TOK["token_schema.json"]
-        AUTH --> ONT_OUT["system_ontology.json\n(그래프 구조)"]
-        GRAPH_SEC --> SYS
-
-        SPEC_FILE["spec.md"] --> SPEC_AN["spec_analyzer.py\nUI 패턴 탐지"]
-        SPEC_AN --> COMP_GEN["component_specs.py"]
-        COMP_GEN --> COMP["component_specs.md"]
-    end
-
-    ONT --> KB_LOAD
-    CSS_EX --> KB_LOAD
-```
-
-## 모듈 구조
-
-```mermaid
-graph TB
-    subgraph ENTRY["진입점"]
-        CLI["cli.py"]
-    end
-
-    subgraph PIPELINE["수집 파이프라인"]
-        SHARED["cli_shared.py"]
-        SEED_MOD["seed_article.py\n시드 파싱"]
-        CRAWLER["crawler.py\n5-tier 크롤링"]
-        ONTOLOGY["ontology.py\n크롤 증거 매칭"]
-    end
-
-    subgraph CSS["CSS 추출"]
-        CSS_PIPE["css_pipeline.py"]
-        VAR_RES["var_resolver.py\nvar() 체인 해결"]
-        BRAND_C["brand_candidates.py\n브랜드 색상"]
-        TYPO_EX["typo_extractor.py\n타이포 스케일"]
-        ALIAS["alias_layer.py\n토큰 tier 분류"]
-    end
-
-    subgraph SYNTHESIS["합성 엔진"]
-        SYNTH["synthesis.py\n블루프린트"]
-        COLOR["color_reference.py\n팔레트 결정"]
-        FONT["font_reference.py\n서체 결정"]
-        BENCH["benchmark_kb.py\n41개 벤치마크"]
-        VISUAL["visual_reference.py\n시각 레퍼런스 해석"]
-        VQUERY["visual_queries.py\n검색 query 생성"]
-    end
-
-    subgraph GRAPH["온톨로지 그래프"]
-        SCHEMA["graph_schema.py\n22 NodeType\n27 EdgeType"]
-        BUILDERS["graph_builders.py\n11개 레이어 빌더"]
-        SECTIONS["graph_spec_sections.py\n18-21섹션 도출"]
-    end
-
-    subgraph OUTPUT["산출물 생성"]
-        AUTH["authoring.py\n21섹션 spec"]
-        COMP_SPEC["component_specs.py\n컴포넌트 스펙"]
-        AGENT["agent_packs.py\n에이전트 팩 4종"]
-    end
-
-    CLI --> SHARED
-    CLI --> KB["kb.py"] --> SHARED
-    CLI --> SCAFFOLD["scaffold.py"]
-    CLI --> SPEC_AN["spec_analyzer.py"] --> COMP_SPEC
-
-    SHARED --> SEED_MOD --> CRAWLER
-    CRAWLER --> CSS_PIPE
-    CRAWLER --> ONTOLOGY
-    CSS_PIPE --> VAR_RES
-    CSS_PIPE --> BRAND_C
-    CSS_PIPE --> TYPO_EX
-    CSS_PIPE --> ALIAS
-
-    SHARED --> SYNTH
-    SYNTH --> COLOR
-    SYNTH --> FONT
-    SYNTH --> BENCH
-    SYNTH --> VISUAL
-    SYNTH --> AUTH
-    CLI --> VQUERY
-
-    AUTH --> BUILDERS
-    BUILDERS --> SCHEMA
-    BUILDERS --> SECTIONS
-    SECTIONS --> AUTH
-
-    BENCH --> BUILDERS
-    COLOR --> BUILDERS
-    FONT --> BUILDERS
-    ALIAS --> BUILDERS
-```
-
-## 플러그인 배포 (Phase 7~14)
-
-이 harness 는 20종 프리셋을 찍어 [`design-ontology-plugin`](https://github.com/2000silpeed/design-ontology-plugin) 공개 레포로 자동 싱크합니다. 최종 사용자는 `/plugin install design-ontology` 한 줄로 프리셋·스킬·에이전트·어댑터를 얻습니다.
-
-> **Pretendard 서체 / SIL OFL 1.1** — 플러그인은 Pretendard Variable 을 **런타임 fetch** 방식으로 주입합니다 (`scripts/fetch-pretendard.mjs`). woff2 바이너리는 harness/plugin 레포 어디에도 번들되지 않고, OFL 고지(`LICENSE-FONTS`) 와 함께 설치 시점에 다운로드됩니다. 재배포 시 이 고지를 유지해야 합니다 (OFL §2).
-
-### 프리셋 카탈로그 요약 (2026-04-29 현재 20종)
-
-자동 생성된 카드 + 축 매트릭스 + Core HEX 스와치는 [`design-ontology-plugin/docs/CATALOG.md`](https://github.com/2000silpeed/design-ontology-plugin/blob/main/docs/CATALOG.md) 에서 확인하세요. Harness 쪽에서는 `python3 scripts/build-catalog.py --output <path>` 로 언제든 재생성.
-
-axis matrix (app_mode × brand_tone):
-
-| app_mode \ brand_tone | minimal-tech | editorial-warm | bold-confident | playful-soft | corporate-trust |
-|---|---|---|---|---|---|
-| **dashboard** | `P0` orbit | `P2` curator | `P3` lattice-dash | `P3` meadow | `P1` ledger |
-| **document-content** | `P1` lattice | `P0` signal-desk | `P2` broadside | — | — |
-| **marketing-landing** | `P2` beacon | `P3` loom | `P0` premier-league | — | — |
-| **commerce** | — | `P0` colorfit | `P2` drop | `P3` orchard | — |
-| **conversation-copilot** | `P0` glacier | `P2` quill | — | — | `P3` mercer |
-| **canvas-tool** | `P1` atelier | — | — | — | — |
-| **community-feed** | — | — | — | `P1` bloom | — |
-| **monitoring-ops** | `P1` pulse | — | — | — | — |
-
-- P0 5종: MVP 승격 (기존 4프로젝트 + 신규 `dashboard--minimal-tech`)
-- P1 5종: fintech · observability · reference-docs · social · canvas
-- P2 5종: 톤 다변화 (각 app_mode 두번째/세번째 tone)
-- P3 5종: 커뮤니티 기여 경로 dogfood 검증 완료, 실수요에 따라 승급 후보
-
-### 고급 사용자 / 메인테이너 워크플로우
-
-```bash
-# 1. 새 프리셋 합성
-uv run design-ontology run-project --project-dir projects/<new-project>
-uv run design-ontology build-preset \
-  --project projects/<new-project> \
-  --preset-id <app_mode>--<brand_tone> \
-  --owner maintainer --tier P2 \
-  --color-modes light,dark --default-color-mode light \
-  --tags <ko,saas,...>
-
-# 2. 전체 재빌드 + 검증
-uv run design-ontology rebuild-all-presets --projects-root projects
-uv run design-ontology validate-presets
-uv run design-ontology lint-previews
-
-# 3. 카탈로그 재생성
-python3 scripts/build-catalog.py \
-  --output /path/to/design-ontology-plugin/docs/CATALOG.md
-
-# 4. 플러그인 레포로 싱크 (compatibility 게이트 자동)
-./scripts/sync-plugin-presets.sh \
-  --plugin-repo /path/to/design-ontology-plugin
-
-# 5. 기존 프리셋을 복사해 커스터마이징
-uv run design-ontology customize-preset \
-  --preset-id dashboard--minimal-tech \
-  --project-name my-dashboard
-# projects/my-dashboard/brand_profile.json 편집 후 run-project
-```
-
-### 버전 계약 (4필드 + compatibility.json)
-
-프리셋 `manifest.json` 은 네 개의 1급 버전 필드를 가집니다:
-
-| 필드 | 의미 | 변경 트리거 |
-|------|------|-------------|
-| `schema_version` | 산출물 내부 스키마 (token_schema 등) | 산출물 구조 변경 |
-| `preset_api_version` | 플러그인 소비 계약 | manifest 필드 추가/삭제 |
-| `generated_by_harness_version` | 생성 시점 Python 코어 버전 | 매 빌드 |
-| `preview_version` | 프리뷰 아티팩트 포맷 | 텍스트/스크린샷 포맷 변경 |
-
-`presets/compatibility.json` 은 이 harness 가 찍는 `current_preset_api_version` 과 지원 range (`supported_preset_api_range`) + 어댑터 호환 range 를 기록합니다. 플러그인 `plugin.json` 의 `supported_preset_api` 와 교차 검증하는 sync 게이트는 `scripts/check-plugin-compatibility.py` 에 있습니다. 자세한 계약 구조는 [`docs/PLUGIN_PLAN.md`](docs/PLUGIN_PLAN.md) §3.3 참고.
-
-### Sync 파이프라인
-
-```
-harness presets/  ──(check-plugin-compatibility.py)──▶  plugin/presets/
-           │                     │
-           │                     └──(sync-plugin-presets.sh)── rsync + gh pr create
-           │
-           └──(.github/workflows/sync-plugin.yml)── main push 시 자동
-```
-
-- `scripts/sync-plugin-presets.sh --plugin-repo <path> [--dry-run]` — 로컬에서 수동 싱크
-- `.github/workflows/sync-plugin.yml` — main push 시 compatibility 통과 시에만 PR 자동 생성 (`PLUGIN_REPO_TOKEN` 필요)
-- `.github/workflows/validate.yml` (플러그인 쪽) — PR 수신 시 2차 compatibility 검증
-
-## Phase 진행 상태
-
-| Phase | 상태 | 산출물 |
-|-------|------|--------|
-| 1~6 | done | harness 코어 (KB · synthesis · graph · agent-pack) |
-| 7 | done | 프리셋 인프라 + 버전 계약 4필드 + sync validator |
-| 8 | done | P0 5종 프리셋 승격 + 텍스트 프리뷰 |
-| 9 | done (로컬 scaffold) | 플러그인 레포 분리 + skills/agents 이식 |
-| 10A | done | `nextjs-tailwind-shadcn` 어댑터 |
-| 10B | done | `raw-css-variables` 어댑터 + `design_system_mirror_ops` 공통화 |
-| 10C | done | `vite-tailwind` 어댑터 + base.py 승격 |
-| 11 | done | MVP alpha — `/design-start` + matcher + installer |
-| 12A | done | 텍스트 프리뷰 + preview_linter (E001–E008 / W001–W003) |
-| 12B | deferred | P0 선택적 스크린샷 (alpha 후) |
-| 13-1 ~ 13-10 | done | P1 + P2 누적 15종 |
-| 13-11 ~ 13-12 | done | P3 커뮤니티 기여 경로 · SOP · Q2 리허설 |
-| **14** | **done** | 공개 배포 로컬 gate — README · CATALOG · marketplace alpha · release 자동화 · demo 검증 |
-| 15 | done | 라이프사이클 정책 운영 — catalog-health · promote · deprecate · prune · credits |
-
-## 예제 프로젝트
-
-| 프로젝트 | 브랜드 키워드 | 자동 결정된 팔레트 | 자동 결정된 서체 |
-|---------|------------|-----------------|---------------|
-| `projects/signal-desk` | calm, precise, editorial, trustworthy | Charcoal + Burnt Sienna + Shell Pink | Lora(heading) + Pretendard(body) |
-| `projects/premier-league` | bold, precise, energetic | Matchday Red + Electric Green + Golden Score | Plus Jakarta Sans(heading/body) |
-
-## 폴더 구조
-
-```
-design_ontology_harness/   코어 프레임워크
-  cli.py                   CLI 명령어 분기
-  crawler.py               5-tier fallback 크롤링 + CSS 병렬 다운로드
-  css_pipeline.py          CSS 추출 파이프라인 (var/brand/typo/alias 통합)
-  var_resolver.py          CSS var() 체인 재귀 해결
-  brand_candidates.py      브랜드 색상 후보 추출
-  typo_extractor.py        타이포그래피 스케일 추출
-  alias_layer.py           시멘틱 토큰 tier 분류
-  synthesis.py             블루프린트 합성
-  authoring.py             21섹션 산출물 생성
-  graph_schema.py          온톨로지 그래프 스키마 (22 NodeType, 27 EdgeType)
-  graph_builders.py        그래프 빌더 (brand/foundation/color/typo/pattern/a11y/benchmark/generated visual assets)
-  graph_spec_sections.py   그래프 기반 spec 섹션 생성 (18-21)
-  benchmark_kb.py          41개 실서비스 벤치마크 KB
-  color_reference.py       색상 팔레트 자동 결정
-  font_reference.py        서체 자동 결정 (25+ 실무 서체 DB)
-  spec_analyzer.py         설계서 → UI 패턴 탐지
-  component_specs.py       컴포넌트별 상세 스펙 생성
-  style_capsule.py         STYLE.md / DESIGN.md 에이전트용 스타일 캡슐 생성
-  agent_packs.py           Codex / Claude Code 에이전트 스킬 생성
-  implementation_linter.py 구현 repo 토큰/팔레트 위반 검사
-  ontology.py              크롤 증거 기반 개념 매칭 (문서→개념)
-schemas/                   입력 스키마
-config/                    브랜드 프로필 예시
-docs/                      설계 문서
-kb/                        지식베이스 (로컬 생성, gitignore)
-projects/                  프로젝트 워크스페이스
-```
-
-## 참고
-
-- 크롤링은 5-tier fallback 체인으로 대부분의 사이트를 수집합니다. Playwright tier를 사용하려면 `pip install playwright && playwright install chromium`이 필요합니다.
-- 크롤링 시 CSS를 자동으로 병렬 다운로드하고 추출 파이프라인을 실행합니다.
-- 온톨로지는 2-tier: `ontology.py`(크롤 증거 키워드 매칭) + `graph_builders.py`(22종 노드 관계 그래프). 그래프는 컬러↔컴포넌트↔패턴↔생성 이미지 계획을 유기적으로 연결합니다.
-- `config/brand_profile.example.json`을 참고해 브랜드 프로필을 작성하세요.
-- 서체 결정은 Google Fonts/GitHub에서 무료로 사용 가능한 서체만 추천합니다.
-- 벤치마크 KB의 41개 시스템은 합성 품질 비교와 키워드 매칭에 활용됩니다.
-
-## 라이선스
-
-MIT. `LICENSE` 파일 참조.
+## 관련 문서
+
+- [docs/OMNIGEN_REFERENCE_PACKS.md](./docs/OMNIGEN_REFERENCE_PACKS.md)
+- [docs/REFERENCE_INTELLIGENCE.md](./docs/REFERENCE_INTELLIGENCE.md)
+- [docs/PINTEREST_ASSISTED_WORKFLOW.md](./docs/PINTEREST_ASSISTED_WORKFLOW.md)
+- [docs/VISUAL_REFERENCE_VALIDATION_REPORT.md](./docs/VISUAL_REFERENCE_VALIDATION_REPORT.md)
+- [docs/AESTHETIC_SELF_IMPROVEMENT_LOOP.md](./docs/AESTHETIC_SELF_IMPROVEMENT_LOOP.md)
+- [docs/IMPLEMENTATION_WORKFLOW.md](./docs/IMPLEMENTATION_WORKFLOW.md)
+- [docs/CONTRIBUTING_PRESETS.md](./docs/CONTRIBUTING_PRESETS.md)
+- [docs/PLUGIN_LOCAL_DEV.md](./docs/PLUGIN_LOCAL_DEV.md)
+
+## 유지보수 메모
+
+- README의 수치가 헷갈리면 `python3 -c "from design_ontology_harness.graph_schema import NodeType, EdgeType; print(len(NodeType), len(EdgeType))"`로 현재 graph schema를 확인하세요.
+- 이미지 레퍼런스는 advisory-only가 기본입니다. 새로운 provider를 붙여도 `reference_context.REFERENCE_ABSORPTION_POLICY`의 allowed/denied 경계를 먼저 맞춰야 합니다.
+- mockup이나 웹사이트 산출물을 만들 때는 의미 있는 visual asset이 필요한 도메인인지 먼저 판단하고, 필요한 경우 manifest와 license/prompt metadata를 남겨야 합니다.
+- 구현 품질 검증은 `lint-implementation`, screenshot QA, `compare-visuals`를 함께 보는 흐름을 권장합니다.

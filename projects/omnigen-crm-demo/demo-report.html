@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Omnigen CRM 디자인 시스템 생성 리포트</title>
+  <style>
+    :root {
+      --canvas: #f7f8fa;
+      --surface: #ffffff;
+      --surface-muted: #eef1f6;
+      --border: #d6dde6;
+      --ink: #003153;
+      --ink-body: #172235;
+      --ink-muted: #5b6778;
+      --accent: #0f4c81;
+      --accent-soft: #d6eaf8;
+      --proof: #cc5500;
+      --success: #157a4f;
+      --shadow: 0 18px 44px rgba(0, 49, 83, 0.1);
+      color: var(--ink-body);
+      background: var(--canvas);
+      font-family: "Spoqa Han Sans Neo", "Pretendard", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-width: 1080px;
+      background: var(--canvas);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 34px 28px 56px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+      gap: 22px;
+      align-items: center;
+      padding: 26px;
+      background: #08243a;
+      color: white;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 14px 0 0;
+      color: #c8dced;
+      line-height: 1.7;
+      max-width: 58ch;
+    }
+
+    .hero img {
+      display: block;
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: white;
+    }
+
+    .meta-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .meta-card,
+    .section,
+    .artifact,
+    .evidence-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 10px 26px rgba(0, 49, 83, 0.05);
+    }
+
+    .meta-card {
+      padding: 16px;
+    }
+
+    .meta-card strong {
+      display: block;
+      color: var(--ink);
+      font-size: 24px;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .meta-card span {
+      display: block;
+      margin-top: 8px;
+      color: var(--ink-muted);
+      font-size: 13px;
+    }
+
+    .section {
+      margin-top: 18px;
+      padding: 24px;
+    }
+
+    .section h2 {
+      margin: 0 0 12px;
+      color: var(--ink);
+      font-size: 22px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .section p {
+      margin: 0;
+      line-height: 1.72;
+      color: var(--ink-body);
+    }
+
+    .section p + p {
+      margin-top: 10px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .artifact {
+      padding: 16px;
+      min-height: 126px;
+    }
+
+    .artifact h3,
+    .evidence-card h3 {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .artifact p,
+    .evidence-card p {
+      font-size: 13px;
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fbfcfd;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .step h3 {
+      margin: 0;
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    .step p {
+      margin-top: 5px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    pre {
+      margin: 14px 0 0;
+      padding: 14px;
+      overflow: auto;
+      border-radius: 8px;
+      border: 1px solid #1e3a5a;
+      background: #08243a;
+      color: #e7f2fb;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    code {
+      font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .signal {
+      padding: 14px;
+      border-radius: 8px;
+      background: #f8fbfe;
+      border: 1px solid var(--border);
+    }
+
+    .signal strong {
+      display: block;
+      color: var(--ink);
+      font-size: 18px;
+    }
+
+    .signal span {
+      display: block;
+      margin-top: 6px;
+      color: var(--ink-muted);
+      font-size: 12px;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    figure {
+      margin: 0;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      background: var(--surface-muted);
+    }
+
+    figure.missing-reference::before {
+      content: "Local Omnigen reference";
+      display: grid;
+      place-items: center;
+      min-height: 150px;
+      padding: 20px;
+      color: var(--ink-muted);
+      background: repeating-linear-gradient(135deg, #EEF3F8 0 10px, #E3EAF1 10px 20px);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    figcaption {
+      min-height: 52px;
+      padding: 10px;
+      color: var(--ink-muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .mapping {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 13px;
+    }
+
+    .mapping th,
+    .mapping td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .mapping th {
+      color: var(--ink);
+      background: #f7f9fb;
+      font-size: 12px;
+    }
+
+    .mockup-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 14px;
+      margin-top: 14px;
+      border-radius: 6px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .mockup-link:hover {
+      text-decoration: none;
+      background: #0a3d6c;
+    }
+
+    .note {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #fff8ef;
+      border: 1px solid #f2d7b9;
+      color: #6a3b04;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .usage-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .usage-item {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fbfcfd;
+    }
+
+    .usage-item strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .usage-item span {
+      display: block;
+      color: var(--ink-muted);
+      font-size: 13px;
+      line-height: 1.58;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        min-width: 0;
+      }
+
+      .page {
+        padding: 18px;
+      }
+
+      .hero,
+      .grid-2,
+      .grid-3,
+      .usage-list,
+      .signal-grid,
+      .image-grid,
+      .meta-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div>
+        <h1>Omnigen CRM 디자인 시스템 생성 데모</h1>
+        <p>로컬 Omnigen vault에서 CRM 대시보드에 맞는 UI 레퍼런스를 골랐고, 그 신호를 하네스의 디자인 시스템 산출물과 목업 UI로 연결했습니다. 이미지는 배포물에 넣지 않고, 프로젝트 내부의 ignored build 경로에 symlink로만 연결했습니다.</p>
+        <a class="mockup-link" href="mockup/index.html">목업 UI 열기</a>
+      </div>
+      <img src="mockup/mockup-desktop.png" alt="Omnigen CRM 목업 UI 스크린샷">
+    </section>
+
+    <div class="meta-strip">
+      <div class="meta-card"><strong>596</strong><span>검색 후보 이미지</span></div>
+      <div class="meta-card"><strong>12</strong><span>선별된 레퍼런스</span></div>
+      <div class="meta-card"><strong>99</strong><span>생성된 컴포넌트 스펙</span></div>
+      <div class="meta-card"><strong>dense</strong><span>최종 화면 밀도 신호</span></div>
+    </div>
+
+    <section class="section">
+      <h2>이번에 만든 것</h2>
+      <p>이 데모는 단순한 화면 한 장이 아니라, 디자인 시스템 생성 흐름 전체를 보여줍니다. 먼저 제품 설명과 브랜드 입력값을 만들고, Omnigen vault에서 관련 UI 이미지를 골랐습니다. 그다음 하네스가 `system_spec.md`, `token_schema.json`, `component_inventory.json`, `component_specs.md`, `design_context_pack.json`을 생성했고, 그 결과를 바탕으로 정적 목업 UI를 만들었습니다.</p>
+      <p>목업은 `dense dashboard grid`, `flat card surfaces`, `thin dividers`, `split-pane workspace`, `utilitarian typography`를 기준으로 삼았습니다. 색상은 스펙에 나온 blue 계열 semantic role을 쓰되, 실제 업무 화면에서는 밝은 surface와 얇은 border를 중심으로 정리했습니다.</p>
+    </section>
+
+    <section class="section">
+      <h2>목업 사용법</h2>
+      <p>이제 목업은 단순 이미지가 아니라 눌러볼 수 있는 프로토타입입니다. 아래 기능들은 모두 브라우저 안에서 바로 반응합니다. 별도 사용 설명서는 <a href="USER_GUIDE.md">USER_GUIDE.md</a>에도 정리했습니다.</p>
+      <div class="usage-list">
+        <div class="usage-item"><strong>새 연락처 추가</strong><span>`New contact`를 누르면 Nari Choi가 테이블 맨 위에 추가되고, 왼쪽 Contacts 카운트가 1 올라갑니다.</span></div>
+        <div class="usage-item"><strong>검색과 필터</strong><span>상단 검색창, 테이블 검색창, Status·Owner·Stage 드롭다운이 함께 작동합니다. 조건에 맞지 않는 행은 바로 숨겨집니다.</span></div>
+        <div class="usage-item"><strong>저장된 보기 탭</strong><span>`Priority contacts`, `Renewals`, `At risk`, `New this week` 탭을 누르면 테이블 행이 각 보기 기준으로 바뀝니다.</span></div>
+        <div class="usage-item"><strong>CSV 내보내기</strong><span>`Export`는 현재 화면에 보이는 행만 `omnigen-crm-contacts.csv`로 저장합니다.</span></div>
+        <div class="usage-item"><strong>업무 패널 조작</strong><span>`Open`은 데이터 정리 큐의 다음 작업 시간을 보여주고, `View all`은 활동 피드를 확장합니다.</span></div>
+        <div class="usage-item"><strong>설정 토글</strong><span>우측 Settings snapshot의 스위치는 마우스 클릭과 Enter/Space 키로 켜고 끌 수 있습니다.</span></div>
+      </div>
+      <div class="note">이 목업은 백엔드 없이 동작하는 프론트엔드 프로토타입입니다. 새로고침하면 추가한 연락처와 필터 상태는 초기화됩니다.</div>
+    </section>
+
+    <section class="section">
+      <h2>실행 절차</h2>
+      <div class="timeline">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div>
+            <h3>프로젝트 입력값 작성</h3>
+            <p>`brand_profile.json`에는 CRM, analytics, contacts, pipeline, dense 같은 제품 키워드를 넣었습니다. `spec.md`에는 KPI 카드, 연락처 테이블, 필터 툴바, 파이프라인 보드, 설정 탭 같은 핵심 화면과 컴포넌트를 적었습니다.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div>
+            <h3>Omnigen 레퍼런스 선별</h3>
+            <p>로컬 vault의 `index.sqlite`에서 `app-design`, `web-design` 카테고리를 검색했습니다. 쿼리와 subject, tags, style, palette, mood, prompt가 맞는 이미지를 점수화했고, 중복 hash와 subject 편중을 줄여 12장을 골랐습니다.</p>
+            <pre><code>uv run design-ontology select-omnigen-references \
+  --project-dir projects/omnigen-crm-demo \
+  --query "crm analytics dashboard contacts settings table kpi sales pipeline" \
+  --category app-design \
+  --category web-design \
+  --count 12 \
+  --orientation landscape \
+  --sync-sources</code></pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div>
+            <h3>Visual reference 분석</h3>
+            <p>선별된 12장을 `visual_reference.sources`에 연결한 뒤, 이미지에서 화면 밀도, 표면감, 레이아웃 리듬, 컴포넌트 형태 힌트를 추출했습니다.</p>
+            <pre><code>uv run design-ontology analyze-visuals \
+  --project-dir projects/omnigen-crm-demo</code></pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div>
+            <h3>디자인 시스템 산출물 생성</h3>
+            <p>기존 KB, 브랜드 입력값, 제품 spec, Omnigen visual signal을 합쳐 디자인 시스템 설계서를 만들었습니다.</p>
+            <pre><code>uv run design-ontology run-project \
+  --project-dir projects/omnigen-crm-demo</code></pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">5</div>
+          <div>
+            <h3>목업 UI 제작과 캡처</h3>
+            <p>생성된 스펙을 읽고 목업 UI를 만들었습니다. 이후 Playwright로 1440px 데스크톱 화면을 캡처해 이 리포트에 넣었습니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>뽑힌 디자인 신호</h2>
+      <div class="signal-grid">
+        <div class="signal"><strong>dense</strong><span>테이블, KPI, 대시보드 이미지 신호가 강했습니다.</span></div>
+        <div class="signal"><strong>flat</strong><span>카드와 패널은 낮은 elevation과 얇은 border 중심입니다.</span></div>
+        <div class="signal"><strong>dashboard-grid</strong><span>KPI 카드, 데이터 테이블, 보조 패널을 함께 쓰는 구성이 우세했습니다.</span></div>
+        <div class="signal"><strong>utilitarian</strong><span>타이포는 장식보다 정렬, 숫자 가독성, 상태 인식이 중요합니다.</span></div>
+      </div>
+      <table class="mapping">
+        <thead>
+          <tr>
+            <th>생성 신호</th>
+            <th>목업에 반영한 위치</th>
+            <th>적용 방식</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>dense dashboard grid</td>
+            <td>KPI 카드, 연락처 테이블, 우측 활동 패널</td>
+            <td>넓은 hero 대신 업무 화면을 첫 화면에 배치하고, 카드와 테이블 간격을 촘촘하게 잡았습니다.</td>
+          </tr>
+          <tr>
+            <td>flat card surfaces</td>
+            <td>카드, 패널, 툴바</td>
+            <td>그림자는 약하게 쓰고, `#D6DDE6` 계열 border로 surface를 구분했습니다.</td>
+          </tr>
+          <tr>
+            <td>split-pane workspace</td>
+            <td>좌측 sidebar와 우측 보조 패널</td>
+            <td>고정 사이드바, 중앙 업무 영역, 우측 activity/settings 패널로 화면을 나눴습니다.</td>
+          </tr>
+          <tr>
+            <td>restrained blue accent</td>
+            <td>primary button, active tab, progress meter</td>
+            <td>강한 색은 핵심 액션과 현재 위치에만 쓰고, 상태색은 success/warning/danger로 분리했습니다.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>샘플 레퍼런스 이미지</h2>
+      <p>아래 이미지는 Omnigen vault에서 선별된 12장 중 일부입니다. 프로젝트에는 원본을 복사하지 않았고, `build/visuals/omnigen-selected/` 아래 symlink만 만들었습니다. 그래서 이 데모를 배포할 때 대용량 이미지가 본체에 섞이지 않습니다.</p>
+      <div class="image-grid">
+        <figure>
+          <img src="build/visuals/omnigen-selected/01-a-crm-sales-pipeline-app__f44327ed9916.png" alt="CRM sales pipeline app reference" onerror="this.closest('figure').classList.add('missing-reference'); this.remove();">
+          <figcaption>CRM sales pipeline app · app-design · rank 1</figcaption>
+        </figure>
+        <figure>
+          <img src="build/visuals/omnigen-selected/02-an-admin-crm-contacts-table__618df365258e.png" alt="Admin CRM contacts table reference" onerror="this.closest('figure').classList.add('missing-reference'); this.remove();">
+          <figcaption>Admin CRM contacts table · web-design · rank 2</figcaption>
+        </figure>
+        <figure>
+          <img src="build/visuals/omnigen-selected/05-a-modern-analytics-dashboard-screen__705119287d0a.png" alt="Modern analytics dashboard reference" onerror="this.closest('figure').classList.add('missing-reference'); this.remove();">
+          <figcaption>Modern analytics dashboard · web-design · rank 5</figcaption>
+        </figure>
+        <figure>
+          <img src="build/visuals/omnigen-selected/10-a-settings-page-with-tabs-and-toggles__a3b1389ae301.png" alt="Settings tabs and toggles reference" onerror="this.closest('figure').classList.add('missing-reference'); this.remove();">
+          <figcaption>Settings page with tabs and toggles · web-design · rank 10</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>생성된 산출물</h2>
+      <div class="grid-3">
+        <div class="artifact">
+          <h3><a href="build/system/blueprint/system_spec.md">system_spec.md</a></h3>
+          <p>브랜드 방향, 토큰 전략, color reference, visual signal, 컴포넌트 정책이 들어간 핵심 설계서입니다.</p>
+        </div>
+        <div class="artifact">
+          <h3><a href="build/system/blueprint/token_schema.json">token_schema.json</a></h3>
+          <p>core, semantic, component layer와 color, spacing, typography, motion, elevation token 전략입니다.</p>
+        </div>
+        <div class="artifact">
+          <h3><a href="build/system/blueprint/component_inventory.json">component_inventory.json</a></h3>
+          <p>제품 spec에서 도출한 컴포넌트 패밀리와 우선순위를 정리한 inventory입니다.</p>
+        </div>
+        <div class="artifact">
+          <h3><a href="build/system/components/component_specs.md">component_specs.md</a></h3>
+          <p>99개 컴포넌트 스펙이 구조, 상태, 접근성, 적용 규칙 중심으로 생성됐습니다.</p>
+        </div>
+        <div class="artifact">
+          <h3><a href="build/system/blueprint/visual_reference_report.json">visual_reference_report.json</a></h3>
+          <p>Omnigen 이미지에서 관찰·추론된 density, surface, layout, component hints가 들어 있습니다.</p>
+        </div>
+        <div class="artifact">
+          <h3><a href="mockup/index.html">mockup/index.html</a></h3>
+          <p>생성된 디자인 시스템 신호를 화면으로 옮긴 CRM 대시보드 목업입니다.</p>
+        </div>
+      </div>
+      <div class="note">이 리포트의 이미지는 데모 검증용입니다. 외부 배포판에는 Omnigen 원본 이미지를 포함하지 않고, 선택 로직과 문서, 필요 시 별도 reference pack만 제공하는 쪽이 안전합니다.</div>
+    </section>
+  </main>
+</body>
+</html>
