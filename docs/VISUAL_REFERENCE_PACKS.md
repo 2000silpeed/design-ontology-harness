@@ -55,12 +55,28 @@ uv run design-ontology build-reference-pack \
 uv run design-ontology build-reference-pack \
   --pack-id crm-web-research \
   --source-url https://example.com/case-study \
-  --category dashboard \
-  --tags "crm,saas,workspace" \
+  --category web-reference \
+  --tags "public-web,reference-only" \
   --materialize metadata
 ```
 
 이 경우 pack에는 page URL과 image URL이 기록됩니다. 원본 이미지를 저장하지 않기 때문에 배포가 가볍고, 라이선스가 불명확한 이미지를 실수로 재배포할 위험도 줄어듭니다.
+
+검색 기반으로 넣을 때는 사용자가 찾은 공개 gallery/search URL을 `--source-url`에 넣습니다.
+
+```bash
+uv run design-ontology build-reference-pack \
+  --pack-id public-dashboard-web-search \
+  --source-url https://saasinterface.com/pages/dashboard/ \
+  --source-url https://www.geckoboard.com/dashboard-examples/ \
+  --provider-id public-web-search \
+  --category web-reference \
+  --tags "public-web,reference-only" \
+  --materialize metadata \
+  --max-assets 80
+```
+
+공통 `--tags`에는 검색어를 넣지 않는 편이 좋습니다. 예를 들어 모든 asset에 `dashboard`, `crm`, `saas`를 붙이면 자동 선별 점수가 비슷해져 로고나 CTA 이미지가 위로 올라올 수 있습니다. 공통 tag는 출처와 사용 정책만 나타내고, 실제 선별은 `--query`에 맡기는 편이 안정적입니다.
 
 원본까지 내려받아 내부 pack으로 만들려면:
 
@@ -102,6 +118,15 @@ uv run design-ontology select-visual-references \
   --query "crm analytics dashboard contacts table" \
   --count 12 \
   --sync-sources
+```
+
+선택 결과를 눈으로 검수:
+
+```bash
+uv run design-ontology export-reference-gallery \
+  --pack crm-web-research \
+  --selection projects/my-app/build/visuals/visual_reference_pack_selection.json \
+  --output projects/my-app/reference-gallery.html
 ```
 
 그 다음은 기존 흐름과 같습니다.

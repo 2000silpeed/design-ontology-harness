@@ -44,6 +44,7 @@ from .reference_packs import (
     DEFAULT_REFERENCE_DIR as PACK_DEFAULT_REFERENCE_DIR,
     DEFAULT_REFERENCE_PACK_ROOT,
     build_reference_pack,
+    export_reference_pack_gallery,
     list_reference_packs,
     select_visual_references,
     sync_reference_pack_sources,
@@ -225,6 +226,13 @@ def build_parser() -> argparse.ArgumentParser:
     pack_select_parser.add_argument("--local-only", action="store_true", help="Only select records with local image files")
     pack_select_parser.add_argument("--sync-sources", action="store_true", help="Update brand_profile.visual_reference.sources with the selected references")
     pack_select_parser.add_argument("--output-dir", default=None, help="Optional directory for visual_reference_pack_selection.json")
+
+    pack_gallery_parser = subparsers.add_parser("export-reference-gallery", help="Export an HTML preview gallery for a visual reference pack")
+    pack_gallery_parser.add_argument("--pack", required=True, help="Reference pack id or path")
+    pack_gallery_parser.add_argument("--pack-root", default=str(DEFAULT_REFERENCE_PACK_ROOT), help="Reference pack root for pack ids")
+    pack_gallery_parser.add_argument("--selection", default=None, help="Optional visual_reference_pack_selection.json to highlight selected assets")
+    pack_gallery_parser.add_argument("--output", required=True, help="Output HTML file")
+    pack_gallery_parser.add_argument("--title", default=None, help="Optional gallery title")
 
     analyze_parser = subparsers.add_parser("analyze-spec", help="Analyze a product spec to auto-detect needed UI components")
     analyze_parser.add_argument("--spec-file", required=True, help="Path to a product spec file (markdown, text)")
@@ -1681,6 +1689,21 @@ def main() -> None:
                 f"{sync_result['managed_source_count']}개 reference pack source 반영"
             )
             print(f"  -> {brand_profile_path} 업데이트 완료")
+        return
+
+    if args.command == "export-reference-gallery":
+        report = export_reference_pack_gallery(
+            pack=args.pack,
+            pack_root=Path(args.pack_root),
+            selection_manifest=Path(args.selection) if args.selection else None,
+            output_path=Path(args.output),
+            title=args.title,
+        )
+        print(f"[export-reference-gallery] HTML gallery 생성 완료: {report['output_path']}")
+        print(
+            f"  -> pack: {report['pack_id']} | assets {report['asset_count']} | "
+            f"selected {report['selected_count']} | source pages {report['source_url_count']}"
+        )
         return
 
     if args.command == "init":

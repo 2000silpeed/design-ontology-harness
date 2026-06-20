@@ -179,8 +179,8 @@ Omnigen이 없어도 같은 경험을 만들 수 있습니다. 로컬 스크린�
 uv run design-ontology build-reference-pack \
   --pack-id crm-web-research \
   --source-url https://example.com/case-study \
-  --category dashboard \
-  --tags "crm,saas,workspace" \
+  --category web-reference \
+  --tags "public-web,reference-only" \
   --materialize metadata
 ```
 
@@ -195,7 +195,16 @@ uv run design-ontology select-visual-references \
   --sync-sources
 ```
 
-`metadata` pack은 원본 이미지를 복사하지 않고 URL과 메타데이터만 남깁니다. 실제 이미지 분석이 필요하면 local folder pack을 `--materialize copy`로 만들거나, 웹 이미지를 내부 용도로 `--materialize download`로 내려받으면 됩니다. 자세한 내용은 [docs/VISUAL_REFERENCE_PACKS.md](./docs/VISUAL_REFERENCE_PACKS.md)를 참고하세요.
+선택 결과를 눈으로 검수하려면 HTML 갤러리를 뽑습니다.
+
+```bash
+uv run design-ontology export-reference-gallery \
+  --pack crm-web-research \
+  --selection projects/my-app/build/visuals/visual_reference_pack_selection.json \
+  --output projects/my-app/reference-gallery.html
+```
+
+`metadata` pack은 원본 이미지를 복사하지 않고 URL과 메타데이터만 남깁니다. 실제 이미지 분석이 필요하면 local folder pack을 `--materialize copy`로 만들거나, 웹 이미지를 내부 용도로 `--materialize download`로 내려받으면 됩니다. 검색어와 같은 단어를 공통 `--tags`에 넣으면 모든 asset 점수가 비슷해지므로, 공통 tag는 `public-web`, `reference-only`처럼 중립적으로 두는 편이 좋습니다. 자세한 내용은 [docs/VISUAL_REFERENCE_PACKS.md](./docs/VISUAL_REFERENCE_PACKS.md)를 참고하세요.
 
 ### 3. Visual Reference 분석
 
@@ -563,6 +572,7 @@ http://127.0.0.1:8765/projects/omnigen-crm-demo/demo-report.html
 | `build-reference-pack` | 로컬 폴더, manifest, 웹 URL에서 Visual Reference Pack 생성 |
 | `list-reference-packs` | 설치된 Visual Reference Pack 목록 확인 |
 | `select-visual-references` | 범용 reference pack에서 프로젝트별 레퍼런스 선별 |
+| `export-reference-gallery` | Pack과 selection manifest를 HTML 갤러리로 검수 |
 | `extract-css` | CSS에서 토큰, 브랜드 컬러, typography 후보 추출 |
 | `build-components` | spec, KB, brand profile 기반 컴포넌트 상세 스펙 생성 |
 | `benchmark` | 브랜드 키워드와 맞는 참고 디자인 시스템 추천 |

@@ -5,6 +5,7 @@ from pathlib import Path
 
 from design_ontology_harness.reference_packs import (
     build_reference_pack,
+    export_reference_pack_gallery,
     list_reference_packs,
     select_visual_references,
     sync_reference_pack_sources,
@@ -30,7 +31,7 @@ class ReferencePackTests(unittest.TestCase):
                 provider_id="local-screenshots",
                 category="dashboard",
                 tags=["crm", "analytics"],
-                materialize="copy",
+                materialize="symlink",
             )
 
             self.assertEqual(pack["pack_id"], "crm-pack")
@@ -38,6 +39,8 @@ class ReferencePackTests(unittest.TestCase):
             self.assertTrue((pack_dir / "pack.json").exists())
             self.assertTrue((pack_dir / "assets.jsonl").exists())
             self.assertTrue((pack_dir / "index.sqlite").exists())
+            first_asset = json.loads((pack_dir / "assets.jsonl").read_text(encoding="utf-8").splitlines()[0])
+            self.assertFalse(Path(first_asset["local_path"]).is_absolute())
 
             selection = select_visual_references(
                 pack=pack_dir,
@@ -49,6 +52,7 @@ class ReferencePackTests(unittest.TestCase):
 
             self.assertEqual(selection["selected_count"], 1)
             self.assertEqual(selection["selected"][0]["label"], "crm-dashboard-table")
+            self.assertFalse(Path(selection["selected"][0]["selected_relative_path"]).is_absolute())
             selected_path = project_dir / selection["selected"][0]["selected_relative_path"]
             self.assertTrue(selected_path.is_symlink())
             self.assertTrue(selected_path.exists())
@@ -89,6 +93,7 @@ class ReferencePackTests(unittest.TestCase):
                 query="crm dashboard",
                 count=1,
             )
+            (root / "selection.json").write_text(json.dumps(selection), encoding="utf-8")
 
             self.assertEqual(selection["selected_count"], 1)
             self.assertEqual(selection["selected"][0]["materialization"], "lazy-reference")
@@ -104,8 +109,24 @@ class ReferencePackTests(unittest.TestCase):
             self.assertEqual(sources[0], "references/manual.png")
             self.assertEqual(sources[1]["kind"], "external-reference")
             self.assertEqual(sources[1]["provider_id"], "web-crawl")
-            self.assertEqual(sources[1]["url"], "https://example.com/case-study")
+            self.assertEqual(sources[1]["url"], "https://cdn.example.com/crm-dashboard.png")
+            self.assertEqual(sources[1]["source_url"], "https://example.com/case-study")
+            self.assertEqual(sources[1]["download_url"], "https://cdn.example.com/crm-dashboard.png")
             self.assertEqual(profile["visual_reference"]["reference_pack"]["pack_id"], "web-pack")
+
+            gallery_path = root / "gallery.html"
+            gallery = export_reference_pack_gallery(
+                pack="web-pack",
+                pack_root=root / "packs",
+                selection_manifest=root / "selection.json",
+                output_path=gallery_path,
+            )
+
+            self.assertEqual(gallery["asset_count"], 1)
+            self.assertEqual(gallery["selected_count"], 1)
+            gallery_text = gallery_path.read_text(encoding="utf-8")
+            self.assertIn("Remote CRM dashboard", gallery_text)
+            self.assertIn("https://cdn.example.com/crm-dashboard.png", gallery_text)
 
     def test_list_reference_packs_reads_pack_metadata(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

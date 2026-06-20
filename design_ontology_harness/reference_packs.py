@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import html as html_lib
 import json
 import os
 import shutil
@@ -190,6 +191,49 @@ def load_reference_pack(pack_dir: Path | str) -> tuple[dict[str, Any], list[dict
     return pack, assets
 
 
+def export_reference_pack_gallery(
+    *,
+    pack: str | Path,
+    output_path: Path | str,
+    pack_root: Path | str = DEFAULT_REFERENCE_PACK_ROOT,
+    selection_manifest: Path | str | None = None,
+    title: str | None = None,
+) -> dict[str, Any]:
+    pack_dir = resolve_reference_pack(pack, pack_root=pack_root)
+    pack_manifest, assets = load_reference_pack(pack_dir)
+    output = Path(output_path).expanduser()
+    ensure_dir(output.parent)
+    selection = _load_selection_manifest(selection_manifest)
+    selected = selection.get("selected", []) if selection else []
+    selected_ids = {str(item.get("asset_id")) for item in selected if item.get("asset_id")}
+
+    source_urls = sorted({
+        str(asset.get("source_url"))
+        for asset in assets
+        if asset.get("source_url")
+    })
+    gallery_title = title or f"{pack_manifest.get('pack_id', 'Reference Pack')} preview"
+    html_text = _render_reference_gallery_html(
+        title=gallery_title,
+        pack=pack_manifest,
+        pack_dir=pack_dir,
+        assets=assets,
+        selection=selection,
+        selected=selected,
+        selected_ids=selected_ids,
+        source_urls=source_urls,
+        output_dir=output.parent,
+    )
+    output.write_text(html_text, encoding="utf-8")
+    return {
+        "output_path": str(output),
+        "pack_id": pack_manifest.get("pack_id"),
+        "asset_count": len(assets),
+        "selected_count": len(selected),
+        "source_url_count": len(source_urls),
+    }
+
+
 def select_visual_references(
     *,
     pack: str | Path,
@@ -303,6 +347,182 @@ def sync_reference_pack_sources(
         "managed_source_count": len(merged_sources) - len(preserved_sources),
         "total_source_count": len(merged_sources),
     }
+
+
+def _load_selection_manifest(selection_manifest: Path | str | None) -> dict[str, Any] | None:
+    if not selection_manifest:
+        return None
+    path = Path(selection_manifest).expanduser()
+    if not path.exists():
+        raise FileNotFoundError(f"selection manifest not found: {path}")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _render_reference_gallery_html(
+    *,
+    title: str,
+    pack: dict[str, Any],
+    pack_dir: Path,
+    assets: list[dict[str, Any]],
+    selection: dict[str, Any] | None,
+    selected: list[dict[str, Any]],
+    selected_ids: set[str],
+    source_urls: list[str],
+    output_dir: Path,
+) -> str:
+    source_links = "\n".join(
+        f'<li><a href="{_h(url)}" target="_blank" rel="noreferrer">{_h(url)}</a></li>'
+        for url in source_urls
+    ) or "<li>No source pages recorded.</li>"
+    selected_cards = "\n".join(
+        _gallery_card(item, output_dir=output_dir, pack_dir=pack_dir, selected=True)
+        for item in selected
+    )
+    if not selected_cards:
+        selected_cards = '<p class="empty-copy">No selection manifest supplied.</p>'
+    asset_cards = "\n".join(
+        _gallery_card(asset, output_dir=output_dir, pack_dir=pack_dir, selected=str(asset.get("asset_id")) in selected_ids)
+        for asset in assets
+    )
+    selected_count = len(selected) if selection else 0
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{_h(title)}</title>
+  <style>
+    :root {{
+      color-scheme: light;
+      --ink: #122033;
+      --muted: #5d6979;
+      --line: #d8e0ea;
+      --surface: #ffffff;
+      --soft: #f5f7fa;
+      --accent: #0f5b7f;
+      --accent-2: #28785f;
+    }}
+    * {{ box-sizing: border-box; }}
+    body {{ margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--soft); color: var(--ink); }}
+    header {{ padding: 32px 40px 24px; background: #0b2538; color: white; }}
+    header h1 {{ margin: 0 0 10px; font-size: 30px; line-height: 1.2; letter-spacing: 0; }}
+    header p {{ margin: 0; max-width: 920px; color: #c6d8e5; line-height: 1.7; }}
+    main {{ padding: 24px 40px 48px; }}
+    .stats {{ display: grid; grid-template-columns: repeat(4, minmax(160px, 1fr)); gap: 12px; margin-bottom: 18px; }}
+    .stat {{ background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; }}
+    .stat strong {{ display: block; font-size: 24px; margin-bottom: 4px; overflow-wrap: anywhere; }}
+    .stat span {{ color: var(--muted); font-size: 13px; }}
+    section {{ margin-top: 24px; }}
+    section > h2 {{ margin: 0 0 12px; font-size: 20px; letter-spacing: 0; }}
+    .note {{ background: #eef6f3; border: 1px solid #c6ded4; border-radius: 8px; padding: 14px 16px; color: #214536; line-height: 1.6; }}
+    .sources {{ background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; }}
+    .sources ul {{ margin: 8px 0 0; padding-left: 20px; }}
+    .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }}
+    .card {{ background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; min-width: 0; }}
+    .card.selected {{ border-color: #95c7b5; box-shadow: inset 0 0 0 1px #95c7b5; }}
+    .thumb {{ height: 176px; background: #e7edf4; display: flex; align-items: center; justify-content: center; overflow: hidden; }}
+    .thumb img {{ width: 100%; height: 100%; object-fit: cover; display: block; }}
+    .empty-copy {{ color: var(--muted); }}
+    .empty-image {{ color: var(--muted); font-size: 13px; }}
+    .meta {{ padding: 12px 14px 14px; }}
+    .row {{ display: flex; justify-content: space-between; gap: 8px; align-items: center; color: var(--accent); font-size: 12px; }}
+    .row span {{ color: var(--accent-2); }}
+    h3 {{ margin: 8px 0 4px; font-size: 14px; line-height: 1.35; overflow-wrap: anywhere; letter-spacing: 0; }}
+    .meta p {{ margin: 0 0 10px; color: var(--muted); font-size: 12px; }}
+    .links {{ display: flex; gap: 10px; flex-wrap: wrap; }}
+    a {{ color: #0c5c8a; text-decoration: none; font-weight: 650; }}
+    a:hover {{ text-decoration: underline; }}
+    @media (max-width: 760px) {{
+      header, main {{ padding-left: 18px; padding-right: 18px; }}
+      .stats {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
+      .thumb {{ height: 150px; }}
+    }}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>{_h(title)}</h1>
+    <p>Preview the visual references that entered this pack. Remote images remain reference-analysis-only unless you explicitly materialize licensed assets.</p>
+  </header>
+  <main>
+    <div class="stats">
+      <div class="stat"><strong>{_h(pack.get("asset_count", len(assets)))}</strong><span>assets in pack</span></div>
+      <div class="stat"><strong>{_h(selected_count)}</strong><span>selected references</span></div>
+      <div class="stat"><strong>{_h(pack.get("materialization"))}</strong><span>materialization</span></div>
+      <div class="stat"><strong>{_h(pack.get("pack_id"))}</strong><span>pack id</span></div>
+    </div>
+    <div class="note">Use this gallery for review and curation. Do not redistribute remote search/gallery images as product assets unless license metadata permits it.</div>
+    <section class="sources">
+      <h2>Source Pages</h2>
+      <ul>{source_links}</ul>
+    </section>
+    <section>
+      <h2>Selected References</h2>
+      <div class="grid">{selected_cards}</div>
+    </section>
+    <section>
+      <h2>Pack Assets</h2>
+      <div class="grid">{asset_cards}</div>
+    </section>
+  </main>
+</body>
+</html>
+"""
+
+
+def _gallery_card(item: dict[str, Any], *, output_dir: Path, pack_dir: Path, selected: bool) -> str:
+    label = item.get("label") or item.get("asset_id") or "reference"
+    image_url = _gallery_image_src(item, output_dir=output_dir, pack_dir=pack_dir)
+    source_page = str(item.get("source_url") or "")
+    direct_url = str(item.get("download_url") or image_url or "")
+    rank = item.get("rank")
+    badge = f"#{rank}" if rank else ("selected" if selected else "pack")
+    score = item.get("score")
+    score_html = f"<span>score {_h(score)}</span>" if score is not None else ""
+    image_html = (
+        f'<img src="{_h(image_url)}" alt="{_h(label)}" loading="lazy">'
+        if image_url
+        else '<div class="empty-image">no image url</div>'
+    )
+    source_link = (
+        f'<a href="{_h(source_page)}" target="_blank" rel="noreferrer">source page</a>'
+        if source_page
+        else ""
+    )
+    image_link = (
+        f'<a href="{_h(direct_url)}" target="_blank" rel="noreferrer">image url</a>'
+        if direct_url
+        else ""
+    )
+    selected_class = " selected" if selected else ""
+    return f"""
+      <article class="card{selected_class}">
+        <div class="thumb">{image_html}</div>
+        <div class="meta">
+          <div class="row"><strong>{_h(badge)}</strong>{score_html}</div>
+          <h3>{_h(label)}</h3>
+          <p>{_h(item.get("category") or "reference")}</p>
+          <div class="links">{image_link}{source_link}</div>
+        </div>
+      </article>
+    """
+
+
+def _gallery_image_src(item: dict[str, Any], *, output_dir: Path, pack_dir: Path) -> str | None:
+    for key in ("selected_path", "local_path"):
+        raw = item.get(key)
+        if not raw:
+            continue
+        path = Path(str(raw)).expanduser()
+        if not path.is_absolute():
+            path = pack_dir / path if key == "local_path" else output_dir / path
+        if path.exists():
+            return _relative_or_absolute(path, output_dir)
+    return _optional_str(item.get("download_url") or item.get("source_url") or item.get("url"))
+
+
+def _h(value: Any) -> str:
+    return html_lib.escape(str(value or ""), quote=True)
 
 
 def _records_from_source_dir(
@@ -829,7 +1049,7 @@ def _source_entry_from_selection(item: dict[str, Any], *, selection_manifest: di
     if path:
         source["path"] = path
     else:
-        source["url"] = item.get("source_url") or item.get("download_url")
+        source["url"] = item.get("download_url") or item.get("source_url")
     return source
 
 
@@ -845,7 +1065,7 @@ def _source_entry_identity(source: Any, *, base_dir: Path) -> str:
     if isinstance(source, str):
         raw = source
     elif isinstance(source, dict):
-        raw = str(source.get("path") or source.get("url") or source.get("download_url") or source.get("label") or "")
+        raw = str(source.get("path") or source.get("download_url") or source.get("url") or source.get("source_url") or source.get("label") or "")
     else:
         raw = str(source)
     if raw.startswith(("http://", "https://")):
@@ -969,10 +1189,15 @@ def _relative_to_project(path: Path | None, project_dir: Path | None) -> str | N
 def _relative_or_absolute(path: Path | None, base_dir: Path) -> str | None:
     if path is None:
         return None
+    candidate = path.expanduser()
+    if not candidate.is_absolute():
+        candidate = base_dir / candidate
+    candidate = candidate.absolute()
+    base = base_dir.expanduser().absolute()
     try:
-        return str(path.resolve().relative_to(base_dir.resolve()))
+        return str(candidate.relative_to(base))
     except ValueError:
-        return str(path)
+        return str(candidate)
 
 
 def _optional_str(value: Any) -> str | None:
