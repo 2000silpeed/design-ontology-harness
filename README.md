@@ -24,6 +24,7 @@
 |---|---|
 | 이미지 레퍼런스가 1차 입력 모델로 승격 | `brand_profile.visual_reference`, `analyze-visuals` |
 | Omnigen vault에서 프로젝트별 UI 레퍼런스 선별 | `omnigen_references.py`, `select-omnigen-references` |
+| Omnigen 외부 소스를 pack으로 묶는 범용 계층 추가 | `reference_packs.py`, `build-reference-pack`, `select-visual-references` |
 | provider-neutral reference layer 추가 | `reference_context.py`, `design_context_pack.json` |
 | Pinterest-assisted 검색/캡처/선택 흐름 추가 | `generate-visual-queries`, `capture-pinterest`, `select-pinterest-candidates` |
 | 이미지 에셋 governance 확장 | `GeneratedVisualAsset`, `SourcedVisualAsset`, `LicensePolicy` |
@@ -170,7 +171,33 @@ link mode는 세 가지입니다.
 
 자세한 운영 규칙은 [docs/OMNIGEN_REFERENCE_PACKS.md](./docs/OMNIGEN_REFERENCE_PACKS.md)를 참고하세요.
 
-### 2. Visual Reference 분석
+### 2. Visual Reference Pack
+
+Omnigen이 없어도 같은 경험을 만들 수 있습니다. 로컬 스크린샷 폴더, 웹 크롤링 결과, Lazyweb/Figma export, 별도 manifest를 `pack.json + assets.jsonl + index.sqlite` 형식으로 묶으면 됩니다.
+
+```bash
+uv run design-ontology build-reference-pack \
+  --pack-id crm-web-research \
+  --source-url https://example.com/case-study \
+  --category dashboard \
+  --tags "crm,saas,workspace" \
+  --materialize metadata
+```
+
+프로젝트에서 pack을 선택합니다.
+
+```bash
+uv run design-ontology select-visual-references \
+  --project-dir projects/my-app \
+  --pack crm-web-research \
+  --query "crm analytics dashboard contacts table" \
+  --count 12 \
+  --sync-sources
+```
+
+`metadata` pack은 원본 이미지를 복사하지 않고 URL과 메타데이터만 남깁니다. 실제 이미지 분석이 필요하면 local folder pack을 `--materialize copy`로 만들거나, 웹 이미지를 내부 용도로 `--materialize download`로 내려받으면 됩니다. 자세한 내용은 [docs/VISUAL_REFERENCE_PACKS.md](./docs/VISUAL_REFERENCE_PACKS.md)를 참고하세요.
+
+### 3. Visual Reference 분석
 
 `design_ontology_harness/visual_reference.py`는 `brand_profile.visual_reference.sources`에 연결된 이미지와 폴더를 분석합니다.
 
@@ -206,7 +233,7 @@ projects/my-app/build/visuals/
   design_context_pack.json
 ```
 
-### 3. Reference Intelligence Pack
+### 4. Reference Intelligence Pack
 
 `design_ontology_harness/reference_context.py`는 provider가 달라도 같은 구조로 reference context를 정리합니다.
 
@@ -533,6 +560,9 @@ http://127.0.0.1:8765/projects/omnigen-crm-demo/demo-report.html
 | `select-pinterest-candidates` | 캡처 후보를 selection manifest에 고정 |
 | `sync-pinterest-selection` | 선택된 Pinterest 후보를 `visual_reference.sources`에 반영 |
 | `select-omnigen-references` | 로컬 Omnigen vault에서 프로젝트별 이미지 레퍼런스 선별 |
+| `build-reference-pack` | 로컬 폴더, manifest, 웹 URL에서 Visual Reference Pack 생성 |
+| `list-reference-packs` | 설치된 Visual Reference Pack 목록 확인 |
+| `select-visual-references` | 범용 reference pack에서 프로젝트별 레퍼런스 선별 |
 | `extract-css` | CSS에서 토큰, 브랜드 컬러, typography 후보 추출 |
 | `build-components` | spec, KB, brand profile 기반 컴포넌트 상세 스펙 생성 |
 | `benchmark` | 브랜드 키워드와 맞는 참고 디자인 시스템 추천 |
@@ -600,6 +630,7 @@ design_ontology_harness/
 ## 관련 문서
 
 - [docs/OMNIGEN_REFERENCE_PACKS.md](./docs/OMNIGEN_REFERENCE_PACKS.md)
+- [docs/VISUAL_REFERENCE_PACKS.md](./docs/VISUAL_REFERENCE_PACKS.md)
 - [docs/REFERENCE_INTELLIGENCE.md](./docs/REFERENCE_INTELLIGENCE.md)
 - [docs/PINTEREST_ASSISTED_WORKFLOW.md](./docs/PINTEREST_ASSISTED_WORKFLOW.md)
 - [docs/VISUAL_REFERENCE_VALIDATION_REPORT.md](./docs/VISUAL_REFERENCE_VALIDATION_REPORT.md)

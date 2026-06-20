@@ -40,6 +40,14 @@ from .preset_ops import (
 )
 from .preset_validator import format_report as format_preset_report, validate_all
 from .reference_context import build_design_context_pack
+from .reference_packs import (
+    DEFAULT_REFERENCE_DIR as PACK_DEFAULT_REFERENCE_DIR,
+    DEFAULT_REFERENCE_PACK_ROOT,
+    build_reference_pack,
+    list_reference_packs,
+    select_visual_references,
+    sync_reference_pack_sources,
+)
 from .spec_analyzer import analyze_spec_file, build_component_list, detected_to_primitives
 from .synthesis import build_blueprint, load_brand_profile
 from .utils import ensure_dir, write_json, write_jsonl
@@ -185,6 +193,38 @@ def build_parser() -> argparse.ArgumentParser:
     )
     omnigen_parser.add_argument("--sync-sources", action="store_true", help="Update brand_profile.visual_reference.sources with the selected references")
     omnigen_parser.add_argument("--output-dir", default=None, help="Optional directory for omnigen_reference_selection.json")
+
+    pack_build_parser = subparsers.add_parser("build-reference-pack", help="Build a portable visual reference pack from local folders, manifests, or web image URLs")
+    pack_build_parser.add_argument("--pack-id", required=True, help="Stable pack id, for example crm-dashboard-web")
+    pack_build_parser.add_argument("--output-dir", default=None, help="Output pack directory. Defaults under ~/.design-ontology/reference-packs/<pack-id>")
+    pack_build_parser.add_argument("--source-dir", action="append", default=[], help="Local image/screenshot directory. Can be passed multiple times.")
+    pack_build_parser.add_argument("--source-url", action="append", default=[], help="Web page URL to crawl for image references. Can be passed multiple times.")
+    pack_build_parser.add_argument("--asset-manifest", default=None, help="JSON/JSONL asset manifest with source_url, download_url, local_path, tags")
+    pack_build_parser.add_argument("--provider-id", default="local-folder", help="Provider id for source-dir or manifest records")
+    pack_build_parser.add_argument("--category", default=None, help="Category label applied to records without one")
+    pack_build_parser.add_argument("--tags", default="", help="Comma-separated tags applied to every record")
+    pack_build_parser.add_argument("--materialize", choices=["metadata", "copy", "symlink", "download"], default="metadata")
+    pack_build_parser.add_argument("--crawl-depth", type=int, default=0, help="Same-origin crawl depth for --source-url")
+    pack_build_parser.add_argument("--max-pages", type=int, default=16)
+    pack_build_parser.add_argument("--max-assets", type=int, default=500)
+
+    pack_list_parser = subparsers.add_parser("list-reference-packs", help="List installed visual reference packs")
+    pack_list_parser.add_argument("--pack-root", default=str(DEFAULT_REFERENCE_PACK_ROOT), help="Reference pack root directory")
+
+    pack_select_parser = subparsers.add_parser("select-visual-references", help="Select advisory visual references from a generic reference pack")
+    pack_select_target = pack_select_parser.add_mutually_exclusive_group(required=True)
+    pack_select_target.add_argument("--brand-profile", default=None, help="Path to a JSON brand profile")
+    pack_select_target.add_argument("--project-dir", default=None, help="Optional project directory created by init")
+    pack_select_parser.add_argument("--pack", required=True, help="Reference pack id or path")
+    pack_select_parser.add_argument("--pack-root", default=str(DEFAULT_REFERENCE_PACK_ROOT), help="Reference pack root for pack ids")
+    pack_select_parser.add_argument("--query", default=None, help="Search terms used to score pack assets")
+    pack_select_parser.add_argument("--category", action="append", dest="categories", default=[], help="Category filter. Can be passed multiple times.")
+    pack_select_parser.add_argument("--count", type=int, default=12)
+    pack_select_parser.add_argument("--link-mode", choices=["symlink", "copy", "absolute"], default="symlink")
+    pack_select_parser.add_argument("--reference-dir", default=PACK_DEFAULT_REFERENCE_DIR, help="Project-local directory for selected local assets")
+    pack_select_parser.add_argument("--local-only", action="store_true", help="Only select records with local image files")
+    pack_select_parser.add_argument("--sync-sources", action="store_true", help="Update brand_profile.visual_reference.sources with the selected references")
+    pack_select_parser.add_argument("--output-dir", default=None, help="Optional directory for visual_reference_pack_selection.json")
 
     analyze_parser = subparsers.add_parser("analyze-spec", help="Analyze a product spec to auto-detect needed UI components")
     analyze_parser.add_argument("--spec-file", required=True, help="Path to a product spec file (markdown, text)")
@@ -1548,6 +1588,101 @@ def main() -> None:
             print(f"  -> {brand_profile_path} 업데이트 완료")
         return
 
+    if args.command == "build-reference-pack":
+        output_dir = Path(args.output_dir).expanduser() if args.output_dir else DEFAULT_REFERENCE_PACK_ROOT / args.pack_id
+        pack = build_reference_pack(
+            pack_id=args.pack_id,
+            output_dir=output_dir,
+            source_dirs=[Path(item) for item in args.source_dir],
+            source_urls=args.source_url,
+            asset_manifest=Path(args.asset_manifest) if args.asset_manifest else None,
+            provider_id=args.provider_id,
+            category=args.category,
+            tags=_split_csv(args.tags),
+            materialize=args.materialize,
+            crawl_depth=args.crawl_depth,
+            max_pages=args.max_pages,
+            max_assets=args.max_assets,
+        )
+        print(f"[build-reference-pack] pack 생성 완료: {output_dir}")
+        print(
+            f"  -> {pack['pack_id']} v{pack['version']} | "
+            f"assets {pack['asset_count']} | materialize {pack['materialization']}"
+        )
+        print("  -> pack.json, assets.jsonl, index.sqlite, checksums.json 저장")
+        return
+
+    if args.command == "list-reference-packs":
+        packs = list_reference_packs(args.pack_root)
+        if not packs:
+            print(f"[list-reference-packs] 설치된 reference pack이 없습니다: {args.pack_root}")
+            return
+        print(f"[list-reference-packs] {len(packs)}개 pack")
+        for pack in packs:
+            print(
+                f"  - {pack.get('pack_id')} v{pack.get('version')} | "
+                f"assets {pack.get('asset_count', 0)} | {pack.get('path')}"
+            )
+        return
+
+    if args.command == "select-visual-references":
+        brand_profile_path, project_dir, manifest = _resolve_brand_profile_target(
+            brand_profile_arg=args.brand_profile,
+            project_dir_arg=args.project_dir,
+        )
+        raw_profile = json.loads(brand_profile_path.read_text(encoding="utf-8"))
+        visuals_dir = _resolve_support_output_dir(
+            raw_output=args.output_dir,
+            project_dir=project_dir,
+            manifest=manifest,
+            folder_name="visuals",
+        )
+        query = args.query or _omnigen_query_from_profile(raw_profile)
+        selection_manifest = select_visual_references(
+            pack=args.pack,
+            pack_root=Path(args.pack_root),
+            project_dir=project_dir or brand_profile_path.parent,
+            query=query,
+            categories=args.categories or None,
+            count=args.count,
+            link_mode=args.link_mode,
+            reference_dir=args.reference_dir,
+            local_only=args.local_only,
+        )
+        write_json(visuals_dir / "visual_reference_pack_selection.json", selection_manifest)
+
+        sync_result = None
+        if args.sync_sources:
+            sync_result = sync_reference_pack_sources(
+                raw_brand_profile=raw_profile,
+                selection_manifest=selection_manifest,
+                base_dir=project_dir or brand_profile_path.parent,
+            )
+            write_json(brand_profile_path, raw_profile)
+
+        print(
+            f"[select-visual-references] {selection_manifest['selected_count']}개 reference 선택 완료: "
+            f"{visuals_dir}/visual_reference_pack_selection.json"
+        )
+        print(
+            f"  -> pack: {selection_manifest['pack_id']} v{selection_manifest.get('pack_version')} | "
+            f"query: {selection_manifest['query'] or '(profile-derived)'}"
+        )
+        print(
+            f"  -> candidates {selection_manifest['scored_candidate_count']} / "
+            f"selected {selection_manifest['selected_count']} | link_mode {args.link_mode}"
+        )
+        for item in selection_manifest["selected"][: min(8, selection_manifest["selected_count"])]:
+            label = item.get("label") or item.get("asset_id") or "reference"
+            print(f"     - #{item['rank']:02d} {label} ({item.get('category')}, score {item.get('score')})")
+        if sync_result:
+            print(
+                f"  -> visual_reference.sources 동기화: "
+                f"{sync_result['managed_source_count']}개 reference pack source 반영"
+            )
+            print(f"  -> {brand_profile_path} 업데이트 완료")
+        return
+
     if args.command == "init":
         result = scaffold_project(
             project_dir=Path(args.project_dir),
@@ -2127,6 +2262,12 @@ def _source_path_identity(raw_path: str, *, base_dir: Path) -> str:
     else:
         path = path.resolve()
     return str(path)
+
+
+def _split_csv(value: str | None) -> list[str]:
+    if not value:
+        return []
+    return [item.strip() for item in value.split(",") if item.strip()]
 
 
 def _write_visual_analysis_outputs(
