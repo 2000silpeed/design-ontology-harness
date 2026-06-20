@@ -34,7 +34,7 @@ AI_SYNTHESIS_PRINCIPLES = [
     {
         "id": "no_emoji_as_ui",
         "rule": "이모지를 UI 요소로 쓰지 않는다",
-        "detail": "AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 반드시 SVG 파일/아이콘 컴포넌트 또는 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)를 사용한다. 리팩토링 중 카드, 버튼, 배지, 탭, 상태 표시, empty state에서 이모지를 발견하면 그대로 두지 말고 적절한 SVG 아이콘으로 교체한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다.",
+        "detail": "AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 기본값은 SVG 파일/아이콘 컴포넌트 또는 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)이지만, 사용자·리뷰어가 no-SVG/raster-only 매체를 지정한 프로젝트에서는 PNG/WebP/JPEG 아이콘 에셋을 사용한다. 리팩토링 중 카드, 버튼, 배지, 탭, 상태 표시, empty state에서 이모지를 발견하면 그대로 두지 말고 프로젝트의 활성 medium directive에 맞는 실제 아이콘 에셋으로 교체한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다.",
     },
     {
         "id": "implement_components_directly",
@@ -52,6 +52,11 @@ AI_SYNTHESIS_PRINCIPLES = [
         "detail": "AI는 image_gen을 사용할 수 없거나 실제 사진성이 더 중요한 경우에만 sourced visual fallback을 사용한다. 무료 provider는 per-asset license metadata가 필요하고, paid provider는 license_proof/usage_scope/licensed_to가 필요하다. Reference-only provider는 형태와 밀도 참고만 가능하며 이미지를 구현 에셋으로 복사하지 않는다. source_url, download_url, provider, author, license, attribution_required, sha256, alt_text를 manifest에 기록하지 못하는 이미지는 구현에 넣지 않는다. 런타임 hotlink와 stock/search 이미지를 앱 아이콘·로고·상태 아이콘으로 쓰는 것을 금지한다.",
     },
     {
+        "id": "explicit_visual_medium_directives_are_binding",
+        "rule": "사용자가 지정한 이미지 매체는 기본 SVG 규칙보다 우선한다",
+        "detail": "사용자나 리뷰어가 'SVG 만들지 말고', '실제 그림파일', '검색해서 넣어', 'PNG/WebP/JPEG', '래스터', '비트맵'처럼 시각 에셋 매체를 명시하면 그 지시는 온톨로지의 medium override가 된다. 해당 범위의 아바타, 캐릭터, 콘텐츠 이미지, 앱 아이콘, UI 아이콘은 SVG/inline vector로 대체하지 않고 생성·사용자 제공·라이선스 소스 기반의 실제 래스터 파일을 프로젝트에 복사해 사용한다. 예외가 필요하면 사용자의 명시 승인과 medium_decision 기록이 먼저 있어야 한다.",
+    },
+    {
         "id": "visual_substance_in_mockups",
         "rule": "목업은 관련 이미지를 적극적으로 사용한다",
         "detail": "AI는 사이트, 앱, 랜딩, 제품 소개, 콘텐츠 카드, 스포츠/장소/상품/포트폴리오 목업을 이미지 없는 카드와 그라디언트 블록만으로 끝내지 않는다. 도메인 실체를 드러내는 생성 이미지, 라이선스 검증 이미지, 사용자 제공 이미지, 브랜드 identity asset을 적극적으로 배치하고 manifest/alt/crop/반응형 검증까지 완료한다. 단 대시보드·운영 UI에서는 이미지가 표, 필터, 상태, 출처 같은 핵심 작업 표면을 밀어내지 않게 한다.",
@@ -64,7 +69,7 @@ AI_SYNTHESIS_PRINCIPLES = [
     {
         "id": "active_svg_visual_affordances",
         "rule": "아이콘과 도메인 그림은 완성 조건이다",
-        "detail": "AI는 필터, 상태, 액션, 추천 근거, 도메인 객체에 SVG 아이콘이나 deterministic SVG/이미지 자산을 적극적으로 연결한다. 도메인이 장소·상품·콘텐츠·게임·스포츠처럼 시각 실체를 갖는 경우, 텍스트와 테두리만으로 완료 처리하지 않는다.",
+        "detail": "AI는 필터, 상태, 액션, 추천 근거, 도메인 객체에 프로젝트의 활성 medium directive에 맞는 아이콘이나 이미지 자산을 적극적으로 연결한다. 기본값은 SVG 아이콘이나 deterministic SVG/이미지 자산이지만, no-SVG/raster-only directive가 있으면 PNG/WebP/JPEG 에셋을 사용한다. 도메인이 장소·상품·콘텐츠·게임·스포츠처럼 시각 실체를 갖는 경우, 텍스트와 테두리만으로 완료 처리하지 않는다.",
     },
 ]
 
@@ -182,16 +187,31 @@ ICON_REFACTOR_POLICY = {
     "rule": "During UI refactors, emoji-looking UI affordances must be replaced with SVG-based icons instead of preserved as text glyphs.",
     "targets": ["button", "card", "badge", "tab", "navigation item", "status indicator", "empty state", "toast", "banner"],
     "replacement_order": [
+        "If the user/reviewer has declared a raster-only or no-SVG medium override, use approved PNG/WebP/JPEG icon/image assets and document the override.",
         "Use the project's existing icon library when one is already installed and stylistically compatible.",
         "Reuse existing local SVG/icon components when available.",
         "Create a simple local SVG file or SVG component when no suitable icon exists.",
     ],
+    "quality_floor": {
+        "rule": "UI icons must come from an approved icon system or document a consistent icon grammar; arbitrary hand-drawn path sets are not acceptable just because they are SVG.",
+        "approved_sources": ["existing project icon library", "Lucide", "Heroicons", "Phosphor", "Tabler", "Material Symbols", "approved custom icon set"],
+        "required_grammar": [
+            "consistent 24px grid or documented asset grid",
+            "consistent stroke weight, caps, joins, and optical size",
+            "currentColor or token-bound stroke/fill",
+            "visible text or aria-label for semantic controls",
+            "no mixed filled/outlined styles unless the state model requires it",
+        ],
+    },
     "implementation_rules": [
         "Keep SVG stroke/fill bound to currentColor or design tokens, not hard-coded palette values.",
         "Decorative SVG icons use aria-hidden=\"true\"; semantic icons get an accessible label or adjacent text.",
         "Store new SVG assets in the nearest existing icons/assets directory; create a minimal icons directory only when none exists.",
         "Do not replace user-generated emoji content, chat text, blog body, or emoji-picker data.",
         "Do not use emoji as a placeholder while searching for a proper icon.",
+        "Do not use SVG icons when a project-specific medium override says no SVG or requires real raster image files; use project-local PNG/WebP/JPEG icon assets instead.",
+        "Do not hand-roll a UI icon sprite when a suitable icon library exists; if a local sprite is used, declare its source or approved custom grammar.",
+        "Navigation, toolbar, status, and action icons must share one visual grammar across stroke width, corner style, optical size, and active/inactive treatment.",
     ],
     "failure_patterns": [
         {
@@ -207,6 +227,13 @@ ICON_REFACTOR_POLICY = {
             "rule": "Icons are part of scanability for controls and state, not optional decoration.",
             "prevention": "Add token-bound SVG icons to filters, actions, status, and repeated scan surfaces while keeping accessible text labels.",
             "technical_controls": ["IMPLEMENTATION_CONTRACT.md", "component_specs.md icon notes", "lint-implementation DS071"],
+        },
+        {
+            "id": "amateur-custom-svg-icon-set",
+            "trigger": "A UI ships a custom inline icon sprite or handmade icon set without an approved library/source marker or consistent icon grammar.",
+            "rule": "SVG is a file format, not a quality guarantee; UI icons must use an approved icon system or a documented custom grammar.",
+            "prevention": "Replace the handmade sprite with Lucide/Heroicons/Phosphor/Tabler/Material or mark and document an approved custom icon set with consistent stroke, caps, joins, sizing, and accessibility.",
+            "technical_controls": ["IMPLEMENTATION_CONTRACT.md Icon Quality", "system_spec.md Emoji-to-SVG Refactor", "lint-implementation DS080", "visual QA screenshots"],
         }
     ],
     "outputs": ["system_spec.md", "component_specs.md", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "lint-implementation"],
@@ -220,7 +247,7 @@ APP_ICON_IDENTITY_POLICY = {
             "id": "identity-asset:app-icon",
             "label": "Brand app icon",
             "required": True,
-            "formats": ["svg source", "favicon", "web app manifest icon when applicable"],
+            "formats": ["source asset (SVG by default; PNG/WebP/JPEG when a no-SVG medium override is active)", "favicon", "web app manifest icon when applicable"],
             "targets": ["favicon", "app shell brand mark", "web app manifest", "mobile home-screen icon"],
             "description": "A compact identity mark that encodes the product domain, brand palette, and interaction posture without relying on generic initials.",
         }
@@ -229,8 +256,10 @@ APP_ICON_IDENTITY_POLICY = {
         "Do not ship a plain initials tile such as WC, AI, DS, or App as the final app icon unless the brand system explicitly defines that lettermark.",
         "The app icon must use the brand palette, visual keywords, and product primitives as evidence for shape language.",
         "Use a deterministic SVG source for the primary app icon; generated raster imagery may support marketing visuals but must not replace the identity icon source.",
+        "If the user/reviewer explicitly forbids SVG or requires actual raster image files, the app icon identity source may be PNG/WebP/JPEG instead; record that medium override in the ontology and do not create an SVG fallback silently.",
         "Wire the app icon into favicon/link metadata and the visible app-shell brand mark when the implementation has one.",
         "Keep small-size legibility: the icon must remain recognizable at 32px and in a 44px navigation mark.",
+        "The app icon must read as a finished identity mark, not a rough illustration, generic tile, emoji-like sticker, or low-confidence geometric placeholder.",
     ],
     "failure_patterns": [
         {
@@ -239,6 +268,13 @@ APP_ICON_IDENTITY_POLICY = {
             "rule": "App icons are required brand identity assets, not temporary text badges.",
             "prevention": "Create or reuse a brand-specific SVG app icon, wire it to favicon/manifest/app-shell surfaces, and document it in the ontology.",
             "technical_controls": ["system_spec.md Brand Identity Assets", "system_ontology.json BrandIdentityAsset", "IMPLEMENTATION_CONTRACT.md", "lint-implementation DS077", "viewport screenshot QA"],
+        },
+        {
+            "id": "low-quality-app-icon-identity",
+            "trigger": "A favicon, web manifest icon, or app-shell mark is present but looks like a rough doodle, generic geometric placeholder, or amateur illustration.",
+            "rule": "App icons are identity assets and must meet a finished visual quality floor.",
+            "prevention": "Redesign the app icon as a compact, legible, brand-specific SVG mark with coherent geometry, palette, and small-size testing.",
+            "technical_controls": ["system_spec.md Brand Identity Assets", "system_ontology.json BrandIdentityAsset", "IMPLEMENTATION_CONTRACT.md", "viewport screenshot QA"],
         }
     ],
     "outputs": ["brand_profile", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "lint-implementation"],
@@ -287,6 +323,7 @@ MOCKUP_VISUAL_SUBSTANCE_POLICY = {
         "Path-only inline SVGs with generic map/sketch/illustration classes do not count as visual substance unless the visual is semantically anchored with labels, legend, title/desc, or data-subject landmarks.",
         "Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.",
         "Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.",
+        "Do not represent evidence maps, relation maps, or product data graphs as hand-positioned HTML nodes connected by rotated CSS lines. Use a real graph/chart library, SVG/canvas visualization with semantic labels and runtime data, or a ledger/table when the relationship is simple.",
         "A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.",
         "Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.",
         "Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.",
@@ -329,6 +366,13 @@ MOCKUP_VISUAL_SUBSTANCE_POLICY = {
             "technical_controls": ["lint-implementation DS075", "IMPLEMENTATION_CONTRACT.md", "visual QA screenshots"],
         },
         {
+            "id": "ad-hoc-node-link-placeholder-graph",
+            "trigger": "A mockup draws an evidence map, relation map, or graph using absolutely positioned nodes and rotated CSS lines such as graph-node/graph-edge or trace-node/trace-line.",
+            "rule": "A hand-drawn node-link sketch is not a product-grade data visualization.",
+            "prevention": "Use a proven graph/chart library, a semantically labeled SVG/canvas visualization backed by real runtime data, or replace simple relationships with an evidence ledger/table.",
+            "technical_controls": ["lint-implementation DS082", "component_specs.md data visualization notes", "visual QA screenshots"],
+        },
+        {
             "id": "media-runtime-surface-without-asset",
             "trigger": "A place, product, article, or content detail declares a media/photo runtime surface but renders only CSS patterns, gradients, or generic blocks.",
             "rule": "Runtime media surfaces need actual media assets or explicit empty/loading states.",
@@ -351,6 +395,104 @@ MOCKUP_VISUAL_SUBSTANCE_POLICY = {
         },
     ],
     "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "visual QA", "compare-visuals"],
+}
+
+VISUAL_ASSET_MEDIUM_SELECTION_POLICY = {
+    "id": "visual-asset-medium-selection",
+    "rule": "Visual asset slots must choose the medium that matches the subject and runtime role; narrative/content media needs high-fidelity raster or approved production artwork, not ad-hoc SVG sketches.",
+    "directive_overrides": [
+        {
+            "id": "user-raster-asset-directive",
+            "trigger_phrases": ["SVG 만들지 말고", "SVG 금지", "실제 그림파일", "실제 이미지 파일", "검색해서 넣어", "PNG", "WebP", "JPEG", "래스터", "비트맵"],
+            "priority": "highest",
+            "required_medium": "project-local raster image asset",
+            "allowed_formats": ["png", "webp", "jpg", "jpeg", "avif"],
+            "denied_formats": ["svg", "inline svg", "deterministic svg placeholder"],
+            "applies_to": ["avatars", "character portraits", "content images", "mockup visual assets", "app icons", "UI icons unless explicitly exempted"],
+            "documentation_required": ["medium_decision", "asset_path", "acquisition_mode", "source_or_prompt", "verification that no .svg or inline <svg> remains"],
+        }
+    ],
+    "decision_sequence": [
+        "First honor explicit user/reviewer medium directives. A no-SVG or raster-only directive overrides default identity/icon/vector preferences for the affected project or slot.",
+        "Classify the slot before drawing: identity/icon, control glyph, diagram/data, factual real-world media, narrative/content media, or decorative support.",
+        "If the slot's user expectation is rendered content art, product/place photography, story atmosphere, or inspectable media, use image_gen, user-supplied licensed imagery, sourced licensed imagery, or an already approved high-fidelity asset.",
+        "Use deterministic SVG for app icons, logos, flags, UI glyphs, charts, diagrams, maps, schematics, and semantic product illustrations where vector geometry is the correct runtime representation.",
+        "When a faster-to-author SVG would reduce the slot to a placeholder, treat that as a wrong-medium failure rather than a stylistic option.",
+    ],
+    "slot_families": [
+        {
+            "id": "high-fidelity-narrative-media",
+            "examples": [
+                "comic/manga/webtoon cover",
+                "panel or strip preview",
+                "story or character scene",
+                "editorial/article cover",
+                "gameplay or sprite-like scene",
+                "portfolio/content artwork",
+            ],
+            "default_acquisition_modes": ["image_gen", "user_supplied", "sourced"],
+            "deterministic_svg": "denied unless the project already has approved production-grade vector artwork for that exact content slot",
+        },
+        {
+            "id": "factual-real-world-media",
+            "examples": ["real venue", "real product", "food/travel/place photo", "person or event photo"],
+            "default_acquisition_modes": ["user_supplied", "sourced"],
+            "deterministic_svg": "allowed only for maps, diagrams, or clearly labeled schematics, not as a photo substitute",
+        },
+        {
+            "id": "identity-control-technical-vector",
+            "examples": ["app icon", "logo", "favicon", "flag", "UI icon", "chart", "diagram", "map schematic"],
+            "default_acquisition_modes": ["deterministic_svg", "icon_library", "semantic_html_css"],
+            "deterministic_svg": "preferred when token-bound, accessible, and semantically anchored",
+        },
+        {
+            "id": "user-specified-raster-assets",
+            "examples": ["AI avatar", "chat character portrait", "generated app visual", "search/sourced image slot", "raster-only UI icon set"],
+            "default_acquisition_modes": ["image_gen", "user_supplied", "sourced", "project_local_raster"],
+            "deterministic_svg": "denied whenever the user/reviewer says no SVG, real image file, raster-only, or asks to search/generate actual imagery",
+        },
+    ],
+    "implementation_rules": [
+        "A user/reviewer sentence such as 'SVG 만들지 말고 실제 그림파일로 만들거나 검색해서 넣어' is a binding medium override, not a preference. Store it in governance/system_ontology/IMPLEMENTATION_CONTRACT and satisfy it before visual QA.",
+        "When a raster-only/no-SVG directive is active, do not create SVG avatars, inline SVG sprites, SVG favicons, SVG placeholder art, or SVG UI icons for the affected scope; create or source project-local PNG/WebP/JPEG assets instead.",
+        "Comic, manga, and webtoon cover or panel-preview slots default to image_gen-generated raster, user-supplied artwork, or licensed/sourced artwork.",
+        "A geometric SVG, rough path drawing, or low-information vector placeholder is not an acceptable final comic cover, manga panel, article cover, product photo, or story media asset.",
+        "Do not substitute inline SVG scene art solely because it is faster to author; use the imagegen skill when synthetic art is appropriate and available.",
+        "Deterministic SVG remains appropriate for app icons, logos, flags, UI icons, charts, diagrams, maps, and product schematics when those are the actual runtime medium.",
+        "If a narrative/content media slot intentionally uses vector artwork, document why it is production-grade artwork rather than a placeholder and record it in the manifest or implementation notes.",
+        "Manifest or implementation records should include acquisition_mode and medium_decision for non-obvious visual slots.",
+    ],
+    "failure_patterns": [
+        {
+            "id": "wrong-medium-svg-for-narrative-media",
+            "trigger": "A comic/webtoon/manga cover, panel preview, story scene, character image, editorial cover, or content-media slot references an SVG placeholder instead of high-fidelity raster or approved artwork.",
+            "rule": "Narrative/content media slots require the medium users expect to inspect: generated, sourced, user-supplied, or approved polished artwork.",
+            "prevention": "Use image_gen or licensed/user-supplied raster artwork for the slot; reserve deterministic SVG for identity, controls, diagrams, maps, charts, or schematics.",
+            "technical_controls": ["system_spec.md Visual Asset Medium Selection", "system_ontology.json GovernanceRule", "IMPLEMENTATION_CONTRACT.md", "lint-implementation DS079", "visual QA screenshots"],
+        },
+        {
+            "id": "user-raster-directive-svg-violation",
+            "trigger": "A project or slot declares no-SVG/raster-only/real-image-file requirements but implementation still contains .svg assets, inline <svg>, image/svg+xml favicons, or SVG icon sprites in the affected scope.",
+            "rule": "Explicit user/reviewer raster directives override default SVG icon and identity guidance.",
+            "prevention": "Replace SVG assets with project-local PNG/WebP/JPEG files generated, user-supplied, or license-verified from search; record medium_decision and verify the implementation has no .svg or inline <svg> references.",
+            "technical_controls": ["system_spec.md Visual Asset Medium Selection", "system_ontology.json GovernanceRule", "IMPLEMENTATION_CONTRACT.md", "lint-implementation DS081", "visual QA screenshots"],
+        },
+        {
+            "id": "comic-cover-as-geometric-placeholder",
+            "trigger": "A comic/manga/webtoon magazine mockup ships geometric blocks, rough paths, or diagram-like vector art where the reader expects polished cover or panel art.",
+            "rule": "Comic media quality is a product signal; placeholder geometry does not satisfy a comic/content asset slot.",
+            "prevention": "Generate or source finished cover and panel artwork, then verify crop, alt text, manifest metadata, and mobile legibility.",
+            "technical_controls": ["imagegen skill", "visual asset manifest", "lint-implementation DS079", "viewport screenshot QA"],
+        },
+        {
+            "id": "unreviewed-visual-medium-substitution",
+            "trigger": "An implementation changes a planned acquisition mode from generated/sourced/user-supplied media to deterministic SVG without documenting the slot judgment.",
+            "rule": "Medium substitution is a design-system decision and must be traceable.",
+            "prevention": "Record the medium_decision, intended_for slot, and reason for deterministic vector use, or restore the appropriate media pipeline.",
+            "technical_controls": ["design_system_blueprint.governance", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "visual QA review"],
+        },
+    ],
+    "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "lint-implementation", "visual QA"],
 }
 
 COMMERCIAL_PRODUCT_REALISM_POLICY = {
@@ -752,6 +894,8 @@ def build_blueprint(
                 "상용 제품형 화면은 피치덱식 히어로/균일 카드벽보다 실제 작업 표면, 데이터 밀도, 상태, 필터, 출처를 첫 화면에 우선 배치한다",
                 "데이터·스포츠·운영 UI에서 정확한 수치, 예측, 순위, 투표수는 출처/업데이트 시각/샘플 라벨 없이 확정값처럼 보이게 하지 않는다",
                 "사이트·앱·랜딩·제품·장소·콘텐츠·게임 목업은 도메인 실체를 보여주는 이미지/미디어/identity asset을 적극적으로 사용하고, 이미지 없는 카드·그라디언트만으로 완성 처리하지 않는다",
+                "만화·웹툰·잡지 표지, 컷 미리보기, 서사 콘텐츠 미디어 슬롯은 image_gen/사용자 제공/라이선스 소스/승인된 고품질 아트워크를 기본값으로 삼고, 즉석 SVG 스케치나 기하학 플레이스홀더를 최종 자산으로 쓰지 않는다",
+                "사용자·리뷰어가 'SVG 만들지 말고', '실제 그림파일', 'PNG/WebP/JPEG', '검색해서 넣어'처럼 매체를 지정하면 해당 범위는 raster-only medium override로 기록하고 SVG/inline vector/아이콘 스프라이트로 대체하지 않는다",
                 "생성 이미지와 장식 비주얼은 도메인 맥락을 보조해야 하며 일정, 결과, 표, 필터, 상태 같은 핵심 작업 표면을 압도하지 않는다",
                 "Codex image_gen이 실패하거나 실제 사진성이 더 중요해 sourced visual fallback을 사용할 때는 라이선스/저작자/출처/attribution/sha256을 manifest에 기록하고 프로젝트 에셋으로 복사한 뒤 사용한다",
                 "유료 stock provider는 구매·구독·프로젝트 라이선스 증빙이 없으면 구현 에셋으로 승격하지 않고, reference-only provider는 형태·밀도·flow 참고로만 사용한다",
@@ -768,6 +912,7 @@ def build_blueprint(
             "icon_refactor_policy": ICON_REFACTOR_POLICY,
             "app_icon_identity_policy": APP_ICON_IDENTITY_POLICY,
             "mockup_visual_substance_policy": MOCKUP_VISUAL_SUBSTANCE_POLICY,
+            "visual_asset_medium_selection_policy": VISUAL_ASSET_MEDIUM_SELECTION_POLICY,
             "commercial_product_realism_policy": COMMERCIAL_PRODUCT_REALISM_POLICY,
             "feedback_promotion_policy": REFERENCE_ABSORPTION_SCOPE["promotion_policy"],
         },

@@ -201,6 +201,34 @@ def build_generated_visual_asset_section(graph: DesignOntologyGraph) -> str:
             lines.append(f"- **Required sourced record fields**: {', '.join(f'`{field}`' for field in required_fields[:16])}")
         lines.append("")
 
+    medium_policy = graph.get_node("governance:visual-asset-medium-selection")
+    if medium_policy:
+        lines.append(f"- **Visual Asset Medium Selection**: {medium_policy.meta.get('rule', 'Choose visual medium by slot role.')}")
+        directive_overrides = medium_policy.meta.get("directive_overrides") or []
+        if directive_overrides:
+            lines.append("- **Directive overrides**:")
+            for override in directive_overrides[:4]:
+                trigger = ", ".join(override.get("trigger_phrases", [])[:5])
+                denied = ", ".join(override.get("denied_formats", [])[:4])
+                lines.append(
+                    f"  - {override.get('id', 'medium-override')}: "
+                    f"{override.get('required_medium', 'specified medium')} required; "
+                    f"triggers: {trigger}; denied: {denied}"
+                )
+        decision_sequence = medium_policy.meta.get("decision_sequence") or []
+        if decision_sequence:
+            lines.append("- **Medium decision sequence**:")
+            for item in decision_sequence[:5]:
+                lines.append(f"  - {item}")
+        slot_families = medium_policy.meta.get("slot_families") or []
+        if slot_families:
+            lines.append("- **Slot family defaults**:")
+            for family in slot_families[:5]:
+                examples = ", ".join(family.get("examples", [])[:4])
+                modes = ", ".join(family.get("default_acquisition_modes", [])[:4])
+                lines.append(f"  - {family.get('id', 'slot-family')}: {modes}; examples: {examples}")
+        lines.append("")
+
     integrated_assets = [
         asset for asset in all_assets
         if asset.meta.get("integrated") or asset.meta.get("asset_path")
@@ -220,8 +248,8 @@ def build_generated_visual_asset_section(graph: DesignOntologyGraph) -> str:
         lines.append("")
 
     rows: list[str] = []
-    rows.append("| Asset Slot | Mode | Source | Intended For | Manifest | Policy |")
-    rows.append("|------------|------|--------|--------------|----------|--------|")
+    rows.append("| Asset Slot | Mode | Required Medium | Source | Intended For | Manifest | Policy |")
+    rows.append("|------------|------|-----------------|--------|--------------|----------|--------|")
 
     for asset in sorted(all_assets, key=lambda n: n.label):
         mode = asset.meta.get("acquisition_mode") or ("sourced" if asset.type == NodeType.SourcedVisualAsset else "generated")
@@ -248,10 +276,13 @@ def build_generated_visual_asset_section(graph: DesignOntologyGraph) -> str:
 
         manifest = asset.meta.get("manifest_path", "—")
         failure_policy = asset.meta.get("fallback_policy", "—")
+        medium_role = asset.meta.get("medium_role", "—")
+        svg_allowed = asset.meta.get("deterministic_svg_allowed", "—")
+        required_medium = f"{medium_role}; SVG: {svg_allowed}"
         intended_for = ", ".join(targets[:6]) if targets else ", ".join(asset.meta.get("intended_for", [])[:6])
         if not intended_for:
             intended_for = asset.meta.get("activation", "optional")
-        rows.append(f"| {asset.label} | {mode} | {source} | {intended_for} | `{manifest}` | {failure_policy} |")
+        rows.append(f"| {asset.label} | {mode} | {required_medium} | {source} | {intended_for} | `{manifest}` | {failure_policy} |")
 
     lines.extend(rows)
     return "\n".join(lines)
@@ -336,7 +367,7 @@ def build_commercial_product_realism_section(graph: DesignOntologyGraph) -> str:
     failure_edges = graph.get_edges_from(policy.id, EdgeType.prevents)
     if failure_edges:
         lines.append("- **Promoted failure patterns**:")
-        for edge in failure_edges[:8]:
+        for edge in failure_edges[:10]:
             failure = graph.get_node(edge.target)
             if failure:
                 lines.append(f"  - {failure.label}: {failure.meta.get('prevention', '')}")
@@ -346,41 +377,58 @@ def build_commercial_product_realism_section(graph: DesignOntologyGraph) -> str:
 
 def build_mockup_visual_substance_section(graph: DesignOntologyGraph) -> str:
     policy = graph.get_node("governance:mockup-visual-substance")
-    if not policy:
+    medium_policy = graph.get_node("governance:visual-asset-medium-selection")
+    if not policy and not medium_policy:
         return "No mockup visual substance policy defined."
 
     lines: list[str] = []
-    lines.append(f"- **Policy**: {policy.meta.get('rule', 'Use relevant visual assets in mockups.')}")
+    if policy:
+        lines.append(f"- **Policy**: {policy.meta.get('rule', 'Use relevant visual assets in mockups.')}")
 
-    applies_to = policy.meta.get("applies_to") or []
+    applies_to = policy.meta.get("applies_to") if policy else []
     if applies_to:
         lines.append(f"- **Applies to**: {', '.join(applies_to[:10])}")
 
-    diagnosis = policy.meta.get("diagnosis") or []
+    diagnosis = policy.meta.get("diagnosis") if policy else []
     if diagnosis:
         lines.append("- **Why image-free mockups fail**:")
         for item in diagnosis[:4]:
             lines.append(f"  - {item}")
 
-    required_signals = policy.meta.get("required_signals") or []
+    if medium_policy:
+        lines.append(f"- **Medium selection policy**: {medium_policy.meta.get('rule', 'Choose visual asset medium by slot role.')}")
+        rules = medium_policy.meta.get("implementation_rules") or []
+        if rules:
+            lines.append("- **Medium selection rules**:")
+            for rule in rules[:6]:
+                lines.append(f"  - {rule}")
+        medium_failure_edges = graph.get_edges_from(medium_policy.id, EdgeType.prevents)
+        if medium_failure_edges:
+            lines.append("- **Promoted medium failure patterns**:")
+            for edge in medium_failure_edges[:6]:
+                failure = graph.get_node(edge.target)
+                if failure:
+                    lines.append(f"  - {failure.label}: {failure.meta.get('prevention', '')}")
+
+    required_signals = policy.meta.get("required_signals") if policy else []
     if required_signals:
         lines.append("- **Required visual substance signals**:")
         for item in required_signals[:8]:
             lines.append(f"  - {item}")
 
-    acquisition_order = policy.meta.get("image_acquisition_order") or []
+    acquisition_order = policy.meta.get("image_acquisition_order") if policy else []
     if acquisition_order:
         lines.append("- **Image acquisition order**:")
         for item in acquisition_order[:6]:
             lines.append(f"  - {item}")
 
-    rules = policy.meta.get("implementation_rules") or []
+    rules = policy.meta.get("implementation_rules") if policy else []
     if rules:
         lines.append("- **Implementation rules**:")
         for rule in rules[:10]:
             lines.append(f"  - {rule}")
 
-    failure_edges = graph.get_edges_from(policy.id, EdgeType.prevents)
+    failure_edges = graph.get_edges_from(policy.id, EdgeType.prevents) if policy else []
     if failure_edges:
         lines.append("- **Promoted failure patterns**:")
         for edge in failure_edges[:8]:

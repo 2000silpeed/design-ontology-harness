@@ -15,6 +15,7 @@ from design_ontology_harness.synthesis import (
     MOCKUP_VISUAL_SUBSTANCE_POLICY,
     REFERENCE_ABSORPTION_SCOPE,
     RESPONSIVE_RESILIENCE_POLICY,
+    VISUAL_ASSET_MEDIUM_SELECTION_POLICY,
 )
 
 
@@ -189,6 +190,63 @@ def test_flags_homogeneous_card_wall_risk(tmp_path: Path):
     assert "DS070" in codes
 
 
+def test_flags_ad_hoc_node_link_placeholder_graph(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <section class="trace-canvas" aria-label="근거 연결 미니맵">
+          <span class="trace-node main">Answer</span>
+          <span class="trace-node top">CH-078</span>
+          <span class="trace-node law-node">하도급법</span>
+          <i class="trace-line line-a"></i>
+          <i class="trace-line line-b"></i>
+        </section>
+        """,
+        encoding="utf-8",
+    )
+    (tmp_path / "styles.css").write_text(
+        """
+        .trace-canvas { position: relative; }
+        .trace-node { position: absolute; border: var(--app-border); }
+        .trace-line { position: absolute; height: 2px; transform: rotate(18deg); }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS082" in codes
+
+
+def test_allows_evidence_ledger_instead_of_node_link_placeholder(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <section class="evidence-ledger" aria-label="답변, chunk, 법령 검증 ledger">
+          <div class="ledger-row ledger-head">
+            <span>검증 항목</span><span>의결서 chunk</span><span>법령 보강</span><span>상태</span>
+          </div>
+          <div class="ledger-row">
+            <strong>기술자료 제공 요구</strong><span>DOC-066cf416-CH-078</span><span>하도급법</span><mark>원문 확인</mark>
+          </div>
+        </section>
+        """,
+        encoding="utf-8",
+    )
+    (tmp_path / "styles.css").write_text(
+        """
+        .evidence-ledger { display: grid; border: var(--app-border); }
+        .ledger-row { display: grid; grid-template-columns: 1fr 1fr 1fr auto; }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS082" not in codes
+
+
 def test_flags_icon_starved_interactive_surface(tmp_path: Path):
     (tmp_path / "design-system").mkdir()
     (tmp_path / "index.html").write_text(
@@ -211,6 +269,63 @@ def test_flags_icon_starved_interactive_surface(tmp_path: Path):
 
     assert not report.ok
     assert "DS071" in codes
+
+
+def test_flags_undeclared_handmade_icon_sprite(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "콘텐츠 앱"}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <svg class="icon-sprite" aria-hidden="true">
+          <symbol id="icon-home" viewBox="0 0 24 24"><path d="M3 9h18v12H3z" /></symbol>
+          <symbol id="icon-search" viewBox="0 0 24 24"><path d="M10 10h8v8h-8z" /></symbol>
+          <symbol id="icon-user" viewBox="0 0 24 24"><path d="M12 4h1v1h-1z" /></symbol>
+          <symbol id="icon-bell" viewBox="0 0 24 24"><path d="M5 5h14v14H5z" /></symbol>
+        </svg>
+        <nav>
+          <button class="nav-item"><svg class="icon"><use href="#icon-home" /></svg>홈</button>
+          <button class="nav-item"><svg class="icon"><use href="#icon-search" /></svg>검색</button>
+        </nav>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS080" in codes
+
+
+def test_allows_declared_lucide_icon_sprite(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "콘텐츠 앱"}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <svg class="icon-sprite" data-icon-set="lucide" aria-hidden="true">
+          <symbol id="icon-home" viewBox="0 0 24 24"><path d="M3 9h18v12H3z" /></symbol>
+          <symbol id="icon-search" viewBox="0 0 24 24"><path d="M10 10h8v8h-8z" /></symbol>
+          <symbol id="icon-user" viewBox="0 0 24 24"><path d="M12 4h1v1h-1z" /></symbol>
+          <symbol id="icon-bell" viewBox="0 0 24 24"><path d="M5 5h14v14H5z" /></symbol>
+        </svg>
+        <nav>
+          <button class="nav-item"><svg class="icon"><use href="#icon-home" /></svg>홈</button>
+          <button class="nav-item"><svg class="icon"><use href="#icon-search" /></svg>검색</button>
+        </nav>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS080" not in codes
 
 
 def test_flags_missing_domain_visual_substance(tmp_path: Path):
@@ -338,6 +453,105 @@ def test_flags_ad_hoc_sketch_domain_visual(tmp_path: Path):
 
     assert not report.ok
     assert "DS074" in codes
+
+
+def test_flags_wrong_medium_svg_for_comic_media_slot(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "모바일 만화 잡지 앱", "visual_keywords": ["comic", "webtoon", "cover"]}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section class="issue-cover comic-cover">
+            <img class="cover-visual" src="./assets/cover-lunar.svg" alt="만화 잡지 표지" />
+          </section>
+          <section class="panel-preview">
+            <img src="./assets/panel-strip.svg" alt="웹툰 컷 미리보기" />
+          </section>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS079" in codes
+
+
+def test_allows_svg_for_identity_and_diagram_slots(tmp_path: Path):
+    (tmp_path / "design-system").mkdir()
+    (tmp_path / "design-system" / "brand_profile.json").write_text(
+        '{"product_summary": "모바일 만화 잡지 앱", "visual_keywords": ["comic", "webtoon", "cover"]}',
+        encoding="utf-8",
+    )
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <img class="app-icon" src="./assets/app-icon.svg" alt="앱 아이콘" />
+          <img class="reading-map diagram" src="./assets/episode-map.svg" alt="회차 흐름 다이어그램" />
+          <article class="comic-cover">
+            <img class="cover-visual" src="./assets/cover-lunar.png" alt="만화 잡지 표지" />
+          </article>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS079" not in codes
+
+
+def test_flags_svg_when_raster_only_directive_is_active(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <html>
+          <head>
+            <meta name="visual-asset-medium" content="raster-only; no-svg; png-webp-jpeg-assets" />
+            <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml" />
+          </head>
+          <body>
+            <svg class="icon-sprite"><symbol id="icon-home"></symbol></svg>
+            <img class="agent-avatar" src="./assets/agent.svg" alt="AI avatar" />
+          </body>
+        </html>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS081" in codes
+
+
+def test_allows_png_assets_when_raster_only_directive_is_active(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <html>
+          <head>
+            <meta name="visual-asset-medium" content="raster-only; no-svg; png-webp-jpeg-assets" />
+            <link rel="icon" href="./assets/app-icon.png" type="image/png" />
+          </head>
+          <body>
+            <img class="icon" src="./assets/icons/home.png" alt="" />
+            <img class="agent-avatar" src="./assets/agent.webp" alt="AI avatar" />
+          </body>
+        </html>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS081" not in codes
 
 
 def test_flags_ambiguous_mock_runtime_surface(tmp_path: Path):
@@ -650,6 +864,12 @@ def test_implementation_contract_declares_reference_scope():
     assert "DS076" in contract
     assert "DS077" in contract
     assert "DS078" in contract
+    assert "Visual Asset Medium Selection" in contract
+    assert "wrong-medium SVG narrative media" in contract
+    assert "DS079" in contract
+    assert "DS080" in contract
+    assert "DS081" in contract
+    assert "raster-only/no-SVG" in contract
     assert "uv run design-ontology lint-implementation --target-repo ." in contract
 
 
@@ -708,8 +928,10 @@ def test_icon_refactor_policy_is_structured_for_ontology():
     assert ICON_REFACTOR_POLICY["id"] == "emoji-to-svg-refactor"
     assert "button" in ICON_REFACTOR_POLICY["targets"]
     assert any("existing icon library" in item for item in ICON_REFACTOR_POLICY["replacement_order"])
+    assert "quality_floor" in ICON_REFACTOR_POLICY
+    assert "Lucide" in ICON_REFACTOR_POLICY["quality_floor"]["approved_sources"]
     failure_ids = {item["id"] for item in ICON_REFACTOR_POLICY["failure_patterns"]}
-    assert {"emoji-ui-affordance", "icon-starved-control-surface"} <= failure_ids
+    assert {"emoji-ui-affordance", "icon-starved-control-surface", "amateur-custom-svg-icon-set"} <= failure_ids
     assert "lint-implementation" in ICON_REFACTOR_POLICY["outputs"]
 
 
@@ -733,12 +955,45 @@ def test_mockup_visual_substance_policy_flags_low_information_svg():
     assert "lint-implementation DS078" in tile["technical_controls"]
 
 
+def test_visual_asset_medium_selection_policy_is_structured_for_ontology():
+    assert VISUAL_ASSET_MEDIUM_SELECTION_POLICY["id"] == "visual-asset-medium-selection"
+    override_ids = {item["id"] for item in VISUAL_ASSET_MEDIUM_SELECTION_POLICY["directive_overrides"]}
+    assert "user-raster-asset-directive" in override_ids
+    raster_override = next(
+        item for item in VISUAL_ASSET_MEDIUM_SELECTION_POLICY["directive_overrides"]
+        if item["id"] == "user-raster-asset-directive"
+    )
+    assert raster_override["required_medium"] == "project-local raster image asset"
+    assert "svg" in raster_override["denied_formats"]
+    assert any("Classify the slot" in item for item in VISUAL_ASSET_MEDIUM_SELECTION_POLICY["decision_sequence"])
+    family_ids = {item["id"] for item in VISUAL_ASSET_MEDIUM_SELECTION_POLICY["slot_families"]}
+    assert "high-fidelity-narrative-media" in family_ids
+    assert "identity-control-technical-vector" in family_ids
+    assert "user-specified-raster-assets" in family_ids
+    failure_ids = {item["id"] for item in VISUAL_ASSET_MEDIUM_SELECTION_POLICY["failure_patterns"]}
+    assert "wrong-medium-svg-for-narrative-media" in failure_ids
+    assert "user-raster-directive-svg-violation" in failure_ids
+    wrong_medium = next(
+        item for item in VISUAL_ASSET_MEDIUM_SELECTION_POLICY["failure_patterns"]
+        if item["id"] == "wrong-medium-svg-for-narrative-media"
+    )
+    raster_violation = next(
+        item for item in VISUAL_ASSET_MEDIUM_SELECTION_POLICY["failure_patterns"]
+        if item["id"] == "user-raster-directive-svg-violation"
+    )
+    assert "lint-implementation DS079" in wrong_medium["technical_controls"]
+    assert "lint-implementation DS081" in raster_violation["technical_controls"]
+    assert "system_ontology.json" in VISUAL_ASSET_MEDIUM_SELECTION_POLICY["outputs"]
+
+
 def test_app_icon_identity_policy_is_structured_for_ontology():
     assert APP_ICON_IDENTITY_POLICY["id"] == "brand-app-icon-identity"
     assert APP_ICON_IDENTITY_POLICY["required_assets"][0]["id"] == "identity-asset:app-icon"
     assert "favicon" in APP_ICON_IDENTITY_POLICY["required_assets"][0]["targets"]
     assert APP_ICON_IDENTITY_POLICY["failure_patterns"][0]["id"] == "generic-initials-app-icon"
     assert "lint-implementation DS077" in APP_ICON_IDENTITY_POLICY["failure_patterns"][0]["technical_controls"]
+    failure_ids = {item["id"] for item in APP_ICON_IDENTITY_POLICY["failure_patterns"]}
+    assert "low-quality-app-icon-identity" in failure_ids
     assert "system_ontology.json" in APP_ICON_IDENTITY_POLICY["outputs"]
 
 

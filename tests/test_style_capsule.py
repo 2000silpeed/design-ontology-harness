@@ -37,3 +37,4 @@ def test_style_capsule_renders_agent_ready_governance() -> None:
     assert "token-bound-reference-palette-mixing" in text
     assert "Advanced Component Menu" in text
     assert "policy-matrix" in text
+    assert "Design Context Pack" in text

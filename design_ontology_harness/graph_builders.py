@@ -709,6 +709,7 @@ VISUAL_ASSET_PROMPT_PACK_PATH = "public/generated/design-system/imagegen-prompts
 VISUAL_IMAGE_GENERATOR_ID = "image-model:codex-imagegen"
 VISUAL_IMAGE_GENERATOR_LABEL = "Codex image_gen skill"
 VISUAL_IMAGE_GENERATOR_FAILURE_POLICY = "no API fallback"
+VISUAL_ASSET_MEDIUM_SELECTION_POLICY_ID = "governance:visual-asset-medium-selection"
 VISUAL_ASSET_CONTRACT_ID = "governance:generated-visual-asset-contract"
 SOURCED_VISUAL_ASSET_CONTRACT_ID = "governance:sourced-visual-asset-fallback-contract"
 SOURCED_VISUAL_ASSET_FALLBACK_POLICY = "license-verified sourced visual fallback"
@@ -1037,6 +1038,9 @@ VISUAL_ASSET_SLOT_RULES = [
         "aspect_ratios": ["16:9", "4:3", "1:1"],
         "usage": "Optional Codex imagery when a screen needs professional raster substance.",
         "activation": "only when the implementation surface would benefit from generated imagery",
+        "medium_role": "high-fidelity-raster-support",
+        "default_acquisition_modes": ["image_gen", "user_supplied", "sourced"],
+        "deterministic_svg_allowed": False,
     },
     {
         "slot": "hero-image",
@@ -1046,6 +1050,9 @@ VISUAL_ASSET_SLOT_RULES = [
         "aspect_ratios": ["16:9", "3:2"],
         "usage": "First-viewport visual signal for landing, product, or editorial hero sections.",
         "activation": "hero, landing, product, or editorial first screen",
+        "medium_role": "high-fidelity-raster-support",
+        "default_acquisition_modes": ["image_gen", "user_supplied", "sourced"],
+        "deterministic_svg_allowed": False,
     },
     {
         "slot": "card-thumbnail",
@@ -1055,6 +1062,9 @@ VISUAL_ASSET_SLOT_RULES = [
         "aspect_ratios": ["4:3", "1:1"],
         "usage": "Content image for product, venue, object, media, or feature cards.",
         "activation": "card grids or repeated content surfaces need real visual content",
+        "medium_role": "content-media",
+        "default_acquisition_modes": ["image_gen", "user_supplied", "sourced"],
+        "deterministic_svg_allowed": "only for approved product schematics or semantic vector thumbnails",
     },
     {
         "slot": "editorial-cover",
@@ -1064,6 +1074,33 @@ VISUAL_ASSET_SLOT_RULES = [
         "aspect_ratios": ["4:5", "3:4"],
         "usage": "Cover image for articles, case studies, press stories, or narrative modules.",
         "activation": "editorial or story-led content module",
+        "medium_role": "high-fidelity-narrative-media",
+        "default_acquisition_modes": ["image_gen", "user_supplied", "sourced"],
+        "deterministic_svg_allowed": "denied unless approved production vector artwork exists",
+    },
+    {
+        "slot": "comic-cover",
+        "label": "Comic/manga cover art",
+        "keywords": ("comic", "manga", "webtoon", "toon", "cover", "issue", "magazine", "만화", "웹툰", "표지", "잡지"),
+        "family_keywords": (),
+        "aspect_ratios": ["2:3", "3:4", "4:5"],
+        "usage": "Finished cover artwork for comic, manga, webtoon, or illustrated magazine content.",
+        "activation": "comic, manga, webtoon, magazine issue, or cover-led reader surface",
+        "medium_role": "high-fidelity-narrative-media",
+        "default_acquisition_modes": ["image_gen", "user_supplied", "sourced"],
+        "deterministic_svg_allowed": "denied unless approved production vector cover art exists",
+    },
+    {
+        "slot": "comic-panel-preview",
+        "label": "Comic panel preview",
+        "keywords": ("panel", "strip", "episode", "chapter", "reader", "comic", "manga", "webtoon", "컷", "회차", "연재"),
+        "family_keywords": (),
+        "aspect_ratios": ["2:1", "16:9", "4:3"],
+        "usage": "Finished panel or strip preview artwork for story-led comic content.",
+        "activation": "comic reader, webtoon episode, manga chapter, or panel-preview rail",
+        "medium_role": "high-fidelity-narrative-media",
+        "default_acquisition_modes": ["image_gen", "user_supplied", "sourced"],
+        "deterministic_svg_allowed": "denied unless approved production vector panel art exists",
     },
     {
         "slot": "empty-state-illustration",
@@ -1073,6 +1110,9 @@ VISUAL_ASSET_SLOT_RULES = [
         "aspect_ratios": ["4:3", "1:1"],
         "usage": "Supportive illustration for empty states, onboarding, or no-result panels.",
         "activation": "empty state benefits from clarification without replacing text",
+        "medium_role": "supportive-illustration",
+        "default_acquisition_modes": ["image_gen", "deterministic_svg", "user_supplied", "sourced"],
+        "deterministic_svg_allowed": "allowed when polished, semantic, and not substituting for content media",
     },
 ]
 
@@ -1154,6 +1194,10 @@ def build_generated_visual_asset_layer(
                 "aspect_ratios": rule["aspect_ratios"],
                 "usage": rule["usage"],
                 "activation": rule["activation"],
+                "medium_role": rule.get("medium_role", "brand-aligned-raster"),
+                "default_acquisition_modes": rule.get("default_acquisition_modes", ["image_gen", "user_supplied", "sourced"]),
+                "deterministic_svg_allowed": rule.get("deterministic_svg_allowed", False),
+                "medium_selection_policy_id": VISUAL_ASSET_MEDIUM_SELECTION_POLICY_ID,
                 "alt_text_required": True,
                 "prompt_summary_required": True,
                 "sha256_required": True,
@@ -1201,6 +1245,22 @@ def build_generated_visual_asset_layer(
         ):
             graph.add_edge(OntologyEdge(type=EdgeType.enforces, source=visual_policy.id, target=asset.id))
 
+    medium_policy = graph.get_node(VISUAL_ASSET_MEDIUM_SELECTION_POLICY_ID)
+    if medium_policy:
+        for target_id in (
+            VISUAL_ASSET_CONTRACT_ID,
+            SOURCED_VISUAL_ASSET_CONTRACT_ID,
+            model_id,
+        ):
+            if graph.get_node(target_id):
+                graph.add_edge(OntologyEdge(type=EdgeType.enforces, source=medium_policy.id, target=target_id))
+        for asset in (
+            graph.get_nodes_by_type(NodeType.GeneratedVisualAsset)
+            + graph.get_nodes_by_type(NodeType.SourcedVisualAsset)
+            + graph.get_nodes_by_type(NodeType.BrandIdentityAsset)
+        ):
+            graph.add_edge(OntologyEdge(type=EdgeType.enforces, source=medium_policy.id, target=asset.id))
+
 
 def _add_visual_asset_contract_nodes(graph: DesignOntologyGraph) -> None:
     graph.add_node(OntologyNode(
@@ -1221,6 +1281,7 @@ def _add_visual_asset_contract_nodes(graph: DesignOntologyGraph) -> None:
             "manifest_required_fields": VISUAL_ASSET_MANIFEST_REQUIRED_FIELDS,
             "asset_record_required_fields": VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
             "rules": VISUAL_ASSET_CONTRACT_RULES,
+            "medium_selection_policy_id": VISUAL_ASSET_MEDIUM_SELECTION_POLICY_ID,
             "source_project_pattern": "sprout-community-mock/design-system/generated_visual_assets.json",
         },
     ))
@@ -1249,6 +1310,12 @@ def _add_visual_asset_contract_nodes(graph: DesignOntologyGraph) -> None:
             "label": "Generated image missing accessibility record",
             "trigger": "A generated visual asset is integrated without alt_text or an intended_for target.",
             "prevention": "Treat alt text and target component linkage as required manifest fields, not implementation notes.",
+        },
+        {
+            "id": "failure-pattern:wrong-medium-svg-for-narrative-media",
+            "label": "Wrong medium SVG for narrative media",
+            "trigger": "A narrative/content media slot such as a comic cover, panel preview, story scene, or editorial cover is implemented with a rough or placeholder SVG.",
+            "prevention": "Use image_gen, user-supplied artwork, sourced imagery, or approved high-fidelity artwork; reserve deterministic SVG for identity, controls, diagrams, maps, charts, or schematics.",
         },
     ]
     for failure in failure_patterns:
@@ -1294,6 +1361,7 @@ def _add_sourced_visual_asset_contract_nodes(graph: DesignOntologyGraph, brand_i
             "license_policy_id": FREE_SOURCED_VISUAL_ASSET_LICENSE_POLICY["id"],
             "paid_license_policy_id": LICENSED_VISUAL_ASSET_PROOF_POLICY["id"],
             "reference_only_policy_id": REFERENCE_ONLY_VISUAL_POLICY["id"],
+            "medium_selection_policy_id": VISUAL_ASSET_MEDIUM_SELECTION_POLICY_ID,
             "rules": SOURCED_VISUAL_ASSET_CONTRACT_RULES,
         },
     ))
@@ -1466,6 +1534,10 @@ def _add_sourced_visual_asset_slot_plan(
             "aspect_ratios": rule["aspect_ratios"],
             "usage": rule["usage"],
             "activation": rule["activation"],
+            "medium_role": rule.get("medium_role", "content-media"),
+            "default_acquisition_modes": rule.get("default_acquisition_modes", ["image_gen", "user_supplied", "sourced"]),
+            "deterministic_svg_allowed": rule.get("deterministic_svg_allowed", False),
+            "medium_selection_policy_id": VISUAL_ASSET_MEDIUM_SELECTION_POLICY_ID,
             "hotlinking_allowed": False,
             "workspace_copy_required": True,
             "license_metadata_required": True,
@@ -1864,6 +1936,7 @@ def build_governance_layer(
     icon_policy = governance.get("icon_refactor_policy") or {}
     app_icon_policy = governance.get("app_icon_identity_policy") or {}
     visual_substance_policy = governance.get("mockup_visual_substance_policy") or {}
+    visual_medium_policy = governance.get("visual_asset_medium_selection_policy") or {}
     commercial_policy = governance.get("commercial_product_realism_policy") or {}
 
     scope_id = "governance:reference-absorption-scope"
@@ -2004,6 +2077,7 @@ def build_governance_layer(
                 "rule": icon_policy.get("rule", ""),
                 "targets": icon_policy.get("targets", []),
                 "replacement_order": icon_policy.get("replacement_order", []),
+                "quality_floor": icon_policy.get("quality_floor", {}),
                 "implementation_rules": icon_policy.get("implementation_rules", []),
                 "outputs": icon_policy.get("outputs", []),
             },
@@ -2114,6 +2188,47 @@ def build_governance_layer(
                 },
             ))
             graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=visual_policy_id, target=pattern_id))
+
+    if visual_medium_policy:
+        visual_medium_policy_id = f"governance:{slugify(visual_medium_policy.get('id', 'visual-asset-medium-selection'))}"
+        graph.add_node(OntologyNode(
+            id=visual_medium_policy_id,
+            type=NodeType.GovernanceRule,
+            label=visual_medium_policy.get("id", "visual asset medium selection"),
+            meta={
+                "rule": visual_medium_policy.get("rule", ""),
+                "directive_overrides": visual_medium_policy.get("directive_overrides", []),
+                "decision_sequence": visual_medium_policy.get("decision_sequence", []),
+                "slot_families": visual_medium_policy.get("slot_families", []),
+                "implementation_rules": visual_medium_policy.get("implementation_rules", []),
+                "outputs": visual_medium_policy.get("outputs", []),
+            },
+        ))
+        if graph.get_node(brand_id):
+            graph.add_edge(OntologyEdge(type=EdgeType.grounded_in, source=visual_medium_policy_id, target=brand_id))
+
+        for target_id in (
+            VISUAL_ASSET_CONTRACT_ID,
+            SOURCED_VISUAL_ASSET_CONTRACT_ID,
+            "identity-asset:app-icon",
+        ):
+            if graph.get_node(target_id):
+                graph.add_edge(OntologyEdge(type=EdgeType.enforces, source=visual_medium_policy_id, target=target_id))
+
+        for pattern in visual_medium_policy.get("failure_patterns", []):
+            pattern_id = f"failure-pattern:{slugify(pattern.get('id', 'visual-asset-medium-failure'))}"
+            graph.add_node(OntologyNode(
+                id=pattern_id,
+                type=NodeType.ImplementationFailurePattern,
+                label=pattern.get("id", "visual asset medium failure"),
+                meta={
+                    "trigger": pattern.get("trigger", ""),
+                    "rule": pattern.get("rule", ""),
+                    "prevention": pattern.get("prevention", ""),
+                    "technical_controls": pattern.get("technical_controls", []),
+                },
+            ))
+            graph.add_edge(OntologyEdge(type=EdgeType.prevents, source=visual_medium_policy_id, target=pattern_id))
 
     if app_icon_policy:
         app_icon_policy_id = f"governance:{slugify(app_icon_policy.get('id', 'brand-app-icon-identity'))}"

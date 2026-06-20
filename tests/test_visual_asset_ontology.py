@@ -14,6 +14,7 @@ from design_ontology_harness.synthesis import (
     MOCKUP_VISUAL_SUBSTANCE_POLICY,
     REFERENCE_ABSORPTION_SCOPE,
     RESPONSIVE_RESILIENCE_POLICY,
+    VISUAL_ASSET_MEDIUM_SELECTION_POLICY,
     discover_brand_identity_assets,
     discover_generated_visual_asset_manifests,
     load_brand_profile,
@@ -119,6 +120,7 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIn("visual-asset:hero-image", {edge.target for edge in governance_edges})
         prevention_edges = graph.get_edges_from("governance:generated-visual-asset-contract", EdgeType.prevents)
         self.assertIn("failure-pattern:generated-image-untracked-asset", {edge.target for edge in prevention_edges})
+        self.assertIn("failure-pattern:wrong-medium-svg-for-narrative-media", {edge.target for edge in prevention_edges})
 
     def test_generated_visual_asset_plan_is_rendered_in_system_spec_sections(self) -> None:
         graph = build_full_ontology_graph(
@@ -147,6 +149,57 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIn("visual-asset-manifest/v1", sections)
         self.assertIn("design-system/generated_visual_assets.json", sections)
         self.assertIn("workspace copy required", sections)
+
+    def test_comic_visual_asset_slots_require_raster_medium(self) -> None:
+        graph = build_full_ontology_graph(
+            brand_profile={"brand_name": "Panel Pop"},
+            blueprint={
+                "principles": [],
+                "governance": {
+                    "visual_asset_medium_selection_policy": VISUAL_ASSET_MEDIUM_SELECTION_POLICY,
+                },
+            },
+            component_inventory={
+                "families": [{"family": "editorial", "components": ["comic-cover", "panel-preview"]}],
+                "components": [
+                    {
+                        "name": "comic-cover",
+                        "family": "editorial",
+                        "role": "Comic magazine cover",
+                        "supports_primitive": "webtoon cover art",
+                    },
+                    {
+                        "name": "panel-preview",
+                        "family": "editorial",
+                        "role": "Manga panel preview",
+                        "supports_primitive": "episode strip",
+                    },
+                ],
+            },
+            token_schema={"categories": {}},
+        )
+
+        cover = graph.get_node("visual-asset:comic-cover")
+        panel = graph.get_node("visual-asset:comic-panel-preview")
+        self.assertIsNotNone(cover)
+        self.assertIsNotNone(panel)
+        self.assertEqual(cover.meta["medium_role"], "high-fidelity-narrative-media")
+        self.assertIn("image_gen", cover.meta["default_acquisition_modes"])
+        self.assertIn("denied", cover.meta["deterministic_svg_allowed"])
+        self.assertEqual(cover.meta["medium_selection_policy_id"], "governance:visual-asset-medium-selection")
+
+        policy = graph.get_node("governance:visual-asset-medium-selection")
+        self.assertIsNotNone(policy)
+        self.assertTrue(any("Comic" in item or "comic" in item for item in policy.meta["implementation_rules"]))
+
+        policy_edges = graph.get_edges_from("governance:visual-asset-medium-selection", EdgeType.enforces)
+        self.assertIn("visual-asset:comic-cover", {edge.target for edge in policy_edges})
+        self.assertIn("visual-asset:comic-panel-preview", {edge.target for edge in policy_edges})
+
+        sections = build_graph_spec_sections(graph)
+        self.assertIn("Medium selection", sections)
+        self.assertIn("high-fidelity-narrative-media", sections)
+        self.assertIn("Comic/manga cover art", sections)
 
     def test_sourced_visual_asset_fallback_is_modeled_with_license_policy(self) -> None:
         graph = build_full_ontology_graph(
@@ -533,6 +586,7 @@ class VisualAssetOntologyTests(unittest.TestCase):
                     "icon_refactor_policy": ICON_REFACTOR_POLICY,
                     "app_icon_identity_policy": APP_ICON_IDENTITY_POLICY,
                     "mockup_visual_substance_policy": MOCKUP_VISUAL_SUBSTANCE_POLICY,
+                    "visual_asset_medium_selection_policy": VISUAL_ASSET_MEDIUM_SELECTION_POLICY,
                     "commercial_product_realism_policy": COMMERCIAL_PRODUCT_REALISM_POLICY,
                     "feedback_promotion_policy": REFERENCE_ABSORPTION_SCOPE["promotion_policy"],
                 },
@@ -598,14 +652,21 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIsNotNone(icon_policy)
         self.assertEqual(icon_policy.type, NodeType.GovernanceRule)
         self.assertIn("button", icon_policy.meta["targets"])
+        self.assertIn("Lucide", icon_policy.meta["quality_floor"]["approved_sources"])
 
         emoji_failure = graph.get_node("failure-pattern:emoji-ui-affordance")
         self.assertIsNotNone(emoji_failure)
         self.assertEqual(emoji_failure.type, NodeType.ImplementationFailurePattern)
         self.assertTrue(any("DS050" in item for item in emoji_failure.meta["technical_controls"]))
 
+        handmade_icon_failure = graph.get_node("failure-pattern:amateur-custom-svg-icon-set")
+        self.assertIsNotNone(handmade_icon_failure)
+        self.assertEqual(handmade_icon_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("DS080" in item for item in handmade_icon_failure.meta["technical_controls"]))
+
         icon_edges = graph.get_edges_from("governance:emoji-to-svg-refactor", EdgeType.prevents)
         self.assertIn("failure-pattern:emoji-ui-affordance", {edge.target for edge in icon_edges})
+        self.assertIn("failure-pattern:amateur-custom-svg-icon-set", {edge.target for edge in icon_edges})
 
         app_icon_policy = graph.get_node("governance:brand-app-icon-identity")
         self.assertIsNotNone(app_icon_policy)
@@ -645,6 +706,34 @@ class VisualAssetOntologyTests(unittest.TestCase):
         visual_edges = graph.get_edges_from("governance:mockup-visual-substance", EdgeType.prevents)
         self.assertIn("failure-pattern:image-free-commercial-mockup", {edge.target for edge in visual_edges})
         self.assertIn("failure-pattern:placeholder-gradient-as-image", {edge.target for edge in visual_edges})
+
+        visual_medium_policy = graph.get_node("governance:visual-asset-medium-selection")
+        self.assertIsNotNone(visual_medium_policy)
+        self.assertEqual(visual_medium_policy.type, NodeType.GovernanceRule)
+        self.assertTrue(any(item["id"] == "user-raster-asset-directive" for item in visual_medium_policy.meta["directive_overrides"]))
+        raster_override = next(
+            item for item in visual_medium_policy.meta["directive_overrides"]
+            if item["id"] == "user-raster-asset-directive"
+        )
+        self.assertEqual(raster_override["required_medium"], "project-local raster image asset")
+        self.assertIn("svg", raster_override["denied_formats"])
+        self.assertTrue(any("Classify the slot" in item for item in visual_medium_policy.meta["decision_sequence"]))
+        self.assertTrue(any(item["id"] == "high-fidelity-narrative-media" for item in visual_medium_policy.meta["slot_families"]))
+        self.assertTrue(any(item["id"] == "user-specified-raster-assets" for item in visual_medium_policy.meta["slot_families"]))
+
+        wrong_medium_failure = graph.get_node("failure-pattern:wrong-medium-svg-for-narrative-media")
+        self.assertIsNotNone(wrong_medium_failure)
+        self.assertEqual(wrong_medium_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("DS079" in item for item in wrong_medium_failure.meta["technical_controls"]))
+
+        raster_directive_failure = graph.get_node("failure-pattern:user-raster-directive-svg-violation")
+        self.assertIsNotNone(raster_directive_failure)
+        self.assertEqual(raster_directive_failure.type, NodeType.ImplementationFailurePattern)
+        self.assertTrue(any("DS081" in item for item in raster_directive_failure.meta["technical_controls"]))
+
+        medium_edges = graph.get_edges_from("governance:visual-asset-medium-selection", EdgeType.prevents)
+        self.assertIn("failure-pattern:wrong-medium-svg-for-narrative-media", {edge.target for edge in medium_edges})
+        self.assertIn("failure-pattern:user-raster-directive-svg-violation", {edge.target for edge in medium_edges})
 
         realism_policy = graph.get_node("governance:commercial-product-realism")
         self.assertIsNotNone(realism_policy)
@@ -700,6 +789,10 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIn("Mockup Visual Substance", sections)
         self.assertIn("image-free-commercial-mockup", sections)
         self.assertIn("placeholder-gradient-as-image", sections)
+        self.assertIn("Visual Asset Medium Selection", sections)
+        self.assertIn("wrong-medium-svg-for-narrative-media", sections)
+        self.assertIn("user-raster-asset-directive", sections)
+        self.assertIn("user-raster-directive-svg-violation", sections)
         self.assertIn("Commercial Product Realism", sections)
         self.assertIn("pitch-deck-dashboard-shell", sections)
         self.assertIn("reference-free-realism-refactor", sections)

@@ -76,6 +76,23 @@ class TypographyGuardrailTests(unittest.TestCase):
             " ".join(font_system["script_guardrails"]["rules"]),
         )
 
+    def test_explicit_font_system_overrides_auto_resolution(self) -> None:
+        profile = _sample_brand_profile()
+        profile["font_system"] = {
+            "heading": {"name": "Space Grotesk", "weights": [500, 600, 700]},
+            "body": {"name": "Inter", "weights": [400, 500, 600]},
+            "mono": {"name": "JetBrains Mono", "weights": [400, 500, 600]},
+            "korean": {"name": "Pretendard", "weights": [400, 500, 600, 700]},
+        }
+
+        font_system = resolve_font_system(profile)
+
+        self.assertEqual(font_system["heading"]["name"], "Space Grotesk")
+        self.assertEqual(font_system["body"]["name"], "Inter")
+        self.assertEqual(font_system["mono"]["name"], "JetBrains Mono")
+        self.assertEqual(font_system["korean"]["name"], "Pretendard")
+        self.assertEqual(font_system["pairing_source"], "manual font_system")
+
     def test_system_spec_and_component_specs_surface_guardrails(self) -> None:
         brand_profile = _sample_brand_profile()
         blueprint = _sample_blueprint()

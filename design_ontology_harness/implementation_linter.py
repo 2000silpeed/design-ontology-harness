@@ -130,6 +130,15 @@ EMOJI_CONTENT_CONTEXT_RE = re.compile(
     r"(?:emoji[-_]?picker|emojiPicker|reaction-data|user-generated|user-content|chat-message|comment-body|blog-body|article-body|markdown|prose)",
     re.IGNORECASE,
 )
+ICON_SPRITE_RE = re.compile(
+    r"<svg\b(?P<attrs>[^>]*class(?:Name)?=['\"][^'\"]*icon-sprite[^'\"]*['\"][^>]*)>(?P<body>.*?)</svg>",
+    re.IGNORECASE | re.DOTALL,
+)
+APPROVED_ICON_SET_RE = re.compile(
+    r"(?:data-icon-set\s*=\s*['\"](?:lucide|heroicons|phosphor|tabler|material|approved-custom)[^'\"]*['\"]|lucide-|heroicon|phosphor|tabler|material-symbol)",
+    re.IGNORECASE,
+)
+ICON_SYMBOL_RE = re.compile(r"<symbol\b[^>]*id=['\"]icon-[^'\"]+['\"]", re.IGNORECASE)
 CARD_PANEL_TOKEN_RE = re.compile(r"\b[a-z0-9_-]*(?:card|panel)[a-z0-9_-]*\b", re.IGNORECASE)
 LAYOUT_DIVERSITY_TOKEN_RE = re.compile(
     r"\b(?:row|table|rail|canvas|map-zone|map-visual|sketch|illustration|figure|media|timeline|split|inspector-rail|list-row|data-table|toolbar|strip|sheet|scene)\b",
@@ -165,6 +174,20 @@ AMBIGUOUS_MOCK_SURFACE_RE = re.compile(
     r"\b(?:schematic|mock-map|mock-visual|placeholder-visual|placeholder-map|도식)\b",
     re.IGNORECASE,
 )
+AD_HOC_NODE_LINK_CLASS_RE = re.compile(
+    r"\b(?:trace-canvas|trace-node|trace-line|graph-node|graph-edge|mock-graph|placeholder-graph|node-link-mini(?:map)?|mini-?map)\b",
+    re.IGNORECASE,
+)
+AD_HOC_NODE_LINK_LAYOUT_RE = re.compile(
+    r"(?:\.(?:trace-node|graph-node|node-link-node)[^{]*\{[^}]*\bposition\s*:\s*absolute\b|"
+    r"\.(?:trace-line|graph-edge|node-link-edge)[^{]*\{[^}]*\btransform\s*:\s*rotate\s*\(|"
+    r"\.(?:trace-line|graph-edge|node-link-edge)[^{]*\{[^}]*\bheight\s*:\s*2px\b)",
+    re.IGNORECASE | re.DOTALL,
+)
+AD_HOC_NODE_LINK_LABEL_RE = re.compile(
+    r"\b(?:Answer|CH-\d{2,3}|DOC-[a-z0-9-]+-CH-\d+|별표\s*\d+|하도급법|공정거래법|법령)\b",
+    re.IGNORECASE,
+)
 RUNTIME_SURFACE_MARKER_RE = re.compile(r"\bdata-runtime-surface\s*=", re.IGNORECASE)
 MEDIA_RUNTIME_SURFACE_RE = re.compile(
     r"\bdata-runtime-surface\s*=\s*['\"][^'\"]*(?:media|photo|thumbnail|image|generated|sourced)[^'\"]*['\"]",
@@ -172,6 +195,26 @@ MEDIA_RUNTIME_SURFACE_RE = re.compile(
 )
 MEDIA_ASSET_RE = re.compile(
     r"(?:<(?:img|picture|video|source)\b|url\(\s*['\"]?[^'\"\)]*\.(?:png|jpe?g|webp|avif|gif))",
+    re.IGNORECASE,
+)
+SVG_MEDIA_ASSET_RE = re.compile(
+    r"<(?P<tag>img|source)\b(?P<attrs>[^>]*(?:src|srcset)\s*=\s*['\"][^'\"]+\.svg(?:#[^'\"]*)?[^'\"]*['\"][^>]*)>",
+    re.IGNORECASE | re.DOTALL,
+)
+NARRATIVE_MEDIA_CONTEXT_RE = re.compile(
+    r"(?:comic|manga|webtoon|toon|cover|panel|strip|episode|chapter|story|character|poster|editorial|article|magazine|issue|reader|만화|웹툰|표지|컷|회차|연재|캐릭터|잡지)",
+    re.IGNORECASE,
+)
+SVG_MEDIUM_ALLOWED_CONTEXT_RE = re.compile(
+    r"(?:app-icon|favicon|logo|brand-mark|icon|flag|diagram|chart|map|schematic|glyph|ui-icon|mask-icon|rel=['\"]icon)",
+    re.IGNORECASE,
+)
+RASTER_ONLY_DIRECTIVE_RE = re.compile(
+    r"(?:no[-_\s]?svg|svg\s*(?:금지|없이|만들지\s*말고)|raster[-_\s]?only|래스터|비트맵|실제\s*(?:그림|이미지)\s*파일|png|webp|jpe?g)",
+    re.IGNORECASE,
+)
+SVG_USAGE_RE = re.compile(
+    r"(?:<svg\b|</svg>|<symbol\b|<use\b|use\s+href=|image/svg\+xml|(?:src|href|url\()\s*=\s*['\"]?[^'\"\)]*\.svg\b|\.svg\b)",
     re.IGNORECASE,
 )
 MEDIA_TILE_RE = re.compile(
@@ -200,7 +243,12 @@ VISUAL_SUBJECT_KEYWORDS = {
     "commerce",
     "portfolio",
     "article",
+    "comic",
     "editorial",
+    "manga",
+    "webtoon",
+    "magazine",
+    "story",
     "game",
     "sports",
     "team",
@@ -221,6 +269,12 @@ VISUAL_SUBJECT_KEYWORDS = {
     "사진",
     "도식",
     "콘텐츠",
+    "만화",
+    "웹툰",
+    "잡지",
+    "표지",
+    "연재",
+    "회차",
     "경기",
     "팀",
 }
@@ -524,6 +578,33 @@ def _lint_project_composition(
             )
         )
 
+    if RASTER_ONLY_DIRECTIVE_RE.search(combined):
+        svg_usage = _find_svg_usage_under_raster_directive(combined)
+        if svg_usage:
+            issues.append(
+                _issue(
+                    "DS081",
+                    first_ui_path,
+                    1,
+                    1,
+                    "Raster-only/no-SVG medium directive is active, but the implementation still contains SVG usage; replace affected assets with project-local PNG/WebP/JPEG files and record the medium decision.",
+                    svg_usage[0],
+                )
+            )
+
+    ad_hoc_node_link = _find_ad_hoc_node_link_placeholder(combined)
+    if ad_hoc_node_link:
+        issues.append(
+            _issue(
+                "DS082",
+                first_ui_path,
+                1,
+                1,
+                "Ad-hoc node-link placeholder graph detected; replace hand-positioned nodes/rotated lines with a real chart/graph library, a semantic table/ledger, or a polished data visualization with labels and runtime data.",
+                ad_hoc_node_link[0],
+            )
+        )
+
     if not (target / artifact_dir).exists():
         return issues
 
@@ -601,6 +682,30 @@ def _lint_project_composition(
                     "data-runtime-surface media/photo without <img>, <picture>, <video>, or image url(...) asset",
                 )
             )
+        wrong_medium_media = _find_wrong_medium_svg_media(combined)
+        if wrong_medium_media:
+            issues.append(
+                _issue(
+                    "DS079",
+                    first_ui_path,
+                    1,
+                    1,
+                    "Narrative/content media slot uses an SVG asset; comic, manga, webtoon, story, character, editorial-cover, and panel-preview slots need image_gen, user-supplied, sourced, or approved high-fidelity artwork.",
+                    wrong_medium_media[0],
+                )
+            )
+        handmade_icon_sprite = _find_undeclared_icon_sprite(combined)
+        if handmade_icon_sprite:
+            issues.append(
+                _issue(
+                    "DS080",
+                    first_ui_path,
+                    1,
+                    1,
+                    "Inline icon sprite does not declare an approved icon set or custom icon grammar; use a known icon library such as Lucide/Heroicons/Phosphor/Tabler/Material or document the sprite as approved-custom.",
+                    handmade_icon_sprite[0],
+                )
+            )
         empty_media_tiles = _find_media_tiles_without_assets(combined)
         if empty_media_tiles:
             issues.append(
@@ -636,6 +741,70 @@ def _find_media_tiles_without_assets(text: str) -> list[str]:
         if MEDIA_ASSET_RE.search(block) or EXPLICIT_EMPTY_STATE_RE.search(block):
             continue
         snippets.append(_single_line_snippet(block))
+    return snippets
+
+
+def _find_ad_hoc_node_link_placeholder(text: str) -> list[str]:
+    """Detect hand-drawn node/edge diagrams that read as placeholder graphs.
+
+    This intentionally requires both graph-like class names and absolute/rotated
+    layout mechanics so real tables, ledgers, SVG charts, canvas charts, or
+    library-rendered graph containers are not blocked by a generic "graph" word.
+    """
+
+    class_hits = {hit.lower() for hit in AD_HOC_NODE_LINK_CLASS_RE.findall(text)}
+    if len(class_hits) < 2:
+        return []
+    layout_match = AD_HOC_NODE_LINK_LAYOUT_RE.search(text)
+    if not layout_match:
+        return []
+    label_match = AD_HOC_NODE_LINK_LABEL_RE.search(text)
+    snippet_start = layout_match.start()
+    snippet_end = min(len(text), layout_match.end() + 220)
+    snippet = _single_line_snippet(text[snippet_start:snippet_end], limit=240)
+    if label_match:
+        label_context_start = max(0, label_match.start() - 80)
+        label_context_end = min(len(text), label_match.end() + 80)
+        snippet = _single_line_snippet(
+            f"{text[label_context_start:label_context_end]} {text[snippet_start:snippet_end]}",
+            limit=240,
+        )
+    return [snippet]
+
+
+def _find_svg_usage_under_raster_directive(text: str) -> list[str]:
+    snippets: list[str] = []
+    for match in SVG_USAGE_RE.finditer(text):
+        snippets.append(_single_line_snippet(match.group(0)))
+    return snippets
+
+
+def _find_wrong_medium_svg_media(text: str) -> list[str]:
+    snippets: list[str] = []
+    for match in SVG_MEDIA_ASSET_RE.finditer(text):
+        attrs = match.group("attrs")
+        context_start = max(0, match.start() - 220)
+        context_end = min(len(text), match.end() + 220)
+        context = f"{attrs} {text[context_start:context_end]}"
+        if SVG_MEDIUM_ALLOWED_CONTEXT_RE.search(context):
+            continue
+        if not NARRATIVE_MEDIA_CONTEXT_RE.search(context):
+            continue
+        snippets.append(_single_line_snippet(match.group(0)))
+    return snippets
+
+
+def _find_undeclared_icon_sprite(text: str) -> list[str]:
+    snippets: list[str] = []
+    for match in ICON_SPRITE_RE.finditer(text):
+        block = match.group(0)
+        attrs = match.group("attrs")
+        symbol_count = len(ICON_SYMBOL_RE.findall(block))
+        if symbol_count < 4:
+            continue
+        if APPROVED_ICON_SET_RE.search(attrs) or APPROVED_ICON_SET_RE.search(block):
+            continue
+        snippets.append(_single_line_snippet(block, limit=220))
     return snippets
 
 

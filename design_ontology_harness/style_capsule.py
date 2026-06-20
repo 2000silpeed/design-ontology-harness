@@ -145,6 +145,7 @@ def render_style_markdown(
             app_mode=app_mode,
         )
     )
+    lines.extend(_design_context_section(blueprint=blueprint))
     lines.extend(_reference_governance_section(blueprint=blueprint))
     lines.extend(_agent_preflight_section())
     return "\n".join(lines).rstrip() + "\n"
@@ -453,6 +454,65 @@ def _advanced_component_rows(component_inventory: dict[str, Any]) -> list[str]:
     return rows
 
 
+def _design_context_section(*, blueprint: dict[str, Any]) -> list[str]:
+    pack = blueprint.get("design_context_pack") if isinstance(blueprint.get("design_context_pack"), dict) else {}
+    lines = ["## Design Context Pack"]
+    if not pack:
+        lines += [
+            "- No provider-neutral design context pack found. Use external references only after reading `system_spec.md`.",
+            "",
+        ]
+        return lines
+
+    lines.append(f"- activation: `{_first_str(pack.get('activation_state'), 'planned')}`")
+    providers = pack.get("providers") if isinstance(pack.get("providers"), list) else []
+    if providers:
+        provider_bits = []
+        for provider in providers[:5]:
+            if not isinstance(provider, dict):
+                continue
+            provider_bits.append(
+                f"`{_first_str(provider.get('provider_id'), 'provider')}`={_first_str(provider.get('status'), 'n/a')}"
+            )
+        if provider_bits:
+            lines.append(f"- providers: {', '.join(provider_bits)}")
+
+    flows = pack.get("flow_index") if isinstance(pack.get("flow_index"), list) else []
+    if flows:
+        flow_bits = []
+        for item in flows[:6]:
+            if not isinstance(item, dict):
+                continue
+            status = _first_str(item.get("status"), "n/a")
+            flow_bits.append(f"{_first_str(item.get('flow'), 'flow')}({status})")
+        if flow_bits:
+            lines.append(f"- flow coverage: {', '.join(flow_bits)}")
+
+    cards = pack.get("context_cards") if isinstance(pack.get("context_cards"), list) else []
+    if cards:
+        lines += [
+            "| Context | Provider | Allowed Use |",
+            "| --- | --- | --- |",
+        ]
+        for card in cards[:4]:
+            if not isinstance(card, dict):
+                continue
+            context = _escape_pipe(_first_str(card.get("label"), card.get("context_id"), "context"))
+            provider = _escape_pipe(_first_str(card.get("provider_id"), "provider"))
+            morphology = _escape_pipe(_inline_list(_list_of_str(card.get("morphology")), 3))
+            flows = _escape_pipe(_inline_list(_list_of_str(card.get("flows")), 3))
+            lines.append(f"| {context} | `{provider}` | morphology: {morphology}; flows: {flows} |")
+
+    gaps = pack.get("research_gaps") if isinstance(pack.get("research_gaps"), list) else []
+    for gap in gaps[:2]:
+        if isinstance(gap, dict):
+            lines.append(
+                f"- research gap `{gap.get('id', 'gap')}`: {_sentence(_first_str(gap.get('recommended_action'), gap.get('detail'), 'Collect stronger references.'))}"
+            )
+    lines.append("")
+    return lines
+
+
 def _reference_governance_section(*, blueprint: dict[str, Any]) -> list[str]:
     governance = blueprint.get("governance") if isinstance(blueprint.get("governance"), dict) else {}
     guardrails = _list_of_str(governance.get("implementation_guardrails"))
@@ -471,6 +531,26 @@ def _reference_governance_section(*, blueprint: dict[str, Any]) -> list[str]:
     if guardrails:
         lines.append("- implementation guardrails:")
         for item in guardrails[:6]:
+            lines.append(f"  - {_sentence(item)}")
+    medium_policy = governance.get("visual_asset_medium_selection_policy")
+    if isinstance(medium_policy, dict):
+        rule = _first_str(medium_policy.get("rule"), "")
+        if rule:
+            lines.append(f"- visual asset medium selection: {_sentence(rule)}")
+        overrides = medium_policy.get("directive_overrides")
+        if isinstance(overrides, list):
+            for override in overrides[:2]:
+                if not isinstance(override, dict):
+                    continue
+                required = _first_str(override.get("required_medium"), "")
+                denied = _list_of_str(override.get("denied_formats"))
+                triggers = _list_of_str(override.get("trigger_phrases"))
+                if required:
+                    lines.append(
+                        f"  - medium override `{override.get('id', 'medium-override')}`: "
+                        f"{_sentence(required)}; denied {_inline_list(denied, 4)}; triggers {_inline_list(triggers, 4)}"
+                    )
+        for item in _list_of_str(medium_policy.get("implementation_rules"))[:3]:
             lines.append(f"  - {_sentence(item)}")
     for pattern in failure_patterns[:2]:
         if not isinstance(pattern, dict):

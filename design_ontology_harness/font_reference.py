@@ -695,6 +695,8 @@ PROVEN_PAIRINGS: list[dict] = [
 # ──────────────────────────────────────────────
 
 def resolve_font_system(brand_profile: dict) -> dict:
+    explicit_system = brand_profile.get("font_system")
+    explicit_system = explicit_system if isinstance(explicit_system, dict) else {}
     brand_keywords = [kw.lower() for kw in brand_profile.get("brand_keywords", [])]
     anti_keywords = [kw.lower() for kw in brand_profile.get("anti_keywords", [])]
     platforms = [p.lower() for p in brand_profile.get("platforms", ["web"])]
@@ -718,6 +720,18 @@ def resolve_font_system(brand_profile: dict) -> dict:
         heading_font = _get_font(pairing["heading"]) or heading_font
         body_font = _get_font(pairing["body"]) or body_font
 
+    explicit_heading = _explicit_font(explicit_system, "heading")
+    explicit_body = _explicit_font(explicit_system, "body")
+    explicit_mono = _explicit_font(explicit_system, "mono")
+    explicit_korean = _explicit_font(explicit_system, "korean")
+    explicit_any = any([explicit_heading, explicit_body, explicit_mono, explicit_korean])
+    if explicit_heading:
+        heading_font = explicit_heading
+    if explicit_body:
+        body_font = explicit_body
+    if explicit_mono:
+        mono_font = explicit_mono
+
     korean_font = _pick_korean_font(
         body_font,
         heading_font,
@@ -725,6 +739,8 @@ def resolve_font_system(brand_profile: dict) -> dict:
         product_type=product_type,
         brand_keywords=brand_keywords,
     )
+    if explicit_korean:
+        korean_font = explicit_korean
     type_scale = _pick_type_scale(product_type, brand_keywords)
     line_height = _pick_line_height(brand_keywords)
 
@@ -782,7 +798,7 @@ def resolve_font_system(brand_profile: dict) -> dict:
         "line_height_preset": line_height,
         "product_type_detected": product_type,
         "needs_korean": needs_korean,
-        "pairing_source": pairing.get("context") if pairing else "auto-scored",
+        "pairing_source": "manual font_system" if explicit_any else pairing.get("context") if pairing else "auto-scored",
         "strategy": _build_strategy_notes(heading_font, body_font, mono_font, korean_font, brand_keywords, product_type),
         "loading": _build_loading_strategy(heading_font, body_font, mono_font, korean_font, platforms),
         "pitfall_warnings": pitfall_warnings,
@@ -797,6 +813,66 @@ def resolve_font_system(brand_profile: dict) -> dict:
         ),
     }
     return result
+
+
+def _explicit_font(font_system: dict, role: str) -> dict | None:
+    entry = font_system.get(role)
+    if not entry:
+        return None
+    if isinstance(entry, str):
+        name = entry
+        weights = None
+        note = ""
+    elif isinstance(entry, dict):
+        name = entry.get("name") or entry.get("font") or entry.get("family_name")
+        weights = entry.get("weights")
+        note = entry.get("notes") or entry.get("note") or ""
+    else:
+        return None
+    if not isinstance(name, str) or not name.strip():
+        return None
+
+    base = _get_font(name.strip())
+    if base:
+        font = dict(base)
+    else:
+        font = _custom_font(name.strip(), role)
+    if weights:
+        font["weight_range"] = _format_weight_range(weights)
+    if note:
+        font["note"] = note
+    return font
+
+
+def _custom_font(name: str, role: str) -> dict:
+    if role == "mono":
+        family = "monospace"
+        personality = ["precise", "technical"]
+    elif role == "korean":
+        family = "humanist-sans"
+        personality = ["readable", "professional"]
+    else:
+        family = "geometric-sans" if role == "heading" else "humanist-sans"
+        personality = ["custom", "professional"]
+    return {
+        "name": name,
+        "family": family,
+        "personality": personality,
+        "best_for": [],
+        "weight_range": "400-700",
+        "variable": False,
+        "source": "brand_profile.font_system",
+        "note": "Explicitly configured in brand_profile.font_system.",
+    }
+
+
+def _format_weight_range(weights: object) -> str:
+    if isinstance(weights, list) and weights:
+        values = [str(weight) for weight in weights]
+        return "-".join([values[0], values[-1]]) if len(values) > 1 else values[0]
+    if isinstance(weights, str):
+        return weights
+    return "400-700"
 
 
 def _infer_product_type(summary: str, keywords: list[str], visual_kw: list[str]) -> str:

@@ -3,6 +3,7 @@ import unittest
 from design_ontology_harness.authoring import build_component_inventory
 from design_ontology_harness.advanced_components import recommend_advanced_components
 from design_ontology_harness.component_specs import generate_component_specs
+from design_ontology_harness.synthesis import RESPONSIVE_RESILIENCE_POLICY
 
 
 class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
@@ -74,6 +75,8 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
         button_aspects = {note["aspect"] for note in by_name["primary-button"]["visual_adaptation"]}
         self.assertIn("cta_prominence", button_aspects)
         self.assertEqual(by_name["primary-button"]["anatomy"]["parts"][0], "container")
+        self.assertEqual(by_name["primary-button"]["tokens"]["max-inline-size"], "100%")
+        self.assertEqual(by_name["primary-button"]["tokens"]["min-inline-size"], "0")
 
         nav_aspects = {note["aspect"] for note in by_name["site-nav"]["visual_adaptation"]}
         self.assertIn("filter_nav_density", nav_aspects)
@@ -162,6 +165,35 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
         self.assertEqual(policy_matrix["archetype"], "advanced:policy-matrix")
         self.assertIn("status-cell", policy_matrix["anatomy"]["parts"])
         self.assertIn("caption describes policy scope", policy_matrix["accessibility"])
+
+    def test_responsive_guidance_flows_into_button_specs(self) -> None:
+        brand_profile = {
+            "brand_name": "TacticLens",
+            "brand_keywords": ["precise"],
+            "anti_keywords": [],
+        }
+        blueprint = {
+            "governance": {
+                "responsive_resilience_policy": RESPONSIVE_RESILIENCE_POLICY,
+            }
+        }
+        component_list = [
+            {"name": "primary-button", "family": "button", "role": "Primary CTA", "source": "spec"},
+        ]
+
+        specs_data = generate_component_specs(
+            brand_profile=brand_profile,
+            blueprint=blueprint,
+            component_list=component_list,
+            documents=[],
+        )
+
+        self.assertTrue(specs_data["responsive_guidance"]["active"])
+        self.assertIn(320, specs_data["responsive_guidance"]["required_widths_px"])
+        button = specs_data["specs"][0]
+        notes = " ".join(button["implementation_notes"])
+        self.assertIn("max-inline-size: 100%", notes)
+        self.assertIn("fixed `width`/`min-width`", notes)
 
 
 if __name__ == "__main__":

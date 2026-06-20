@@ -327,8 +327,11 @@ When refactoring existing UI, do not merely report emoji UI affordances. Replace
 
 - Scan buttons, cards, badges, tabs, nav items, status indicators, empty states, toasts, and banners for emoji-looking icons or visual markers.
 - Prefer the project's existing icon library when it is already installed and visually compatible.
+- Prefer approved icon systems such as Lucide, Heroicons, Phosphor, Tabler, Material Symbols, or the existing project icon library over handmade path sprites.
 - Reuse existing local SVG/icon components when available.
-- If no suitable icon exists, create a simple local SVG file or SVG component in the nearest existing icons/assets directory.
+- If no suitable icon exists, create a local SVG file or SVG component in the nearest existing icons/assets directory and document its icon grammar.
+- A custom icon sprite must declare its source or approved grammar, such as `data-icon-set="lucide"` or `data-icon-set="approved-custom"`.
+- Keep one icon grammar across the UI: consistent grid, stroke weight, caps, joins, optical size, and active/inactive treatment.
 - Bind SVG stroke/fill to `currentColor` or design tokens, not hard-coded colors.
 - Decorative icons use `aria-hidden="true"`; semantic icons need an accessible label or adjacent visible text.
 - Do not replace user-generated emoji content, chat text, blog body, or emoji-picker data.
@@ -795,7 +798,7 @@ These artifacts are your source of truth. If any core file is missing, report wh
 2. **Hardcoded tokens**: colors (#hex, rgb, tailwind color classes), spacing (px values not on scale), font sizes, border-radius, shadows → replace with semantic tokens
 3. **Missing component states**: components that lack states defined in the spec (disabled, loading, error, hover, focus)
 4. **Missing anatomy parts**: components missing required parts from the spec (e.g., button without loading spinner slot)
-5. **Emoji UI affordances**: emoji glyphs used as button/card/badge/status/nav icons → replace with SVG files/components or an approved icon library
+5. **Icon quality**: emoji glyphs or handmade path sprites used as button/card/badge/status/nav icons → replace with SVG files/components from an approved icon library, or document an approved custom icon grammar
 6. **Brand misalignment**: visual patterns that conflict with brand keywords or match anti-keywords
 
 {_emoji_to_svg_refactor_guidance()}
@@ -1243,6 +1246,7 @@ Generate imagery for:
 - product, venue, object, or media cards that benefit from real visual substance
 - empty states, onboarding panels, or feature sections where illustration clarifies the product
 - case-study or article covers where the system spec calls for editorial treatment
+- comic, manga, webtoon, story, character, cover, and panel-preview slots where readers expect polished artwork
 - sports, travel, food, real-estate, portfolio, game, commerce, and brand/product mockups where visual subject matter makes the screen feel complete
 
 Do not generate imagery for:
@@ -1250,6 +1254,7 @@ Do not generate imagery for:
 - icons, logos, button glyphs, tabs, toggles, or status markers
 - app icons, favicons, or app-shell brand marks; these are deterministic brand identity assets, not generated raster imagery
 - components that should be built with CSS, SVG primitives, or an icon library
+- comic covers, manga/webtoon panel previews, story scenes, editorial covers, or inspectable content media that would be reduced to rough inline SVG geometry
 - dashboard/tool/data-product first viewports where users need tables, schedules, filters, live state, or provenance before decorative visuals
 - copyrighted characters, real brands, real people, or identifiable private locations unless the user explicitly provided licensed source material
 - purely atmospheric blurred backgrounds that do not reveal the product, state, place, or object
@@ -1263,6 +1268,14 @@ Do not generate imagery for:
 5. If no image path can meet the manifest and license contract, leave a prompt/candidate pack and report why imagery was not integrated; do not silently ship an image-free mockup.
 
 Never switch to CLI, SDK runner, or OpenAI image API fallback unless the user explicitly asks for that different path.
+
+## Medium Selection Contract
+
+- Classify each visual slot as identity/icon, control glyph, diagram/data, factual real-world media, narrative/content media, or decorative support before authoring an asset.
+- Narrative/content media such as comic covers, manga/webtoon panels, character/story scenes, editorial covers, portfolio artwork, and game scenes should use `image_gen`, user-supplied art, sourced licensed art, or an already approved high-fidelity asset.
+- Deterministic SVG is the right tool for app icons, logos, flags, UI glyphs, charts, diagrams, maps, schematics, and semantic product illustrations where vector geometry is the real runtime representation.
+- Do not substitute inline SVG because it is faster. A geometric or rough SVG in a cover/panel/story-media slot is a wrong-medium failure, not a valid style variant.
+- If a narrative/content slot intentionally uses vector artwork, document why it is production-grade artwork rather than a placeholder and record the medium decision.
 
 ## Codex Imagegen Workflow
 
