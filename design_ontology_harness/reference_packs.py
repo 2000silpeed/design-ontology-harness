@@ -22,7 +22,7 @@ PACK_SCHEMA_VERSION = "visual-reference-pack/v1"
 SELECTION_SCHEMA_VERSION = "visual-reference-pack-selection/v1"
 MANAGED_PROVIDER_ID = "visual-reference-pack"
 
-IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".svg"}
+IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".svg", ".avif"}
 
 ASSET_COLUMNS = (
     "asset_id",
@@ -819,7 +819,7 @@ def _crawl_pages(source_urls: list[str], *, crawl_depth: int, max_pages: int) ->
 
 
 def _iter_page_image_urls(pages: dict[str, str]) -> list[tuple[str, str]]:
-    pairs: list[tuple[str, str]] = []
+    per_page_pairs: list[list[tuple[str, str]]] = []
     seen: set[str] = set()
     for page_url, html in pages.items():
         soup = BeautifulSoup(html, "html.parser")
@@ -834,6 +834,7 @@ def _iter_page_image_urls(pages: dict[str, str]) -> list[tuple[str, str]]:
                 raw = str(image["srcset"]).split(",")[0].strip().split(" ")[0]
             if raw:
                 candidates.append(str(raw))
+        page_pairs: list[tuple[str, str]] = []
         for raw in candidates:
             image_url = urljoin(page_url, raw)
             if image_url in seen:
@@ -842,7 +843,16 @@ def _iter_page_image_urls(pages: dict[str, str]) -> list[tuple[str, str]]:
             if parsed.scheme not in {"http", "https"}:
                 continue
             seen.add(image_url)
-            pairs.append((page_url, image_url))
+            page_pairs.append((page_url, image_url))
+        if page_pairs:
+            per_page_pairs.append(page_pairs)
+
+    pairs: list[tuple[str, str]] = []
+    max_page_candidates = max((len(page_pairs) for page_pairs in per_page_pairs), default=0)
+    for index in range(max_page_candidates):
+        for page_pairs in per_page_pairs:
+            if index < len(page_pairs):
+                pairs.append(page_pairs[index])
     return pairs
 
 
@@ -865,13 +875,16 @@ def _download_asset(*, url: str, pack_dir: Path, provider_id: str, fallback_name
     parsed = urlparse(url)
     suffix = Path(parsed.path).suffix.lower()
     if suffix not in IMAGE_EXTENSIONS:
-        suffix = ".bin"
-    file_name = f"{slugify(fallback_name)[:64] or 'asset'}__{hashlib.sha256(url.encode()).hexdigest()[:12]}{suffix}"
-    target = assets_dir / file_name
+        suffix = ""
+    stem = f"{slugify(fallback_name)[:64] or 'asset'}__{hashlib.sha256(url.encode()).hexdigest()[:12]}"
+    target = assets_dir / f"{stem}{suffix or '.bin'}"
     if not target.exists():
         with httpx.Client(timeout=20.0, follow_redirects=True) as client:
             response = client.get(url)
             response.raise_for_status()
+            inferred_suffix = _extension_from_content_type(response.headers.get("content-type"))
+            if not suffix and inferred_suffix:
+                target = assets_dir / f"{stem}{inferred_suffix}"
             target.write_bytes(response.content)
     return _relative_or_absolute(target, pack_dir), target
 
@@ -1232,11 +1245,27 @@ def _mime_type(path: Path) -> str | None:
         return "image/webp"
     if suffix == ".svg":
         return "image/svg+xml"
+    if suffix == ".avif":
+        return "image/avif"
     if suffix == ".gif":
         return "image/gif"
     if suffix == ".bmp":
         return "image/bmp"
     return None
+
+
+def _extension_from_content_type(content_type: str | None) -> str | None:
+    normalized = (content_type or "").split(";", 1)[0].strip().lower()
+    return {
+        "image/jpeg": ".jpg",
+        "image/jpg": ".jpg",
+        "image/png": ".png",
+        "image/webp": ".webp",
+        "image/gif": ".gif",
+        "image/svg+xml": ".svg",
+        "image/avif": ".avif",
+        "image/bmp": ".bmp",
+    }.get(normalized)
 
 
 def _sha256(path: Path) -> str:

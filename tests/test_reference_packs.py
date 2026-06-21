@@ -10,6 +10,7 @@ from design_ontology_harness.reference_packs import (
     select_visual_references,
     sync_reference_pack_sources,
 )
+from design_ontology_harness import reference_packs
 
 
 class ReferencePackTests(unittest.TestCase):
@@ -145,6 +146,37 @@ class ReferencePackTests(unittest.TestCase):
             self.assertEqual(len(packs), 1)
             self.assertEqual(packs[0]["pack_id"], "dashboard-pack")
             self.assertEqual(packs[0]["asset_count"], 1)
+
+    def test_web_page_image_urls_round_robin_across_sources(self) -> None:
+        pages = {
+            "https://source-a.example/gallery": """
+                <html><body>
+                  <img src="/a-one.jpg">
+                  <img src="/a-two.jpg">
+                </body></html>
+            """,
+            "https://source-b.example/gallery": """
+                <html><body>
+                  <img src="/b-one.jpg">
+                </body></html>
+            """,
+        }
+
+        pairs = reference_packs._iter_page_image_urls(pages)
+
+        self.assertEqual(
+            pairs,
+            [
+                ("https://source-a.example/gallery", "https://source-a.example/a-one.jpg"),
+                ("https://source-b.example/gallery", "https://source-b.example/b-one.jpg"),
+                ("https://source-a.example/gallery", "https://source-a.example/a-two.jpg"),
+            ],
+        )
+
+    def test_content_type_extension_inference(self) -> None:
+        self.assertEqual(reference_packs._extension_from_content_type("image/jpeg; charset=utf-8"), ".jpg")
+        self.assertEqual(reference_packs._extension_from_content_type("image/avif"), ".avif")
+        self.assertIsNone(reference_packs._extension_from_content_type("text/html"))
 
 
 def _write_image(path: Path, payload: bytes) -> None:

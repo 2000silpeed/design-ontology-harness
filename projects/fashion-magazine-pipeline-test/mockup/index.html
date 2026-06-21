@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mode Signal Fashion Magazine Mockup</title>
+  <style>
+    :root {
+      --canvas: #f7f8fa;
+      --paper: #ffffff;
+      --ink: #10131a;
+      --ink-soft: #4b5563;
+      --line: #d7dce4;
+      --line-strong: #aeb7c4;
+      --oxblood: #7f1734;
+      --ruby: #bd2e4a;
+      --moss: #27503d;
+      --blue: #0f4c81;
+      --amber: #ffbf00;
+      --ice: #d6eaf8;
+      --radius: 8px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--canvas);
+      letter-spacing: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--canvas);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .masthead {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(247, 248, 250, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .masthead-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 16px 28px 12px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .brand-row,
+    .section-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--ink);
+      display: grid;
+      place-items: center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      font-weight: 700;
+      background: var(--paper);
+    }
+
+    .brand-name {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 4vw, 52px);
+      line-height: 0.92;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .issue-meta {
+      color: var(--ink-soft);
+      font-size: 12px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .nav button,
+    .chip,
+    .icon-button,
+    .save-button,
+    .text-button {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 36px;
+      border-radius: 999px;
+      padding: 0 13px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .nav button[aria-pressed="true"],
+    .chip[aria-pressed="true"] {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--paper);
+    }
+
+    .tools {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .search {
+      width: min(300px, 34vw);
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 14px;
+      background: var(--paper);
+      min-width: 160px;
+    }
+
+    .page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 22px 28px 36px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 22px;
+    }
+
+    .main-flow {
+      display: grid;
+      gap: 22px;
+      min-width: 0;
+    }
+
+    .edition-strip {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 12px 0;
+      border-top: 2px solid var(--ink);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .edition-strip strong {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(22px, 3vw, 36px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .edition-strip span {
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .hero-media,
+    .story-media,
+    .rail-media {
+      background: #e8ecf1;
+      overflow: hidden;
+    }
+
+    .hero-media {
+      min-height: 560px;
+      position: relative;
+      border: 1px solid var(--line);
+    }
+
+    .hero-media img,
+    .story-media img,
+    .rail-media img,
+    .spotlight img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-copy {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 28px;
+      color: var(--paper);
+      background: linear-gradient(0deg, rgba(16, 19, 26, 0.88), rgba(16, 19, 26, 0));
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      background: var(--amber);
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .hero-copy h1 {
+      max-width: 760px;
+      margin: 14px 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(38px, 6vw, 76px);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .hero-copy p {
+      max-width: 680px;
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.65;
+      color: #eef3f7;
+    }
+
+    .hero-actions {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .text-button.dark {
+      background: var(--paper);
+      color: var(--ink);
+      border-color: var(--paper);
+    }
+
+    .text-button.ghost {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.55);
+      color: var(--paper);
+    }
+
+    .story-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .story-card {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+      min-width: 0;
+    }
+
+    .story-media {
+      aspect-ratio: 4 / 5;
+      border: 1px solid var(--line);
+    }
+
+    .story-card h2,
+    .feed-card h3,
+    .panel h2,
+    .rail-card h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing: 0;
+    }
+
+    .story-card h2 {
+      font-size: 20px;
+      line-height: 1.08;
+    }
+
+    .story-card p,
+    .feed-card p,
+    .panel p,
+    .rail-card p {
+      margin: 7px 0 0;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .story-meta,
+    .feed-meta,
+    .rail-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+      color: var(--oxblood);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 4px 0 2px;
+    }
+
+    .rail-section {
+      display: grid;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--line-strong);
+      padding-bottom: 10px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+
+    .rail-controls {
+      display: flex;
+      gap: 6px;
+    }
+
+    .icon-button {
+      width: 38px;
+      padding: 0;
+      border-radius: 999px;
+    }
+
+    .rail {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(220px, 260px);
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 8px;
+    }
+
+    .rail-card {
+      scroll-snap-align: start;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      min-width: 0;
+    }
+
+    .rail-media {
+      aspect-ratio: 4 / 5;
+    }
+
+    .rail-card .copy,
+    .feed-card .copy {
+      padding: 12px;
+    }
+
+    .rail-card h3 {
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .content-grid.compact {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .feed-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      min-width: 0;
+    }
+
+    .feed-card .story-media {
+      aspect-ratio: 4 / 3;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .feed-card h3 {
+      font-size: 22px;
+      line-height: 1.08;
+    }
+
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .save-button[aria-pressed="true"] {
+      border-color: var(--moss);
+      color: var(--moss);
+      background: #eef6f3;
+    }
+
+    .aside {
+      display: grid;
+      gap: 16px;
+      align-self: start;
+      position: sticky;
+      top: 128px;
+      min-width: 0;
+    }
+
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 16px;
+    }
+
+    .panel h2 {
+      font-size: 24px;
+      line-height: 1.05;
+    }
+
+    .trend-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .trend-item {
+      display: grid;
+      gap: 6px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .trend-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .meter {
+      height: 6px;
+      background: #e4e7ec;
+      overflow: hidden;
+    }
+
+    .meter span {
+      display: block;
+      height: 100%;
+      background: var(--ruby);
+    }
+
+    .newsletter {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .newsletter input {
+      height: 40px;
+      border: 1px solid var(--line);
+      padding: 0 12px;
+      min-width: 0;
+    }
+
+    .newsletter button {
+      height: 40px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+      font-weight: 800;
+    }
+
+    .live-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .live-list div {
+      display: grid;
+      grid-template-columns: 56px minmax(0, 1fr);
+      gap: 8px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+    }
+
+    .live-list time {
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    .status {
+      min-height: 20px;
+      color: var(--moss);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--amber);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 1160px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+
+      .aside {
+        position: static;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .masthead-inner,
+      .page {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .brand-row,
+      .section-row,
+      .edition-strip {
+        align-items: stretch;
+        flex-direction: column;
+        display: flex;
+      }
+
+      .brand {
+        justify-content: space-between;
+      }
+
+      .brand-name {
+        white-space: normal;
+        font-size: 34px;
+      }
+
+      .tools {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+
+      .search {
+        width: 100%;
+      }
+
+      .hero-media {
+        min-height: 520px;
+      }
+
+      .hero-copy {
+        padding: 20px;
+      }
+
+      .story-card {
+        grid-template-columns: 92px minmax(0, 1fr);
+      }
+
+      .content-grid,
+      .aside {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="masthead">
+      <div class="masthead-inner">
+        <div class="brand-row">
+          <a class="brand" href="#top" aria-label="Mode Signal home">
+            <span class="brand-mark">M</span>
+            <span class="brand-name">Mode Signal</span>
+          </a>
+          <span class="issue-meta">Digital issue / Fashion week desk / 21 Jun 2026</span>
+        </div>
+        <div class="section-row">
+          <nav class="nav" aria-label="Sections">
+            <button type="button" aria-pressed="true" data-nav="Today">Today</button>
+            <button type="button" aria-pressed="false" data-nav="Runway">Runway</button>
+            <button type="button" aria-pressed="false" data-nav="Trends">Trends</button>
+            <button type="button" aria-pressed="false" data-nav="Beauty">Beauty</button>
+            <button type="button" aria-pressed="false" data-nav="Shopping">Shopping</button>
+            <button type="button" aria-pressed="false" data-nav="Archive">Archive</button>
+          </nav>
+          <div class="tools">
+            <input class="search" type="search" placeholder="Search runway, designer, city" aria-label="Search stories">
+            <button class="text-button" type="button" id="editionButton">Evening edition</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page" id="top">
+      <div class="main-flow">
+        <section class="edition-strip" aria-live="polite">
+          <div>
+            <strong id="editionTitle">Today in fashion: street style overtakes the front row</strong>
+            <span id="editionSummary">18 sourced references shaped this airy editorial feed, runway rail, and image-led story rhythm.</span>
+          </div>
+          <button class="text-button" type="button" id="layoutButton">Compact feed</button>
+        </section>
+
+        <section class="hero-grid" aria-label="Lead package">
+          <article class="hero-media">
+            <img src="https://assets.vogue.com/photos/6a092f97e29af8531d6105c2/4:3/w_1600%2Cc_limit/australianfashionweek_fw26_streetstyle_day5_rachelyabsley03.jpg" alt="Street style portrait used as the lead fashion story">
+            <div class="hero-copy">
+              <span class="kicker">Street Style Index</span>
+              <h1>When the pavement becomes the season's sharpest runway</h1>
+              <p>Editors track the silhouettes, color shocks, and informal uniforms crossing Milan, Tokyo, London, and New York.</p>
+              <div class="hero-actions">
+                <button class="text-button dark" type="button">Read the report</button>
+                <button class="text-button ghost save-button" type="button" aria-pressed="false">Save story</button>
+              </div>
+            </div>
+          </article>
+
+          <div class="story-stack" aria-label="Top stories">
+            <article class="story-card" data-section="Runway">
+              <div class="story-media"><img src="https://assets.vogue.com/photos/6a36ab4198abfca1b3255877/master/w_1280%2Cc_limit/00001-dolce-and-gabbana-spring-2027-menswear-credit-gorunway.jpg" alt="Runway look from a menswear show"></div>
+              <div>
+                <div class="story-meta"><span>Runway</span><span>6 min</span></div>
+                <h2>Dolce and Gabbana opens with a cleaned-up theatrical code</h2>
+                <p>Look one sets the tone for a controlled Milan menswear week.</p>
+              </div>
+            </article>
+            <article class="story-card" data-section="Trends">
+              <div class="story-media"><img src="https://assets.vogue.com/photos/6a187b2b484cb2994d44ac70/3:4/w_1024%2Cc_limit/SummerTrend_Max.jpg" alt="Summer trend editorial image"></div>
+              <div>
+                <div class="story-meta"><span>Trend radar</span><span>4 min</span></div>
+                <h2>The summer silhouette shifts from softness to signal</h2>
+                <p>Color, cut, and texture move from accessory detail to lead story.</p>
+              </div>
+            </article>
+            <article class="story-card" data-section="Shopping">
+              <div class="story-media"><img src="https://assets.vogue.com/photos/69b18f5f5ea9bf1c087b9043/4:3/w_1600%2Cc_limit/PFW_fw26_streetstyle_day8_philoh_07.jpg" alt="Street style look with shopping edit context"></div>
+              <div>
+                <div class="story-meta"><span>Shopping edit</span><span>9 picks</span></div>
+                <h2>What editors are saving from the show-week sidewalks</h2>
+                <p>A practical edit of bags, tailoring, metallics, and flat shoes.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <div class="filter-row" aria-label="Topic filters">
+          <button class="chip" type="button" aria-pressed="true" data-filter="All">All</button>
+          <button class="chip" type="button" aria-pressed="false" data-filter="Fashion Week">Fashion Week</button>
+          <button class="chip" type="button" aria-pressed="false" data-filter="Street Style">Street Style</button>
+          <button class="chip" type="button" aria-pressed="false" data-filter="New Designers">New Designers</button>
+          <button class="chip" type="button" aria-pressed="false" data-filter="Accessories">Accessories</button>
+        </div>
+
+        <section class="rail-section" aria-label="Runway rail">
+          <div class="section-head">
+            <h2>Runway contact sheet</h2>
+            <div class="rail-controls">
+              <button class="icon-button" type="button" id="railPrev" aria-label="Previous looks">&lt;</button>
+              <button class="icon-button" type="button" id="railNext" aria-label="Next looks">&gt;</button>
+            </div>
+          </div>
+          <div class="rail" id="runwayRail">
+            <article class="rail-card" data-section="Runway">
+              <div class="rail-media"><img src="https://assets.vogue.com/photos/6a35b1d71abfb16910dc5af4/master/w_1280%2Cc_limit/00001-ralph-lauren-spring-2027-menswear-credit-gorunway.jpg" alt="Ralph Lauren runway look"></div>
+              <div class="copy"><div class="rail-meta"><span>Look 01</span><span>New York</span></div><h3>American polish, trimmed to a sharper line</h3></div>
+            </article>
+            <article class="rail-card" data-section="Runway">
+              <div class="rail-media"><img src="https://assets.vogue.com/photos/6a341cd2b93067308ab8b737/master/w_1280%2Cc_limit/00001-simone-rocha-spring-2027-menswear-credit-gorunway.jpg" alt="Simone Rocha runway look"></div>
+              <div class="copy"><div class="rail-meta"><span>Look 02</span><span>London</span></div><h3>Romance held inside a stricter silhouette</h3></div>
+            </article>
+            <article class="rail-card" data-section="Runway">
+              <div class="rail-media"><img src="https://assets.vogue.com/photos/6a23d2aab20c74e916a2202b/master/w_1280%2Cc_limit/00001-zegna-spring-2027-menswear-credit-gorunway.jpg" alt="Zegna runway look"></div>
+              <div class="copy"><div class="rail-meta"><span>Look 03</span><span>Milan</span></div><h3>Quiet tailoring builds a warmer menswear language</h3></div>
+            </article>
+            <article class="rail-card" data-section="Street Style">
+              <div class="rail-media"><img src="https://assets.vogue.com/photos/69c160c639ff0f80d93c0c3c/4:3/w_1600%2Cc_limit/TokyoFashionweek_fw26_streetstyle_day6_momoangela_38.jpg" alt="Tokyo fashion week street style"></div>
+              <div class="copy"><div class="rail-meta"><span>Street</span><span>Tokyo</span></div><h3>Sharp color appears as a navigational cue</h3></div>
+            </article>
+            <article class="rail-card" data-section="Street Style">
+              <div class="rail-media"><img src="https://assets.vogue.com/photos/699db86e5991aefb546d408a/4:3/w_1600%2Cc_limit/LFW_FW26_streetstyle_day2philoh_44.jpg" alt="London fashion week street style"></div>
+              <div class="copy"><div class="rail-meta"><span>Street</span><span>London</span></div><h3>Outerwear becomes the headline surface</h3></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="rail-section" aria-label="Latest stories">
+          <div class="section-head">
+            <h2>Latest signals</h2>
+            <span class="issue-meta" id="resultCount">6 stories</span>
+          </div>
+          <div class="content-grid" id="storyGrid">
+            <article class="feed-card" data-section="Street Style" data-title="Milan street style makes pink feel precise">
+              <div class="story-media"><img src="https://assets.vogue.com/photos/6a36ec048f8f6aa956918107/1:1/w_640%2Cc_limit/MILANMENSSS27_STREETSTYLE_DAY2_ACIELLE_04.jpg" alt="Milan street style"></div>
+              <div class="copy"><div class="feed-meta"><span>Street Style</span><span>Milan</span></div><h3>Milan street style makes pink feel precise</h3><p>Soft color becomes architectural when worn with strict denim and dark accessories.</p><div class="card-actions"><button class="save-button" type="button" aria-pressed="false">Save</button><span class="issue-meta">4 min</span></div></div>
+            </article>
+            <article class="feed-card" data-section="Street Style" data-title="Stockholm proves the power of disciplined neutrals">
+              <div class="story-media"><img src="https://assets.vogue.com/photos/6a28802712e8322ea5724cc0/4:3/w_1600%2Cc_limit/STHLMFW26_STREETSTYLE_day2_ACIELLE_06.jpg" alt="Stockholm street style"></div>
+              <div class="copy"><div class="feed-meta"><span>Street Style</span><span>Stockholm</span></div><h3>Stockholm proves the power of disciplined neutrals</h3><p>The palette is quiet, but proportion keeps the look editorial.</p><div class="card-actions"><button class="save-button" type="button" aria-pressed="false">Save</button><span class="issue-meta">5 min</span></div></div>
+            </article>
+            <article class="feed-card" data-section="Runway" data-title="Backstage textures pull focus in Milan">
+              <div class="story-media"><img src="https://assets.vogue.com/photos/6a36c6117ca497383515f641/3:4/w_1024%2Cc_limit/DOLCE&amp;GABBANA_MILANMENSSS27_BACKSTAGE_ACIELLE_06.jpg" alt="Backstage runway detail"></div>
+              <div class="copy"><div class="feed-meta"><span>Backstage</span><span>Milan</span></div><h3>Backstage textures pull focus in Milan</h3><p>A close reading of shine, shadow, tailoring, and the theatrical prep room.</p><div class="card-actions"><button class="save-button" type="button" aria-pressed="false">Save</button><span class="issue-meta">7 min</span></div></div>
+            </article>
+            <article class="feed-card" data-section="Trends" data-title="Shoes return as the season's social shorthand">
+              <div class="story-media"><img src="https://assets.vogue.com/photos/6940781a0265f202b80f9aac/4:3/w_1600%2Cc_limit/final_shoetrends_mainholding%2520(1).jpg" alt="Shoe trend editorial still"></div>
+              <div class="copy"><div class="feed-meta"><span>Accessories</span><span>Trend</span></div><h3>Shoes return as the season's social shorthand</h3><p>Flat, pointed, metallic, and oddly practical: the edit is broader than it looks.</p><div class="card-actions"><button class="save-button" type="button" aria-pressed="false">Save</button><span class="issue-meta">6 min</span></div></div>
+            </article>
+            <article class="feed-card" data-section="Fashion Week" data-title="Paris closes with a moodier contact sheet">
+              <div class="story-media"><img src="https://assets.vogue.com/photos/69b18f5f5ea9bf1c087b9043/4:3/w_1600%2Cc_limit/PFW_fw26_streetstyle_day8_philoh_07.jpg" alt="Paris fashion week street style"></div>
+              <div class="copy"><div class="feed-meta"><span>Fashion Week</span><span>Paris</span></div><h3>Paris closes with a moodier contact sheet</h3><p>The final day leans into dark surfaces, long lines, and camera-ready restraint.</p><div class="card-actions"><button class="save-button" type="button" aria-pressed="false">Save</button><span class="issue-meta">3 min</span></div></div>
+            </article>
+            <article class="feed-card" data-section="New Designers" data-title="A new minimalism shows up in the first look">
+              <div class="story-media"><img src="https://assets.vogue.com/photos/6a36d1a3ddec5f877c242d3e/16:9/w_1280%2Cc_limit/dolce%2520hero.jpg" alt="Runway hero image"></div>
+              <div class="copy"><div class="feed-meta"><span>New Designers</span><span>Runway</span></div><h3>A new minimalism shows up in the first look</h3><p>Clean front-row photography gives the collection a stronger editorial entry point.</p><div class="card-actions"><button class="save-button" type="button" aria-pressed="false">Save</button><span class="issue-meta">8 min</span></div></div>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <aside class="aside" aria-label="Editor's desk">
+        <section class="panel">
+          <h2>Trend radar</h2>
+          <p>Signals inferred from runway and street-style references.</p>
+          <div class="trend-list">
+            <div class="trend-item"><div class="trend-row"><span>Street style authority</span><span>92</span></div><div class="meter"><span style="width: 92%"></span></div></div>
+            <div class="trend-item"><div class="trend-row"><span>Red accent movement</span><span>78</span></div><div class="meter"><span style="width: 78%"></span></div></div>
+            <div class="trend-item"><div class="trend-row"><span>Tailoring return</span><span>71</span></div><div class="meter"><span style="width: 71%"></span></div></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Editor's note</h2>
+          <p>The homepage follows an airy editorial feed, tinted surfaces, and high-contrast image rhythm extracted from the reference pack.</p>
+          <div class="live-list">
+            <div><time>09:20</time><span>Milan street style moved to hero package.</span></div>
+            <div><time>10:05</time><span>Runway contact sheet refreshed with first looks.</span></div>
+            <div><time>11:40</time><span>Shopping edit flagged for accessories rail.</span></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Signal letter</h2>
+          <p>A concise dispatch on what editors are saving before the next show starts.</p>
+          <form class="newsletter">
+            <input type="email" id="email" placeholder="editor@example.com" aria-label="Email address">
+            <button type="submit">Subscribe</button>
+            <span class="status" id="newsletterStatus"></span>
+          </form>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    const sectionButtons = document.querySelectorAll('.nav button');
+    const filterButtons = document.querySelectorAll('.chip');
+    const stories = [...document.querySelectorAll('.feed-card, .story-card, .rail-card')];
+    const search = document.querySelector('.search');
+    const resultCount = document.querySelector('#resultCount');
+    const rail = document.querySelector('#runwayRail');
+
+    function setPressed(buttons, active) {
+      buttons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button === active));
+      });
+    }
+
+    function applyFilters() {
+      const activeFilter = document.querySelector('.chip[aria-pressed="true"]').dataset.filter;
+      const activeNav = document.querySelector('.nav button[aria-pressed="true"]').dataset.nav;
+      const query = search.value.trim().toLowerCase();
+      let visibleFeed = 0;
+      stories.forEach((story) => {
+        const section = story.dataset.section || '';
+        const title = (story.dataset.title || story.textContent || '').toLowerCase();
+        const sectionMatch = activeFilter === 'All' || section === activeFilter || activeNav === 'Today' || section === activeNav;
+        const textMatch = !query || title.includes(query);
+        const visible = sectionMatch && textMatch;
+        story.classList.toggle('hidden', !visible);
+        if (visible && story.classList.contains('feed-card')) visibleFeed += 1;
+      });
+      resultCount.textContent = `${visibleFeed} stories`;
+    }
+
+    sectionButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        setPressed(sectionButtons, button);
+        applyFilters();
+      });
+    });
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        setPressed(filterButtons, button);
+        applyFilters();
+      });
+    });
+
+    search.addEventListener('input', applyFilters);
+
+    document.querySelectorAll('.save-button').forEach((button) => {
+      button.addEventListener('click', () => {
+        const pressed = button.getAttribute('aria-pressed') === 'true';
+        button.setAttribute('aria-pressed', String(!pressed));
+        button.textContent = pressed ? (button.textContent.includes('story') ? 'Save story' : 'Save') : 'Saved';
+      });
+    });
+
+    document.querySelector('#railPrev').addEventListener('click', () => {
+      rail.scrollBy({ left: -280, behavior: 'smooth' });
+    });
+
+    document.querySelector('#railNext').addEventListener('click', () => {
+      rail.scrollBy({ left: 280, behavior: 'smooth' });
+    });
+
+    document.querySelector('#layoutButton').addEventListener('click', (event) => {
+      const grid = document.querySelector('#storyGrid');
+      const compact = grid.classList.toggle('compact');
+      event.currentTarget.textContent = compact ? 'Editorial feed' : 'Compact feed';
+    });
+
+    document.querySelector('#editionButton').addEventListener('click', () => {
+      document.querySelector('#editionTitle').textContent = 'Evening edition: runway notes move from show to street';
+      document.querySelector('#editionSummary').textContent = 'The page reprioritized live notes, street-style reports, and the runway contact sheet.';
+    });
+
+    document.querySelector('.newsletter').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const email = document.querySelector('#email');
+      const status = document.querySelector('#newsletterStatus');
+      status.textContent = email.value.trim() ? 'Subscribed for the next issue.' : 'Enter an email first.';
+    });
+
+    applyFilters();
+  </script>
+</body>
+</html>
