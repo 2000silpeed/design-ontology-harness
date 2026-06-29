@@ -7,6 +7,7 @@ from pathlib import Path
 
 from design_ontology_harness.agent_packs import (
     _codex_implementer_skill,
+    _codex_reference_inspect_skill,
     _codex_visual_asset_skill,
     scaffold_agent_pack,
 )
@@ -52,6 +53,22 @@ class AgentPackTests(unittest.TestCase):
         self.assertIn("approved icon systems", skill_text)
         self.assertIn("data-icon-set", skill_text)
 
+    def test_codex_reference_inspect_skill_keeps_references_advisory(self) -> None:
+        skill_text = _codex_reference_inspect_skill("design-system")
+
+        self.assertIn("inspect-reference-site", skill_text)
+        self.assertIn("PAGE_TOPOLOGY.md", skill_text)
+        self.assertIn("BEHAVIORS.md", skill_text)
+        self.assertIn("Observed Reference Evidence", skill_text)
+        self.assertIn("component morphology", skill_text)
+        self.assertIn("layout density", skill_text)
+        self.assertIn("interaction affordance", skill_text)
+        self.assertIn("Never copy", skill_text)
+        self.assertIn("color palette", skill_text)
+        self.assertIn("product copy", skill_text)
+        self.assertIn("logos", skill_text)
+        self.assertIn("raw CSS values", skill_text)
+
     def test_codex_scaffold_includes_visual_asset_skill(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             result = scaffold_agent_pack(
@@ -68,6 +85,14 @@ class AgentPackTests(unittest.TestCase):
                 / "design-system-visual-assets"
                 / "SKILL.md"
             )
+            reference_skill_path = (
+                Path(tmp)
+                / "plugins"
+                / "design-system-harness"
+                / "skills"
+                / "design-system-reference-inspect"
+                / "SKILL.md"
+            )
             plugin_manifest_path = (
                 Path(tmp)
                 / "plugins"
@@ -77,16 +102,23 @@ class AgentPackTests(unittest.TestCase):
             )
 
             self.assertTrue(skill_path.exists())
+            self.assertTrue(reference_skill_path.exists())
             self.assertIn(str(skill_path), result["created"])
+            self.assertIn(str(reference_skill_path), result["created"])
             self.assertIn("image_gen", skill_path.read_text(encoding="utf-8"))
             self.assertIn("do not call an API fallback", skill_path.read_text(encoding="utf-8"))
             self.assertIn("sourced visual fallback", skill_path.read_text(encoding="utf-8"))
+            self.assertIn("inspect-reference-site", reference_skill_path.read_text(encoding="utf-8"))
+            self.assertIn("Never copy", reference_skill_path.read_text(encoding="utf-8"))
 
             plugin_manifest = json.loads(plugin_manifest_path.read_text(encoding="utf-8"))
             self.assertIn("imagery", plugin_manifest["keywords"])
+            self.assertIn("reference-inspection", plugin_manifest["keywords"])
             self.assertIn("image_gen", plugin_manifest["interface"]["longDescription"])
+            self.assertIn("website reference inspections", plugin_manifest["interface"]["longDescription"])
             self.assertIn("license-verified sourced visual fallback", plugin_manifest["interface"]["longDescription"])
             self.assertIn("light mode", " ".join(plugin_manifest["interface"]["defaultPrompt"]))
+            self.assertIn("advisory morphology", " ".join(plugin_manifest["interface"]["defaultPrompt"]))
             self.assertIn("operational product surfaces", " ".join(plugin_manifest["interface"]["defaultPrompt"]))
             self.assertIn("fallbacks are disabled", plugin_manifest["interface"]["longDescription"])
 
