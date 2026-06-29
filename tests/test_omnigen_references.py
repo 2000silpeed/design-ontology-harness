@@ -5,7 +5,9 @@ import unittest
 from pathlib import Path
 
 from design_ontology_harness.omnigen_references import (
+    DEFAULT_CATEGORIES,
     IMAGE_COLUMNS,
+    export_omnigen_selection_gallery,
     select_omnigen_references,
     sync_omnigen_sources,
 )
@@ -80,9 +82,55 @@ class OmnigenReferenceSelectionTests(unittest.TestCase):
             self.assertEqual(manifest["selected"][1]["subject"], "an admin CRM contacts table")
             for item in manifest["selected"]:
                 selected_path = project_dir / item["selected_relative_path"]
+                self.assertFalse(Path(item["selected_relative_path"]).is_absolute())
                 self.assertTrue(selected_path.is_symlink())
                 self.assertTrue(selected_path.exists())
                 self.assertFalse(item["redistribution_allowed"])
+
+    def test_default_categories_include_ai_agent_ui_and_gallery_export(self) -> None:
+        self.assertIn("ai-agent-ui", DEFAULT_CATEGORIES)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            vault_dir = root / "vault"
+            project_dir = root / "project"
+            vault_dir.mkdir()
+            project_dir.mkdir()
+            index_path = vault_dir / "index.sqlite"
+            _create_omnigen_index(index_path)
+
+            agent_ui = _write_image(vault_dir, "images/ai-agent-ui/agent.png")
+            _insert_image(
+                index_path,
+                id=10,
+                category="ai-agent-ui",
+                subject="an agent task console with tool timeline",
+                style="agentic workspace",
+                palette="blue accent",
+                mood="light theme",
+                rel_path="images/ai-agent-ui/agent.png",
+                abs_path=str(agent_ui),
+                sha256="sha-agent",
+                phash="phash-agent",
+            )
+
+            manifest = select_omnigen_references(
+                vault_dir=vault_dir,
+                project_dir=project_dir,
+                query="agent task console",
+                count=1,
+                link_mode="symlink",
+            )
+            gallery_path = export_omnigen_selection_gallery(
+                manifest,
+                project_dir / "build" / "visuals" / "omnigen_reference_gallery.html",
+            )
+
+            self.assertEqual(manifest["selected"][0]["category"], "ai-agent-ui")
+            self.assertTrue(gallery_path.exists())
+            html = gallery_path.read_text(encoding="utf-8")
+            self.assertIn("an agent task console", html)
+            self.assertIn("ai-agent-ui", html)
+            self.assertIn("<img", html)
 
     def test_sync_omnigen_sources_replaces_managed_entries_and_preserves_other_sources(self) -> None:
         profile = {

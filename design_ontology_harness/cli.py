@@ -16,6 +16,7 @@ from .omnigen_references import (
     DEFAULT_CATEGORIES as OMNIGEN_DEFAULT_CATEGORIES,
     DEFAULT_OMNIGEN_VAULT_DIR,
     DEFAULT_REFERENCE_DIR as OMNIGEN_DEFAULT_REFERENCE_DIR,
+    export_omnigen_selection_gallery,
     select_omnigen_references,
     sync_omnigen_sources,
 )
@@ -209,6 +210,16 @@ def build_parser() -> argparse.ArgumentParser:
         "--reference-dir",
         default=OMNIGEN_DEFAULT_REFERENCE_DIR,
         help="Project-local directory for symlinks/copies. Defaults inside ignored build/.",
+    )
+    omnigen_parser.add_argument(
+        "--export-gallery",
+        action="store_true",
+        help="Write an HTML review gallery next to omnigen_reference_selection.json",
+    )
+    omnigen_parser.add_argument(
+        "--gallery-output",
+        default=None,
+        help="Optional path for the HTML gallery (default: <output-dir>/omnigen_reference_gallery.html)",
     )
     omnigen_parser.add_argument("--sync-sources", action="store_true", help="Update brand_profile.visual_reference.sources with the selected references")
     omnigen_parser.add_argument("--output-dir", default=None, help="Optional directory for omnigen_reference_selection.json")
@@ -1633,6 +1644,14 @@ def main() -> None:
             reference_dir=args.reference_dir,
         )
         write_json(visuals_dir / "omnigen_reference_selection.json", selection_manifest)
+        gallery_path = None
+        if args.export_gallery:
+            gallery_path = Path(args.gallery_output) if args.gallery_output else visuals_dir / "omnigen_reference_gallery.html"
+            export_omnigen_selection_gallery(
+                selection_manifest,
+                gallery_path,
+                title=f"Omnigen references for {raw_profile.get('brand_name', 'project')}",
+            )
 
         sync_result = None
         if args.sync_sources:
@@ -1655,6 +1674,8 @@ def main() -> None:
             f"  -> candidates {selection_manifest['scored_candidate_count']} / "
             f"selected {selection_manifest['selected_count']} | link_mode {args.link_mode}"
         )
+        if gallery_path:
+            print(f"  -> gallery: {gallery_path}")
         for item in selection_manifest["selected"][: min(8, selection_manifest["selected_count"])]:
             print(
                 f"     - #{item['rank']:02d} {item.get('subject', 'reference')} "

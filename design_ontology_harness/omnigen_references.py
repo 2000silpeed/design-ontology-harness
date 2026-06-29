@@ -11,7 +11,7 @@ from .models import utc_now_iso
 from .utils import ensure_dir, slugify
 
 DEFAULT_OMNIGEN_VAULT_DIR = Path.home() / ".omnigen-vault"
-DEFAULT_CATEGORIES = ("web-design", "app-design", "mobile-design")
+DEFAULT_CATEGORIES = ("web-design", "app-design", "mobile-design", "ai-agent-ui")
 DEFAULT_REFERENCE_DIR = "build/visuals/omnigen-selected"
 MANAGED_PROVIDER_ID = "omnigen-vault"
 
@@ -181,6 +181,23 @@ def sync_omnigen_sources(
         "managed_source_count": len(merged_sources) - len(preserved_sources),
         "total_source_count": len(merged_sources),
     }
+
+
+def export_omnigen_selection_gallery(
+    selection_manifest: dict[str, Any],
+    output_path: Path | str,
+    *,
+    title: str | None = None,
+) -> Path:
+    """Write a lightweight HTML review gallery for selected Omnigen references."""
+
+    path = Path(output_path)
+    ensure_dir(path.parent)
+    selected = selection_manifest.get("selected", []) or []
+    page_title = title or "Omnigen Reference Selection"
+    html = _render_selection_gallery(page_title, selection_manifest, selected, path.parent)
+    path.write_text(html, encoding="utf-8")
+    return path
 
 
 def _load_candidates(
@@ -444,6 +461,168 @@ def _public_candidate_fields(candidate: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _render_selection_gallery(
+    title: str,
+    selection_manifest: dict[str, Any],
+    selected: list[dict[str, Any]],
+    output_dir: Path,
+) -> str:
+    cards = "\n".join(_render_gallery_card(item, output_dir) for item in selected)
+    category_counts: dict[str, int] = {}
+    for item in selected:
+        category = str(item.get("category") or "unknown")
+        category_counts[category] = category_counts.get(category, 0) + 1
+    category_summary = ", ".join(f"{key}: {value}" for key, value in sorted(category_counts.items())) or "none"
+    query = _html_escape(str(selection_manifest.get("query") or "(profile-derived)"))
+    categories = _html_escape(", ".join(selection_manifest.get("categories", []) or []))
+    created_at = _html_escape(str(selection_manifest.get("created_at") or ""))
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{_html_escape(title)}</title>
+  <style>
+    :root {{
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --ink: #17202a;
+      --muted: #667085;
+      --border: #d9dee7;
+      --accent: #3157d5;
+    }}
+    * {{ box-sizing: border-box; }}
+    body {{
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }}
+    header {{
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }}
+    h1 {{ margin: 0 0 8px; font-size: 22px; line-height: 1.2; }}
+    .meta {{ display: flex; flex-wrap: wrap; gap: 8px 16px; color: var(--muted); }}
+    main {{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      padding: 16px;
+    }}
+    article {{
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      min-width: 0;
+    }}
+    img {{
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      background: #e8ebf1;
+      border-bottom: 1px solid var(--border);
+    }}
+    .body {{ padding: 12px; display: grid; gap: 8px; }}
+    .title {{ font-weight: 700; line-height: 1.25; }}
+    .badges {{ display: flex; flex-wrap: wrap; gap: 6px; }}
+    .badge {{
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 2px 8px;
+      color: var(--muted);
+      font-size: 12px;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }}
+    dl {{ margin: 0; display: grid; grid-template-columns: 72px 1fr; gap: 4px 8px; color: var(--muted); }}
+    dt {{ font-weight: 650; color: var(--ink); }}
+    dd {{ margin: 0; min-width: 0; overflow-wrap: anywhere; }}
+    a {{ color: var(--accent); text-decoration: none; }}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>{_html_escape(title)}</h1>
+    <div class="meta">
+      <span>Created: {created_at}</span>
+      <span>Query: {query}</span>
+      <span>Categories: {categories}</span>
+      <span>Selected: {len(selected)}</span>
+      <span>By category: {_html_escape(category_summary)}</span>
+    </div>
+  </header>
+  <main>
+    {cards}
+  </main>
+</body>
+</html>
+"""
+
+
+def _render_gallery_card(item: dict[str, Any], output_dir: Path) -> str:
+    path = _gallery_image_path(item, output_dir)
+    subject = str(item.get("subject") or "Untitled reference")
+    badges = [
+        str(item.get("category") or ""),
+        str(item.get("orientation") or ""),
+        str(item.get("style") or ""),
+        str(item.get("palette") or ""),
+        str(item.get("mood") or ""),
+    ]
+    badge_html = "".join(f'<span class="badge">{_html_escape(badge)}</span>' for badge in badges if badge)
+    matches = item.get("matched_terms", []) or []
+    match_summary = ", ".join(
+        f"{match.get('term')}:{match.get('field')}"
+        for match in matches[:6]
+        if isinstance(match, dict)
+    )
+    return f"""<article>
+  <a href="{_html_escape(path)}"><img src="{_html_escape(path)}" alt="{_html_escape(subject)}" loading="lazy" /></a>
+  <div class="body">
+    <div class="title">#{int(item.get("rank") or 0):02d} {_html_escape(subject)}</div>
+    <div class="badges">{badge_html}</div>
+    <dl>
+      <dt>score</dt><dd>{_html_escape(str(item.get("score") or 0))}</dd>
+      <dt>size</dt><dd>{_html_escape(str(item.get("width") or "?"))}x{_html_escape(str(item.get("height") or "?"))}</dd>
+      <dt>ocr</dt><dd>{_html_escape(str(item.get("ocr_char_count") or 0))} chars</dd>
+      <dt>match</dt><dd>{_html_escape(match_summary or "dimension/diversity")}</dd>
+      <dt>path</dt><dd><a href="{_html_escape(path)}">{_html_escape(path)}</a></dd>
+    </dl>
+  </div>
+</article>"""
+
+
+def _gallery_image_path(item: dict[str, Any], output_dir: Path) -> str:
+    raw_path = str(item.get("selected_path") or item.get("source_path") or "")
+    if not raw_path:
+        return ""
+    path = Path(raw_path)
+    if path.is_absolute():
+        try:
+            return str(path.resolve().relative_to(output_dir.resolve()))
+        except ValueError:
+            return str(path)
+    return raw_path
+
+
+def _html_escape(value: str) -> str:
+    return (
+        value.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+        .replace("'", "&#39;")
+    )
+
+
 def _normalize_categories(categories: list[str] | None) -> list[str]:
     normalized = [
         str(category).strip()
@@ -507,6 +686,10 @@ def _relative_to_project(path: Path, project_dir: Path | None) -> str:
 
 
 def _relative_or_absolute(path: Path, base_dir: Path) -> str:
+    try:
+        return str(path.absolute().relative_to(base_dir.absolute()))
+    except ValueError:
+        pass
     try:
         return str(path.resolve().relative_to(base_dir.resolve()))
     except ValueError:

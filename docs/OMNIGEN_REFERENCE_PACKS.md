@@ -22,16 +22,19 @@ separate image corpus if they want a richer starting point.
 ```bash
 uv run design-ontology select-omnigen-references \
   --project-dir projects/my-app \
-  --query "analytics dashboard crm settings" \
+  --query "analytics dashboard crm settings agent task console" \
   --category app-design \
   --category web-design \
+  --category ai-agent-ui \
   --count 12 \
+  --export-gallery \
   --sync-sources
 ```
 
 The command writes:
 
 - `projects/my-app/build/visuals/omnigen_reference_selection.json`
+- `projects/my-app/build/visuals/omnigen_reference_gallery.html` when `--export-gallery` is passed
 - `projects/my-app/build/visuals/omnigen-selected/*` symlinks by default
 - updated `projects/my-app/brand_profile.json` when `--sync-sources` is passed
 
@@ -66,11 +69,24 @@ Use project-shaped words, not style-only words:
 - Good: `analytics dashboard crm contacts settings table`
 - Good: `mobile banking wallet cards onboarding`
 - Good: `commerce product grid checkout cart detail`
+- Good: `agent task console tool timeline chat side panel`
 - Less useful: `beautiful minimal modern clean`
 
 If `--query` is omitted, the CLI builds one from `brand_profile.json` fields such
 as `product_summary`, `brand_keywords`, `visual_keywords`, and
 `product_primitives`.
+
+Default UI categories are:
+
+- `web-design`
+- `app-design`
+- `mobile-design`
+- `ai-agent-ui`
+
+Use `--export-gallery` when selecting from a large vault. The gallery is the
+human review step: keep the selected set if the top images have useful
+morphology and density, then run `analyze-visuals`; otherwise rerun selection
+with a sharper query or category filter.
 
 ## Why This Shape
 
