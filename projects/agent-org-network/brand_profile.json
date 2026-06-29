@@ -1,0 +1,570 @@
+{
+  "brand_name": "Agent Org Network",
+  "system_name": "Agent Org Network Design System",
+  "product_summary": "An operational command surface for mapping AI agents, human owners, tools, handoffs, policies, and run health across an organization.",
+  "audiences": [
+    "AI operations lead",
+    "platform engineering manager",
+    "automation program owner",
+    "security and governance reviewer",
+    "agent team maintainer"
+  ],
+  "brand_keywords": [
+    "agentic",
+    "operational",
+    "networked",
+    "observable",
+    "governed",
+    "precise",
+    "structured",
+    "calm",
+    "trustworthy"
+  ],
+  "anti_keywords": [
+    "chatbot-only",
+    "decorative graph",
+    "marketing-heavy",
+    "sci-fi glow",
+    "generic card wall",
+    "noisy",
+    "unexplained automation",
+    "opaque status"
+  ],
+  "tone_of_voice": [
+    "direct",
+    "operational",
+    "audit-friendly",
+    "low-drama",
+    "specific"
+  ],
+  "visual_keywords": [
+    "agent orchestration dashboard",
+    "org network graph",
+    "split-pane graph workspace",
+    "dense task queue",
+    "tool timeline",
+    "capability matrix",
+    "handoff edge labels",
+    "health status badges",
+    "policy sidebar",
+    "audit log table",
+    "model evaluation dashboard",
+    "restrained multi-accent system"
+  ],
+  "interaction_keywords": [
+    "zoomable network map",
+    "graph node inspection drawer",
+    "filter by team role model tool and risk",
+    "handoff path tracing",
+    "run replay timeline",
+    "policy approval gate",
+    "inline owner assignment",
+    "keyboard command palette",
+    "saved network views",
+    "diff between agent versions"
+  ],
+  "platforms": [
+    "web",
+    "desktop-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "keyboard graph traversal",
+    "non-color status encoding"
+  ],
+  "product_primitives": [
+    "agent org graph canvas",
+    "agent node card",
+    "team cluster",
+    "handoff edge",
+    "owner badge",
+    "model badge",
+    "tool permission matrix",
+    "capability matrix",
+    "run health summary",
+    "task queue table",
+    "tool timeline",
+    "policy approval panel",
+    "risk indicator",
+    "audit log",
+    "incident feed",
+    "agent version drawer",
+    "prompt and tool diff",
+    "saved network view",
+    "command palette",
+    "data tables",
+    "search and filter",
+    "charts and visualization",
+    "workspace navigation",
+    "modal and dialog",
+    "notifications",
+    "onboarding and stepper",
+    "forms"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "data density",
+      "graph",
+      "workflow",
+      "table",
+      "dashboard",
+      "governance"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "marketing-only",
+      "single chatbot demo"
+    ]
+  },
+  "seeds": [
+    {
+      "url": "https://primer.style",
+      "kind": "design-system",
+      "title": "Primer",
+      "notes": "Practical component contracts and dense developer-tool surfaces"
+    },
+    {
+      "url": "https://carbondesignsystem.com",
+      "kind": "design-system",
+      "title": "Carbon",
+      "notes": "Enterprise data UI, status patterns, and accessibility guidance"
+    },
+    {
+      "url": "https://atlassian.design",
+      "kind": "design-system",
+      "title": "Atlassian Design System",
+      "notes": "Workspace navigation, permissions, and operational SaaS patterns"
+    }
+  ],
+  "color_reference": {
+    "path": "../../docs/color-reference.md",
+    "preferred_families": [
+      "Cool Grays",
+      "Standard Blues",
+      "Natural Greens",
+      "Reds"
+    ],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "balanced",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "정확함",
+        "신뢰감",
+        "차분함",
+        "운영성"
+      ],
+      "avoid_moods": [
+        "과장",
+        "장식적",
+        "몽환적",
+        "유아적"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 8,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Base surfaces should stay neutral and readable under dense operational data.",
+      "Use blue for primary focus and selection, green for healthy automation, red for risk and blocked handoffs.",
+      "Avoid a single purple or blue gradient identity; the product needs role, risk, and ownership distinction."
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "multi agent orchestration dashboard agent task console tool timeline",
+      "workflow DAG builder for agents model evaluation dashboard",
+      "org network graph dashboard table policy sidebar"
+    ],
+    "sources": [
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen ai-agent-ui reference 1",
+        "path": "build/visuals/omnigen-selected/01-a-multi-agent-orchestration-dashboard__bab935758737.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "ai-agent-ui",
+          "a-multi-agent-orchestration-dashboard",
+          "data-dense-dashboard",
+          "blue-accent",
+          "high-contrast-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 7493,
+          "subject": "a multi-agent orchestration dashboard",
+          "style": "data-dense dashboard",
+          "palette": "blue accent",
+          "mood": "high-contrast theme",
+          "score": 87,
+          "source_path": "/Users/sungwoon/.omnigen-vault/images/ai-agent-ui/landscape/a-multi-agent-orchestration-dashboard__1536x1024__bab935758737.png",
+          "thumb_path": "/Users/sungwoon/.omnigen-vault/thumbs/ai-agent-ui/landscape/bab935758737625e.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen ai-agent-ui reference 2",
+        "path": "build/visuals/omnigen-selected/02-a-model-evaluation-dashboard-for-agent-runs__f44c1ba1e1b8.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "ai-agent-ui",
+          "a-model-evaluation-dashboard-for-agent-runs",
+          "data-dense-dashboard",
+          "green-accent",
+          "pastel-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 7602,
+          "subject": "a model evaluation dashboard for agent runs",
+          "style": "data-dense dashboard",
+          "palette": "green accent",
+          "mood": "pastel theme",
+          "score": 79,
+          "source_path": "/Users/sungwoon/.omnigen-vault/images/ai-agent-ui/landscape/a-model-evaluation-dashboard-for-agent-runs__1536x1024__f44c1ba1e1b8.png",
+          "thumb_path": "/Users/sungwoon/.omnigen-vault/thumbs/ai-agent-ui/landscape/f44c1ba1e1b8a11f.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen app-design reference 3",
+        "path": "build/visuals/omnigen-selected/03-a-multi-agent-task-orchestration-console__1b8409ec7901.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "app-design",
+          "a-multi-agent-task-orchestration-console",
+          "soft-rounded-cards",
+          "orange-accent",
+          "vibrant-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 7167,
+          "subject": "a multi-agent task orchestration console",
+          "style": "soft rounded cards",
+          "palette": "orange accent",
+          "mood": "vibrant theme",
+          "score": 73,
+          "source_path": "/Users/sungwoon/.omnigen-vault/images/app-design/landscape/a-multi-agent-task-orchestration-console__1536x1024__1b8409ec7901.png",
+          "thumb_path": "/Users/sungwoon/.omnigen-vault/thumbs/app-design/landscape/1b8409ec79016fe6.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen ai-agent-ui reference 4",
+        "path": "build/visuals/omnigen-selected/04-a-workflow-dag-builder-for-agents__62b3f337be64.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "ai-agent-ui",
+          "a-workflow-dag-builder-for-agents",
+          "data-dense-dashboard",
+          "green-accent",
+          "light-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 6497,
+          "subject": "a workflow DAG builder for agents",
+          "style": "data-dense dashboard",
+          "palette": "green accent",
+          "mood": "light theme",
+          "score": 71,
+          "source_path": "/Users/sungwoon/.omnigen-vault/images/ai-agent-ui/landscape/a-workflow-dag-builder-for-agents__1536x1024__62b3f337be64.png",
+          "thumb_path": "/Users/sungwoon/.omnigen-vault/thumbs/ai-agent-ui/landscape/62b3f337be64ae4b.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen ai-agent-ui reference 5",
+        "path": "build/visuals/omnigen-selected/05-an-agent-task-queue-monitor__4788d51ea69f.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "ai-agent-ui",
+          "an-agent-task-queue-monitor",
+          "data-dense-dashboard",
+          "monochrome-accent",
+          "dark-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 6964,
+          "subject": "an agent task queue monitor",
+          "style": "data-dense dashboard",
+          "palette": "monochrome accent",
+          "mood": "dark theme",
+          "score": 57,
+          "source_path": "/Users/sungwoon/.omnigen-vault/images/ai-agent-ui/landscape/an-agent-task-queue-monitor__1536x1024__4788d51ea69f.png",
+          "thumb_path": "/Users/sungwoon/.omnigen-vault/thumbs/ai-agent-ui/landscape/4788d51ea69f0431.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen app-design reference 6",
+        "path": "build/visuals/omnigen-selected/06-a-model-evaluation-experiment-dashboard__9054c25189f0.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "app-design",
+          "a-model-evaluation-experiment-dashboard",
+          "data-dense-dashboard",
+          "pink-accent",
+          "vibrant-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 6875,
+          "subject": "a model evaluation experiment dashboard",
+          "style": "data-dense dashboard",
+          "palette": "pink accent",
+          "mood": "vibrant theme",
+          "score": 55,
+          "source_path": "/Users/sungwoon/.omnigen-vault/images/app-design/landscape/a-model-evaluation-experiment-dashboard__1536x1024__9054c25189f0.png",
+          "thumb_path": "/Users/sungwoon/.omnigen-vault/thumbs/app-design/landscape/9054c25189f005cb.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen ai-agent-ui reference 7",
+        "path": "build/visuals/omnigen-selected/07-an-agent-run-replay-screen__477ba11734ca.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "ai-agent-ui",
+          "an-agent-run-replay-screen",
+          "data-dense-dashboard",
+          "orange-accent",
+          "muted-neutral-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 6290,
+          "subject": "an agent run replay screen",
+          "style": "data-dense dashboard",
+          "palette": "orange accent",
+          "mood": "muted neutral theme",
+          "score": 55,
+          "source_path": "/Users/sungwoon/.omnigen-vault/images/ai-agent-ui/landscape/an-agent-run-replay-screen__1536x1024__477ba11734ca.png",
+          "thumb_path": "/Users/sungwoon/.omnigen-vault/thumbs/ai-agent-ui/landscape/477ba11734ca021e.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen ai-agent-ui reference 8",
+        "path": "build/visuals/omnigen-selected/08-an-autonomous-coding-agent-control-panel__52a050e27ddc.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "ai-agent-ui",
+          "an-autonomous-coding-agent-control-panel",
+          "data-dense-dashboard",
+          "pink-accent",
+          "vibrant-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 6079,
+          "subject": "an autonomous coding agent control panel",
+          "style": "data-dense dashboard",
+          "palette": "pink accent",
+          "mood": "vibrant theme",
+          "score": 51,
+          "source_path": "/Users/sungwoon/.omnigen-vault/images/ai-agent-ui/landscape/an-autonomous-coding-agent-control-panel__1536x1024__52a050e27ddc.png",
+          "thumb_path": "/Users/sungwoon/.omnigen-vault/thumbs/ai-agent-ui/landscape/52a050e27ddc5ded.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen ai-agent-ui reference 9",
+        "path": "build/visuals/omnigen-selected/09-a-human-approval-inbox-for-agent-actions__320286a55694.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "ai-agent-ui",
+          "a-human-approval-inbox-for-agent-actions",
+          "data-dense-dashboard",
+          "pink-accent",
+          "pastel-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 7887,
+          "subject": "a human approval inbox for agent actions",
+          "style": "data-dense dashboard",
+          "palette": "pink accent",
+          "mood": "pastel theme",
+          "score": 47,
+          "source_path": "/Users/sungwoon/.omnigen-vault/images/ai-agent-ui/landscape/a-human-approval-inbox-for-agent-actions__1536x1024__320286a55694.png",
+          "thumb_path": "/Users/sungwoon/.omnigen-vault/thumbs/ai-agent-ui/landscape/320286a55694ffd3.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen ai-agent-ui reference 10",
+        "path": "build/visuals/omnigen-selected/10-a-retrieval-augmented-generation-console__cb6c270d9342.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "ai-agent-ui",
+          "a-retrieval-augmented-generation-console",
+          "data-dense-dashboard",
+          "blue-accent",
+          "muted-neutral-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 6149,
+          "subject": "a retrieval augmented generation console",
+          "style": "data-dense dashboard",
+          "palette": "blue accent",
+          "mood": "muted neutral theme",
+          "score": 47,
+          "source_path": "/Users/sungwoon/.omnigen-vault/images/ai-agent-ui/landscape/a-retrieval-augmented-generation-console__1536x1024__cb6c270d9342.png",
+          "thumb_path": "/Users/sungwoon/.omnigen-vault/thumbs/ai-agent-ui/landscape/cb6c270d9342a94d.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen ai-agent-ui reference 11",
+        "path": "build/visuals/omnigen-selected/11-a-semantic-memory-search-console__a58473a48baf.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "ai-agent-ui",
+          "a-semantic-memory-search-console",
+          "data-dense-dashboard",
+          "orange-accent",
+          "dark-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 6832,
+          "subject": "a semantic memory search console",
+          "style": "data-dense dashboard",
+          "palette": "orange accent",
+          "mood": "dark theme",
+          "score": 47,
+          "source_path": "/Users/sungwoon/.omnigen-vault/images/ai-agent-ui/landscape/a-semantic-memory-search-console__1536x1024__a58473a48baf.png",
+          "thumb_path": "/Users/sungwoon/.omnigen-vault/thumbs/ai-agent-ui/landscape/a58473a48bafdf59.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen ai-agent-ui reference 12",
+        "path": "build/visuals/omnigen-selected/12-a-cron-agent-job-monitor__dcacee86ae0d.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "ai-agent-ui",
+          "a-cron-agent-job-monitor",
+          "data-dense-dashboard",
+          "blue-accent",
+          "dark-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 6693,
+          "subject": "a cron agent job monitor",
+          "style": "data-dense dashboard",
+          "palette": "blue accent",
+          "mood": "dark theme",
+          "score": 45,
+          "source_path": "/Users/sungwoon/.omnigen-vault/images/ai-agent-ui/landscape/a-cron-agent-job-monitor__1536x1024__dcacee86ae0d.png",
+          "thumb_path": "/Users/sungwoon/.omnigen-vault/thumbs/ai-agent-ui/landscape/dcacee86ae0dcfc5.jpg"
+        }
+      }
+    ],
+    "preferred_count": 12,
+    "weights": {
+      "layout": 0.32,
+      "component_shape": 0.26,
+      "color_balance": 0.16,
+      "typography_mood": 0.12,
+      "surface_style": 0.14
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "visible agent ownership and handoff state",
+      "graph plus table or timeline pairing",
+      "policy or risk evidence near automation status"
+    ],
+    "avoid_patterns": [
+      "decorative graph without labels",
+      "single full-screen chat window",
+      "abstract AI glow background",
+      "unexplained autonomous action"
+    ],
+    "notes": [
+      "References guide density, workspace layout, graph-table pairing, and operational affordances only.",
+      "Do not copy reference colors or generated copy. Final IA must keep governance and audit flows visible."
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "Pinterest is optional. This project defaults to local Omnigen UI references.",
+        "Only selected local files should be connected to visual_reference.sources."
+      ]
+    }
+  }
+}
