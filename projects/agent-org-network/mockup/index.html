@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Org Network Mockup</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell" data-theme="light">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand-block">
+        <div class="brand-mark" aria-hidden="true">AON</div>
+        <div>
+          <div class="brand-name">Agent Org Network</div>
+          <div class="brand-meta">Production graph</div>
+        </div>
+      </div>
+
+      <nav class="nav-list">
+        <button class="nav-item active" data-section="overview"><span class="nav-icon">OV</span><span>Overview</span><strong>42</strong></button>
+        <button class="nav-item" data-section="agents"><span class="nav-icon">AG</span><span>Agents</span><strong>128</strong></button>
+        <button class="nav-item" data-section="teams"><span class="nav-icon">TM</span><span>Teams</span><strong>18</strong></button>
+        <button class="nav-item" data-section="tools"><span class="nav-icon">TL</span><span>Tools</span><strong>36</strong></button>
+        <button class="nav-item" data-section="policies"><span class="nav-icon">PL</span><span>Policies</span><strong>9</strong></button>
+        <button class="nav-item" data-section="runs"><span class="nav-icon">RN</span><span>Runs</span><strong>312</strong></button>
+        <button class="nav-item alert" data-section="incidents"><span class="nav-icon">IN</span><span>Incidents</span><strong>7</strong></button>
+        <button class="nav-item" data-section="audit"><span class="nav-icon">AU</span><span>Audit log</span><strong>1.9k</strong></button>
+      </nav>
+
+      <div class="scope-card">
+        <label for="environment">Environment</label>
+        <select id="environment">
+          <option>Production</option>
+          <option>Staging</option>
+          <option>Sandbox</option>
+        </select>
+      </div>
+
+      <div class="operator-card">
+        <span class="avatar">SJ</span>
+        <div>
+          <strong>Sofia Jung</strong>
+          <span>AI operations lead</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="breadcrumb">Workspaces / Platform automation / Agent graph</div>
+          <h1>Agent organization network</h1>
+        </div>
+        <div class="top-actions">
+          <label class="search-box">
+            <span>Search</span>
+            <input id="globalSearch" type="search" placeholder="Agent, owner, tool, policy">
+          </label>
+          <button class="icon-button" id="commandButton" title="Open command palette">K</button>
+          <button class="button secondary" id="themeToggle">Dark mode</button>
+          <button class="button primary" id="reviewButton">Review 5 gates</button>
+        </div>
+      </header>
+
+      <section class="status-strip" aria-label="Network status summary">
+        <article class="metric-card">
+          <div class="metric-label">Active agents</div>
+          <div class="metric-value">128</div>
+          <div class="metric-foot positive">+14 this week</div>
+          <div class="sparkline" data-bars="18,26,22,31,38,35,44,47,39,52,49,61"></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">Open handoffs</div>
+          <div class="metric-value">312</div>
+          <div class="metric-foot warning">26 waiting for owner</div>
+          <div class="sparkline amber" data-bars="35,32,38,42,48,53,51,57,62,58,64,70"></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">Policy gates</div>
+          <div class="metric-value">91%</div>
+          <div class="metric-foot positive">automated checks passed</div>
+          <div class="sparkline green" data-bars="58,61,63,62,68,66,71,70,74,76,75,78"></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">High risk paths</div>
+          <div class="metric-value">7</div>
+          <div class="metric-foot danger">2 require reviewer action</div>
+          <div class="sparkline red" data-bars="18,21,17,26,31,28,25,33,29,24,22,19"></div>
+        </article>
+      </section>
+
+      <section class="workspace-grid">
+        <section class="network-panel panel">
+          <div class="panel-header">
+            <div>
+              <h2>Org graph</h2>
+              <p>Live agent ownership, handoffs, tool scopes, and risk routes.</p>
+            </div>
+            <div class="segmented" role="tablist" aria-label="Graph view">
+              <button class="active" data-graph-view="health">Health</button>
+              <button data-graph-view="risk">Risk</button>
+              <button data-graph-view="owners">Owners</button>
+            </div>
+          </div>
+
+          <div class="graph-toolbar">
+            <label>
+              Team
+              <select id="teamFilter">
+                <option value="all">All teams</option>
+                <option value="eng">Engineering</option>
+                <option value="support">Support</option>
+                <option value="governance">Governance</option>
+                <option value="revenue">Revenue</option>
+              </select>
+            </label>
+            <label>
+              Risk
+              <select id="riskFilter">
+                <option value="all">All risk</option>
+                <option value="high">High</option>
+                <option value="watch">Watch</option>
+                <option value="clear">Clear</option>
+              </select>
+            </label>
+            <button class="button ghost" id="traceCritical">Trace critical path</button>
+          </div>
+
+          <div class="graph-canvas" id="graphCanvas" aria-label="Agent network graph" data-runtime-surface="graph-layer">
+            <div class="graph-stage">
+              <svg class="edge-layer" viewBox="0 0 900 460" aria-hidden="true">
+                <path class="edge active" data-route="critical" d="M146 96 C270 72 295 122 390 138"></path>
+                <path class="edge" d="M510 143 C610 124 648 142 746 101"></path>
+                <path class="edge active" data-route="critical" d="M516 169 C610 210 633 256 742 280"></path>
+                <path class="edge" d="M144 235 C272 245 297 228 398 225"></path>
+                <path class="edge warning" d="M515 230 C604 232 650 206 750 197"></path>
+                <path class="edge" d="M150 350 C274 340 304 306 402 292"></path>
+                <path class="edge danger" data-route="critical" d="M512 302 C614 338 658 342 750 360"></path>
+                <path class="edge muted" d="M401 150 C358 190 363 210 404 226"></path>
+                <path class="edge muted" d="M407 242 C356 276 356 295 406 304"></path>
+              </svg>
+
+              <button class="node source clear" style="--x:36px; --y:58px" data-agent="researcher" data-team="support" data-risk="clear">
+                <span class="node-type">SUPPORT</span>
+                <strong>Researcher</strong>
+                <small>Owner: Mina</small>
+                <em>Healthy</em>
+              </button>
+              <button class="node processor watch selected" style="--x:376px; --y:112px" data-agent="planner" data-team="eng" data-risk="watch">
+                <span class="node-type">ENG</span>
+                <strong>Planner</strong>
+                <small>GPT-4.1 / v3.8</small>
+                <em>Watch</em>
+              </button>
+              <button class="node tool clear" style="--x:730px; --y:64px" data-agent="jira" data-team="eng" data-risk="clear">
+                <span class="node-type">TOOL</span>
+                <strong>Jira writer</strong>
+                <small>Write scope: limited</small>
+                <em>Approved</em>
+              </button>
+              <button class="node source clear" style="--x:40px; --y:205px" data-agent="support-triage" data-team="support" data-risk="clear">
+                <span class="node-type">SUPPORT</span>
+                <strong>Support triage</strong>
+                <small>Queue age 7m</small>
+                <em>Healthy</em>
+              </button>
+              <button class="node processor watch" style="--x:382px; --y:202px" data-agent="coder" data-team="eng" data-risk="watch">
+                <span class="node-type">ENG</span>
+                <strong>Coder</strong>
+                <small>Owner: Devon</small>
+                <em>Latency high</em>
+              </button>
+              <button class="node policy high" style="--x:728px; --y:182px" data-agent="policy" data-team="governance" data-risk="high">
+                <span class="node-type">POLICY</span>
+                <strong>PII gate</strong>
+                <small>2 approvals stale</small>
+                <em>Blocked</em>
+              </button>
+              <button class="node source clear" style="--x:38px; --y:326px" data-agent="revenue" data-team="revenue" data-risk="clear">
+                <span class="node-type">REVENUE</span>
+                <strong>CRM updater</strong>
+                <small>HubSpot scope</small>
+                <em>Healthy</em>
+              </button>
+              <button class="node processor clear" style="--x:385px; --y:278px" data-agent="summarizer" data-team="support" data-risk="clear">
+                <span class="node-type">SUPPORT</span>
+                <strong>Summarizer</strong>
+                <small>Claude 3.5</small>
+                <em>Healthy</em>
+              </button>
+              <button class="node tool high" style="--x:724px; --y:334px" data-agent="data-warehouse" data-team="governance" data-risk="high">
+                <span class="node-type">DATA</span>
+                <strong>Warehouse query</strong>
+                <small>Read PII table</small>
+                <em>Needs review</em>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <aside class="detail-panel panel" aria-label="Selected agent detail">
+          <div class="panel-header compact">
+            <div>
+              <h2 id="drawerTitle">Planner</h2>
+              <p id="drawerSubtitle">Engineering agent / GPT-4.1 / v3.8</p>
+            </div>
+            <span class="risk-pill watch" id="drawerRisk">Watch</span>
+          </div>
+
+          <div class="drawer-section">
+            <h3>Owner and policy</h3>
+            <dl class="facts">
+              <div><dt>Owner</dt><dd id="drawerOwner">Devon Lee</dd></div>
+              <div><dt>Reviewer</dt><dd>Security Ops</dd></div>
+              <div><dt>Policy gate</dt><dd id="drawerPolicy">PII write approval</dd></div>
+              <div><dt>Last release</dt><dd>v3.8.2, 42m ago</dd></div>
+            </dl>
+          </div>
+
+          <div class="drawer-section">
+            <h3>Capability matrix</h3>
+            <div class="matrix">
+              <span>Read tickets</span><b class="ok">Allowed</b>
+              <span>Write tickets</span><b class="ok">Allowed</b>
+              <span>Query CRM</span><b class="warn">Review</b>
+              <span>PII export</span><b class="stop">Blocked</b>
+            </div>
+          </div>
+
+          <div class="drawer-section">
+            <h3>Run replay</h3>
+            <ol class="timeline">
+              <li class="done"><span>09:42</span><p>Parsed 48 support tickets</p></li>
+              <li class="done"><span>09:44</span><p>Generated handoff plan</p></li>
+              <li class="warn"><span>09:47</span><p>Requested PII gate approval</p></li>
+              <li><span>09:51</span><p>Waiting for reviewer</p></li>
+            </ol>
+          </div>
+
+          <div class="drawer-actions">
+            <button class="button primary" id="assignButton">Assign reviewer</button>
+            <button class="button secondary" id="diffButton">View diff</button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="lower-grid">
+        <section class="runs-panel panel">
+          <div class="panel-header">
+            <div>
+              <h2>Runs and handoffs</h2>
+              <p>Live queue with owner, risk, and policy evidence.</p>
+            </div>
+            <div class="tabs" role="tablist" aria-label="Run filters">
+              <button class="active" data-run-filter="all">Live</button>
+              <button data-run-filter="blocked">Blocked</button>
+              <button data-run-filter="human">Waiting for human</button>
+              <button data-run-filter="risk">High risk</button>
+            </div>
+          </div>
+
+          <div class="table-toolbar">
+            <input id="runSearch" type="search" placeholder="Filter runs">
+            <select id="modelFilter">
+              <option value="all">All models</option>
+              <option value="gpt">GPT-4.1</option>
+              <option value="claude">Claude 3.5</option>
+              <option value="llama">Llama 3.1</option>
+            </select>
+            <button class="button secondary" id="refreshButton">Refresh</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Run</th>
+                  <th>Agent</th>
+                  <th>Owner</th>
+                  <th>Status</th>
+                  <th>Risk</th>
+                  <th>Policy</th>
+                  <th>Queue</th>
+                </tr>
+              </thead>
+              <tbody id="runsBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="ops-column">
+          <article class="panel">
+            <div class="panel-header compact">
+              <div>
+                <h2>Policy review queue</h2>
+                <p>Human approval gates tied to active handoffs.</p>
+              </div>
+              <span class="count-pill">5 open</span>
+            </div>
+            <div class="review-list" id="reviewList"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header compact">
+              <div>
+                <h2>Tool health</h2>
+                <p>Success rate, latency, and permission failures.</p>
+              </div>
+            </div>
+            <div class="tool-grid">
+              <div class="tool-card"><strong>GitHub</strong><span>99.1%</span><i style="--w:99%"></i></div>
+              <div class="tool-card warn"><strong>Jira</strong><span>92.4%</span><i style="--w:92%"></i></div>
+              <div class="tool-card"><strong>Slack</strong><span>98.7%</span><i style="--w:98%"></i></div>
+              <div class="tool-card danger"><strong>Warehouse</strong><span>86.9%</span><i style="--w:86%"></i></div>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="command-dialog" id="commandDialog">
+    <form method="dialog">
+      <div class="dialog-head">
+        <strong>Command palette</strong>
+        <button class="icon-button" value="close" title="Close">X</button>
+      </div>
+      <input type="search" placeholder="Trace path, assign owner, create policy exception" autofocus>
+      <div class="command-results">
+        <button value="trace">Trace critical handoff path</button>
+        <button value="assign">Assign reviewer to PII gate</button>
+        <button value="diff">Open Planner prompt diff</button>
+        <button value="export">Export audit packet</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
