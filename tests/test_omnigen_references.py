@@ -131,6 +131,8 @@ class OmnigenReferenceSelectionTests(unittest.TestCase):
             self.assertIn("an agent task console", html)
             self.assertIn("ai-agent-ui", html)
             self.assertIn("<img", html)
+            self.assertIn("omnigen-selected/01-an-agent-task-console-with-tool-timeline__sha-agent.png", html)
+            self.assertNotIn(str(project_dir), html)
 
     def test_sync_omnigen_sources_replaces_managed_entries_and_preserves_other_sources(self) -> None:
         profile = {

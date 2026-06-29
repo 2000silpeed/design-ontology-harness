@@ -627,11 +627,33 @@ def _render_gallery_card(item: dict[str, Any], output_dir: Path) -> str:
 
 
 def _gallery_image_path(item: dict[str, Any], output_dir: Path) -> str:
+    selected_relative_path = str(item.get("selected_relative_path") or "")
+    if selected_relative_path:
+        relative_path = Path(selected_relative_path)
+        if not relative_path.is_absolute():
+            relative_parts = relative_path.parts
+            selected_path = Path(str(item.get("selected_path") or ""))
+            if selected_path.is_absolute():
+                selected_absolute = selected_path.absolute()
+                output_absolute = output_dir.absolute()
+                for index in range(len(relative_parts)):
+                    candidate = Path(*relative_parts[index:])
+                    if (output_absolute / candidate).absolute() == selected_absolute:
+                        return str(candidate)
+            for index, part in enumerate(relative_parts):
+                if part == output_dir.name and index < len(relative_parts) - 1:
+                    return str(Path(*relative_parts[index + 1:]))
+            return selected_relative_path
+
     raw_path = str(item.get("selected_path") or item.get("source_path") or "")
     if not raw_path:
         return ""
     path = Path(raw_path)
     if path.is_absolute():
+        try:
+            return str(path.absolute().relative_to(output_dir.absolute()))
+        except ValueError:
+            pass
         try:
             return str(path.resolve().relative_to(output_dir.resolve()))
         except ValueError:
