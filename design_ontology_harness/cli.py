@@ -128,6 +128,24 @@ def build_parser() -> argparse.ArgumentParser:
     visual_target.add_argument("--project-dir", default=None, help="Optional project directory created by init")
     visual_parser.add_argument("--output-dir", default=None, help="Optional directory to write visual analysis outputs")
 
+    website_inspect_parser = subparsers.add_parser(
+        "inspect-reference-site",
+        help="Capture website screenshots, topology, behaviors, assets, and computed-style evidence as advisory reference context",
+    )
+    website_target = website_inspect_parser.add_mutually_exclusive_group(required=True)
+    website_target.add_argument("--brand-profile", default=None, help="Path to a JSON brand profile")
+    website_target.add_argument("--project-dir", default=None, help="Optional project directory created by init")
+    website_inspect_parser.add_argument("--url", required=True, help="Reference website URL to inspect")
+    website_inspect_parser.add_argument("--label", default=None, help="Optional label for this reference")
+    website_inspect_parser.add_argument("--output-dir", default=None, help="Optional directory to write website research outputs")
+    website_inspect_parser.add_argument("--timeout-ms", type=int, default=30000, help="Navigation timeout in milliseconds")
+    website_inspect_parser.add_argument(
+        "--sync-brand-profile",
+        action="store_true",
+        help="Append the generated website-inspection source to brand_profile.visual_reference.sources",
+    )
+    website_inspect_parser.add_argument("--json", action="store_true", help="Emit JSON summary")
+
     query_parser = subparsers.add_parser("generate-visual-queries", help="Generate Pinterest/image-search query candidates from brand profile and spec")
     query_target = query_parser.add_mutually_exclusive_group(required=True)
     query_target.add_argument("--brand-profile", default=None, help="Path to a JSON brand profile")
@@ -1235,6 +1253,60 @@ def main() -> None:
         print(f"  -> {output_dir}/components/component_specs.json")
         return
 
+    if args.command == "inspect-reference-site":
+        from .website_inspection import inspect_reference_site
+
+        brand_profile_path, project_dir, manifest = _resolve_brand_profile_target(
+            brand_profile_arg=args.brand_profile,
+            project_dir_arg=args.project_dir,
+        )
+        brand_profile = load_brand_profile(brand_profile_path)
+        output_dir = _resolve_support_output_dir(
+            raw_output=args.output_dir,
+            project_dir=project_dir,
+            manifest=manifest,
+            folder_name="website_research",
+        )
+        result = inspect_reference_site(
+            args.url,
+            output_dir,
+            label=args.label,
+            timeout_ms=args.timeout_ms,
+        )
+        visual_reference = {
+            "mode": "website-inspection",
+            "sources": [result.design_context_source],
+        }
+        design_context_pack = build_design_context_pack(brand_profile, visual_reference)
+        write_json(output_dir / "design_context_pack.json", design_context_pack)
+
+        if args.sync_brand_profile:
+            _sync_website_inspection_source(
+                brand_profile_path=brand_profile_path,
+                source=result.design_context_source,
+            )
+
+        summary = {
+            "output_dir": result.output_dir,
+            "report_path": result.report_path,
+            "final_url": result.report.get("final_url"),
+            "section_count": len(result.report.get("topology", []) or []),
+            "screenshots": result.report.get("screenshots", []),
+            "design_context_activation": design_context_pack.get("activation_state"),
+            "synced_brand_profile": bool(args.sync_brand_profile),
+        }
+        if args.json:
+            print(json.dumps(summary, ensure_ascii=False, indent=2))
+        else:
+            print(f"[inspect-reference-site] 웹사이트 레퍼런스 inspection 완료: {output_dir}")
+            print(f"  -> URL: {summary['final_url']}")
+            print(f"  -> sections: {summary['section_count']} | screenshots: {len(summary['screenshots'])}")
+            print(f"  -> report: {result.report_path}")
+            print(f"  -> design_context_pack: {output_dir / 'design_context_pack.json'}")
+            if args.sync_brand_profile:
+                print(f"  -> brand_profile visual_reference.sources 동기화: {brand_profile_path}")
+        return
+
     if args.command == "analyze-visuals":
         brand_profile_path, project_dir, manifest = _resolve_brand_profile_target(
             brand_profile_arg=args.brand_profile,
@@ -2083,6 +2155,57 @@ def _read_json_if_exists(path: Path) -> dict | None:
     if not path.exists():
         return None
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _sync_website_inspection_source(
+    *,
+    brand_profile_path: Path,
+    source: dict,
+) -> None:
+    raw_profile = json.loads(brand_profile_path.read_text(encoding="utf-8"))
+    visual_reference = raw_profile.setdefault("visual_reference", {})
+    if not isinstance(visual_reference, dict):
+        visual_reference = {}
+        raw_profile["visual_reference"] = visual_reference
+    visual_reference["mode"] = "website-inspection"
+    visual_reference.setdefault("extraction_policy", "advisory-only")
+    existing_sources = visual_reference.get("sources")
+    if not isinstance(existing_sources, list):
+        existing_sources = []
+
+    normalized_source = deepcopy(source)
+    path_text = str(normalized_source.get("path") or "")
+    if path_text:
+        path = Path(path_text)
+        if path.is_absolute():
+            try:
+                normalized_source["path"] = str(path.relative_to(brand_profile_path.parent))
+            except ValueError:
+                normalized_source["path"] = str(path)
+
+    source_id = str(normalized_source.get("source_id") or "")
+    source_url = str(normalized_source.get("url") or "")
+    replaced = False
+    merged_sources: list[dict | str] = []
+    for item in existing_sources:
+        if not isinstance(item, dict):
+            merged_sources.append(item)
+            continue
+        same_source_id = source_id and str(item.get("source_id") or "") == source_id
+        same_url = (
+            str(item.get("kind") or "") == "website-inspection"
+            and source_url
+            and str(item.get("url") or "") == source_url
+        )
+        if same_source_id or same_url:
+            merged_sources.append(normalized_source)
+            replaced = True
+        else:
+            merged_sources.append(item)
+    if not replaced:
+        merged_sources.append(normalized_source)
+    visual_reference["sources"] = merged_sources
+    write_json(brand_profile_path, raw_profile)
 
 
 def _apply_pinterest_candidate_selection_updates(

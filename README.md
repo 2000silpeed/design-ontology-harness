@@ -26,6 +26,7 @@
 | Omnigen vault에서 프로젝트별 UI 레퍼런스 선별 | `omnigen_references.py`, `select-omnigen-references` |
 | Omnigen 외부 소스를 pack으로 묶는 범용 계층 추가 | `reference_packs.py`, `build-reference-pack`, `select-visual-references` |
 | provider-neutral reference layer 추가 | `reference_context.py`, `design_context_pack.json` |
+| 공개 웹페이지를 advisory reference로 정찰 | `website_inspection.py`, `inspect-reference-site` |
 | Pinterest-assisted 검색/캡처/선택 흐름 추가 | `generate-visual-queries`, `capture-pinterest`, `select-pinterest-candidates` |
 | 이미지 에셋 governance 확장 | `GeneratedVisualAsset`, `SourcedVisualAsset`, `LicensePolicy` |
 | `system_spec.md` 후반 섹션 확장 | 22-26번 섹션 |
@@ -205,6 +206,25 @@ uv run design-ontology export-reference-gallery \
 ```
 
 `metadata` pack은 원본 이미지를 복사하지 않고 URL과 메타데이터만 남깁니다. 실제 이미지 분석이 필요하면 local folder pack을 `--materialize copy`로 만들거나, 웹 이미지를 내부 용도로 `--materialize download`로 내려받으면 됩니다. 검색어와 같은 단어를 공통 `--tags`에 넣으면 모든 asset 점수가 비슷해지므로, 공통 tag는 `public-web`, `reference-only`처럼 중립적으로 두는 편이 좋습니다. 자세한 내용은 [docs/VISUAL_REFERENCE_PACKS.md](./docs/VISUAL_REFERENCE_PACKS.md)를 참고하세요.
+
+### 2-1. Website Reference Inspection
+
+공개 웹페이지의 섹션 구조, 화면 밀도, 상호작용 affordance를 참고하고 싶을 때는
+`inspect-reference-site`로 research artifact를 만듭니다. 이 명령은 원본 사이트를
+복제하기 위한 경로가 아니라, `Design Context Pack`에 넣을 수 있는 advisory reference를
+만드는 경로입니다.
+
+```bash
+uv run design-ontology inspect-reference-site \
+  --project-dir projects/my-app \
+  --url https://example.com/product \
+  --label "Example product page" \
+  --sync-brand-profile
+```
+
+생성되는 `build/website_research/design_context_pack.json`은 형태, 밀도, hierarchy rhythm,
+interaction model만 참고 신호로 제공합니다. 색상, 폰트, IA, 카피, 외부 이미지는 흡수하지
+않습니다. 자세한 내용은 [docs/WEBSITE_REFERENCE_INSPECTION.md](./docs/WEBSITE_REFERENCE_INSPECTION.md)를 참고하세요.
 
 ### 3. Visual Reference 분석
 
@@ -564,6 +584,7 @@ http://127.0.0.1:8765/projects/omnigen-crm-demo/demo-report.html
 | `run-project` | KB, brand profile, spec, visual reference를 합성해 시스템 산출물 생성 |
 | `analyze-spec` | 설계서에서 필요한 컴포넌트와 product primitive 탐지 |
 | `analyze-visuals` | 로컬 이미지/스크린샷 기반 visual reference 분석 |
+| `inspect-reference-site` | 공개 웹페이지를 advisory-only reference context로 정찰 |
 | `generate-visual-queries` | 브랜드와 spec 기반 이미지 검색 query 생성 |
 | `capture-pinterest` | Pinterest 검색 결과 tile을 로컬 후보로 캡처 |
 | `select-pinterest-candidates` | 캡처 후보를 selection manifest에 고정 |

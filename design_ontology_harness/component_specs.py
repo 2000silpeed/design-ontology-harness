@@ -598,6 +598,9 @@ def generate_component_specs(
             "visual_adaptation": _build_visual_adaptation_notes(
                 comp["name"], family, archetype_key, visual_guidance
             ),
+            "observed_reference_evidence": _build_observed_reference_evidence(
+                comp["name"], family, visual_guidance
+            ),
             "reference_evidence": kb_evidence,
             "implementation_notes": _build_implementation_notes(
                 comp["name"],
@@ -778,6 +781,18 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
                 md_lines.append(f"- **{note['aspect']}**: {note['summary']}{suffix}")
             md_lines.append("")
 
+        if spec.get("observed_reference_evidence"):
+            md_lines.append("### Observed Reference Evidence\n")
+            md_lines.append("- 아래 근거는 형태, 밀도, 상호작용 affordance 참고용이다. 색상, 폰트, IA, 카피, 외부 에셋은 흡수하지 않는다.")
+            for evidence in spec["observed_reference_evidence"][:3]:
+                traits = evidence.get("absorbed_traits") or []
+                trait_suffix = f" traits={', '.join(traits[:4])}" if traits else ""
+                md_lines.append(
+                    f"- **{evidence['provider_id']} / {evidence['context_id']}**: "
+                    f"{evidence['label']}{trait_suffix}"
+                )
+            md_lines.append("")
+
         if spec["reference_evidence"]:
             md_lines.append("### 레퍼런스 근거\n")
             for evidence in spec["reference_evidence"][:3]:
@@ -825,6 +840,7 @@ def _collect_visual_guidance(brand_profile: dict, blueprint: dict) -> dict:
     )
     visual_motifs = blueprint.get("visual_language") or visual_reference.get("visual_motifs") or {}
     layout_cues = blueprint.get("layout_cues") or visual_reference.get("layout_cues") or []
+    design_context_pack = blueprint.get("design_context_pack") or brand_profile.get("_design_context_pack") or {}
 
     return {
         "connected": bool(visual_reference or component_style_hints or visual_motifs or layout_cues),
@@ -835,6 +851,8 @@ def _collect_visual_guidance(brand_profile: dict, blueprint: dict) -> dict:
         "typography_mood": (visual_motifs.get("typography_mood") or {}).get("value"),
         "top_layout_cue": layout_cues[0]["id"] if layout_cues else None,
         "component_style_hints": component_style_hints,
+        "design_context_activation": design_context_pack.get("activation_state"),
+        "reference_observations": _collect_reference_observations(design_context_pack),
     }
 
 
@@ -859,6 +877,30 @@ def _collect_responsive_guidance(blueprint: dict) -> dict:
         "control_rules": policy.get("control_rules", []),
         "failure_patterns": policy.get("failure_patterns", []),
     }
+
+
+def _collect_reference_observations(design_context_pack: dict) -> list[dict]:
+    if not isinstance(design_context_pack, dict):
+        return []
+    observations: list[dict] = []
+    for card in design_context_pack.get("context_cards", []) or []:
+        if not isinstance(card, dict):
+            continue
+        if card.get("provenance_level") != "observed":
+            continue
+        observations.append(
+            {
+                "context_id": card.get("context_id"),
+                "provider_id": card.get("provider_id"),
+                "kind": card.get("kind"),
+                "label": card.get("label"),
+                "flows": card.get("flows", []),
+                "morphology": card.get("morphology", []),
+                "absorbed_traits": card.get("absorbed_traits", []),
+                "must_not_absorb": card.get("must_not_absorb", []),
+            }
+        )
+    return observations[:12]
 
 
 def _build_token_bindings(name: str, family: str, source: dict) -> dict[str, str]:
@@ -1017,6 +1059,90 @@ def _build_visual_adaptation_notes(
         seen_aspects.add(aspect)
         deduped.append(note)
     return deduped
+
+
+def _build_observed_reference_evidence(name: str, family: str, visual_guidance: dict) -> list[dict]:
+    observations = visual_guidance.get("reference_observations") or []
+    if not observations:
+        return []
+
+    component_terms = _component_match_terms(name, family)
+    scored: list[tuple[int, dict]] = []
+    for observation in observations:
+        if not isinstance(observation, dict):
+            continue
+        obs_terms = _observation_terms(observation)
+        score = len(component_terms & obs_terms)
+        provider_id = str(observation.get("provider_id") or "")
+        if provider_id == "website-inspection":
+            score += 1
+        if family == "navigation" and {"navigation", "nav", "sidebar"} & obs_terms:
+            score += 3
+        if family == "data-display" and {"dashboard", "data", "table", "grid", "card", "panel"} & obs_terms:
+            score += 3
+        if family == "button" and {"click", "input", "cta"} & obs_terms:
+            score += 2
+        if family == "overlay" and {"drawer", "modal", "overlay", "inspector"} & obs_terms:
+            score += 2
+        if score:
+            scored.append((score, observation))
+
+    if not scored:
+        scored = [
+            (1, observation)
+            for observation in observations
+            if isinstance(observation, dict) and observation.get("provider_id") == "website-inspection"
+        ][:1]
+
+    scored.sort(key=lambda item: (-item[0], str(item[1].get("context_id") or "")))
+    evidence: list[dict] = []
+    for _score, observation in scored[:3]:
+        evidence.append(
+            {
+                "context_id": observation.get("context_id"),
+                "provider_id": observation.get("provider_id"),
+                "kind": observation.get("kind"),
+                "label": observation.get("label"),
+                "flows": observation.get("flows", []),
+                "morphology": observation.get("morphology", []),
+                "absorbed_traits": observation.get("absorbed_traits", []),
+                "must_not_absorb": observation.get("must_not_absorb", []),
+            }
+        )
+    return evidence
+
+
+def _component_match_terms(name: str, family: str) -> set[str]:
+    terms = set(_split_component_terms(name))
+    terms.update(_split_component_terms(family))
+    family_expansions = {
+        "navigation": {"navigation", "nav", "sidebar", "topbar", "tabs", "menu"},
+        "data-display": {"dashboard", "data", "table", "grid", "card", "panel", "metric"},
+        "button": {"button", "cta", "click", "action"},
+        "input": {"input", "form", "composer", "search"},
+        "feedback": {"badge", "status", "alert", "toast"},
+        "overlay": {"modal", "drawer", "overlay", "inspector"},
+        "marketing": {"hero", "section", "cta", "landing"},
+    }
+    terms.update(family_expansions.get(family, set()))
+    return terms
+
+
+def _observation_terms(observation: dict) -> set[str]:
+    values: list[str] = []
+    for key in ("provider_id", "kind", "label"):
+        value = observation.get(key)
+        if value:
+            values.append(str(value))
+    for key in ("flows", "morphology", "absorbed_traits"):
+        for item in observation.get(key, []) or []:
+            values.append(str(item))
+    return set(_split_component_terms(" ".join(values)))
+
+
+def _split_component_terms(value: str) -> list[str]:
+    normalized = "".join(ch.lower() if ch.isalnum() else " " for ch in str(value))
+    return [part for part in normalized.split() if part]
 
 
 def _make_visual_note(
