@@ -200,6 +200,32 @@ def export_omnigen_selection_gallery(
     return path
 
 
+def build_omnigen_query_from_profile(profile: dict[str, Any]) -> str:
+    """Build a project-shaped Omnigen search query from brand profile fields."""
+
+    parts: list[str] = []
+    for key in (
+        "product_summary",
+        "brand_keywords",
+        "visual_keywords",
+        "product_primitives",
+        "platforms",
+    ):
+        value = profile.get(key)
+        if isinstance(value, str):
+            parts.append(value)
+        elif isinstance(value, list):
+            parts.extend(str(item) for item in value if isinstance(item, str))
+    visual_reference = profile.get("visual_reference")
+    if isinstance(visual_reference, dict):
+        query = visual_reference.get("query")
+        if isinstance(query, str):
+            parts.append(query)
+        elif isinstance(query, list):
+            parts.extend(str(item) for item in query if isinstance(item, str))
+    return " ".join(parts)
+
+
 def _load_candidates(
     *,
     index_path: Path,

@@ -58,7 +58,7 @@ flowchart TB
         COLOR["color_reference.md"] --> SYNTH
         FONT["font reference DB"] --> SYNTH
         IMAGES["local images / screenshots / Figma export"] --> VISUAL["Visual Reference Analysis"]
-        OMNI["Omnigen vault index.sqlite"] --> SELECT["select-omnigen-references"]
+        OMNI["Omnigen vault index.sqlite"] --> SELECT["curate-omnigen-references"]
         SELECT --> VISUAL
         PIN["Pinterest-assisted capture"] --> VISUAL
     end
@@ -138,7 +138,7 @@ flowchart TB
 기본 검색 카테고리:
 
 ```text
-web-design, app-design, mobile-design
+web-design, app-design, mobile-design, ai-agent-ui
 ```
 
 선별 시 참고하는 값:
@@ -152,15 +152,19 @@ web-design, app-design, mobile-design
 선별 결과는 프로젝트 안에 metadata manifest로 남고, 이미지는 기본적으로 `build/visuals/omnigen-selected/`에 symlink됩니다. 그래서 하네스 본체나 public plugin 배포물에 이미지 원본이 섞이지 않습니다.
 
 ```bash
-uv run design-ontology select-omnigen-references \
+uv run design-ontology curate-omnigen-references \
   --project-dir projects/my-app \
   --vault-dir ~/.omnigen-vault \
-  --query "analytics dashboard crm contacts settings table" \
+  --query "analytics dashboard crm contacts settings table agent task console" \
   --category app-design \
   --category web-design \
-  --count 12 \
-  --sync-sources
+  --category ai-agent-ui \
+  --count 12
 ```
+
+이 빠른 경로는 선별 manifest, HTML 검수 갤러리, `brand_profile.visual_reference.sources`
+동기화, `visual_reference_report.json`, `design_context_pack.json`까지 한 번에 생성합니다.
+선별만 따로 조정하고 싶으면 `select-omnigen-references`를 쓰면 됩니다.
 
 link mode는 세 가지입니다.
 
@@ -589,6 +593,7 @@ http://127.0.0.1:8765/projects/omnigen-crm-demo/demo-report.html
 | `capture-pinterest` | Pinterest 검색 결과 tile을 로컬 후보로 캡처 |
 | `select-pinterest-candidates` | 캡처 후보를 selection manifest에 고정 |
 | `sync-pinterest-selection` | 선택된 Pinterest 후보를 `visual_reference.sources`에 반영 |
+| `curate-omnigen-references` | Omnigen vault에서 선별, 갤러리, source 동기화, visual analysis까지 실행 |
 | `select-omnigen-references` | 로컬 Omnigen vault에서 프로젝트별 이미지 레퍼런스 선별 |
 | `build-reference-pack` | 로컬 폴더, manifest, 웹 URL에서 Visual Reference Pack 생성 |
 | `list-reference-packs` | 설치된 Visual Reference Pack 목록 확인 |

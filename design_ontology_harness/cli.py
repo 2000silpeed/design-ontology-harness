@@ -16,10 +16,12 @@ from .omnigen_references import (
     DEFAULT_CATEGORIES as OMNIGEN_DEFAULT_CATEGORIES,
     DEFAULT_OMNIGEN_VAULT_DIR,
     DEFAULT_REFERENCE_DIR as OMNIGEN_DEFAULT_REFERENCE_DIR,
+    build_omnigen_query_from_profile,
     export_omnigen_selection_gallery,
     select_omnigen_references,
     sync_omnigen_sources,
 )
+from .omnigen_workflow import curate_omnigen_reference_artifacts
 from .pinterest_capture import capture_pinterest_candidates
 from .scaffold import load_project, resolve_kb_dir, scaffold_project
 from .pinterest_assist import build_pinterest_assist_bundle
@@ -223,6 +225,45 @@ def build_parser() -> argparse.ArgumentParser:
     )
     omnigen_parser.add_argument("--sync-sources", action="store_true", help="Update brand_profile.visual_reference.sources with the selected references")
     omnigen_parser.add_argument("--output-dir", default=None, help="Optional directory for omnigen_reference_selection.json")
+
+    omnigen_workflow_parser = subparsers.add_parser(
+        "curate-omnigen-references",
+        help="Select Omnigen references, export a review gallery, sync sources, and write visual analysis artifacts",
+    )
+    omnigen_workflow_target = omnigen_workflow_parser.add_mutually_exclusive_group(required=True)
+    omnigen_workflow_target.add_argument("--brand-profile", default=None, help="Path to a JSON brand profile")
+    omnigen_workflow_target.add_argument("--project-dir", default=None, help="Optional project directory created by init")
+    omnigen_workflow_parser.add_argument("--vault-dir", default=str(DEFAULT_OMNIGEN_VAULT_DIR), help="Omnigen vault directory containing index.sqlite")
+    omnigen_workflow_parser.add_argument("--query", default=None, help="Search terms used to score Omnigen image metadata")
+    omnigen_workflow_parser.add_argument(
+        "--category",
+        action="append",
+        dest="categories",
+        default=[],
+        help=f"Omnigen category to search. Defaults to: {', '.join(OMNIGEN_DEFAULT_CATEGORIES)}",
+    )
+    omnigen_workflow_parser.add_argument("--count", type=int, default=12, help="Number of selected references to keep")
+    omnigen_workflow_parser.add_argument("--orientation", choices=["any", "landscape", "portrait"], default="any")
+    omnigen_workflow_parser.add_argument("--max-per-subject", type=int, default=2, help="Diversity cap before backfilling")
+    omnigen_workflow_parser.add_argument("--min-rating", type=int, default=None, help="Optional minimum Omnigen rating")
+    omnigen_workflow_parser.add_argument("--max-ocr-chars", type=int, default=None, help="Optional OCR text cap to avoid text-heavy generated UI")
+    omnigen_workflow_parser.add_argument("--link-mode", choices=["symlink", "copy", "absolute"], default="symlink")
+    omnigen_workflow_parser.add_argument(
+        "--reference-dir",
+        default=OMNIGEN_DEFAULT_REFERENCE_DIR,
+        help="Project-local directory for symlinks/copies. Defaults inside ignored build/.",
+    )
+    omnigen_workflow_parser.add_argument(
+        "--no-gallery",
+        action="store_true",
+        help="Skip the HTML review gallery",
+    )
+    omnigen_workflow_parser.add_argument(
+        "--gallery-output",
+        default=None,
+        help="Optional path for the HTML gallery (default: <output-dir>/omnigen_reference_gallery.html)",
+    )
+    omnigen_workflow_parser.add_argument("--output-dir", default=None, help="Optional directory for workflow and visual analysis outputs")
 
     pack_build_parser = subparsers.add_parser("build-reference-pack", help="Build a portable visual reference pack from local folders, manifests, or web image URLs")
     pack_build_parser.add_argument("--pack-id", required=True, help="Stable pack id, for example crm-dashboard-web")
@@ -1617,6 +1658,71 @@ def main() -> None:
         print(f"  -> promoted {assist_bundle['plan']['capture_progress']['promoted_count']}")
         return
 
+    if args.command == "curate-omnigen-references":
+        brand_profile_path, project_dir, manifest = _resolve_brand_profile_target(
+            brand_profile_arg=args.brand_profile,
+            project_dir_arg=args.project_dir,
+        )
+        visuals_dir = _resolve_support_output_dir(
+            raw_output=args.output_dir,
+            project_dir=project_dir,
+            manifest=manifest,
+            folder_name="visuals",
+        )
+        result = curate_omnigen_reference_artifacts(
+            brand_profile_path=brand_profile_path,
+            project_dir=project_dir,
+            output_dir=visuals_dir,
+            vault_dir=Path(args.vault_dir),
+            query=args.query,
+            categories=args.categories or None,
+            count=args.count,
+            orientation=args.orientation,
+            max_per_subject=args.max_per_subject,
+            min_rating=args.min_rating,
+            max_ocr_chars=args.max_ocr_chars,
+            link_mode=args.link_mode,
+            reference_dir=args.reference_dir,
+            export_gallery=not args.no_gallery,
+            gallery_output=Path(args.gallery_output) if args.gallery_output else None,
+        )
+
+        selection_manifest = result["selection_manifest"]
+        sync_result = result["sync_result"]
+        visual_report = result["visual_report"]
+        coverage = visual_report.get("coverage", {}) or {}
+        motifs = visual_report.get("visual_motifs", {}) or {}
+        layout_cues = visual_report.get("layout_cues", []) or []
+        top_layout = layout_cues[0]["id"] if layout_cues else "n/a"
+        print(
+            f"[curate-omnigen-references] {selection_manifest['selected_count']}개 reference 선별, "
+            f"동기화, 분석 완료: {visuals_dir}"
+        )
+        print(
+            f"  -> query: {selection_manifest['query'] or '(profile-derived)'} | "
+            f"categories: {', '.join(selection_manifest['categories'])}"
+        )
+        print(
+            f"  -> candidates {selection_manifest['scored_candidate_count']} / "
+            f"selected {selection_manifest['selected_count']} | "
+            f"managed sources {sync_result['managed_source_count']}"
+        )
+        if result["gallery_path"]:
+            print(f"  -> gallery: {result['gallery_path']}")
+        print(f"  -> workflow: {result['workflow_summary_path']}")
+        print(
+            f"  -> visual analysis: sources {coverage.get('source_count', 0)} | "
+            f"images {coverage.get('image_count', 0)} | layout {top_layout} | "
+            f"density {(motifs.get('density') or {}).get('value', 'n/a')}"
+        )
+        if result["issues"]:
+            print("  -> 이슈:")
+            for issue in result["issues"][:5]:
+                print(f"     - {issue}")
+        if project_dir:
+            print(f"  -> 다음: uv run design-ontology run-project --project-dir {project_dir}")
+        return
+
     if args.command == "select-omnigen-references":
         brand_profile_path, project_dir, manifest = _resolve_brand_profile_target(
             brand_profile_arg=args.brand_profile,
@@ -2052,27 +2158,7 @@ def _warn_placeholder_profile(profile: dict) -> None:
 
 
 def _omnigen_query_from_profile(profile: dict) -> str:
-    parts: list[str] = []
-    for key in (
-        "product_summary",
-        "brand_keywords",
-        "visual_keywords",
-        "product_primitives",
-        "platforms",
-    ):
-        value = profile.get(key)
-        if isinstance(value, str):
-            parts.append(value)
-        elif isinstance(value, list):
-            parts.extend(str(item) for item in value if isinstance(item, str))
-    visual_reference = profile.get("visual_reference")
-    if isinstance(visual_reference, dict):
-        query = visual_reference.get("query")
-        if isinstance(query, str):
-            parts.append(query)
-        elif isinstance(query, list):
-            parts.extend(str(item) for item in query if isinstance(item, str))
-    return " ".join(parts)
+    return build_omnigen_query_from_profile(profile)
 
 
 def _resolve_brand_profile_target(

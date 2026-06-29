@@ -17,7 +17,39 @@ separate image corpus if they want a richer starting point.
 - Selected Omnigen images are `reference-analysis-only`; they are not
   redistributable product assets.
 
-## Select References From A Local Vault
+## Fast Path: Curate And Analyze
+
+```bash
+uv run design-ontology curate-omnigen-references \
+  --project-dir projects/my-app \
+  --query "analytics dashboard crm settings agent task console" \
+  --category app-design \
+  --category web-design \
+  --category ai-agent-ui \
+  --count 12
+```
+
+The command writes:
+
+- `projects/my-app/build/visuals/omnigen_reference_selection.json`
+- `projects/my-app/build/visuals/omnigen_reference_gallery.html`
+- `projects/my-app/build/visuals/omnigen_reference_workflow.json`
+- `projects/my-app/build/visuals/omnigen-selected/*` symlinks by default
+- updated `projects/my-app/brand_profile.json`
+- visual analysis outputs including `visual_reference_report.json`,
+  `layout_cues.json`, `component_style_hints.json`, and
+  `design_context_pack.json`
+
+Then run the system synthesis step when the project has a KB configured:
+
+```bash
+uv run design-ontology run-project --project-dir projects/my-app
+```
+
+## Manual Selection Only
+
+Use `select-omnigen-references` when you want to inspect the selected images
+before syncing or analyzing them:
 
 ```bash
 uv run design-ontology select-omnigen-references \
@@ -30,13 +62,6 @@ uv run design-ontology select-omnigen-references \
   --export-gallery \
   --sync-sources
 ```
-
-The command writes:
-
-- `projects/my-app/build/visuals/omnigen_reference_selection.json`
-- `projects/my-app/build/visuals/omnigen_reference_gallery.html` when `--export-gallery` is passed
-- `projects/my-app/build/visuals/omnigen-selected/*` symlinks by default
-- updated `projects/my-app/brand_profile.json` when `--sync-sources` is passed
 
 Then run:
 
