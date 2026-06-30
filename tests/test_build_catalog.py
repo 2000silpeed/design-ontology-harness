@@ -104,8 +104,8 @@ def test_render_catalog_current_presets_matrix():
     md = BC.render_catalog(PRESETS_ROOT)
     # Axis counts line
     assert "Axes: app_mode (×8) × brand_tone (×5)" in md
-    # 20 presets currently in matrix.json (P0×5 + P1×5 + P2×5 + P3×5)
-    assert "Total presets: **20**" in md
+    # 21 presets currently in matrix.json after adding monitoring-ops--corporate-trust.
+    assert "Total presets: **21**" in md
     # Matrix header row with all 5 brand tones
     for tone in ("minimal-tech", "editorial-warm", "bold-confident", "playful-soft", "corporate-trust"):
         assert tone in md

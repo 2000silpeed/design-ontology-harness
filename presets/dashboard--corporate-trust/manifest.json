@@ -18,7 +18,13 @@
     "dark"
   ],
   "default_color_mode": "dark",
-  "tags": [],
+  "tags": [
+    "fintech",
+    "banking",
+    "enterprise",
+    "governance",
+    "ko"
+  ],
   "locale_pairings": {},
   "owner": "sungwoon",
   "tier": "P1",

@@ -1,8 +1,8 @@
 const NAV_ITEMS = [
-  { label: "Reviews", href: "#reviews" },
-  { label: "Compare", href: "#compare" },
-  { label: "Method", href: "#methodology" },
-  { label: "Membership", href: "#membership" },
+  { label: "리뷰", href: "#reviews" },
+  { label: "비교표", href: "#compare" },
+  { label: "랭킹", href: "#rankings" },
+  { label: "방법론", href: "#methodology" },
 ];
 
 export function SiteNav() {

@@ -404,7 +404,13 @@
         "dark"
       ],
       "default_color_mode": "dark",
-      "tags": [],
+      "tags": [
+        "fintech",
+        "banking",
+        "enterprise",
+        "governance",
+        "ko"
+      ],
       "description": "Agent Org Network question-routing console design system",
       "source_project": "agent-org-network",
       "owner": "sungwoon",

@@ -692,6 +692,14 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
         scale = typography_guidance.get("scale") or {}
         if scale.get("guidance"):
             md_lines.append(f"- Scale guidance: {scale['guidance']}")
+        constraints = (typography_guidance.get("implementation_constraints") or {}).get("headline_display") or {}
+        if constraints:
+            md_lines.append(
+                "- Hangul display safety: "
+                f"line-height >= {constraints.get('line_height_min', 'n/a')} | "
+                f"tracking {constraints.get('letter_spacing_min', 'n/a')} to {constraints.get('letter_spacing_max', 'n/a')} | "
+                "forced <br /> 금지 until breakpoint QA"
+            )
         for rule in typography_guidance.get("rules", [])[:4]:
             md_lines.append(f"- {rule}")
         md_lines.append("")

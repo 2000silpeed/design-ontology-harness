@@ -40,28 +40,28 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <SiteFooter>
           <FooterColumn title="Reviews">
-            <FooterLink href="#reviews">Latest Reviews</FooterLink>
-            <FooterLink href="#verdicts">Verdict Snapshot</FooterLink>
-            <FooterLink href="#compare">Compare Board</FooterLink>
-            <FooterLink href="#charts">Charts</FooterLink>
+            <FooterLink href="#reviews">이번 주 리뷰</FooterLink>
+            <FooterLink href="#reviews">에디터 큐레이션</FooterLink>
+            <FooterLink href="#compare">구매 판단 표</FooterLink>
+            <FooterLink href="#rankings">월간 랭킹</FooterLink>
           </FooterColumn>
           <FooterColumn title="Tools">
-            <FooterLink href="#compare">구매 판단 도구</FooterLink>
-            <FooterLink href="#membership">멤버십</FooterLink>
-            <FooterLink href="#newsletter">뉴스레터</FooterLink>
-            <FooterLink href="#faq">FAQ</FooterLink>
+            <FooterLink href="#compare">비교 보드</FooterLink>
+            <FooterLink href="#discover">탐색 패널</FooterLink>
+            <FooterLink href="#newsletter">주간 다이제스트</FooterLink>
+            <FooterLink href="#methodology">평가 기준</FooterLink>
           </FooterColumn>
           <FooterColumn title="Editorial">
             <FooterLink href="#methodology">방법론</FooterLink>
             <FooterLink href="#methodology">점수 체계</FooterLink>
             <FooterLink href="#reviews">플랫폼 커버리지</FooterLink>
-            <FooterLink href="#about">에디터 노트</FooterLink>
+            <FooterLink href="#top">에디터 노트</FooterLink>
           </FooterColumn>
           <FooterColumn title="Checkpoint">
-            <FooterLink href="#about">About</FooterLink>
+            <FooterLink href="#top">About</FooterLink>
             <FooterLink href="#newsletter">Contact</FooterLink>
-            <FooterLink href="#membership">Partnerships</FooterLink>
-            <FooterLink href="#faq">Support</FooterLink>
+            <FooterLink href="#newsletter">Partnerships</FooterLink>
+            <FooterLink href="#newsletter">Support</FooterLink>
           </FooterColumn>
           <FooterLegal />
         </SiteFooter>

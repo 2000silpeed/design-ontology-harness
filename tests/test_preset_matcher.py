@@ -83,15 +83,15 @@ def test_fallback_when_only_low_matches():
     )
 
 
-def test_unique_app_mode_infers_brand_tone_for_demo_query():
+def test_monitoring_ops_requires_brand_tone_when_multiple_tones_exist():
     query = MatchQuery(
         free_text="SRE observability dashboard, Grafana/Datadog style, dense tables, dark default, alert feed"
     )
     results = match_presets(query, top_k=3)
 
     assert results[0].preset_id == "monitoring-ops--minimal-tech"
-    assert results[0].bucket == "High"
-    assert results[0].missing_signals == []
+    assert results[0].bucket == "Low"
+    assert results[0].missing_signals == ["brand_tone"]
 
 
 def test_color_mode_filter_zeroes_unsupported():
