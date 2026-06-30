@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Panel Pop Mobile Comic Magazine</title>
+    <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <link rel="stylesheet" href="./design-system/tokens.css" />
+    <link rel="stylesheet" href="./design-system/fonts.css" />
+    <link rel="stylesheet" href="./styles.css?v=icon-quality-2" />
+  </head>
+  <body data-locale="ko">
+    <a class="skip-link" href="#main">본문으로 이동</a>
+
+    <svg class="icon-sprite" data-icon-set="lucide" aria-hidden="true" focusable="false">
+      <symbol id="icon-home" viewBox="0 0 24 24">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
+        <path d="M9 22V12h6v10" />
+      </symbol>
+      <symbol id="icon-book-open" viewBox="0 0 24 24">
+        <path d="M12 7v14" />
+        <path d="M3 18a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3Z" />
+      </symbol>
+      <symbol id="icon-library" viewBox="0 0 24 24">
+        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5Z" />
+        <path d="M8 7h8" />
+        <path d="M8 11h8" />
+        <path d="M8 15h5" />
+      </symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24">
+        <path d="m21 21-4.2-4.2" />
+        <circle cx="11" cy="11" r="7" />
+      </symbol>
+      <symbol id="icon-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="5" />
+        <path d="M20 21a8 8 0 0 0-16 0" />
+      </symbol>
+      <symbol id="icon-bell" viewBox="0 0 24 24">
+        <path d="M10.3 21a2 2 0 0 0 3.4 0" />
+        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+      </symbol>
+      <symbol id="icon-moon" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 6 9 9 0 1 1-9-6Z" />
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </symbol>
+      <symbol id="icon-bookmark" viewBox="0 0 24 24">
+        <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2Z" />
+      </symbol>
+      <symbol id="icon-heart" viewBox="0 0 24 24">
+        <path d="M19.5 12.6 12 20l-7.5-7.4a5 5 0 0 1 7.1-7.1l.4.4.4-.4a5 5 0 1 1 7.1 7.1Z" />
+      </symbol>
+      <symbol id="icon-play" viewBox="0 0 24 24">
+        <polygon points="6 3 20 12 6 21 6 3" />
+      </symbol>
+      <symbol id="icon-grid" viewBox="0 0 24 24">
+        <rect width="7" height="7" x="3" y="3" rx="1" />
+        <rect width="7" height="7" x="14" y="3" rx="1" />
+        <rect width="7" height="7" x="14" y="14" rx="1" />
+        <rect width="7" height="7" x="3" y="14" rx="1" />
+      </symbol>
+      <symbol id="icon-message" viewBox="0 0 24 24">
+        <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9H13a8.5 8.5 0 0 1 8 8v.5Z" />
+      </symbol>
+      <symbol id="icon-chevron" viewBox="0 0 24 24">
+        <path d="m9 18 6-6-6-6" />
+      </symbol>
+    </svg>
+
+    <div class="app-stage">
+      <div class="phone-frame" data-runtime-surface="mobile-comic-magazine-app">
+        <header class="topbar" aria-label="Panel Pop 앱 상태">
+          <div class="brand-lockup">
+            <img src="./assets/app-icon.svg" alt="" width="44" height="44" />
+            <div>
+              <p>weekly comic magazine</p>
+              <strong>Panel Pop</strong>
+            </div>
+          </div>
+          <div class="topbar-actions">
+            <button class="icon-button" type="button" aria-label="알림">
+              <svg class="icon"><use href="#icon-bell" /></svg>
+              <span class="dot" aria-hidden="true"></span>
+            </button>
+            <button class="icon-button" type="button" data-theme-toggle aria-label="다크 모드로 전환">
+              <svg class="icon theme-icon"><use href="#icon-moon" /></svg>
+            </button>
+          </div>
+        </header>
+
+        <main id="main" class="screen-stack">
+          <section class="view active" data-view="home" aria-labelledby="home-title">
+            <div class="issue-hero">
+              <figure class="cover-visual hero-cover" data-runtime-surface="generated-comic-cover">
+                <img src="./assets/cover-lunar-cafe.png" alt="달빛 카페를 배경으로 한 Panel Pop 18호 표지 일러스트" width="1024" height="1536" fetchpriority="high" />
+              </figure>
+              <div class="hero-copy">
+                <div class="kicker-row">
+                  <span class="issue-pill">ISSUE 18</span>
+                  <span class="fresh-badge">신작 6편</span>
+                </div>
+                <h1 id="home-title">달빛 카페에서 시작된 이번 주 단편들</h1>
+                <p>짧게 읽는 신작, 작가 코멘터리, 저장한 연재를 한 번에 이어봅니다.</p>
+                <div class="hero-actions">
+                  <button class="primary-action" type="button" data-view-target="featured">
+                    <svg class="icon"><use href="#icon-play" /></svg>
+                    표지작 읽기
+                  </button>
+                  <button class="quiet-action save-toggle" type="button" aria-pressed="false">
+                    <svg class="icon"><use href="#icon-bookmark" /></svg>
+                    저장
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <section class="issue-section" aria-labelledby="issue-rail-title">
+              <div class="section-head">
+                <div>
+                  <p class="eyebrow">issue rack</p>
+                  <h2 id="issue-rail-title">이번 주 매거진</h2>
+                </div>
+                <button class="text-link" type="button" data-view-target="featured">
+                  전체 보기
+                  <svg class="icon"><use href="#icon-chevron" /></svg>
+                </button>
+              </div>
+              <div class="issue-rail" aria-label="이슈 커버 목록">
+                <button class="issue-tile active" type="button" data-view-target="featured">
+                  <img src="./assets/cover-lunar-cafe.png" alt="" width="1024" height="1536" />
+                  <span>달빛 카페</span>
+                  <b>표지작</b>
+                </button>
+                <button class="issue-tile" type="button">
+                  <img src="./assets/cover-bento-hero.png" alt="" width="1024" height="1536" />
+                  <span>도시락 히어로</span>
+                  <b>새 회차</b>
+                </button>
+                <button class="issue-tile" type="button">
+                  <img src="./assets/cover-cloud-runner.png" alt="" width="1024" height="1536" />
+                  <span>구름 러너</span>
+                  <b>단편</b>
+                </button>
+              </div>
+            </section>
+
+            <section class="chip-section" aria-label="장르 필터">
+              <button class="genre-chip active" type="button" aria-pressed="true">신작</button>
+              <button class="genre-chip" type="button">단편</button>
+              <button class="genre-chip" type="button">판타지</button>
+              <button class="genre-chip" type="button">일상</button>
+              <button class="genre-chip" type="button">인터뷰</button>
+            </section>
+
+            <section class="episode-stream" aria-labelledby="episode-title">
+              <div class="section-head">
+                <div>
+                  <p class="eyebrow">new episodes</p>
+                  <h2 id="episode-title">바로 이어볼 회차</h2>
+                </div>
+                <span class="count-chip">12분 분량</span>
+              </div>
+
+              <article class="episode-row">
+                <img class="thumb" src="./assets/cover-bento-hero.png" alt="도시락 히어로 표지" width="1024" height="1536" loading="lazy" />
+                <div class="episode-copy">
+                  <span class="series-label">EP. 24 · 일상 액션</span>
+                  <h3>도시락 히어로: 매콤한 결승전</h3>
+                  <p>도시락 뚜껑이 열리는 순간, 점심시간 리그가 시작됩니다.</p>
+                  <div class="meta-row">
+                    <span>5분</span>
+                    <span>78% 읽음</span>
+                  </div>
+                </div>
+                <button class="icon-button save-toggle" type="button" aria-label="도시락 히어로 저장" aria-pressed="true">
+                  <svg class="icon"><use href="#icon-bookmark" /></svg>
+                </button>
+              </article>
+
+              <article class="episode-row">
+                <img class="thumb" src="./assets/cover-cloud-runner.png" alt="구름 러너 표지" width="1024" height="1536" loading="lazy" />
+                <div class="episode-copy">
+                  <span class="series-label">ONE-SHOT · 모험</span>
+                  <h3>구름 러너와 잃어버린 우산</h3>
+                  <p>비가 오기 전 도착해야 하는 하늘길 배달 이야기.</p>
+                  <div class="meta-row">
+                    <span>7분</span>
+                    <span>새 단편</span>
+                  </div>
+                </div>
+                <button class="icon-button save-toggle" type="button" aria-label="구름 러너 저장" aria-pressed="false">
+                  <svg class="icon"><use href="#icon-bookmark" /></svg>
+                </button>
+              </article>
+            </section>
+          </section>
+
+          <section class="view" data-view="featured" aria-labelledby="featured-title">
+            <div class="reader-topline">
+              <button class="quiet-action" type="button" data-view-target="home">
+                <svg class="icon"><use href="#icon-chevron" /></svg>
+                홈
+              </button>
+              <span class="issue-pill">COVER STORY</span>
+            </div>
+
+            <article class="feature-surface">
+              <figure class="cover-visual feature-cover" data-runtime-surface="generated-comic-cover">
+                <img src="./assets/cover-lunar-cafe.png" alt="달빛 카페 표지작 커버" width="1024" height="1536" />
+              </figure>
+              <div class="feature-copy">
+                <p class="eyebrow">editor pick</p>
+                <h1 id="featured-title">달빛 카페의 마지막 주문</h1>
+                <p>문 닫기 10분 전, 매일 같은 자리에 앉는 손님이 오늘만 다른 메뉴를 주문합니다.</p>
+              </div>
+            </article>
+
+            <section class="panel-preview" aria-labelledby="panel-title">
+              <div class="section-head compact">
+                <div>
+                  <p class="eyebrow">panel preview</p>
+                  <h2 id="panel-title">첫 장면 미리보기</h2>
+                </div>
+                <span class="count-chip">3컷</span>
+              </div>
+              <figure class="panel-strip" data-runtime-surface="generated-comic-panel-sequence">
+                <img src="./assets/panel-strip-lunar.png" alt="달빛 카페 단편의 첫 세 컷 미리보기" width="1774" height="887" loading="lazy" />
+              </figure>
+            </section>
+
+            <section class="creator-sheet" aria-labelledby="creator-title">
+              <div class="bubble-tag">
+                <svg class="icon"><use href="#icon-message" /></svg>
+                편집부 노트
+              </div>
+              <h2 id="creator-title">작가 코멘터리</h2>
+              <p>이번 회차는 말풍선보다 표정 간격이 중요한 이야기입니다. 컷 사이 여백을 조금 길게 두고 읽어보세요.</p>
+              <div class="reader-progress" role="progressbar" aria-label="읽기 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42">
+                <span style="inline-size: 42%"></span>
+              </div>
+              <button class="primary-action full" type="button">
+                <svg class="icon"><use href="#icon-book-open" /></svg>
+                이어서 읽기
+              </button>
+            </section>
+          </section>
+
+          <section class="view" data-view="library" aria-labelledby="library-title">
+            <div class="library-hero">
+              <p class="eyebrow">my shelf</p>
+              <h1 id="library-title">저장한 연재와 읽기 큐</h1>
+              <p>새 회차가 올라온 작품만 위로 모았습니다.</p>
+            </div>
+
+            <section class="shelf-grid" aria-label="저장한 작품">
+              <article class="shelf-tile">
+                <img src="./assets/cover-bento-hero.png" alt="도시락 히어로 커버" width="1024" height="1536" />
+                <div>
+                  <span class="series-label">새 회차</span>
+                  <h2>도시락 히어로</h2>
+                  <p>EP. 24 대기 중</p>
+                </div>
+              </article>
+              <article class="shelf-tile">
+                <img src="./assets/cover-cloud-runner.png" alt="구름 러너 커버" width="1024" height="1536" />
+                <div>
+                  <span class="series-label">단편 저장</span>
+                  <h2>구름 러너</h2>
+                  <p>오늘 21:00 공개</p>
+                </div>
+              </article>
+            </section>
+
+            <section class="queue-sheet" aria-labelledby="queue-title">
+              <div class="section-head compact">
+                <div>
+                  <p class="eyebrow">reading queue</p>
+                  <h2 id="queue-title">오늘의 읽기 순서</h2>
+                </div>
+                <button class="text-link" type="button">편집</button>
+              </div>
+              <ol class="queue-list">
+                <li><span>01</span><strong>달빛 카페의 마지막 주문</strong><b>42%</b></li>
+                <li><span>02</span><strong>도시락 히어로</strong><b>새 회차</b></li>
+                <li><span>03</span><strong>구름 러너와 잃어버린 우산</strong><b>단편</b></li>
+              </ol>
+            </section>
+          </section>
+        </main>
+
+        <nav class="bottom-nav" aria-label="주요 화면">
+          <button class="nav-item active" type="button" data-view-target="home" aria-current="page">
+            <svg class="icon"><use href="#icon-home" /></svg>
+            <span>홈</span>
+          </button>
+          <button class="nav-item" type="button" data-view-target="featured">
+            <svg class="icon"><use href="#icon-book-open" /></svg>
+            <span>연재</span>
+          </button>
+          <button class="nav-item" type="button" data-view-target="library">
+            <svg class="icon"><use href="#icon-library" /></svg>
+            <span>보관함</span>
+          </button>
+          <button class="nav-item" type="button" data-view-target="home">
+            <svg class="icon"><use href="#icon-search" /></svg>
+            <span>검색</span>
+          </button>
+          <button class="nav-item" type="button" data-view-target="library">
+            <svg class="icon"><use href="#icon-user" /></svg>
+            <span>내 서재</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <div class="toast" role="status" aria-live="polite" data-toast hidden>저장 상태가 바뀌었습니다.</div>
+
+    <script src="./mockup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,202 @@
+{
+  "schema_version": "geist-reference-page/v1",
+  "slug": "table",
+  "kind": "component",
+  "title": "Table",
+  "url": "https://vercel.com/geist/table",
+  "final_url": "https://vercel.com/geist/table",
+  "canonical_url": "https://vercel.com/geist/table",
+  "redirected": false,
+  "description": "A semantic HTML table component",
+  "source_hash": "sha256:6256879538692689d1f40cbcee27fcf02c911128c10b088464b173135832b956",
+  "body_text_length": 3700,
+  "sections": [
+    {
+      "level": "h2",
+      "text": "Basic table"
+    },
+    {
+      "level": "h2",
+      "text": "Striped table"
+    },
+    {
+      "level": "h2",
+      "text": "Bordered table"
+    },
+    {
+      "level": "h2",
+      "text": "Interactive table"
+    },
+    {
+      "level": "h2",
+      "text": "Full featured table"
+    },
+    {
+      "level": "h2",
+      "text": "Virtualized table"
+    },
+    {
+      "level": "h2",
+      "text": "Best Practices"
+    },
+    {
+      "level": "h3",
+      "text": "When to use"
+    },
+    {
+      "level": "h3",
+      "text": "Behavior"
+    },
+    {
+      "level": "h3",
+      "text": "Content"
+    }
+  ],
+  "section_count": 10,
+  "symbol_metadata": {
+    "code_example_count": 6,
+    "import_symbols": [
+      "Table",
+      "TableHeader",
+      "TableRow",
+      "TableHead",
+      "TableBody",
+      "TableCell",
+      "TableRoot",
+      "TableColgroup",
+      "TableCol",
+      "TableFooter",
+      "ShowMore",
+      "memo",
+      "useState",
+      "type JSX"
+    ],
+    "import_sources": [
+      "@vercel/geistcn/components",
+      "react"
+    ],
+    "jsx_tags": [
+      "TableRoot",
+      "Table",
+      "TableHeader",
+      "TableRow",
+      "TableHead",
+      "TableBody",
+      "TableCell",
+      "TableColgroup",
+      "TableCol",
+      "TableFooter",
+      "Row"
+    ],
+    "prop_names": [
+      "key",
+      "colSpan",
+      "item"
+    ]
+  },
+  "token_refs": {
+    "css_var_count": 61,
+    "css_vars": [
+      "--accents-1",
+      "--accents-2",
+      "--accents-3",
+      "--accents-8",
+      "--cross-color",
+      "--ds-amber-800",
+      "--ds-background-100",
+      "--ds-blue-300",
+      "--ds-blue-700",
+      "--ds-blue-900",
+      "--ds-focus-color",
+      "--ds-focus-ring",
+      "--ds-gray-100",
+      "--ds-gray-1000",
+      "--ds-gray-200",
+      "--ds-gray-400",
+      "--ds-gray-700",
+      "--ds-gray-900",
+      "--ds-gray-alpha-100",
+      "--ds-gray-alpha-200",
+      "--ds-gray-alpha-400",
+      "--ds-gray-alpha-500",
+      "--ds-gray-alpha-600",
+      "--ds-shadow-border",
+      "--ds-shadow-border-small",
+      "--font-mono",
+      "--font-sans",
+      "--geist-background",
+      "--geist-foreground",
+      "--geist-form-small-font",
+      "--geist-form-small-height",
+      "--geist-gap-half",
+      "--geist-icon-size",
+      "--grid-columns",
+      "--grid-rows",
+      "--guide-color",
+      "--guide-width",
+      "--height",
+      "--lg-cell-columns",
+      "--lg-cell-rows",
+      "--max-width",
+      "--md-cell-columns",
+      "--md-cell-rows",
+      "--min-width",
+      "--sm-cell-columns",
+      "--sm-cell-rows",
+      "--sm-grid-column",
+      "--sm-grid-row",
+      "--sm-height",
+      "--smd-cell-columns",
+      "--smd-cell-rows",
+      "--spinner-size",
+      "--themed-bg",
+      "--themed-border",
+      "--themed-fg",
+      "--themed-hover-bg",
+      "--x",
+      "--x-padding",
+      "--xs-cell-columns",
+      "--xs-cell-rows",
+      "--y"
+    ],
+    "geist_data_attrs": [
+      "data-geist-button",
+      "data-geist-kbd",
+      "data-geist-textarea-wrapper"
+    ]
+  },
+  "accessibility_terms": [
+    "Keyboard",
+    "aria-checked",
+    "aria-controls",
+    "aria-disabled",
+    "aria-expanded",
+    "aria-hidden",
+    "aria-label",
+    "aria-pressable",
+    "assistive",
+    "focus",
+    "keyboard",
+    "role"
+  ],
+  "absorption_policy": {
+    "allowed": [
+      "component names",
+      "component taxonomy",
+      "state coverage hints",
+      "section headings",
+      "import and JSX symbol references",
+      "token identifiers",
+      "accessibility and interaction evidence labels"
+    ],
+    "denied": [
+      "verbatim product copy beyond short labels",
+      "brand logos or protected imagery",
+      "unlicensed implementation source code",
+      "full documentation text",
+      "Vercel-specific IA as product IA"
+    ],
+    "rule": "Store structured reference metadata for local reimplementation; keep source URLs as evidence."
+  },
+  "nav_index": 69
+}

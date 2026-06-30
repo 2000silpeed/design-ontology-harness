@@ -1,0 +1,211 @@
+{
+  "schema_version": "geist-reference-page/v1",
+  "slug": "gauge",
+  "kind": "component",
+  "title": "Gauge",
+  "url": "https://vercel.com/geist/gauge",
+  "final_url": "https://vercel.com/geist/gauge",
+  "canonical_url": "https://vercel.com/geist/gauge",
+  "redirected": false,
+  "description": "A circular visual for conveying a percentage.",
+  "source_hash": "sha256:7c08b2e07a3cca231492e2f2974d58766c1884ba4b6062eaf5194d5e04b134a5",
+  "body_text_length": 2921,
+  "sections": [
+    {
+      "level": "h2",
+      "text": "Default"
+    },
+    {
+      "level": "h2",
+      "text": "Label"
+    },
+    {
+      "level": "h2",
+      "text": "Default color scale"
+    },
+    {
+      "level": "h2",
+      "text": "Custom color range"
+    },
+    {
+      "level": "h2",
+      "text": "Custom secondary color"
+    },
+    {
+      "level": "h2",
+      "text": "Arc priority"
+    },
+    {
+      "level": "h2",
+      "text": "Indeterminate"
+    },
+    {
+      "level": "h2",
+      "text": "Best Practices"
+    },
+    {
+      "level": "h3",
+      "text": "When to use"
+    },
+    {
+      "level": "h3",
+      "text": "Behavior"
+    },
+    {
+      "level": "h3",
+      "text": "Content"
+    },
+    {
+      "level": "h3",
+      "text": "Accessibility"
+    }
+  ],
+  "section_count": 12,
+  "symbol_metadata": {
+    "code_example_count": 7,
+    "import_symbols": [
+      "Gauge"
+    ],
+    "import_sources": [
+      "@vercel/geistcn/components"
+    ],
+    "jsx_tags": [
+      "Gauge"
+    ],
+    "prop_names": [
+      "size",
+      "value",
+      "colors",
+      "arcPriority"
+    ]
+  },
+  "token_refs": {
+    "css_var_count": 85,
+    "css_vars": [
+      "--accents-1",
+      "--accents-2",
+      "--accents-3",
+      "--accents-8",
+      "--circle-size",
+      "--circumference",
+      "--cross-color",
+      "--delay",
+      "--ds-amber-700",
+      "--ds-amber-800",
+      "--ds-background-100",
+      "--ds-blue-300",
+      "--ds-blue-700",
+      "--ds-blue-900",
+      "--ds-focus-color",
+      "--ds-focus-ring",
+      "--ds-gray-100",
+      "--ds-gray-1000",
+      "--ds-gray-200",
+      "--ds-gray-400",
+      "--ds-gray-700",
+      "--ds-gray-900",
+      "--ds-gray-alpha-100",
+      "--ds-gray-alpha-200",
+      "--ds-gray-alpha-400",
+      "--ds-gray-alpha-500",
+      "--ds-gray-alpha-600",
+      "--ds-green-700",
+      "--ds-pink-100",
+      "--ds-pink-1000",
+      "--ds-pink-200",
+      "--ds-pink-300",
+      "--ds-pink-400",
+      "--ds-pink-500",
+      "--ds-pink-600",
+      "--ds-pink-700",
+      "--ds-pink-800",
+      "--ds-pink-900",
+      "--ds-red-700",
+      "--ds-red-800",
+      "--ds-shadow-border",
+      "--ds-shadow-border-small",
+      "--font-mono",
+      "--font-sans",
+      "--gap-percent",
+      "--geist-foreground",
+      "--geist-form-small-font",
+      "--geist-form-small-height",
+      "--geist-gap-half",
+      "--geist-icon-size",
+      "--grid-columns",
+      "--grid-rows",
+      "--guide-color",
+      "--guide-width",
+      "--height",
+      "--lg-cell-columns",
+      "--lg-cell-rows",
+      "--max-width",
+      "--md-cell-columns",
+      "--md-cell-rows",
+      "--min-width",
+      "--offset-factor",
+      "--offset-factor-secondary",
+      "--percent-to-deg",
+      "--percent-to-px",
+      "--sm-cell-columns",
+      "--sm-cell-rows",
+      "--sm-grid-column",
+      "--sm-grid-row",
+      "--sm-height",
+      "--smd-cell-columns",
+      "--smd-cell-rows",
+      "--spinner-size",
+      "--stroke-percent",
+      "--themed-bg",
+      "--themed-border",
+      "--themed-fg",
+      "--themed-hover-bg",
+      "--transition-length",
+      "--transition-step"
+    ],
+    "geist_data_attrs": [
+      "data-geist-button",
+      "data-geist-kbd",
+      "data-geist-progress-circle",
+      "data-geist-progress-circle-fg",
+      "data-geist-textarea-wrapper"
+    ]
+  },
+  "accessibility_terms": [
+    "Keyboard",
+    "aria-checked",
+    "aria-controls",
+    "aria-disabled",
+    "aria-expanded",
+    "aria-hidden",
+    "aria-label",
+    "aria-labelledby",
+    "aria-pressable",
+    "aria-valuemax",
+    "aria-valuemin",
+    "aria-valuenow",
+    "focus",
+    "keyboard",
+    "role"
+  ],
+  "absorption_policy": {
+    "allowed": [
+      "component names",
+      "component taxonomy",
+      "state coverage hints",
+      "section headings",
+      "import and JSX symbol references",
+      "token identifiers",
+      "accessibility and interaction evidence labels"
+    ],
+    "denied": [
+      "verbatim product copy beyond short labels",
+      "brand logos or protected imagery",
+      "unlicensed implementation source code",
+      "full documentation text",
+      "Vercel-specific IA as product IA"
+    ],
+    "rule": "Store structured reference metadata for local reimplementation; keep source URLs as evidence."
+  },
+  "nav_index": 39
+}

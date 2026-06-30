@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FairCite Evidence Console</title>
+    <meta
+      name="description"
+      content="공정거래위원회 의결서 500건을 chunk 단위로 추적하는 FairCite 듀얼 모드 근거추적 웹서비스"
+    />
+    <link rel="icon" href="./assets/faircite-mark.png" />
+    <link rel="stylesheet" href="./design-system/tokens.css" />
+    <link rel="stylesheet" href="./design-system/fonts.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">본문으로 이동</a>
+
+    <header class="site-header">
+      <a class="brand-lockup" href="#main" aria-label="FairCite 홈">
+        <img class="brand-symbol product-visual" src="./assets/faircite-mark.png" alt="" />
+        <span>
+          <strong>FairCite</strong>
+          <small>의결路 Evidence Console</small>
+        </span>
+      </a>
+
+      <nav class="module-nav" aria-label="주요 모듈">
+        <button class="module-button active" type="button" data-view-target="diagnosis">
+          <i data-lucide="scan-search"></i>
+          <span>진단 콘솔</span>
+        </button>
+        <button class="module-button" type="button" data-view-target="sanction">
+          <i data-lucide="calculator"></i>
+          <span>산정 구조</span>
+        </button>
+        <button class="module-button" type="button" data-view-target="catalog">
+          <i data-lucide="layout-grid"></i>
+          <span>패턴 카탈로그</span>
+        </button>
+        <button class="module-button" type="button" data-view-target="paired">
+          <i data-lucide="columns-3"></i>
+          <span>쌍대 케이스</span>
+        </button>
+        <button class="module-button" type="button" data-view-target="map">
+          <i data-lucide="network"></i>
+          <span>근거 맵</span>
+        </button>
+      </nav>
+
+      <div class="site-actions" aria-label="서비스 상태">
+        <span class="status-pill"><i data-lucide="shield-check"></i> `/predict` 보호</span>
+        <button class="icon-button" type="button" id="clearInput" aria-label="내 입력 지우기">
+          <i data-lucide="eraser"></i>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="commercial-hero" aria-label="FairCite 소개">
+        <div class="hero-copy">
+          <p class="eyebrow">Track 2 service result</p>
+          <h1>
+            <span class="title-desktop">의결서 답변을 믿게 만드는 가장 짧은 길, chunk까지 보이는 근거추적.</span>
+            <span class="title-mobile">의결서 답변에<br />근거를 붙입니다.</span>
+          </h1>
+          <p>
+            <span class="copy-desktop">
+              FairCite는 공정거래위원회 의결서 500건을 답변, 유사 패턴, 현행 조문, 과징금 산정 구조까지
+              하나의 검토 화면에서 연결합니다.
+            </span>
+            <span class="copy-mobile">500건 의결서 답변과 근거 chunk를 한 화면에서 확인합니다.</span>
+          </p>
+          <div class="hero-actions">
+            <button class="primary-button" type="button" data-view-target="diagnosis">
+              <i data-lucide="play-circle"></i>
+              데모 시작
+            </button>
+            <button class="secondary-button" type="button" data-view-target="paired">
+              <i data-lucide="split-square-horizontal"></i>
+              쌍대 케이스 보기
+            </button>
+          </div>
+          <dl class="hero-metrics">
+            <div><dt>의결서</dt><dd>500건</dd></div>
+            <div><dt>Chunks</dt><dd>31,879</dd></div>
+            <div><dt>Baseline</dt><dd>0.7295</dd></div>
+          </dl>
+        </div>
+
+        <div class="hero-visual product-visual">
+          <img src="./assets/evidence-workspace-hero.png" alt="의결서 근거 검토 업무 장면" />
+          <div class="hero-glass top">
+            <span class="source-badge original">[원문 추출]</span>
+            <strong>DOC-066cf416-CH-078</strong>
+            <small>score 0.92 · 판단</small>
+          </div>
+          <div class="hero-glass bottom">
+            <span class="source-badge stats">[통계 집계]</span>
+            <strong>매우 유사 4건</strong>
+            <small>기술자료 부당 요구·유용</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="console-shell" data-mode="compliance" data-view="diagnosis" aria-label="FairCite 제품 데모">
+        <header class="console-top">
+          <div class="title-block">
+            <p class="eyebrow">live evidence review</p>
+            <h2>현대중공업 기술자료 유용 사건</h2>
+          </div>
+          <div class="mode-switch" aria-label="사용자 모드 선택">
+            <button class="mode-tile active" type="button" data-mode-target="compliance">
+              <span><i data-lucide="building-2"></i></span>
+              <strong>컴플라이언스</strong>
+              <small>본사·원청 관점</small>
+            </button>
+            <button class="mode-tile" type="button" data-mode-target="shield">
+              <span><i data-lucide="scale"></i></span>
+              <strong>권익보호</strong>
+              <small>가맹점주·수급사업자 관점</small>
+            </button>
+            <button class="mode-tile" type="button" data-mode-target="paired">
+              <span><i data-lucide="git-compare-arrows"></i></span>
+              <strong>쌍대 케이스</strong>
+              <small>한 사건 두 시점</small>
+            </button>
+          </div>
+        </header>
+
+        <section class="privacy-banner" aria-label="민감정보 안내">
+          <i data-lucide="lock-keyhole"></i>
+          <p>
+            실제 거래처명·인명·계약 정보는 임의 코드명으로 대체하기를 권장합니다.
+            본 화면은 입력 본문을 저장하지 않는 시연용 콘솔입니다.
+          </p>
+          <a href="#privacy">개인정보 처리방침</a>
+        </section>
+
+        <section class="work-stack">
+          <article class="surface diagnosis-view" data-view="diagnosis">
+            <div class="surface-head">
+              <div>
+                <p class="eyebrow" id="modeKicker">compliance mode</p>
+                <h2 id="diagnosisTitle">자사 리스크 진단</h2>
+              </div>
+              <span class="source-badge person">[사람 분류]</span>
+            </div>
+
+            <div class="evidence-workbench">
+              <form class="query-rail" id="diagnosisForm" aria-label="진단 입력">
+                <div class="rail-heading">
+                  <strong>입력 스코프</strong>
+                  <span class="source-badge person">[사람 분류]</span>
+                </div>
+                <div class="field-grid" id="complianceFields">
+                  <label>
+                    <span>산업·업종</span>
+                    <input value="조선·제조 하도급" />
+                  </label>
+                  <label>
+                    <span>거래구조</span>
+                    <select>
+                      <option>하도급·기술자료 제공</option>
+                      <option>가맹·필수품목 공급</option>
+                      <option>입찰·공동행위</option>
+                    </select>
+                  </label>
+                  <label>
+                    <span>자사 위치</span>
+                    <select>
+                      <option>원사업자</option>
+                      <option>가맹본부</option>
+                      <option>발주자</option>
+                    </select>
+                  </label>
+                </div>
+
+                <label class="scenario-field">
+                  <span id="scenarioLabel">주요 행위</span>
+                  <textarea id="scenarioInput" rows="5">협력사에 도면과 원가자료를 요청하고, 유사 부품 개발 검토 회의에서 해당 자료를 참조했다.</textarea>
+                </label>
+
+                <div class="action-row">
+                  <button class="primary-button" type="submit"><i data-lucide="search-check"></i> 진단 실행</button>
+                  <button class="secondary-button" type="button" id="sampleButton"><i data-lucide="wand-sparkles"></i> 샘플</button>
+                </div>
+                <span class="run-note" id="runNote">RRF + CE retrieval ready</span>
+              </form>
+
+              <section class="document-canvas visual-map" data-runtime-surface="document-review-canvas" aria-label="의결서 근거 검토 화면">
+                <div class="canvas-toolbar">
+                  <div>
+                    <p class="eyebrow">primary evidence surface</p>
+                    <h3>의결서 원문과 답변 근거를 같은 표면에서 검토</h3>
+                  </div>
+                  <span class="source-badge original">DOC-066cf416</span>
+                </div>
+
+                <div class="document-review-layout">
+                  <article class="document-sheet">
+                    <div class="doc-meta-row">
+                      <span>판단</span>
+                      <span>CH-078</span>
+                      <span>score 0.92</span>
+                    </div>
+                    <p>
+                      피심인은 수급사업자에게 도면·원가자료 등 기술자료 제공을 요구했고,
+                      이후 유사 부품 개발 검토 회의에서 해당 자료를 참조한 정황이 확인됩니다.
+                      <mark>[원문 추출 · DOC-066cf416-CH-078]</mark>
+                    </p>
+                    <p>
+                      관련 처분 판단은 기술자료 요구 목적, 제출 경위, 내부 공유 범위, 유사 제품 개발
+                      정황을 함께 보아야 합니다. <mark>[모델 요약 · 근거 chunk 2개]</mark>
+                    </p>
+                  </article>
+
+                  <aside class="claim-stack" aria-label="진단 결과">
+                    <div class="result-head">
+                      <div>
+                        <p class="eyebrow">diagnosis result</p>
+                        <h3 id="resultTitle">상위 리스크 매트릭스</h3>
+                      </div>
+                      <span class="source-badge stats">[통계 집계]</span>
+                    </div>
+                    <div class="risk-list" id="riskList"></div>
+                    <div class="case-results" aria-label="유사 의결서">
+                      <button class="case-row active" type="button">
+                        <span class="source-badge original">[원문 추출]</span>
+                        <strong>현대중공업 기술자료 유용 사건</strong>
+                        <small>DOC-066cf416-CH-078 · 판단</small>
+                      </button>
+                      <button class="case-row" type="button">
+                        <span class="source-badge summary">[모델 요약]</span>
+                        <strong>필수품목 공급조건 변경 사건</strong>
+                        <small>DOC-21ab93e0-CH-044 · 처분</small>
+                      </button>
+                    </div>
+                  </aside>
+                </div>
+
+                <section class="evidence-chain" aria-label="답변 근거 체인">
+                  <div class="chain-head">
+                    <div>
+                      <p class="eyebrow">claim-to-source</p>
+                      <h3>답변 문장마다 근거 출처를 고정</h3>
+                    </div>
+                    <span class="source-badge original">5 chunks</span>
+                  </div>
+                  <div class="chain-grid">
+                    <article>
+                      <span>01 · 답변 주장</span>
+                      <strong>기술자료 제공 요구와 목적 외 활용 정황</strong>
+                      <small>진단 결과 본문에 표시되는 핵심 주장</small>
+                    </article>
+                    <article>
+                      <span>02 · 의결서 근거</span>
+                      <strong>DOC-066cf416-CH-078 / CH-081</strong>
+                      <small>판단·처분 chunk 원문과 모델 요약 동시 표시</small>
+                    </article>
+                    <article>
+                      <span>03 · 현행 법령 보강</span>
+                      <strong>하도급법 제12조의3</strong>
+                      <small>법제처 조회 시점과 snapshot fallback 라벨 유지</small>
+                    </article>
+                  </div>
+                </section>
+              </section>
+            </div>
+          </article>
+
+          <article class="surface sanction-view" data-view="sanction">
+            <div class="surface-head">
+              <div>
+                <p class="eyebrow">sanction anatomy</p>
+                <h2>과징금 산정 구조 분석기</h2>
+              </div>
+              <span class="source-badge original">[원문 추출]</span>
+            </div>
+            <div class="notice-row">
+              <i data-lucide="badge-alert"></i>
+              <p>예측 아님. 시행령 별표의 산정 구조와 유사 의결서 비교 자료입니다.</p>
+            </div>
+            <ol class="stepper">
+              <li><span>1</span><strong>부과기준율</strong><small>위반유형·중대성 기준</small></li>
+              <li><span>2</span><strong>관련매출액</strong><small>의결서 인정 범위 확인</small></li>
+              <li><span>3</span><strong>가중·감경</strong><small>반복, 협조, 피해 회복</small></li>
+              <li><span>4</span><strong>사례 범위</strong><small>의결서 분포로만 표시</small></li>
+            </ol>
+          </article>
+
+          <article class="surface catalog-view" data-view="catalog">
+            <div class="surface-head">
+              <div>
+                <p class="eyebrow">abuse pattern catalog</p>
+                <h2>갑질 패턴 카탈로그</h2>
+              </div>
+              <span class="source-badge person">[사람 분류]</span>
+            </div>
+            <div class="pattern-grid">
+              <button class="pattern-tile active" type="button"><i data-lucide="file-warning"></i><strong>기술자료 부당 요구</strong><small>공정위 인정 사례 5건</small></button>
+              <button class="pattern-tile" type="button"><i data-lucide="trending-down"></i><strong>단가 후려치기</strong><small>공정위 인정 사례 8건</small></button>
+              <button class="pattern-tile" type="button"><i data-lucide="package-check"></i><strong>필수품목 강매</strong><small>공정위 인정 사례 6건</small></button>
+              <button class="pattern-tile" type="button"><i data-lucide="gavel"></i><strong>입찰 들러리</strong><small>공동행위 사례 7건</small></button>
+            </div>
+          </article>
+
+          <article class="surface paired-view" data-view="paired">
+            <div class="surface-head">
+              <div>
+                <p class="eyebrow">paired case demo</p>
+                <h2>현대중공업 사건 쌍대 보기</h2>
+              </div>
+              <button class="secondary-button" type="button" id="swapButton"><i data-lucide="refresh-cw"></i> 시점 전환</button>
+            </div>
+            <div class="paired-grid">
+              <section class="perspective-tile">
+                <span class="perspective-kicker">컴플라이언스</span>
+                <h3>원사업자가 예방하지 못한 행위</h3>
+                <p>협력사 기술자료 요청 절차, 목적 외 사용 금지, 접근 권한 기록을 사전 점검 항목으로 전환합니다.</p>
+                <span class="source-badge summary">[모델 요약]</span>
+              </section>
+              <section class="perspective-tile accent">
+                <span class="perspective-kicker">권익보호</span>
+                <h3>수급사업자가 인지할 수 있는 패턴</h3>
+                <p>자료 제공 요청 경위, 제출 강제성, 유사 제품 개발 정황을 사실관계 정리 항목으로 묶습니다.</p>
+                <span class="source-badge original">[근거 chunk_id]</span>
+              </section>
+            </div>
+          </article>
+
+          <article class="surface map-view" data-view="map">
+            <div class="surface-head">
+              <div>
+                <p class="eyebrow">evidence map</p>
+                <h2>답변 근거 흐름</h2>
+              </div>
+              <span class="source-badge stats">[통계 집계]</span>
+            </div>
+            <div class="evidence-ledger visual-map" data-runtime-surface="chart-layer" aria-label="답변, chunk, 법령 검증 ledger">
+              <div class="ledger-row ledger-head">
+                <span>검증 항목</span>
+                <span>의결서 chunk</span>
+                <span>법령/통계 보강</span>
+                <span>상태</span>
+              </div>
+              <div class="ledger-row">
+                <strong>기술자료 제공 요구</strong>
+                <span>DOC-066cf416-CH-078</span>
+                <span>하도급법 제12조의3</span>
+                <mark>원문 확인</mark>
+              </div>
+              <div class="ledger-row">
+                <strong>목적 외 활용 정황</strong>
+                <span>DOC-066cf416-CH-081</span>
+                <span>유사 사례 4건</span>
+                <mark>요약 확인</mark>
+              </div>
+              <div class="ledger-row">
+                <strong>처분 강도 비교</strong>
+                <span>처분/과징금 chunk</span>
+                <span>동종 유형 분포</span>
+                <mark>집계 확인</mark>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <aside class="citation-drawer" aria-label="Evidence Map 상세">
+          <div class="drawer-head">
+            <div>
+              <p class="eyebrow">retrieved evidence</p>
+              <h2>근거 패널</h2>
+            </div>
+            <span class="source-badge original">[원문 추출]</span>
+          </div>
+          <section class="answer-summary">
+            <div><span>현재 답변</span><strong id="similarityText">매우 유사 4건</strong></div>
+            <p id="answerText">기술자료 제공 요구와 목적 외 활용 정황이 함께 나타난 의결서 chunk가 검색됐습니다. 결과는 참고용 진단이며 법률 자문이 아닙니다.</p>
+          </section>
+          <div class="source-stack">
+            <article class="source-record active">
+              <strong>DOC-066cf416-CH-078</strong>
+              <span>현대중공업 · 판단</span>
+              <p>수급사업자의 기술자료를 요구하고 유사 부품 개발 과정에서 참조한 정황.</p>
+              <footer><span class="source-badge original">[원문 추출]</span><small>score 0.92</small></footer>
+            </article>
+            <article class="source-record">
+              <strong>DOC-066cf416-CH-081</strong>
+              <span>현대중공업 · 처분</span>
+              <p>관련 시정명령과 과징금 부과 판단이 함께 기재된 chunk.</p>
+              <footer><span class="source-badge summary">[모델 요약]</span><small>score 0.88</small></footer>
+            </article>
+            <article class="source-record">
+              <strong>하도급법 제12조의3</strong>
+              <span>법제처 2026-06-01 조회</span>
+              <p>기술자료 제공 요구 관련 현행 조문. snapshot fallback 사용 시 조회 시점이 별도 표시됩니다.</p>
+              <footer><span class="source-badge original">[법제처]</span><small>live</small></footer>
+            </article>
+          </div>
+          <div class="legend-row">
+            <span class="source-badge original">[원문 추출]</span>
+            <span class="source-badge summary">[모델 요약]</span>
+            <span class="source-badge person">[사람 분류]</span>
+            <span class="source-badge stats">[통계 집계]</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="proof-strip" aria-label="5축 증명 장면">
+        <article><strong>다양성</strong><span>듀얼 모드 토글</span></article>
+        <article><strong>명확성</strong><span>Chunk + 법령 근거</span></article>
+        <article><strong>이해도</strong><span>별표 산정 구조</span></article>
+        <article><strong>적합성</strong><span>실제 워크플로우</span></article>
+        <article><strong>창의성</strong><span>쌍대 케이스 컷</span></article>
+      </section>
+    </main>
+
+    <footer id="privacy" class="page-footer">
+      본 결과는 공정위 의결서 사례 기반 참고 자료이며, 법적 자문을 대체하지 않습니다. 실제 신고·소송 결정 전 변호사 또는 공정위에 문의하시기 바랍니다.
+    </footer>
+  </body>
+</html>

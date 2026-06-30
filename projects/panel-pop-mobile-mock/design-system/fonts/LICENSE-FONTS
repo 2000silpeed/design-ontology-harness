@@ -1,0 +1,15 @@
+# Bundled Fonts — License Notices
+
+## Pretendard Variable (SIL Open Font License 1.1)
+
+- Source: https://github.com/orioncactus/pretendard
+- License: SIL OFL 1.1
+  (see https://scripts.sil.org/OFL)
+- Redistribution is permitted under OFL. The woff2 binary is fetched at
+  install-time by `design-system/fonts/fetch-pretendard.mjs`; it is not committed to the
+  harness or plugin repositories.
+- The reserved font name "Pretendard" must not be removed or renamed in
+  derivatives. Modified glyph files must use a different family name.
+- **재배포 시 이 고지를 유지해야 합니다.** When redistributing the
+  bundle (or a derivative product), this notice and the OFL text must
+  travel with the font assets — removing it violates OFL §2.

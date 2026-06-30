@@ -1,205 +1,222 @@
 {
-  "brand_name": "Ledger",
-  "system_name": "Ledger System",
-  "product_summary": "기업·금융팀을 위한 콘서버티브/신뢰 톤의 핀테크 운영 대시보드 — 거래/잔고/컴플라이언스 콘솔",
+  "brand_name": "Agent Org Network",
+  "system_name": "Agent Org Network Design System",
+  "product_summary": "A question-routing organization layer: a person asks in plain language, the system finds the accountable human owner, that owner answers from their own knowledge, and every answer carries its owner, trust state, and sources — with internal routing hidden from the asker.",
   "audiences": [
-    "기업 재무/회계 담당자",
-    "핀테크 운영/컴플라이언스 팀",
-    "B2B SaaS 프로덕트 매니저"
+    "question asker (end user)",
+    "knowledge owner accountable for a domain",
+    "operations monitor",
+    "governance and audit reviewer",
+    "team lead"
   ],
   "brand_keywords": [
-    "corporate",
-    "trust",
-    "fintech",
-    "financial",
-    "conservative",
-    "enterprise",
-    "compliance",
-    "institutional"
+    "agentic",
+    "operational",
+    "networked",
+    "observable",
+    "governed",
+    "precise",
+    "structured",
+    "calm",
+    "trustworthy"
   ],
   "anti_keywords": [
-    "playful",
-    "decorative",
-    "saturated neon",
-    "bold casual",
-    "experimental"
+    "decorative graph",
+    "marketing-heavy",
+    "sci-fi glow",
+    "generic card wall",
+    "noisy",
+    "unexplained automation",
+    "opaque status",
+    "exposed routing internals to end users",
+    "knowledge bodies leaving the owner environment"
   ],
   "tone_of_voice": [
-    "professional",
-    "trustworthy",
-    "precise",
-    "formal"
+    "direct",
+    "operational",
+    "audit-friendly",
+    "low-drama",
+    "specific"
   ],
   "visual_keywords": [
-    "navy/deep blue primary",
-    "muted secondary",
-    "dense data hierarchy",
-    "restrained accent",
-    "thin borders",
-    "clear whitespace",
-    "numeric-first layout"
+    "trustworthy answer chat with owner and source chips",
+    "staged routing progress trace",
+    "owner knowledge authoring workspace",
+    "staged concept review cards with approve edit reject",
+    "before-after diff card",
+    "owner handling inbox with tabs",
+    "live operations event feed",
+    "routing outcome status tags",
+    "worker admission panel",
+    "audit log table",
+    "restrained multi-accent system",
+    "dense legible dark console"
   ],
   "interaction_keywords": [
-    "keyboard-friendly",
-    "predictable states",
-    "low-noise motion",
-    "audit-trail affordances",
-    "dense table filters"
+    "ask and receive an accountable answer",
+    "watch a staged routing trace resolve",
+    "approve edit or reject a staged concept draft",
+    "commit and publish reviewed knowledge",
+    "settle contested ownership by assigning",
+    "review a backup answer first-person",
+    "pull document content on demand",
+    "follow a live event feed",
+    "admit or revoke a worker",
+    "trace one question from arrival to answer"
   ],
   "platforms": [
     "web",
-    "desktop"
+    "desktop-web"
   ],
   "accessibility_targets": [
-    "WCAG 2.2 AA"
+    "WCAG 2.2 AA",
+    "full keyboard operation",
+    "non-color status encoding"
   ],
   "product_primitives": [
-    "sidebar navigation",
-    "workspace switcher",
-    "transactions table",
-    "balance kpi card",
-    "compliance banner",
-    "alert list",
-    "audit timeline",
-    "filter chrome",
-    "status badge",
-    "date range picker",
-    "member roster",
-    "settings panel"
+    "answer chat thread",
+    "question and answer bubble",
+    "trust state chip",
+    "source chip",
+    "owner chip",
+    "staged routing progress trace",
+    "staged pipeline stepper",
+    "concept draft card",
+    "approve edit reject disposition control",
+    "before-after diff card",
+    "owner inbox tabs",
+    "contested case card",
+    "candidate coverage list",
+    "on-demand document pull",
+    "assign owner control",
+    "backup answer review card",
+    "re-review queue row",
+    "metric summary card",
+    "live event feed",
+    "routing outcome status tag",
+    "worker admission panel",
+    "audit log table",
+    "light org reference map",
+    "data tables",
+    "search and filter",
+    "workspace navigation",
+    "modal and dialog",
+    "notifications",
+    "onboarding and stepper",
+    "forms"
   ],
   "reference_preferences": {
     "prioritize_sources_containing": [
       "components",
       "typography",
       "accessibility",
-      "design token",
       "data density",
+      "conversation",
+      "review queue",
+      "live feed",
       "table",
-      "form"
+      "dashboard",
+      "governance"
     ],
     "avoid_sources_containing": [
       "brand-only",
-      "marketing-only"
+      "marketing-only",
+      "single chatbot demo"
     ]
   },
-  "color_reference": {
-    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
-    "preferred_families": [
-      "Deep Blues",
-      "Pantone Trend Blues",
-      "Natural Blues",
-      "Pastel Blues"
-    ],
-    "palette_roles": {
-      "primary": "Prussian Blue",
-      "accent": "Bronze Gold",
-      "surface_tint": "Ice Blue"
+  "seeds": [
+    {
+      "url": "https://primer.style",
+      "kind": "design-system",
+      "title": "Primer",
+      "notes": "Practical component contracts and dense developer-tool surfaces"
     },
+    {
+      "url": "https://carbondesignsystem.com",
+      "kind": "design-system",
+      "title": "Carbon",
+      "notes": "Enterprise data UI, status patterns, and accessibility guidance"
+    },
+    {
+      "url": "https://atlassian.design",
+      "kind": "design-system",
+      "title": "Atlassian Design System",
+      "notes": "Workspace navigation, permissions, and operational SaaS patterns"
+    }
+  ],
+  "color_reference": {
+    "path": "../../docs/color-reference.md",
+    "preferred_families": [
+      "Cool Grays",
+      "Standard Blues",
+      "Natural Greens",
+      "Reds"
+    ],
     "palette_strategy": {
       "mode": "brand-guided",
       "candidate_count": 3,
       "active_candidate": 1,
-      "temperature": "cool",
+      "temperature": "balanced",
       "contrast": "balanced",
-      "diversity": "narrow",
+      "diversity": "balanced",
       "surface_style": "flat",
       "prefer_moods": [
-        "신뢰",
-        "권위",
-        "전문성",
-        "정제됨"
+        "정확함",
+        "신뢰감",
+        "차분함",
+        "운영성"
       ],
       "avoid_moods": [
-        "달콤함",
-        "귀여움",
-        "화려함",
-        "대담함"
+        "과장",
+        "장식적",
+        "몽환적",
+        "유아적"
       ]
     },
     "palette_expansion": {
       "enabled": true,
-      "supporting_color_count": 10,
+      "supporting_color_count": 8,
       "combination_count": 3,
       "prefer_pairings": true,
       "prefer_related_families": true
     },
     "notes": [
-      "Prussian Blue 를 primary 로 — 금융/공공 기관 신뢰감",
-      "Bronze Gold 액센트로 클래식/프리미엄 감도 보조",
-      "Ice Blue 는 surface_tint — 데이터 밀도 높은 표에서 피로감 최소화",
-      "dark mode 1급 지원 — 야간 운영/모니터링 환경",
-      "semantic feedback(success/warn/danger/info) 별도 role, 과포화 금지"
+      "Base surfaces should stay neutral and readable under dense operational data.",
+      "Use blue for primary focus and selection, green for healthy automation, red for risk and blocked handoffs.",
+      "Avoid a single purple or blue gradient identity; the product needs role, risk, and ownership distinction."
     ]
-  },
-  "font_system": {
-    "heading": {
-      "name": "Inter",
-      "weights": [
-        500,
-        600,
-        700
-      ],
-      "notes": "geometric sans, 숫자 가독성 우수"
-    },
-    "body": {
-      "name": "Inter",
-      "weights": [
-        400,
-        500
-      ],
-      "notes": "본문/라벨 공용"
-    },
-    "mono": {
-      "name": "JetBrains Mono",
-      "weights": [
-        400,
-        500
-      ],
-      "notes": "거래 ID, 계좌번호, 감사 로그"
-    },
-    "korean": {
-      "name": "Pretendard",
-      "weights": [
-        400,
-        500,
-        600,
-        700
-      ],
-      "notes": "한글 1급 — 본문/UI 일관"
-    }
   },
   "visual_reference": {
     "mode": "local-images",
     "query": [
-      "enterprise fintech dashboard navy",
-      "stripe dashboard transactions table",
-      "brex admin reporting",
-      "conservative banking UI"
+      "trustworthy answer chat with owner attribution and source citations",
+      "human approval inbox and review queue with status tags",
+      "operations event feed dashboard with audit log table dark theme"
     ],
     "sources": [],
-    "preferred_count": 8,
+    "preferred_count": 12,
     "weights": {
-      "layout": 0.4,
-      "component_shape": 0.25,
-      "color_balance": 0.15,
-      "typography_mood": 0.1,
-      "surface_style": 0.1
+      "layout": 0.32,
+      "component_shape": 0.26,
+      "color_balance": 0.16,
+      "typography_mood": 0.12,
+      "surface_style": 0.14
     },
     "extraction_policy": "advisory-only",
     "must_include": [
-      "dense transactions table",
-      "balance kpi",
-      "2-level sidebar",
-      "compliance/alert affordances"
+      "answer attribution: owner, trust state, and source visible near the answer",
+      "review queue or inbox with clear per-item disposition controls",
+      "live event feed or audit table with legible status tags"
     ],
     "avoid_patterns": [
-      "glassmorphism",
-      "gradient-heavy surfaces",
-      "playful illustrations"
+      "decorative network graph without labels",
+      "abstract AI glow background",
+      "unexplained autonomous action",
+      "internal routing scores exposed to the end user"
     ],
     "notes": [
-      "Stripe/Brex/Mercury/Ramp 스타일 conservative 참조",
-      "이미지 기반 힌트는 advisory — 구조는 spec + KB 우선"
+      "References guide density, workspace layout, feed and table pairing, and operational affordances only.",
+      "Do not copy reference colors or generated copy. Final IA must keep answer attribution, trust state, sources, and audit visible, and must hide routing internals from the question-asker."
     ],
     "pinterest_assist": {
       "enabled": false,
@@ -212,33 +229,10 @@
         "boards",
         "adjacent-search"
       ],
-      "notes": []
+      "notes": [
+        "Pinterest is optional. This project defaults to local Omnigen UI references.",
+        "Only selected local files should be connected to visual_reference.sources."
+      ]
     }
-  },
-  "seeds": [
-    {
-      "url": "https://stripe.com",
-      "kind": "design-system",
-      "title": "Stripe",
-      "notes": "fintech enterprise dashboard / payments UI references"
-    },
-    {
-      "url": "https://www.brex.com",
-      "kind": "design-system",
-      "title": "Brex",
-      "notes": "corporate fintech admin console references"
-    },
-    {
-      "url": "https://mercury.com",
-      "kind": "design-system",
-      "title": "Mercury",
-      "notes": "banking dashboard + compliance references"
-    },
-    {
-      "url": "https://ramp.com",
-      "kind": "design-system",
-      "title": "Ramp",
-      "notes": "expense management admin references"
-    }
-  ]
+  }
 }

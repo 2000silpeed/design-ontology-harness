@@ -1,0 +1,60 @@
+{
+  "cards": {
+    "direction": "raised cards with restrained depth를 기본으로 하고, 균형 잡힌 spacing과 명확한 slot hierarchy. soft round corner를 기본값으로 유지.",
+    "confidence": 0.14,
+    "evidence": [
+      "surface=elevated",
+      "density=balanced",
+      "corner=round"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+    }
+  },
+  "navigation": {
+    "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
+    "confidence": 0.29,
+    "evidence": [
+      "Split-pane workspace"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+    }
+  },
+  "typography": {
+    "direction": "utilitarian hierarchy를 유지하되 중요한 heading만 선택적으로 크게 만든다.",
+    "confidence": 0.28,
+    "evidence": [
+      "typography_mood=utilitarian"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+    }
+  },
+  "data_display": {
+    "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+    "confidence": 0.17,
+    "evidence": [
+      "layout=data-review-surface",
+      "density=balanced"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+    }
+  },
+  "panel": {
+    "direction": "보조 패널은 메인 표면보다 한 단계 더 조용한 tint와 명확한 section framing으로 구분한다.",
+    "confidence": 0.29,
+    "evidence": [
+      "Conversation side panel"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+    }
+  }
+}

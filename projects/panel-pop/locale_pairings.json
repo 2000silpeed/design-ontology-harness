@@ -1,0 +1,8 @@
+{
+  "ko": {
+    "heading_font": "Pretendard",
+    "body_font": "Pretendard",
+    "mono_font": "JetBrains Mono",
+    "notes": "모바일 만화 잡지 앱 — 한국어 cover title / episode title / creator note keep-all line-height 1.5-1.65, issue number / episode number / reading progress는 mono 영문 고정 tabular-nums"
+  }
+}

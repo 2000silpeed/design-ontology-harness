@@ -1,0 +1,196 @@
+{
+  "schema_version": "geist-reference-page/v1",
+  "slug": "radio",
+  "kind": "component",
+  "title": "Radio",
+  "url": "https://vercel.com/geist/radio",
+  "final_url": "https://vercel.com/geist/radio",
+  "canonical_url": "https://vercel.com/geist/radio",
+  "redirected": false,
+  "description": "Provides single user input from a selection of options.",
+  "source_hash": "sha256:86cdfca4e31b911c652ef99a7fe89ed0cb4a1749ec276a8b78ab6accf090c78a",
+  "body_text_length": 3019,
+  "sections": [
+    {
+      "level": "h2",
+      "text": "Default"
+    },
+    {
+      "level": "h2",
+      "text": "Radio disabled"
+    },
+    {
+      "level": "h2",
+      "text": "Radio required"
+    },
+    {
+      "level": "h2",
+      "text": "Radio headless"
+    },
+    {
+      "level": "h2",
+      "text": "Radio standalone"
+    },
+    {
+      "level": "h2",
+      "text": "Best Practices"
+    },
+    {
+      "level": "h3",
+      "text": "When to use"
+    },
+    {
+      "level": "h3",
+      "text": "Behavior"
+    },
+    {
+      "level": "h3",
+      "text": "Content"
+    },
+    {
+      "level": "h3",
+      "text": "Accessibility"
+    }
+  ],
+  "section_count": 10,
+  "symbol_metadata": {
+    "code_example_count": 5,
+    "import_symbols": [
+      "RadioGroup",
+      "RadioGroupItem",
+      "useState",
+      "type JSX",
+      "Button",
+      "useRadio",
+      "Radio"
+    ],
+    "import_sources": [
+      "@vercel/geistcn/components",
+      "react"
+    ],
+    "jsx_tags": [
+      "RadioGroup",
+      "RadioGroupItem",
+      "Button",
+      "Radio"
+    ],
+    "prop_names": [
+      "label",
+      "onChange",
+      "value",
+      "size",
+      "aria-label",
+      "checked"
+    ]
+  },
+  "token_refs": {
+    "css_var_count": 64,
+    "css_vars": [
+      "--accents-1",
+      "--accents-2",
+      "--accents-3",
+      "--accents-8",
+      "--cross-color",
+      "--ds-amber-800",
+      "--ds-background-100",
+      "--ds-blue-300",
+      "--ds-blue-700",
+      "--ds-blue-900",
+      "--ds-focus-color",
+      "--ds-focus-ring",
+      "--ds-gray-100",
+      "--ds-gray-1000",
+      "--ds-gray-200",
+      "--ds-gray-400",
+      "--ds-gray-500",
+      "--ds-gray-600",
+      "--ds-gray-700",
+      "--ds-gray-900",
+      "--ds-gray-alpha-100",
+      "--ds-gray-alpha-200",
+      "--ds-gray-alpha-400",
+      "--ds-gray-alpha-500",
+      "--ds-gray-alpha-600",
+      "--ds-shadow-border",
+      "--ds-shadow-border-small",
+      "--font-mono",
+      "--font-sans",
+      "--geist-foreground",
+      "--geist-form-small-font",
+      "--geist-form-small-height",
+      "--geist-gap-half",
+      "--geist-gap-quarter",
+      "--geist-icon-size",
+      "--grid-columns",
+      "--grid-rows",
+      "--guide-color",
+      "--guide-width",
+      "--height",
+      "--lg-cell-columns",
+      "--lg-cell-rows",
+      "--max-width",
+      "--md-cell-columns",
+      "--md-cell-rows",
+      "--min-width",
+      "--radio-color",
+      "--sm-cell-columns",
+      "--sm-cell-rows",
+      "--sm-grid-column",
+      "--sm-grid-row",
+      "--sm-height",
+      "--smd-cell-columns",
+      "--smd-cell-rows",
+      "--spinner-size",
+      "--themed-bg",
+      "--themed-border",
+      "--themed-fg",
+      "--themed-hover-bg",
+      "--x",
+      "--x-padding",
+      "--xs-cell-columns",
+      "--xs-cell-rows",
+      "--y"
+    ],
+    "geist_data_attrs": [
+      "data-geist-button",
+      "data-geist-kbd",
+      "data-geist-radio-group",
+      "data-geist-radio-item",
+      "data-geist-textarea-wrapper"
+    ]
+  },
+  "accessibility_terms": [
+    "Keyboard",
+    "aria-checked",
+    "aria-controls",
+    "aria-disabled",
+    "aria-expanded",
+    "aria-hidden",
+    "aria-label",
+    "aria-labelledby",
+    "aria-pressable",
+    "focus",
+    "keyboard",
+    "role"
+  ],
+  "absorption_policy": {
+    "allowed": [
+      "component names",
+      "component taxonomy",
+      "state coverage hints",
+      "section headings",
+      "import and JSX symbol references",
+      "token identifiers",
+      "accessibility and interaction evidence labels"
+    ],
+    "denied": [
+      "verbatim product copy beyond short labels",
+      "brand logos or protected imagery",
+      "unlicensed implementation source code",
+      "full documentation text",
+      "Vercel-specific IA as product IA"
+    ],
+    "rule": "Store structured reference metadata for local reimplementation; keep source URLs as evidence."
+  },
+  "nav_index": 54
+}

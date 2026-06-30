@@ -1,0 +1,356 @@
+{
+  "schema_version": "geist-component-inventory/v1",
+  "source": "https://vercel.com/geist/introduction",
+  "component_count": 71,
+  "families": [
+    {
+      "family": "action",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "hover",
+        "active",
+        "disabled",
+        "loading",
+        "focus"
+      ],
+      "components": [
+        "button",
+        "copy-button",
+        "dots-menu",
+        "load-more-button",
+        "split-button",
+        "text-with-copy-button"
+      ],
+      "source": "https://vercel.com/geist/introduction",
+      "visual_reference_signals": [
+        {
+          "id": "geist-action-metadata",
+          "label": "Geist action component metadata",
+          "confidence": 0.95,
+          "evidence": [
+            "6 pages",
+            "public docs nav",
+            "metadata-only extraction"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "content",
+      "priority": "medium",
+      "required_states": [
+        "default",
+        "hover",
+        "selected"
+      ],
+      "components": [
+        "book",
+        "browser",
+        "code",
+        "code-block",
+        "description",
+        "file-tree",
+        "middle-truncate",
+        "phone",
+        "show-more",
+        "snippet",
+        "video"
+      ],
+      "source": "https://vercel.com/geist/introduction",
+      "visual_reference_signals": [
+        {
+          "id": "geist-content-metadata",
+          "label": "Geist content component metadata",
+          "confidence": 0.95,
+          "evidence": [
+            "11 pages",
+            "public docs nav",
+            "metadata-only extraction"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "data-display",
+      "priority": "medium",
+      "required_states": [
+        "default",
+        "loading",
+        "empty",
+        "error",
+        "selected"
+      ],
+      "components": [
+        "gauge",
+        "table"
+      ],
+      "source": "https://vercel.com/geist/introduction",
+      "visual_reference_signals": [
+        {
+          "id": "geist-data-display-metadata",
+          "label": "Geist data-display component metadata",
+          "confidence": 0.95,
+          "evidence": [
+            "2 pages",
+            "public docs nav",
+            "metadata-only extraction"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "feedback",
+      "priority": "high",
+      "required_states": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "components": [
+        "badge",
+        "banner",
+        "empty-state",
+        "error",
+        "error-card",
+        "feedback",
+        "loading-dots",
+        "note",
+        "progress",
+        "project-banner",
+        "skeleton",
+        "spinner",
+        "status-dot",
+        "toast"
+      ],
+      "source": "https://vercel.com/geist/introduction",
+      "visual_reference_signals": [
+        {
+          "id": "geist-feedback-metadata",
+          "label": "Geist feedback component metadata",
+          "confidence": 0.95,
+          "evidence": [
+            "14 pages",
+            "public docs nav",
+            "metadata-only extraction"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "form",
+      "priority": "medium",
+      "required_states": [
+        "default",
+        "focus",
+        "disabled",
+        "error"
+      ],
+      "components": [
+        "fieldset",
+        "label"
+      ],
+      "source": "https://vercel.com/geist/introduction",
+      "visual_reference_signals": [
+        {
+          "id": "geist-form-metadata",
+          "label": "Geist form component metadata",
+          "confidence": 0.95,
+          "evidence": [
+            "2 pages",
+            "public docs nav",
+            "metadata-only extraction"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "identity",
+      "priority": "medium",
+      "required_states": [
+        "default",
+        "loading",
+        "empty"
+      ],
+      "components": [
+        "avatar",
+        "entity"
+      ],
+      "source": "https://vercel.com/geist/introduction",
+      "visual_reference_signals": [
+        {
+          "id": "geist-identity-metadata",
+          "label": "Geist identity component metadata",
+          "confidence": 0.95,
+          "evidence": [
+            "2 pages",
+            "public docs nav",
+            "metadata-only extraction"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "input",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "components": [
+        "calendar",
+        "checkbox",
+        "choicebox",
+        "clearable-input",
+        "combobox",
+        "input",
+        "keyboard-input",
+        "multi-select",
+        "radio",
+        "search-input",
+        "select",
+        "slider",
+        "switch",
+        "textarea",
+        "theme-switcher",
+        "toggle"
+      ],
+      "source": "https://vercel.com/geist/introduction",
+      "visual_reference_signals": [
+        {
+          "id": "geist-input-metadata",
+          "label": "Geist input component metadata",
+          "confidence": 0.95,
+          "evidence": [
+            "16 pages",
+            "public docs nav",
+            "metadata-only extraction"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "layout",
+      "priority": "medium",
+      "required_states": [
+        "default",
+        "responsive"
+      ],
+      "components": [
+        "grid",
+        "separator"
+      ],
+      "source": "https://vercel.com/geist/introduction",
+      "visual_reference_signals": [
+        {
+          "id": "geist-layout-metadata",
+          "label": "Geist layout component metadata",
+          "confidence": 0.95,
+          "evidence": [
+            "2 pages",
+            "public docs nav",
+            "metadata-only extraction"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "navigation",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "hover",
+        "active",
+        "focus",
+        "disabled"
+      ],
+      "components": [
+        "breadcrumbs",
+        "menu",
+        "pagination",
+        "scroller",
+        "tabs"
+      ],
+      "source": "https://vercel.com/geist/introduction",
+      "visual_reference_signals": [
+        {
+          "id": "geist-navigation-metadata",
+          "label": "Geist navigation component metadata",
+          "confidence": 0.95,
+          "evidence": [
+            "5 pages",
+            "public docs nav",
+            "metadata-only extraction"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "overlay",
+      "priority": "high",
+      "required_states": [
+        "closed",
+        "opening",
+        "open",
+        "dismissed"
+      ],
+      "components": [
+        "collapse",
+        "command-menu",
+        "context-menu",
+        "destructive-action-modal",
+        "drawer",
+        "modal",
+        "sheet",
+        "tooltip"
+      ],
+      "source": "https://vercel.com/geist/introduction",
+      "visual_reference_signals": [
+        {
+          "id": "geist-overlay-metadata",
+          "label": "Geist overlay component metadata",
+          "confidence": 0.95,
+          "evidence": [
+            "8 pages",
+            "public docs nav",
+            "metadata-only extraction"
+          ]
+        }
+      ]
+    },
+    {
+      "family": "surface",
+      "priority": "medium",
+      "required_states": [
+        "default",
+        "hover",
+        "selected",
+        "disabled"
+      ],
+      "components": [
+        "card",
+        "context-card",
+        "relative-time-card"
+      ],
+      "source": "https://vercel.com/geist/introduction",
+      "visual_reference_signals": [
+        {
+          "id": "geist-surface-metadata",
+          "label": "Geist surface component metadata",
+          "confidence": 0.95,
+          "evidence": [
+            "3 pages",
+            "public docs nav",
+            "metadata-only extraction"
+          ]
+        }
+      ]
+    }
+  ]
+}

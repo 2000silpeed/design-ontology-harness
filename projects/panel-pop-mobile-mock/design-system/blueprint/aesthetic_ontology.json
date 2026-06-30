@@ -1,0 +1,1192 @@
+{
+  "schema_version": "aesthetic-evaluation-ontology/v1",
+  "dimensions": [
+    {
+      "id": "visual_harmony",
+      "label": "Visual harmony",
+      "weight": 0.24,
+      "description": "How coherently color, type, spacing, and composition work together.",
+      "metrics": [
+        "color_harmony",
+        "spacing_consistency",
+        "typography_balance",
+        "composition_order"
+      ]
+    },
+    {
+      "id": "clarity",
+      "label": "Clarity",
+      "weight": 0.2,
+      "description": "How quickly the intended hierarchy, action, and information structure can be read.",
+      "metrics": [
+        "hierarchy_clarity",
+        "contrast_legibility",
+        "content_density_control",
+        "task_focus"
+      ]
+    },
+    {
+      "id": "brand_fit",
+      "label": "Brand fit",
+      "weight": 0.18,
+      "description": "How well the candidate expresses the intended brand posture and avoids anti-keywords.",
+      "metrics": [
+        "keyword_alignment",
+        "tone_alignment",
+        "domain_fit",
+        "anti_keyword_avoidance"
+      ]
+    },
+    {
+      "id": "emotional_appeal",
+      "label": "Emotional appeal",
+      "weight": 0.14,
+      "description": "How desirable, confident, and affectively appropriate the surface feels.",
+      "metrics": [
+        "desirability",
+        "confidence_signal",
+        "warmth_or_energy"
+      ]
+    },
+    {
+      "id": "craft_quality",
+      "label": "Craft quality",
+      "weight": 0.14,
+      "description": "How polished and implementation-ready the candidate is across fit, tokens, and affordances.",
+      "metrics": [
+        "responsive_fit",
+        "token_binding",
+        "accessibility_baseline",
+        "interaction_affordance",
+        "asset_completeness"
+      ]
+    },
+    {
+      "id": "novelty",
+      "label": "Novelty",
+      "weight": 0.1,
+      "description": "How distinctive the design is without breaking its product and brand constraints.",
+      "metrics": [
+        "distinctiveness",
+        "reference_transformation",
+        "memorability"
+      ]
+    },
+    {
+      "id": "brand_semantic_fit",
+      "label": "Brand semantic fit",
+      "weight": 0.22,
+      "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+      "metrics": [
+        "brand_keyword:document-content-ffc9ffd8",
+        "brand_keyword:comic-magazine-a4bef56a",
+        "brand_keyword:manga-1c404c69",
+        "brand_keyword:webtoon-faee237b",
+        "brand_keyword:mobile-first-06fe75a3",
+        "brand_keyword:issue-00819c0e",
+        "brand_keyword:cover-story-0c78eb40",
+        "brand_keyword:serial-reader-1efd1095",
+        "brand_tone:bright-0570b92f",
+        "brand_tone:curious-293028aa",
+        "brand_tone:friendly-41209342",
+        "brand_tone:editorial-980a8caf",
+        "brand_tone:snappy-a0b1117d"
+      ],
+      "research_basis": [
+        "kansei",
+        "aesthemos"
+      ]
+    },
+    {
+      "id": "brand_boundary_fit",
+      "label": "Brand boundary fit",
+      "weight": 0.16,
+      "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+      "metrics": [
+        "anti_keyword:enterprise-052a3c16",
+        "anti_keyword:corporate-e276d18d",
+        "anti_keyword:minimal-tech-54872a07",
+        "anti_keyword:legal-b150a1aa",
+        "anti_keyword:dashboard-heavy-98cd5dbc",
+        "anti_keyword:commerce-checkout-0aa58267",
+        "anti_keyword:monochrome-96012589",
+        "anti_keyword:serious-newspaper-51d99644",
+        "avoid_pattern:desktop-newspaper-masthead-dominance-ffc46be7",
+        "avoid_pattern:image-free-card-wall-04d1afea",
+        "avoid_pattern:hard-enterprise-sidebar-116f6a48",
+        "avoid_pattern:checkout-funnel-fe17de97",
+        "avoid_pattern:rough-doodle-placeholder-cover-9f072d11",
+        "avoid_pattern:low-information-inline-svg-comic-art-e0bb3a12"
+      ],
+      "research_basis": [
+        "kansei"
+      ]
+    },
+    {
+      "id": "product_ontology_fit",
+      "label": "Product ontology fit",
+      "weight": 0.22,
+      "description": "How clearly product primitives and ontology-required signals appear in the design.",
+      "metrics": [
+        "product_primitive:tags-and-labels-825dbc17",
+        "product_primitive:onboarding-and-stepper-9d716ac1",
+        "product_primitive:data-tables-8118c784",
+        "product_primitive:search-and-filter-d5b6bb5f",
+        "product_primitive:workspace-navigation-d3b6a2b1",
+        "product_primitive:hero-section-1f65effe",
+        "product_primitive:notifications-1b60d2ed",
+        "product_primitive:bold-editorial-magazine-95ba6a42",
+        "product_primitive:site-footer-1ea24cba",
+        "product_primitive:forms-453ca94c",
+        "must_include:mobile-bottom-navigation-9921a489",
+        "must_include:cover-art-as-content-object-5bed2fa7",
+        "must_include:episode-list-7f70eb81",
+        "must_include:reader-progress-4f1a1120",
+        "must_include:polished-generated-comic-cover-art-f929b1a8",
+        "must_include:finished-manga-webtoon-panel-preview-61e9dc98"
+      ],
+      "research_basis": [
+        "beauvis",
+        "kansei"
+      ]
+    },
+    {
+      "id": "audience_context_fit",
+      "label": "Audience context fit",
+      "weight": 0.12,
+      "description": "How well the design serves declared users, platforms, and accessibility floors.",
+      "metrics": [
+        "audience_need:퇴근길과-등하굣길에-짧은-연재-만화를-훑어보는-모바일-독자-9d67c22b",
+        "audience_need:신작-단편-작가-인터뷰-테마-기획을-잡지처럼-탐색하는-만화-팬-32dcfef7",
+        "audience_need:관심-작품을-보관하고-새-회차-알림을-받는-라이트-구독자-821ef065",
+        "accessibility_target:wcag-2-2-aa-41a998cd",
+        "accessibility_target:mobile-320px-horizontal-fit-35f5b771"
+      ],
+      "research_basis": [
+        "visawi",
+        "aesthemos"
+      ]
+    }
+  ],
+  "metrics": {
+    "color_harmony": {
+      "label": "Color harmony",
+      "improvement": "Tighten the palette around one primary accent, one neutral surface ladder, and explicit semantic roles.",
+      "expected_lift": 0.08
+    },
+    "spacing_consistency": {
+      "label": "Spacing consistency",
+      "improvement": "Normalize page rhythm with shared spacing steps for section, cluster, and control gaps.",
+      "expected_lift": 0.07
+    },
+    "typography_balance": {
+      "label": "Typography balance",
+      "improvement": "Rebalance type hierarchy so headings, body, captions, and controls use distinct but restrained roles.",
+      "expected_lift": 0.07
+    },
+    "composition_order": {
+      "label": "Composition order",
+      "improvement": "Strengthen alignment, focal sequence, and proportional grouping before adding more decoration.",
+      "expected_lift": 0.08
+    },
+    "hierarchy_clarity": {
+      "label": "Hierarchy clarity",
+      "improvement": "Make the primary state, primary action, and next-best secondary action visible in the first scan.",
+      "expected_lift": 0.09
+    },
+    "contrast_legibility": {
+      "label": "Contrast and legibility",
+      "improvement": "Raise text/background and control/border contrast while preserving the selected token roles.",
+      "expected_lift": 0.08
+    },
+    "content_density_control": {
+      "label": "Content density control",
+      "improvement": "Reduce competing modules or group dense content into scannable rows, tables, rails, or panels.",
+      "expected_lift": 0.07
+    },
+    "task_focus": {
+      "label": "Task focus",
+      "improvement": "Move decorative or pitch-like content below the operational surface that supports the user's main task.",
+      "expected_lift": 0.08
+    },
+    "keyword_alignment": {
+      "label": "Keyword alignment",
+      "improvement": "Map the strongest brand keywords to visible choices in layout, tone, density, and component emphasis.",
+      "expected_lift": 0.08
+    },
+    "tone_alignment": {
+      "label": "Tone alignment",
+      "improvement": "Adjust copy weight, control styling, and visual temperature to match the intended voice.",
+      "expected_lift": 0.06
+    },
+    "domain_fit": {
+      "label": "Domain fit",
+      "improvement": "Add domain-native structures such as tables, maps, media, timelines, inspectors, or product objects where relevant.",
+      "expected_lift": 0.08
+    },
+    "anti_keyword_avoidance": {
+      "label": "Anti-keyword avoidance",
+      "improvement": "Remove visual tropes that match the brand profile's anti-keywords before polishing details.",
+      "expected_lift": 0.06
+    },
+    "desirability": {
+      "label": "Desirability",
+      "improvement": "Give the primary surface a more intentional visual reward: stronger imagery, tactile controls, or clearer payoff.",
+      "expected_lift": 0.07
+    },
+    "confidence_signal": {
+      "label": "Confidence signal",
+      "improvement": "Add evidence, provenance, precision, or stable UI states that make the surface feel trustworthy.",
+      "expected_lift": 0.07
+    },
+    "warmth_or_energy": {
+      "label": "Warmth or energy",
+      "improvement": "Tune motion, image choice, accent placement, or microcopy energy to the target audience.",
+      "expected_lift": 0.06
+    },
+    "responsive_fit": {
+      "label": "Responsive fit",
+      "improvement": "Verify mobile and desktop fit, then fix overflow, clipped labels, and unstable control sizing.",
+      "expected_lift": 0.08
+    },
+    "token_binding": {
+      "label": "Token binding",
+      "improvement": "Replace local visual constants with design-system tokens and keep semantic roles consistent.",
+      "expected_lift": 0.06
+    },
+    "accessibility_baseline": {
+      "label": "Accessibility baseline",
+      "improvement": "Check contrast, focus states, labels, and target sizes as part of visual polish, not after it.",
+      "expected_lift": 0.07
+    },
+    "interaction_affordance": {
+      "label": "Interaction affordance",
+      "improvement": "Make controls, filters, state chips, and navigation visually legible with icons, state, and hit-area clarity.",
+      "expected_lift": 0.07
+    },
+    "asset_completeness": {
+      "label": "Asset completeness",
+      "improvement": "Use concrete product, place, object, identity, or content assets where the domain expects visual substance.",
+      "expected_lift": 0.08
+    },
+    "distinctiveness": {
+      "label": "Distinctiveness",
+      "improvement": "Introduce one memorable composition or interaction pattern while keeping the rest of the system restrained.",
+      "expected_lift": 0.06
+    },
+    "reference_transformation": {
+      "label": "Reference transformation",
+      "improvement": "Absorb reference morphology without copying palette, copy, IA, or protected asset choices.",
+      "expected_lift": 0.06
+    },
+    "memorability": {
+      "label": "Memorability",
+      "improvement": "Create a recognizable signature in the first viewport through layout, identity asset, or product-native visual.",
+      "expected_lift": 0.06
+    },
+    "brand_keyword:document-content-ffc9ffd8": {
+      "label": "Expresses brand keyword: document-content",
+      "improvement": "Make 'document-content' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "document-content"
+    },
+    "brand_keyword:comic-magazine-a4bef56a": {
+      "label": "Expresses brand keyword: comic-magazine",
+      "improvement": "Make 'comic-magazine' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "comic-magazine"
+    },
+    "brand_keyword:manga-1c404c69": {
+      "label": "Expresses brand keyword: manga",
+      "improvement": "Make 'manga' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "manga"
+    },
+    "brand_keyword:webtoon-faee237b": {
+      "label": "Expresses brand keyword: webtoon",
+      "improvement": "Make 'webtoon' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "webtoon"
+    },
+    "brand_keyword:mobile-first-06fe75a3": {
+      "label": "Expresses brand keyword: mobile-first",
+      "improvement": "Make 'mobile-first' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "mobile-first"
+    },
+    "brand_keyword:issue-00819c0e": {
+      "label": "Expresses brand keyword: issue",
+      "improvement": "Make 'issue' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "issue"
+    },
+    "brand_keyword:cover-story-0c78eb40": {
+      "label": "Expresses brand keyword: cover-story",
+      "improvement": "Make 'cover-story' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "cover-story"
+    },
+    "brand_keyword:serial-reader-1efd1095": {
+      "label": "Expresses brand keyword: serial-reader",
+      "improvement": "Make 'serial-reader' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "serial-reader"
+    },
+    "brand_tone:bright-0570b92f": {
+      "label": "Expresses tone of voice: bright",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'bright'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "bright"
+    },
+    "brand_tone:curious-293028aa": {
+      "label": "Expresses tone of voice: curious",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'curious'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "curious"
+    },
+    "brand_tone:friendly-41209342": {
+      "label": "Expresses tone of voice: friendly",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'friendly'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "friendly"
+    },
+    "brand_tone:editorial-980a8caf": {
+      "label": "Expresses tone of voice: editorial",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'editorial'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "editorial"
+    },
+    "brand_tone:snappy-a0b1117d": {
+      "label": "Expresses tone of voice: snappy",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'snappy'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "snappy"
+    },
+    "anti_keyword:enterprise-052a3c16": {
+      "label": "Avoids anti-keyword: enterprise",
+      "improvement": "Remove cues that make the product read as 'enterprise'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "enterprise"
+    },
+    "anti_keyword:corporate-e276d18d": {
+      "label": "Avoids anti-keyword: corporate",
+      "improvement": "Remove cues that make the product read as 'corporate'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "corporate"
+    },
+    "anti_keyword:minimal-tech-54872a07": {
+      "label": "Avoids anti-keyword: minimal-tech",
+      "improvement": "Remove cues that make the product read as 'minimal-tech'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "minimal-tech"
+    },
+    "anti_keyword:legal-b150a1aa": {
+      "label": "Avoids anti-keyword: legal",
+      "improvement": "Remove cues that make the product read as 'legal'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "legal"
+    },
+    "anti_keyword:dashboard-heavy-98cd5dbc": {
+      "label": "Avoids anti-keyword: dashboard-heavy",
+      "improvement": "Remove cues that make the product read as 'dashboard-heavy'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "dashboard-heavy"
+    },
+    "anti_keyword:commerce-checkout-0aa58267": {
+      "label": "Avoids anti-keyword: commerce-checkout",
+      "improvement": "Remove cues that make the product read as 'commerce-checkout'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "commerce-checkout"
+    },
+    "anti_keyword:monochrome-96012589": {
+      "label": "Avoids anti-keyword: monochrome",
+      "improvement": "Remove cues that make the product read as 'monochrome'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "monochrome"
+    },
+    "anti_keyword:serious-newspaper-51d99644": {
+      "label": "Avoids anti-keyword: serious-newspaper",
+      "improvement": "Remove cues that make the product read as 'serious-newspaper'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "serious-newspaper"
+    },
+    "avoid_pattern:desktop-newspaper-masthead-dominance-ffc46be7": {
+      "label": "Avoids visual pattern: desktop newspaper masthead dominance",
+      "improvement": "Replace 'desktop newspaper masthead dominance' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "desktop newspaper masthead dominance"
+    },
+    "avoid_pattern:image-free-card-wall-04d1afea": {
+      "label": "Avoids visual pattern: image-free card wall",
+      "improvement": "Replace 'image-free card wall' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "image-free card wall"
+    },
+    "avoid_pattern:hard-enterprise-sidebar-116f6a48": {
+      "label": "Avoids visual pattern: hard enterprise sidebar",
+      "improvement": "Replace 'hard enterprise sidebar' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "hard enterprise sidebar"
+    },
+    "avoid_pattern:checkout-funnel-fe17de97": {
+      "label": "Avoids visual pattern: checkout funnel",
+      "improvement": "Replace 'checkout funnel' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "checkout funnel"
+    },
+    "avoid_pattern:rough-doodle-placeholder-cover-9f072d11": {
+      "label": "Avoids visual pattern: rough doodle placeholder cover",
+      "improvement": "Replace 'rough doodle placeholder cover' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "rough doodle placeholder cover"
+    },
+    "avoid_pattern:low-information-inline-svg-comic-art-e0bb3a12": {
+      "label": "Avoids visual pattern: low-information inline SVG comic art",
+      "improvement": "Replace 'low-information inline SVG comic art' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "low-information inline SVG comic art"
+    },
+    "product_primitive:tags-and-labels-825dbc17": {
+      "label": "Embodies product primitive: tags and labels",
+      "improvement": "Represent 'tags and labels' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "tags and labels"
+    },
+    "product_primitive:onboarding-and-stepper-9d716ac1": {
+      "label": "Embodies product primitive: onboarding and stepper",
+      "improvement": "Represent 'onboarding and stepper' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "onboarding and stepper"
+    },
+    "product_primitive:data-tables-8118c784": {
+      "label": "Embodies product primitive: data tables",
+      "improvement": "Represent 'data tables' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "data tables"
+    },
+    "product_primitive:search-and-filter-d5b6bb5f": {
+      "label": "Embodies product primitive: search and filter",
+      "improvement": "Represent 'search and filter' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "search and filter"
+    },
+    "product_primitive:workspace-navigation-d3b6a2b1": {
+      "label": "Embodies product primitive: workspace navigation",
+      "improvement": "Represent 'workspace navigation' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "workspace navigation"
+    },
+    "product_primitive:hero-section-1f65effe": {
+      "label": "Embodies product primitive: hero section",
+      "improvement": "Represent 'hero section' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "hero section"
+    },
+    "product_primitive:notifications-1b60d2ed": {
+      "label": "Embodies product primitive: notifications",
+      "improvement": "Represent 'notifications' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "notifications"
+    },
+    "product_primitive:bold-editorial-magazine-95ba6a42": {
+      "label": "Embodies product primitive: bold editorial magazine",
+      "improvement": "Represent 'bold editorial magazine' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "bold editorial magazine"
+    },
+    "product_primitive:site-footer-1ea24cba": {
+      "label": "Embodies product primitive: site footer",
+      "improvement": "Represent 'site footer' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "site footer"
+    },
+    "product_primitive:forms-453ca94c": {
+      "label": "Embodies product primitive: forms",
+      "improvement": "Represent 'forms' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "forms"
+    },
+    "must_include:mobile-bottom-navigation-9921a489": {
+      "label": "Includes required visual/system signal: mobile bottom navigation",
+      "improvement": "Make 'mobile bottom navigation' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "mobile bottom navigation"
+    },
+    "must_include:cover-art-as-content-object-5bed2fa7": {
+      "label": "Includes required visual/system signal: cover art as content object",
+      "improvement": "Make 'cover art as content object' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "cover art as content object"
+    },
+    "must_include:episode-list-7f70eb81": {
+      "label": "Includes required visual/system signal: episode list",
+      "improvement": "Make 'episode list' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "episode list"
+    },
+    "must_include:reader-progress-4f1a1120": {
+      "label": "Includes required visual/system signal: reader progress",
+      "improvement": "Make 'reader progress' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "reader progress"
+    },
+    "must_include:polished-generated-comic-cover-art-f929b1a8": {
+      "label": "Includes required visual/system signal: polished generated comic cover art",
+      "improvement": "Make 'polished generated comic cover art' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "polished generated comic cover art"
+    },
+    "must_include:finished-manga-webtoon-panel-preview-61e9dc98": {
+      "label": "Includes required visual/system signal: finished manga/webtoon panel preview",
+      "improvement": "Make 'finished manga/webtoon panel preview' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "finished manga/webtoon panel preview"
+    },
+    "audience_need:퇴근길과-등하굣길에-짧은-연재-만화를-훑어보는-모바일-독자-9d67c22b": {
+      "label": "Fits audience context: 퇴근길과 등하굣길에 짧은 연재 만화를 훑어보는 모바일 독자",
+      "improvement": "Adjust density, language, workflow order, and controls for '퇴근길과 등하굣길에 짧은 연재 만화를 훑어보는 모바일 독자'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "퇴근길과 등하굣길에 짧은 연재 만화를 훑어보는 모바일 독자"
+    },
+    "audience_need:신작-단편-작가-인터뷰-테마-기획을-잡지처럼-탐색하는-만화-팬-32dcfef7": {
+      "label": "Fits audience context: 신작 단편, 작가 인터뷰, 테마 기획을 잡지처럼 탐색하는 만화 팬",
+      "improvement": "Adjust density, language, workflow order, and controls for '신작 단편, 작가 인터뷰, 테마 기획을 잡지처럼 탐색하는 만화 팬'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "신작 단편, 작가 인터뷰, 테마 기획을 잡지처럼 탐색하는 만화 팬"
+    },
+    "audience_need:관심-작품을-보관하고-새-회차-알림을-받는-라이트-구독자-821ef065": {
+      "label": "Fits audience context: 관심 작품을 보관하고 새 회차 알림을 받는 라이트 구독자",
+      "improvement": "Adjust density, language, workflow order, and controls for '관심 작품을 보관하고 새 회차 알림을 받는 라이트 구독자'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "관심 작품을 보관하고 새 회차 알림을 받는 라이트 구독자"
+    },
+    "accessibility_target:wcag-2-2-aa-41a998cd": {
+      "label": "Supports accessibility target: WCAG 2.2 AA",
+      "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "WCAG 2.2 AA"
+    },
+    "accessibility_target:mobile-320px-horizontal-fit-35f5b771": {
+      "label": "Supports accessibility target: mobile 320px horizontal-fit",
+      "improvement": "Verify 'mobile 320px horizontal-fit' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "mobile 320px horizontal-fit"
+    }
+  },
+  "relations": [
+    {
+      "source": "DesignCandidate",
+      "relation": "evaluated_by",
+      "target": "AestheticDimension"
+    },
+    {
+      "source": "AestheticDimension",
+      "relation": "measured_by",
+      "target": "AestheticMetric"
+    },
+    {
+      "source": "AestheticMetric",
+      "relation": "improved_by",
+      "target": "ImprovementAction"
+    },
+    {
+      "source": "AestheticEvaluation",
+      "relation": "gates",
+      "target": "Execution"
+    }
+  ],
+  "context": {
+    "brand_name": "Panel Pop",
+    "system_name": "Panel Pop Design System",
+    "product_summary": "모바일 중심 만화 잡지 앱: 주간 이슈, 표지 기사, 연재 회차, 컷 미리보기, 작가 코멘터리와 독자 보관함을 묶는 playful-soft editorial reading experience",
+    "audiences": [
+      "퇴근길과 등하굣길에 짧은 연재 만화를 훑어보는 모바일 독자",
+      "신작 단편, 작가 인터뷰, 테마 기획을 잡지처럼 탐색하는 만화 팬",
+      "관심 작품을 보관하고 새 회차 알림을 받는 라이트 구독자"
+    ],
+    "brand_keywords": [
+      "document-content",
+      "comic-magazine",
+      "manga",
+      "webtoon",
+      "mobile-first",
+      "issue",
+      "cover-story",
+      "serial-reader",
+      "episode-card",
+      "panel-preview",
+      "creator-note",
+      "reading-queue",
+      "bookmark-library",
+      "playful",
+      "soft",
+      "rounded",
+      "expressive",
+      "pastel-pop"
+    ],
+    "anti_keywords": [
+      "enterprise",
+      "corporate",
+      "minimal-tech",
+      "legal",
+      "dashboard-heavy",
+      "commerce-checkout",
+      "monochrome",
+      "serious-newspaper",
+      "dense-table",
+      "generic-card-wall"
+    ],
+    "tone_of_voice": [
+      "bright",
+      "curious",
+      "friendly",
+      "editorial",
+      "snappy",
+      "warm"
+    ],
+    "product_primitives": [
+      "tags and labels",
+      "onboarding and stepper",
+      "data tables",
+      "search and filter",
+      "workspace navigation",
+      "hero section",
+      "notifications",
+      "bold editorial magazine",
+      "site footer",
+      "forms",
+      "comments and discussion",
+      "modal and dialog",
+      "chat and messaging",
+      "reference documentation",
+      "presence and notifications"
+    ]
+  },
+  "brand_aesthetic_contract": {
+    "schema_version": "brand-aesthetic-contract/v1",
+    "brand_name": "Panel Pop",
+    "system_name": "Panel Pop Design System",
+    "research_basis": [
+      {
+        "id": "visawi",
+        "label": "VisAWI",
+        "construct": "perceived website visual aesthetics",
+        "operational_use": "Map simplicity, diversity, colorfulness, and craftsmanship into visual system coherence metrics.",
+        "source_url": "https://www.sciencedirect.com/science/article/pii/S1071581910000777"
+      },
+      {
+        "id": "apid",
+        "label": "APiD",
+        "construct": "aesthetic pleasure in designed artifacts",
+        "operational_use": "Keep a direct pleasure/desirability layer instead of only formal pixel metrics.",
+        "source_url": "https://opus.lib.uts.edu.au/handle/10453/81276"
+      },
+      {
+        "id": "beauvis",
+        "label": "BeauVis",
+        "construct": "aesthetic pleasure of visual representations",
+        "operational_use": "Treat scores as comparative, context-bound judgments rather than universal beauty values.",
+        "source_url": "https://arxiv.org/abs/2207.14147"
+      },
+      {
+        "id": "aesthemos",
+        "label": "AESTHEMOS",
+        "construct": "aesthetic emotions",
+        "operational_use": "Translate brand tone and target affect into measurable emotional-response proxies.",
+        "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0178899"
+      },
+      {
+        "id": "kansei",
+        "label": "Kansei / semantic differential",
+        "construct": "design element to impression mapping",
+        "operational_use": "Use brand keywords and anti-keywords as semantic impression targets and boundaries.",
+        "source_url": "https://www.mdpi.com/2073-8994/12/8/1340"
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "brand_semantic_fit",
+        "label": "Brand semantic fit",
+        "weight": 0.22,
+        "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+        "metrics": [
+          "brand_keyword:document-content-ffc9ffd8",
+          "brand_keyword:comic-magazine-a4bef56a",
+          "brand_keyword:manga-1c404c69",
+          "brand_keyword:webtoon-faee237b",
+          "brand_keyword:mobile-first-06fe75a3",
+          "brand_keyword:issue-00819c0e",
+          "brand_keyword:cover-story-0c78eb40",
+          "brand_keyword:serial-reader-1efd1095",
+          "brand_tone:bright-0570b92f",
+          "brand_tone:curious-293028aa",
+          "brand_tone:friendly-41209342",
+          "brand_tone:editorial-980a8caf",
+          "brand_tone:snappy-a0b1117d"
+        ],
+        "research_basis": [
+          "kansei",
+          "aesthemos"
+        ]
+      },
+      {
+        "id": "brand_boundary_fit",
+        "label": "Brand boundary fit",
+        "weight": 0.16,
+        "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+        "metrics": [
+          "anti_keyword:enterprise-052a3c16",
+          "anti_keyword:corporate-e276d18d",
+          "anti_keyword:minimal-tech-54872a07",
+          "anti_keyword:legal-b150a1aa",
+          "anti_keyword:dashboard-heavy-98cd5dbc",
+          "anti_keyword:commerce-checkout-0aa58267",
+          "anti_keyword:monochrome-96012589",
+          "anti_keyword:serious-newspaper-51d99644",
+          "avoid_pattern:desktop-newspaper-masthead-dominance-ffc46be7",
+          "avoid_pattern:image-free-card-wall-04d1afea",
+          "avoid_pattern:hard-enterprise-sidebar-116f6a48",
+          "avoid_pattern:checkout-funnel-fe17de97",
+          "avoid_pattern:rough-doodle-placeholder-cover-9f072d11",
+          "avoid_pattern:low-information-inline-svg-comic-art-e0bb3a12"
+        ],
+        "research_basis": [
+          "kansei"
+        ]
+      },
+      {
+        "id": "product_ontology_fit",
+        "label": "Product ontology fit",
+        "weight": 0.22,
+        "description": "How clearly product primitives and ontology-required signals appear in the design.",
+        "metrics": [
+          "product_primitive:tags-and-labels-825dbc17",
+          "product_primitive:onboarding-and-stepper-9d716ac1",
+          "product_primitive:data-tables-8118c784",
+          "product_primitive:search-and-filter-d5b6bb5f",
+          "product_primitive:workspace-navigation-d3b6a2b1",
+          "product_primitive:hero-section-1f65effe",
+          "product_primitive:notifications-1b60d2ed",
+          "product_primitive:bold-editorial-magazine-95ba6a42",
+          "product_primitive:site-footer-1ea24cba",
+          "product_primitive:forms-453ca94c",
+          "must_include:mobile-bottom-navigation-9921a489",
+          "must_include:cover-art-as-content-object-5bed2fa7",
+          "must_include:episode-list-7f70eb81",
+          "must_include:reader-progress-4f1a1120",
+          "must_include:polished-generated-comic-cover-art-f929b1a8",
+          "must_include:finished-manga-webtoon-panel-preview-61e9dc98"
+        ],
+        "research_basis": [
+          "beauvis",
+          "kansei"
+        ]
+      },
+      {
+        "id": "audience_context_fit",
+        "label": "Audience context fit",
+        "weight": 0.12,
+        "description": "How well the design serves declared users, platforms, and accessibility floors.",
+        "metrics": [
+          "audience_need:퇴근길과-등하굣길에-짧은-연재-만화를-훑어보는-모바일-독자-9d67c22b",
+          "audience_need:신작-단편-작가-인터뷰-테마-기획을-잡지처럼-탐색하는-만화-팬-32dcfef7",
+          "audience_need:관심-작품을-보관하고-새-회차-알림을-받는-라이트-구독자-821ef065",
+          "accessibility_target:wcag-2-2-aa-41a998cd",
+          "accessibility_target:mobile-320px-horizontal-fit-35f5b771"
+        ],
+        "research_basis": [
+          "visawi",
+          "aesthemos"
+        ]
+      }
+    ],
+    "metrics": {
+      "brand_keyword:document-content-ffc9ffd8": {
+        "label": "Expresses brand keyword: document-content",
+        "improvement": "Make 'document-content' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "document-content"
+      },
+      "brand_keyword:comic-magazine-a4bef56a": {
+        "label": "Expresses brand keyword: comic-magazine",
+        "improvement": "Make 'comic-magazine' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "comic-magazine"
+      },
+      "brand_keyword:manga-1c404c69": {
+        "label": "Expresses brand keyword: manga",
+        "improvement": "Make 'manga' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "manga"
+      },
+      "brand_keyword:webtoon-faee237b": {
+        "label": "Expresses brand keyword: webtoon",
+        "improvement": "Make 'webtoon' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "webtoon"
+      },
+      "brand_keyword:mobile-first-06fe75a3": {
+        "label": "Expresses brand keyword: mobile-first",
+        "improvement": "Make 'mobile-first' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "mobile-first"
+      },
+      "brand_keyword:issue-00819c0e": {
+        "label": "Expresses brand keyword: issue",
+        "improvement": "Make 'issue' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "issue"
+      },
+      "brand_keyword:cover-story-0c78eb40": {
+        "label": "Expresses brand keyword: cover-story",
+        "improvement": "Make 'cover-story' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "cover-story"
+      },
+      "brand_keyword:serial-reader-1efd1095": {
+        "label": "Expresses brand keyword: serial-reader",
+        "improvement": "Make 'serial-reader' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "serial-reader"
+      },
+      "brand_tone:bright-0570b92f": {
+        "label": "Expresses tone of voice: bright",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'bright'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "bright"
+      },
+      "brand_tone:curious-293028aa": {
+        "label": "Expresses tone of voice: curious",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'curious'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "curious"
+      },
+      "brand_tone:friendly-41209342": {
+        "label": "Expresses tone of voice: friendly",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'friendly'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "friendly"
+      },
+      "brand_tone:editorial-980a8caf": {
+        "label": "Expresses tone of voice: editorial",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'editorial'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "editorial"
+      },
+      "brand_tone:snappy-a0b1117d": {
+        "label": "Expresses tone of voice: snappy",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'snappy'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "snappy"
+      },
+      "anti_keyword:enterprise-052a3c16": {
+        "label": "Avoids anti-keyword: enterprise",
+        "improvement": "Remove cues that make the product read as 'enterprise'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "enterprise"
+      },
+      "anti_keyword:corporate-e276d18d": {
+        "label": "Avoids anti-keyword: corporate",
+        "improvement": "Remove cues that make the product read as 'corporate'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "corporate"
+      },
+      "anti_keyword:minimal-tech-54872a07": {
+        "label": "Avoids anti-keyword: minimal-tech",
+        "improvement": "Remove cues that make the product read as 'minimal-tech'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "minimal-tech"
+      },
+      "anti_keyword:legal-b150a1aa": {
+        "label": "Avoids anti-keyword: legal",
+        "improvement": "Remove cues that make the product read as 'legal'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "legal"
+      },
+      "anti_keyword:dashboard-heavy-98cd5dbc": {
+        "label": "Avoids anti-keyword: dashboard-heavy",
+        "improvement": "Remove cues that make the product read as 'dashboard-heavy'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "dashboard-heavy"
+      },
+      "anti_keyword:commerce-checkout-0aa58267": {
+        "label": "Avoids anti-keyword: commerce-checkout",
+        "improvement": "Remove cues that make the product read as 'commerce-checkout'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "commerce-checkout"
+      },
+      "anti_keyword:monochrome-96012589": {
+        "label": "Avoids anti-keyword: monochrome",
+        "improvement": "Remove cues that make the product read as 'monochrome'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "monochrome"
+      },
+      "anti_keyword:serious-newspaper-51d99644": {
+        "label": "Avoids anti-keyword: serious-newspaper",
+        "improvement": "Remove cues that make the product read as 'serious-newspaper'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "serious-newspaper"
+      },
+      "avoid_pattern:desktop-newspaper-masthead-dominance-ffc46be7": {
+        "label": "Avoids visual pattern: desktop newspaper masthead dominance",
+        "improvement": "Replace 'desktop newspaper masthead dominance' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "desktop newspaper masthead dominance"
+      },
+      "avoid_pattern:image-free-card-wall-04d1afea": {
+        "label": "Avoids visual pattern: image-free card wall",
+        "improvement": "Replace 'image-free card wall' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "image-free card wall"
+      },
+      "avoid_pattern:hard-enterprise-sidebar-116f6a48": {
+        "label": "Avoids visual pattern: hard enterprise sidebar",
+        "improvement": "Replace 'hard enterprise sidebar' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "hard enterprise sidebar"
+      },
+      "avoid_pattern:checkout-funnel-fe17de97": {
+        "label": "Avoids visual pattern: checkout funnel",
+        "improvement": "Replace 'checkout funnel' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "checkout funnel"
+      },
+      "avoid_pattern:rough-doodle-placeholder-cover-9f072d11": {
+        "label": "Avoids visual pattern: rough doodle placeholder cover",
+        "improvement": "Replace 'rough doodle placeholder cover' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "rough doodle placeholder cover"
+      },
+      "avoid_pattern:low-information-inline-svg-comic-art-e0bb3a12": {
+        "label": "Avoids visual pattern: low-information inline SVG comic art",
+        "improvement": "Replace 'low-information inline SVG comic art' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "low-information inline SVG comic art"
+      },
+      "product_primitive:tags-and-labels-825dbc17": {
+        "label": "Embodies product primitive: tags and labels",
+        "improvement": "Represent 'tags and labels' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "tags and labels"
+      },
+      "product_primitive:onboarding-and-stepper-9d716ac1": {
+        "label": "Embodies product primitive: onboarding and stepper",
+        "improvement": "Represent 'onboarding and stepper' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "onboarding and stepper"
+      },
+      "product_primitive:data-tables-8118c784": {
+        "label": "Embodies product primitive: data tables",
+        "improvement": "Represent 'data tables' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "data tables"
+      },
+      "product_primitive:search-and-filter-d5b6bb5f": {
+        "label": "Embodies product primitive: search and filter",
+        "improvement": "Represent 'search and filter' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "search and filter"
+      },
+      "product_primitive:workspace-navigation-d3b6a2b1": {
+        "label": "Embodies product primitive: workspace navigation",
+        "improvement": "Represent 'workspace navigation' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "workspace navigation"
+      },
+      "product_primitive:hero-section-1f65effe": {
+        "label": "Embodies product primitive: hero section",
+        "improvement": "Represent 'hero section' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "hero section"
+      },
+      "product_primitive:notifications-1b60d2ed": {
+        "label": "Embodies product primitive: notifications",
+        "improvement": "Represent 'notifications' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "notifications"
+      },
+      "product_primitive:bold-editorial-magazine-95ba6a42": {
+        "label": "Embodies product primitive: bold editorial magazine",
+        "improvement": "Represent 'bold editorial magazine' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "bold editorial magazine"
+      },
+      "product_primitive:site-footer-1ea24cba": {
+        "label": "Embodies product primitive: site footer",
+        "improvement": "Represent 'site footer' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "site footer"
+      },
+      "product_primitive:forms-453ca94c": {
+        "label": "Embodies product primitive: forms",
+        "improvement": "Represent 'forms' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "forms"
+      },
+      "must_include:mobile-bottom-navigation-9921a489": {
+        "label": "Includes required visual/system signal: mobile bottom navigation",
+        "improvement": "Make 'mobile bottom navigation' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "mobile bottom navigation"
+      },
+      "must_include:cover-art-as-content-object-5bed2fa7": {
+        "label": "Includes required visual/system signal: cover art as content object",
+        "improvement": "Make 'cover art as content object' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "cover art as content object"
+      },
+      "must_include:episode-list-7f70eb81": {
+        "label": "Includes required visual/system signal: episode list",
+        "improvement": "Make 'episode list' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "episode list"
+      },
+      "must_include:reader-progress-4f1a1120": {
+        "label": "Includes required visual/system signal: reader progress",
+        "improvement": "Make 'reader progress' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "reader progress"
+      },
+      "must_include:polished-generated-comic-cover-art-f929b1a8": {
+        "label": "Includes required visual/system signal: polished generated comic cover art",
+        "improvement": "Make 'polished generated comic cover art' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "polished generated comic cover art"
+      },
+      "must_include:finished-manga-webtoon-panel-preview-61e9dc98": {
+        "label": "Includes required visual/system signal: finished manga/webtoon panel preview",
+        "improvement": "Make 'finished manga/webtoon panel preview' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "finished manga/webtoon panel preview"
+      },
+      "audience_need:퇴근길과-등하굣길에-짧은-연재-만화를-훑어보는-모바일-독자-9d67c22b": {
+        "label": "Fits audience context: 퇴근길과 등하굣길에 짧은 연재 만화를 훑어보는 모바일 독자",
+        "improvement": "Adjust density, language, workflow order, and controls for '퇴근길과 등하굣길에 짧은 연재 만화를 훑어보는 모바일 독자'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "퇴근길과 등하굣길에 짧은 연재 만화를 훑어보는 모바일 독자"
+      },
+      "audience_need:신작-단편-작가-인터뷰-테마-기획을-잡지처럼-탐색하는-만화-팬-32dcfef7": {
+        "label": "Fits audience context: 신작 단편, 작가 인터뷰, 테마 기획을 잡지처럼 탐색하는 만화 팬",
+        "improvement": "Adjust density, language, workflow order, and controls for '신작 단편, 작가 인터뷰, 테마 기획을 잡지처럼 탐색하는 만화 팬'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "신작 단편, 작가 인터뷰, 테마 기획을 잡지처럼 탐색하는 만화 팬"
+      },
+      "audience_need:관심-작품을-보관하고-새-회차-알림을-받는-라이트-구독자-821ef065": {
+        "label": "Fits audience context: 관심 작품을 보관하고 새 회차 알림을 받는 라이트 구독자",
+        "improvement": "Adjust density, language, workflow order, and controls for '관심 작품을 보관하고 새 회차 알림을 받는 라이트 구독자'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "관심 작품을 보관하고 새 회차 알림을 받는 라이트 구독자"
+      },
+      "accessibility_target:wcag-2-2-aa-41a998cd": {
+        "label": "Supports accessibility target: WCAG 2.2 AA",
+        "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "WCAG 2.2 AA"
+      },
+      "accessibility_target:mobile-320px-horizontal-fit-35f5b771": {
+        "label": "Supports accessibility target: mobile 320px horizontal-fit",
+        "improvement": "Verify 'mobile 320px horizontal-fit' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "mobile 320px horizontal-fit"
+      }
+    },
+    "rule": "Brand-owned aesthetic quality is evaluated as fit to declared semantic targets, explicit boundaries, product ontology, audience context, and visual craft."
+  },
+  "interpretation_rule": "Scores represent observed or reviewed response proxies in a declared context; they are not universal beauty claims."
+}

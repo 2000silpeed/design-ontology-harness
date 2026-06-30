@@ -1,0 +1,87 @@
+/*
+  Ontology color decision for MoaChat
+  - Selector: design_ontology_harness.semantic_color_selector
+  - Matched pattern: pattern-brief-palette-stable-green-ui-surface
+  - Source: design_ontology_harness/resources/semantic_color_ontology.json
+  - Geist is used for component structure only, not color.
+*/
+
+:root {
+  color-scheme: light;
+
+  /* Semantic OS color ontology roles */
+  --ontology-anchor-surface: #27503D; /* Forest Green: grounded primary surface, trust depth */
+  --ontology-structural-support: #006A4E; /* Bottle Green: navigation, frame, panels */
+  --ontology-quiet-background: #ACE1AF; /* Celadon: calm fields and empty states */
+  --ontology-calm-border: #76C1B1; /* Cascade: low-chroma boundaries */
+  --ontology-fresh-accent: #00A591; /* Arcadia: selected/progress/action signal */
+
+  /* Expanded status roles from the same color reference pass */
+  --ontology-info: #967BB6; /* Lavender Violet */
+  --ontology-warning: #FFB27F; /* Apricot */
+  --ontology-danger: #FA8072; /* Salmon */
+
+  /* Neutral roles use the harness color-reference semantic fallback for UI legibility */
+  --ontology-canvas: #F7F8FA;
+  --ontology-paper: #FFFFFF;
+  --ontology-surface-muted: #EEF1F6;
+  --ontology-border: #D6DDE6;
+  --ontology-border-strong: #B0BAC7;
+  --ontology-ink: #111111;
+  --ontology-ink-muted: #4B5563;
+  --ontology-ink-subtle: #6B7280;
+
+  --app-bg: var(--ontology-canvas);
+  --app-surface: var(--ontology-paper);
+  --app-surface-muted: color-mix(in srgb, var(--ontology-quiet-background) 18%, var(--ontology-paper));
+  --app-surface-raised: var(--ontology-paper);
+  --app-text: var(--ontology-ink);
+  --app-text-secondary: var(--ontology-ink-muted);
+  --app-text-muted: var(--ontology-ink-subtle);
+  --app-border: var(--ontology-border);
+  --app-border-strong: color-mix(in srgb, var(--ontology-calm-border) 48%, var(--ontology-border-strong));
+  --app-focus: var(--ontology-fresh-accent);
+  --app-primary: var(--ontology-structural-support);
+  --app-primary-strong: var(--ontology-anchor-surface);
+  --app-primary-soft: color-mix(in srgb, var(--ontology-quiet-background) 42%, var(--ontology-paper));
+  --app-accent: var(--ontology-fresh-accent);
+  --app-info: var(--ontology-info);
+  --app-info-soft: color-mix(in srgb, var(--ontology-info) 14%, var(--ontology-paper));
+  --app-success: var(--ontology-structural-support);
+  --app-success-soft: color-mix(in srgb, var(--ontology-quiet-background) 48%, var(--ontology-paper));
+  --app-warning: #B87333; /* Copper, color reference support color */
+  --app-warning-soft: color-mix(in srgb, var(--ontology-warning) 34%, var(--ontology-paper));
+  --app-danger: #E2725B; /* Terracotta, color reference support color */
+  --app-danger-soft: color-mix(in srgb, var(--ontology-danger) 24%, var(--ontology-paper));
+  --app-shadow: 0 1px 2px #0000000A, 0 8px 16px -8px #00000014;
+  --app-shadow-strong: 0 1px 1px #0000000A, 0 12px 28px -12px #00000029;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --app-bg: #111111;
+  --app-surface: #2F2F2F;
+  --app-surface-muted: color-mix(in srgb, var(--ontology-anchor-surface) 42%, #111111);
+  --app-surface-raised: #3F3F3F;
+  --app-text: #FFFFFF;
+  --app-text-secondary: #F5F5F5;
+  --app-text-muted: #D9D9D9;
+  --app-border: #4C4C4C;
+  --app-border-strong: color-mix(in srgb, var(--ontology-calm-border) 52%, #4C4C4C);
+  --app-focus: var(--ontology-calm-border);
+  --app-primary: var(--ontology-calm-border);
+  --app-primary-strong: var(--ontology-quiet-background);
+  --app-primary-soft: color-mix(in srgb, var(--ontology-anchor-surface) 54%, #111111);
+  --app-accent: var(--ontology-fresh-accent);
+  --app-info: #BCA7E0; /* Lavender pairing support */
+  --app-info-soft: color-mix(in srgb, #BCA7E0 22%, #111111);
+  --app-success: var(--ontology-calm-border);
+  --app-success-soft: color-mix(in srgb, var(--ontology-anchor-surface) 62%, #111111);
+  --app-warning: var(--ontology-warning);
+  --app-warning-soft: color-mix(in srgb, var(--ontology-warning) 22%, #111111);
+  --app-danger: var(--ontology-danger);
+  --app-danger-soft: color-mix(in srgb, var(--ontology-danger) 18%, #111111);
+  --app-shadow: 0 1px 2px #00000057, 0 12px 28px -12px #000000B3;
+  --app-shadow-strong: 0 1px 1px #00000057, 0 18px 36px -12px #000000B3;
+}

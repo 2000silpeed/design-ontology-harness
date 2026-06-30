@@ -1,0 +1,192 @@
+{
+  "schema_version": "geist-reference-page/v1",
+  "slug": "select",
+  "kind": "component",
+  "title": "Select",
+  "url": "https://vercel.com/geist/select",
+  "final_url": "https://vercel.com/geist/select",
+  "canonical_url": "https://vercel.com/geist/select",
+  "redirected": false,
+  "description": "Display a dropdown list of items.",
+  "source_hash": "sha256:808c2023269b1d893335144be604d3c810ee99994d91cc6be168e39bb2058160",
+  "body_text_length": 2523,
+  "sections": [
+    {
+      "level": "h2",
+      "text": "Sizes"
+    },
+    {
+      "level": "h2",
+      "text": "Prefix and suffix"
+    },
+    {
+      "level": "h2",
+      "text": "Disabled"
+    },
+    {
+      "level": "h2",
+      "text": "Error"
+    },
+    {
+      "level": "h2",
+      "text": "Label"
+    },
+    {
+      "level": "h2",
+      "text": "With options"
+    },
+    {
+      "level": "h2",
+      "text": "Required"
+    },
+    {
+      "level": "h2",
+      "text": "Best Practices"
+    }
+  ],
+  "section_count": 8,
+  "symbol_metadata": {
+    "code_example_count": 7,
+    "import_symbols": [
+      "Select",
+      "IconArrowCircleUp"
+    ],
+    "import_sources": [
+      "@vercel/geistcn/components",
+      "@vercel/geistcn-assets/icons"
+    ],
+    "jsx_tags": [
+      "Select",
+      "IconArrowCircleUp"
+    ],
+    "prop_names": [
+      "aria-label",
+      "placeholder",
+      "size",
+      "prefix",
+      "suffix",
+      "error",
+      "label",
+      "value",
+      "defaultValue"
+    ]
+  },
+  "token_refs": {
+    "css_var_count": 70,
+    "css_vars": [
+      "--accents-1",
+      "--accents-2",
+      "--accents-3",
+      "--accents-8",
+      "--cross-color",
+      "--ds-amber-800",
+      "--ds-background-100",
+      "--ds-blue-300",
+      "--ds-blue-700",
+      "--ds-blue-900",
+      "--ds-focus-border",
+      "--ds-focus-color",
+      "--ds-focus-ring",
+      "--ds-gray-100",
+      "--ds-gray-1000",
+      "--ds-gray-200",
+      "--ds-gray-400",
+      "--ds-gray-700",
+      "--ds-gray-900",
+      "--ds-gray-alpha-100",
+      "--ds-gray-alpha-200",
+      "--ds-gray-alpha-400",
+      "--ds-gray-alpha-500",
+      "--ds-gray-alpha-600",
+      "--ds-red-900",
+      "--ds-red-900-value",
+      "--ds-shadow-border",
+      "--ds-shadow-border-small",
+      "--font-mono",
+      "--font-sans",
+      "--geist-foreground",
+      "--geist-form-font",
+      "--geist-form-height",
+      "--geist-form-large-font",
+      "--geist-form-large-height",
+      "--geist-form-large-line-height",
+      "--geist-form-line-height",
+      "--geist-form-small-font",
+      "--geist-form-small-height",
+      "--geist-gap-half",
+      "--geist-icon-size",
+      "--geist-radius",
+      "--grid-columns",
+      "--grid-rows",
+      "--guide-color",
+      "--guide-width",
+      "--height",
+      "--lg-cell-columns",
+      "--lg-cell-rows",
+      "--max-width",
+      "--md-cell-columns",
+      "--md-cell-rows",
+      "--min-width",
+      "--sm-cell-columns",
+      "--sm-cell-rows",
+      "--sm-grid-column",
+      "--sm-grid-row",
+      "--sm-height",
+      "--smd-cell-columns",
+      "--smd-cell-rows",
+      "--spinner-size",
+      "--themed-bg",
+      "--themed-border",
+      "--themed-fg",
+      "--themed-hover-bg",
+      "--x",
+      "--x-padding",
+      "--xs-cell-columns",
+      "--xs-cell-rows",
+      "--y"
+    ],
+    "geist_data_attrs": [
+      "data-geist-button",
+      "data-geist-error",
+      "data-geist-kbd",
+      "data-geist-select",
+      "data-geist-textarea-wrapper"
+    ]
+  },
+  "accessibility_terms": [
+    "Keyboard",
+    "aria-atomic",
+    "aria-checked",
+    "aria-controls",
+    "aria-describedby",
+    "aria-disabled",
+    "aria-expanded",
+    "aria-hidden",
+    "aria-invalid",
+    "aria-label",
+    "aria-pressable",
+    "focus",
+    "keyboard",
+    "role"
+  ],
+  "absorption_policy": {
+    "allowed": [
+      "component names",
+      "component taxonomy",
+      "state coverage hints",
+      "section headings",
+      "import and JSX symbol references",
+      "token identifiers",
+      "accessibility and interaction evidence labels"
+    ],
+    "denied": [
+      "verbatim product copy beyond short labels",
+      "brand logos or protected imagery",
+      "unlicensed implementation source code",
+      "full documentation text",
+      "Vercel-specific IA as product IA"
+    ],
+    "rule": "Store structured reference metadata for local reimplementation; keep source URLs as evidence."
+  },
+  "nav_index": 58
+}

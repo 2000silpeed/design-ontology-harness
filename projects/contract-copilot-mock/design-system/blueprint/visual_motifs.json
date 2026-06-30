@@ -1,0 +1,111 @@
+{
+  "density": {
+    "value": "balanced",
+    "confidence": 0.25,
+    "evidence": [
+      "workspace x3.9499999999999997",
+      "product x0.15"
+    ],
+    "candidates": [
+      {
+        "value": "balanced",
+        "score": 4.1
+      },
+      {
+        "value": "airy",
+        "score": 3.1
+      },
+      {
+        "value": "dense",
+        "score": 2.7
+      }
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Derived from query and brand context only because no local image selection was available."
+    }
+  },
+  "surface_style": {
+    "value": "elevated",
+    "confidence": 0.19,
+    "evidence": [
+      "modal x2.25"
+    ],
+    "candidates": [
+      {
+        "value": "elevated",
+        "score": 2.25
+      },
+      {
+        "value": "tinted",
+        "score": 2.05
+      }
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Derived from query and brand context only because no local image selection was available."
+    }
+  },
+  "typography_mood": {
+    "value": "utilitarian",
+    "confidence": 0.5,
+    "evidence": [
+      "dashboard x0.9",
+      "admin x0.45",
+      "enterprise x6.65"
+    ],
+    "candidates": [
+      {
+        "value": "utilitarian",
+        "score": 16.9
+      },
+      {
+        "value": "premium",
+        "score": 1.5
+      },
+      {
+        "value": "editorial",
+        "score": 1.45
+      },
+      {
+        "value": "playful",
+        "score": 1.2
+      }
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Derived from query and brand context only because no local image selection was available."
+    }
+  },
+  "corner_style": {
+    "value": "round",
+    "confidence": 0.18,
+    "evidence": [
+      "soft x0.8"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Derived from query and brand context only because no local image geometry was available."
+    }
+  },
+  "color_balance": {
+    "observed": false,
+    "temperature": "unknown",
+    "contrast_profile": "unknown",
+    "neutral_bias": "unknown",
+    "dominant": [],
+    "supporting": [],
+    "provenance": {
+      "level": "unverified",
+      "detail": "No reliable pixel-color sample was available from the current selection."
+    }
+  },
+  "image_selection": {
+    "selected_image_count": 0,
+    "available_image_count": 0,
+    "provenance": {
+      "level": "unverified",
+      "detail": "No local image files were available for selection."
+    }
+  }
+}

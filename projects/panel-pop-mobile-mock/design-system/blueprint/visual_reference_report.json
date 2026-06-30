@@ -1,0 +1,559 @@
+{
+  "mode": "local-images",
+  "query": [
+    "mobile manga magazine app home screen",
+    "comic reader app issue cover carousel",
+    "webtoon app episode card bottom navigation",
+    "playful editorial mobile app pastel comic covers",
+    "magazine app creator interview mobile UI",
+    "manga panel preview strip app design"
+  ],
+  "preferred_count": 12,
+  "weights": {
+    "layout": 0.32,
+    "component_shape": 0.28,
+    "color_balance": 0.18,
+    "typography_mood": 0.12,
+    "surface_style": 0.1
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "외부 레퍼런스는 형태, 밀도, carousel/card 비례 참고만 허용한다",
+    "색상, 폰트, IA, 카피는 이 brand_profile과 하네스 산출물을 우선한다",
+    "목업 구현에서는 라이선스 이슈를 피하기 위해 original generated comic cover/panel assets를 사용한다",
+    "만화 잡지 주제에서 표지/컷 이미지는 핵심 도메인 자산이다. 단순 SVG 낙서, 기하학 박스, 저정보량 placeholder는 실패로 간주한다"
+  ],
+  "must_include": [
+    "mobile bottom navigation",
+    "cover art as content object",
+    "episode list",
+    "reader progress",
+    "polished generated comic cover art",
+    "finished manga/webtoon panel preview"
+  ],
+  "avoid_patterns": [
+    "desktop newspaper masthead dominance",
+    "image-free card wall",
+    "hard enterprise sidebar",
+    "checkout funnel",
+    "rough doodle placeholder cover",
+    "low-information inline SVG comic art",
+    "generic geometric cover blocks"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "airy",
+      "confidence": 0.26,
+      "evidence": [
+        "editorial x1.35",
+        "hero x0.9"
+      ],
+      "candidates": [
+        {
+          "value": "airy",
+          "score": 4.5
+        },
+        {
+          "value": "balanced",
+          "score": 0.9
+        },
+        {
+          "value": "dense",
+          "score": 0.6
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.21,
+      "evidence": [
+        "editorial x1.35",
+        "soft x2.0"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 3.35
+        },
+        {
+          "value": "elevated",
+          "score": 0.9
+        },
+        {
+          "value": "flat",
+          "score": 0.2
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "typography_mood": {
+      "value": "editorial",
+      "confidence": 0.48,
+      "evidence": [
+        "editorial x1.35",
+        "magazine x3.35",
+        "content x1.65",
+        "story x0.75"
+      ],
+      "candidates": [
+        {
+          "value": "editorial",
+          "score": 14.8
+        },
+        {
+          "value": "playful",
+          "score": 3.6
+        },
+        {
+          "value": "utilitarian",
+          "score": 0.9
+        },
+        {
+          "value": "premium",
+          "score": 0.2
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "corner_style": {
+      "value": "round",
+      "confidence": 0.38,
+      "evidence": [
+        "rounded x1.55",
+        "soft x2.0"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image geometry was available."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.52,
+      "evidence": [
+        "editorial x1.35",
+        "content x1.65",
+        "story x0.75",
+        "magazine x3.35"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "split-pane-workspace",
+      "label": "Split-pane workspace",
+      "confidence": 0.4,
+      "evidence": [
+        "workspace x0.9",
+        "sidebar x0.15",
+        "app x2.7",
+        "navigation x3.0500000000000003"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.23,
+      "evidence": [
+        "table x0.1",
+        "data x0.9",
+        "filter x1.35"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "landing-narrative",
+      "label": "Narrative landing flow",
+      "confidence": 0.22,
+      "evidence": [
+        "hero x0.9",
+        "brand x0.2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. soft round corner를 기본값으로 유지.",
+      "confidence": 0.14,
+      "evidence": [
+        "surface=tinted",
+        "density=airy",
+        "corner=round"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "navigation": {
+      "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
+      "confidence": 0.22,
+      "evidence": [
+        "Split-pane workspace"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "typography": {
+      "direction": "headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다.",
+      "confidence": 0.26,
+      "evidence": [
+        "typography_mood=editorial"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.17,
+      "evidence": [
+        "layout=data-review-surface",
+        "density=airy"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.48,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.52)",
+        "editorial x1.35",
+        "content x1.65",
+        "story x0.75",
+        "magazine x3.35"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "workspace-shell",
+      "label": "Workspace shell",
+      "family": "navigation",
+      "confidence": 0.48,
+      "suggested_components": [
+        "app-shell",
+        "sidebar-nav",
+        "workspace-switcher",
+        "breadcrumb",
+        "context-panel"
+      ],
+      "supports_primitives": [
+        "workspace navigation"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.4)",
+        "workspace x0.9",
+        "sidebar x0.15",
+        "navigation x3.0500000000000003",
+        "panel x3.55",
+        "primitive=workspace navigation"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "review-coverage-system",
+      "label": "Review coverage system",
+      "family": "editorial",
+      "confidence": 0.46,
+      "suggested_components": [
+        "review-card",
+        "score-badge",
+        "comparison-table",
+        "ranking-list",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "comparison and ranking",
+        "search and filter",
+        "tags and labels"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.23)",
+        "layout=editorial-feed (0.52)",
+        "layout=landing-narrative (0.22)",
+        "primitive=search and filter",
+        "primitive=tags and labels"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "conversation-sidecar",
+      "label": "Conversation sidecar",
+      "family": "overlay",
+      "confidence": 0.45,
+      "suggested_components": [
+        "chat-panel",
+        "message-thread",
+        "message-composer",
+        "context-drawer"
+      ],
+      "supports_primitives": [
+        "chat and messaging"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.4)",
+        "chat x0.9",
+        "panel x3.55",
+        "primitive=chat and messaging"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.43,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.23)",
+        "table x0.1",
+        "data x0.9",
+        "filter x1.35",
+        "primitive=data tables",
+        "primitive=search and filter"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.32,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "layout=landing-narrative (0.22)",
+        "hero x0.9",
+        "primitive=hero section"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Editorial feed",
+    "recommended_direction": [
+      "layout는 Editorial feed 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 editorial 축 유지",
+      "density는 airy 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "desktop newspaper masthead dominance",
+      "image-free card wall",
+      "hard enterprise sidebar",
+      "checkout funnel",
+      "rough doodle placeholder cover",
+      "low-information inline SVG comic art",
+      "generic geometric cover blocks"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "Panel Pop",
+    "system_name": "Panel Pop Design System",
+    "brand_keywords": [
+      "document-content",
+      "comic-magazine",
+      "manga",
+      "webtoon",
+      "mobile-first",
+      "issue",
+      "cover-story",
+      "serial-reader",
+      "episode-card",
+      "panel-preview",
+      "creator-note",
+      "reading-queue",
+      "bookmark-library",
+      "playful",
+      "soft",
+      "rounded",
+      "expressive",
+      "pastel-pop"
+    ],
+    "anti_keywords": [
+      "enterprise",
+      "corporate",
+      "minimal-tech",
+      "legal",
+      "dashboard-heavy",
+      "commerce-checkout",
+      "monochrome",
+      "serious-newspaper",
+      "dense-table",
+      "generic-card-wall"
+    ],
+    "visual_keywords": [
+      "mobile magazine rack",
+      "soft comic cover art",
+      "rounded issue cards",
+      "panel-strip preview",
+      "speech-bubble labels",
+      "sticker-like badges",
+      "pastel ink surfaces",
+      "bold cover title",
+      "creator note sheet",
+      "bottom navigation",
+      "whole-card carousel",
+      "reading progress chip"
+    ],
+    "interaction_keywords": [
+      "cover swipe",
+      "issue tab switch",
+      "save episode",
+      "continue reading",
+      "panel preview tap",
+      "reader progress",
+      "creator note expand",
+      "genre chip filter",
+      "bottom nav route",
+      "soft toast",
+      "theme toggle"
+    ],
+    "product_primitives": [
+      "tags and labels",
+      "onboarding and stepper",
+      "data tables",
+      "search and filter",
+      "workspace navigation",
+      "hero section",
+      "notifications",
+      "bold editorial magazine",
+      "site footer",
+      "forms",
+      "comments and discussion",
+      "modal and dialog",
+      "chat and messaging",
+      "reference documentation",
+      "presence and notifications"
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360" role="img" aria-labelledby="title desc">
+  <title id="title">Lunar Cafe manga panel preview strip</title>
+  <desc id="desc">Three polished manga preview panels: a closing cafe door, a character at a moonlit table, and a speech bubble over coffee.</desc>
+  <defs>
+    <pattern id="screen" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1.4" fill="#111111" opacity=".22" />
+      <circle cx="9" cy="9" r="1.4" fill="#111111" opacity=".22" />
+    </pattern>
+    <linearGradient id="panelA" x1="0" x2="1">
+      <stop offset="0" stop-color="#F3E5AB" />
+      <stop offset="1" stop-color="#FFFFFF" />
+    </linearGradient>
+    <linearGradient id="panelB" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#8E9AF1" />
+      <stop offset="1" stop-color="#E6E6FA" />
+    </linearGradient>
+  </defs>
+  <rect width="960" height="360" rx="26" fill="#FFFFFF" />
+  <g stroke="#111111" stroke-width="8" stroke-linejoin="round">
+    <rect x="20" y="20" width="292" height="320" rx="18" fill="url(#panelA)" />
+    <rect x="334" y="20" width="292" height="320" rx="18" fill="url(#panelB)" />
+    <rect x="648" y="20" width="292" height="320" rx="18" fill="#FFDAB9" />
+  </g>
+
+  <g aria-label="panel one cafe door">
+    <path d="M58 78h214v228H58z" fill="#FFFFFF" stroke="#111111" stroke-width="7" />
+    <path d="M86 105h80v201H86zM174 105h70v201h-70z" fill="#E6E6FA" stroke="#111111" stroke-width="6" />
+    <path d="M104 168h40M190 168h34" stroke="#111111" stroke-width="7" stroke-linecap="round" />
+    <rect x="78" y="54" width="176" height="44" rx="14" fill="#FF6F61" stroke="#111111" stroke-width="7" />
+    <text x="106" y="84" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20" font-weight="900">LAST ORDER</text>
+    <path d="M218 232c24-10 44-7 62 11M218 256c20-7 39-5 56 8" fill="none" stroke="#111111" stroke-width="6" stroke-linecap="round" />
+  </g>
+
+  <g aria-label="panel two character table">
+    <circle cx="540" cy="88" r="43" fill="#F3E5AB" stroke="#111111" stroke-width="7" />
+    <rect x="382" y="78" width="172" height="128" rx="14" fill="#FFFFFF" stroke="#111111" stroke-width="7" />
+    <path d="M382 140h172M468 78v128" stroke="#111111" stroke-width="5" />
+    <path d="M418 222c30-36 76-36 106 0l-22 82h-62Z" fill="#8E9AF1" stroke="#111111" stroke-width="7" />
+    <circle cx="470" cy="178" r="42" fill="#FFDAB9" stroke="#111111" stroke-width="7" />
+    <path d="M430 168c13-50 46-71 100-62 18 21 23 45 14 72-38-17-76-20-114-10Z" fill="#111111" stroke="#111111" stroke-width="6" />
+    <circle cx="456" cy="184" r="5" fill="#111111" />
+    <circle cx="492" cy="184" r="5" fill="#111111" />
+    <path d="M462 204c14 8 28 8 42 0" fill="none" stroke="#111111" stroke-width="5" stroke-linecap="round" />
+    <ellipse cx="470" cy="260" rx="86" ry="18" fill="#111111" opacity=".16" />
+  </g>
+
+  <g aria-label="panel three dialogue">
+    <rect x="684" y="50" width="220" height="246" rx="18" fill="#FFFFFF" stroke="#111111" stroke-width="7" />
+    <rect x="704" y="68" width="180" height="98" fill="url(#screen)" />
+    <path d="M724 212h92M724 240h124" stroke="#111111" stroke-width="8" stroke-linecap="round" />
+    <rect x="724" y="174" width="88" height="56" rx="14" fill="#F3E5AB" stroke="#111111" stroke-width="7" />
+    <path d="M818 76c36-28 88-25 112 6 22 29 2 70-42 80-19 4-39 2-58-5l-36 29 8-42c-26-19-20-48 16-68Z" fill="#FFFFFF" stroke="#111111" stroke-width="7" stroke-linejoin="round" />
+    <path d="M836 112h62M836 134h38" stroke="#111111" stroke-width="6" stroke-linecap="round" />
+  </g>
+
+  <g aria-label="panel numbers">
+    <circle cx="42" cy="42" r="19" fill="#111111" />
+    <circle cx="356" cy="42" r="19" fill="#111111" />
+    <circle cx="670" cy="42" r="19" fill="#111111" />
+    <text x="35" y="50" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22" font-weight="900">1</text>
+    <text x="349" y="50" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22" font-weight="900">2</text>
+    <text x="663" y="50" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22" font-weight="900">3</text>
+  </g>
+</svg>

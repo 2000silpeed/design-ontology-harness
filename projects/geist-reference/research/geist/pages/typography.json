@@ -1,0 +1,148 @@
+{
+  "schema_version": "geist-reference-page/v1",
+  "slug": "typography",
+  "kind": "foundation",
+  "title": "Typography",
+  "url": "https://vercel.com/geist/typography",
+  "final_url": "https://vercel.com/geist/typography",
+  "canonical_url": "https://vercel.com/geist/typography",
+  "redirected": false,
+  "description": "Rules of typesetting throughout the system.",
+  "source_hash": "sha256:fb545dde6cf4458cf9a717fbc7ede051232520cae33977ef941c12f7687ca993",
+  "body_text_length": 3730,
+  "sections": [
+    {
+      "level": "h3",
+      "text": "Usage"
+    },
+    {
+      "level": "h3",
+      "text": "Headings"
+    },
+    {
+      "level": "h3",
+      "text": "Buttons"
+    },
+    {
+      "level": "h3",
+      "text": "Label"
+    },
+    {
+      "level": "h3",
+      "text": "Copy"
+    }
+  ],
+  "section_count": 5,
+  "symbol_metadata": {
+    "code_example_count": 0,
+    "import_symbols": [],
+    "import_sources": [],
+    "jsx_tags": [],
+    "prop_names": []
+  },
+  "token_refs": {
+    "css_var_count": 62,
+    "css_vars": [
+      "--accents-1",
+      "--accents-2",
+      "--accents-3",
+      "--accents-8",
+      "--cross-color",
+      "--ds-amber-800",
+      "--ds-background-100",
+      "--ds-background-200",
+      "--ds-blue-300",
+      "--ds-blue-700",
+      "--ds-blue-900",
+      "--ds-focus-color",
+      "--ds-focus-ring",
+      "--ds-gray-100",
+      "--ds-gray-1000",
+      "--ds-gray-200",
+      "--ds-gray-400",
+      "--ds-gray-700",
+      "--ds-gray-900",
+      "--ds-gray-alpha-100",
+      "--ds-gray-alpha-200",
+      "--ds-gray-alpha-400",
+      "--ds-gray-alpha-500",
+      "--ds-gray-alpha-600",
+      "--ds-shadow-border",
+      "--ds-shadow-border-small",
+      "--font-mono",
+      "--font-sans",
+      "--geist-foreground",
+      "--geist-form-height",
+      "--geist-form-small-font",
+      "--geist-form-small-height",
+      "--geist-gap-half",
+      "--geist-icon-size",
+      "--grid-columns",
+      "--grid-rows",
+      "--guide-color",
+      "--guide-width",
+      "--height",
+      "--lg-cell-columns",
+      "--lg-cell-rows",
+      "--max-width",
+      "--md-cell-columns",
+      "--md-cell-rows",
+      "--min-width",
+      "--sm-cell-columns",
+      "--sm-cell-rows",
+      "--sm-grid-column",
+      "--sm-grid-row",
+      "--sm-height",
+      "--smd-cell-columns",
+      "--smd-cell-rows",
+      "--spinner-size",
+      "--themed-bg",
+      "--themed-border",
+      "--themed-fg",
+      "--themed-hover-bg",
+      "--x",
+      "--x-padding",
+      "--xs-cell-columns",
+      "--xs-cell-rows",
+      "--y"
+    ],
+    "geist_data_attrs": [
+      "data-geist-button",
+      "data-geist-code-block",
+      "data-geist-code-block-line",
+      "data-geist-kbd",
+      "data-geist-textarea-wrapper"
+    ]
+  },
+  "accessibility_terms": [
+    "Keyboard",
+    "aria-checked",
+    "aria-disabled",
+    "aria-hidden",
+    "aria-label",
+    "aria-pressable",
+    "focus",
+    "keyboard",
+    "role"
+  ],
+  "absorption_policy": {
+    "allowed": [
+      "component names",
+      "component taxonomy",
+      "state coverage hints",
+      "section headings",
+      "import and JSX symbol references",
+      "token identifiers",
+      "accessibility and interaction evidence labels"
+    ],
+    "denied": [
+      "verbatim product copy beyond short labels",
+      "brand logos or protected imagery",
+      "unlicensed implementation source code",
+      "full documentation text",
+      "Vercel-specific IA as product IA"
+    ],
+    "rule": "Store structured reference metadata for local reimplementation; keep source URLs as evidence."
+  },
+  "nav_index": 7
+}

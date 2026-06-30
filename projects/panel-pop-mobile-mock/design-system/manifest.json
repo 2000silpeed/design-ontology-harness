@@ -1,0 +1,40 @@
+{
+  "id": "document-content--playful-soft",
+  "schema_version": "1.0.0",
+  "preset_api_version": "1.0.0",
+  "generated_by_harness_version": "0.1.0",
+  "preview_version": "1.0.0",
+  "adapter_compatibility": {
+    "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+    "raw-css-variables": ">=0.1.0 <1.0.0",
+    "vite-tailwind": ">=0.1.0 <1.0.0"
+  },
+  "source_project": "panel-pop",
+  "content_hash": "sha256:bb4a92eb7c684586e864c18234ef21f00559b7bd2ab12949e8094cefcafcd08e",
+  "app_mode": "document-content",
+  "brand_tone": "playful-soft",
+  "color_modes": [
+    "light",
+    "dark"
+  ],
+  "default_color_mode": "light",
+  "tags": [
+    "ko",
+    "mobile",
+    "comic",
+    "magazine",
+    "reader"
+  ],
+  "locale_pairings": {
+    "ko": {
+      "heading_font": "Pretendard",
+      "body_font": "Pretendard",
+      "mono_font": "JetBrains Mono",
+      "notes": "모바일 만화 잡지 앱 — 한국어 cover title / episode title / creator note keep-all line-height 1.5-1.65, issue number / episode number / reading progress는 mono 영문 고정 tabular-nums"
+    }
+  },
+  "owner": "codex",
+  "tier": "P3",
+  "generated_at": "2026-05-19T14:03:48Z",
+  "description": "모바일 만화 잡지 앱 — playful-soft 톤, 주간 이슈·표지·연재 회차·컷 미리보기·보관함 중심 한국어 UI"
+}

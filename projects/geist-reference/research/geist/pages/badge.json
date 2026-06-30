@@ -1,0 +1,191 @@
+{
+  "schema_version": "geist-reference-page/v1",
+  "slug": "badge",
+  "kind": "component",
+  "title": "Badge",
+  "url": "https://vercel.com/geist/badge",
+  "final_url": "https://vercel.com/geist/badge",
+  "canonical_url": "https://vercel.com/geist/badge",
+  "redirected": false,
+  "description": "A label that emphasizes an element that requires attention, or helps categorize with other similar elements.",
+  "source_hash": "sha256:00e7250693cd39d508c9afcd265dfcbd66ebd6ea5fd5a4d0da2fe09fdfb76f6e",
+  "body_text_length": 3211,
+  "sections": [
+    {
+      "level": "h2",
+      "text": "Variants"
+    },
+    {
+      "level": "h2",
+      "text": "Sizes"
+    },
+    {
+      "level": "h2",
+      "text": "With icons"
+    },
+    {
+      "level": "h2",
+      "text": "Pill"
+    },
+    {
+      "level": "h2",
+      "text": "Best Practices"
+    }
+  ],
+  "section_count": 5,
+  "symbol_metadata": {
+    "code_example_count": 4,
+    "import_symbols": [
+      "Badge",
+      "IconShield",
+      "badgeVariants",
+      "LogoIconSlack",
+      "cn",
+      "Link"
+    ],
+    "import_sources": [
+      "@vercel/geistcn/components",
+      "@vercel/geistcn-assets/icons",
+      "@vercel/geistcn-assets/logos",
+      "@vercel/geistcn/utils",
+      "@vercel/microfrontends/next/client"
+    ],
+    "jsx_tags": [
+      "Badge",
+      "IconShield",
+      "Link",
+      "LogoIconSlack"
+    ],
+    "prop_names": [
+      "variant",
+      "contrast",
+      "size",
+      "icon",
+      "href",
+      "data-slot"
+    ]
+  },
+  "token_refs": {
+    "css_var_count": 83,
+    "css_vars": [
+      "--accents-1",
+      "--accents-2",
+      "--accents-3",
+      "--accents-8",
+      "--cross-color",
+      "--ds-amber-200",
+      "--ds-amber-700",
+      "--ds-amber-800",
+      "--ds-amber-900",
+      "--ds-background-100",
+      "--ds-blue-200",
+      "--ds-blue-300",
+      "--ds-blue-700",
+      "--ds-blue-800",
+      "--ds-blue-900",
+      "--ds-contrast-fg",
+      "--ds-focus-color",
+      "--ds-focus-ring",
+      "--ds-gray-100",
+      "--ds-gray-1000",
+      "--ds-gray-200",
+      "--ds-gray-400",
+      "--ds-gray-500",
+      "--ds-gray-700",
+      "--ds-gray-900",
+      "--ds-gray-alpha-100",
+      "--ds-gray-alpha-200",
+      "--ds-gray-alpha-400",
+      "--ds-gray-alpha-500",
+      "--ds-gray-alpha-600",
+      "--ds-green-200",
+      "--ds-green-600",
+      "--ds-green-900",
+      "--ds-pink-300",
+      "--ds-pink-600",
+      "--ds-pink-900",
+      "--ds-purple-200",
+      "--ds-purple-500",
+      "--ds-purple-900",
+      "--ds-red-200",
+      "--ds-red-800",
+      "--ds-red-900",
+      "--ds-shadow-border",
+      "--ds-shadow-border-small",
+      "--ds-teal-300",
+      "--ds-teal-600",
+      "--ds-teal-900",
+      "--font-mono",
+      "--font-sans",
+      "--geist-background",
+      "--geist-foreground",
+      "--geist-form-small-font",
+      "--geist-form-small-height",
+      "--geist-gap-half",
+      "--geist-icon-size",
+      "--grid-columns",
+      "--grid-rows",
+      "--guide-color",
+      "--guide-width",
+      "--height",
+      "--lg-cell-columns",
+      "--lg-cell-rows",
+      "--max-width",
+      "--md-cell-columns",
+      "--md-cell-rows",
+      "--min-width",
+      "--sm-cell-columns",
+      "--sm-cell-rows",
+      "--sm-grid-column",
+      "--sm-grid-row",
+      "--sm-height",
+      "--smd-cell-columns",
+      "--smd-cell-rows",
+      "--spinner-size",
+      "--themed-bg",
+      "--themed-border",
+      "--themed-fg",
+      "--themed-hover-bg",
+      "--x",
+      "--x-padding"
+    ],
+    "geist_data_attrs": [
+      "data-geist-button",
+      "data-geist-kbd",
+      "data-geist-textarea-wrapper"
+    ]
+  },
+  "accessibility_terms": [
+    "Keyboard",
+    "aria-checked",
+    "aria-controls",
+    "aria-disabled",
+    "aria-expanded",
+    "aria-hidden",
+    "aria-label",
+    "aria-pressable",
+    "focus",
+    "keyboard",
+    "role"
+  ],
+  "absorption_policy": {
+    "allowed": [
+      "component names",
+      "component taxonomy",
+      "state coverage hints",
+      "section headings",
+      "import and JSX symbol references",
+      "token identifiers",
+      "accessibility and interaction evidence labels"
+    ],
+    "denied": [
+      "verbatim product copy beyond short labels",
+      "brand logos or protected imagery",
+      "unlicensed implementation source code",
+      "full documentation text",
+      "Vercel-specific IA as product IA"
+    ],
+    "rule": "Store structured reference metadata for local reimplementation; keep source URLs as evidence."
+  },
+  "nav_index": 9
+}

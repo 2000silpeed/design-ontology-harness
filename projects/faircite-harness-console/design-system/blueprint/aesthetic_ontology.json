@@ -1,0 +1,1201 @@
+{
+  "schema_version": "aesthetic-evaluation-ontology/v1",
+  "dimensions": [
+    {
+      "id": "visual_harmony",
+      "label": "Visual harmony",
+      "weight": 0.24,
+      "description": "How coherently color, type, spacing, and composition work together.",
+      "metrics": [
+        "color_harmony",
+        "spacing_consistency",
+        "typography_balance",
+        "composition_order"
+      ]
+    },
+    {
+      "id": "clarity",
+      "label": "Clarity",
+      "weight": 0.2,
+      "description": "How quickly the intended hierarchy, action, and information structure can be read.",
+      "metrics": [
+        "hierarchy_clarity",
+        "contrast_legibility",
+        "content_density_control",
+        "task_focus"
+      ]
+    },
+    {
+      "id": "brand_fit",
+      "label": "Brand fit",
+      "weight": 0.18,
+      "description": "How well the candidate expresses the intended brand posture and avoids anti-keywords.",
+      "metrics": [
+        "keyword_alignment",
+        "tone_alignment",
+        "domain_fit",
+        "anti_keyword_avoidance"
+      ]
+    },
+    {
+      "id": "emotional_appeal",
+      "label": "Emotional appeal",
+      "weight": 0.14,
+      "description": "How desirable, confident, and affectively appropriate the surface feels.",
+      "metrics": [
+        "desirability",
+        "confidence_signal",
+        "warmth_or_energy"
+      ]
+    },
+    {
+      "id": "craft_quality",
+      "label": "Craft quality",
+      "weight": 0.14,
+      "description": "How polished and implementation-ready the candidate is across fit, tokens, and affordances.",
+      "metrics": [
+        "responsive_fit",
+        "token_binding",
+        "accessibility_baseline",
+        "interaction_affordance",
+        "asset_completeness"
+      ]
+    },
+    {
+      "id": "novelty",
+      "label": "Novelty",
+      "weight": 0.1,
+      "description": "How distinctive the design is without breaking its product and brand constraints.",
+      "metrics": [
+        "distinctiveness",
+        "reference_transformation",
+        "memorability"
+      ]
+    },
+    {
+      "id": "brand_semantic_fit",
+      "label": "Brand semantic fit",
+      "weight": 0.22,
+      "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+      "metrics": [
+        "brand_keyword:fair-trade-3b7c2475",
+        "brand_keyword:evidence-traceability-338508e9",
+        "brand_keyword:decision-document-3a0ac274",
+        "brand_keyword:chunk-citation-01be3d40",
+        "brand_keyword:dual-mode-console-4313e02a",
+        "brand_keyword:compliance-036cb735",
+        "brand_keyword:rights-protection-0f898d10",
+        "brand_keyword:legal-reference-7101404d",
+        "brand_tone:정확한-d3f93117",
+        "brand_tone:차분한-8bc0c584",
+        "brand_tone:근거-중심-9d454a2c",
+        "brand_tone:법률-자문이-아닌-참고-판단-063a0759",
+        "brand_tone:평이하지만-단정하지-않는-c1c82809"
+      ],
+      "research_basis": [
+        "kansei",
+        "aesthemos"
+      ]
+    },
+    {
+      "id": "brand_boundary_fit",
+      "label": "Brand boundary fit",
+      "weight": 0.16,
+      "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+      "metrics": [
+        "anti_keyword:marketing-landing-c2558c9a",
+        "anti_keyword:hero-heavy-ba31222d",
+        "anti_keyword:decorative-gradient-44e6d4d6",
+        "anti_keyword:cartoon-legal-1b22d045",
+        "anti_keyword:one-note-purple-bcff3e4f",
+        "anti_keyword:one-note-blue-511c8b0a",
+        "anti_keyword:beige-law-office-40cdab17",
+        "anti_keyword:black-box-ai-96054edd",
+        "avoid_pattern:hero-landing-page-b92a79ae",
+        "avoid_pattern:decorative-orbs-559738bd",
+        "avoid_pattern:nested-cards-02257046",
+        "avoid_pattern:stock-legal-imagery-2a1aa4c8",
+        "avoid_pattern:purple-blue-gradient-saas-homepage-80dead58"
+      ],
+      "research_basis": [
+        "kansei"
+      ]
+    },
+    {
+      "id": "product_ontology_fit",
+      "label": "Product ontology fit",
+      "weight": 0.22,
+      "description": "How clearly product primitives and ontology-required signals appear in the design.",
+      "metrics": [
+        "product_primitive:app-shell-1eaa69f6",
+        "product_primitive:mode-selector-67b5ec9c",
+        "product_primitive:sidebar-navigation-9ccd2ea3",
+        "product_primitive:privacy-banner-42edc334",
+        "product_primitive:diagnosis-form-281aa1bd",
+        "product_primitive:structured-textarea-7cc8b60c",
+        "product_primitive:segmented-controls-42c72d6a",
+        "product_primitive:risk-matrix-dbb10fed",
+        "product_primitive:risk-row-meter-30feaeb8",
+        "product_primitive:case-result-card-19f34ddf",
+        "must_include:split-pane-evidence-workflow-25862cb8",
+        "must_include:source-provenance-labels-00d87ae0",
+        "must_include:dense-but-readable-korean-dashboard-e82c596b",
+        "must_include:mode-switch-visible-in-first-viewpor-b57a5a86"
+      ],
+      "research_basis": [
+        "beauvis",
+        "kansei"
+      ]
+    },
+    {
+      "id": "audience_context_fit",
+      "label": "Audience context fit",
+      "weight": 0.12,
+      "description": "How well the design serves declared users, platforms, and accessibility floors.",
+      "metrics": [
+        "audience_need:기업-컴플라이언스팀-자사-거래구조와-산업-영역의-공정거래-리스크를-39358d37",
+        "audience_need:사내-법무팀-변호사-의결서-chunk-현행-조문-처분-사례를-빠르-e3f8142c",
+        "audience_need:가맹점주-중소-수급사업자-중소-입찰업체-자신이-겪은-상황과-공정위-eee14767",
+        "audience_need:공모전-평가위원-track-2-서비스-결과물이-자동지표와-분리되어-b2d58bba",
+        "accessibility_target:wcag-2-2-aa-41a998cd",
+        "accessibility_target:keyboard-navigable-4d5c7937",
+        "accessibility_target:high-contrast-source-labels-f7c56837",
+        "accessibility_target:korean-keep-all-line-wrapping-9ffa135a"
+      ],
+      "research_basis": [
+        "visawi",
+        "aesthemos"
+      ]
+    }
+  ],
+  "metrics": {
+    "color_harmony": {
+      "label": "Color harmony",
+      "improvement": "Tighten the palette around one primary accent, one neutral surface ladder, and explicit semantic roles.",
+      "expected_lift": 0.08
+    },
+    "spacing_consistency": {
+      "label": "Spacing consistency",
+      "improvement": "Normalize page rhythm with shared spacing steps for section, cluster, and control gaps.",
+      "expected_lift": 0.07
+    },
+    "typography_balance": {
+      "label": "Typography balance",
+      "improvement": "Rebalance type hierarchy so headings, body, captions, and controls use distinct but restrained roles.",
+      "expected_lift": 0.07
+    },
+    "composition_order": {
+      "label": "Composition order",
+      "improvement": "Strengthen alignment, focal sequence, and proportional grouping before adding more decoration.",
+      "expected_lift": 0.08
+    },
+    "hierarchy_clarity": {
+      "label": "Hierarchy clarity",
+      "improvement": "Make the primary state, primary action, and next-best secondary action visible in the first scan.",
+      "expected_lift": 0.09
+    },
+    "contrast_legibility": {
+      "label": "Contrast and legibility",
+      "improvement": "Raise text/background and control/border contrast while preserving the selected token roles.",
+      "expected_lift": 0.08
+    },
+    "content_density_control": {
+      "label": "Content density control",
+      "improvement": "Reduce competing modules or group dense content into scannable rows, tables, rails, or panels.",
+      "expected_lift": 0.07
+    },
+    "task_focus": {
+      "label": "Task focus",
+      "improvement": "Move decorative or pitch-like content below the operational surface that supports the user's main task.",
+      "expected_lift": 0.08
+    },
+    "keyword_alignment": {
+      "label": "Keyword alignment",
+      "improvement": "Map the strongest brand keywords to visible choices in layout, tone, density, and component emphasis.",
+      "expected_lift": 0.08
+    },
+    "tone_alignment": {
+      "label": "Tone alignment",
+      "improvement": "Adjust copy weight, control styling, and visual temperature to match the intended voice.",
+      "expected_lift": 0.06
+    },
+    "domain_fit": {
+      "label": "Domain fit",
+      "improvement": "Add domain-native structures such as tables, maps, media, timelines, inspectors, or product objects where relevant.",
+      "expected_lift": 0.08
+    },
+    "anti_keyword_avoidance": {
+      "label": "Anti-keyword avoidance",
+      "improvement": "Remove visual tropes that match the brand profile's anti-keywords before polishing details.",
+      "expected_lift": 0.06
+    },
+    "desirability": {
+      "label": "Desirability",
+      "improvement": "Give the primary surface a more intentional visual reward: stronger imagery, tactile controls, or clearer payoff.",
+      "expected_lift": 0.07
+    },
+    "confidence_signal": {
+      "label": "Confidence signal",
+      "improvement": "Add evidence, provenance, precision, or stable UI states that make the surface feel trustworthy.",
+      "expected_lift": 0.07
+    },
+    "warmth_or_energy": {
+      "label": "Warmth or energy",
+      "improvement": "Tune motion, image choice, accent placement, or microcopy energy to the target audience.",
+      "expected_lift": 0.06
+    },
+    "responsive_fit": {
+      "label": "Responsive fit",
+      "improvement": "Verify mobile and desktop fit, then fix overflow, clipped labels, and unstable control sizing.",
+      "expected_lift": 0.08
+    },
+    "token_binding": {
+      "label": "Token binding",
+      "improvement": "Replace local visual constants with design-system tokens and keep semantic roles consistent.",
+      "expected_lift": 0.06
+    },
+    "accessibility_baseline": {
+      "label": "Accessibility baseline",
+      "improvement": "Check contrast, focus states, labels, and target sizes as part of visual polish, not after it.",
+      "expected_lift": 0.07
+    },
+    "interaction_affordance": {
+      "label": "Interaction affordance",
+      "improvement": "Make controls, filters, state chips, and navigation visually legible with icons, state, and hit-area clarity.",
+      "expected_lift": 0.07
+    },
+    "asset_completeness": {
+      "label": "Asset completeness",
+      "improvement": "Use concrete product, place, object, identity, or content assets where the domain expects visual substance.",
+      "expected_lift": 0.08
+    },
+    "distinctiveness": {
+      "label": "Distinctiveness",
+      "improvement": "Introduce one memorable composition or interaction pattern while keeping the rest of the system restrained.",
+      "expected_lift": 0.06
+    },
+    "reference_transformation": {
+      "label": "Reference transformation",
+      "improvement": "Absorb reference morphology without copying palette, copy, IA, or protected asset choices.",
+      "expected_lift": 0.06
+    },
+    "memorability": {
+      "label": "Memorability",
+      "improvement": "Create a recognizable signature in the first viewport through layout, identity asset, or product-native visual.",
+      "expected_lift": 0.06
+    },
+    "brand_keyword:fair-trade-3b7c2475": {
+      "label": "Expresses brand keyword: fair-trade",
+      "improvement": "Make 'fair-trade' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "fair-trade"
+    },
+    "brand_keyword:evidence-traceability-338508e9": {
+      "label": "Expresses brand keyword: evidence-traceability",
+      "improvement": "Make 'evidence-traceability' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "evidence-traceability"
+    },
+    "brand_keyword:decision-document-3a0ac274": {
+      "label": "Expresses brand keyword: decision-document",
+      "improvement": "Make 'decision-document' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "decision-document"
+    },
+    "brand_keyword:chunk-citation-01be3d40": {
+      "label": "Expresses brand keyword: chunk-citation",
+      "improvement": "Make 'chunk-citation' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "chunk-citation"
+    },
+    "brand_keyword:dual-mode-console-4313e02a": {
+      "label": "Expresses brand keyword: dual-mode-console",
+      "improvement": "Make 'dual-mode-console' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "dual-mode-console"
+    },
+    "brand_keyword:compliance-036cb735": {
+      "label": "Expresses brand keyword: compliance",
+      "improvement": "Make 'compliance' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "compliance"
+    },
+    "brand_keyword:rights-protection-0f898d10": {
+      "label": "Expresses brand keyword: rights-protection",
+      "improvement": "Make 'rights-protection' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "rights-protection"
+    },
+    "brand_keyword:legal-reference-7101404d": {
+      "label": "Expresses brand keyword: legal-reference",
+      "improvement": "Make 'legal-reference' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "legal-reference"
+    },
+    "brand_tone:정확한-d3f93117": {
+      "label": "Expresses tone of voice: 정확한",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels '정확한'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "정확한"
+    },
+    "brand_tone:차분한-8bc0c584": {
+      "label": "Expresses tone of voice: 차분한",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels '차분한'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "차분한"
+    },
+    "brand_tone:근거-중심-9d454a2c": {
+      "label": "Expresses tone of voice: 근거 중심",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels '근거 중심'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "근거 중심"
+    },
+    "brand_tone:법률-자문이-아닌-참고-판단-063a0759": {
+      "label": "Expresses tone of voice: 법률 자문이 아닌 참고 판단",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels '법률 자문이 아닌 참고 판단'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "법률 자문이 아닌 참고 판단"
+    },
+    "brand_tone:평이하지만-단정하지-않는-c1c82809": {
+      "label": "Expresses tone of voice: 평이하지만 단정하지 않는",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels '평이하지만 단정하지 않는'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "평이하지만 단정하지 않는"
+    },
+    "anti_keyword:marketing-landing-c2558c9a": {
+      "label": "Avoids anti-keyword: marketing-landing",
+      "improvement": "Remove cues that make the product read as 'marketing-landing'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "marketing-landing"
+    },
+    "anti_keyword:hero-heavy-ba31222d": {
+      "label": "Avoids anti-keyword: hero-heavy",
+      "improvement": "Remove cues that make the product read as 'hero-heavy'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "hero-heavy"
+    },
+    "anti_keyword:decorative-gradient-44e6d4d6": {
+      "label": "Avoids anti-keyword: decorative-gradient",
+      "improvement": "Remove cues that make the product read as 'decorative-gradient'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "decorative-gradient"
+    },
+    "anti_keyword:cartoon-legal-1b22d045": {
+      "label": "Avoids anti-keyword: cartoon-legal",
+      "improvement": "Remove cues that make the product read as 'cartoon-legal'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "cartoon-legal"
+    },
+    "anti_keyword:one-note-purple-bcff3e4f": {
+      "label": "Avoids anti-keyword: one-note-purple",
+      "improvement": "Remove cues that make the product read as 'one-note-purple'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "one-note-purple"
+    },
+    "anti_keyword:one-note-blue-511c8b0a": {
+      "label": "Avoids anti-keyword: one-note-blue",
+      "improvement": "Remove cues that make the product read as 'one-note-blue'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "one-note-blue"
+    },
+    "anti_keyword:beige-law-office-40cdab17": {
+      "label": "Avoids anti-keyword: beige-law-office",
+      "improvement": "Remove cues that make the product read as 'beige-law-office'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "beige-law-office"
+    },
+    "anti_keyword:black-box-ai-96054edd": {
+      "label": "Avoids anti-keyword: black-box-ai",
+      "improvement": "Remove cues that make the product read as 'black-box-ai'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "black-box-ai"
+    },
+    "avoid_pattern:hero-landing-page-b92a79ae": {
+      "label": "Avoids visual pattern: hero landing page",
+      "improvement": "Replace 'hero landing page' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "hero landing page"
+    },
+    "avoid_pattern:decorative-orbs-559738bd": {
+      "label": "Avoids visual pattern: decorative orbs",
+      "improvement": "Replace 'decorative orbs' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "decorative orbs"
+    },
+    "avoid_pattern:nested-cards-02257046": {
+      "label": "Avoids visual pattern: nested cards",
+      "improvement": "Replace 'nested cards' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "nested cards"
+    },
+    "avoid_pattern:stock-legal-imagery-2a1aa4c8": {
+      "label": "Avoids visual pattern: stock legal imagery",
+      "improvement": "Replace 'stock legal imagery' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "stock legal imagery"
+    },
+    "avoid_pattern:purple-blue-gradient-saas-homepage-80dead58": {
+      "label": "Avoids visual pattern: purple-blue gradient SaaS homepage",
+      "improvement": "Replace 'purple-blue gradient SaaS homepage' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "purple-blue gradient SaaS homepage"
+    },
+    "product_primitive:app-shell-1eaa69f6": {
+      "label": "Embodies product primitive: app shell",
+      "improvement": "Represent 'app shell' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "app shell"
+    },
+    "product_primitive:mode-selector-67b5ec9c": {
+      "label": "Embodies product primitive: mode selector",
+      "improvement": "Represent 'mode selector' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "mode selector"
+    },
+    "product_primitive:sidebar-navigation-9ccd2ea3": {
+      "label": "Embodies product primitive: sidebar navigation",
+      "improvement": "Represent 'sidebar navigation' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "sidebar navigation"
+    },
+    "product_primitive:privacy-banner-42edc334": {
+      "label": "Embodies product primitive: privacy banner",
+      "improvement": "Represent 'privacy banner' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "privacy banner"
+    },
+    "product_primitive:diagnosis-form-281aa1bd": {
+      "label": "Embodies product primitive: diagnosis form",
+      "improvement": "Represent 'diagnosis form' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "diagnosis form"
+    },
+    "product_primitive:structured-textarea-7cc8b60c": {
+      "label": "Embodies product primitive: structured textarea",
+      "improvement": "Represent 'structured textarea' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "structured textarea"
+    },
+    "product_primitive:segmented-controls-42c72d6a": {
+      "label": "Embodies product primitive: segmented controls",
+      "improvement": "Represent 'segmented controls' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "segmented controls"
+    },
+    "product_primitive:risk-matrix-dbb10fed": {
+      "label": "Embodies product primitive: risk matrix",
+      "improvement": "Represent 'risk matrix' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "risk matrix"
+    },
+    "product_primitive:risk-row-meter-30feaeb8": {
+      "label": "Embodies product primitive: risk row meter",
+      "improvement": "Represent 'risk row meter' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "risk row meter"
+    },
+    "product_primitive:case-result-card-19f34ddf": {
+      "label": "Embodies product primitive: case result card",
+      "improvement": "Represent 'case result card' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "case result card"
+    },
+    "must_include:split-pane-evidence-workflow-25862cb8": {
+      "label": "Includes required visual/system signal: split-pane evidence workflow",
+      "improvement": "Make 'split-pane evidence workflow' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "split-pane evidence workflow"
+    },
+    "must_include:source-provenance-labels-00d87ae0": {
+      "label": "Includes required visual/system signal: source provenance labels",
+      "improvement": "Make 'source provenance labels' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "source provenance labels"
+    },
+    "must_include:dense-but-readable-korean-dashboard-e82c596b": {
+      "label": "Includes required visual/system signal: dense but readable Korean dashboard",
+      "improvement": "Make 'dense but readable Korean dashboard' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "dense but readable Korean dashboard"
+    },
+    "must_include:mode-switch-visible-in-first-viewpor-b57a5a86": {
+      "label": "Includes required visual/system signal: mode switch visible in first viewport",
+      "improvement": "Make 'mode switch visible in first viewport' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "mode switch visible in first viewport"
+    },
+    "audience_need:기업-컴플라이언스팀-자사-거래구조와-산업-영역의-공정거래-리스크를-39358d37": {
+      "label": "Fits audience context: 기업 컴플라이언스팀 — 자사 거래구조와 산업 영역의 공정거래 리스크를 사전 점검하고 사내 보고용 근거 자료를 만드는 실무자",
+      "improvement": "Adjust density, language, workflow order, and controls for '기업 컴플라이언스팀 — 자사 거래구조와 산업 영역의 공정거래 리스크를 사전 점검하고 사내 보고용 근거 자료를 만드는 실무자'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "기업 컴플라이언스팀 — 자사 거래구조와 산업 영역의 공정거래 리스크를 사전 점검하고 사내 보고용 근거 자료를 만드는 실무자"
+    },
+    "audience_need:사내-법무팀-변호사-의결서-chunk-현행-조문-처분-사례를-빠르-e3f8142c": {
+      "label": "Fits audience context: 사내 법무팀 변호사 — 의결서 chunk, 현행 조문, 처분 사례를 빠르게 비교해 외부 의견서 전 단계의 조사 근거를 확보하는 전문가",
+      "improvement": "Adjust density, language, workflow order, and controls for '사내 법무팀 변호사 — 의결서 chunk, 현행 조문, 처분 사례를 빠르게 비교해 외부 의견서 전 단계의 조사 근거를 확보하는 전문가'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "사내 법무팀 변호사 — 의결서 chunk, 현행 조문, 처분 사례를 빠르게 비교해 외부 의견서 전 단계의 조사 근거를 확보하는 전문가"
+    },
+    "audience_need:가맹점주-중소-수급사업자-중소-입찰업체-자신이-겪은-상황과-공정위-eee14767": {
+      "label": "Fits audience context: 가맹점주·중소 수급사업자·중소 입찰업체 — 자신이 겪은 상황과 공정위 인정 유사 패턴을 비교하고 사실관계 정리와 증거 체크리스트를 준비하는 사용자",
+      "improvement": "Adjust density, language, workflow order, and controls for '가맹점주·중소 수급사업자·중소 입찰업체 — 자신이 겪은 상황과 공정위 인정 유사 패턴을 비교하고 사실관계 정리와 증거 체크리스트를 준비하는 사용자'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "가맹점주·중소 수급사업자·중소 입찰업체 — 자신이 겪은 상황과 공정위 인정 유사 패턴을 비교하고 사실관계 정리와 증거 체크리스트를 준비하는 사용자"
+    },
+    "audience_need:공모전-평가위원-track-2-서비스-결과물이-자동지표와-분리되어-b2d58bba": {
+      "label": "Fits audience context: 공모전 평가위원 — Track 2 서비스 결과물이 자동지표와 분리되어 있고 정성 5축을 명확히 증명하는지 빠르게 확인하는 심사자",
+      "improvement": "Adjust density, language, workflow order, and controls for '공모전 평가위원 — Track 2 서비스 결과물이 자동지표와 분리되어 있고 정성 5축을 명확히 증명하는지 빠르게 확인하는 심사자'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "공모전 평가위원 — Track 2 서비스 결과물이 자동지표와 분리되어 있고 정성 5축을 명확히 증명하는지 빠르게 확인하는 심사자"
+    },
+    "accessibility_target:wcag-2-2-aa-41a998cd": {
+      "label": "Supports accessibility target: WCAG 2.2 AA",
+      "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "WCAG 2.2 AA"
+    },
+    "accessibility_target:keyboard-navigable-4d5c7937": {
+      "label": "Supports accessibility target: keyboard navigable",
+      "improvement": "Verify 'keyboard navigable' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "keyboard navigable"
+    },
+    "accessibility_target:high-contrast-source-labels-f7c56837": {
+      "label": "Supports accessibility target: high contrast source labels",
+      "improvement": "Verify 'high contrast source labels' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "high contrast source labels"
+    },
+    "accessibility_target:korean-keep-all-line-wrapping-9ffa135a": {
+      "label": "Supports accessibility target: Korean keep-all line wrapping",
+      "improvement": "Verify 'Korean keep-all line wrapping' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "Korean keep-all line wrapping"
+    }
+  },
+  "relations": [
+    {
+      "source": "DesignCandidate",
+      "relation": "evaluated_by",
+      "target": "AestheticDimension"
+    },
+    {
+      "source": "AestheticDimension",
+      "relation": "measured_by",
+      "target": "AestheticMetric"
+    },
+    {
+      "source": "AestheticMetric",
+      "relation": "improved_by",
+      "target": "ImprovementAction"
+    },
+    {
+      "source": "AestheticEvaluation",
+      "relation": "gates",
+      "target": "Execution"
+    }
+  ],
+  "context": {
+    "brand_name": "FairCite",
+    "system_name": "FairCite Evidence Console System",
+    "product_summary": "공정거래위원회 의결서 500건을 chunk 단위까지 추적 가능한 형태로 재구성한 근거추적 듀얼 모드 웹서비스. 본사·원청은 사전 예방용으로, 가맹점주·수급사업자는 사후 인지·대응용으로 같은 데이터를 다른 시점에서 활용한다.",
+    "audiences": [
+      "기업 컴플라이언스팀 — 자사 거래구조와 산업 영역의 공정거래 리스크를 사전 점검하고 사내 보고용 근거 자료를 만드는 실무자",
+      "사내 법무팀 변호사 — 의결서 chunk, 현행 조문, 처분 사례를 빠르게 비교해 외부 의견서 전 단계의 조사 근거를 확보하는 전문가",
+      "가맹점주·중소 수급사업자·중소 입찰업체 — 자신이 겪은 상황과 공정위 인정 유사 패턴을 비교하고 사실관계 정리와 증거 체크리스트를 준비하는 사용자",
+      "공모전 평가위원 — Track 2 서비스 결과물이 자동지표와 분리되어 있고 정성 5축을 명확히 증명하는지 빠르게 확인하는 심사자"
+    ],
+    "brand_keywords": [
+      "fair-trade",
+      "evidence-traceability",
+      "decision-document",
+      "chunk-citation",
+      "dual-mode-console",
+      "compliance",
+      "rights-protection",
+      "legal-reference",
+      "law-diff",
+      "sanction-anatomy",
+      "case-briefing",
+      "source-label",
+      "policy-grade",
+      "calm-authoritative",
+      "korean-public-service"
+    ],
+    "anti_keywords": [
+      "marketing-landing",
+      "hero-heavy",
+      "decorative-gradient",
+      "cartoon-legal",
+      "one-note-purple",
+      "one-note-blue",
+      "beige-law-office",
+      "black-box-ai",
+      "legal-advice-claim",
+      "prediction-focused",
+      "consumer-social-feed",
+      "overdecorated-card-stack"
+    ],
+    "tone_of_voice": [
+      "정확한",
+      "차분한",
+      "근거 중심",
+      "법률 자문이 아닌 참고 판단",
+      "평이하지만 단정하지 않는",
+      "공공 서비스처럼 신뢰감 있는"
+    ],
+    "product_primitives": [
+      "app shell",
+      "mode selector",
+      "sidebar navigation",
+      "privacy banner",
+      "diagnosis form",
+      "structured textarea",
+      "segmented controls",
+      "risk matrix",
+      "risk row meter",
+      "case result card",
+      "citation drawer",
+      "source label badge",
+      "source label tooltip",
+      "evidence map",
+      "chunk card",
+      "law lookup card",
+      "sanction anatomy stepper",
+      "pattern catalog",
+      "paired case comparison",
+      "metric strip",
+      "data status card",
+      "legal disclaimer footer",
+      "PDF export button",
+      "graph preview panel"
+    ]
+  },
+  "brand_aesthetic_contract": {
+    "schema_version": "brand-aesthetic-contract/v1",
+    "brand_name": "FairCite",
+    "system_name": "FairCite Evidence Console System",
+    "research_basis": [
+      {
+        "id": "visawi",
+        "label": "VisAWI",
+        "construct": "perceived website visual aesthetics",
+        "operational_use": "Map simplicity, diversity, colorfulness, and craftsmanship into visual system coherence metrics.",
+        "source_url": "https://www.sciencedirect.com/science/article/pii/S1071581910000777"
+      },
+      {
+        "id": "apid",
+        "label": "APiD",
+        "construct": "aesthetic pleasure in designed artifacts",
+        "operational_use": "Keep a direct pleasure/desirability layer instead of only formal pixel metrics.",
+        "source_url": "https://opus.lib.uts.edu.au/handle/10453/81276"
+      },
+      {
+        "id": "beauvis",
+        "label": "BeauVis",
+        "construct": "aesthetic pleasure of visual representations",
+        "operational_use": "Treat scores as comparative, context-bound judgments rather than universal beauty values.",
+        "source_url": "https://arxiv.org/abs/2207.14147"
+      },
+      {
+        "id": "aesthemos",
+        "label": "AESTHEMOS",
+        "construct": "aesthetic emotions",
+        "operational_use": "Translate brand tone and target affect into measurable emotional-response proxies.",
+        "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0178899"
+      },
+      {
+        "id": "kansei",
+        "label": "Kansei / semantic differential",
+        "construct": "design element to impression mapping",
+        "operational_use": "Use brand keywords and anti-keywords as semantic impression targets and boundaries.",
+        "source_url": "https://www.mdpi.com/2073-8994/12/8/1340"
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "brand_semantic_fit",
+        "label": "Brand semantic fit",
+        "weight": 0.22,
+        "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+        "metrics": [
+          "brand_keyword:fair-trade-3b7c2475",
+          "brand_keyword:evidence-traceability-338508e9",
+          "brand_keyword:decision-document-3a0ac274",
+          "brand_keyword:chunk-citation-01be3d40",
+          "brand_keyword:dual-mode-console-4313e02a",
+          "brand_keyword:compliance-036cb735",
+          "brand_keyword:rights-protection-0f898d10",
+          "brand_keyword:legal-reference-7101404d",
+          "brand_tone:정확한-d3f93117",
+          "brand_tone:차분한-8bc0c584",
+          "brand_tone:근거-중심-9d454a2c",
+          "brand_tone:법률-자문이-아닌-참고-판단-063a0759",
+          "brand_tone:평이하지만-단정하지-않는-c1c82809"
+        ],
+        "research_basis": [
+          "kansei",
+          "aesthemos"
+        ]
+      },
+      {
+        "id": "brand_boundary_fit",
+        "label": "Brand boundary fit",
+        "weight": 0.16,
+        "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+        "metrics": [
+          "anti_keyword:marketing-landing-c2558c9a",
+          "anti_keyword:hero-heavy-ba31222d",
+          "anti_keyword:decorative-gradient-44e6d4d6",
+          "anti_keyword:cartoon-legal-1b22d045",
+          "anti_keyword:one-note-purple-bcff3e4f",
+          "anti_keyword:one-note-blue-511c8b0a",
+          "anti_keyword:beige-law-office-40cdab17",
+          "anti_keyword:black-box-ai-96054edd",
+          "avoid_pattern:hero-landing-page-b92a79ae",
+          "avoid_pattern:decorative-orbs-559738bd",
+          "avoid_pattern:nested-cards-02257046",
+          "avoid_pattern:stock-legal-imagery-2a1aa4c8",
+          "avoid_pattern:purple-blue-gradient-saas-homepage-80dead58"
+        ],
+        "research_basis": [
+          "kansei"
+        ]
+      },
+      {
+        "id": "product_ontology_fit",
+        "label": "Product ontology fit",
+        "weight": 0.22,
+        "description": "How clearly product primitives and ontology-required signals appear in the design.",
+        "metrics": [
+          "product_primitive:app-shell-1eaa69f6",
+          "product_primitive:mode-selector-67b5ec9c",
+          "product_primitive:sidebar-navigation-9ccd2ea3",
+          "product_primitive:privacy-banner-42edc334",
+          "product_primitive:diagnosis-form-281aa1bd",
+          "product_primitive:structured-textarea-7cc8b60c",
+          "product_primitive:segmented-controls-42c72d6a",
+          "product_primitive:risk-matrix-dbb10fed",
+          "product_primitive:risk-row-meter-30feaeb8",
+          "product_primitive:case-result-card-19f34ddf",
+          "must_include:split-pane-evidence-workflow-25862cb8",
+          "must_include:source-provenance-labels-00d87ae0",
+          "must_include:dense-but-readable-korean-dashboard-e82c596b",
+          "must_include:mode-switch-visible-in-first-viewpor-b57a5a86"
+        ],
+        "research_basis": [
+          "beauvis",
+          "kansei"
+        ]
+      },
+      {
+        "id": "audience_context_fit",
+        "label": "Audience context fit",
+        "weight": 0.12,
+        "description": "How well the design serves declared users, platforms, and accessibility floors.",
+        "metrics": [
+          "audience_need:기업-컴플라이언스팀-자사-거래구조와-산업-영역의-공정거래-리스크를-39358d37",
+          "audience_need:사내-법무팀-변호사-의결서-chunk-현행-조문-처분-사례를-빠르-e3f8142c",
+          "audience_need:가맹점주-중소-수급사업자-중소-입찰업체-자신이-겪은-상황과-공정위-eee14767",
+          "audience_need:공모전-평가위원-track-2-서비스-결과물이-자동지표와-분리되어-b2d58bba",
+          "accessibility_target:wcag-2-2-aa-41a998cd",
+          "accessibility_target:keyboard-navigable-4d5c7937",
+          "accessibility_target:high-contrast-source-labels-f7c56837",
+          "accessibility_target:korean-keep-all-line-wrapping-9ffa135a"
+        ],
+        "research_basis": [
+          "visawi",
+          "aesthemos"
+        ]
+      }
+    ],
+    "metrics": {
+      "brand_keyword:fair-trade-3b7c2475": {
+        "label": "Expresses brand keyword: fair-trade",
+        "improvement": "Make 'fair-trade' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "fair-trade"
+      },
+      "brand_keyword:evidence-traceability-338508e9": {
+        "label": "Expresses brand keyword: evidence-traceability",
+        "improvement": "Make 'evidence-traceability' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "evidence-traceability"
+      },
+      "brand_keyword:decision-document-3a0ac274": {
+        "label": "Expresses brand keyword: decision-document",
+        "improvement": "Make 'decision-document' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "decision-document"
+      },
+      "brand_keyword:chunk-citation-01be3d40": {
+        "label": "Expresses brand keyword: chunk-citation",
+        "improvement": "Make 'chunk-citation' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "chunk-citation"
+      },
+      "brand_keyword:dual-mode-console-4313e02a": {
+        "label": "Expresses brand keyword: dual-mode-console",
+        "improvement": "Make 'dual-mode-console' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "dual-mode-console"
+      },
+      "brand_keyword:compliance-036cb735": {
+        "label": "Expresses brand keyword: compliance",
+        "improvement": "Make 'compliance' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "compliance"
+      },
+      "brand_keyword:rights-protection-0f898d10": {
+        "label": "Expresses brand keyword: rights-protection",
+        "improvement": "Make 'rights-protection' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "rights-protection"
+      },
+      "brand_keyword:legal-reference-7101404d": {
+        "label": "Expresses brand keyword: legal-reference",
+        "improvement": "Make 'legal-reference' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "legal-reference"
+      },
+      "brand_tone:정확한-d3f93117": {
+        "label": "Expresses tone of voice: 정확한",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels '정확한'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "정확한"
+      },
+      "brand_tone:차분한-8bc0c584": {
+        "label": "Expresses tone of voice: 차분한",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels '차분한'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "차분한"
+      },
+      "brand_tone:근거-중심-9d454a2c": {
+        "label": "Expresses tone of voice: 근거 중심",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels '근거 중심'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "근거 중심"
+      },
+      "brand_tone:법률-자문이-아닌-참고-판단-063a0759": {
+        "label": "Expresses tone of voice: 법률 자문이 아닌 참고 판단",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels '법률 자문이 아닌 참고 판단'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "법률 자문이 아닌 참고 판단"
+      },
+      "brand_tone:평이하지만-단정하지-않는-c1c82809": {
+        "label": "Expresses tone of voice: 평이하지만 단정하지 않는",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels '평이하지만 단정하지 않는'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "평이하지만 단정하지 않는"
+      },
+      "anti_keyword:marketing-landing-c2558c9a": {
+        "label": "Avoids anti-keyword: marketing-landing",
+        "improvement": "Remove cues that make the product read as 'marketing-landing'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "marketing-landing"
+      },
+      "anti_keyword:hero-heavy-ba31222d": {
+        "label": "Avoids anti-keyword: hero-heavy",
+        "improvement": "Remove cues that make the product read as 'hero-heavy'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "hero-heavy"
+      },
+      "anti_keyword:decorative-gradient-44e6d4d6": {
+        "label": "Avoids anti-keyword: decorative-gradient",
+        "improvement": "Remove cues that make the product read as 'decorative-gradient'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "decorative-gradient"
+      },
+      "anti_keyword:cartoon-legal-1b22d045": {
+        "label": "Avoids anti-keyword: cartoon-legal",
+        "improvement": "Remove cues that make the product read as 'cartoon-legal'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "cartoon-legal"
+      },
+      "anti_keyword:one-note-purple-bcff3e4f": {
+        "label": "Avoids anti-keyword: one-note-purple",
+        "improvement": "Remove cues that make the product read as 'one-note-purple'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "one-note-purple"
+      },
+      "anti_keyword:one-note-blue-511c8b0a": {
+        "label": "Avoids anti-keyword: one-note-blue",
+        "improvement": "Remove cues that make the product read as 'one-note-blue'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "one-note-blue"
+      },
+      "anti_keyword:beige-law-office-40cdab17": {
+        "label": "Avoids anti-keyword: beige-law-office",
+        "improvement": "Remove cues that make the product read as 'beige-law-office'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "beige-law-office"
+      },
+      "anti_keyword:black-box-ai-96054edd": {
+        "label": "Avoids anti-keyword: black-box-ai",
+        "improvement": "Remove cues that make the product read as 'black-box-ai'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "black-box-ai"
+      },
+      "avoid_pattern:hero-landing-page-b92a79ae": {
+        "label": "Avoids visual pattern: hero landing page",
+        "improvement": "Replace 'hero landing page' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "hero landing page"
+      },
+      "avoid_pattern:decorative-orbs-559738bd": {
+        "label": "Avoids visual pattern: decorative orbs",
+        "improvement": "Replace 'decorative orbs' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "decorative orbs"
+      },
+      "avoid_pattern:nested-cards-02257046": {
+        "label": "Avoids visual pattern: nested cards",
+        "improvement": "Replace 'nested cards' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "nested cards"
+      },
+      "avoid_pattern:stock-legal-imagery-2a1aa4c8": {
+        "label": "Avoids visual pattern: stock legal imagery",
+        "improvement": "Replace 'stock legal imagery' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "stock legal imagery"
+      },
+      "avoid_pattern:purple-blue-gradient-saas-homepage-80dead58": {
+        "label": "Avoids visual pattern: purple-blue gradient SaaS homepage",
+        "improvement": "Replace 'purple-blue gradient SaaS homepage' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "purple-blue gradient SaaS homepage"
+      },
+      "product_primitive:app-shell-1eaa69f6": {
+        "label": "Embodies product primitive: app shell",
+        "improvement": "Represent 'app shell' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "app shell"
+      },
+      "product_primitive:mode-selector-67b5ec9c": {
+        "label": "Embodies product primitive: mode selector",
+        "improvement": "Represent 'mode selector' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "mode selector"
+      },
+      "product_primitive:sidebar-navigation-9ccd2ea3": {
+        "label": "Embodies product primitive: sidebar navigation",
+        "improvement": "Represent 'sidebar navigation' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "sidebar navigation"
+      },
+      "product_primitive:privacy-banner-42edc334": {
+        "label": "Embodies product primitive: privacy banner",
+        "improvement": "Represent 'privacy banner' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "privacy banner"
+      },
+      "product_primitive:diagnosis-form-281aa1bd": {
+        "label": "Embodies product primitive: diagnosis form",
+        "improvement": "Represent 'diagnosis form' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "diagnosis form"
+      },
+      "product_primitive:structured-textarea-7cc8b60c": {
+        "label": "Embodies product primitive: structured textarea",
+        "improvement": "Represent 'structured textarea' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "structured textarea"
+      },
+      "product_primitive:segmented-controls-42c72d6a": {
+        "label": "Embodies product primitive: segmented controls",
+        "improvement": "Represent 'segmented controls' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "segmented controls"
+      },
+      "product_primitive:risk-matrix-dbb10fed": {
+        "label": "Embodies product primitive: risk matrix",
+        "improvement": "Represent 'risk matrix' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "risk matrix"
+      },
+      "product_primitive:risk-row-meter-30feaeb8": {
+        "label": "Embodies product primitive: risk row meter",
+        "improvement": "Represent 'risk row meter' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "risk row meter"
+      },
+      "product_primitive:case-result-card-19f34ddf": {
+        "label": "Embodies product primitive: case result card",
+        "improvement": "Represent 'case result card' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "case result card"
+      },
+      "must_include:split-pane-evidence-workflow-25862cb8": {
+        "label": "Includes required visual/system signal: split-pane evidence workflow",
+        "improvement": "Make 'split-pane evidence workflow' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "split-pane evidence workflow"
+      },
+      "must_include:source-provenance-labels-00d87ae0": {
+        "label": "Includes required visual/system signal: source provenance labels",
+        "improvement": "Make 'source provenance labels' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "source provenance labels"
+      },
+      "must_include:dense-but-readable-korean-dashboard-e82c596b": {
+        "label": "Includes required visual/system signal: dense but readable Korean dashboard",
+        "improvement": "Make 'dense but readable Korean dashboard' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "dense but readable Korean dashboard"
+      },
+      "must_include:mode-switch-visible-in-first-viewpor-b57a5a86": {
+        "label": "Includes required visual/system signal: mode switch visible in first viewport",
+        "improvement": "Make 'mode switch visible in first viewport' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "mode switch visible in first viewport"
+      },
+      "audience_need:기업-컴플라이언스팀-자사-거래구조와-산업-영역의-공정거래-리스크를-39358d37": {
+        "label": "Fits audience context: 기업 컴플라이언스팀 — 자사 거래구조와 산업 영역의 공정거래 리스크를 사전 점검하고 사내 보고용 근거 자료를 만드는 실무자",
+        "improvement": "Adjust density, language, workflow order, and controls for '기업 컴플라이언스팀 — 자사 거래구조와 산업 영역의 공정거래 리스크를 사전 점검하고 사내 보고용 근거 자료를 만드는 실무자'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "기업 컴플라이언스팀 — 자사 거래구조와 산업 영역의 공정거래 리스크를 사전 점검하고 사내 보고용 근거 자료를 만드는 실무자"
+      },
+      "audience_need:사내-법무팀-변호사-의결서-chunk-현행-조문-처분-사례를-빠르-e3f8142c": {
+        "label": "Fits audience context: 사내 법무팀 변호사 — 의결서 chunk, 현행 조문, 처분 사례를 빠르게 비교해 외부 의견서 전 단계의 조사 근거를 확보하는 전문가",
+        "improvement": "Adjust density, language, workflow order, and controls for '사내 법무팀 변호사 — 의결서 chunk, 현행 조문, 처분 사례를 빠르게 비교해 외부 의견서 전 단계의 조사 근거를 확보하는 전문가'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "사내 법무팀 변호사 — 의결서 chunk, 현행 조문, 처분 사례를 빠르게 비교해 외부 의견서 전 단계의 조사 근거를 확보하는 전문가"
+      },
+      "audience_need:가맹점주-중소-수급사업자-중소-입찰업체-자신이-겪은-상황과-공정위-eee14767": {
+        "label": "Fits audience context: 가맹점주·중소 수급사업자·중소 입찰업체 — 자신이 겪은 상황과 공정위 인정 유사 패턴을 비교하고 사실관계 정리와 증거 체크리스트를 준비하는 사용자",
+        "improvement": "Adjust density, language, workflow order, and controls for '가맹점주·중소 수급사업자·중소 입찰업체 — 자신이 겪은 상황과 공정위 인정 유사 패턴을 비교하고 사실관계 정리와 증거 체크리스트를 준비하는 사용자'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "가맹점주·중소 수급사업자·중소 입찰업체 — 자신이 겪은 상황과 공정위 인정 유사 패턴을 비교하고 사실관계 정리와 증거 체크리스트를 준비하는 사용자"
+      },
+      "audience_need:공모전-평가위원-track-2-서비스-결과물이-자동지표와-분리되어-b2d58bba": {
+        "label": "Fits audience context: 공모전 평가위원 — Track 2 서비스 결과물이 자동지표와 분리되어 있고 정성 5축을 명확히 증명하는지 빠르게 확인하는 심사자",
+        "improvement": "Adjust density, language, workflow order, and controls for '공모전 평가위원 — Track 2 서비스 결과물이 자동지표와 분리되어 있고 정성 5축을 명확히 증명하는지 빠르게 확인하는 심사자'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "공모전 평가위원 — Track 2 서비스 결과물이 자동지표와 분리되어 있고 정성 5축을 명확히 증명하는지 빠르게 확인하는 심사자"
+      },
+      "accessibility_target:wcag-2-2-aa-41a998cd": {
+        "label": "Supports accessibility target: WCAG 2.2 AA",
+        "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "WCAG 2.2 AA"
+      },
+      "accessibility_target:keyboard-navigable-4d5c7937": {
+        "label": "Supports accessibility target: keyboard navigable",
+        "improvement": "Verify 'keyboard navigable' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "keyboard navigable"
+      },
+      "accessibility_target:high-contrast-source-labels-f7c56837": {
+        "label": "Supports accessibility target: high contrast source labels",
+        "improvement": "Verify 'high contrast source labels' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "high contrast source labels"
+      },
+      "accessibility_target:korean-keep-all-line-wrapping-9ffa135a": {
+        "label": "Supports accessibility target: Korean keep-all line wrapping",
+        "improvement": "Verify 'Korean keep-all line wrapping' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "Korean keep-all line wrapping"
+      }
+    },
+    "rule": "Brand-owned aesthetic quality is evaluated as fit to declared semantic targets, explicit boundaries, product ontology, audience context, and visual craft."
+  },
+  "interpretation_rule": "Scores represent observed or reviewed response proxies in a declared context; they are not universal beauty claims."
+}

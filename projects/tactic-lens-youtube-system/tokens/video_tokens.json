@@ -1,0 +1,63 @@
+{
+  "name": "TacticLens YouTube Video Tokens",
+  "version": "0.1.0",
+  "color": {
+    "pitch_green": "#50C878",
+    "tracking_cyan": "#00B1D2",
+    "coach_amber": "#FFBF00",
+    "error_crimson": "#BD2E4A",
+    "analysis_navy": "#061116",
+    "panel_navy": "#0D2028",
+    "chalk_white": "#F8F8F4",
+    "muted_text": "#9FB9B7"
+  },
+  "font": {
+    "heading": "Space Grotesk",
+    "body": "Pretendard",
+    "data": "JetBrains Mono"
+  },
+  "format": {
+    "long_form": {
+      "width": 1920,
+      "height": 1080,
+      "safe_margin": 96,
+      "caption_bottom": 88
+    },
+    "shorts": {
+      "width": 1080,
+      "height": 1920,
+      "top_safe": 250,
+      "bottom_safe": 330,
+      "side_safe": 80
+    },
+    "thumbnail": {
+      "width": 1280,
+      "height": 720,
+      "safe_margin": 56
+    }
+  },
+  "type_scale_1080p": {
+    "thumbnail_title": 88,
+    "title_card": 72,
+    "chapter_title": 64,
+    "caption": 58,
+    "lower_third_title": 38,
+    "lower_third_body": 30,
+    "timecode": 28,
+    "small_label": 22
+  },
+  "motion": {
+    "overlay_fade_ms": 140,
+    "line_draw_ms": 360,
+    "chapter_card_ms": 280,
+    "caption_pop_ms": 120,
+    "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)"
+  },
+  "opacity": {
+    "caption_bar": 0.78,
+    "overlay_line": 0.82,
+    "pitch_grid": 0.38,
+    "background_scrim": 0.64
+  }
+}
+
