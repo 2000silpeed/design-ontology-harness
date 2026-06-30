@@ -1,0 +1,4855 @@
+{
+  "schema_version": "geist-component-specs/v1",
+  "brand": "Geist Reference",
+  "total_components": 71,
+  "families": [
+    "action",
+    "content",
+    "data-display",
+    "feedback",
+    "form",
+    "identity",
+    "input",
+    "layout",
+    "navigation",
+    "overlay",
+    "surface"
+  ],
+  "global_adaptation": {
+    "density": "compact spacing, thin borders, minimal decoration",
+    "surface": "flat or subtle elevated surfaces with 1px separators",
+    "motion": "short, utilitarian state transitions",
+    "accessibility": "visible focus states and explicit ARIA for icon-only or async controls",
+    "policy": "metadata-only reference; local implementation required"
+  },
+  "specs": [
+    {
+      "name": "avatar",
+      "display_name": "Avatar",
+      "family": "identity",
+      "role": "Avatars represent a user or a team. Stacked avatars represent a group of people",
+      "source_url": "https://vercel.com/geist/avatar",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "AvatarGroup",
+          "Avatar",
+          "GitHubAvatar",
+          "GitLabAvatar",
+          "BitbucketAvatar",
+          "AvatarWithIcon",
+          "IconArrowCircleDown",
+          "IconCheckCircleFill",
+          "IconClockDashed"
+        ],
+        "states": [
+          "default",
+          "loading",
+          "empty"
+        ],
+        "sections": [
+          "Group",
+          "Stacking order",
+          "Overlap",
+          "Fixed overlap",
+          "Size",
+          "Git",
+          "With custom icon",
+          "Letter",
+          "Placeholder",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 64,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "AvatarGroup",
+          "Avatar",
+          "GitHubAvatar",
+          "GitLabAvatar",
+          "BitbucketAvatar",
+          "AvatarWithIcon",
+          "IconArrowCircleDown",
+          "IconCheckCircleFill",
+          "IconClockDashed"
+        ],
+        "jsx_tags": [
+          "AvatarGroup",
+          "Avatar",
+          "GitHubAvatar",
+          "GitLabAvatar",
+          "BitbucketAvatar",
+          "AvatarWithIcon",
+          "IconArrowCircleDown",
+          "IconCheckCircleFill",
+          "IconClockDashed"
+        ],
+        "prop_names": [
+          "members",
+          "size",
+          "limit",
+          "overlap",
+          "username",
+          "icon",
+          "color",
+          "letter"
+        ],
+        "code_example_count": 9,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "badge",
+      "display_name": "Badge",
+      "family": "feedback",
+      "role": "A label that emphasizes an element that requires attention, or helps categorize with other similar elements.",
+      "source_url": "https://vercel.com/geist/badge",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Badge",
+          "IconShield",
+          "Link",
+          "LogoIconSlack"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Variants",
+          "Sizes",
+          "With icons",
+          "Pill",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 83,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Badge",
+          "IconShield",
+          "badgeVariants",
+          "LogoIconSlack",
+          "cn",
+          "Link"
+        ],
+        "jsx_tags": [
+          "Badge",
+          "IconShield",
+          "Link",
+          "LogoIconSlack"
+        ],
+        "prop_names": [
+          "variant",
+          "contrast",
+          "size",
+          "icon",
+          "href",
+          "data-slot"
+        ],
+        "code_example_count": 4,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "banner",
+      "display_name": "Banner",
+      "family": "feedback",
+      "role": "A prominent message that spans the full width of its container to announce important information.",
+      "source_url": "https://vercel.com/geist/banner",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Banner"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Default"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Banner"
+        ],
+        "jsx_tags": [
+          "Banner"
+        ],
+        "prop_names": [
+          "button"
+        ],
+        "code_example_count": 1,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "book",
+      "display_name": "Book",
+      "family": "content",
+      "role": "A responsive book component.",
+      "source_url": "https://vercel.com/geist/book",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Book",
+          "LogoIconVercel",
+          "LogoIconNext",
+          "LogoIconReact",
+          "Lines",
+          "Icon"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Variants",
+          "Custom color",
+          "Custom icon",
+          "Custom illustration",
+          "Responsive",
+          "Width",
+          "Textured",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 66,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Book",
+          "LogoIconVercel",
+          "LogoIconNext",
+          "LogoIconReact"
+        ],
+        "jsx_tags": [
+          "Book",
+          "LogoIconVercel",
+          "LogoIconNext",
+          "LogoIconReact",
+          "Lines",
+          "Icon"
+        ],
+        "prop_names": [
+          "title",
+          "variant",
+          "width",
+          "color",
+          "textColor",
+          "icon",
+          "illustration"
+        ],
+        "code_example_count": 8,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "breadcrumbs",
+      "display_name": "Breadcrumbs",
+      "family": "navigation",
+      "role": "Navigation aid that shows the user's location within a site's hierarchy, with text and menu variants.",
+      "source_url": "https://vercel.com/geist/breadcrumbs",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Breadcrumb",
+          "BreadcrumbItem"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "active",
+          "focus",
+          "disabled"
+        ],
+        "sections": [
+          "Default",
+          "Active",
+          "Disabled"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Breadcrumb",
+          "BreadcrumbItem"
+        ],
+        "jsx_tags": [
+          "Breadcrumb",
+          "BreadcrumbItem"
+        ],
+        "prop_names": [
+          "type"
+        ],
+        "code_example_count": 3,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "browser",
+      "display_name": "Browser",
+      "family": "content",
+      "role": "The Browser component lets you showcase website screenshots or any other content within a realistic browser-style frame.",
+      "source_url": "https://vercel.com/geist/browser",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Browser"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected"
+        ],
+        "sections": [
+          "Composition",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Browser"
+        ],
+        "jsx_tags": [
+          "Browser"
+        ],
+        "prop_names": [
+          "address"
+        ],
+        "code_example_count": 1,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "button",
+      "display_name": "Button",
+      "family": "action",
+      "role": "Trigger an action or event, such as submitting a form or displaying a dialog.",
+      "source_url": "https://vercel.com/geist/button",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Button",
+          "IconArrowUp",
+          "IconArrowLeft",
+          "IconArrowRight",
+          "ButtonLink",
+          "CustomButton"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "active",
+          "disabled",
+          "loading",
+          "focus"
+        ],
+        "sections": [
+          "Sizes",
+          "All Types and Sizes in comparison",
+          "Shapes",
+          "Prefix and suffix",
+          "Rounded",
+          "Loading",
+          "Disabled",
+          "Disabled variants",
+          "Link",
+          "Custom",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 76,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Button",
+          "IconArrowUp",
+          "IconArrowLeft",
+          "IconArrowRight",
+          "ButtonLink",
+          "CustomButton"
+        ],
+        "jsx_tags": [
+          "Button",
+          "IconArrowUp",
+          "IconArrowLeft",
+          "IconArrowRight",
+          "ButtonLink",
+          "CustomButton"
+        ],
+        "prop_names": [
+          "size",
+          "variant",
+          "aria-label",
+          "shape",
+          "prefix",
+          "suffix",
+          "href",
+          "active",
+          "hover",
+          "normal",
+          "width"
+        ],
+        "code_example_count": 10,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "calendar",
+      "display_name": "Calendar",
+      "family": "input",
+      "role": "Displays a calendar from which users can select a date or range of dates.",
+      "source_url": "https://vercel.com/geist/calendar",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "RangeValue",
+          "DateValue",
+          "Calendar"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Horizontal Layout",
+          "Sizes",
+          "Presets",
+          "Compact",
+          "Stacked",
+          "Presets with default value",
+          "Min and max dates",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 64,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Calendar",
+          "useState",
+          "type JSX",
+          "startOfDay",
+          "subDays",
+          "subWeeks",
+          "subMonths",
+          "endOfDay",
+          "addDays"
+        ],
+        "jsx_tags": [
+          "RangeValue",
+          "DateValue",
+          "Calendar"
+        ],
+        "prop_names": [
+          "onChange",
+          "value",
+          "minValue",
+          "maxValue",
+          "showTimeInput",
+          "popoverAlignment",
+          "size",
+          "presets",
+          "presetIndex"
+        ],
+        "code_example_count": 8,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "card",
+      "display_name": "Card",
+      "family": "surface",
+      "role": "A container that groups related content and actions on a surface.",
+      "source_url": "https://vercel.com/geist/card",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Card"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected",
+          "disabled"
+        ],
+        "sections": [
+          "Default",
+          "Hover",
+          "Border",
+          "Border Between",
+          "Border Between Vertical",
+          "Secondary"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 62,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Card"
+        ],
+        "jsx_tags": [
+          "Card"
+        ],
+        "prop_names": [
+          "direction"
+        ],
+        "code_example_count": 6,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "checkbox",
+      "display_name": "Checkbox",
+      "family": "input",
+      "role": "A control that toggles between two options, checked or unchecked.",
+      "source_url": "https://vercel.com/geist/checkbox",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Checkbox"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Disabled",
+          "Indeterminate",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 64,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Checkbox",
+          "useState",
+          "type JSX"
+        ],
+        "jsx_tags": [
+          "Checkbox"
+        ],
+        "prop_names": [
+          "checked",
+          "onChange"
+        ],
+        "code_example_count": 3,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "choicebox",
+      "display_name": "Choicebox",
+      "family": "input",
+      "role": "A larger form of Radio or Checkbox, where the user has a larger tap target and more details.",
+      "source_url": "https://vercel.com/geist/choicebox",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "ChoiceboxGroup",
+          "ChoiceboxGroupItem",
+          "Badge"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Single-select",
+          "Multi-select",
+          "Disabled",
+          "Custom content",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 68,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "ChoiceboxGroup",
+          "ChoiceboxGroupItem",
+          "useState",
+          "type JSX",
+          "Badge"
+        ],
+        "jsx_tags": [
+          "ChoiceboxGroup",
+          "ChoiceboxGroupItem",
+          "Badge"
+        ],
+        "prop_names": [
+          "label",
+          "onChange",
+          "type",
+          "value",
+          "listClassName",
+          "description",
+          "title",
+          "variant"
+        ],
+        "code_example_count": 4,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "clearable-input",
+      "display_name": "Clearable Input",
+      "family": "input",
+      "role": "Text input with a clear button that resets the value on Escape.",
+      "source_url": "https://vercel.com/geist/clearable-input",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "ClearableInput"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "With Label",
+          "With Cmdk",
+          "Disabled",
+          "With Clear Callback"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 63,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "ClearableInput",
+          "useState"
+        ],
+        "jsx_tags": [
+          "ClearableInput"
+        ],
+        "prop_names": [
+          "aria-label",
+          "onChange",
+          "placeholder",
+          "value",
+          "label",
+          "onClear"
+        ],
+        "code_example_count": 5,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "code",
+      "display_name": "Code",
+      "family": "content",
+      "role": "Display a snippet of code with syntax highlighting.",
+      "source_url": "https://vercel.com/geist/code",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Code"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected"
+        ],
+        "sections": [
+          "Default"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Code"
+        ],
+        "jsx_tags": [],
+        "prop_names": [],
+        "code_example_count": 1,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "code-block",
+      "display_name": "Code Block",
+      "family": "content",
+      "role": "Code Block component used across Vercel and Next.js.",
+      "source_url": "https://vercel.com/geist/code-block",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Code Block"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "No filename",
+          "Highlighted lines",
+          "Added & removed lines",
+          "Referenced lines",
+          "Language switcher",
+          "Language switcher with tabs",
+          "Hidden line numbers",
+          "Open in v0",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 68,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "CodeBlock",
+          "useState",
+          "type JSX"
+        ],
+        "jsx_tags": [],
+        "prop_names": [],
+        "code_example_count": 9,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "collapse",
+      "display_name": "Collapse",
+      "family": "overlay",
+      "role": "A set of headings, vertically stacked, that each reveal an related section of content. Commonly referred to as an accordion.",
+      "source_url": "https://vercel.com/geist/collapse",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "CollapseGroup",
+          "Collapse"
+        ],
+        "states": [
+          "closed",
+          "opening",
+          "open",
+          "dismissed"
+        ],
+        "sections": [
+          "Default",
+          "Question A",
+          "Question B",
+          "Expanded",
+          "Multiple",
+          "Small",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Collapse",
+          "CollapseGroup"
+        ],
+        "jsx_tags": [
+          "CollapseGroup",
+          "Collapse"
+        ],
+        "prop_names": [
+          "title",
+          "size"
+        ],
+        "code_example_count": 4,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "combobox",
+      "display_name": "Combobox",
+      "family": "input",
+      "role": "Filters large lists to selectable options based on the matching query.",
+      "source_url": "https://vercel.com/geist/combobox",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Combobox",
+          "ComboboxInput",
+          "ComboboxList",
+          "ComboboxOption",
+          "LogoIconVercelSvg",
+          "Button",
+          "Modal",
+          "ModalBody",
+          "ModalHeader",
+          "ModalTitle",
+          "ModalSubtitle",
+          "ModalInset"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Uncontrolled",
+          "Controlled",
+          "Disabled",
+          "Errored",
+          "Custom width input",
+          "Custom width list",
+          "Custom empty message",
+          "Clearable",
+          "With prefix icons",
+          "With suffix icons",
+          "With label",
+          "Sizes",
+          "Used inside a Modal",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 64,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Combobox",
+          "ComboboxInput",
+          "ComboboxList",
+          "ComboboxOption",
+          "useState",
+          "type JSX",
+          "LogoIconVercelSvg",
+          "useId",
+          "Modal",
+          "Button",
+          "Label",
+          "ModalBody",
+          "ModalHeader",
+          "ModalTitle",
+          "ModalSubtitle",
+          "ModalInset",
+          "ModalActions",
+          "ModalAction"
+        ],
+        "jsx_tags": [
+          "Combobox",
+          "ComboboxInput",
+          "ComboboxList",
+          "ComboboxOption",
+          "LogoIconVercelSvg",
+          "Button",
+          "Modal",
+          "ModalBody",
+          "ModalHeader",
+          "ModalTitle",
+          "ModalSubtitle",
+          "ModalInset",
+          "Label",
+          "ModalActions",
+          "ModalAction"
+        ],
+        "prop_names": [
+          "aria-label",
+          "placeholder",
+          "value",
+          "onChange",
+          "width",
+          "maxWidth",
+          "emptyMessage",
+          "prefix",
+          "suffix",
+          "htmlFor",
+          "id",
+          "size",
+          "key",
+          "onClick",
+          "active",
+          "onClickOutside",
+          "variant"
+        ],
+        "code_example_count": 13,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "command-menu",
+      "display_name": "Command Menu",
+      "family": "overlay",
+      "role": "Launch a set of actions as a full-screen overlay.",
+      "source_url": "https://vercel.com/geist/command-menu",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Button",
+          "CommandMenu",
+          "CommandMenuInput",
+          "CommandMenuList",
+          "CommandMenuGroup",
+          "CommandMenuItem",
+          "CommandMenuDivider",
+          "IconCheckCircle"
+        ],
+        "states": [
+          "closed",
+          "opening",
+          "open",
+          "dismissed"
+        ],
+        "sections": [
+          "Default",
+          "With divider",
+          "With suffix",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "CommandMenu",
+          "Button",
+          "CommandMenuInput",
+          "CommandMenuList",
+          "CommandMenuGroup",
+          "CommandMenuItem",
+          "useState",
+          "type JSX",
+          "CommandMenuDivider",
+          "IconCheckCircle"
+        ],
+        "jsx_tags": [
+          "Button",
+          "CommandMenu",
+          "CommandMenuInput",
+          "CommandMenuList",
+          "CommandMenuGroup",
+          "CommandMenuItem",
+          "CommandMenuDivider",
+          "IconCheckCircle"
+        ],
+        "prop_names": [
+          "onClick",
+          "open",
+          "setOpen",
+          "placeholder",
+          "heading",
+          "callback",
+          "suffix",
+          "color"
+        ],
+        "code_example_count": 3,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "context-card",
+      "display_name": "Context Card",
+      "family": "surface",
+      "role": "Tooltip",
+      "source_url": "https://vercel.com/geist/context-card",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "ContextCardTrigger",
+          "Button"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected",
+          "disabled"
+        ],
+        "sections": [
+          "Default",
+          "Alignment",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "ContextCardTrigger",
+          "Button"
+        ],
+        "jsx_tags": [
+          "ContextCardTrigger",
+          "Button"
+        ],
+        "prop_names": [
+          "content",
+          "side",
+          "align"
+        ],
+        "code_example_count": 2,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "context-menu",
+      "display_name": "Context Menu",
+      "family": "overlay",
+      "role": "Displays a brief heading and subheading to communicate any additional information or context a user needs to continue.",
+      "source_url": "https://vercel.com/geist/context-menu",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "ContextMenu",
+          "ContextMenuTrigger",
+          "ContextMenuContent",
+          "ContextMenuItem",
+          "LogoIconVercelCircleSvg"
+        ],
+        "states": [
+          "closed",
+          "opening",
+          "open",
+          "dismissed"
+        ],
+        "sections": [
+          "Default",
+          "Disabled items",
+          "Link items",
+          "Prefix and suffix",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "ContextMenu",
+          "ContextMenuContent",
+          "ContextMenuItem",
+          "ContextMenuTrigger",
+          "LogoIconVercelCircleSvg"
+        ],
+        "jsx_tags": [
+          "ContextMenu",
+          "ContextMenuTrigger",
+          "ContextMenuContent",
+          "ContextMenuItem",
+          "LogoIconVercelCircleSvg"
+        ],
+        "prop_names": [
+          "onClick",
+          "value",
+          "href",
+          "prefix",
+          "suffix"
+        ],
+        "code_example_count": 4,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "copy-button",
+      "display_name": "Copy Button",
+      "family": "action",
+      "role": "A button that copies a given string to the clipboard and provides feedback when copied.",
+      "source_url": "https://vercel.com/geist/copy-button",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "CopyButton"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "active",
+          "disabled",
+          "loading",
+          "focus"
+        ],
+        "sections": [
+          "Default"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "CopyButton"
+        ],
+        "jsx_tags": [
+          "CopyButton"
+        ],
+        "prop_names": [
+          "textToCopy",
+          "label"
+        ],
+        "code_example_count": 1,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "description",
+      "display_name": "Description",
+      "family": "content",
+      "role": "Displays a brief heading and subheading to communicate any additional information or context a user needs to continue.",
+      "source_url": "https://vercel.com/geist/description",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Description"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Text right",
+          "Ellipsis",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Description"
+        ],
+        "jsx_tags": [
+          "Description"
+        ],
+        "prop_names": [
+          "content",
+          "title",
+          "tooltip"
+        ],
+        "code_example_count": 3,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "destructive-action-modal",
+      "display_name": "Destructive Action Modal",
+      "family": "overlay",
+      "role": "Confirm destructive actions with a required type-to-confirm gate and an optional irreversibility band.",
+      "source_url": "https://vercel.com/geist/destructive-action-modal",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Button",
+          "DestructiveActionModal"
+        ],
+        "states": [
+          "closed",
+          "opening",
+          "open",
+          "dismissed"
+        ],
+        "sections": [
+          "Default",
+          "Reversible",
+          "Loading",
+          "With error",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Button",
+          "DestructiveActionModal",
+          "useState",
+          "type JSX"
+        ],
+        "jsx_tags": [
+          "Button",
+          "DestructiveActionModal"
+        ],
+        "prop_names": [
+          "onClick",
+          "size",
+          "variant",
+          "confirmLabel",
+          "description",
+          "irreversibleDescription",
+          "loading",
+          "onCancel",
+          "onConfirm",
+          "open",
+          "title",
+          "verificationLabel",
+          "verificationPhrase",
+          "error"
+        ],
+        "code_example_count": 4,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "dots-menu",
+      "display_name": "Dots Menu",
+      "family": "action",
+      "role": "An overflow menu triggered by a three-dot icon that reveals additional actions in a dropdown.",
+      "source_url": "https://vercel.com/geist/dots-menu",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "DotsMenu",
+          "MenuItem"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "active",
+          "disabled",
+          "loading",
+          "focus"
+        ],
+        "sections": [
+          "Default",
+          "Sizes",
+          "Disabled",
+          "Disabled Menu Item"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "DotsMenu",
+          "MenuItem"
+        ],
+        "jsx_tags": [
+          "DotsMenu",
+          "MenuItem"
+        ],
+        "prop_names": [
+          "iconSize"
+        ],
+        "code_example_count": 4,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "drawer",
+      "display_name": "Drawer",
+      "family": "overlay",
+      "role": "Display content in a separate view from the existing context.",
+      "source_url": "https://vercel.com/geist/drawer",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Button",
+          "Drawer"
+        ],
+        "states": [
+          "closed",
+          "opening",
+          "open",
+          "dismissed"
+        ],
+        "sections": [
+          "Default",
+          "Custom height",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Button",
+          "Drawer",
+          "useState",
+          "type JSX"
+        ],
+        "jsx_tags": [
+          "Button",
+          "Drawer"
+        ],
+        "prop_names": [
+          "onClick",
+          "onDismiss",
+          "show",
+          "height"
+        ],
+        "code_example_count": 2,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "empty-state",
+      "display_name": "Empty State",
+      "family": "feedback",
+      "role": "Fill spaces when no content has been added yet, or is temporarily empty due to the nature of the feature and should be designed to prevent confusion.",
+      "source_url": "https://vercel.com/geist/empty-state",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "EmptyState",
+          "EmptyStateIcon",
+          "IconChartBarPeak",
+          "Button",
+          "Link"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Empty state Design framework",
+          "Blank slate",
+          "Informational",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 65,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "EmptyState",
+          "EmptyStateIcon",
+          "IconChartBarPeak",
+          "Button",
+          "Link"
+        ],
+        "jsx_tags": [
+          "EmptyState",
+          "EmptyStateIcon",
+          "IconChartBarPeak",
+          "Button",
+          "Link"
+        ],
+        "prop_names": [
+          "description",
+          "icon",
+          "size",
+          "title",
+          "variant",
+          "data-zone",
+          "href",
+          "type"
+        ],
+        "code_example_count": 3,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "entity",
+      "display_name": "Entity",
+      "family": "identity",
+      "role": "Displays up-to-two columns of content. The left column can contain arbitrary content, and the right column typically contains controls or actions related to the content in the left column.",
+      "source_url": "https://vercel.com/geist/entity",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Entity",
+          "Avatar",
+          "EntityContent",
+          "Skeleton",
+          "EntityList",
+          "Button",
+          "Record",
+          "Checkbox"
+        ],
+        "states": [
+          "default",
+          "loading",
+          "empty"
+        ],
+        "sections": [
+          "Default",
+          "Entity with Skeleton",
+          "Entity with List",
+          "Entity with List and Checkbox",
+          "Entity with Fill",
+          "Entity with Column ClassNames",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 66,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Avatar",
+          "Entity",
+          "EntityContent",
+          "Skeleton",
+          "Button",
+          "EntityList",
+          "useState",
+          "Checkbox"
+        ],
+        "jsx_tags": [
+          "Entity",
+          "Avatar",
+          "EntityContent",
+          "Skeleton",
+          "EntityList",
+          "Button",
+          "Record",
+          "Checkbox"
+        ],
+        "prop_names": [
+          "left",
+          "size",
+          "username",
+          "right",
+          "description",
+          "title",
+          "height",
+          "width",
+          "as",
+          "variant",
+          "key",
+          "onClick",
+          "aria-label",
+          "checked",
+          "onChange",
+          "leftClassName",
+          "rightClassName"
+        ],
+        "code_example_count": 6,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "error",
+      "display_name": "Error",
+      "family": "feedback",
+      "role": "Good error design is clear, useful, and friendly. Designing concise and accurate error messages unblocks users and builds trust by meeting people where they are.",
+      "source_url": "https://vercel.com/geist/error",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Error",
+          "GeistError"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Default",
+          "Custom label",
+          "No label",
+          "Sizes",
+          "With an error property",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Error"
+        ],
+        "jsx_tags": [
+          "Error",
+          "GeistError"
+        ],
+        "prop_names": [
+          "label",
+          "size",
+          "error"
+        ],
+        "code_example_count": 5,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "error-card",
+      "display_name": "Error Card",
+      "family": "feedback",
+      "role": "A card used to communicate an error state with a title and message.",
+      "source_url": "https://vercel.com/geist/error-card",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "ErrorCard"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Default",
+          "No credits left"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 64,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "ErrorCard"
+        ],
+        "jsx_tags": [
+          "ErrorCard"
+        ],
+        "prop_names": [
+          "message",
+          "title"
+        ],
+        "code_example_count": 1,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "feedback",
+      "display_name": "Feedback",
+      "family": "feedback",
+      "role": "Gather text feedback with an associated emotion.",
+      "source_url": "https://vercel.com/geist/feedback",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Feedback",
+          "Note",
+          "IconFlagPriority"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Default",
+          "Inline",
+          "Feedback with Select",
+          "Feedback with metadata",
+          "Feedback with prefix",
+          "Feedback with suffix",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Feedback",
+          "Note",
+          "IconFlagPriority"
+        ],
+        "jsx_tags": [
+          "Feedback",
+          "Note",
+          "IconFlagPriority"
+        ],
+        "prop_names": [
+          "label",
+          "type",
+          "metadata",
+          "prefix",
+          "suffix"
+        ],
+        "code_example_count": 6,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "fieldset",
+      "display_name": "Fieldset",
+      "family": "form",
+      "role": "Groups related form controls inside a bordered card with optional footer actions.",
+      "source_url": "https://vercel.com/geist/fieldset",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Fieldset",
+          "FieldsetContent",
+          "FieldsetTitle",
+          "FieldsetSubtitle",
+          "FieldsetFooter",
+          "FieldsetFooterStatus",
+          "Link",
+          "FieldsetFooterActions",
+          "Button",
+          "ErrorText",
+          "WarningText",
+          "DisabledWall"
+        ],
+        "states": [
+          "default",
+          "focus",
+          "disabled",
+          "error"
+        ],
+        "sections": [
+          "Default",
+          "Disabled",
+          "With Long Content",
+          "Multiple Fieldsets",
+          "Without Footer",
+          "Without Title",
+          "With Error Text",
+          "With Warning Text",
+          "With Disabled Wall",
+          "Error Type",
+          "Warning Type"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 70,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Button",
+          "Fieldset",
+          "FieldsetContent",
+          "FieldsetFooter",
+          "FieldsetFooterActions",
+          "FieldsetFooterStatus",
+          "FieldsetSubtitle",
+          "FieldsetTitle",
+          "Link",
+          "ErrorText",
+          "WarningText",
+          "DisabledWall"
+        ],
+        "jsx_tags": [
+          "Fieldset",
+          "FieldsetContent",
+          "FieldsetTitle",
+          "FieldsetSubtitle",
+          "FieldsetFooter",
+          "FieldsetFooterStatus",
+          "Link",
+          "FieldsetFooterActions",
+          "Button",
+          "ErrorText",
+          "WarningText",
+          "DisabledWall"
+        ],
+        "prop_names": [
+          "href",
+          "variant",
+          "size",
+          "type"
+        ],
+        "code_example_count": 11,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "file-tree",
+      "display_name": "File Tree",
+      "family": "content",
+      "role": "Display a hierarchical directory structure with expandable folders and files, useful for illustrating project layouts.",
+      "source_url": "https://vercel.com/geist/file-tree",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Tree",
+          "Folder",
+          "File"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected"
+        ],
+        "sections": [
+          "Default"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Tree",
+          "Folder",
+          "File"
+        ],
+        "jsx_tags": [
+          "Tree",
+          "Folder",
+          "File"
+        ],
+        "prop_names": [
+          "name",
+          "href",
+          "type"
+        ],
+        "code_example_count": 1,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "gauge",
+      "display_name": "Gauge",
+      "family": "data-display",
+      "role": "A circular visual for conveying a percentage.",
+      "source_url": "https://vercel.com/geist/gauge",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Gauge"
+        ],
+        "states": [
+          "default",
+          "loading",
+          "empty",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Label",
+          "Default color scale",
+          "Custom color range",
+          "Custom secondary color",
+          "Arc priority",
+          "Indeterminate",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 85,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Gauge"
+        ],
+        "jsx_tags": [
+          "Gauge"
+        ],
+        "prop_names": [
+          "size",
+          "value",
+          "colors",
+          "arcPriority"
+        ],
+        "code_example_count": 7,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "grid",
+      "display_name": "Grid",
+      "family": "layout",
+      "role": "Display elements in a grid layout.",
+      "source_url": "https://vercel.com/geist/grid",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "GridSystem",
+          "Grid",
+          "GridCell",
+          "GridCross",
+          "GridPage"
+        ],
+        "states": [
+          "default",
+          "responsive"
+        ],
+        "sections": [
+          "Grid",
+          "Basic grid",
+          "Solid cells",
+          "Responsive grid",
+          "Responsive Grid with responsive guide clipping cells",
+          "Grid with hidden row guides",
+          "Grid with hidden column guides",
+          "Grid with overlaying cells",
+          "Specific Grid with Guide Clipping",
+          "Grid with cross",
+          "Dashed grid with cross",
+          "Dashed grid with grid page",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 85,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Grid",
+          "GridSystem",
+          "GridCell",
+          "GridCross",
+          "GridPage"
+        ],
+        "jsx_tags": [
+          "GridSystem",
+          "Grid",
+          "GridCell",
+          "GridCross",
+          "GridPage"
+        ],
+        "prop_names": [
+          "guideWidth",
+          "columns",
+          "height",
+          "rows",
+          "column",
+          "row",
+          "hideGuides"
+        ],
+        "code_example_count": 12,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "input",
+      "display_name": "Input",
+      "family": "input",
+      "role": "Retrieve text input from a user.",
+      "source_url": "https://vercel.com/geist/input",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Input",
+          "IconArrowCircleUp",
+          "SearchInput"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Prefix and suffix",
+          "Disabled",
+          "Search",
+          "⌘K",
+          "Error",
+          "Label",
+          "Rounded prefix and suffix",
+          "Rounded prefix and suffix without styling",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 68,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Input",
+          "IconArrowCircleUp",
+          "SearchInput",
+          "useState"
+        ],
+        "jsx_tags": [
+          "Input",
+          "IconArrowCircleUp",
+          "SearchInput"
+        ],
+        "prop_names": [
+          "aria-labelledby",
+          "placeholder",
+          "size",
+          "prefix",
+          "suffix",
+          "prefixStyling",
+          "suffixStyling",
+          "suffixContainer",
+          "value",
+          "onChange",
+          "error",
+          "label"
+        ],
+        "code_example_count": 9,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "keyboard-input",
+      "display_name": "Keyboard Input",
+      "family": "input",
+      "role": "Display keyboard input that triggers an action.",
+      "source_url": "https://vercel.com/geist/keyboard-input",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Kbd"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Modifiers",
+          "Combination",
+          "Small",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Kbd"
+        ],
+        "jsx_tags": [
+          "Kbd"
+        ],
+        "prop_names": [],
+        "code_example_count": 3,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "label",
+      "display_name": "Label",
+      "family": "form",
+      "role": "Accessible text label for form controls.",
+      "source_url": "https://vercel.com/geist/label",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Label",
+          "Input"
+        ],
+        "states": [
+          "default",
+          "focus",
+          "disabled",
+          "error"
+        ],
+        "sections": [
+          "Default",
+          "With Input",
+          "Bypass Casing"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Label",
+          "Input"
+        ],
+        "jsx_tags": [
+          "Label",
+          "Input"
+        ],
+        "prop_names": [
+          "id",
+          "value",
+          "aria-labelledby",
+          "placeholder"
+        ],
+        "code_example_count": 3,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "load-more-button",
+      "display_name": "Load More Button",
+      "family": "action",
+      "role": "A full-width button used to append more items to a paginated list, with loading and styling variants.",
+      "source_url": "https://vercel.com/geist/load-more-button",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "LoadMoreButton"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "active",
+          "disabled",
+          "loading",
+          "focus"
+        ],
+        "sections": [
+          "Default",
+          "Loading",
+          "No Gap",
+          "No Border Radius",
+          "Custom Text"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 62,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "LoadMoreButton"
+        ],
+        "jsx_tags": [
+          "LoadMoreButton"
+        ],
+        "prop_names": [],
+        "code_example_count": 5,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "loading-dots",
+      "display_name": "Loading Dots",
+      "family": "feedback",
+      "role": "Indicate an action running in the background.",
+      "source_url": "https://vercel.com/geist/loading-dots",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "LoadingDots"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Default",
+          "With text",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "LoadingDots"
+        ],
+        "jsx_tags": [
+          "LoadingDots"
+        ],
+        "prop_names": [
+          "size"
+        ],
+        "code_example_count": 2,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "menu",
+      "display_name": "Menu",
+      "family": "navigation",
+      "role": "Dropdown menu opened via button. Supports typeahead and keyboard navigation.",
+      "source_url": "https://vercel.com/geist/menu",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "MenuContainer",
+          "MenuButton",
+          "Menu",
+          "MenuItem",
+          "Tooltip",
+          "MenuItemLocked",
+          "MenuLink",
+          "Avatar",
+          "IconMoreHorizontal",
+          "IconAccessibility",
+          "MenuSection",
+          "MenuDivider"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "active",
+          "focus",
+          "disabled"
+        ],
+        "sections": [
+          "Default",
+          "With chevron",
+          "Disabled items",
+          "Locked items",
+          "Link items",
+          "Custom trigger",
+          "Prefix and suffix",
+          "Menu position",
+          "With section",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Menu",
+          "MenuButton",
+          "MenuContainer",
+          "MenuItem",
+          "MenuItemLocked",
+          "Tooltip",
+          "MenuLink",
+          "Avatar",
+          "IconAccessibility",
+          "IconMoreHorizontal",
+          "MenuDivider",
+          "MenuSection"
+        ],
+        "jsx_tags": [
+          "MenuContainer",
+          "MenuButton",
+          "Menu",
+          "MenuItem",
+          "Tooltip",
+          "MenuItemLocked",
+          "MenuLink",
+          "Avatar",
+          "IconMoreHorizontal",
+          "IconAccessibility",
+          "MenuSection",
+          "MenuDivider"
+        ],
+        "prop_names": [
+          "width",
+          "onClick",
+          "href",
+          "type",
+          "variant",
+          "text",
+          "size",
+          "username",
+          "aria-label",
+          "shape",
+          "prefix",
+          "suffix",
+          "position",
+          "title"
+        ],
+        "code_example_count": 9,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "middle-truncate",
+      "display_name": "MiddleTruncate",
+      "family": "content",
+      "role": "Truncates text in the middle, preserving the start and end of the string for maximum readability.",
+      "source_url": "https://vercel.com/geist/middle-truncate",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "MiddleTruncate",
+          "Label",
+          "Slider",
+          "Toggle"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected"
+        ],
+        "sections": [
+          "Examples",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 69,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Label",
+          "Toggle",
+          "MiddleTruncate",
+          "Slider",
+          "useEffect",
+          "useRef",
+          "useState",
+          "type CSSProperties",
+          "type JSX"
+        ],
+        "jsx_tags": [
+          "MiddleTruncate",
+          "Label",
+          "Slider",
+          "Toggle"
+        ],
+        "prop_names": [
+          "key",
+          "value",
+          "max",
+          "min",
+          "onValueChange",
+          "disabled",
+          "checked",
+          "onChange"
+        ],
+        "code_example_count": 1,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "modal",
+      "display_name": "Modal",
+      "family": "overlay",
+      "role": "Display popup content that requires attention or provides additional information.",
+      "source_url": "https://vercel.com/geist/modal",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Button",
+          "Modal",
+          "ModalBody",
+          "ModalHeader",
+          "ModalTitle",
+          "ModalSubtitle",
+          "ModalActions",
+          "ModalAction",
+          "IconArrowLeft",
+          "ModalInset",
+          "HTMLButtonElement",
+          "HTMLInputElement"
+        ],
+        "states": [
+          "closed",
+          "opening",
+          "open",
+          "dismissed"
+        ],
+        "sections": [
+          "Default",
+          "Sticky",
+          "Single button",
+          "Disabled actions",
+          "Inset",
+          "Control initial focus",
+          "Focus an input on open",
+          "Mobile sheet with inputs",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Button",
+          "Modal",
+          "ModalBody",
+          "ModalHeader",
+          "ModalTitle",
+          "ModalSubtitle",
+          "ModalActions",
+          "ModalAction",
+          "useState",
+          "type JSX",
+          "IconArrowLeft",
+          "ModalInset",
+          "useRef",
+          "Input"
+        ],
+        "jsx_tags": [
+          "Button",
+          "Modal",
+          "ModalBody",
+          "ModalHeader",
+          "ModalTitle",
+          "ModalSubtitle",
+          "ModalActions",
+          "ModalAction",
+          "IconArrowLeft",
+          "ModalInset",
+          "HTMLButtonElement",
+          "HTMLInputElement",
+          "Input"
+        ],
+        "prop_names": [
+          "onClick",
+          "size",
+          "active",
+          "onClickOutside",
+          "variant",
+          "prefix",
+          "initialFocusRef",
+          "ref",
+          "aria-labelledby",
+          "label",
+          "onChange",
+          "placeholder",
+          "value"
+        ],
+        "code_example_count": 8,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "multi-select",
+      "display_name": "Multi Select",
+      "family": "input",
+      "role": "A keyboard-navigable dropdown for selecting multiple items with advanced focus management.",
+      "source_url": "https://vercel.com/geist/multi-select",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Set",
+          "MultiSelectRoot",
+          "MultiSelectTrigger"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Select Actions",
+          "Keyboard Navigation",
+          "Controlled State",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "useState",
+          "MultiSelectRoot",
+          "MultiSelectTrigger",
+          "MultiSelectContent",
+          "MultiSelectRow",
+          "Link"
+        ],
+        "jsx_tags": [
+          "Set",
+          "MultiSelectRoot",
+          "MultiSelectTrigger"
+        ],
+        "prop_names": [],
+        "code_example_count": 3,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "note",
+      "display_name": "Note",
+      "family": "feedback",
+      "role": "Display text that requires attention or provides additional information.",
+      "source_url": "https://vercel.com/geist/note",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Note",
+          "Button",
+          "Link",
+          "Fragment"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Default",
+          "Action",
+          "Success",
+          "Error",
+          "Warning",
+          "Secondary",
+          "Violet",
+          "Cyan",
+          "Disabled",
+          "Labels",
+          "Default label",
+          "Custom label",
+          "No label",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 62,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Note",
+          "Button",
+          "Link",
+          "Fragment",
+          "type JSX"
+        ],
+        "jsx_tags": [
+          "Note",
+          "Button",
+          "Link",
+          "Fragment"
+        ],
+        "prop_names": [
+          "size",
+          "action",
+          "type",
+          "href",
+          "data-zone",
+          "key"
+        ],
+        "code_example_count": 10,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "pagination",
+      "display_name": "Pagination",
+      "family": "navigation",
+      "role": "Navigate to the previous or next page.",
+      "source_url": "https://vercel.com/geist/pagination",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Pagination"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "active",
+          "focus",
+          "disabled"
+        ],
+        "sections": [
+          "Default",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Pagination"
+        ],
+        "jsx_tags": [
+          "Pagination"
+        ],
+        "prop_names": [
+          "next",
+          "previous"
+        ],
+        "code_example_count": 1,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "phone",
+      "display_name": "Phone",
+      "family": "content",
+      "role": "The Phone component lets you showcase website screenshots or other content within a realistic phone-style frame.",
+      "source_url": "https://vercel.com/geist/phone",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Phone"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected"
+        ],
+        "sections": [
+          "Composition",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Phone"
+        ],
+        "jsx_tags": [
+          "Phone"
+        ],
+        "prop_names": [
+          "address"
+        ],
+        "code_example_count": 1,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "progress",
+      "display_name": "Progress",
+      "family": "feedback",
+      "role": "Display progress relative to a limit or related to a task.",
+      "source_url": "https://vercel.com/geist/progress",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Progress",
+          "Button"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Default",
+          "Custom max",
+          "Dynamic colors",
+          "Themed",
+          "With Stops",
+          "Widths",
+          "Heights",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 69,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Progress",
+          "Button",
+          "useState",
+          "type JSX"
+        ],
+        "jsx_tags": [
+          "Progress",
+          "Button"
+        ],
+        "prop_names": [
+          "value",
+          "max",
+          "colors",
+          "onClick",
+          "size",
+          "variant",
+          "type",
+          "stops",
+          "width",
+          "height"
+        ],
+        "code_example_count": 7,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "project-banner",
+      "display_name": "Project Banner",
+      "family": "feedback",
+      "role": "Used for temporary, project-wide notifications that require resolution",
+      "source_url": "https://vercel.com/geist/project-banner",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "ProjectBanner",
+          "IconRotateCounterClockwise",
+          "Tooltip"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Default",
+          "Success",
+          "Warning",
+          "Error",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 65,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "ProjectBanner",
+          "IconShieldCheck",
+          "Tooltip",
+          "IconRotateCounterClockwise",
+          "IconWarning"
+        ],
+        "jsx_tags": [
+          "ProjectBanner",
+          "IconRotateCounterClockwise",
+          "Tooltip"
+        ],
+        "prop_names": [
+          "callToAction",
+          "key",
+          "icon",
+          "label",
+          "text",
+          "variant"
+        ],
+        "code_example_count": 4,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "radio",
+      "display_name": "Radio",
+      "family": "input",
+      "role": "Provides single user input from a selection of options.",
+      "source_url": "https://vercel.com/geist/radio",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "RadioGroup",
+          "RadioGroupItem",
+          "Button",
+          "Radio"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Radio disabled",
+          "Radio required",
+          "Radio headless",
+          "Radio standalone",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 64,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "RadioGroup",
+          "RadioGroupItem",
+          "useState",
+          "type JSX",
+          "Button",
+          "useRadio",
+          "Radio"
+        ],
+        "jsx_tags": [
+          "RadioGroup",
+          "RadioGroupItem",
+          "Button",
+          "Radio"
+        ],
+        "prop_names": [
+          "label",
+          "onChange",
+          "value",
+          "size",
+          "aria-label",
+          "checked"
+        ],
+        "code_example_count": 5,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "relative-time-card",
+      "display_name": "Relative Time Card",
+      "family": "surface",
+      "role": "Popover to show a given date in local time.",
+      "source_url": "https://vercel.com/geist/relative-time-card",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "RelativeTimeCard",
+          "Button"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected",
+          "disabled"
+        ],
+        "sections": [
+          "Default",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Button",
+          "RelativeTimeCard"
+        ],
+        "jsx_tags": [
+          "RelativeTimeCard",
+          "Button"
+        ],
+        "prop_names": [
+          "date",
+          "side"
+        ],
+        "code_example_count": 1,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "scroller",
+      "display_name": "Scroller",
+      "family": "navigation",
+      "role": "Display an overflowing list of items.",
+      "source_url": "https://vercel.com/geist/scroller",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Scroller"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "active",
+          "focus",
+          "disabled"
+        ],
+        "sections": [
+          "Vertical",
+          "Horizontal",
+          "Free",
+          "Vertical with buttons",
+          "Horizontal with buttons",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Scroller"
+        ],
+        "jsx_tags": [
+          "Scroller"
+        ],
+        "prop_names": [
+          "height",
+          "overflow",
+          "width",
+          "key",
+          "childrenContainerClassName"
+        ],
+        "code_example_count": 5,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "search-input",
+      "display_name": "Search Input",
+      "family": "input",
+      "role": "Pre-configured search input with a magnifying glass icon and clear button.",
+      "source_url": "https://vercel.com/geist/search-input",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "SearchInput",
+          "IconSparkles"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "With Cmdk",
+          "Disabled",
+          "Loading",
+          "Custom Prefix"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 65,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "SearchInput",
+          "useState",
+          "IconSparkles"
+        ],
+        "jsx_tags": [
+          "SearchInput",
+          "IconSparkles"
+        ],
+        "prop_names": [
+          "aria-label",
+          "onChange",
+          "placeholder",
+          "value",
+          "prefix"
+        ],
+        "code_example_count": 5,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "select",
+      "display_name": "Select",
+      "family": "input",
+      "role": "Display a dropdown list of items.",
+      "source_url": "https://vercel.com/geist/select",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Select",
+          "IconArrowCircleUp"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Sizes",
+          "Prefix and suffix",
+          "Disabled",
+          "Error",
+          "Label",
+          "With options",
+          "Required",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 70,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Select",
+          "IconArrowCircleUp"
+        ],
+        "jsx_tags": [
+          "Select",
+          "IconArrowCircleUp"
+        ],
+        "prop_names": [
+          "aria-label",
+          "placeholder",
+          "size",
+          "prefix",
+          "suffix",
+          "error",
+          "label",
+          "value",
+          "defaultValue"
+        ],
+        "code_example_count": 7,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "separator",
+      "display_name": "Separator",
+      "family": "layout",
+      "role": "A visual divider that separates content into distinct sections, with support for horizontal and vertical orientations.",
+      "source_url": "https://vercel.com/geist/separator",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Separator"
+        ],
+        "states": [
+          "default",
+          "responsive"
+        ],
+        "sections": [
+          "Horizontal",
+          "Section 1",
+          "Section 2",
+          "Vertical",
+          "Orientation Variants",
+          "Accessibility Variants",
+          "Custom Styling"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Separator"
+        ],
+        "jsx_tags": [
+          "Separator"
+        ],
+        "prop_names": [
+          "orientation",
+          "decorative"
+        ],
+        "code_example_count": 5,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "sheet",
+      "display_name": "Sheet",
+      "family": "overlay",
+      "role": "Display content in a side panel that slides in from the edge of the screen.",
+      "source_url": "https://vercel.com/geist/sheet",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Sheet",
+          "SheetTrigger",
+          "Button",
+          "SheetContent",
+          "SheetHeader",
+          "SheetTitle",
+          "SheetDescription",
+          "SheetFooter",
+          "SheetClose"
+        ],
+        "states": [
+          "closed",
+          "opening",
+          "open",
+          "dismissed"
+        ],
+        "sections": [
+          "Default",
+          "With Side",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Button",
+          "Sheet",
+          "SheetClose",
+          "SheetContent",
+          "SheetDescription",
+          "SheetFooter",
+          "SheetHeader",
+          "SheetTitle",
+          "SheetTrigger"
+        ],
+        "jsx_tags": [
+          "Sheet",
+          "SheetTrigger",
+          "Button",
+          "SheetContent",
+          "SheetHeader",
+          "SheetTitle",
+          "SheetDescription",
+          "SheetFooter",
+          "SheetClose"
+        ],
+        "prop_names": [
+          "noOverlay",
+          "variant",
+          "key",
+          "side"
+        ],
+        "code_example_count": 2,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "show-more",
+      "display_name": "Show more",
+      "family": "content",
+      "role": "Styling component to show expanded or collapsed content.",
+      "source_url": "https://vercel.com/geist/show-more",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "ShowMore"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Expanded",
+          "No border",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "ShowMore",
+          "useState",
+          "type JSX"
+        ],
+        "jsx_tags": [
+          "ShowMore"
+        ],
+        "prop_names": [
+          "expanded",
+          "onClick"
+        ],
+        "code_example_count": 3,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "skeleton",
+      "display_name": "Skeleton",
+      "family": "feedback",
+      "role": "Display a skeleton whilst another component is loading.",
+      "source_url": "https://vercel.com/geist/skeleton",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Skeleton",
+          "Button"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Default with set width",
+          "Default with box height",
+          "Wrapping children",
+          "Wrapping children with fixed size",
+          "Pill",
+          "Rounded",
+          "Squared",
+          "No animation",
+          "Button",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Skeleton",
+          "Button"
+        ],
+        "jsx_tags": [
+          "Skeleton",
+          "Button"
+        ],
+        "prop_names": [
+          "width",
+          "boxHeight",
+          "show",
+          "height",
+          "animated",
+          "variant"
+        ],
+        "code_example_count": 9,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "slider",
+      "display_name": "Slider",
+      "family": "input",
+      "role": "Input to select a value from a given range.",
+      "source_url": "https://vercel.com/geist/slider",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Slider"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Range with inputs",
+          "Disabled range with inputs",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 62,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Slider",
+          "useState",
+          "type JSX"
+        ],
+        "jsx_tags": [
+          "Slider"
+        ],
+        "prop_names": [
+          "onValueChange",
+          "value"
+        ],
+        "code_example_count": 3,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "snippet",
+      "display_name": "Snippet",
+      "family": "content",
+      "role": "Display a snippet of copyable code for the command line.",
+      "source_url": "https://vercel.com/geist/snippet",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Snippet"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Inverted",
+          "Multi line",
+          "No prompt",
+          "Callback",
+          "Variants",
+          "Controlled Copied State",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 62,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Snippet",
+          "useCallback",
+          "useRef",
+          "useState",
+          "ContextCardTrigger"
+        ],
+        "jsx_tags": [
+          "Snippet"
+        ],
+        "prop_names": [
+          "text",
+          "width",
+          "prompt",
+          "onCopy",
+          "type"
+        ],
+        "code_example_count": 7,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "spinner",
+      "display_name": "Spinner",
+      "family": "feedback",
+      "role": "Indicate an action running in the background. Unlike the loading dots, this should generally be used to indicate loading feedback in response to a user action, like for buttons, pagination, etc.",
+      "source_url": "https://vercel.com/geist/spinner",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Spinner"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Default size",
+          "Sizes",
+          "Colors",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 62,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Spinner"
+        ],
+        "jsx_tags": [
+          "Spinner"
+        ],
+        "prop_names": [
+          "size"
+        ],
+        "code_example_count": 3,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "split-button",
+      "display_name": "Split Button",
+      "family": "action",
+      "role": "A button that offers a primary interaction coupled with a dropdown menu offering additional actions.",
+      "source_url": "https://vercel.com/geist/split-button",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "ButtonProps",
+          "SplitButton",
+          "SplitButtonMenuItem",
+          "LogoVZeroSvg",
+          "LogoIconOpenAiSvg"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "active",
+          "disabled",
+          "loading",
+          "focus"
+        ],
+        "sections": [
+          "Default",
+          "Menu Alignment",
+          "Icon",
+          "Title with Icon",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 65,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "SplitButton",
+          "SplitButtonMenuItem",
+          "LogoIconOpenAiSvg",
+          "LogoVZeroSvg",
+          "IconArrowCircleUp",
+          "IconFloppyDisk"
+        ],
+        "jsx_tags": [
+          "ButtonProps",
+          "SplitButton",
+          "SplitButtonMenuItem",
+          "LogoVZeroSvg",
+          "LogoIconOpenAiSvg"
+        ],
+        "prop_names": [
+          "key",
+          "buttonProps",
+          "menuButtonLabel",
+          "menuItems",
+          "description",
+          "menuItemProps",
+          "title",
+          "menuProps",
+          "menuAlignment",
+          "icon"
+        ],
+        "code_example_count": 4,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "status-dot",
+      "display_name": "Status Dot",
+      "family": "feedback",
+      "role": "Display an indicator of deployment status.",
+      "source_url": "https://vercel.com/geist/status-dot",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "StatusDot"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Default",
+          "Label",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 63,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "StatusDot"
+        ],
+        "jsx_tags": [
+          "StatusDot"
+        ],
+        "prop_names": [
+          "state"
+        ],
+        "code_example_count": 2,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "switch",
+      "display_name": "Switch",
+      "family": "input",
+      "role": "Choose between a set of options.",
+      "source_url": "https://vercel.com/geist/switch",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Switch",
+          "SwitchControl",
+          "Tooltip",
+          "IconGridSquare",
+          "IconListUnordered"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Disabled",
+          "Sizes",
+          "Full width",
+          "Tooltip",
+          "Icon",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 62,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Switch",
+          "SwitchControl",
+          "Tooltip",
+          "IconGridSquare",
+          "IconListUnordered"
+        ],
+        "jsx_tags": [
+          "Switch",
+          "SwitchControl",
+          "Tooltip",
+          "IconGridSquare",
+          "IconListUnordered"
+        ],
+        "prop_names": [
+          "name",
+          "label",
+          "value",
+          "size",
+          "text",
+          "icon"
+        ],
+        "code_example_count": 6,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "table",
+      "display_name": "Table",
+      "family": "data-display",
+      "role": "A semantic HTML table component",
+      "source_url": "https://vercel.com/geist/table",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "TableRoot",
+          "Table",
+          "TableHeader",
+          "TableRow",
+          "TableHead",
+          "TableBody",
+          "TableCell",
+          "TableColgroup",
+          "TableCol",
+          "TableFooter",
+          "Row"
+        ],
+        "states": [
+          "default",
+          "loading",
+          "empty",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Basic table",
+          "Striped table",
+          "Bordered table",
+          "Interactive table",
+          "Full featured table",
+          "Virtualized table",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Table",
+          "TableHeader",
+          "TableRow",
+          "TableHead",
+          "TableBody",
+          "TableCell",
+          "TableRoot",
+          "TableColgroup",
+          "TableCol",
+          "TableFooter",
+          "ShowMore",
+          "memo",
+          "useState",
+          "type JSX"
+        ],
+        "jsx_tags": [
+          "TableRoot",
+          "Table",
+          "TableHeader",
+          "TableRow",
+          "TableHead",
+          "TableBody",
+          "TableCell",
+          "TableColgroup",
+          "TableCol",
+          "TableFooter",
+          "Row"
+        ],
+        "prop_names": [
+          "key",
+          "colSpan",
+          "item"
+        ],
+        "code_example_count": 6,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "tabs",
+      "display_name": "Tabs",
+      "family": "navigation",
+      "role": "Display tab content.",
+      "source_url": "https://vercel.com/geist/tabs",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Tabs",
+          "LogoIconGithubSvg",
+          "LogoIconGitlabSvg",
+          "LogoIconBitbucket"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "active",
+          "focus",
+          "disabled"
+        ],
+        "sections": [
+          "Default",
+          "Disabled",
+          "Disable specific tabs",
+          "With icons",
+          "Secondary",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Tabs",
+          "useState",
+          "type JSX",
+          "LogoIconBitbucket",
+          "LogoIconGithubSvg",
+          "LogoIconGitlabSvg"
+        ],
+        "jsx_tags": [
+          "Tabs",
+          "LogoIconGithubSvg",
+          "LogoIconGitlabSvg",
+          "LogoIconBitbucket"
+        ],
+        "prop_names": [
+          "selected",
+          "setSelected",
+          "tabs",
+          "variant"
+        ],
+        "code_example_count": 5,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "text-with-copy-button",
+      "display_name": "Text With Copy Button",
+      "family": "action",
+      "role": "Display text alongside a button that copies the text to the clipboard.",
+      "source_url": "https://vercel.com/geist/text-with-copy-button",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "TextWithCopyButton"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "active",
+          "disabled",
+          "loading",
+          "focus"
+        ],
+        "sections": [
+          "Default",
+          "With Small and Tertiary"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 62,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "TextWithCopyButton"
+        ],
+        "jsx_tags": [
+          "TextWithCopyButton"
+        ],
+        "prop_names": [
+          "successMessage",
+          "textLabel",
+          "textToCopy"
+        ],
+        "code_example_count": 2,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "textarea",
+      "display_name": "Textarea",
+      "family": "input",
+      "role": "Retrieve multi-line user input.",
+      "source_url": "https://vercel.com/geist/textarea",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Textarea"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Disabled",
+          "Error",
+          "Sizes",
+          "Read Only",
+          "Rows",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 64,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Textarea"
+        ],
+        "jsx_tags": [
+          "Textarea"
+        ],
+        "prop_names": [
+          "aria-label",
+          "placeholder",
+          "defaultValue",
+          "error",
+          "size",
+          "rows"
+        ],
+        "code_example_count": 6,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "theme-switcher",
+      "display_name": "Theme Switcher",
+      "family": "input",
+      "role": "Component that allows users to switch between light and dark themes.",
+      "source_url": "https://vercel.com/geist/theme-switcher",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "ThemeSwitcher"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Small",
+          "Disabled",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 61,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "ThemeSwitcher"
+        ],
+        "jsx_tags": [
+          "ThemeSwitcher"
+        ],
+        "prop_names": [],
+        "code_example_count": 3,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "toast",
+      "display_name": "Toast",
+      "family": "feedback",
+      "role": "A succinct message that is displayed temporarily.",
+      "source_url": "https://vercel.com/geist/toast",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Button",
+          "Link"
+        ],
+        "states": [
+          "info",
+          "success",
+          "warning",
+          "error",
+          "loading"
+        ],
+        "sections": [
+          "Default",
+          "Multi-line",
+          "With jsx",
+          "With a link",
+          "Preserve",
+          "Action",
+          "Undo",
+          "Success",
+          "Warning",
+          "Error",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 60,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Button",
+          "useToasts",
+          "Link"
+        ],
+        "jsx_tags": [
+          "Button",
+          "Link"
+        ],
+        "prop_names": [
+          "onClick",
+          "data-zone",
+          "href",
+          "isDifferentZone"
+        ],
+        "code_example_count": 10,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "toggle",
+      "display_name": "Toggle",
+      "family": "input",
+      "role": "Displays a boolean value.",
+      "source_url": "https://vercel.com/geist/toggle",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Toggle",
+          "IconLockClosedSmall",
+          "IconLockOpenSmall"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "disabled",
+          "error",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "Disabled",
+          "Sizes",
+          "Custom Color",
+          "With Label",
+          "Best Practices"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 79,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Toggle",
+          "useState",
+          "type JSX",
+          "IconLockClosedSmall",
+          "IconLockOpenSmall"
+        ],
+        "jsx_tags": [
+          "Toggle",
+          "IconLockClosedSmall",
+          "IconLockOpenSmall"
+        ],
+        "prop_names": [
+          "aria-label",
+          "checked",
+          "onChange",
+          "size",
+          "color",
+          "icon",
+          "direction"
+        ],
+        "code_example_count": 5,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "tooltip",
+      "display_name": "Tooltip",
+      "family": "overlay",
+      "role": "A set of headings, vertically stacked, that each reveal an related section of content. Commonly referred to as an accordion.",
+      "source_url": "https://vercel.com/geist/tooltip",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Tooltip",
+          "Button",
+          "Badge",
+          "Spinner"
+        ],
+        "states": [
+          "closed",
+          "opening",
+          "open",
+          "dismissed"
+        ],
+        "sections": [
+          "Default",
+          "No delay",
+          "Box align",
+          "Custom content",
+          "Custom type",
+          "Components",
+          "Other",
+          "Best Practices",
+          "When to use",
+          "Behavior",
+          "Content",
+          "Accessibility"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 64,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Tooltip",
+          "Badge",
+          "Button",
+          "Spinner"
+        ],
+        "jsx_tags": [
+          "Tooltip",
+          "Button",
+          "Badge",
+          "Spinner"
+        ],
+        "prop_names": [
+          "text",
+          "position",
+          "delay",
+          "boxAlign",
+          "type",
+          "size",
+          "tip",
+          "center"
+        ],
+        "code_example_count": 7,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    },
+    {
+      "name": "video",
+      "display_name": "Video",
+      "family": "content",
+      "role": "Embed a video with built-in playback controls and lazy loading support.",
+      "source_url": "https://vercel.com/geist/video",
+      "source_pattern": "geist-public-docs-metadata",
+      "anatomy": {
+        "parts": [
+          "Video"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "selected"
+        ],
+        "sections": [
+          "Default",
+          "No Loop",
+          "No Controls"
+        ]
+      },
+      "tokens": {
+        "token_ref_count": 62,
+        "token_source": "page-level CSS custom property references"
+      },
+      "api_surface": {
+        "import_symbols": [
+          "Video"
+        ],
+        "jsx_tags": [
+          "Video"
+        ],
+        "prop_names": [
+          "height",
+          "lazy",
+          "src",
+          "width",
+          "loop",
+          "controls"
+        ],
+        "code_example_count": 3,
+        "note": "Identifiers only; implementation source is not vendored."
+      },
+      "accessibility": [
+        "Preserve keyboard focus visibility.",
+        "Map icon-only controls to explicit aria-labels.",
+        "Keep disabled, loading, selected, and error states tokenized."
+      ],
+      "implementation_notes": [
+        "Recreate with local primitives such as Radix UI, shadcn/ui, or existing app components.",
+        "Use the source URL as evidence for behavior and state coverage.",
+        "Do not copy Vercel logos, brand assets, full documentation text, or private package source."
+      ]
+    }
+  ]
+}

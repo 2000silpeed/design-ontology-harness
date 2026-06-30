@@ -1,0 +1,1076 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Omnigen CRM Mockup</title>
+  <style>
+    :root {
+      --canvas: #f7f8fa;
+      --surface: #ffffff;
+      --surface-muted: #eef1f6;
+      --border: #d6dde6;
+      --border-strong: #b0bac7;
+      --ink: #003153;
+      --ink-body: #172235;
+      --ink-muted: #5b6778;
+      --accent: #0f4c81;
+      --accent-soft: #d6eaf8;
+      --proof: #cc5500;
+      --success: #157a4f;
+      --warning: #a66a00;
+      --danger: #b42318;
+      --info: #2463eb;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --shadow-panel: 0 10px 24px rgba(0, 49, 83, 0.08);
+      font-family: "Spoqa Han Sans Neo", "Pretendard", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink-body);
+      background: var(--canvas);
+      letter-spacing: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-width: 1180px;
+      background: var(--canvas);
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button,
+    select,
+    .switch {
+      cursor: pointer;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 228px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: #08243a;
+      color: #dbeafe;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 34px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--accent-soft);
+      color: #08243a;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+
+    .nav-group {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav-label {
+      color: #8fb4d1;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin: 12px 8px 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 34px;
+      padding: 0 10px;
+      border-radius: var(--radius-sm);
+      color: #dce9f5;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .nav-item.active {
+      background: #0f4c81;
+      color: white;
+    }
+
+    .nav-count {
+      min-width: 22px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      text-align: center;
+      font-size: 11px;
+      color: #e8f2fb;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .sidebar-footer strong {
+      display: block;
+      font-size: 13px;
+      color: #fff;
+    }
+
+    .sidebar-footer span {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: #b7cde1;
+    }
+
+    .main {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-width: 0;
+    }
+
+    .topbar {
+      height: 64px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 20px;
+      padding: 0 24px;
+      background: rgba(255, 255, 255, 0.88);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .crumb {
+      color: var(--ink-muted);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .search {
+      width: 330px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0 12px;
+      color: var(--ink-body);
+      background: #fff;
+    }
+
+    .btn {
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      color: var(--ink-body);
+      padding: 0 12px;
+      font-weight: 650;
+      font-size: 13px;
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .content {
+      padding: 20px 24px 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .left-flow {
+      display: grid;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .card,
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-panel);
+    }
+
+    .kpi {
+      padding: 14px;
+      min-height: 118px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .kpi-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--ink-muted);
+      font-size: 12px;
+    }
+
+    .kpi-value {
+      font-size: 26px;
+      font-weight: 760;
+      color: var(--ink);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .trend {
+      color: var(--success);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .spark {
+      height: 32px;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      align-items: end;
+      gap: 3px;
+    }
+
+    .spark i {
+      display: block;
+      border-radius: 3px 3px 0 0;
+      background: var(--accent-soft);
+      border: 1px solid #c0daf0;
+    }
+
+    .work-panel {
+      overflow: hidden;
+    }
+
+    .tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 10px 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab {
+      min-height: 36px;
+      padding: 0 12px;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      color: var(--ink-muted);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto auto auto auto;
+      gap: 8px;
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      background: #fbfcfd;
+    }
+
+    .toolbar input,
+    .toolbar select {
+      min-height: 34px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      padding: 0 10px;
+      color: var(--ink-body);
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      table-layout: fixed;
+    }
+
+    th,
+    td {
+      height: 42px;
+      padding: 0 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    th {
+      color: var(--ink-muted);
+      font-size: 11px;
+      font-weight: 760;
+      background: #f7f9fb;
+    }
+
+    tbody tr:hover {
+      background: #f9fbfd;
+    }
+
+    .name-cell {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 68px;
+      height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-weight: 720;
+      font-size: 11px;
+      border: 1px solid transparent;
+    }
+
+    .badge.active {
+      color: var(--success);
+      background: #e8f6ef;
+      border-color: #cce8da;
+    }
+
+    .badge.review {
+      color: var(--warning);
+      background: #fff4df;
+      border-color: #f2dfb8;
+    }
+
+    .badge.risk {
+      color: var(--danger);
+      background: #fff0ee;
+      border-color: #fad2cc;
+    }
+
+    .probability {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink-muted);
+    }
+
+    .meter {
+      width: 74px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--surface-muted);
+      overflow: hidden;
+    }
+
+    .meter span {
+      display: block;
+      height: 100%;
+      background: var(--accent);
+      border-radius: inherit;
+    }
+
+    .lower-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .panel-header {
+      min-height: 48px;
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-title {
+      font-weight: 760;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .pipeline {
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .stage {
+      display: grid;
+      grid-template-columns: 110px 1fr 64px;
+      align-items: center;
+      gap: 10px;
+      min-height: 34px;
+      font-size: 12px;
+    }
+
+    .stage-bar {
+      height: 9px;
+      border-radius: 999px;
+      background: var(--surface-muted);
+      overflow: hidden;
+    }
+
+    .stage-bar span {
+      display: block;
+      height: 100%;
+      background: var(--accent);
+    }
+
+    .side-flow {
+      display: grid;
+      gap: 14px;
+    }
+
+    .activity {
+      display: grid;
+      gap: 0;
+    }
+
+    .activity-item {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      gap: 10px;
+      align-items: start;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+    }
+
+    .activity-item:last-child {
+      border-bottom: 0;
+    }
+
+    .activity-title {
+      font-weight: 720;
+      color: var(--ink-body);
+    }
+
+    .activity-meta {
+      color: var(--ink-muted);
+      margin-top: 3px;
+    }
+
+    .time {
+      color: var(--ink-muted);
+      font-size: 11px;
+    }
+
+    .settings-list {
+      padding: 12px 14px 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 34px;
+      font-size: 12px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    .setting-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .switch {
+      width: 38px;
+      height: 22px;
+      border-radius: 999px;
+      background: var(--accent);
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .switch::after {
+      content: "";
+      position: absolute;
+      right: 3px;
+      top: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    .switch.off {
+      background: var(--border-strong);
+    }
+
+    .switch.off::after {
+      right: 19px;
+    }
+
+    .is-hidden {
+      display: none !important;
+    }
+
+    .toast-region {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      display: grid;
+      gap: 8px;
+      z-index: 20;
+    }
+
+    .toast {
+      min-width: 260px;
+      max-width: 340px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      background: #08243a;
+      color: #fff;
+      box-shadow: 0 16px 40px rgba(0, 31, 54, 0.22);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .toast strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    @media (max-width: 980px) {
+      body {
+        min-width: 0;
+      }
+
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .kpis,
+      .lower-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .topbar {
+        grid-template-columns: 1fr;
+        height: auto;
+        padding: 14px;
+      }
+
+      .top-actions {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .search {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Main navigation">
+      <div class="brand">
+        <div class="brand-mark">O</div>
+        <span>Omnigen CRM</span>
+      </div>
+      <nav class="nav-group">
+        <div class="nav-label">Workspace</div>
+        <a class="nav-item active" href="#" data-nav="Overview"><span>Overview</span><span class="nav-count">12</span></a>
+        <a class="nav-item" href="#" data-nav="Contacts"><span>Contacts</span><span class="nav-count" id="contacts-count">248</span></a>
+        <a class="nav-item" href="#" data-nav="Pipeline"><span>Pipeline</span><span class="nav-count">31</span></a>
+        <a class="nav-item" href="#" data-nav="Accounts"><span>Accounts</span><span class="nav-count">86</span></a>
+        <a class="nav-item" href="#" data-nav="Reports"><span>Reports</span></a>
+      </nav>
+      <nav class="nav-group">
+        <div class="nav-label">Operations</div>
+        <a class="nav-item" href="#" data-nav="Activity"><span>Activity</span></a>
+        <a class="nav-item" href="#" data-nav="Saved Views"><span>Saved Views</span><span class="nav-count">6</span></a>
+        <a class="nav-item" href="#" data-nav="Settings"><span>Settings</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <strong>Team pipeline</strong>
+        <span>₩4.82B open value · 68% clean records</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="crumb" id="crumb">Workspace / Sales Operations / Overview</div>
+          <h1 id="page-title">Contacts and Pipeline Review</h1>
+        </div>
+        <div class="top-actions">
+          <input class="search" id="global-search" aria-label="Search" placeholder="Search contacts, accounts, deals">
+          <button class="btn" type="button" data-action="export">Export</button>
+          <button class="btn primary" type="button" data-action="new-contact">New contact</button>
+        </div>
+      </header>
+
+      <section class="content">
+        <div class="left-flow">
+          <section class="kpis" aria-label="KPI summary">
+            <article class="card kpi">
+              <div class="kpi-top"><span>Qualified contacts</span><span class="trend">+12.8%</span></div>
+              <div class="kpi-value">2,486</div>
+              <div class="spark" aria-hidden="true"><i style="height:28%"></i><i style="height:38%"></i><i style="height:34%"></i><i style="height:52%"></i><i style="height:45%"></i><i style="height:66%"></i><i style="height:56%"></i><i style="height:70%"></i><i style="height:62%"></i><i style="height:74%"></i><i style="height:78%"></i><i style="height:86%"></i></div>
+            </article>
+            <article class="card kpi">
+              <div class="kpi-top"><span>Pipeline value</span><span class="trend">+8.4%</span></div>
+              <div class="kpi-value">₩4.82B</div>
+              <div class="spark" aria-hidden="true"><i style="height:35%"></i><i style="height:30%"></i><i style="height:48%"></i><i style="height:50%"></i><i style="height:42%"></i><i style="height:61%"></i><i style="height:58%"></i><i style="height:67%"></i><i style="height:72%"></i><i style="height:63%"></i><i style="height:76%"></i><i style="height:82%"></i></div>
+            </article>
+            <article class="card kpi">
+              <div class="kpi-top"><span>Win probability</span><span class="trend">+5.1%</span></div>
+              <div class="kpi-value">64%</div>
+              <div class="spark" aria-hidden="true"><i style="height:22%"></i><i style="height:26%"></i><i style="height:32%"></i><i style="height:30%"></i><i style="height:44%"></i><i style="height:49%"></i><i style="height:54%"></i><i style="height:52%"></i><i style="height:60%"></i><i style="height:57%"></i><i style="height:67%"></i><i style="height:72%"></i></div>
+            </article>
+            <article class="card kpi">
+              <div class="kpi-top"><span>Data quality</span><span class="trend">+3.6%</span></div>
+              <div class="kpi-value">91.4</div>
+              <div class="spark" aria-hidden="true"><i style="height:55%"></i><i style="height:54%"></i><i style="height:58%"></i><i style="height:62%"></i><i style="height:64%"></i><i style="height:67%"></i><i style="height:69%"></i><i style="height:73%"></i><i style="height:71%"></i><i style="height:76%"></i><i style="height:80%"></i><i style="height:84%"></i></div>
+            </article>
+          </section>
+
+          <section class="panel work-panel">
+            <div class="tabs" role="tablist" aria-label="Saved views">
+              <button class="tab active" type="button" role="tab" data-view="priority">Priority contacts</button>
+              <button class="tab" type="button" role="tab" data-view="renewals">Renewals</button>
+              <button class="tab" type="button" role="tab" data-view="risk">At risk</button>
+              <button class="tab" type="button" role="tab" data-view="new">New this week</button>
+            </div>
+            <div class="toolbar">
+              <input id="table-filter" aria-label="Contact filter" placeholder="Filter by name, company, owner">
+              <select id="status-filter" aria-label="Status"><option value="">Status</option><option>Active</option><option>Review</option><option>Risk</option></select>
+              <select id="owner-filter" aria-label="Owner"><option value="">Owner</option><option>Mina Park</option><option>Daniel Cho</option><option>Jae Kim</option></select>
+              <select id="stage-filter" aria-label="Stage"><option value="">Stage</option><option>Qualified</option><option>Proposal</option><option>Negotiation</option><option>Renewal</option></select>
+              <button class="btn" type="button" data-action="save-view">Save view</button>
+            </div>
+            <table aria-label="Contacts table">
+              <thead>
+                <tr>
+                  <th style="width: 26%">Contact</th>
+                  <th style="width: 18%">Company</th>
+                  <th style="width: 13%">Stage</th>
+                  <th style="width: 13%">Owner</th>
+                  <th style="width: 12%">Value</th>
+                  <th style="width: 12%">Probability</th>
+                  <th style="width: 6%">Age</th>
+                </tr>
+              </thead>
+              <tbody id="contacts-body">
+                <tr data-status="Active" data-owner="Mina Park" data-stage="Qualified" data-age="12">
+                  <td><div class="name-cell"><span class="avatar">JH</span><span>Jin Han</span></div></td>
+                  <td>Northstar Labs</td>
+                  <td><span class="badge active">Active</span></td>
+                  <td>Mina Park</td>
+                  <td>₩420M</td>
+                  <td><div class="probability"><span class="meter"><span style="width: 78%"></span></span>78%</div></td>
+                  <td>12d</td>
+                </tr>
+                <tr data-status="Review" data-owner="Daniel Cho" data-stage="Proposal" data-age="18">
+                  <td><div class="name-cell"><span class="avatar">SL</span><span>Sora Lee</span></div></td>
+                  <td>BrightWave</td>
+                  <td><span class="badge review">Review</span></td>
+                  <td>Daniel Cho</td>
+                  <td>₩310M</td>
+                  <td><div class="probability"><span class="meter"><span style="width: 61%"></span></span>61%</div></td>
+                  <td>18d</td>
+                </tr>
+                <tr data-status="Active" data-owner="Mina Park" data-stage="Negotiation" data-age="9">
+                  <td><div class="name-cell"><span class="avatar">MK</span><span>Min Kwon</span></div></td>
+                  <td>Atlas Commerce</td>
+                  <td><span class="badge active">Active</span></td>
+                  <td>Mina Park</td>
+                  <td>₩265M</td>
+                  <td><div class="probability"><span class="meter"><span style="width: 69%"></span></span>69%</div></td>
+                  <td>9d</td>
+                </tr>
+                <tr data-status="Risk" data-owner="Jae Kim" data-stage="Renewal" data-age="31">
+                  <td><div class="name-cell"><span class="avatar">EY</span><span>Eun Yu</span></div></td>
+                  <td>Horizon Cloud</td>
+                  <td><span class="badge risk">Risk</span></td>
+                  <td>Jae Kim</td>
+                  <td>₩188M</td>
+                  <td><div class="probability"><span class="meter"><span style="width: 34%"></span></span>34%</div></td>
+                  <td>31d</td>
+                </tr>
+                <tr data-status="Active" data-owner="Daniel Cho" data-stage="Qualified" data-age="6">
+                  <td><div class="name-cell"><span class="avatar">AR</span><span>Ari Ryu</span></div></td>
+                  <td>SignalWorks</td>
+                  <td><span class="badge active">Active</span></td>
+                  <td>Daniel Cho</td>
+                  <td>₩152M</td>
+                  <td><div class="probability"><span class="meter"><span style="width: 73%"></span></span>73%</div></td>
+                  <td>6d</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="lower-grid">
+            <article class="panel">
+              <div class="panel-header"><span class="panel-title">Pipeline stages</span><button class="btn" type="button" data-action="cycle-range">This month</button></div>
+              <div class="pipeline">
+                <div class="stage"><span>Qualified</span><span class="stage-bar"><span style="width: 82%"></span></span><strong>₩1.7B</strong></div>
+                <div class="stage"><span>Proposal</span><span class="stage-bar"><span style="width: 68%"></span></span><strong>₩1.2B</strong></div>
+                <div class="stage"><span>Negotiation</span><span class="stage-bar"><span style="width: 54%"></span></span><strong>₩920M</strong></div>
+                <div class="stage"><span>Renewal</span><span class="stage-bar"><span style="width: 47%"></span></span><strong>₩710M</strong></div>
+                <div class="stage"><span>Risk review</span><span class="stage-bar"><span style="width: 26%; background: var(--proof)"></span></span><strong>₩310M</strong></div>
+              </div>
+            </article>
+            <article class="panel">
+              <div class="panel-header"><span class="panel-title">Data quality queue</span><button class="btn" type="button" data-action="open-queue">Open</button></div>
+              <div class="settings-list">
+                <div class="setting-row"><span>Missing company size</span><strong>42 records</strong></div>
+                <div class="setting-row"><span>Stale owner assignment</span><strong>18 records</strong></div>
+                <div class="setting-row"><span>Duplicate contact signal</span><strong>9 records</strong></div>
+                <div class="setting-row"><span>Unchecked renewal note</span><strong>6 records</strong></div>
+                <div class="setting-row is-hidden" data-queue-detail><span>Next cleanup window</span><strong>Today 16:30</strong></div>
+              </div>
+            </article>
+          </section>
+        </div>
+
+        <aside class="side-flow" aria-label="Secondary panels">
+          <section class="panel">
+            <div class="panel-header"><span class="panel-title">Activity feed</span><button class="btn" type="button" data-action="view-activity">View all</button></div>
+            <div class="activity">
+              <div class="activity-item"><span class="avatar">MP</span><div><div class="activity-title">Proposal reviewed</div><div class="activity-meta">Northstar Labs · Mina Park</div></div><span class="time">8m</span></div>
+              <div class="activity-item"><span class="avatar">DC</span><div><div class="activity-title">Risk badge added</div><div class="activity-meta">Horizon Cloud · missing renewal note</div></div><span class="time">22m</span></div>
+              <div class="activity-item"><span class="avatar">JK</span><div><div class="activity-title">Pipeline stage moved</div><div class="activity-meta">BrightWave · proposal to review</div></div><span class="time">41m</span></div>
+              <div class="activity-item"><span class="avatar">MP</span><div><div class="activity-title">Contact enriched</div><div class="activity-meta">SignalWorks · new decision maker</div></div><span class="time">1h</span></div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header"><span class="panel-title">Settings snapshot</span><button class="btn" type="button" data-action="edit-settings">Edit</button></div>
+            <div class="settings-list">
+              <div class="setting-row"><span>Auto enrichment</span><span class="switch" role="switch" aria-checked="true" tabindex="0"></span></div>
+              <div class="setting-row"><span>Renewal alert</span><span class="switch" role="switch" aria-checked="true" tabindex="0"></span></div>
+              <div class="setting-row"><span>Strict duplicate check</span><span class="switch" role="switch" aria-checked="true" tabindex="0"></span></div>
+              <div class="setting-row"><span>Weekly digest</span><strong>Friday</strong></div>
+            </div>
+          </section>
+        </aside>
+      </section>
+    </main>
+  </div>
+  <div class="toast-region" aria-live="polite" aria-label="Notifications"></div>
+  <script>
+    const state = {
+      view: "priority",
+      search: "",
+      tableFilter: "",
+      status: "",
+      owner: "",
+      stage: "",
+      rangeIndex: 0,
+      addedContacts: 0
+    };
+
+    const ranges = ["This month", "Last 30 days", "This quarter"];
+    const contactsBody = document.querySelector("#contacts-body");
+    const globalSearch = document.querySelector("#global-search");
+    const tableFilter = document.querySelector("#table-filter");
+    const statusFilter = document.querySelector("#status-filter");
+    const ownerFilter = document.querySelector("#owner-filter");
+    const stageFilter = document.querySelector("#stage-filter");
+    const toastRegion = document.querySelector(".toast-region");
+
+    function showToast(title, body = "") {
+      const toast = document.createElement("div");
+      toast.className = "toast";
+      toast.innerHTML = `<strong>${title}</strong>${body ? `<span>${body}</span>` : ""}`;
+      toastRegion.appendChild(toast);
+      window.setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(6px)";
+      }, 2300);
+      window.setTimeout(() => toast.remove(), 2800);
+    }
+
+    function contactRows() {
+      return Array.from(contactsBody.querySelectorAll("tr"));
+    }
+
+    function normalize(value) {
+      return String(value || "").trim().toLowerCase();
+    }
+
+    function rowMatchesView(row) {
+      if (state.view === "risk") return row.dataset.status === "Risk";
+      if (state.view === "new") return Number(row.dataset.age || 0) <= 12;
+      if (state.view === "renewals") return row.dataset.stage === "Renewal";
+      return true;
+    }
+
+    function applyFilters() {
+      const freeText = normalize(`${state.search} ${state.tableFilter}`);
+      let visibleCount = 0;
+      contactRows().forEach((row) => {
+        const text = normalize(row.textContent);
+        const matchesText = !freeText || text.includes(freeText);
+        const matchesStatus = !state.status || row.dataset.status === state.status;
+        const matchesOwner = !state.owner || row.dataset.owner === state.owner;
+        const matchesStage = !state.stage || row.dataset.stage === state.stage;
+        const visible = matchesText && matchesStatus && matchesOwner && matchesStage && rowMatchesView(row);
+        row.classList.toggle("is-hidden", !visible);
+        if (visible) visibleCount += 1;
+      });
+      document.querySelector(".kpis .kpi-value").textContent = String(visibleCount + 2481).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function setActiveTab(tab) {
+      document.querySelectorAll(".tab").forEach((item) => item.classList.remove("active"));
+      tab.classList.add("active");
+      state.view = tab.dataset.view || "priority";
+      applyFilters();
+      showToast("Saved view applied", tab.textContent.trim());
+    }
+
+    function setActiveNav(item) {
+      document.querySelectorAll(".nav-item").forEach((nav) => nav.classList.remove("active"));
+      item.classList.add("active");
+      const label = item.dataset.nav || "Overview";
+      document.querySelector("#crumb").textContent = `Workspace / Sales Operations / ${label}`;
+      document.querySelector("#page-title").textContent =
+        label === "Overview" ? "Contacts and Pipeline Review" : `${label} Review`;
+      showToast("Navigation changed", label);
+    }
+
+    function exportCsv() {
+      const rows = [
+        ["Contact", "Company", "Stage", "Owner", "Value", "Probability", "Age"],
+        ...contactRows()
+          .filter((row) => !row.classList.contains("is-hidden"))
+          .map((row) => Array.from(row.cells).map((cell) => cell.textContent.trim().replace(/\s+/g, " ")))
+      ];
+      const csv = rows.map((row) => row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(",")).join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "omnigen-crm-contacts.csv";
+      link.click();
+      URL.revokeObjectURL(url);
+      showToast("Export ready", `${rows.length - 1} visible contacts were exported.`);
+    }
+
+    function addContact() {
+      state.addedContacts += 1;
+      const index = state.addedContacts;
+      const row = document.createElement("tr");
+      row.dataset.status = "Active";
+      row.dataset.owner = "Mina Park";
+      row.dataset.stage = "Qualified";
+      row.dataset.age = "1";
+      row.innerHTML = `
+        <td><div class="name-cell"><span class="avatar">NC</span><span>Nari Choi ${index > 1 ? index : ""}</span></div></td>
+        <td>Blue Orbit</td>
+        <td><span class="badge active">Active</span></td>
+        <td>Mina Park</td>
+        <td>₩96M</td>
+        <td><div class="probability"><span class="meter"><span style="width: 57%"></span></span>57%</div></td>
+        <td>1d</td>
+      `;
+      contactsBody.prepend(row);
+      const count = document.querySelector("#contacts-count");
+      count.textContent = String(Number(count.textContent) + 1);
+      applyFilters();
+      showToast("New contact added", "Nari Choi was added to Priority contacts.");
+    }
+
+    function saveView() {
+      const visible = contactRows().filter((row) => !row.classList.contains("is-hidden")).length;
+      showToast("View saved", `${visible} rows, ${state.status || "all statuses"}, ${state.owner || "all owners"}.`);
+    }
+
+    function cycleRange(button) {
+      state.rangeIndex = (state.rangeIndex + 1) % ranges.length;
+      button.textContent = ranges[state.rangeIndex];
+      showToast("Pipeline range changed", ranges[state.rangeIndex]);
+    }
+
+    function toggleQueue(button) {
+      const detail = document.querySelector("[data-queue-detail]");
+      const willOpen = detail.classList.contains("is-hidden");
+      detail.classList.toggle("is-hidden", !willOpen);
+      button.textContent = willOpen ? "Close" : "Open";
+      showToast(willOpen ? "Queue details opened" : "Queue details closed");
+    }
+
+    function showMoreActivity(button) {
+      const activity = document.querySelector(".activity");
+      if (button.dataset.expanded === "true") {
+        activity.querySelectorAll("[data-extra-activity]").forEach((item) => item.remove());
+        button.dataset.expanded = "false";
+        button.textContent = "View all";
+        showToast("Activity feed collapsed");
+        return;
+      }
+      const extras = [
+        ["SL", "Renewal note completed", "BrightWave · Sora Lee", "2h"],
+        ["AR", "New buying committee member", "SignalWorks · Ari Ryu", "3h"]
+      ];
+      extras.forEach(([initials, title, meta, time]) => {
+        const item = document.createElement("div");
+        item.className = "activity-item";
+        item.dataset.extraActivity = "true";
+        item.innerHTML = `<span class="avatar">${initials}</span><div><div class="activity-title">${title}</div><div class="activity-meta">${meta}</div></div><span class="time">${time}</span>`;
+        activity.appendChild(item);
+      });
+      button.dataset.expanded = "true";
+      button.textContent = "Collapse";
+      showToast("Activity feed expanded", "2 more events are visible.");
+    }
+
+    function toggleSwitch(switchEl) {
+      const next = switchEl.getAttribute("aria-checked") !== "true";
+      switchEl.setAttribute("aria-checked", String(next));
+      switchEl.classList.toggle("off", !next);
+      showToast("Setting updated", next ? "Enabled" : "Disabled");
+    }
+
+    document.querySelectorAll(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => setActiveTab(tab));
+    });
+
+    document.querySelectorAll(".nav-item").forEach((item) => {
+      item.addEventListener("click", (event) => {
+        event.preventDefault();
+        setActiveNav(item);
+      });
+    });
+
+    globalSearch.addEventListener("input", (event) => {
+      state.search = event.target.value;
+      applyFilters();
+    });
+
+    tableFilter.addEventListener("input", (event) => {
+      state.tableFilter = event.target.value;
+      applyFilters();
+    });
+
+    statusFilter.addEventListener("change", (event) => {
+      state.status = event.target.value;
+      applyFilters();
+    });
+
+    ownerFilter.addEventListener("change", (event) => {
+      state.owner = event.target.value;
+      applyFilters();
+    });
+
+    stageFilter.addEventListener("change", (event) => {
+      state.stage = event.target.value;
+      applyFilters();
+    });
+
+    document.querySelectorAll("[data-action]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const action = button.dataset.action;
+        if (action === "export") exportCsv();
+        if (action === "new-contact") addContact();
+        if (action === "save-view") saveView();
+        if (action === "cycle-range") cycleRange(button);
+        if (action === "open-queue") toggleQueue(button);
+        if (action === "view-activity") showMoreActivity(button);
+        if (action === "edit-settings") showToast("Settings are editable", "Use the switches below to toggle each setting.");
+      });
+    });
+
+    document.querySelectorAll(".switch").forEach((switchEl) => {
+      switchEl.addEventListener("click", () => toggleSwitch(switchEl));
+      switchEl.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggleSwitch(switchEl);
+        }
+      });
+    });
+
+    applyFilters();
+  </script>
+</body>
+</html>

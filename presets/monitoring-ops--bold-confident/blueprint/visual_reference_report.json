@@ -1,0 +1,460 @@
+{
+  "mode": "local-images",
+  "query": [
+    "government evidence dashboard split pane",
+    "legal research citation drawer",
+    "compliance risk matrix enterprise console",
+    "public service data dashboard korean",
+    "audit trail evidence map UI",
+    "source citation card dense dashboard"
+  ],
+  "preferred_count": 12,
+  "weights": {
+    "layout": 0.35,
+    "component_shape": 0.25,
+    "color_balance": 0.15,
+    "typography_mood": 0.15,
+    "surface_style": 0.1
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "Visual references may inform morphology and density only. FairCite IA, copy, palette roles, labels, and legal-safety language come from this brand_profile and spec.md.",
+    "No external image asset is required for the primary console. The service result should prove data and evidence, not atmosphere."
+  ],
+  "must_include": [
+    "split-pane evidence workflow",
+    "source provenance labels",
+    "dense but readable Korean dashboard",
+    "mode switch visible in first viewport"
+  ],
+  "avoid_patterns": [
+    "hero landing page",
+    "decorative orbs",
+    "nested cards",
+    "stock legal imagery",
+    "purple-blue gradient SaaS homepage"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "dense",
+      "confidence": 0.38,
+      "evidence": [
+        "dashboard x2.7"
+      ],
+      "candidates": [
+        {
+          "value": "dense",
+          "score": 8.1
+        },
+        {
+          "value": "airy",
+          "score": 1.75
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "surface_style": {
+      "value": "flat",
+      "confidence": 0.13,
+      "evidence": [
+        "fallback=flat"
+      ],
+      "candidates": [],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "typography_mood": {
+      "value": "utilitarian",
+      "confidence": 0.36,
+      "evidence": [
+        "dashboard x2.7",
+        "enterprise x0.45"
+      ],
+      "candidates": [
+        {
+          "value": "utilitarian",
+          "score": 9.0
+        },
+        {
+          "value": "playful",
+          "score": 1.25
+        },
+        {
+          "value": "premium",
+          "score": 0.2
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "corner_style": {
+      "value": "medium",
+      "confidence": 0.26,
+      "evidence": [
+        "card x4.6"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image geometry was available."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.51,
+      "evidence": [
+        "audit x1.25",
+        "data x2.35",
+        "comparison x1.7000000000000002"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.43,
+      "evidence": [
+        "dashboard x2.7",
+        "metric x0.9"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "split-pane-workspace",
+      "label": "Split-pane workspace",
+      "confidence": 0.36,
+      "evidence": [
+        "sidebar x0.9",
+        "app x0.9",
+        "shell x0.9",
+        "navigation x1.35"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "flat card planes를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.",
+      "confidence": 0.21,
+      "evidence": [
+        "surface=flat",
+        "density=dense",
+        "corner=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "navigation": {
+      "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
+      "confidence": 0.2,
+      "evidence": [
+        "Split-pane workspace"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "typography": {
+      "direction": "정보 밀도에 맞춰 type scale 차이를 줄이고 table/list label의 정렬 정확도를 우선한다.",
+      "confidence": 0.2,
+      "evidence": [
+        "typography_mood=utilitarian"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.21,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=dense"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "dashboard-insight-module",
+      "label": "Dashboard insight module",
+      "family": "data-display",
+      "confidence": 0.48,
+      "suggested_components": [
+        "stat-card",
+        "insight-card",
+        "chart-panel",
+        "section-header",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "dashboard cards",
+        "charts and visualization"
+      ],
+      "evidence": [
+        "layout=dashboard-grid (0.43)",
+        "dashboard x2.7",
+        "metric x0.9"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.48,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.51)",
+        "layout=dashboard-grid (0.43)",
+        "data x2.35",
+        "audit x1.25"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "workspace-shell",
+      "label": "Workspace shell",
+      "family": "navigation",
+      "confidence": 0.47,
+      "suggested_components": [
+        "app-shell",
+        "sidebar-nav",
+        "workspace-switcher",
+        "breadcrumb",
+        "context-panel"
+      ],
+      "supports_primitives": [
+        "workspace navigation"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.36)",
+        "sidebar x0.9",
+        "navigation x1.35",
+        "panel x0.9",
+        "shell x0.9"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "review-coverage-system",
+      "label": "Review coverage system",
+      "family": "editorial",
+      "confidence": 0.36,
+      "suggested_components": [
+        "review-card",
+        "score-badge",
+        "comparison-table",
+        "ranking-list",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "comparison and ranking",
+        "search and filter",
+        "tags and labels"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.51)",
+        "comparison x1.7000000000000002"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Data review surface",
+    "recommended_direction": [
+      "layout는 Data review surface 기준으로 정리",
+      "surface language는 flat 성향 우선",
+      "typography mood는 utilitarian 축 유지",
+      "density는 dense 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "hero landing page",
+      "decorative orbs",
+      "nested cards",
+      "stock legal imagery",
+      "purple-blue gradient SaaS homepage"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "FairCite",
+    "system_name": "FairCite Evidence Console System",
+    "brand_keywords": [
+      "fair-trade",
+      "evidence-traceability",
+      "decision-document",
+      "chunk-citation",
+      "dual-mode-console",
+      "compliance",
+      "rights-protection",
+      "legal-reference",
+      "law-diff",
+      "sanction-anatomy",
+      "case-briefing",
+      "source-label",
+      "policy-grade",
+      "calm-authoritative",
+      "korean-public-service"
+    ],
+    "anti_keywords": [
+      "marketing-landing",
+      "hero-heavy",
+      "decorative-gradient",
+      "cartoon-legal",
+      "one-note-purple",
+      "one-note-blue",
+      "beige-law-office",
+      "black-box-ai",
+      "legal-advice-claim",
+      "prediction-focused",
+      "consumer-social-feed",
+      "overdecorated-card-stack"
+    ],
+    "visual_keywords": [
+      "dense evidence console",
+      "public-sector trust",
+      "split-pane workflow",
+      "citation drawer",
+      "source label badges",
+      "legal document snippets",
+      "structured risk matrix",
+      "paired case comparison",
+      "law lookup hover",
+      "neutral surfaces with restrained status accents",
+      "Korean professional UI",
+      "audit-friendly data panels"
+    ],
+    "interaction_keywords": [
+      "mode switch between compliance and shield",
+      "right-side evidence drawer",
+      "inline chunk citation reveal",
+      "source label tooltip",
+      "law hover lookup",
+      "risk matrix drilldown",
+      "sanction structure stepper",
+      "pattern catalog card select",
+      "paired case perspective toggle",
+      "clear inputs privacy action",
+      "PDF export affordance",
+      "keyboard-friendly dashboard navigation"
+    ],
+    "product_primitives": [
+      "app shell",
+      "mode selector",
+      "sidebar navigation",
+      "privacy banner",
+      "diagnosis form",
+      "structured textarea",
+      "segmented controls",
+      "risk matrix",
+      "risk row meter",
+      "case result card",
+      "citation drawer",
+      "source label badge",
+      "source label tooltip",
+      "evidence map",
+      "chunk card",
+      "law lookup card",
+      "sanction anatomy stepper",
+      "pattern catalog",
+      "paired case comparison",
+      "metric strip",
+      "data status card",
+      "legal disclaimer footer",
+      "PDF export button",
+      "graph preview panel"
+    ]
+  }
+}

@@ -1,0 +1,277 @@
+{
+  "brand_name": "Panel Pop",
+  "system_name": "Panel Pop Design System",
+  "product_summary": "모바일 중심 만화 잡지 앱: 주간 이슈, 표지 기사, 연재 회차, 컷 미리보기, 작가 코멘터리와 독자 보관함을 묶는 playful-soft editorial reading experience",
+  "audiences": [
+    "퇴근길과 등하굣길에 짧은 연재 만화를 훑어보는 모바일 독자",
+    "신작 단편, 작가 인터뷰, 테마 기획을 잡지처럼 탐색하는 만화 팬",
+    "관심 작품을 보관하고 새 회차 알림을 받는 라이트 구독자"
+  ],
+  "brand_keywords": [
+    "document-content",
+    "comic-magazine",
+    "manga",
+    "webtoon",
+    "mobile-first",
+    "issue",
+    "cover-story",
+    "serial-reader",
+    "episode-card",
+    "panel-preview",
+    "creator-note",
+    "reading-queue",
+    "bookmark-library",
+    "playful",
+    "soft",
+    "rounded",
+    "expressive",
+    "pastel-pop"
+  ],
+  "anti_keywords": [
+    "enterprise",
+    "corporate",
+    "minimal-tech",
+    "legal",
+    "dashboard-heavy",
+    "commerce-checkout",
+    "monochrome",
+    "serious-newspaper",
+    "dense-table",
+    "generic-card-wall"
+  ],
+  "tone_of_voice": [
+    "bright",
+    "curious",
+    "friendly",
+    "editorial",
+    "snappy",
+    "warm"
+  ],
+  "visual_keywords": [
+    "mobile magazine rack",
+    "soft comic cover art",
+    "rounded issue cards",
+    "panel-strip preview",
+    "speech-bubble labels",
+    "sticker-like badges",
+    "pastel ink surfaces",
+    "bold cover title",
+    "creator note sheet",
+    "bottom navigation",
+    "whole-card carousel",
+    "reading progress chip"
+  ],
+  "interaction_keywords": [
+    "cover swipe",
+    "issue tab switch",
+    "save episode",
+    "continue reading",
+    "panel preview tap",
+    "reader progress",
+    "creator note expand",
+    "genre chip filter",
+    "bottom nav route",
+    "soft toast",
+    "theme toggle"
+  ],
+  "platforms": [
+    "mobile-web",
+    "ios",
+    "android",
+    "web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "mobile 320px horizontal-fit"
+  ],
+  "product_primitives": [
+    "tags and labels",
+    "onboarding and stepper",
+    "data tables",
+    "search and filter",
+    "workspace navigation",
+    "hero section",
+    "notifications",
+    "bold editorial magazine",
+    "site footer",
+    "forms",
+    "comments and discussion",
+    "modal and dialog",
+    "chat and messaging",
+    "reference documentation",
+    "presence and notifications"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "mobile",
+      "magazine",
+      "editorial",
+      "comic",
+      "reader",
+      "carousel",
+      "bottom navigation"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "dashboard-only",
+      "enterprise-only",
+      "checkout-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Pastel Violets",
+      "Pantone Trend Oranges",
+      "Pastel Yellows",
+      "Pantone Trend Blues"
+    ],
+    "palette_roles": {
+      "primary": "Periwinkle",
+      "accent": "Living Coral",
+      "surface_tint": "Buttercream"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "balanced",
+      "contrast": "balanced",
+      "diversity": "wide",
+      "surface_style": "soft",
+      "prefer_moods": [
+        "부드러움",
+        "몽환",
+        "명랑",
+        "낙관적",
+        "젊음",
+        "창의적",
+        "친근"
+      ],
+      "avoid_moods": [
+        "엄격",
+        "차가움",
+        "기업적",
+        "무채색",
+        "공격적",
+        "럭셔리"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Periwinkle #8E9AF1 primary — 모바일 만화 표지와 탭 상태에 쓰는 부드러운 보라-블루 축",
+      "Living Coral #FF6F61 accent — 신작 배지, 저장 액션, 연재 업데이트에 쓰는 생동감 있는 코랄",
+      "Buttercream #F3E5AB surface_tint — 장시간 탐색용 따뜻한 종이빛 배경",
+      "Blue Atoll 계열은 보조 정보/알림에만 사용해 팔레트가 보라 한 톤으로 뭉치지 않게 한다",
+      "light mode 기본, dark mode 옵션 — 밤 독서와 모바일 독서 맥락을 모두 지원한다"
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Pretendard",
+      "weights": [
+        700,
+        800,
+        900
+      ],
+      "notes": "한국어 만화 잡지 제호, 표지 제목, 섹션 타이틀에 쓰는 굵은 rounded sans 성격"
+    },
+    "body": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "모바일 본문, 에피소드 설명, 작가 노트 공용. keep-all, 1.5-1.65 line-height"
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "issue number, episode number, reading progress, update timestamp 숫자 전용"
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        700,
+        900
+      ],
+      "notes": "한국어 UI 1급. 짧은 만화 제목은 700-900, 설명문은 500 이하로 대비"
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "mobile manga magazine app home screen",
+      "comic reader app issue cover carousel",
+      "webtoon app episode card bottom navigation",
+      "playful editorial mobile app pastel comic covers",
+      "magazine app creator interview mobile UI",
+      "manga panel preview strip app design"
+    ],
+    "sources": [],
+    "preferred_count": 12,
+    "weights": {
+      "layout": 0.32,
+      "component_shape": 0.28,
+      "color_balance": 0.18,
+      "typography_mood": 0.12,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "mobile bottom navigation",
+      "cover art as content object",
+      "episode list",
+      "reader progress",
+      "polished generated comic cover art",
+      "finished manga/webtoon panel preview"
+    ],
+    "avoid_patterns": [
+      "desktop newspaper masthead dominance",
+      "image-free card wall",
+      "hard enterprise sidebar",
+      "checkout funnel",
+      "rough doodle placeholder cover",
+      "low-information inline SVG comic art",
+      "generic geometric cover blocks"
+    ],
+    "notes": [
+      "외부 레퍼런스는 형태, 밀도, carousel/card 비례 참고만 허용한다",
+      "색상, 폰트, IA, 카피는 이 brand_profile과 하네스 산출물을 우선한다",
+      "목업 구현에서는 라이선스 이슈를 피하기 위해 original generated comic cover/panel assets를 사용한다",
+      "만화 잡지 주제에서 표지/컷 이미지는 핵심 도메인 자산이다. 단순 SVG 낙서, 기하학 박스, 저정보량 placeholder는 실패로 간주한다"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "이번 dogfood는 로컬 deterministic SVG assets 중심으로 진행",
+        "후속 라운드에서 Lazyweb/Pinterest 후보를 붙이면 morphology만 흡수"
+      ]
+    }
+  }
+}

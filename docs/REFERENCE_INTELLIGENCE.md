@@ -9,7 +9,7 @@ without copying their palette, typography, IA, copy, or assets.
 - `Design Context Pack`: provider-neutral research artifact generated from
   `visual_reference`, query suggestions, and configured providers.
 - `ReferenceProvider` ontology nodes: local images, Pinterest-assisted capture,
-  Lazyweb MCP/export, Figma export, or other future providers.
+  Lazyweb MCP/export, Figma export, Playwright website inspection, or other future providers.
 - `DesignContextCard` ontology nodes: selected screenshots or planned research
   queries with flow and morphology tags.
 - Governance: every provider and context card repeats the allowed/denied
@@ -60,6 +60,10 @@ External references are last in the authority order. They may influence:
 - hierarchy rhythm
 - interaction affordance patterns
 - flow pattern labels
+
+Use `inspect-reference-site` when a live website should become this kind of
+reference context. The command records screenshots, topology, behaviors, assets,
+and computed-style evidence, but the same authority rule still applies.
 
 They must not influence:
 

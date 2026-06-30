@@ -119,6 +119,20 @@ def _scaffold_claude_pack(target_repo: Path, artifact_dir: str, force: bool, cre
         created=created,
     )
 
+    reference_skill_dir = ensure_dir(skills_dir / "design-system-reference-inspect")
+    _write_if_allowed(
+        reference_skill_dir / "SKILL.md",
+        _claude_reference_inspect_skill(artifact_dir),
+        force=force,
+        created=created,
+    )
+    _write_if_allowed(
+        agents_dir / "design-system-reference-inspect.md",
+        _claude_reference_inspect_agent(artifact_dir),
+        force=force,
+        created=created,
+    )
+
 
 def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, created: list[str]) -> None:
     plugin_root = ensure_dir(target_repo / "plugins" / "design-system-harness")
@@ -127,6 +141,7 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
     architect_dir = ensure_dir(skills_root / "design-system-architect")
     implementer_dir = ensure_dir(skills_root / "design-system-implementer")
     visual_assets_dir = ensure_dir(skills_root / "design-system-visual-assets")
+    reference_inspect_dir = ensure_dir(skills_root / "design-system-reference-inspect")
     plugin_agents_dir = ensure_dir(plugin_root / "agents")
     marketplace_dir = ensure_dir(target_repo / ".agents" / "plugins")
 
@@ -143,6 +158,7 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
             "tokens",
             "ui",
             "imagery",
+            "reference-inspection",
             "codex",
             "skills",
         ],
@@ -150,7 +166,7 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
         "interface": {
             "displayName": "Design System Harness",
             "shortDescription": "Apply design-system artifacts inside a real implementation repo",
-            "longDescription": "Provides Codex skills for reading design-system artifacts, implementing tokens/components, creating brand-aligned generated imagery with the built-in Codex image_gen skill, and using license-verified sourced visual fallback when generation is unavailable or real-world photography is more appropriate. API and CLI image fallbacks are disabled.",
+            "longDescription": "Provides Codex skills for reading design-system artifacts, implementing tokens/components, using advisory website reference inspections without cloning protected site assets, creating brand-aligned generated imagery with the built-in Codex image_gen skill, and using license-verified sourced visual fallback when generation is unavailable or real-world photography is more appropriate. API and CLI image fallbacks are disabled.",
             "developerName": "Design Ontology Harness",
             "category": "Coding",
             "capabilities": ["Interactive", "Write"],
@@ -158,6 +174,7 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
                 "Implement UI changes using the local design-system artifacts and component inventory",
                 "Ship normal light mode and dark mode together unless a single mode is explicitly requested",
                 "When a screen needs professional imagery, use Codex image_gen first; if unavailable, use license-verified sourced visual fallback without API fallback",
+                "Use website reference inspections only as advisory morphology, density, hierarchy, and interaction affordance evidence; never clone copy, palette, typography, IA, logos, or unlicensed assets",
                 "Treat favicon, app-shell mark, and web manifest icon as required brand-specific identity assets",
                 "For dashboards, tools, sports/data, and community products, lead with operational product surfaces instead of pitch-deck heroes or homogeneous card walls",
             ],
@@ -206,6 +223,12 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
     _write_if_allowed(
         visual_assets_dir / "SKILL.md",
         _codex_visual_asset_skill(artifact_dir),
+        force=force,
+        created=created,
+    )
+    _write_if_allowed(
+        reference_inspect_dir / "SKILL.md",
+        _codex_reference_inspect_skill(artifact_dir),
         force=force,
         created=created,
     )
@@ -328,8 +351,11 @@ When refactoring existing UI, do not merely report emoji UI affordances. Replace
 
 - Scan buttons, cards, badges, tabs, nav items, status indicators, empty states, toasts, and banners for emoji-looking icons or visual markers.
 - Prefer the project's existing icon library when it is already installed and visually compatible.
+- Prefer approved icon systems such as Lucide, Heroicons, Phosphor, Tabler, Material Symbols, or the existing project icon library over handmade path sprites.
 - Reuse existing local SVG/icon components when available.
-- If no suitable icon exists, create a simple local SVG file or SVG component in the nearest existing icons/assets directory.
+- If no suitable icon exists, create a local SVG file or SVG component in the nearest existing icons/assets directory and document its icon grammar.
+- A custom icon sprite must declare its source or approved grammar, such as `data-icon-set="lucide"` or `data-icon-set="approved-custom"`.
+- Keep one icon grammar across the UI: consistent grid, stroke weight, caps, joins, optical size, and active/inactive treatment.
 - Bind SVG stroke/fill to `currentColor` or design tokens, not hard-coded colors.
 - Decorative icons use `aria-hidden="true"`; semantic icons need an accessible label or adjacent visible text.
 - Do not replace user-generated emoji content, chat text, blog body, or emoji-picker data.
@@ -796,7 +822,7 @@ These artifacts are your source of truth. If any core file is missing, report wh
 2. **Hardcoded tokens**: colors (#hex, rgb, tailwind color classes), spacing (px values not on scale), font sizes, border-radius, shadows → replace with semantic tokens
 3. **Missing component states**: components that lack states defined in the spec (disabled, loading, error, hover, focus)
 4. **Missing anatomy parts**: components missing required parts from the spec (e.g., button without loading spinner slot)
-5. **Emoji UI affordances**: emoji glyphs used as button/card/badge/status/nav icons → replace with SVG files/components or an approved icon library
+5. **Icon quality**: emoji glyphs or handmade path sprites used as button/card/badge/status/nav icons → replace with SVG files/components from an approved icon library, or document an approved custom icon grammar
 6. **Brand misalignment**: visual patterns that conflict with brand keywords or match anti-keywords
 
 {_emoji_to_svg_refactor_guidance()}
@@ -1098,6 +1124,102 @@ Refactoring: `color: #3b82f6` → `color: var(--accent)` (same layout, different
 """
 
 
+def _claude_reference_inspect_skill(artifact_dir: str) -> str:
+    return f"""---
+name: design-system-reference-inspect
+description: 웹사이트 reference inspection 산출물을 읽고 구현 계획에 안전하게 반영합니다. 원본 사이트 복제가 아니라 형태·밀도·상호작용 affordance만 흡수할 때 사용하세요.
+allowed-tools: Read Glob Grep Bash Edit Write
+paths:
+  - "{artifact_dir}/**"
+  - "build/website_research/**"
+  - "docs/website_research/**"
+  - "src/**"
+  - "app/**"
+  - "components/**"
+  - "styles/**"
+---
+
+# Design System Reference Inspect
+
+Use this skill when a screen should learn from `inspect-reference-site` outputs without cloning the referenced website.
+
+## Required Inputs
+
+Read these files first when they exist:
+
+1. `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md`
+2. `{artifact_dir}/system_spec.md`
+3. `{artifact_dir}/token_schema.json`
+4. `{artifact_dir}/components/component_specs.md` or `{artifact_dir}/components/component_specs.json`
+5. `{artifact_dir}/design_context_pack.json`
+6. `build/website_research/design_context_pack.json` or `docs/website_research/design_context_pack.json`
+7. `build/website_research/PAGE_TOPOLOGY.md` and `build/website_research/BEHAVIORS.md` when available
+8. `build/website_research/website_reference_report.json` when available
+
+If no website inspection artifact exists, tell the user to run:
+
+```bash
+uv run design-ontology inspect-reference-site --project-dir <project> --url <url> --sync-brand-profile
+```
+
+## Absorption Rules
+
+Allowed:
+- component morphology
+- layout density
+- panel/card proportions
+- hierarchy rhythm
+- interaction affordance patterns
+- flow pattern labels
+
+Denied:
+- color palette or palette composition
+- typography scale
+- domain IA
+- product copy
+- logos, brand marks, favicons, or unlicensed imagery
+- any attempt to make a pixel-perfect clone unless the user owns the original and explicitly requests that scope
+
+## Workflow
+
+1. Map inspected sections from `PAGE_TOPOLOGY.md` to local component families.
+2. Use `BEHAVIORS.md` to identify whether each surface is static, click/input-driven, scroll-aware, or time-driven.
+3. Check `component_specs.md` for `Observed Reference Evidence`; use it only as advisory evidence.
+4. Implement with local tokens and component anatomy from `{artifact_dir}`, not with reference-site CSS values.
+5. Preserve existing product features and routing.
+6. Verify desktop/mobile screenshots, overflow, clipping, light/dark mode, and `lint-implementation`.
+
+When finishing, state which website inspection files were used and list any reference traits that were intentionally rejected because of the denied absorption rules.
+"""
+
+
+def _claude_reference_inspect_agent(artifact_dir: str) -> str:
+    return f"""---
+name: design-system-reference-inspect
+description: Website reference inspection specialist. Converts inspect-reference-site artifacts into ontology-safe UI implementation guidance.
+tools: Read, Glob, Grep, Bash
+model: sonnet
+color: cyan
+---
+
+You are a reference inspection specialist for implementation work.
+
+Your job is to read website inspection outputs and explain how they may influence the local product UI without cloning the referenced site.
+
+Always:
+
+1. Read `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md` first when present.
+2. Read `{artifact_dir}/system_spec.md`, `{artifact_dir}/token_schema.json`, and component specs.
+3. Read `design_context_pack.json`, `PAGE_TOPOLOGY.md`, `BEHAVIORS.md`, and `website_reference_report.json` when present.
+4. Map observed sections to local component families and states.
+5. Mark every recommendation as advisory morphology, density, hierarchy, or interaction affordance.
+6. Reject reference palette, typography, IA, copy, logos, and unlicensed assets.
+7. Produce an implementation checklist plus verification checklist.
+
+You do not implement code by default; hand off to the implementer or rebuild skill after the reference-safe plan is clear.
+"""
+
+
 def _codex_architect_skill(artifact_dir: str) -> str:
     return f"""---
 name: design-system-architect
@@ -1196,6 +1318,94 @@ Read these files first when they exist:
 """
 
 
+def _codex_reference_inspect_skill(artifact_dir: str) -> str:
+    return f"""---
+name: design-system-reference-inspect
+description: Use website reference inspection outputs safely while implementing local design-system screens. This skill translates inspect-reference-site artifacts into advisory morphology, density, hierarchy, and interaction guidance without cloning protected site assets.
+---
+
+# Design System Reference Inspect
+
+Use this skill when the repository has outputs from `inspect-reference-site` and the implementation should learn from a reference website without copying it.
+
+## Required Inputs
+
+Read these files first when they exist:
+
+- `{artifact_dir}/IMPLEMENTATION_CONTRACT.md`
+- `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md`
+- `{artifact_dir}/system_spec.md`
+- `{artifact_dir}/token_schema.json`
+- `{artifact_dir}/components/component_specs.md`
+- `{artifact_dir}/components/component_specs.json`
+- `{artifact_dir}/design_context_pack.json`
+- `{artifact_dir}/website_research/design_context_pack.json`
+- `build/website_research/design_context_pack.json`
+- `docs/website_research/design_context_pack.json`
+- `build/website_research/PAGE_TOPOLOGY.md`
+- `build/website_research/BEHAVIORS.md`
+- `build/website_research/website_reference_report.json`
+
+If no website inspection artifact exists, ask the user to generate one from the harness:
+
+```bash
+uv run design-ontology inspect-reference-site --project-dir <project> --url <url> --sync-brand-profile
+```
+
+## Authority Order
+
+The local design system wins:
+
+1. Product task flow and existing feature behavior
+2. `{artifact_dir}/token_schema.json`
+3. `{artifact_dir}/components/component_specs.*`
+4. `{artifact_dir}/system_spec.md` and `{artifact_dir}/system_ontology.json`
+5. Website reference inspection context
+
+## Allowed Absorption
+
+You may use reference inspection for:
+
+- component morphology
+- layout density
+- panel/card proportions
+- hierarchy rhythm
+- interaction affordance patterns
+- flow pattern labels
+- scroll-aware vs click/input-driven interaction modeling
+
+## Denied Absorption
+
+Never copy from the reference website:
+
+- color palette or palette composition
+- typography scale or font choices
+- domain information architecture
+- product copy, navigation labels, marketing copy, or legal copy
+- logos, icons, favicons, screenshots, photos, videos, or other runtime assets unless explicit license metadata exists
+- raw CSS values as implementation tokens
+- pixel-perfect layout intent unless the user owns the original and explicitly changes scope
+
+## Implementation Workflow
+
+1. Summarize observed sections from `PAGE_TOPOLOGY.md`.
+2. Summarize behaviors from `BEHAVIORS.md`: static, click/input-driven, scroll-aware, time-driven.
+3. Check component specs for `Observed Reference Evidence`.
+4. Map each relevant observation to local component families and states.
+5. Implement using local semantic tokens and component anatomy.
+6. Reject any reference trait that violates denied absorption.
+7. Verify with `lint-implementation`, desktop/mobile screenshots, overflow checks, and light/dark mode checks.
+
+## Output Expectations
+
+- State which reference inspection files were used.
+- List absorbed advisory traits.
+- List rejected traits and why.
+- State which local design-system artifacts stayed authoritative.
+- Mention any screenshot or behavior QA still needed.
+"""
+
+
 def _codex_visual_asset_skill(artifact_dir: str) -> str:
     compatible_manifest_paths = "\n".join(
         f"   - `{path}`" for path in VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS
@@ -1244,6 +1454,7 @@ Generate imagery for:
 - product, venue, object, or media cards that benefit from real visual substance
 - empty states, onboarding panels, or feature sections where illustration clarifies the product
 - case-study or article covers where the system spec calls for editorial treatment
+- comic, manga, webtoon, story, character, cover, and panel-preview slots where readers expect polished artwork
 - sports, travel, food, real-estate, portfolio, game, commerce, and brand/product mockups where visual subject matter makes the screen feel complete
 
 Do not generate imagery for:
@@ -1251,6 +1462,7 @@ Do not generate imagery for:
 - icons, logos, button glyphs, tabs, toggles, or status markers
 - app icons, favicons, or app-shell brand marks; these are deterministic brand identity assets, not generated raster imagery
 - components that should be built with CSS, SVG primitives, or an icon library
+- comic covers, manga/webtoon panel previews, story scenes, editorial covers, or inspectable content media that would be reduced to rough inline SVG geometry
 - dashboard/tool/data-product first viewports where users need tables, schedules, filters, live state, or provenance before decorative visuals
 - copyrighted characters, real brands, real people, or identifiable private locations unless the user explicitly provided licensed source material
 - purely atmospheric blurred backgrounds that do not reveal the product, state, place, or object
@@ -1264,6 +1476,14 @@ Do not generate imagery for:
 5. If no image path can meet the manifest and license contract, leave a prompt/candidate pack and report why imagery was not integrated; do not silently ship an image-free mockup.
 
 Never switch to CLI, SDK runner, or OpenAI image API fallback unless the user explicitly asks for that different path.
+
+## Medium Selection Contract
+
+- Classify each visual slot as identity/icon, control glyph, diagram/data, factual real-world media, narrative/content media, or decorative support before authoring an asset.
+- Narrative/content media such as comic covers, manga/webtoon panels, character/story scenes, editorial covers, portfolio artwork, and game scenes should use `image_gen`, user-supplied art, sourced licensed art, or an already approved high-fidelity asset.
+- Deterministic SVG is the right tool for app icons, logos, flags, UI glyphs, charts, diagrams, maps, schematics, and semantic product illustrations where vector geometry is the real runtime representation.
+- Do not substitute inline SVG because it is faster. A geometric or rough SVG in a cover/panel/story-media slot is a wrong-medium failure, not a valid style variant.
+- If a narrative/content slot intentionally uses vector artwork, document why it is production-grade artwork rather than a placeholder and record the medium decision.
 
 ## Codex Imagegen Workflow
 
@@ -1375,7 +1595,7 @@ For Korean-first products, include Hangul-safe composition constraints:
 def _codex_plugin_openai_yaml() -> str:
     return """display_name: Design System Harness
 short_description: Apply local design-system artifacts and brand imagery inside implementation repos
-default_prompt: Implement UI changes using the design-system artifacts in this repository; lead dashboard/tool/data products with operational surfaces; use Codex image_gen first for professional imagery, then license-verified sourced visual fallback when needed, without API fallback
+default_prompt: Implement UI changes using the design-system artifacts in this repository; use website reference inspections only as advisory morphology/density/interaction evidence; lead dashboard/tool/data products with operational surfaces; use Codex image_gen first for professional imagery, then license-verified sourced visual fallback when needed, without API fallback
 """
 
 

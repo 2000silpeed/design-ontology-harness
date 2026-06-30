@@ -10,6 +10,13 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body data-locale="ko">
+    <a class="skip-link" href="#main">본문으로 이동</a>
+
+    <!--
+      Lazyweb MCP intake, 2026-05-04:
+      Remote/Complydo compliance dashboards, Appcues/Userpilot onboarding checklists,
+      DuckDuckGo legal index. Absorb morphology only; ontology owns IA, tokens, type, and copy.
+    -->
     <div class="app-frame">
       <aside class="sidebar" aria-label="문서 검토 워크스페이스">
         <div class="profile-card">
@@ -29,18 +36,18 @@
           <button class="nav-item" type="button"><span>RP</span>리포트</button>
         </nav>
 
-        <section class="contact-dock" aria-label="오늘의 문서 큐">
-          <div class="dock-title">
+        <section class="queue-card" aria-label="오늘의 문서 큐">
+          <div class="queue-title">
             <strong>오늘의 문서</strong>
-            <button type="button" aria-label="큐 접기">○</button>
+            <button type="button" aria-label="큐 접기">⌃</button>
           </div>
           <ol>
-            <li><span class="signal hot"></span>위탁 처리 조항 <b>3</b></li>
-            <li><span class="signal warn"></span>AI 데이터 보존 <b>1</b></li>
-            <li><span class="signal"></span>자동 갱신 고지</li>
-            <li><span class="signal hot"></span>국외 이전 고지 <b>2</b></li>
-            <li><span class="signal"></span>접속 기록 보관</li>
-            <li><span class="signal"></span>해지 요청 절차</li>
+            <li class="hot"><span></span>위탁 처리 조항 <b>3</b></li>
+            <li class="warn"><span></span>AI 데이터 보존 <b>1</b></li>
+            <li><span></span>자동 갱신 고지</li>
+            <li class="hot"><span></span>국외 이전 고지 <b>2</b></li>
+            <li><span></span>접속 기록 보관</li>
+            <li><span></span>해지 요청 절차</li>
           </ol>
         </section>
 
@@ -51,7 +58,7 @@
         </div>
       </aside>
 
-      <main class="review-shell">
+      <main id="main" class="review-shell">
         <header class="review-header">
           <div class="utility-bar">
             <button class="menu-button" type="button" aria-label="메뉴 열기">☰</button>
@@ -73,17 +80,17 @@
               <div>
                 <strong>92%</strong>
                 <span>정책 일치율</span>
-                <i aria-hidden="true"></i>
+                <i aria-hidden="true" style="--v: 92%"></i>
               </div>
               <div>
                 <strong>18</strong>
                 <span>인용 근거</span>
-                <i aria-hidden="true"></i>
+                <i aria-hidden="true" style="--v: 72%"></i>
               </div>
               <div class="risk">
                 <strong>3</strong>
                 <span>필수 수정</span>
-                <i aria-hidden="true"></i>
+                <i aria-hidden="true" style="--v: 38%"></i>
               </div>
             </div>
 
@@ -100,90 +107,70 @@
           </nav>
         </header>
 
-        <section class="hero-analytics" aria-label="주요 검토 분석">
-          <article class="panel chart-wide">
+        <section class="review-workbench" aria-label="계약 검토 작업대">
+          <article class="panel document-workspace" aria-labelledby="document-title">
             <div class="panel-top">
-              <h2>위험 신호 타임라인</h2>
-              <div class="legend">
-                <span><i class="policy-signal"></i>내부 정책</span>
-                <span><i class="regulatory-signal"></i>감독 기준</span>
+              <div>
+                <p class="eyebrow">document review</p>
+                <h2 id="document-title">위탁 처리 계약 조항</h2>
+              </div>
+              <span class="status-badge danger">고위험 3건</span>
+            </div>
+
+            <div class="document-grid">
+              <nav class="policy-index" aria-label="문서 내 정책 인덱스">
+                <a href="#clause-transfer" class="active">국외 이전</a>
+                <a href="#clause-notice">사전 고지</a>
+                <a href="#clause-stop">처리 중단</a>
+                <a href="#clause-log">접속 기록</a>
+              </nav>
+
+              <div class="document-body">
+                <p>
+                  회사는 서비스 제공을 위하여 필요한 범위에서 고객 데이터를 외부 수탁사에 위탁할 수 있다.
+                </p>
+                <p id="clause-transfer" class="clause-mark danger">
+                  국외 이전이 발생하는 경우 합리적인 기간 내 고객에게 이를 고지할 수 있다.
+                </p>
+                <p id="clause-stop" class="clause-mark warn">
+                  고객은 위탁 처리 중단을 요청할 수 있으며, 회사는 내부 절차에 따라 검토한다.
+                </p>
+                <p id="clause-log">
+                  접속 기록과 위탁 처리 이력은 내부 보존 정책에 따라 관리한다.
+                </p>
               </div>
             </div>
-            <svg class="line-chart" viewBox="0 0 860 270" role="img" aria-label="위탁 조항 위험 신호 변화">
-              <g class="grid-lines">
-                <path d="M42 38H820M42 88H820M42 138H820M42 188H820M42 238H820" />
-                <path d="M42 38V238M154 38V238M266 38V238M378 38V238M490 38V238M602 38V238M714 38V238M820 38V238" />
-              </g>
-              <path class="area policy-area" d="M42 196L154 146L266 176L378 98L490 72L602 124L714 82L820 132L820 238L42 238Z" />
-              <path class="line policy-line" d="M42 196L154 146L266 176L378 98L490 72L602 124L714 82L820 132" />
-              <path class="line regulatory-line" d="M42 226L154 182L266 162L378 214L490 132L602 198L714 144L820 78" />
-              <g class="points policy-points">
-                <circle cx="42" cy="196" r="6" />
-                <circle cx="154" cy="146" r="6" />
-                <circle cx="266" cy="176" r="6" />
-                <circle cx="378" cy="98" r="6" />
-                <circle cx="490" cy="72" r="6" />
-                <circle cx="602" cy="124" r="6" />
-                <circle cx="714" cy="82" r="6" />
-                <circle cx="820" cy="132" r="6" />
-              </g>
-              <g class="points regulatory-points">
-                <circle cx="42" cy="226" r="6" />
-                <circle cx="154" cy="182" r="6" />
-                <circle cx="266" cy="162" r="6" />
-                <circle cx="378" cy="214" r="6" />
-                <circle cx="490" cy="132" r="6" />
-                <circle cx="602" cy="198" r="6" />
-                <circle cx="714" cy="144" r="6" />
-                <circle cx="820" cy="78" r="6" />
-              </g>
-              <foreignObject x="350" y="59" width="132" height="58">
-                <div class="chart-tip">고위험 3건<span>국외 이전 고지</span></div>
-              </foreignObject>
-              <g class="x-labels">
-                <text x="42" y="262">초안</text>
-                <text x="154" y="262">1차</text>
-                <text x="266" y="262">정책</text>
-                <text x="378" y="262">법무</text>
-                <text x="490" y="262">근거</text>
-                <text x="602" y="262">수정</text>
-                <text x="714" y="262">승인</text>
-                <text x="820" y="262">발송</text>
-              </g>
-            </svg>
           </article>
 
-          <aside class="review-rail" aria-label="검토 요약">
-            <div>
-              <strong>High</strong>
-              <span>정책 위반 가능성</span>
+          <aside class="panel decision-panel" aria-labelledby="decision-title">
+            <div class="panel-top">
+              <div>
+                <p class="eyebrow">approval readiness</p>
+                <h2 id="decision-title">승인 전 체크</h2>
+              </div>
+              <span class="status-badge">심사 대기</span>
             </div>
-            <div>
-              <strong>30일</strong>
-              <span>사전 고지 기준</span>
-              <i class="mini-bars" aria-hidden="true"></i>
+
+            <div class="readiness-meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68">
+              <div class="donut" aria-hidden="true"></div>
+              <strong>68</strong>
+              <span>보강 필요</span>
             </div>
-            <div>
-              <strong>23분</strong>
-              <span>예상 완료</span>
-              <i class="mini-bars" aria-hidden="true"></i>
-            </div>
-            <button type="button">리포트 내보내기</button>
+
+            <ol class="checklist">
+              <li class="done"><span></span>정책 근거 연결</li>
+              <li class="current"><span></span>고지 시점 문구 수정</li>
+              <li><span></span>법무 승인 메모 작성</li>
+            </ol>
           </aside>
         </section>
 
-        <section class="card-grid" aria-label="검토 카드">
-          <article class="panel chart-card document-card">
-            <div class="card-title"><h2>검토 조항</h2><button type="button" aria-label="카드 설정">○</button></div>
-            <div class="clause-preview">
-              <p>회사는 서비스 제공을 위하여 필요한 범위에서 고객 데이터를 외부 수탁사에 위탁할 수 있다.</p>
-              <p class="marked high">국외 이전이 발생하는 경우 합리적인 기간 내 고객에게 이를 고지할 수 있다.</p>
-              <p class="marked warn">고객은 위탁 처리 중단을 요청할 수 있으며, 회사는 내부 절차에 따라 검토한다.</p>
+        <section class="component-grid" aria-label="검토 컴포넌트">
+          <article class="panel component-card copilot-card">
+            <div class="card-title">
+              <h2>Copilot Review</h2>
+              <button type="button" aria-label="카드 설정">·</button>
             </div>
-          </article>
-
-          <article class="panel chart-card insight-card">
-            <div class="card-title"><h2>Copilot Review</h2><button type="button" aria-label="카드 설정">○</button></div>
             <div class="review-note">
               <strong>Mercer AI</strong>
               <p>사전 고지 시점과 거부권 처리 절차가 빠져 있습니다. 국외 이전 예정일 기준 30일 전 통지 문구를 권장합니다.</p>
@@ -195,8 +182,11 @@
             </div>
           </article>
 
-          <article class="panel chart-card">
-            <div class="card-title"><h2>정책 체크</h2><button type="button" aria-label="카드 설정">○</button></div>
+          <article class="panel component-card policy-card">
+            <div class="card-title">
+              <h2>정책 체크</h2>
+              <button type="button" aria-label="카드 설정">·</button>
+            </div>
             <div class="policy-list">
               <div class="fail"><span></span><strong>사전 고지 기준</strong><p>국외 이전 30일 전 고지 필요</p></div>
               <div class="warn"><span></span><strong>처리 중단 요청</strong><p>응답 기한 5영업일 명시 권장</p></div>
@@ -204,51 +194,83 @@
             </div>
           </article>
 
-          <article class="panel chart-card evidence-card">
-            <div class="card-title"><h2>Evidence Map</h2><button type="button" aria-label="카드 설정">○</button></div>
-            <img src="./assets/evidence-map.svg" alt="계약 조항과 정책 근거가 연결된 AI 검토 맵" />
+          <article class="panel component-card matrix-card">
+            <div class="card-title">
+              <h2>근거 매트릭스</h2>
+              <button type="button" aria-label="카드 설정">·</button>
+            </div>
+            <table>
+              <caption>조항별 정책 근거 매트릭스</caption>
+              <thead>
+                <tr>
+                  <th scope="col">조항</th>
+                  <th scope="col">정책</th>
+                  <th scope="col">상태</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">국외 이전</th>
+                  <td>KB 4.3</td>
+                  <td><span class="dot danger"></span>수정</td>
+                </tr>
+                <tr>
+                  <th scope="row">중단 요청</th>
+                  <td>KB 2.1</td>
+                  <td><span class="dot warn"></span>보강</td>
+                </tr>
+                <tr>
+                  <th scope="row">접속 기록</th>
+                  <td>KB 7.2</td>
+                  <td><span class="dot pass"></span>통과</td>
+                </tr>
+              </tbody>
+            </table>
           </article>
 
-          <article class="panel chart-card recommendation-card">
-            <div class="card-title"><h2>제안 문구</h2><button type="button" aria-label="카드 설정">○</button></div>
+          <article class="panel component-card recommendation-card">
+            <div class="card-title">
+              <h2>제안 문구</h2>
+              <button type="button" aria-label="카드 설정">·</button>
+            </div>
             <p>수탁사 변경 또는 국외 이전 예정일 최소 30일 전에 고객에게 통지하며, 고객은 이전 거부 또는 계약 해지를 요청할 수 있다.</p>
             <button type="button">문서에 삽입</button>
           </article>
 
-          <article class="panel chart-card compliance-card">
-            <div class="card-title"><h2>정책 일치율</h2><button type="button" aria-label="카드 설정">○</button></div>
-            <div class="score-ring">
-              <div class="donut small"></div>
-              <strong>92%</strong>
+          <article class="panel component-card diff-card">
+            <div class="card-title">
+              <h2>변경 비교</h2>
+              <button type="button" aria-label="카드 설정">·</button>
             </div>
-            <dl class="score-list">
-              <div><dt>고지</dt><dd>26.8%</dd></div>
-              <div><dt>보존</dt><dd>26.1%</dd></div>
-              <div><dt>이전</dt><dd>21.5%</dd></div>
-              <div><dt>동의</dt><dd>25.6%</dd></div>
-            </dl>
+            <div class="diff-grid">
+              <div>
+                <span>현재</span>
+                <p>합리적인 기간 내 고객에게 이를 고지할 수 있다.</p>
+              </div>
+              <div>
+                <span>개정</span>
+                <p>예정일 최소 30일 전에 고객에게 통지한다.</p>
+              </div>
+            </div>
           </article>
 
-          <article class="panel chart-card">
-            <div class="card-title"><h2>근거 유형</h2><button type="button" aria-label="카드 설정">○</button></div>
-            <div class="bar-chart">
-              <span style="--v: 54"></span><span style="--v: 66"></span><span style="--v: 74"></span><span style="--v: 58"></span>
-              <span style="--v: 82"></span><span style="--v: 70"></span><span style="--v: 76"></span>
+          <article class="panel component-card evidence-card">
+            <div class="card-title">
+              <h2>근거 서랍</h2>
+              <button type="button" aria-label="카드 설정">·</button>
             </div>
-            <div class="days"><span>계약</span><span>정책</span><span>법령</span><span>가이드</span><span>판례</span><span>이력</span><span>승인</span></div>
+            <div class="source-stack">
+              <a href="#clause-transfer">개인정보 위탁 4.3<span>30일 전 고지</span></a>
+              <a href="#clause-stop">소비자 요청 2.1<span>처리 중단 권리</span></a>
+              <a href="#clause-log">감사 보존 7.2<span>접속 기록 보존</span></a>
+            </div>
           </article>
 
-          <article class="panel chart-card">
-            <div class="card-title"><h2>수정 우선순위</h2><button type="button" aria-label="카드 설정">○</button></div>
-            <div class="stacked-bars">
-              <span style="--a: 28; --b: 34; --c: 18"></span><span style="--a: 45; --b: 26; --c: 16"></span><span style="--a: 36; --b: 31; --c: 22"></span>
-              <span style="--a: 42; --b: 22; --c: 24"></span><span style="--a: 55; --b: 20; --c: 18"></span><span style="--a: 48; --b: 24; --c: 20"></span>
+          <article class="panel component-card approval-card">
+            <div class="card-title">
+              <h2>승인 흐름</h2>
+              <button type="button" aria-label="카드 설정">·</button>
             </div>
-            <div class="chart-tip floating">위험 3건<span>고지 문구</span></div>
-          </article>
-
-          <article class="panel chart-card approval-card">
-            <div class="card-title"><h2>승인 흐름</h2><button type="button" aria-label="카드 설정">○</button></div>
             <ol>
               <li><span class="done"></span>AI 위험 분류 완료</li>
               <li><span class="done"></span>정책 근거 연결 완료</li>
@@ -257,35 +279,16 @@
             </ol>
           </article>
 
-          <article class="panel chart-card">
-            <div class="card-title"><h2>쟁점 산포도</h2><button type="button" aria-label="카드 설정">○</button></div>
-            <div class="scatter">
-              <i style="--x: 10%; --y: 64%"></i><i style="--x: 18%; --y: 48%"></i><i style="--x: 26%; --y: 72%"></i><i style="--x: 34%; --y: 38%"></i>
-              <i style="--x: 44%; --y: 58%"></i><i style="--x: 52%; --y: 42%"></i><i style="--x: 60%; --y: 66%"></i><i style="--x: 68%; --y: 34%"></i>
-              <i style="--x: 78%; --y: 51%"></i><i style="--x: 88%; --y: 29%"></i>
-              <div class="chart-tip">고위험<span>국외 이전</span></div>
+          <article class="panel component-card audit-card">
+            <div class="card-title">
+              <h2>감사 로그</h2>
+              <button type="button" aria-label="카드 설정">·</button>
             </div>
-          </article>
-
-          <article class="panel chart-card audit-card">
-            <div class="card-title"><h2>감사 로그</h2><button type="button" aria-label="카드 설정">○</button></div>
             <ol>
               <li><time>10:42</time><span>자동 위험 분류 완료</span></li>
               <li><time>10:48</time><span>정책 KB v4.3 근거 18개 생성</span></li>
               <li><time>11:02</time><span>법무 승인 요청 준비</span></li>
             </ol>
-          </article>
-
-          <article class="panel chart-card">
-            <div class="card-title"><h2>조항 영역 비교</h2><button type="button" aria-label="카드 설정">○</button></div>
-            <div class="policy-radar">
-              <svg viewBox="0 0 210 170" role="img" aria-label="조항 영역별 정책 위험 비교">
-                <path class="radar-grid" d="M105 14L180 57L180 128L105 164L30 128L30 57ZM105 39L156 69L156 116L105 139L54 116L54 69Z" />
-                <path class="radar-fill gold" d="M105 40L154 76L144 120L98 140L58 108L74 66Z" />
-                <path class="radar-fill policy-fill" d="M105 28L170 68L158 130L100 152L42 116L64 48Z" />
-              </svg>
-              <div class="chart-tip">이전 조항<span>수정 필요</span></div>
-            </div>
           </article>
         </section>
       </main>

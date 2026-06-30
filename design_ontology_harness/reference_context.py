@@ -69,6 +69,13 @@ PROVIDER_REGISTRY = {
         "default_status": "active",
         "truth_role": "human-selected screenshot evidence",
     },
+    "website-inspection": {
+        "label": "Website reference inspection",
+        "kind": "website-inspection",
+        "access_mode": "playwright-capture",
+        "default_status": "active",
+        "truth_role": "observed web page topology, behavior, and morphology evidence",
+    },
 }
 
 FLOW_KEYWORDS = {
@@ -497,6 +504,17 @@ def _absorbed_traits_from_source(source: dict[str, Any], terms: list[str]) -> li
         if source.get(key):
             normalized_key = "company" if key in {"companyName", "company_name"} else key
             traits.append(f"{normalized_key}={source[key]}")
+    website_inspection = source.get("website_inspection")
+    if isinstance(website_inspection, dict):
+        if website_inspection.get("section_count") is not None:
+            traits.append(f"sections={website_inspection['section_count']}")
+        for model in _normalize_terms(website_inspection.get("interaction_models", []))[:4]:
+            traits.append(f"interaction={model}")
+        asset_counts = website_inspection.get("asset_counts")
+        if isinstance(asset_counts, dict):
+            for key in ("images", "videos", "background_images", "inline_svgs"):
+                if asset_counts.get(key):
+                    traits.append(f"{key}={asset_counts[key]}")
     for tag in _normalize_terms(source.get("tags", []))[:4]:
         traits.append(f"tag={tag}")
     for flow in _infer_flows(terms)[:3]:

@@ -1,0 +1,30 @@
+{
+  "brand_profile": "/Users/sungwoon/ai-projects/design-ontology-harness/projects/contract-copilot-mock/design-system/brand_profile.json",
+  "issues": [
+    "visual_reference URL source is not fetched automatically yet: https://remote.com/global-hr/contractor-of-record (download locally and pass it via sources[].path)",
+    "visual_reference URL source is not fetched automatically yet: https://www.complydo.io/ (download locally and pass it via sources[].path)",
+    "visual_reference URL source is not fetched automatically yet: https://www.appcues.com/use-case/onboarding (download locally and pass it via sources[].path)",
+    "visual_reference URL source is not fetched automatically yet: https://userpilot.com/product/user-engagement/ (download locally and pass it via sources[].path)",
+    "visual_reference URL source is not fetched automatically yet: https://duckduckgo.com/duckduckgo-help-pages/r-legal (download locally and pass it via sources[].path)"
+  ],
+  "coverage": {
+    "source_count": 5,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "design_context_activation": "grounded",
+  "top_layout_cue": "conversation-panel",
+  "density": "balanced",
+  "surface_style": "elevated",
+  "component_hint_keys": [
+    "cards",
+    "data_display",
+    "navigation",
+    "panel",
+    "typography"
+  ]
+}

@@ -72,6 +72,7 @@ Style Capsule은 아래 섹션으로 구성됩니다.
 - Component Priorities
 - Signature Components
 - Advanced Component Menu
+- Design Context Pack
 - Reference Governance
 - Agent Preflight
 
@@ -158,6 +159,18 @@ audit, approval, bulk triage, AI traceability처럼 실제 업무 흐름을 더 
 만들 때만 사용합니다. 색상, 폰트, IA, copy, 상태 의미는 여전히 온톨로지와
 토큰이 우선합니다.
 
+## Design Context Pack
+
+Style Capsule은 `design_system_blueprint.json`의 `design_context_pack`을
+**Design Context Pack** 섹션으로 노출합니다. 이 섹션은 Lazyweb, Pinterest,
+Figma, 로컬 스크린샷 같은 provider를 같은 형식으로 요약하고, 각 context가
+어떤 flow와 component morphology에만 쓰일 수 있는지 표시합니다.
+
+중요한 점은 provider가 곧 truth source가 아니라는 것입니다. `lazyweb`이
+연결되지 않은 상태에서는 `suggested` provider로만 표시되고, 실제 캡처나
+export가 `visual_reference.sources`로 승격된 뒤에야 grounded evidence가
+됩니다. 이 섹션도 색상, 폰트, IA, copy를 가져오는 근거가 될 수 없습니다.
+
 ## 구현 repo에서 쓰는 법
 
 프리셋 설치:
@@ -208,5 +221,9 @@ uv run design-ontology lint-implementation --target-repo /path/to/implementation
 3. Style Capsule 렌더러에 반영합니다.
 4. 가능하면 `lint-implementation` 룰로 승격합니다.
 5. 테스트를 추가합니다.
+
+예: 손으로 배치한 `graph-node` / `graph-edge` / `trace-line` 기반 미니맵은 제품급 데이터 시각화가 아니므로
+`lint-implementation DS082`에서 차단합니다. 단순 관계는 ledger/table로, 복잡한 관계는 실제 graph/chart 라이브러리나
+semantic SVG/canvas 시각화로 구현해야 합니다.
 
 이 원칙 때문에 Style Capsule은 단순 문서가 아니라 feedback promotion 경로의 일부입니다.

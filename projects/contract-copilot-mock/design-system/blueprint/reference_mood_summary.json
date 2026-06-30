@@ -1,0 +1,30 @@
+{
+  "top_layout": "Conversation side panel",
+  "recommended_direction": [
+    "layout는 Conversation side panel 기준으로 정리",
+    "surface language는 elevated 성향 우선",
+    "typography mood는 utilitarian 축 유지",
+    "density는 balanced 기준으로 primitive spacing 조정",
+    "palette temperature는 unknown 쪽을 우선"
+  ],
+  "avoidance": [
+    "playful pastel consumer chat",
+    "streetwear drop hero",
+    "editorial magazine cover",
+    "d2c product grid",
+    "glassmorphism",
+    "social feed casual chat",
+    "marketing landing pricing-focused"
+  ],
+  "component_focus": [
+    "cards",
+    "data_display",
+    "navigation",
+    "panel",
+    "typography"
+  ],
+  "provenance": {
+    "level": "inferred",
+    "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+  }
+}

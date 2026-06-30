@@ -1,0 +1,186 @@
+{
+  "schema_version": "geist-reference-page/v1",
+  "slug": "middle-truncate",
+  "kind": "component",
+  "title": "MiddleTruncate",
+  "url": "https://vercel.com/geist/middle-truncate",
+  "final_url": "https://vercel.com/geist/middle-truncate",
+  "canonical_url": "https://vercel.com/geist/middle-truncate",
+  "redirected": false,
+  "description": "Truncates text in the middle, preserving the start and end of the string for maximum readability.",
+  "source_hash": "sha256:7f3a445686cad6229dbf13298d590a9cbb239037cfcce286632244724c30d004",
+  "body_text_length": 3982,
+  "sections": [
+    {
+      "level": "h2",
+      "text": "Examples"
+    },
+    {
+      "level": "h2",
+      "text": "Best Practices"
+    },
+    {
+      "level": "h3",
+      "text": "When to use"
+    },
+    {
+      "level": "h3",
+      "text": "Behavior"
+    },
+    {
+      "level": "h3",
+      "text": "Accessibility"
+    }
+  ],
+  "section_count": 5,
+  "symbol_metadata": {
+    "code_example_count": 1,
+    "import_symbols": [
+      "Label",
+      "Toggle",
+      "MiddleTruncate",
+      "Slider",
+      "useEffect",
+      "useRef",
+      "useState",
+      "type CSSProperties",
+      "type JSX"
+    ],
+    "import_sources": [
+      "@vercel/geistcn/components",
+      "react"
+    ],
+    "jsx_tags": [
+      "MiddleTruncate",
+      "Label",
+      "Slider",
+      "Toggle"
+    ],
+    "prop_names": [
+      "key",
+      "value",
+      "max",
+      "min",
+      "onValueChange",
+      "disabled",
+      "checked",
+      "onChange"
+    ]
+  },
+  "token_refs": {
+    "css_var_count": 69,
+    "css_vars": [
+      "--accents-1",
+      "--accents-2",
+      "--accents-3",
+      "--accents-8",
+      "--cross-color",
+      "--ds-amber-800",
+      "--ds-background-100",
+      "--ds-background-200",
+      "--ds-blue-300",
+      "--ds-blue-700",
+      "--ds-blue-900",
+      "--ds-focus-color",
+      "--ds-focus-ring",
+      "--ds-gray-100",
+      "--ds-gray-1000",
+      "--ds-gray-1000-value",
+      "--ds-gray-200",
+      "--ds-gray-400",
+      "--ds-gray-500",
+      "--ds-gray-700",
+      "--ds-gray-900",
+      "--ds-gray-alpha-100",
+      "--ds-gray-alpha-200",
+      "--ds-gray-alpha-300",
+      "--ds-gray-alpha-400",
+      "--ds-gray-alpha-500",
+      "--ds-gray-alpha-600",
+      "--ds-shadow-border",
+      "--ds-shadow-border-small",
+      "--font-mono",
+      "--font-sans",
+      "--geist-foreground",
+      "--geist-form-small-font",
+      "--geist-form-small-height",
+      "--geist-gap-half",
+      "--geist-icon-size",
+      "--geist-secondary",
+      "--geist-space-gap-half",
+      "--grid-columns",
+      "--grid-rows",
+      "--guide-color",
+      "--guide-width",
+      "--height",
+      "--lg-cell-columns",
+      "--lg-cell-rows",
+      "--max-width",
+      "--md-cell-columns",
+      "--md-cell-rows",
+      "--min-width",
+      "--radix-slider-thumb-transform",
+      "--sm-cell-columns",
+      "--sm-cell-rows",
+      "--sm-grid-column",
+      "--sm-grid-row",
+      "--sm-height",
+      "--smd-cell-columns",
+      "--smd-cell-rows",
+      "--spinner-size",
+      "--themed-bg",
+      "--themed-border",
+      "--themed-fg",
+      "--themed-hover-bg",
+      "--thumb-unchecked-bg-color-override",
+      "--unchecked-bg-color-override",
+      "--x",
+      "--x-padding",
+      "--xs-cell-columns",
+      "--xs-cell-rows",
+      "--y"
+    ],
+    "geist_data_attrs": [
+      "data-geist-button",
+      "data-geist-kbd",
+      "data-geist-textarea-wrapper"
+    ]
+  },
+  "accessibility_terms": [
+    "Keyboard",
+    "aria-checked",
+    "aria-controls",
+    "aria-disabled",
+    "aria-expanded",
+    "aria-hidden",
+    "aria-label",
+    "aria-orientation",
+    "aria-pressable",
+    "aria-valuemax",
+    "aria-valuemin",
+    "assistive",
+    "focus",
+    "keyboard",
+    "role"
+  ],
+  "absorption_policy": {
+    "allowed": [
+      "component names",
+      "component taxonomy",
+      "state coverage hints",
+      "section headings",
+      "import and JSX symbol references",
+      "token identifiers",
+      "accessibility and interaction evidence labels"
+    ],
+    "denied": [
+      "verbatim product copy beyond short labels",
+      "brand logos or protected imagery",
+      "unlicensed implementation source code",
+      "full documentation text",
+      "Vercel-specific IA as product IA"
+    ],
+    "rule": "Store structured reference metadata for local reimplementation; keep source URLs as evidence."
+  },
+  "nav_index": 46
+}

@@ -19,6 +19,7 @@ COMPONENT_ANATOMY: dict[str, dict] = {
             "aria-busy=\"true\" when loading",
             "최소 44x44 터치 영역",
             "텍스트 대비 4.5:1 이상",
+            "320px viewport에서도 버튼 전체와 focus ring이 화면 밖으로 나가지 않아야 함",
         ],
         "tokens": {
             "surface": "var(--color-brand-primary)",
@@ -26,6 +27,9 @@ COMPONENT_ANATOMY: dict[str, dict] = {
             "border": "var(--color-brand-primary)",
             "radius": "var(--radius-md)",
             "padding": "var(--space-12) var(--space-24)",
+            "max-inline-size": "100%",
+            "min-inline-size": "0",
+            "label-wrap": "white-space: normal",
             "font": "var(--font-body) / var(--text-md) / semibold",
             "hover-surface": "var(--color-link-hover)",
             "focus-ring": "box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-brand-primary)",
@@ -555,6 +559,7 @@ def generate_component_specs(
     anti_rules = _collect_anti_rules(anti_keywords)
     visual_guidance = _collect_visual_guidance(brand_profile, blueprint)
     typography_guidance = _collect_typography_guidance(brand_profile)
+    responsive_guidance = _collect_responsive_guidance(blueprint)
 
     families: dict[str, list[dict]] = {}
     for comp in component_list:
@@ -593,12 +598,16 @@ def generate_component_specs(
             "visual_adaptation": _build_visual_adaptation_notes(
                 comp["name"], family, archetype_key, visual_guidance
             ),
+            "observed_reference_evidence": _build_observed_reference_evidence(
+                comp["name"], family, visual_guidance
+            ),
             "reference_evidence": kb_evidence,
             "implementation_notes": _build_implementation_notes(
                 comp["name"],
                 family,
                 brand_keywords,
                 typography_guidance,
+                responsive_guidance,
             ),
         }
         specs.append(spec)
@@ -612,6 +621,7 @@ def generate_component_specs(
         "global_adaptation": adaptations,
         "visual_guidance": visual_guidance,
         "typography_guidance": typography_guidance,
+        "responsive_guidance": responsive_guidance,
         "specs": specs,
     }
 
@@ -627,11 +637,12 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
 
     md_lines.append("## 구현 원칙 (Non-negotiable)\n")
     md_lines.append("이 스펙의 모든 컴포넌트를 구현할 때 반드시 지킨다:\n")
-    md_lines.append("1. **이모지를 UI로 쓰지 않는다** — 🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등 이모지를 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 자리에 절대 넣지 않는다. 아이콘 자리에는 SVG 컴포넌트 또는 Lucide/Heroicons/Phosphor/Tabler 라이브러리를 사용한다.")
+    md_lines.append("1. **이모지를 UI로 쓰지 않는다** — 🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등 이모지를 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 자리에 절대 넣지 않는다. 리팩토링 중 카드/버튼/배지/탭/상태 UI에서 이모지를 발견하면 SVG 파일, SVG 컴포넌트, 또는 Lucide/Heroicons/Phosphor/Tabler 같은 아이콘 라이브러리로 교체한다.")
     md_lines.append("2. **컴포넌트를 직접 구현한다** — 아래 각 컴포넌트의 anatomy(구조), states(상태), 토큰 바인딩, 접근성 규칙을 그대로 따라 완전하게 구현한다. '임시', 'TODO', '플레이스홀더' 같은 반쪽 구현을 남기지 않는다.")
     md_lines.append("3. **라이브러리 기본 스타일 금지** — 라이브러리 컴포넌트를 그대로 import해서 쓰지 않는다. 반드시 디자인 토큰(--color-*, --space-*, --radius-*, --font-*)으로 스타일을 명시적으로 바인딩한다.")
     md_lines.append("4. **접근성은 옵션이 아니다** — 각 컴포넌트의 '접근성' 섹션에 정의된 role, aria-*, label, focus 관리 규칙을 전부 적용한다.")
     md_lines.append("5. **hex 값 하드코딩 금지** — 색상은 반드시 semantic token을 경유한다 (예: `color: var(--color-ink)` not `color: #2C2C2C`).")
+    md_lines.append("6. **모바일 overflow 금지** — 버튼, CTA, 탭, 필터칩, 툴바 액션은 320px viewport에서 화면 밖으로 나가면 안 된다. fixed/min-width px 값으로 폭을 고정하지 말고 wrap/stack fallback을 제공한다.")
     md_lines.append("")
 
     md_lines.append("## 브랜드 적용 규칙\n")
@@ -690,6 +701,19 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
                 "forced <br /> 금지 until breakpoint QA"
             )
         for rule in typography_guidance.get("rules", [])[:4]:
+            md_lines.append(f"- {rule}")
+        md_lines.append("")
+
+    responsive_guidance = specs_data.get("responsive_guidance") or {}
+    if responsive_guidance.get("active"):
+        md_lines.append("## Responsive Resilience\n")
+        md_lines.append(
+            "- 모바일에서 horizontal scroll이 생기거나 primary action이 화면 밖으로 나가면 컴포넌트 구현이 완료된 것이 아니다."
+        )
+        widths = responsive_guidance.get("required_widths_px", [])
+        if widths:
+            md_lines.append(f"- Required viewport checks: {', '.join(str(width) + 'px' for width in widths)}")
+        for rule in responsive_guidance.get("control_rules", [])[:5]:
             md_lines.append(f"- {rule}")
         md_lines.append("")
 
@@ -765,6 +789,18 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
                 md_lines.append(f"- **{note['aspect']}**: {note['summary']}{suffix}")
             md_lines.append("")
 
+        if spec.get("observed_reference_evidence"):
+            md_lines.append("### Observed Reference Evidence\n")
+            md_lines.append("- 아래 근거는 형태, 밀도, 상호작용 affordance 참고용이다. 색상, 폰트, IA, 카피, 외부 에셋은 흡수하지 않는다.")
+            for evidence in spec["observed_reference_evidence"][:3]:
+                traits = evidence.get("absorbed_traits") or []
+                trait_suffix = f" traits={', '.join(traits[:4])}" if traits else ""
+                md_lines.append(
+                    f"- **{evidence['provider_id']} / {evidence['context_id']}**: "
+                    f"{evidence['label']}{trait_suffix}"
+                )
+            md_lines.append("")
+
         if spec["reference_evidence"]:
             md_lines.append("### 레퍼런스 근거\n")
             for evidence in spec["reference_evidence"][:3]:
@@ -812,6 +848,7 @@ def _collect_visual_guidance(brand_profile: dict, blueprint: dict) -> dict:
     )
     visual_motifs = blueprint.get("visual_language") or visual_reference.get("visual_motifs") or {}
     layout_cues = blueprint.get("layout_cues") or visual_reference.get("layout_cues") or []
+    design_context_pack = blueprint.get("design_context_pack") or brand_profile.get("_design_context_pack") or {}
 
     return {
         "connected": bool(visual_reference or component_style_hints or visual_motifs or layout_cues),
@@ -822,6 +859,8 @@ def _collect_visual_guidance(brand_profile: dict, blueprint: dict) -> dict:
         "typography_mood": (visual_motifs.get("typography_mood") or {}).get("value"),
         "top_layout_cue": layout_cues[0]["id"] if layout_cues else None,
         "component_style_hints": component_style_hints,
+        "design_context_activation": design_context_pack.get("activation_state"),
+        "reference_observations": _collect_reference_observations(design_context_pack),
     }
 
 
@@ -831,6 +870,45 @@ def _collect_typography_guidance(brand_profile: dict) -> dict:
     if not script_guardrails:
         return {"active": False}
     return {"active": True, **script_guardrails}
+
+
+def _collect_responsive_guidance(blueprint: dict) -> dict:
+    policy = (blueprint.get("governance") or {}).get("responsive_resilience_policy") or {}
+    if not policy:
+        return {"active": False}
+    contract = policy.get("viewport_contract") or {}
+    return {
+        "active": True,
+        "rule": policy.get("rule", ""),
+        "required_widths_px": contract.get("required_widths_px", [320, 360, 390, 430, 768, 1024, 1440]),
+        "pass_condition": contract.get("pass_condition", ""),
+        "control_rules": policy.get("control_rules", []),
+        "failure_patterns": policy.get("failure_patterns", []),
+    }
+
+
+def _collect_reference_observations(design_context_pack: dict) -> list[dict]:
+    if not isinstance(design_context_pack, dict):
+        return []
+    observations: list[dict] = []
+    for card in design_context_pack.get("context_cards", []) or []:
+        if not isinstance(card, dict):
+            continue
+        if card.get("provenance_level") != "observed":
+            continue
+        observations.append(
+            {
+                "context_id": card.get("context_id"),
+                "provider_id": card.get("provider_id"),
+                "kind": card.get("kind"),
+                "label": card.get("label"),
+                "flows": card.get("flows", []),
+                "morphology": card.get("morphology", []),
+                "absorbed_traits": card.get("absorbed_traits", []),
+                "must_not_absorb": card.get("must_not_absorb", []),
+            }
+        )
+    return observations[:12]
 
 
 def _build_token_bindings(name: str, family: str, source: dict) -> dict[str, str]:
@@ -989,6 +1067,90 @@ def _build_visual_adaptation_notes(
         seen_aspects.add(aspect)
         deduped.append(note)
     return deduped
+
+
+def _build_observed_reference_evidence(name: str, family: str, visual_guidance: dict) -> list[dict]:
+    observations = visual_guidance.get("reference_observations") or []
+    if not observations:
+        return []
+
+    component_terms = _component_match_terms(name, family)
+    scored: list[tuple[int, dict]] = []
+    for observation in observations:
+        if not isinstance(observation, dict):
+            continue
+        obs_terms = _observation_terms(observation)
+        score = len(component_terms & obs_terms)
+        provider_id = str(observation.get("provider_id") or "")
+        if provider_id == "website-inspection":
+            score += 1
+        if family == "navigation" and {"navigation", "nav", "sidebar"} & obs_terms:
+            score += 3
+        if family == "data-display" and {"dashboard", "data", "table", "grid", "card", "panel"} & obs_terms:
+            score += 3
+        if family == "button" and {"click", "input", "cta"} & obs_terms:
+            score += 2
+        if family == "overlay" and {"drawer", "modal", "overlay", "inspector"} & obs_terms:
+            score += 2
+        if score:
+            scored.append((score, observation))
+
+    if not scored:
+        scored = [
+            (1, observation)
+            for observation in observations
+            if isinstance(observation, dict) and observation.get("provider_id") == "website-inspection"
+        ][:1]
+
+    scored.sort(key=lambda item: (-item[0], str(item[1].get("context_id") or "")))
+    evidence: list[dict] = []
+    for _score, observation in scored[:3]:
+        evidence.append(
+            {
+                "context_id": observation.get("context_id"),
+                "provider_id": observation.get("provider_id"),
+                "kind": observation.get("kind"),
+                "label": observation.get("label"),
+                "flows": observation.get("flows", []),
+                "morphology": observation.get("morphology", []),
+                "absorbed_traits": observation.get("absorbed_traits", []),
+                "must_not_absorb": observation.get("must_not_absorb", []),
+            }
+        )
+    return evidence
+
+
+def _component_match_terms(name: str, family: str) -> set[str]:
+    terms = set(_split_component_terms(name))
+    terms.update(_split_component_terms(family))
+    family_expansions = {
+        "navigation": {"navigation", "nav", "sidebar", "topbar", "tabs", "menu"},
+        "data-display": {"dashboard", "data", "table", "grid", "card", "panel", "metric"},
+        "button": {"button", "cta", "click", "action"},
+        "input": {"input", "form", "composer", "search"},
+        "feedback": {"badge", "status", "alert", "toast"},
+        "overlay": {"modal", "drawer", "overlay", "inspector"},
+        "marketing": {"hero", "section", "cta", "landing"},
+    }
+    terms.update(family_expansions.get(family, set()))
+    return terms
+
+
+def _observation_terms(observation: dict) -> set[str]:
+    values: list[str] = []
+    for key in ("provider_id", "kind", "label"):
+        value = observation.get(key)
+        if value:
+            values.append(str(value))
+    for key in ("flows", "morphology", "absorbed_traits"):
+        for item in observation.get(key, []) or []:
+            values.append(str(item))
+    return set(_split_component_terms(" ".join(values)))
+
+
+def _split_component_terms(value: str) -> list[str]:
+    normalized = "".join(ch.lower() if ch.isalnum() else " " for ch in str(value))
+    return [part for part in normalized.split() if part]
 
 
 def _make_visual_note(
@@ -1178,6 +1340,7 @@ def _build_implementation_notes(
     family: str,
     brand_keywords: list[str],
     typography_guidance: dict | None = None,
+    responsive_guidance: dict | None = None,
 ) -> list[str]:
     notes = [
         "기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작",
@@ -1186,6 +1349,8 @@ def _build_implementation_notes(
 
     if family == "button":
         notes.append("size prop: sm / md / lg (터치 영역은 항상 최소 44px 보장)")
+        notes.append("모든 버튼은 `max-inline-size: 100%`와 `min-inline-size: 0`을 기본 보호값으로 갖고, 긴 라벨은 모바일에서 wrap 또는 action-group stack으로 처리")
+        notes.append("fixed `width`/`min-width` px 값으로 CTA 폭을 고정하지 않음 — 필요하면 container query 또는 <=480px stack fallback을 함께 정의")
     elif family == "input":
         notes.append("error 상태에서 helper text → error message로 자동 전환")
         notes.append("label은 항상 visible (placeholder만으로 대체 금지)")
@@ -1216,6 +1381,15 @@ def _build_implementation_notes(
                 notes.append(
                     f"좁은 UI 텍스트는 {body_font.get('name', 'body font')} 기준 label line-height {body_font.get('ui_label_line_height')}를 참고해 뭉침을 방지"
                 )
+
+    if responsive_guidance and responsive_guidance.get("active"):
+        if family in {"button", "navigation", "feedback", "input"} or any(token in name for token in ["button", "cta", "tab", "chip", "toolbar"]):
+            widths = responsive_guidance.get("required_widths_px", [])
+            if widths:
+                notes.append(
+                    f"반응형 검증: {', '.join(str(width) + 'px' for width in widths[:4])}에서 control overflow와 viewport horizontal scroll이 없어야 함"
+                )
+            notes.append("action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음")
 
     if "calm" in brand_keywords:
         notes.append("애니메이션은 상태 설명용으로만 사용, 장식 효과 금지")

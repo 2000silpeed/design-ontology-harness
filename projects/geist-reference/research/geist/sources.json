@@ -1,0 +1,487 @@
+{
+  "schema_version": "geist-reference-sources/v1",
+  "created_at": "2026-06-30T01:23:47Z",
+  "policy": {
+    "allowed": [
+      "component names",
+      "component taxonomy",
+      "state coverage hints",
+      "section headings",
+      "import and JSX symbol references",
+      "token identifiers",
+      "accessibility and interaction evidence labels"
+    ],
+    "denied": [
+      "verbatim product copy beyond short labels",
+      "brand logos or protected imagery",
+      "unlicensed implementation source code",
+      "full documentation text",
+      "Vercel-specific IA as product IA"
+    ],
+    "rule": "Store structured reference metadata for local reimplementation; keep source URLs as evidence."
+  },
+  "sources": [
+    {
+      "url": "https://vercel.com/geist/brands",
+      "kind": "design-system-doc",
+      "title": "Brands",
+      "notes": "asset page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/geistcn-icons",
+      "kind": "design-system-doc",
+      "title": "Geist Design System",
+      "notes": "asset page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/avatar",
+      "kind": "design-system-doc",
+      "title": "Avatar",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/colors",
+      "kind": "design-system-doc",
+      "title": "Colors",
+      "notes": "foundation page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/grid",
+      "kind": "design-system-doc",
+      "title": "Grid",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/introduction",
+      "kind": "design-system-doc",
+      "title": "Geist Design System",
+      "notes": "foundation page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/typography",
+      "kind": "design-system-doc",
+      "title": "Typography",
+      "notes": "foundation page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/materials",
+      "kind": "design-system-doc",
+      "title": "Materials",
+      "notes": "foundation page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/badge",
+      "kind": "design-system-doc",
+      "title": "Badge",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/banner",
+      "kind": "design-system-doc",
+      "title": "Banner",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/book",
+      "kind": "design-system-doc",
+      "title": "Book",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/breadcrumbs",
+      "kind": "design-system-doc",
+      "title": "Breadcrumbs",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/browser",
+      "kind": "design-system-doc",
+      "title": "Browser",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/button",
+      "kind": "design-system-doc",
+      "title": "Button",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/calendar",
+      "kind": "design-system-doc",
+      "title": "Calendar",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/card",
+      "kind": "design-system-doc",
+      "title": "Card",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/checkbox",
+      "kind": "design-system-doc",
+      "title": "Checkbox",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/choicebox",
+      "kind": "design-system-doc",
+      "title": "Choicebox",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/clearable-input",
+      "kind": "design-system-doc",
+      "title": "Clearable Input",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/code",
+      "kind": "design-system-doc",
+      "title": "Code",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/code-block",
+      "kind": "design-system-doc",
+      "title": "Code Block",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/collapse",
+      "kind": "design-system-doc",
+      "title": "Collapse",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/combobox",
+      "kind": "design-system-doc",
+      "title": "Combobox",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/command-menu",
+      "kind": "design-system-doc",
+      "title": "Command Menu",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/context-card",
+      "kind": "design-system-doc",
+      "title": "Context Card",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/context-menu",
+      "kind": "design-system-doc",
+      "title": "Context Menu",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/copy-button",
+      "kind": "design-system-doc",
+      "title": "Copy Button",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/description",
+      "kind": "design-system-doc",
+      "title": "Description",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/destructive-action-modal",
+      "kind": "design-system-doc",
+      "title": "Destructive Action Modal",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/dots-menu",
+      "kind": "design-system-doc",
+      "title": "Dots Menu",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/drawer",
+      "kind": "design-system-doc",
+      "title": "Drawer",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/empty-state",
+      "kind": "design-system-doc",
+      "title": "Empty State",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/entity",
+      "kind": "design-system-doc",
+      "title": "Entity",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/error",
+      "kind": "design-system-doc",
+      "title": "Error",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/error-card",
+      "kind": "design-system-doc",
+      "title": "Error Card",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/feedback",
+      "kind": "design-system-doc",
+      "title": "Feedback",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/fieldset",
+      "kind": "design-system-doc",
+      "title": "Fieldset",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/file-tree",
+      "kind": "design-system-doc",
+      "title": "File Tree",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/gauge",
+      "kind": "design-system-doc",
+      "title": "Gauge",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/input",
+      "kind": "design-system-doc",
+      "title": "Input",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/keyboard-input",
+      "kind": "design-system-doc",
+      "title": "Keyboard Input",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/label",
+      "kind": "design-system-doc",
+      "title": "Label",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/load-more-button",
+      "kind": "design-system-doc",
+      "title": "Load More Button",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/loading-dots",
+      "kind": "design-system-doc",
+      "title": "Loading Dots",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/menu",
+      "kind": "design-system-doc",
+      "title": "Menu",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/middle-truncate",
+      "kind": "design-system-doc",
+      "title": "MiddleTruncate",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/modal",
+      "kind": "design-system-doc",
+      "title": "Modal",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/multi-select",
+      "kind": "design-system-doc",
+      "title": "Multi Select",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/note",
+      "kind": "design-system-doc",
+      "title": "Note",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/pagination",
+      "kind": "design-system-doc",
+      "title": "Pagination",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/phone",
+      "kind": "design-system-doc",
+      "title": "Phone",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/progress",
+      "kind": "design-system-doc",
+      "title": "Progress",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/project-banner",
+      "kind": "design-system-doc",
+      "title": "Project Banner",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/radio",
+      "kind": "design-system-doc",
+      "title": "Radio",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/relative-time-card",
+      "kind": "design-system-doc",
+      "title": "Relative Time Card",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/scroller",
+      "kind": "design-system-doc",
+      "title": "Scroller",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/search-input",
+      "kind": "design-system-doc",
+      "title": "Search Input",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/select",
+      "kind": "design-system-doc",
+      "title": "Select",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/separator",
+      "kind": "design-system-doc",
+      "title": "Separator",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/sheet",
+      "kind": "design-system-doc",
+      "title": "Sheet",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/show-more",
+      "kind": "design-system-doc",
+      "title": "Show more",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/skeleton",
+      "kind": "design-system-doc",
+      "title": "Skeleton",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/slider",
+      "kind": "design-system-doc",
+      "title": "Slider",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/snippet",
+      "kind": "design-system-doc",
+      "title": "Snippet",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/spinner",
+      "kind": "design-system-doc",
+      "title": "Spinner",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/split-button",
+      "kind": "design-system-doc",
+      "title": "Split Button",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/status-dot",
+      "kind": "design-system-doc",
+      "title": "Status Dot",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/switch",
+      "kind": "design-system-doc",
+      "title": "Switch",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/table",
+      "kind": "design-system-doc",
+      "title": "Table",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/tabs",
+      "kind": "design-system-doc",
+      "title": "Tabs",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/text-with-copy-button",
+      "kind": "design-system-doc",
+      "title": "Text With Copy Button",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/textarea",
+      "kind": "design-system-doc",
+      "title": "Textarea",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/theme-switcher",
+      "kind": "design-system-doc",
+      "title": "Theme Switcher",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/toast",
+      "kind": "design-system-doc",
+      "title": "Toast",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/toggle",
+      "kind": "design-system-doc",
+      "title": "Toggle",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/tooltip",
+      "kind": "design-system-doc",
+      "title": "Tooltip",
+      "notes": "component page; metadata-only extraction"
+    },
+    {
+      "url": "https://vercel.com/geist/video",
+      "kind": "design-system-doc",
+      "title": "Video",
+      "notes": "component page; metadata-only extraction"
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+[
+  {
+    "id": "conversation-sidecar",
+    "label": "Conversation sidecar",
+    "family": "overlay",
+    "confidence": 0.48,
+    "suggested_components": [
+      "chat-panel",
+      "message-thread",
+      "message-composer",
+      "context-drawer"
+    ],
+    "supports_primitives": [
+      "chat and messaging"
+    ],
+    "evidence": [
+      "layout=conversation-panel (0.52)",
+      "layout=split-pane-workspace (0.52)",
+      "chat x3.35",
+      "assistant x0.45",
+      "message x4.5",
+      "conversation x3.35"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+    }
+  },
+  {
+    "id": "data-review-table",
+    "label": "Data review table",
+    "family": "data-display",
+    "confidence": 0.48,
+    "suggested_components": [
+      "data-table",
+      "column-header",
+      "row-actions",
+      "filter-toolbar",
+      "pagination"
+    ],
+    "supports_primitives": [
+      "data tables",
+      "search and filter"
+    ],
+    "evidence": [
+      "layout=data-review-surface (0.52)",
+      "data x0.9",
+      "grid x0.15",
+      "audit x4.000000000000001"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+    }
+  },
+  {
+    "id": "workspace-shell",
+    "label": "Workspace shell",
+    "family": "navigation",
+    "confidence": 0.48,
+    "suggested_components": [
+      "app-shell",
+      "sidebar-nav",
+      "workspace-switcher",
+      "breadcrumb",
+      "context-panel"
+    ],
+    "supports_primitives": [
+      "workspace navigation"
+    ],
+    "evidence": [
+      "layout=split-pane-workspace (0.52)",
+      "workspace x3.9499999999999997",
+      "sidebar x3.0500000000000003",
+      "panel x3.0500000000000003"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+    }
+  },
+  {
+    "id": "review-coverage-system",
+    "label": "Review coverage system",
+    "family": "editorial",
+    "confidence": 0.33,
+    "suggested_components": [
+      "review-card",
+      "score-badge",
+      "comparison-table",
+      "ranking-list",
+      "filter-chip"
+    ],
+    "supports_primitives": [
+      "comparison and ranking",
+      "search and filter",
+      "tags and labels"
+    ],
+    "evidence": [
+      "layout=data-review-surface (0.52)",
+      "layout=editorial-feed (0.24)",
+      "review x0.9"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+    }
+  }
+]

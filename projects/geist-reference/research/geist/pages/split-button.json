@@ -1,0 +1,182 @@
+{
+  "schema_version": "geist-reference-page/v1",
+  "slug": "split-button",
+  "kind": "component",
+  "title": "Split Button",
+  "url": "https://vercel.com/geist/split-button",
+  "final_url": "https://vercel.com/geist/split-button",
+  "canonical_url": "https://vercel.com/geist/split-button",
+  "redirected": false,
+  "description": "A button that offers a primary interaction coupled with a dropdown menu offering additional actions.",
+  "source_hash": "sha256:2d649e4b1b9a3d850944d8336b1e101a9c9651119bfb6b55096bcb5e3f2b8c47",
+  "body_text_length": 2438,
+  "sections": [
+    {
+      "level": "h2",
+      "text": "Default"
+    },
+    {
+      "level": "h2",
+      "text": "Menu Alignment"
+    },
+    {
+      "level": "h2",
+      "text": "Icon"
+    },
+    {
+      "level": "h2",
+      "text": "Title with Icon"
+    },
+    {
+      "level": "h2",
+      "text": "Best Practices"
+    }
+  ],
+  "section_count": 5,
+  "symbol_metadata": {
+    "code_example_count": 4,
+    "import_symbols": [
+      "SplitButton",
+      "SplitButtonMenuItem",
+      "LogoIconOpenAiSvg",
+      "LogoVZeroSvg",
+      "IconArrowCircleUp",
+      "IconFloppyDisk"
+    ],
+    "import_sources": [
+      "@vercel/geistcn/components",
+      "@vercel/geistcn-assets/logos",
+      "@vercel/geistcn-assets/icons"
+    ],
+    "jsx_tags": [
+      "ButtonProps",
+      "SplitButton",
+      "SplitButtonMenuItem",
+      "LogoVZeroSvg",
+      "LogoIconOpenAiSvg"
+    ],
+    "prop_names": [
+      "key",
+      "buttonProps",
+      "menuButtonLabel",
+      "menuItems",
+      "description",
+      "menuItemProps",
+      "title",
+      "menuProps",
+      "menuAlignment",
+      "icon"
+    ]
+  },
+  "token_refs": {
+    "css_var_count": 65,
+    "css_vars": [
+      "--accents-1",
+      "--accents-2",
+      "--accents-3",
+      "--accents-8",
+      "--cross-color",
+      "--divider-color",
+      "--ds-amber-800",
+      "--ds-background-100",
+      "--ds-blue-300",
+      "--ds-blue-700",
+      "--ds-blue-900",
+      "--ds-focus-color",
+      "--ds-focus-ring",
+      "--ds-gray-100",
+      "--ds-gray-1000",
+      "--ds-gray-200",
+      "--ds-gray-300",
+      "--ds-gray-400",
+      "--ds-gray-700",
+      "--ds-gray-900",
+      "--ds-gray-alpha-100",
+      "--ds-gray-alpha-200",
+      "--ds-gray-alpha-400",
+      "--ds-gray-alpha-500",
+      "--ds-gray-alpha-600",
+      "--ds-gray-alpha-900",
+      "--ds-shadow-border",
+      "--ds-shadow-border-small",
+      "--font-mono",
+      "--font-sans",
+      "--geist-foreground",
+      "--geist-form-large-font",
+      "--geist-form-large-line-height",
+      "--geist-form-small-font",
+      "--geist-form-small-height",
+      "--geist-gap-half",
+      "--geist-icon-size",
+      "--grid-columns",
+      "--grid-rows",
+      "--guide-color",
+      "--guide-width",
+      "--height",
+      "--lg-cell-columns",
+      "--lg-cell-rows",
+      "--max-width",
+      "--md-cell-columns",
+      "--md-cell-rows",
+      "--min-width",
+      "--sm-cell-columns",
+      "--sm-cell-rows",
+      "--sm-grid-column",
+      "--sm-grid-row",
+      "--sm-height",
+      "--smd-cell-columns",
+      "--smd-cell-rows",
+      "--spinner-size",
+      "--themed-bg",
+      "--themed-border",
+      "--themed-fg",
+      "--themed-hover-bg",
+      "--x",
+      "--x-padding",
+      "--xs-cell-columns",
+      "--xs-cell-rows",
+      "--y"
+    ],
+    "geist_data_attrs": [
+      "data-geist-button",
+      "data-geist-kbd",
+      "data-geist-menu-button",
+      "data-geist-textarea-wrapper"
+    ]
+  },
+  "accessibility_terms": [
+    "Keyboard",
+    "aria-checked",
+    "aria-controls",
+    "aria-disabled",
+    "aria-expanded",
+    "aria-haspopup",
+    "aria-hidden",
+    "aria-label",
+    "aria-pressable",
+    "focus",
+    "keyboard",
+    "role",
+    "screen-reader"
+  ],
+  "absorption_policy": {
+    "allowed": [
+      "component names",
+      "component taxonomy",
+      "state coverage hints",
+      "section headings",
+      "import and JSX symbol references",
+      "token identifiers",
+      "accessibility and interaction evidence labels"
+    ],
+    "denied": [
+      "verbatim product copy beyond short labels",
+      "brand logos or protected imagery",
+      "unlicensed implementation source code",
+      "full documentation text",
+      "Vercel-specific IA as product IA"
+    ],
+    "rule": "Store structured reference metadata for local reimplementation; keep source URLs as evidence."
+  },
+  "nav_index": 66
+}

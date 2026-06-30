@@ -1198,6 +1198,10 @@ def build_system_spec_markdown(
     icon_replacement_lines = "\n".join(
         f"- {item}" for item in icon_policy.get("replacement_order", [])
     ) or "- Use existing icon library, local SVG components, or create a minimal SVG asset."
+    icon_quality = icon_policy.get("quality_floor", {})
+    icon_quality_lines = "\n".join(
+        f"- {item}" for item in icon_quality.get("required_grammar", [])
+    ) or "- No icon quality grammar defined."
     icon_rule_lines = "\n".join(
         f"- {item}" for item in icon_policy.get("implementation_rules", [])
     ) or "- No icon refactor implementation rules defined."
@@ -1211,6 +1215,8 @@ def build_system_spec_markdown(
 - **Targets**: {icon_targets}
 - **Replacement order**:
 {icon_replacement_lines}
+- **Quality floor**: {icon_quality.get('rule', 'Use an approved icon system or documented icon grammar.')}
+{icon_quality_lines}
 - **Implementation rules**:
 {icon_rule_lines}
 - **Promoted icon failure patterns**:
@@ -1268,6 +1274,43 @@ def build_system_spec_markdown(
 {visual_substance_rule_lines}
 - **Promoted visual substance failure patterns**:
 {visual_substance_failure_lines}"""
+    visual_medium_policy = governance.get("visual_asset_medium_selection_policy", {})
+    visual_medium_override_lines = "\n".join(
+        (
+            f"- **{item.get('id', 'medium-override')}**: priority {item.get('priority', 'highest')}; "
+            f"required {item.get('required_medium', '')}; denied {', '.join(item.get('denied_formats', []))}; "
+            f"triggers {', '.join(item.get('trigger_phrases', [])[:6])}"
+        )
+        for item in visual_medium_policy.get("directive_overrides", [])
+        if isinstance(item, dict)
+    ) or "- No explicit medium directive overrides defined."
+    visual_medium_decision_lines = "\n".join(
+        f"- {item}" for item in visual_medium_policy.get("decision_sequence", [])
+    ) or "- Classify visual slots before choosing an asset medium."
+    visual_medium_family_lines = "\n".join(
+        f"- **{item.get('id', 'slot-family')}**: modes {', '.join(item.get('default_acquisition_modes', []))}; examples {', '.join(item.get('examples', []))}; SVG: {item.get('deterministic_svg', '')}"
+        for item in visual_medium_policy.get("slot_families", [])
+    ) or "- No medium selection slot families defined."
+    visual_medium_rule_lines = "\n".join(
+        f"- {item}" for item in visual_medium_policy.get("implementation_rules", [])
+    ) or "- No visual medium selection rules defined."
+    visual_medium_failure_lines = "\n".join(
+        f"- **{item.get('id', 'visual-asset-medium-failure')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in visual_medium_policy.get("failure_patterns", [])
+    ) or "- No visual medium failure patterns defined."
+    visual_medium_section = f"""### Visual Asset Medium Selection
+
+- **Rule**: {visual_medium_policy.get('rule', 'Choose visual asset medium according to slot role and subject matter.')}
+- **Directive overrides**:
+{visual_medium_override_lines}
+- **Decision sequence**:
+{visual_medium_decision_lines}
+- **Slot family defaults**:
+{visual_medium_family_lines}
+- **Implementation rules**:
+{visual_medium_rule_lines}
+- **Promoted medium failure patterns**:
+{visual_medium_failure_lines}"""
     commercial_policy = governance.get("commercial_product_realism_policy", {})
     commercial_applies_to = ", ".join(commercial_policy.get("applies_to", [])) or "dashboard, tool, data product, operational UI"
     commercial_diagnosis_lines = "\n".join(
@@ -1387,6 +1430,8 @@ def build_system_spec_markdown(
 {app_icon_section}
 
 {visual_substance_section}
+
+{visual_medium_section}
 
 {commercial_section}
 

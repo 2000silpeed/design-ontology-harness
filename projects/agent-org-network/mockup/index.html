@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>에이전트 조직망 목업</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <svg class="icon-sprite" aria-hidden="true" focusable="false">
+    <symbol id="icon-network" viewBox="0 0 24 24"><path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path><path d="M18 14a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path><path d="M8.6 6.5 15.4 9.5"></path><path d="M8.4 17.8 15.6 12.2"></path><path d="M6 22a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path></symbol>
+    <symbol id="icon-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></symbol>
+    <symbol id="icon-bot" viewBox="0 0 24 24"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M9 13v2"></path><path d="M15 13v2"></path></symbol>
+    <symbol id="icon-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.9"></path><path d="M16 3.1a4 4 0 0 1 0 7.8"></path></symbol>
+    <symbol id="icon-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2.8-2.8 2.6-3Z"></path></symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3v8Z"></path><path d="m9 12 2 2 4-5"></path></symbol>
+    <symbol id="icon-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 8L9 4l-3 8H2"></path></symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24"><path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></symbol>
+    <symbol id="icon-search-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h5"></path><path d="M14 2v6h6"></path><circle cx="16" cy="17" r="3"></circle><path d="m21 22-2.1-2.1"></path></symbol>
+    <symbol id="icon-command" viewBox="0 0 24 24"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0 0-6Z"></path></symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></symbol>
+  </svg>
+
+  <div class="app-shell" data-theme="light">
+    <aside class="sidebar" aria-label="주요 내비게이션">
+      <div class="brand-block">
+        <div class="brand-mark" aria-hidden="true"><svg><use href="#icon-network"></use></svg></div>
+        <div>
+          <div class="brand-name">Agent Org Network</div>
+          <div class="brand-meta">운영 보드</div>
+        </div>
+      </div>
+
+      <nav class="nav-list">
+        <button class="nav-item active" data-section="개요"><span class="nav-icon" aria-hidden="true"><svg><use href="#icon-dashboard"></use></svg></span><span>개요</span><strong>42</strong></button>
+        <button class="nav-item" data-section="에이전트"><span class="nav-icon" aria-hidden="true"><svg><use href="#icon-bot"></use></svg></span><span>에이전트</span><strong>128</strong></button>
+        <button class="nav-item" data-section="팀"><span class="nav-icon" aria-hidden="true"><svg><use href="#icon-users"></use></svg></span><span>팀</span><strong>18</strong></button>
+        <button class="nav-item" data-section="도구"><span class="nav-icon" aria-hidden="true"><svg><use href="#icon-wrench"></use></svg></span><span>도구</span><strong>36</strong></button>
+        <button class="nav-item" data-section="정책"><span class="nav-icon" aria-hidden="true"><svg><use href="#icon-shield"></use></svg></span><span>정책</span><strong>9</strong></button>
+        <button class="nav-item" data-section="실행"><span class="nav-icon" aria-hidden="true"><svg><use href="#icon-activity"></use></svg></span><span>실행</span><strong>312</strong></button>
+        <button class="nav-item alert" data-section="사고"><span class="nav-icon" aria-hidden="true"><svg><use href="#icon-alert"></use></svg></span><span>사고</span><strong>7</strong></button>
+        <button class="nav-item" data-section="감사 로그"><span class="nav-icon" aria-hidden="true"><svg><use href="#icon-search-file"></use></svg></span><span>감사 로그</span><strong>1.9k</strong></button>
+      </nav>
+
+      <div class="scope-card">
+        <label for="environment">환경</label>
+        <select id="environment">
+          <option>프로덕션</option>
+          <option>스테이징</option>
+          <option>샌드박스</option>
+        </select>
+      </div>
+
+      <div class="operator-card">
+        <span class="avatar">SJ</span>
+        <div>
+          <strong>Sofia Jung</strong>
+          <span>AI 운영 리드</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="breadcrumb">워크스페이스 / 플랫폼 자동화 / 에이전트 운영</div>
+          <h1>에이전트 조직망</h1>
+        </div>
+        <div class="top-actions">
+          <label class="search-box">
+            <span>검색</span>
+            <input id="globalSearch" type="search" placeholder="에이전트, 담당자, 도구, 정책">
+          </label>
+          <button class="icon-button" id="commandButton" title="명령 팔레트 열기"><svg aria-hidden="true"><use href="#icon-command"></use></svg><span class="sr-only">명령 팔레트 열기</span></button>
+          <button class="button secondary" id="themeToggle">다크 모드</button>
+          <button class="button primary" id="reviewButton">게이트 5개 검토</button>
+        </div>
+      </header>
+
+      <section class="status-strip" aria-label="네트워크 상태 요약">
+        <article class="metric-card">
+          <div class="metric-label">활성 에이전트</div>
+          <div class="metric-value">128</div>
+          <div class="metric-foot positive">이번 주 +14</div>
+          <div class="sparkline" data-bars="18,26,22,31,38,35,44,47,39,52,49,61"></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">열린 핸드오프</div>
+          <div class="metric-value">312</div>
+          <div class="metric-foot warning">26건 담당자 대기</div>
+          <div class="sparkline amber" data-bars="35,32,38,42,48,53,51,57,62,58,64,70"></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">정책 게이트</div>
+          <div class="metric-value">91%</div>
+          <div class="metric-foot positive">자동 점검 통과</div>
+          <div class="sparkline green" data-bars="58,61,63,62,68,66,71,70,74,76,75,78"></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">고위험 경로</div>
+          <div class="metric-value">7</div>
+          <div class="metric-foot danger">2건 검토자 조치 필요</div>
+          <div class="sparkline red" data-bars="18,21,17,26,31,28,25,33,29,24,22,19"></div>
+        </article>
+      </section>
+
+      <section class="workspace-grid">
+        <section class="network-panel panel">
+          <div class="panel-header">
+            <div>
+              <h2>핸드오프 보드</h2>
+              <p>현재 실행이 어느 팀, 에이전트, 승인 게이트를 지나는지 행 단위로 봅니다.</p>
+            </div>
+            <div class="segmented" role="tablist" aria-label="보드 보기">
+              <button class="active" data-graph-view="상태">상태</button>
+              <button data-graph-view="위험">위험</button>
+              <button data-graph-view="담당자">담당자</button>
+            </div>
+          </div>
+
+          <div class="graph-toolbar">
+            <label>
+              팀
+              <select id="teamFilter">
+                <option value="all">전체 팀</option>
+                <option value="eng">엔지니어링</option>
+                <option value="support">지원</option>
+                <option value="governance">거버넌스</option>
+                <option value="revenue">매출</option>
+              </select>
+            </label>
+            <label>
+              위험도
+              <select id="riskFilter">
+                <option value="all">전체 위험도</option>
+                <option value="high">높음</option>
+                <option value="watch">주의</option>
+                <option value="clear">정상</option>
+              </select>
+            </label>
+            <button class="button ghost" id="traceCritical">병목 경로만 보기</button>
+          </div>
+
+          <div class="graph-canvas" id="graphCanvas" aria-label="에이전트 핸드오프 운영 보드" data-runtime-surface="handoff-board">
+            <div class="handoff-board">
+              <div class="board-head" aria-hidden="true">
+                <span>요청</span>
+                <span>처리 에이전트</span>
+                <span>승인/도구</span>
+                <span>상태</span>
+              </div>
+
+              <div class="handoff-row critical">
+                <button class="node handoff-card source clear" data-agent="researcher" data-team="support" data-risk="clear">
+                  <span class="node-type">지원</span>
+                  <strong>리서처</strong>
+                  <small>티켓 48건 읽기 · 담당 Mina</small>
+                  <em>정상</em>
+                </button>
+                <button class="node handoff-card processor watch selected" data-agent="planner" data-team="eng" data-risk="watch" data-route="critical">
+                  <span class="node-type">엔지니어링</span>
+                  <strong>플래너</strong>
+                  <small>GPT-4.1 / v3.8 · 핸드오프 계획</small>
+                  <em>주의</em>
+                </button>
+                <button class="node handoff-card policy high" data-agent="policy" data-team="governance" data-risk="high" data-route="critical">
+                  <span class="node-type">정책</span>
+                  <strong>PII 게이트</strong>
+                  <small>승인 2건 지연 · 보안 운영</small>
+                  <em>차단</em>
+                </button>
+                <div class="handoff-status high">
+                  <strong>18분 지연</strong>
+                  <span>검토자 배정 필요</span>
+                </div>
+              </div>
+
+              <div class="handoff-row">
+                <button class="node handoff-card source clear" data-agent="support-triage" data-team="support" data-risk="clear">
+                  <span class="node-type">지원</span>
+                  <strong>지원 분류</strong>
+                  <small>대기 7분 · 고객 메시지 가드</small>
+                  <em>정상</em>
+                </button>
+                <button class="node handoff-card processor watch" data-agent="coder" data-team="eng" data-risk="watch">
+                  <span class="node-type">엔지니어링</span>
+                  <strong>코더</strong>
+                  <small>담당 Devon · 저장소 쓰기 요청</small>
+                  <em>지연 높음</em>
+                </button>
+                <button class="node handoff-card tool clear" data-agent="jira" data-team="eng" data-risk="clear">
+                  <span class="node-type">도구</span>
+                  <strong>Jira 작성기</strong>
+                  <small>쓰기 권한 제한 · 승인됨</small>
+                  <em>승인됨</em>
+                </button>
+                <div class="handoff-status watch">
+                  <strong>11분 대기</strong>
+                  <span>소유자 확인 중</span>
+                </div>
+              </div>
+
+              <div class="handoff-row">
+                <button class="node handoff-card source clear" data-agent="revenue" data-team="revenue" data-risk="clear">
+                  <span class="node-type">매출</span>
+                  <strong>CRM 업데이트</strong>
+                  <small>HubSpot 범위 · 필드 허용 목록</small>
+                  <em>정상</em>
+                </button>
+                <button class="node handoff-card processor clear" data-agent="summarizer" data-team="support" data-risk="clear">
+                  <span class="node-type">지원</span>
+                  <strong>요약기</strong>
+                  <small>Claude 3.5 · 외부 쓰기 없음</small>
+                  <em>정상</em>
+                </button>
+                <button class="node handoff-card tool high" data-agent="data-warehouse" data-team="governance" data-risk="high" data-route="critical">
+                  <span class="node-type">데이터</span>
+                  <strong>웨어하우스 쿼리</strong>
+                  <small>PII 테이블 읽기 · 검토 필요</small>
+                  <em>검토 필요</em>
+                </button>
+                <div class="handoff-status high">
+                  <strong>정책 확인</strong>
+                  <span>민감 테이블 접근</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="detail-panel panel" aria-label="선택한 에이전트 상세">
+          <div class="panel-header compact">
+            <div>
+              <h2 id="drawerTitle">플래너</h2>
+              <p id="drawerSubtitle">엔지니어링 에이전트 / GPT-4.1 / v3.8</p>
+            </div>
+            <span class="risk-pill watch" id="drawerRisk">주의</span>
+          </div>
+
+          <div class="drawer-section">
+            <h3>담당자와 정책</h3>
+            <dl class="facts">
+              <div><dt>담당자</dt><dd id="drawerOwner">Devon Lee</dd></div>
+              <div><dt>검토자</dt><dd>보안 운영</dd></div>
+              <div><dt>정책 게이트</dt><dd id="drawerPolicy">PII 쓰기 승인</dd></div>
+              <div><dt>최근 배포</dt><dd>v3.8.2, 42분 전</dd></div>
+            </dl>
+          </div>
+
+          <div class="drawer-section">
+            <h3>권한 매트릭스</h3>
+            <div class="matrix">
+              <span>티켓 읽기</span><b class="ok">허용</b>
+              <span>티켓 쓰기</span><b class="ok">허용</b>
+              <span>CRM 조회</span><b class="warn">검토</b>
+              <span>PII 내보내기</span><b class="stop">차단</b>
+            </div>
+          </div>
+
+          <div class="drawer-section">
+            <h3>실행 리플레이</h3>
+            <ol class="timeline">
+              <li class="done"><span>09:42</span><p>지원 티켓 48건 파싱</p></li>
+              <li class="done"><span>09:44</span><p>핸드오프 계획 생성</p></li>
+              <li class="warn"><span>09:47</span><p>PII 게이트 승인 요청</p></li>
+              <li><span>09:51</span><p>검토자 대기</p></li>
+            </ol>
+          </div>
+
+          <div class="drawer-actions">
+            <button class="button primary" id="assignButton">검토자 배정</button>
+            <button class="button secondary" id="diffButton">변경점 보기</button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="lower-grid">
+        <section class="runs-panel panel">
+          <div class="panel-header">
+            <div>
+              <h2>실행과 핸드오프</h2>
+              <p>담당자, 위험도, 정책 근거가 붙은 실시간 큐입니다.</p>
+            </div>
+            <div class="tabs" role="tablist" aria-label="실행 필터">
+              <button class="active" data-run-filter="all">실시간</button>
+              <button data-run-filter="blocked">차단</button>
+              <button data-run-filter="human">사람 대기</button>
+              <button data-run-filter="risk">고위험</button>
+            </div>
+          </div>
+
+          <div class="table-toolbar">
+            <input id="runSearch" type="search" placeholder="실행 필터">
+            <select id="modelFilter">
+              <option value="all">전체 모델</option>
+              <option value="gpt">GPT-4.1</option>
+              <option value="claude">Claude 3.5</option>
+              <option value="llama">Llama 3.1</option>
+            </select>
+            <button class="button secondary" id="refreshButton">새로고침</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>실행</th>
+                  <th>에이전트</th>
+                  <th>담당</th>
+                  <th>상태</th>
+                  <th>위험도</th>
+                  <th>정책</th>
+                  <th>대기</th>
+                </tr>
+              </thead>
+              <tbody id="runsBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="ops-column">
+          <article class="panel">
+            <div class="panel-header compact">
+              <div>
+                <h2>정책 검토 큐</h2>
+                <p>진행 중인 핸드오프에 묶인 사람 승인 게이트입니다.</p>
+              </div>
+              <span class="count-pill">5건 열림</span>
+            </div>
+            <div class="review-list" id="reviewList"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header compact">
+              <div>
+                <h2>도구 상태</h2>
+                <p>성공률, 지연, 권한 실패를 함께 봅니다.</p>
+              </div>
+            </div>
+            <div class="tool-grid">
+              <div class="tool-card"><strong>GitHub</strong><span>99.1%</span><i style="--w:99%"></i></div>
+              <div class="tool-card warn"><strong>Jira</strong><span>92.4%</span><i style="--w:92%"></i></div>
+              <div class="tool-card"><strong>Slack</strong><span>98.7%</span><i style="--w:98%"></i></div>
+              <div class="tool-card danger"><strong>Warehouse</strong><span>86.9%</span><i style="--w:86%"></i></div>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="command-dialog" id="commandDialog">
+    <form method="dialog">
+      <div class="dialog-head">
+        <strong>명령 팔레트</strong>
+        <button class="icon-button" value="close" title="닫기"><svg aria-hidden="true"><use href="#icon-x"></use></svg><span class="sr-only">닫기</span></button>
+      </div>
+      <input type="search" placeholder="경로 추적, 담당자 배정, 정책 예외 생성" autofocus>
+      <div class="command-results">
+        <button value="핵심 경로">핵심 핸드오프 경로 추적</button>
+        <button value="검토자 배정">PII 게이트 검토자 배정</button>
+        <button value="프롬프트 변경점">플래너 프롬프트 변경점 열기</button>
+        <button value="감사 패킷">감사 패킷 내보내기</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

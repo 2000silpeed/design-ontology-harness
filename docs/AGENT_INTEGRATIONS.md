@@ -47,12 +47,14 @@ AI 도구로 사용할 때의 역할은 세 가지로 나뉩니다.
 - `plugins/design-system-harness/skills/design-system-architect/SKILL.md`
 - `plugins/design-system-harness/skills/design-system-implementer/SKILL.md`
 - `plugins/design-system-harness/skills/design-system-visual-assets/SKILL.md`
+- `plugins/design-system-harness/skills/design-system-reference-inspect/SKILL.md`
 - `.agents/plugins/marketplace.json`
 
 용도:
 
 - 로컬 Codex plugin bundle
 - implementation repo에서 system artifacts를 읽는 skill 제공
+- `inspect-reference-site` 산출물을 복제 지시가 아니라 형태·밀도·상호작용 affordance 근거로만 쓰게 하는 reference inspect skill 제공
 - Codex의 내장 `image_gen` 스킬이 가능할 때 브랜드에 맞는 히어로/카드/에디토리얼 이미지를 생성하고 통합하는 visual asset skill 제공. 실패해도 CLI/API fallback은 호출하지 않음
 
 ### Claude Code
@@ -61,8 +63,10 @@ AI 도구로 사용할 때의 역할은 세 가지로 나뉩니다.
 
 - `.claude/skills/design-system-architect/SKILL.md`
 - `.claude/skills/design-system-implement/SKILL.md`
+- `.claude/skills/design-system-reference-inspect/SKILL.md`
 - `.claude/agents/design-system-architect.md`
 - `.claude/agents/design-system-implementer.md`
+- `.claude/agents/design-system-reference-inspect.md`
 
 용도:
 
@@ -102,6 +106,7 @@ The generated skills and agents expect these files inside the implementation rep
 - `design-system/component_inventory.json`
 - `design-system/system_ontology.json`
 - `design-system/components/component_specs.md`
+- `design-system/design_context_pack.json` 또는 `design-system/website_research/design_context_pack.json` (선택, `inspect-reference-site` 사용 시)
 
 If a curated color reference is connected through the harness project, the generated `system_spec.md` and `token_schema.json` will also carry the active palette, alternative palette candidates, and semantic role hints that agents should follow.
 
@@ -137,23 +142,26 @@ Codex나 Claude Code가 이 하네스를 AI 도구로 사용할 때는 아래 �
 2. **Screen mapping**: 작업 화면을 기존 컴포넌트 패밀리와 product primitive에
    매핑합니다. 필요한 컴포넌트가 없으면 임시 UI를 만들기보다 하네스 산출물을
    먼저 갱신합니다.
-3. **Implementation**: semantic token, component anatomy, state, accessibility
+3. **Reference inspection**: `website_research`나 `design_context_pack.json`이 있으면
+   형태, 밀도, hierarchy rhythm, interaction affordance만 참고합니다. 색상, 폰트,
+   IA, 카피, 로고, 외부 에셋은 가져오지 않습니다.
+4. **Implementation**: semantic token, component anatomy, state, accessibility
    contract를 기준으로 구현합니다. raw hex, 독자 팔레트 재조합, 이모지 UI,
    generic initials app icon은 금지합니다.
-4. **Domain realism**: 대시보드, 도구, 스포츠, 데이터, 커뮤니티 제품은 마케팅
+5. **Domain realism**: 대시보드, 도구, 스포츠, 데이터, 커뮤니티 제품은 마케팅
    히어로보다 실제 조작면을 먼저 보여줍니다. 출처, 업데이트 시각, 상태, 필터,
    표/레일/리스트 같은 운영 UI가 첫 화면의 밀도를 만듭니다.
-5. **Identity and assets**: 앱 아이콘, favicon, app-shell mark는
+6. **Identity and assets**: 앱 아이콘, favicon, app-shell mark는
    `BrandIdentityAsset`으로 취급합니다. 일반 `WC`, `AI`, `DS` 이니셜 타일을
    최종 아이콘으로 남기지 않고 브랜드 특정 SVG/아이콘 자산을 만듭니다.
-6. **Visuals**: 히어로/카드/에디토리얼 이미지는 Codex 내장 `image_gen` 경로를
+7. **Visuals**: 히어로/카드/에디토리얼 이미지는 Codex 내장 `image_gen` 경로를
    사용합니다. 사이트, 앱, 랜딩, 제품, 장소, 콘텐츠, 게임 목업은 이미지 없는
    카드/그라디언트만으로 완료하지 않고 도메인 실체를 보여주는 visual asset을
    적극적으로 배치합니다. 버튼 glyph, 상태 마커, 앱 아이콘은 이미지 생성 대상이
    아니라 SVG나 아이콘 라이브러리 대상입니다.
-7. **Mode parity**: 명시적으로 한 모드만 요구하지 않는 한 light mode와 dark mode를
+8. **Mode parity**: 명시적으로 한 모드만 요구하지 않는 한 light mode와 dark mode를
    같은 semantic token 역할로 함께 구현하고 캡처합니다.
-8. **Verification**: `lint-implementation`을 실행하고, 브라우저 캡처로 desktop,
+9. **Verification**: `lint-implementation`을 실행하고, 브라우저 캡처로 desktop,
    mobile, light, dark, overflow, label clipping을 확인합니다.
 
 국가 대표팀이나 월드컵처럼 국가 식별이 핵심인 화면에서는 팀을 장식 이니셜보다
@@ -179,6 +187,7 @@ In a frontend repo:
 
 - first ask the agent to read `design-system/IMPLEMENTATION_CONTRACT.md` and `design-system/STYLE.md`
 - ask the architect skill/agent to map a new screen to component families
+- if `inspect-reference-site` outputs exist, ask the reference-inspect skill/agent to convert them into safe morphology and interaction guidance before implementation
 - ask the implementer skill/agent to build the screen using existing tokens and primitives
 - require normal light mode and dark mode together unless the task explicitly asks for one mode only; light mode is the default surface
 - in Codex, ask the visual asset skill to generate imagery through the built-in `image_gen` skill for hero, empty-state, editorial, or product sections when the screen needs real visual substance

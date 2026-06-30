@@ -1,0 +1,21 @@
+/* design-ontology:START */
+/* locale: ko — Pretendard pairing */
+@font-face {
+  font-family: "Pretendard Variable";
+  font-style: normal;
+  font-weight: 45 920;
+  font-display: swap;
+  src: url("./fonts/PretendardVariable.woff2") format("woff2-variations");
+}
+
+:root {
+  --ds-font-ko: "Pretendard Variable", "Pretendard", system-ui, -apple-system, sans-serif;
+  --ds-font-heading: var(--ds-font-ko);
+  --ds-font-body: var(--ds-font-ko);
+  --ds-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html[lang='ko'], [data-locale='ko'] {
+  font-family: var(--ds-font-ko);
+}
+/* design-ontology:END */

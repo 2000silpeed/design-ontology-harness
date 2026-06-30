@@ -209,14 +209,86 @@
   },
   "visual_reference": {
     "mode": "local-images",
+    "reference_providers": [
+      {
+        "provider_id": "lazyweb",
+        "status": "active",
+        "access_mode": "mcp",
+        "truth_role": "real app morphology evidence from Lazyweb MCP searches"
+      }
+    ],
     "query": [
       "chatgpt enterprise admin console",
       "anthropic claude enterprise workspace",
       "stripe dialog documentation",
       "salesforce einstein assistant",
-      "intercom fin ai copilot"
+      "intercom fin ai copilot",
+      "enterprise compliance dashboard review workflow",
+      "enterprise onboarding checklist approval workflow dashboard",
+      "document review policy citations sidebar"
     ],
-    "sources": [],
+    "sources": [
+      {
+        "kind": "lazyweb",
+        "label": "Remote contractor compliance dashboard",
+        "url": "https://remote.com/global-hr/contractor-of-record",
+        "tags": [
+          "compliance",
+          "dashboard",
+          "approval",
+          "overview-card",
+          "contractor-list"
+        ]
+      },
+      {
+        "kind": "lazyweb",
+        "label": "Complydo compliance autopilot dashboard",
+        "url": "https://www.complydo.io/",
+        "tags": [
+          "compliance",
+          "dashboard",
+          "risk-assessment",
+          "workflow",
+          "sidebar"
+        ]
+      },
+      {
+        "kind": "lazyweb",
+        "label": "Appcues onboarding checklist and analytics",
+        "url": "https://www.appcues.com/use-case/onboarding",
+        "tags": [
+          "onboarding",
+          "checklist",
+          "progress",
+          "analytics",
+          "guidance"
+        ]
+      },
+      {
+        "kind": "lazyweb",
+        "label": "Userpilot product onboarding modules",
+        "url": "https://userpilot.com/product/user-engagement/",
+        "tags": [
+          "onboarding",
+          "resource-center",
+          "task-list",
+          "modular-panel",
+          "guidance"
+        ]
+      },
+      {
+        "kind": "lazyweb",
+        "label": "DuckDuckGo legal help center index",
+        "url": "https://duckduckgo.com/duckduckgo-help-pages/r-legal",
+        "tags": [
+          "policy",
+          "document",
+          "sidebar",
+          "index",
+          "legal"
+        ]
+      }
+    ],
     "preferred_count": 8,
     "weights": {
       "layout": 0.3,
@@ -246,6 +318,7 @@
     ],
     "notes": [
       "ChatGPT Enterprise / Anthropic Claude Enterprise / Stripe Dialog docs / Salesforce Einstein / Intercom Fin 계열 enterprise AI copilot 참조",
+      "Lazyweb MCP 2026-05-04 실검색: Remote/Complydo/Appcues/Userpilot/DuckDuckGo는 component morphology, layout density, hierarchy rhythm만 흡수한다.",
       "corporate-trust 톤: Super Sonic + Copper + Powder Blue 로 enterprise 신뢰·정돈 감성 유지, 밀도는 medium-high (compliance 보조 패널 + audit trail)",
       "이미지 힌트는 advisory — 구조는 spec + KB 우선"
     ],

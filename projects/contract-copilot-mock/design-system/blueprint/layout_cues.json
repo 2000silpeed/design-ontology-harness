@@ -1,0 +1,63 @@
+[
+  {
+    "id": "conversation-panel",
+    "label": "Conversation side panel",
+    "confidence": 0.52,
+    "evidence": [
+      "chat x3.35",
+      "assistant x0.45",
+      "message x4.5",
+      "thread x2.7",
+      "prompt x1.8",
+      "conversation x3.35"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+    }
+  },
+  {
+    "id": "data-review-surface",
+    "label": "Data review surface",
+    "confidence": 0.52,
+    "evidence": [
+      "grid x0.15",
+      "audit x4.000000000000001",
+      "data x0.9",
+      "timeline x2.6",
+      "review x0.9"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+    }
+  },
+  {
+    "id": "split-pane-workspace",
+    "label": "Split-pane workspace",
+    "confidence": 0.52,
+    "evidence": [
+      "workspace x3.9499999999999997",
+      "sidebar x3.0500000000000003"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+    }
+  },
+  {
+    "id": "editorial-feed",
+    "label": "Editorial feed",
+    "confidence": 0.24,
+    "evidence": [
+      "editorial x0.25",
+      "feed x0.25",
+      "magazine x0.25",
+      "review x0.9"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+    }
+  }
+]

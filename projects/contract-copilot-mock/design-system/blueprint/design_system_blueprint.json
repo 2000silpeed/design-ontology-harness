@@ -1834,9 +1834,7 @@
       ]
     }
   },
-  "visual_reference_issues": [
-    "visual_reference.sources is empty"
-  ],
+  "visual_reference_issues": [],
   "visual_language": {
     "density": {
       "value": "airy",

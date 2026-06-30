@@ -1,0 +1,19 @@
+{
+  "preset_id": "document-content--playful-soft",
+  "preset_api_version": "1.0.0",
+  "adapter_id": "raw-css-variables",
+  "adapter_version": "0.1.0",
+  "harness_version": "0.1.0",
+  "color_mode": "light",
+  "locale": "ko",
+  "installed_at": "2026-05-19T14:03:57Z",
+  "content_hash": "sha256:bb4a92eb7c684586e864c18234ef21f00559b7bd2ab12949e8094cefcafcd08e",
+  "proposed_files": [],
+  "counts": {
+    "created": 0,
+    "merged": 2,
+    "overwritten": 28,
+    "proposed": 0,
+    "skipped": 0
+  }
+}

@@ -2,36 +2,32 @@
   "id": "dashboard--corporate-trust",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
     "raw-css-variables": ">=0.1.0 <1.0.0",
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
-  "source_project": "ledger",
-  "content_hash": "sha256:9c2956a12a8b3c40a73de832523cad402049fc1f4ce25eb1defc56d663bf9dac",
+  "source_project": "agent-org-network",
+  "content_hash": "sha256:29d6e3cf3e6585d4308f39be642884f1a9a00bd21b2bdd984b0d508324dfe085",
   "app_mode": "dashboard",
   "brand_tone": "corporate-trust",
   "color_modes": [
     "light",
     "dark"
   ],
-  "default_color_mode": "light",
+  "default_color_mode": "dark",
   "tags": [
     "fintech",
+    "banking",
+    "enterprise",
+    "governance",
     "ko"
   ],
-  "locale_pairings": {
-    "ko": {
-      "heading_font": "Pretendard",
-      "body_font": "Pretendard",
-      "mono_font": "JetBrains Mono",
-      "notes": "fintech 운영 대시보드 — 한국어 UI 1급, 숫자 가독성은 tabular-nums 로 보조"
-    }
-  },
-  "owner": "maintainer",
+  "locale_pairings": {},
+  "owner": "sungwoon",
   "tier": "P1",
-  "generated_at": "2026-04-21T12:34:59Z",
-  "description": "기업·금융팀을 위한 corporate-trust 톤 핀테크 운영 대시보드 — 거래/잔고/컴플라이언스 콘솔, 한국어 1급"
+  "generated_at": "2026-06-30T03:02:05Z",
+  "description": "Agent Org Network question-routing console design system"
 }

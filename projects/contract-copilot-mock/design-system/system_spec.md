@@ -240,7 +240,6 @@
 ## 13. Profile Validation
 
 - Warning: [pitfall#3-rebrand] Classic Blue vs Misty Blue (blue): lightness diff 53, saturation diff 22 — possible rebrand remnant
-- Warning: visual_reference.sources is empty
 
 ## 14. Quick Start
 

@@ -1,0 +1,163 @@
+{
+  "brand_name": "Mode Signal",
+  "system_name": "Mode Signal Editorial System",
+  "product_summary": "A visual-first fashion magazine web experience for runway reports, trend essays, shopping edits, and daily style intelligence.",
+  "audiences": [
+    "Fashion readers who scan visually before reading deeply",
+    "Editors planning homepage packages and runway coverage",
+    "Style shoppers who move between editorial inspiration and product context"
+  ],
+  "brand_keywords": [
+    "editorial",
+    "visual",
+    "fashion-forward",
+    "cultured",
+    "decisive",
+    "premium"
+  ],
+  "anti_keywords": [
+    "generic blog",
+    "template marketplace",
+    "overly beige",
+    "stock-photo lifestyle",
+    "dashboard-heavy",
+    "luxury cliche"
+  ],
+  "tone_of_voice": [
+    "sharp",
+    "observant",
+    "magazine-like",
+    "confident",
+    "concise"
+  ],
+  "visual_keywords": [
+    "large editorial imagery",
+    "high-contrast serif headlines",
+    "dense article rails",
+    "runway contact sheet",
+    "fashion week energy",
+    "disciplined whitespace"
+  ],
+  "interaction_keywords": [
+    "fast section switching",
+    "save story",
+    "edition filter",
+    "horizontal trend rail",
+    "image-led browsing"
+  ],
+  "platforms": [
+    "responsive web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "keyboard navigable content rails",
+    "visible focus states",
+    "alt text for editorial imagery"
+  ],
+  "product_primitives": [
+    "hero section",
+    "search and filter",
+    "tags and labels",
+    "data tables",
+    "forms",
+    "workspace navigation",
+    "charts and visualization",
+    "site header"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "fashion",
+      "runway",
+      "magazine",
+      "editorial",
+      "style"
+    ],
+    "avoid_sources_containing": [
+      "logo",
+      "advertisement",
+      "tracking pixel",
+      "social icon"
+    ]
+  },
+  "seeds": [
+    "https://www.vogue.com/fashion",
+    "https://www.vogue.com/fashion-shows",
+    "https://runwaymagazines.com/",
+    "https://www.elle.com/fashion/"
+  ],
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Ink",
+      "Ruby",
+      "Moss",
+      "Ivory"
+    ],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "balanced",
+      "contrast": "high",
+      "diversity": "high",
+      "surface_style": "editorial",
+      "prefer_moods": [
+        "editorial",
+        "premium",
+        "dramatic"
+      ],
+      "avoid_moods": [
+        "pastel",
+        "corporate",
+        "beige-only"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 8,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": false
+    },
+    "notes": [
+      "Use a high contrast editorial base with one fashion accent and one cool supporting tone.",
+      "Avoid an all-cream magazine look; the interface should feel current and digital."
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "fashion magazine editorial homepage runway gallery trend story serif",
+      "visual fashion news layout large image headline article rail",
+      "runway fashion week gallery magazine homepage editorial grid"
+    ],
+    "sources": [],
+    "preferred_count": 18,
+    "weights": {
+      "layout": 0.28,
+      "component_shape": 0.2,
+      "color_balance": 0.2,
+      "typography_mood": 0.22,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "image-led hero",
+      "editorial feed",
+      "runway/gallery rail",
+      "serif display headline",
+      "newsletter capture"
+    ],
+    "avoid_patterns": [
+      "empty media placeholders",
+      "generic card grid",
+      "dashboard chrome",
+      "marketing SaaS hero",
+      "single-color beige palette"
+    ],
+    "notes": [
+      "Reference pack sources are used for analysis and style grounding only.",
+      "Mockup images are local test assets and should not be redistributed as product assets."
+    ]
+  }
+}

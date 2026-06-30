@@ -1,0 +1,22 @@
+{
+  "name": "tactic-lens-remotion-sample",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "preview": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts TacticLensMinute out/tacticlens-minute.mp4 --codec=h264",
+    "render:still": "remotion still src/index.ts TacticLensMinute out/thumbnail.png --frame=90"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.459",
+    "remotion": "4.0.459",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3"
+  }
+}
+

@@ -1,0 +1,3179 @@
+{
+  "components": [
+    {
+      "slug": "avatar",
+      "name": "Avatar",
+      "family": "identity",
+      "url": "https://vercel.com/geist/avatar",
+      "description": "Avatars represent a user or a team. Stacked avatars represent a group of people",
+      "sections": [
+        "Group",
+        "Stacking order",
+        "Overlap",
+        "Fixed overlap",
+        "Size",
+        "Git",
+        "With custom icon",
+        "Letter",
+        "Placeholder",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "loading",
+        "empty"
+      ],
+      "import_symbols": [
+        "AvatarGroup",
+        "Avatar",
+        "GitHubAvatar",
+        "GitLabAvatar",
+        "BitbucketAvatar",
+        "AvatarWithIcon",
+        "IconArrowCircleDown",
+        "IconCheckCircleFill",
+        "IconClockDashed"
+      ],
+      "jsx_tags": [
+        "AvatarGroup",
+        "Avatar",
+        "GitHubAvatar",
+        "GitLabAvatar",
+        "BitbucketAvatar",
+        "AvatarWithIcon",
+        "IconArrowCircleDown",
+        "IconCheckCircleFill",
+        "IconClockDashed"
+      ],
+      "prop_names": [
+        "members",
+        "size",
+        "limit",
+        "overlap",
+        "username",
+        "icon",
+        "color",
+        "letter"
+      ],
+      "token_refs_count": 64,
+      "code_example_count": 9,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "grid",
+      "name": "Grid",
+      "family": "layout",
+      "url": "https://vercel.com/geist/grid",
+      "description": "Display elements in a grid layout.",
+      "sections": [
+        "Grid",
+        "Basic grid",
+        "Solid cells",
+        "Responsive grid",
+        "Responsive Grid with responsive guide clipping cells",
+        "Grid with hidden row guides",
+        "Grid with hidden column guides",
+        "Grid with overlaying cells",
+        "Specific Grid with Guide Clipping",
+        "Grid with cross",
+        "Dashed grid with cross",
+        "Dashed grid with grid page",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "responsive"
+      ],
+      "import_symbols": [
+        "Grid",
+        "GridSystem",
+        "GridCell",
+        "GridCross",
+        "GridPage"
+      ],
+      "jsx_tags": [
+        "GridSystem",
+        "Grid",
+        "GridCell",
+        "GridCross",
+        "GridPage"
+      ],
+      "prop_names": [
+        "guideWidth",
+        "columns",
+        "height",
+        "rows",
+        "column",
+        "row",
+        "hideGuides"
+      ],
+      "token_refs_count": 85,
+      "code_example_count": 12,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "badge",
+      "name": "Badge",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/badge",
+      "description": "A label that emphasizes an element that requires attention, or helps categorize with other similar elements.",
+      "sections": [
+        "Variants",
+        "Sizes",
+        "With icons",
+        "Pill",
+        "Best Practices"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "Badge",
+        "IconShield",
+        "badgeVariants",
+        "LogoIconSlack",
+        "cn",
+        "Link"
+      ],
+      "jsx_tags": [
+        "Badge",
+        "IconShield",
+        "Link",
+        "LogoIconSlack"
+      ],
+      "prop_names": [
+        "variant",
+        "contrast",
+        "size",
+        "icon",
+        "href",
+        "data-slot"
+      ],
+      "token_refs_count": 83,
+      "code_example_count": 4,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "banner",
+      "name": "Banner",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/banner",
+      "description": "A prominent message that spans the full width of its container to announce important information.",
+      "sections": [
+        "Default"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "Banner"
+      ],
+      "jsx_tags": [
+        "Banner"
+      ],
+      "prop_names": [
+        "button"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 1,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "book",
+      "name": "Book",
+      "family": "content",
+      "url": "https://vercel.com/geist/book",
+      "description": "A responsive book component.",
+      "sections": [
+        "Default",
+        "Variants",
+        "Custom color",
+        "Custom icon",
+        "Custom illustration",
+        "Responsive",
+        "Width",
+        "Textured",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected"
+      ],
+      "import_symbols": [
+        "Book",
+        "LogoIconVercel",
+        "LogoIconNext",
+        "LogoIconReact"
+      ],
+      "jsx_tags": [
+        "Book",
+        "LogoIconVercel",
+        "LogoIconNext",
+        "LogoIconReact",
+        "Lines",
+        "Icon"
+      ],
+      "prop_names": [
+        "title",
+        "variant",
+        "width",
+        "color",
+        "textColor",
+        "icon",
+        "illustration"
+      ],
+      "token_refs_count": 66,
+      "code_example_count": 8,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "breadcrumbs",
+      "name": "Breadcrumbs",
+      "family": "navigation",
+      "url": "https://vercel.com/geist/breadcrumbs",
+      "description": "Navigation aid that shows the user's location within a site's hierarchy, with text and menu variants.",
+      "sections": [
+        "Default",
+        "Active",
+        "Disabled"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "active",
+        "focus",
+        "disabled"
+      ],
+      "import_symbols": [
+        "Breadcrumb",
+        "BreadcrumbItem"
+      ],
+      "jsx_tags": [
+        "Breadcrumb",
+        "BreadcrumbItem"
+      ],
+      "prop_names": [
+        "type"
+      ],
+      "token_refs_count": 61,
+      "code_example_count": 3,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "browser",
+      "name": "Browser",
+      "family": "content",
+      "url": "https://vercel.com/geist/browser",
+      "description": "The Browser component lets you showcase website screenshots or any other content within a realistic browser-style frame.",
+      "sections": [
+        "Composition",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected"
+      ],
+      "import_symbols": [
+        "Browser"
+      ],
+      "jsx_tags": [
+        "Browser"
+      ],
+      "prop_names": [
+        "address"
+      ],
+      "token_refs_count": 61,
+      "code_example_count": 1,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "button",
+      "name": "Button",
+      "family": "action",
+      "url": "https://vercel.com/geist/button",
+      "description": "Trigger an action or event, such as submitting a form or displaying a dialog.",
+      "sections": [
+        "Sizes",
+        "All Types and Sizes in comparison",
+        "Shapes",
+        "Prefix and suffix",
+        "Rounded",
+        "Loading",
+        "Disabled",
+        "Disabled variants",
+        "Link",
+        "Custom",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "active",
+        "disabled",
+        "loading",
+        "focus"
+      ],
+      "import_symbols": [
+        "Button",
+        "IconArrowUp",
+        "IconArrowLeft",
+        "IconArrowRight",
+        "ButtonLink",
+        "CustomButton"
+      ],
+      "jsx_tags": [
+        "Button",
+        "IconArrowUp",
+        "IconArrowLeft",
+        "IconArrowRight",
+        "ButtonLink",
+        "CustomButton"
+      ],
+      "prop_names": [
+        "size",
+        "variant",
+        "aria-label",
+        "shape",
+        "prefix",
+        "suffix",
+        "href",
+        "active",
+        "hover",
+        "normal",
+        "width"
+      ],
+      "token_refs_count": 76,
+      "code_example_count": 10,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "calendar",
+      "name": "Calendar",
+      "family": "input",
+      "url": "https://vercel.com/geist/calendar",
+      "description": "Displays a calendar from which users can select a date or range of dates.",
+      "sections": [
+        "Default",
+        "Horizontal Layout",
+        "Sizes",
+        "Presets",
+        "Compact",
+        "Stacked",
+        "Presets with default value",
+        "Min and max dates",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "Calendar",
+        "useState",
+        "type JSX",
+        "startOfDay",
+        "subDays",
+        "subWeeks",
+        "subMonths",
+        "endOfDay",
+        "addDays"
+      ],
+      "jsx_tags": [
+        "RangeValue",
+        "DateValue",
+        "Calendar"
+      ],
+      "prop_names": [
+        "onChange",
+        "value",
+        "minValue",
+        "maxValue",
+        "showTimeInput",
+        "popoverAlignment",
+        "size",
+        "presets",
+        "presetIndex"
+      ],
+      "token_refs_count": 64,
+      "code_example_count": 8,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "card",
+      "name": "Card",
+      "family": "surface",
+      "url": "https://vercel.com/geist/card",
+      "description": "A container that groups related content and actions on a surface.",
+      "sections": [
+        "Default",
+        "Hover",
+        "Border",
+        "Border Between",
+        "Border Between Vertical",
+        "Secondary"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected",
+        "disabled"
+      ],
+      "import_symbols": [
+        "Card"
+      ],
+      "jsx_tags": [
+        "Card"
+      ],
+      "prop_names": [
+        "direction"
+      ],
+      "token_refs_count": 62,
+      "code_example_count": 6,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "checkbox",
+      "name": "Checkbox",
+      "family": "input",
+      "url": "https://vercel.com/geist/checkbox",
+      "description": "A control that toggles between two options, checked or unchecked.",
+      "sections": [
+        "Default",
+        "Disabled",
+        "Indeterminate",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "Checkbox",
+        "useState",
+        "type JSX"
+      ],
+      "jsx_tags": [
+        "Checkbox"
+      ],
+      "prop_names": [
+        "checked",
+        "onChange"
+      ],
+      "token_refs_count": 64,
+      "code_example_count": 3,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "choicebox",
+      "name": "Choicebox",
+      "family": "input",
+      "url": "https://vercel.com/geist/choicebox",
+      "description": "A larger form of Radio or Checkbox, where the user has a larger tap target and more details.",
+      "sections": [
+        "Single-select",
+        "Multi-select",
+        "Disabled",
+        "Custom content",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "ChoiceboxGroup",
+        "ChoiceboxGroupItem",
+        "useState",
+        "type JSX",
+        "Badge"
+      ],
+      "jsx_tags": [
+        "ChoiceboxGroup",
+        "ChoiceboxGroupItem",
+        "Badge"
+      ],
+      "prop_names": [
+        "label",
+        "onChange",
+        "type",
+        "value",
+        "listClassName",
+        "description",
+        "title",
+        "variant"
+      ],
+      "token_refs_count": 68,
+      "code_example_count": 4,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "clearable-input",
+      "name": "Clearable Input",
+      "family": "input",
+      "url": "https://vercel.com/geist/clearable-input",
+      "description": "Text input with a clear button that resets the value on Escape.",
+      "sections": [
+        "Default",
+        "With Label",
+        "With Cmdk",
+        "Disabled",
+        "With Clear Callback"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "ClearableInput",
+        "useState"
+      ],
+      "jsx_tags": [
+        "ClearableInput"
+      ],
+      "prop_names": [
+        "aria-label",
+        "onChange",
+        "placeholder",
+        "value",
+        "label",
+        "onClear"
+      ],
+      "token_refs_count": 63,
+      "code_example_count": 5,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "code",
+      "name": "Code",
+      "family": "content",
+      "url": "https://vercel.com/geist/code",
+      "description": "Display a snippet of code with syntax highlighting.",
+      "sections": [
+        "Default"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected"
+      ],
+      "import_symbols": [
+        "Code"
+      ],
+      "jsx_tags": [],
+      "prop_names": [],
+      "token_refs_count": 60,
+      "code_example_count": 1,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "code-block",
+      "name": "Code Block",
+      "family": "content",
+      "url": "https://vercel.com/geist/code-block",
+      "description": "Code Block component used across Vercel and Next.js.",
+      "sections": [
+        "Default",
+        "No filename",
+        "Highlighted lines",
+        "Added & removed lines",
+        "Referenced lines",
+        "Language switcher",
+        "Language switcher with tabs",
+        "Hidden line numbers",
+        "Open in v0",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected"
+      ],
+      "import_symbols": [
+        "CodeBlock",
+        "useState",
+        "type JSX"
+      ],
+      "jsx_tags": [],
+      "prop_names": [],
+      "token_refs_count": 68,
+      "code_example_count": 9,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "collapse",
+      "name": "Collapse",
+      "family": "overlay",
+      "url": "https://vercel.com/geist/collapse",
+      "description": "A set of headings, vertically stacked, that each reveal an related section of content. Commonly referred to as an accordion.",
+      "sections": [
+        "Default",
+        "Question A",
+        "Question B",
+        "Expanded",
+        "Multiple",
+        "Small",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "closed",
+        "opening",
+        "open",
+        "dismissed"
+      ],
+      "import_symbols": [
+        "Collapse",
+        "CollapseGroup"
+      ],
+      "jsx_tags": [
+        "CollapseGroup",
+        "Collapse"
+      ],
+      "prop_names": [
+        "title",
+        "size"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 4,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "combobox",
+      "name": "Combobox",
+      "family": "input",
+      "url": "https://vercel.com/geist/combobox",
+      "description": "Filters large lists to selectable options based on the matching query.",
+      "sections": [
+        "Uncontrolled",
+        "Controlled",
+        "Disabled",
+        "Errored",
+        "Custom width input",
+        "Custom width list",
+        "Custom empty message",
+        "Clearable",
+        "With prefix icons",
+        "With suffix icons",
+        "With label",
+        "Sizes",
+        "Used inside a Modal",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "Combobox",
+        "ComboboxInput",
+        "ComboboxList",
+        "ComboboxOption",
+        "useState",
+        "type JSX",
+        "LogoIconVercelSvg",
+        "useId",
+        "Modal",
+        "Button",
+        "Label",
+        "ModalBody",
+        "ModalHeader",
+        "ModalTitle",
+        "ModalSubtitle",
+        "ModalInset",
+        "ModalActions",
+        "ModalAction"
+      ],
+      "jsx_tags": [
+        "Combobox",
+        "ComboboxInput",
+        "ComboboxList",
+        "ComboboxOption",
+        "LogoIconVercelSvg",
+        "Button",
+        "Modal",
+        "ModalBody",
+        "ModalHeader",
+        "ModalTitle",
+        "ModalSubtitle",
+        "ModalInset",
+        "Label",
+        "ModalActions",
+        "ModalAction"
+      ],
+      "prop_names": [
+        "aria-label",
+        "placeholder",
+        "value",
+        "onChange",
+        "width",
+        "maxWidth",
+        "emptyMessage",
+        "prefix",
+        "suffix",
+        "htmlFor",
+        "id",
+        "size",
+        "key",
+        "onClick",
+        "active",
+        "onClickOutside",
+        "variant"
+      ],
+      "token_refs_count": 64,
+      "code_example_count": 13,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "command-menu",
+      "name": "Command Menu",
+      "family": "overlay",
+      "url": "https://vercel.com/geist/command-menu",
+      "description": "Launch a set of actions as a full-screen overlay.",
+      "sections": [
+        "Default",
+        "With divider",
+        "With suffix",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "closed",
+        "opening",
+        "open",
+        "dismissed"
+      ],
+      "import_symbols": [
+        "CommandMenu",
+        "Button",
+        "CommandMenuInput",
+        "CommandMenuList",
+        "CommandMenuGroup",
+        "CommandMenuItem",
+        "useState",
+        "type JSX",
+        "CommandMenuDivider",
+        "IconCheckCircle"
+      ],
+      "jsx_tags": [
+        "Button",
+        "CommandMenu",
+        "CommandMenuInput",
+        "CommandMenuList",
+        "CommandMenuGroup",
+        "CommandMenuItem",
+        "CommandMenuDivider",
+        "IconCheckCircle"
+      ],
+      "prop_names": [
+        "onClick",
+        "open",
+        "setOpen",
+        "placeholder",
+        "heading",
+        "callback",
+        "suffix",
+        "color"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 3,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "context-card",
+      "name": "Context Card",
+      "family": "surface",
+      "url": "https://vercel.com/geist/context-card",
+      "description": "Tooltip",
+      "sections": [
+        "Default",
+        "Alignment",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected",
+        "disabled"
+      ],
+      "import_symbols": [
+        "ContextCardTrigger",
+        "Button"
+      ],
+      "jsx_tags": [
+        "ContextCardTrigger",
+        "Button"
+      ],
+      "prop_names": [
+        "content",
+        "side",
+        "align"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 2,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "context-menu",
+      "name": "Context Menu",
+      "family": "overlay",
+      "url": "https://vercel.com/geist/context-menu",
+      "description": "Displays a brief heading and subheading to communicate any additional information or context a user needs to continue.",
+      "sections": [
+        "Default",
+        "Disabled items",
+        "Link items",
+        "Prefix and suffix",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "closed",
+        "opening",
+        "open",
+        "dismissed"
+      ],
+      "import_symbols": [
+        "ContextMenu",
+        "ContextMenuContent",
+        "ContextMenuItem",
+        "ContextMenuTrigger",
+        "LogoIconVercelCircleSvg"
+      ],
+      "jsx_tags": [
+        "ContextMenu",
+        "ContextMenuTrigger",
+        "ContextMenuContent",
+        "ContextMenuItem",
+        "LogoIconVercelCircleSvg"
+      ],
+      "prop_names": [
+        "onClick",
+        "value",
+        "href",
+        "prefix",
+        "suffix"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 4,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "copy-button",
+      "name": "Copy Button",
+      "family": "action",
+      "url": "https://vercel.com/geist/copy-button",
+      "description": "A button that copies a given string to the clipboard and provides feedback when copied.",
+      "sections": [
+        "Default"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "active",
+        "disabled",
+        "loading",
+        "focus"
+      ],
+      "import_symbols": [
+        "CopyButton"
+      ],
+      "jsx_tags": [
+        "CopyButton"
+      ],
+      "prop_names": [
+        "textToCopy",
+        "label"
+      ],
+      "token_refs_count": 61,
+      "code_example_count": 1,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "description",
+      "name": "Description",
+      "family": "content",
+      "url": "https://vercel.com/geist/description",
+      "description": "Displays a brief heading and subheading to communicate any additional information or context a user needs to continue.",
+      "sections": [
+        "Default",
+        "Text right",
+        "Ellipsis",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected"
+      ],
+      "import_symbols": [
+        "Description"
+      ],
+      "jsx_tags": [
+        "Description"
+      ],
+      "prop_names": [
+        "content",
+        "title",
+        "tooltip"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 3,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "destructive-action-modal",
+      "name": "Destructive Action Modal",
+      "family": "overlay",
+      "url": "https://vercel.com/geist/destructive-action-modal",
+      "description": "Confirm destructive actions with a required type-to-confirm gate and an optional irreversibility band.",
+      "sections": [
+        "Default",
+        "Reversible",
+        "Loading",
+        "With error",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "closed",
+        "opening",
+        "open",
+        "dismissed"
+      ],
+      "import_symbols": [
+        "Button",
+        "DestructiveActionModal",
+        "useState",
+        "type JSX"
+      ],
+      "jsx_tags": [
+        "Button",
+        "DestructiveActionModal"
+      ],
+      "prop_names": [
+        "onClick",
+        "size",
+        "variant",
+        "confirmLabel",
+        "description",
+        "irreversibleDescription",
+        "loading",
+        "onCancel",
+        "onConfirm",
+        "open",
+        "title",
+        "verificationLabel",
+        "verificationPhrase",
+        "error"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 4,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "dots-menu",
+      "name": "Dots Menu",
+      "family": "action",
+      "url": "https://vercel.com/geist/dots-menu",
+      "description": "An overflow menu triggered by a three-dot icon that reveals additional actions in a dropdown.",
+      "sections": [
+        "Default",
+        "Sizes",
+        "Disabled",
+        "Disabled Menu Item"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "active",
+        "disabled",
+        "loading",
+        "focus"
+      ],
+      "import_symbols": [
+        "DotsMenu",
+        "MenuItem"
+      ],
+      "jsx_tags": [
+        "DotsMenu",
+        "MenuItem"
+      ],
+      "prop_names": [
+        "iconSize"
+      ],
+      "token_refs_count": 61,
+      "code_example_count": 4,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "drawer",
+      "name": "Drawer",
+      "family": "overlay",
+      "url": "https://vercel.com/geist/drawer",
+      "description": "Display content in a separate view from the existing context.",
+      "sections": [
+        "Default",
+        "Custom height",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "closed",
+        "opening",
+        "open",
+        "dismissed"
+      ],
+      "import_symbols": [
+        "Button",
+        "Drawer",
+        "useState",
+        "type JSX"
+      ],
+      "jsx_tags": [
+        "Button",
+        "Drawer"
+      ],
+      "prop_names": [
+        "onClick",
+        "onDismiss",
+        "show",
+        "height"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 2,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "empty-state",
+      "name": "Empty State",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/empty-state",
+      "description": "Fill spaces when no content has been added yet, or is temporarily empty due to the nature of the feature and should be designed to prevent confusion.",
+      "sections": [
+        "Empty state Design framework",
+        "Blank slate",
+        "Informational",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "EmptyState",
+        "EmptyStateIcon",
+        "IconChartBarPeak",
+        "Button",
+        "Link"
+      ],
+      "jsx_tags": [
+        "EmptyState",
+        "EmptyStateIcon",
+        "IconChartBarPeak",
+        "Button",
+        "Link"
+      ],
+      "prop_names": [
+        "description",
+        "icon",
+        "size",
+        "title",
+        "variant",
+        "data-zone",
+        "href",
+        "type"
+      ],
+      "token_refs_count": 65,
+      "code_example_count": 3,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "entity",
+      "name": "Entity",
+      "family": "identity",
+      "url": "https://vercel.com/geist/entity",
+      "description": "Displays up-to-two columns of content. The left column can contain arbitrary content, and the right column typically contains controls or actions related to the content in the left column.",
+      "sections": [
+        "Default",
+        "Entity with Skeleton",
+        "Entity with List",
+        "Entity with List and Checkbox",
+        "Entity with Fill",
+        "Entity with Column ClassNames",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content"
+      ],
+      "states_required": [
+        "default",
+        "loading",
+        "empty"
+      ],
+      "import_symbols": [
+        "Avatar",
+        "Entity",
+        "EntityContent",
+        "Skeleton",
+        "Button",
+        "EntityList",
+        "useState",
+        "Checkbox"
+      ],
+      "jsx_tags": [
+        "Entity",
+        "Avatar",
+        "EntityContent",
+        "Skeleton",
+        "EntityList",
+        "Button",
+        "Record",
+        "Checkbox"
+      ],
+      "prop_names": [
+        "left",
+        "size",
+        "username",
+        "right",
+        "description",
+        "title",
+        "height",
+        "width",
+        "as",
+        "variant",
+        "key",
+        "onClick",
+        "aria-label",
+        "checked",
+        "onChange",
+        "leftClassName",
+        "rightClassName"
+      ],
+      "token_refs_count": 66,
+      "code_example_count": 6,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "error",
+      "name": "Error",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/error",
+      "description": "Good error design is clear, useful, and friendly. Designing concise and accurate error messages unblocks users and builds trust by meeting people where they are.",
+      "sections": [
+        "Default",
+        "Custom label",
+        "No label",
+        "Sizes",
+        "With an error property",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "Error"
+      ],
+      "jsx_tags": [
+        "Error",
+        "GeistError"
+      ],
+      "prop_names": [
+        "label",
+        "size",
+        "error"
+      ],
+      "token_refs_count": 61,
+      "code_example_count": 5,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "error-card",
+      "name": "Error Card",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/error-card",
+      "description": "A card used to communicate an error state with a title and message.",
+      "sections": [
+        "Default",
+        "No credits left"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "ErrorCard"
+      ],
+      "jsx_tags": [
+        "ErrorCard"
+      ],
+      "prop_names": [
+        "message",
+        "title"
+      ],
+      "token_refs_count": 64,
+      "code_example_count": 1,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "feedback",
+      "name": "Feedback",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/feedback",
+      "description": "Gather text feedback with an associated emotion.",
+      "sections": [
+        "Default",
+        "Inline",
+        "Feedback with Select",
+        "Feedback with metadata",
+        "Feedback with prefix",
+        "Feedback with suffix",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "Feedback",
+        "Note",
+        "IconFlagPriority"
+      ],
+      "jsx_tags": [
+        "Feedback",
+        "Note",
+        "IconFlagPriority"
+      ],
+      "prop_names": [
+        "label",
+        "type",
+        "metadata",
+        "prefix",
+        "suffix"
+      ],
+      "token_refs_count": 61,
+      "code_example_count": 6,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "fieldset",
+      "name": "Fieldset",
+      "family": "form",
+      "url": "https://vercel.com/geist/fieldset",
+      "description": "Groups related form controls inside a bordered card with optional footer actions.",
+      "sections": [
+        "Default",
+        "Disabled",
+        "With Long Content",
+        "Multiple Fieldsets",
+        "Without Footer",
+        "Without Title",
+        "With Error Text",
+        "With Warning Text",
+        "With Disabled Wall",
+        "Error Type",
+        "Warning Type"
+      ],
+      "states_required": [
+        "default",
+        "focus",
+        "disabled",
+        "error"
+      ],
+      "import_symbols": [
+        "Button",
+        "Fieldset",
+        "FieldsetContent",
+        "FieldsetFooter",
+        "FieldsetFooterActions",
+        "FieldsetFooterStatus",
+        "FieldsetSubtitle",
+        "FieldsetTitle",
+        "Link",
+        "ErrorText",
+        "WarningText",
+        "DisabledWall"
+      ],
+      "jsx_tags": [
+        "Fieldset",
+        "FieldsetContent",
+        "FieldsetTitle",
+        "FieldsetSubtitle",
+        "FieldsetFooter",
+        "FieldsetFooterStatus",
+        "Link",
+        "FieldsetFooterActions",
+        "Button",
+        "ErrorText",
+        "WarningText",
+        "DisabledWall"
+      ],
+      "prop_names": [
+        "href",
+        "variant",
+        "size",
+        "type"
+      ],
+      "token_refs_count": 70,
+      "code_example_count": 11,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "file-tree",
+      "name": "File Tree",
+      "family": "content",
+      "url": "https://vercel.com/geist/file-tree",
+      "description": "Display a hierarchical directory structure with expandable folders and files, useful for illustrating project layouts.",
+      "sections": [
+        "Default"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected"
+      ],
+      "import_symbols": [
+        "Tree",
+        "Folder",
+        "File"
+      ],
+      "jsx_tags": [
+        "Tree",
+        "Folder",
+        "File"
+      ],
+      "prop_names": [
+        "name",
+        "href",
+        "type"
+      ],
+      "token_refs_count": 61,
+      "code_example_count": 1,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "gauge",
+      "name": "Gauge",
+      "family": "data-display",
+      "url": "https://vercel.com/geist/gauge",
+      "description": "A circular visual for conveying a percentage.",
+      "sections": [
+        "Default",
+        "Label",
+        "Default color scale",
+        "Custom color range",
+        "Custom secondary color",
+        "Arc priority",
+        "Indeterminate",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "loading",
+        "empty",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "Gauge"
+      ],
+      "jsx_tags": [
+        "Gauge"
+      ],
+      "prop_names": [
+        "size",
+        "value",
+        "colors",
+        "arcPriority"
+      ],
+      "token_refs_count": 85,
+      "code_example_count": 7,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "input",
+      "name": "Input",
+      "family": "input",
+      "url": "https://vercel.com/geist/input",
+      "description": "Retrieve text input from a user.",
+      "sections": [
+        "Default",
+        "Prefix and suffix",
+        "Disabled",
+        "Search",
+        "⌘K",
+        "Error",
+        "Label",
+        "Rounded prefix and suffix",
+        "Rounded prefix and suffix without styling",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "Input",
+        "IconArrowCircleUp",
+        "SearchInput",
+        "useState"
+      ],
+      "jsx_tags": [
+        "Input",
+        "IconArrowCircleUp",
+        "SearchInput"
+      ],
+      "prop_names": [
+        "aria-labelledby",
+        "placeholder",
+        "size",
+        "prefix",
+        "suffix",
+        "prefixStyling",
+        "suffixStyling",
+        "suffixContainer",
+        "value",
+        "onChange",
+        "error",
+        "label"
+      ],
+      "token_refs_count": 68,
+      "code_example_count": 9,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "keyboard-input",
+      "name": "Keyboard Input",
+      "family": "input",
+      "url": "https://vercel.com/geist/keyboard-input",
+      "description": "Display keyboard input that triggers an action.",
+      "sections": [
+        "Modifiers",
+        "Combination",
+        "Small",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "Kbd"
+      ],
+      "jsx_tags": [
+        "Kbd"
+      ],
+      "prop_names": [],
+      "token_refs_count": 61,
+      "code_example_count": 3,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "label",
+      "name": "Label",
+      "family": "form",
+      "url": "https://vercel.com/geist/label",
+      "description": "Accessible text label for form controls.",
+      "sections": [
+        "Default",
+        "With Input",
+        "Bypass Casing"
+      ],
+      "states_required": [
+        "default",
+        "focus",
+        "disabled",
+        "error"
+      ],
+      "import_symbols": [
+        "Label",
+        "Input"
+      ],
+      "jsx_tags": [
+        "Label",
+        "Input"
+      ],
+      "prop_names": [
+        "id",
+        "value",
+        "aria-labelledby",
+        "placeholder"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 3,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "load-more-button",
+      "name": "Load More Button",
+      "family": "action",
+      "url": "https://vercel.com/geist/load-more-button",
+      "description": "A full-width button used to append more items to a paginated list, with loading and styling variants.",
+      "sections": [
+        "Default",
+        "Loading",
+        "No Gap",
+        "No Border Radius",
+        "Custom Text"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "active",
+        "disabled",
+        "loading",
+        "focus"
+      ],
+      "import_symbols": [
+        "LoadMoreButton"
+      ],
+      "jsx_tags": [
+        "LoadMoreButton"
+      ],
+      "prop_names": [],
+      "token_refs_count": 62,
+      "code_example_count": 5,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "loading-dots",
+      "name": "Loading Dots",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/loading-dots",
+      "description": "Indicate an action running in the background.",
+      "sections": [
+        "Default",
+        "With text",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Accessibility"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "LoadingDots"
+      ],
+      "jsx_tags": [
+        "LoadingDots"
+      ],
+      "prop_names": [
+        "size"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 2,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "menu",
+      "name": "Menu",
+      "family": "navigation",
+      "url": "https://vercel.com/geist/menu",
+      "description": "Dropdown menu opened via button. Supports typeahead and keyboard navigation.",
+      "sections": [
+        "Default",
+        "With chevron",
+        "Disabled items",
+        "Locked items",
+        "Link items",
+        "Custom trigger",
+        "Prefix and suffix",
+        "Menu position",
+        "With section",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "active",
+        "focus",
+        "disabled"
+      ],
+      "import_symbols": [
+        "Menu",
+        "MenuButton",
+        "MenuContainer",
+        "MenuItem",
+        "MenuItemLocked",
+        "Tooltip",
+        "MenuLink",
+        "Avatar",
+        "IconAccessibility",
+        "IconMoreHorizontal",
+        "MenuDivider",
+        "MenuSection"
+      ],
+      "jsx_tags": [
+        "MenuContainer",
+        "MenuButton",
+        "Menu",
+        "MenuItem",
+        "Tooltip",
+        "MenuItemLocked",
+        "MenuLink",
+        "Avatar",
+        "IconMoreHorizontal",
+        "IconAccessibility",
+        "MenuSection",
+        "MenuDivider"
+      ],
+      "prop_names": [
+        "width",
+        "onClick",
+        "href",
+        "type",
+        "variant",
+        "text",
+        "size",
+        "username",
+        "aria-label",
+        "shape",
+        "prefix",
+        "suffix",
+        "position",
+        "title"
+      ],
+      "token_refs_count": 61,
+      "code_example_count": 9,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "middle-truncate",
+      "name": "MiddleTruncate",
+      "family": "content",
+      "url": "https://vercel.com/geist/middle-truncate",
+      "description": "Truncates text in the middle, preserving the start and end of the string for maximum readability.",
+      "sections": [
+        "Examples",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected"
+      ],
+      "import_symbols": [
+        "Label",
+        "Toggle",
+        "MiddleTruncate",
+        "Slider",
+        "useEffect",
+        "useRef",
+        "useState",
+        "type CSSProperties",
+        "type JSX"
+      ],
+      "jsx_tags": [
+        "MiddleTruncate",
+        "Label",
+        "Slider",
+        "Toggle"
+      ],
+      "prop_names": [
+        "key",
+        "value",
+        "max",
+        "min",
+        "onValueChange",
+        "disabled",
+        "checked",
+        "onChange"
+      ],
+      "token_refs_count": 69,
+      "code_example_count": 1,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "modal",
+      "name": "Modal",
+      "family": "overlay",
+      "url": "https://vercel.com/geist/modal",
+      "description": "Display popup content that requires attention or provides additional information.",
+      "sections": [
+        "Default",
+        "Sticky",
+        "Single button",
+        "Disabled actions",
+        "Inset",
+        "Control initial focus",
+        "Focus an input on open",
+        "Mobile sheet with inputs",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "closed",
+        "opening",
+        "open",
+        "dismissed"
+      ],
+      "import_symbols": [
+        "Button",
+        "Modal",
+        "ModalBody",
+        "ModalHeader",
+        "ModalTitle",
+        "ModalSubtitle",
+        "ModalActions",
+        "ModalAction",
+        "useState",
+        "type JSX",
+        "IconArrowLeft",
+        "ModalInset",
+        "useRef",
+        "Input"
+      ],
+      "jsx_tags": [
+        "Button",
+        "Modal",
+        "ModalBody",
+        "ModalHeader",
+        "ModalTitle",
+        "ModalSubtitle",
+        "ModalActions",
+        "ModalAction",
+        "IconArrowLeft",
+        "ModalInset",
+        "HTMLButtonElement",
+        "HTMLInputElement",
+        "Input"
+      ],
+      "prop_names": [
+        "onClick",
+        "size",
+        "active",
+        "onClickOutside",
+        "variant",
+        "prefix",
+        "initialFocusRef",
+        "ref",
+        "aria-labelledby",
+        "label",
+        "onChange",
+        "placeholder",
+        "value"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 8,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "multi-select",
+      "name": "Multi Select",
+      "family": "input",
+      "url": "https://vercel.com/geist/multi-select",
+      "description": "A keyboard-navigable dropdown for selecting multiple items with advanced focus management.",
+      "sections": [
+        "Select Actions",
+        "Keyboard Navigation",
+        "Controlled State",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "useState",
+        "MultiSelectRoot",
+        "MultiSelectTrigger",
+        "MultiSelectContent",
+        "MultiSelectRow",
+        "Link"
+      ],
+      "jsx_tags": [
+        "Set",
+        "MultiSelectRoot",
+        "MultiSelectTrigger"
+      ],
+      "prop_names": [],
+      "token_refs_count": 61,
+      "code_example_count": 3,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "note",
+      "name": "Note",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/note",
+      "description": "Display text that requires attention or provides additional information.",
+      "sections": [
+        "Default",
+        "Action",
+        "Success",
+        "Error",
+        "Warning",
+        "Secondary",
+        "Violet",
+        "Cyan",
+        "Disabled",
+        "Labels",
+        "Default label",
+        "Custom label",
+        "No label",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "Note",
+        "Button",
+        "Link",
+        "Fragment",
+        "type JSX"
+      ],
+      "jsx_tags": [
+        "Note",
+        "Button",
+        "Link",
+        "Fragment"
+      ],
+      "prop_names": [
+        "size",
+        "action",
+        "type",
+        "href",
+        "data-zone",
+        "key"
+      ],
+      "token_refs_count": 62,
+      "code_example_count": 10,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "pagination",
+      "name": "Pagination",
+      "family": "navigation",
+      "url": "https://vercel.com/geist/pagination",
+      "description": "Navigate to the previous or next page.",
+      "sections": [
+        "Default",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "active",
+        "focus",
+        "disabled"
+      ],
+      "import_symbols": [
+        "Pagination"
+      ],
+      "jsx_tags": [
+        "Pagination"
+      ],
+      "prop_names": [
+        "next",
+        "previous"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 1,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "phone",
+      "name": "Phone",
+      "family": "content",
+      "url": "https://vercel.com/geist/phone",
+      "description": "The Phone component lets you showcase website screenshots or other content within a realistic phone-style frame.",
+      "sections": [
+        "Composition",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected"
+      ],
+      "import_symbols": [
+        "Phone"
+      ],
+      "jsx_tags": [
+        "Phone"
+      ],
+      "prop_names": [
+        "address"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 1,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "progress",
+      "name": "Progress",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/progress",
+      "description": "Display progress relative to a limit or related to a task.",
+      "sections": [
+        "Default",
+        "Custom max",
+        "Dynamic colors",
+        "Themed",
+        "With Stops",
+        "Widths",
+        "Heights",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "Progress",
+        "Button",
+        "useState",
+        "type JSX"
+      ],
+      "jsx_tags": [
+        "Progress",
+        "Button"
+      ],
+      "prop_names": [
+        "value",
+        "max",
+        "colors",
+        "onClick",
+        "size",
+        "variant",
+        "type",
+        "stops",
+        "width",
+        "height"
+      ],
+      "token_refs_count": 69,
+      "code_example_count": 7,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "project-banner",
+      "name": "Project Banner",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/project-banner",
+      "description": "Used for temporary, project-wide notifications that require resolution",
+      "sections": [
+        "Default",
+        "Success",
+        "Warning",
+        "Error",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "ProjectBanner",
+        "IconShieldCheck",
+        "Tooltip",
+        "IconRotateCounterClockwise",
+        "IconWarning"
+      ],
+      "jsx_tags": [
+        "ProjectBanner",
+        "IconRotateCounterClockwise",
+        "Tooltip"
+      ],
+      "prop_names": [
+        "callToAction",
+        "key",
+        "icon",
+        "label",
+        "text",
+        "variant"
+      ],
+      "token_refs_count": 65,
+      "code_example_count": 4,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "radio",
+      "name": "Radio",
+      "family": "input",
+      "url": "https://vercel.com/geist/radio",
+      "description": "Provides single user input from a selection of options.",
+      "sections": [
+        "Default",
+        "Radio disabled",
+        "Radio required",
+        "Radio headless",
+        "Radio standalone",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "RadioGroup",
+        "RadioGroupItem",
+        "useState",
+        "type JSX",
+        "Button",
+        "useRadio",
+        "Radio"
+      ],
+      "jsx_tags": [
+        "RadioGroup",
+        "RadioGroupItem",
+        "Button",
+        "Radio"
+      ],
+      "prop_names": [
+        "label",
+        "onChange",
+        "value",
+        "size",
+        "aria-label",
+        "checked"
+      ],
+      "token_refs_count": 64,
+      "code_example_count": 5,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "relative-time-card",
+      "name": "Relative Time Card",
+      "family": "surface",
+      "url": "https://vercel.com/geist/relative-time-card",
+      "description": "Popover to show a given date in local time.",
+      "sections": [
+        "Default",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected",
+        "disabled"
+      ],
+      "import_symbols": [
+        "Button",
+        "RelativeTimeCard"
+      ],
+      "jsx_tags": [
+        "RelativeTimeCard",
+        "Button"
+      ],
+      "prop_names": [
+        "date",
+        "side"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 1,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "scroller",
+      "name": "Scroller",
+      "family": "navigation",
+      "url": "https://vercel.com/geist/scroller",
+      "description": "Display an overflowing list of items.",
+      "sections": [
+        "Vertical",
+        "Horizontal",
+        "Free",
+        "Vertical with buttons",
+        "Horizontal with buttons",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "active",
+        "focus",
+        "disabled"
+      ],
+      "import_symbols": [
+        "Scroller"
+      ],
+      "jsx_tags": [
+        "Scroller"
+      ],
+      "prop_names": [
+        "height",
+        "overflow",
+        "width",
+        "key",
+        "childrenContainerClassName"
+      ],
+      "token_refs_count": 61,
+      "code_example_count": 5,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "search-input",
+      "name": "Search Input",
+      "family": "input",
+      "url": "https://vercel.com/geist/search-input",
+      "description": "Pre-configured search input with a magnifying glass icon and clear button.",
+      "sections": [
+        "Default",
+        "With Cmdk",
+        "Disabled",
+        "Loading",
+        "Custom Prefix"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "SearchInput",
+        "useState",
+        "IconSparkles"
+      ],
+      "jsx_tags": [
+        "SearchInput",
+        "IconSparkles"
+      ],
+      "prop_names": [
+        "aria-label",
+        "onChange",
+        "placeholder",
+        "value",
+        "prefix"
+      ],
+      "token_refs_count": 65,
+      "code_example_count": 5,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "select",
+      "name": "Select",
+      "family": "input",
+      "url": "https://vercel.com/geist/select",
+      "description": "Display a dropdown list of items.",
+      "sections": [
+        "Sizes",
+        "Prefix and suffix",
+        "Disabled",
+        "Error",
+        "Label",
+        "With options",
+        "Required",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "Select",
+        "IconArrowCircleUp"
+      ],
+      "jsx_tags": [
+        "Select",
+        "IconArrowCircleUp"
+      ],
+      "prop_names": [
+        "aria-label",
+        "placeholder",
+        "size",
+        "prefix",
+        "suffix",
+        "error",
+        "label",
+        "value",
+        "defaultValue"
+      ],
+      "token_refs_count": 70,
+      "code_example_count": 7,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "separator",
+      "name": "Separator",
+      "family": "layout",
+      "url": "https://vercel.com/geist/separator",
+      "description": "A visual divider that separates content into distinct sections, with support for horizontal and vertical orientations.",
+      "sections": [
+        "Horizontal",
+        "Section 1",
+        "Section 2",
+        "Vertical",
+        "Orientation Variants",
+        "Accessibility Variants",
+        "Custom Styling"
+      ],
+      "states_required": [
+        "default",
+        "responsive"
+      ],
+      "import_symbols": [
+        "Separator"
+      ],
+      "jsx_tags": [
+        "Separator"
+      ],
+      "prop_names": [
+        "orientation",
+        "decorative"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 5,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "sheet",
+      "name": "Sheet",
+      "family": "overlay",
+      "url": "https://vercel.com/geist/sheet",
+      "description": "Display content in a side panel that slides in from the edge of the screen.",
+      "sections": [
+        "Default",
+        "With Side",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "closed",
+        "opening",
+        "open",
+        "dismissed"
+      ],
+      "import_symbols": [
+        "Button",
+        "Sheet",
+        "SheetClose",
+        "SheetContent",
+        "SheetDescription",
+        "SheetFooter",
+        "SheetHeader",
+        "SheetTitle",
+        "SheetTrigger"
+      ],
+      "jsx_tags": [
+        "Sheet",
+        "SheetTrigger",
+        "Button",
+        "SheetContent",
+        "SheetHeader",
+        "SheetTitle",
+        "SheetDescription",
+        "SheetFooter",
+        "SheetClose"
+      ],
+      "prop_names": [
+        "noOverlay",
+        "variant",
+        "key",
+        "side"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 2,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "show-more",
+      "name": "Show more",
+      "family": "content",
+      "url": "https://vercel.com/geist/show-more",
+      "description": "Styling component to show expanded or collapsed content.",
+      "sections": [
+        "Default",
+        "Expanded",
+        "No border",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected"
+      ],
+      "import_symbols": [
+        "ShowMore",
+        "useState",
+        "type JSX"
+      ],
+      "jsx_tags": [
+        "ShowMore"
+      ],
+      "prop_names": [
+        "expanded",
+        "onClick"
+      ],
+      "token_refs_count": 61,
+      "code_example_count": 3,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "skeleton",
+      "name": "Skeleton",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/skeleton",
+      "description": "Display a skeleton whilst another component is loading.",
+      "sections": [
+        "Default with set width",
+        "Default with box height",
+        "Wrapping children",
+        "Wrapping children with fixed size",
+        "Pill",
+        "Rounded",
+        "Squared",
+        "No animation",
+        "Button",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Accessibility"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "Skeleton",
+        "Button"
+      ],
+      "jsx_tags": [
+        "Skeleton",
+        "Button"
+      ],
+      "prop_names": [
+        "width",
+        "boxHeight",
+        "show",
+        "height",
+        "animated",
+        "variant"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 9,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "slider",
+      "name": "Slider",
+      "family": "input",
+      "url": "https://vercel.com/geist/slider",
+      "description": "Input to select a value from a given range.",
+      "sections": [
+        "Default",
+        "Range with inputs",
+        "Disabled range with inputs",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "Slider",
+        "useState",
+        "type JSX"
+      ],
+      "jsx_tags": [
+        "Slider"
+      ],
+      "prop_names": [
+        "onValueChange",
+        "value"
+      ],
+      "token_refs_count": 62,
+      "code_example_count": 3,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "snippet",
+      "name": "Snippet",
+      "family": "content",
+      "url": "https://vercel.com/geist/snippet",
+      "description": "Display a snippet of copyable code for the command line.",
+      "sections": [
+        "Default",
+        "Inverted",
+        "Multi line",
+        "No prompt",
+        "Callback",
+        "Variants",
+        "Controlled Copied State",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected"
+      ],
+      "import_symbols": [
+        "Snippet",
+        "useCallback",
+        "useRef",
+        "useState",
+        "ContextCardTrigger"
+      ],
+      "jsx_tags": [
+        "Snippet"
+      ],
+      "prop_names": [
+        "text",
+        "width",
+        "prompt",
+        "onCopy",
+        "type"
+      ],
+      "token_refs_count": 62,
+      "code_example_count": 7,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "spinner",
+      "name": "Spinner",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/spinner",
+      "description": "Indicate an action running in the background. Unlike the loading dots, this should generally be used to indicate loading feedback in response to a user action, like for buttons, pagination, etc.",
+      "sections": [
+        "Default size",
+        "Sizes",
+        "Colors",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Accessibility"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "Spinner"
+      ],
+      "jsx_tags": [
+        "Spinner"
+      ],
+      "prop_names": [
+        "size"
+      ],
+      "token_refs_count": 62,
+      "code_example_count": 3,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "split-button",
+      "name": "Split Button",
+      "family": "action",
+      "url": "https://vercel.com/geist/split-button",
+      "description": "A button that offers a primary interaction coupled with a dropdown menu offering additional actions.",
+      "sections": [
+        "Default",
+        "Menu Alignment",
+        "Icon",
+        "Title with Icon",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "active",
+        "disabled",
+        "loading",
+        "focus"
+      ],
+      "import_symbols": [
+        "SplitButton",
+        "SplitButtonMenuItem",
+        "LogoIconOpenAiSvg",
+        "LogoVZeroSvg",
+        "IconArrowCircleUp",
+        "IconFloppyDisk"
+      ],
+      "jsx_tags": [
+        "ButtonProps",
+        "SplitButton",
+        "SplitButtonMenuItem",
+        "LogoVZeroSvg",
+        "LogoIconOpenAiSvg"
+      ],
+      "prop_names": [
+        "key",
+        "buttonProps",
+        "menuButtonLabel",
+        "menuItems",
+        "description",
+        "menuItemProps",
+        "title",
+        "menuProps",
+        "menuAlignment",
+        "icon"
+      ],
+      "token_refs_count": 65,
+      "code_example_count": 4,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "status-dot",
+      "name": "Status Dot",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/status-dot",
+      "description": "Display an indicator of deployment status.",
+      "sections": [
+        "Default",
+        "Label",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "StatusDot"
+      ],
+      "jsx_tags": [
+        "StatusDot"
+      ],
+      "prop_names": [
+        "state"
+      ],
+      "token_refs_count": 63,
+      "code_example_count": 2,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "switch",
+      "name": "Switch",
+      "family": "input",
+      "url": "https://vercel.com/geist/switch",
+      "description": "Choose between a set of options.",
+      "sections": [
+        "Default",
+        "Disabled",
+        "Sizes",
+        "Full width",
+        "Tooltip",
+        "Icon",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "Switch",
+        "SwitchControl",
+        "Tooltip",
+        "IconGridSquare",
+        "IconListUnordered"
+      ],
+      "jsx_tags": [
+        "Switch",
+        "SwitchControl",
+        "Tooltip",
+        "IconGridSquare",
+        "IconListUnordered"
+      ],
+      "prop_names": [
+        "name",
+        "label",
+        "value",
+        "size",
+        "text",
+        "icon"
+      ],
+      "token_refs_count": 62,
+      "code_example_count": 6,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "table",
+      "name": "Table",
+      "family": "data-display",
+      "url": "https://vercel.com/geist/table",
+      "description": "A semantic HTML table component",
+      "sections": [
+        "Basic table",
+        "Striped table",
+        "Bordered table",
+        "Interactive table",
+        "Full featured table",
+        "Virtualized table",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content"
+      ],
+      "states_required": [
+        "default",
+        "loading",
+        "empty",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "Table",
+        "TableHeader",
+        "TableRow",
+        "TableHead",
+        "TableBody",
+        "TableCell",
+        "TableRoot",
+        "TableColgroup",
+        "TableCol",
+        "TableFooter",
+        "ShowMore",
+        "memo",
+        "useState",
+        "type JSX"
+      ],
+      "jsx_tags": [
+        "TableRoot",
+        "Table",
+        "TableHeader",
+        "TableRow",
+        "TableHead",
+        "TableBody",
+        "TableCell",
+        "TableColgroup",
+        "TableCol",
+        "TableFooter",
+        "Row"
+      ],
+      "prop_names": [
+        "key",
+        "colSpan",
+        "item"
+      ],
+      "token_refs_count": 61,
+      "code_example_count": 6,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "tabs",
+      "name": "Tabs",
+      "family": "navigation",
+      "url": "https://vercel.com/geist/tabs",
+      "description": "Display tab content.",
+      "sections": [
+        "Default",
+        "Disabled",
+        "Disable specific tabs",
+        "With icons",
+        "Secondary",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "active",
+        "focus",
+        "disabled"
+      ],
+      "import_symbols": [
+        "Tabs",
+        "useState",
+        "type JSX",
+        "LogoIconBitbucket",
+        "LogoIconGithubSvg",
+        "LogoIconGitlabSvg"
+      ],
+      "jsx_tags": [
+        "Tabs",
+        "LogoIconGithubSvg",
+        "LogoIconGitlabSvg",
+        "LogoIconBitbucket"
+      ],
+      "prop_names": [
+        "selected",
+        "setSelected",
+        "tabs",
+        "variant"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 5,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "text-with-copy-button",
+      "name": "Text With Copy Button",
+      "family": "action",
+      "url": "https://vercel.com/geist/text-with-copy-button",
+      "description": "Display text alongside a button that copies the text to the clipboard.",
+      "sections": [
+        "Default",
+        "With Small and Tertiary"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "active",
+        "disabled",
+        "loading",
+        "focus"
+      ],
+      "import_symbols": [
+        "TextWithCopyButton"
+      ],
+      "jsx_tags": [
+        "TextWithCopyButton"
+      ],
+      "prop_names": [
+        "successMessage",
+        "textLabel",
+        "textToCopy"
+      ],
+      "token_refs_count": 62,
+      "code_example_count": 2,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "textarea",
+      "name": "Textarea",
+      "family": "input",
+      "url": "https://vercel.com/geist/textarea",
+      "description": "Retrieve multi-line user input.",
+      "sections": [
+        "Default",
+        "Disabled",
+        "Error",
+        "Sizes",
+        "Read Only",
+        "Rows",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "Textarea"
+      ],
+      "jsx_tags": [
+        "Textarea"
+      ],
+      "prop_names": [
+        "aria-label",
+        "placeholder",
+        "defaultValue",
+        "error",
+        "size",
+        "rows"
+      ],
+      "token_refs_count": 64,
+      "code_example_count": 6,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "theme-switcher",
+      "name": "Theme Switcher",
+      "family": "input",
+      "url": "https://vercel.com/geist/theme-switcher",
+      "description": "Component that allows users to switch between light and dark themes.",
+      "sections": [
+        "Default",
+        "Small",
+        "Disabled",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "ThemeSwitcher"
+      ],
+      "jsx_tags": [
+        "ThemeSwitcher"
+      ],
+      "prop_names": [],
+      "token_refs_count": 61,
+      "code_example_count": 3,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "toast",
+      "name": "Toast",
+      "family": "feedback",
+      "url": "https://vercel.com/geist/toast",
+      "description": "A succinct message that is displayed temporarily.",
+      "sections": [
+        "Default",
+        "Multi-line",
+        "With jsx",
+        "With a link",
+        "Preserve",
+        "Action",
+        "Undo",
+        "Success",
+        "Warning",
+        "Error",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "info",
+        "success",
+        "warning",
+        "error",
+        "loading"
+      ],
+      "import_symbols": [
+        "Button",
+        "useToasts",
+        "Link"
+      ],
+      "jsx_tags": [
+        "Button",
+        "Link"
+      ],
+      "prop_names": [
+        "onClick",
+        "data-zone",
+        "href",
+        "isDifferentZone"
+      ],
+      "token_refs_count": 60,
+      "code_example_count": 10,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "toggle",
+      "name": "Toggle",
+      "family": "input",
+      "url": "https://vercel.com/geist/toggle",
+      "description": "Displays a boolean value.",
+      "sections": [
+        "Default",
+        "Disabled",
+        "Sizes",
+        "Custom Color",
+        "With Label",
+        "Best Practices"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "error",
+        "selected"
+      ],
+      "import_symbols": [
+        "Toggle",
+        "useState",
+        "type JSX",
+        "IconLockClosedSmall",
+        "IconLockOpenSmall"
+      ],
+      "jsx_tags": [
+        "Toggle",
+        "IconLockClosedSmall",
+        "IconLockOpenSmall"
+      ],
+      "prop_names": [
+        "aria-label",
+        "checked",
+        "onChange",
+        "size",
+        "color",
+        "icon",
+        "direction"
+      ],
+      "token_refs_count": 79,
+      "code_example_count": 5,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "tooltip",
+      "name": "Tooltip",
+      "family": "overlay",
+      "url": "https://vercel.com/geist/tooltip",
+      "description": "A set of headings, vertically stacked, that each reveal an related section of content. Commonly referred to as an accordion.",
+      "sections": [
+        "Default",
+        "No delay",
+        "Box align",
+        "Custom content",
+        "Custom type",
+        "Components",
+        "Other",
+        "Best Practices",
+        "When to use",
+        "Behavior",
+        "Content",
+        "Accessibility"
+      ],
+      "states_required": [
+        "closed",
+        "opening",
+        "open",
+        "dismissed"
+      ],
+      "import_symbols": [
+        "Tooltip",
+        "Badge",
+        "Button",
+        "Spinner"
+      ],
+      "jsx_tags": [
+        "Tooltip",
+        "Button",
+        "Badge",
+        "Spinner"
+      ],
+      "prop_names": [
+        "text",
+        "position",
+        "delay",
+        "boxAlign",
+        "type",
+        "size",
+        "tip",
+        "center"
+      ],
+      "token_refs_count": 64,
+      "code_example_count": 7,
+      "absorption": "metadata-only"
+    },
+    {
+      "slug": "video",
+      "name": "Video",
+      "family": "content",
+      "url": "https://vercel.com/geist/video",
+      "description": "Embed a video with built-in playback controls and lazy loading support.",
+      "sections": [
+        "Default",
+        "No Loop",
+        "No Controls"
+      ],
+      "states_required": [
+        "default",
+        "hover",
+        "selected"
+      ],
+      "import_symbols": [
+        "Video"
+      ],
+      "jsx_tags": [
+        "Video"
+      ],
+      "prop_names": [
+        "height",
+        "lazy",
+        "src",
+        "width",
+        "loop",
+        "controls"
+      ],
+      "token_refs_count": 62,
+      "code_example_count": 3,
+      "absorption": "metadata-only"
+    }
+  ]
+}

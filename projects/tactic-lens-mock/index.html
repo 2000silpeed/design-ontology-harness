@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TacticLens MVP Mock</title>
+    <link rel="icon" href="./favicon.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">본문으로 이동</a>
+
+    <svg class="icon-sprite" aria-hidden="true">
+      <symbol id="icon-upload" viewBox="0 0 24 24">
+        <path d="M12 16V4m0 0 5 5m-5-5-5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" />
+      </symbol>
+      <symbol id="icon-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z" /></symbol>
+      <symbol id="icon-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" /></symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24"><path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" /></symbol>
+      <symbol id="icon-filter" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4" /></symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24"><path d="M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" /></symbol>
+      <symbol id="icon-alert" viewBox="0 0 24 24"><path d="M12 8v5m0 4h.01M10.3 3.8 2.4 18a2 2 0 0 0 1.8 3h15.6a2 2 0 0 0 1.8-3L13.7 3.8a2 2 0 0 0-3.4 0Z" /></symbol>
+      <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" /><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /></symbol>
+      <symbol id="icon-export" viewBox="0 0 24 24"><path d="M14 3h7v7M21 3l-9 9M5 7v14h14v-6" /></symbol>
+      <symbol id="icon-settings" viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" /><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 0 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.2a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.2a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3 1.6 1.6 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.2a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8 1.6 1.6 0 0 0 1.5 1h.2a2 2 0 0 1 0 4h-.2a1.6 1.6 0 0 0-1.5 1Z" /></symbol>
+    </svg>
+
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="TacticLens 메뉴">
+        <div class="brand-block">
+          <div class="brand-mark">TL</div>
+          <div>
+            <strong>TacticLens</strong>
+            <span>Seoul U18 Analysis</span>
+          </div>
+        </div>
+
+        <nav class="main-nav" aria-label="주요 화면">
+          <button class="nav-item active" type="button" data-view-target="library">
+            <svg><use href="#icon-upload" /></svg>
+            <span>Library / Upload</span>
+          </button>
+          <button class="nav-item" type="button" data-view-target="queue">
+            <svg><use href="#icon-clock" /></svg>
+            <span>Processing Queue</span>
+          </button>
+          <button class="nav-item" type="button" data-view-target="workspace">
+            <svg><use href="#icon-eye" /></svg>
+            <span>Analysis Workspace</span>
+          </button>
+          <button class="nav-item" type="button" data-view-target="playbook">
+            <svg><use href="#icon-check" /></svg>
+            <span>Playbook</span>
+          </button>
+          <button class="nav-item" type="button" data-view-target="reports">
+            <svg><use href="#icon-export" /></svg>
+            <span>Reports</span>
+          </button>
+        </nav>
+
+        <section class="side-status" aria-label="현재 경기 요약">
+          <div class="side-status__top">
+            <span class="status-dot"></span>
+            <strong>FC Seoul U18</strong>
+          </div>
+          <dl>
+            <div><dt>Match</dt><dd>vs Suwon U18</dd></div>
+            <div><dt>Target</dt><dd>Home team</dd></div>
+            <div><dt>Phase</dt><dd>Review ready</dd></div>
+          </dl>
+        </section>
+
+        <div class="side-meter">
+          <span>검수 대기</span>
+          <strong>14</strong>
+        </div>
+      </aside>
+
+      <main id="main" class="main-panel">
+        <header class="topbar">
+          <div class="match-context">
+            <span class="eyebrow">MATCH TL-2026-0505</span>
+            <h1 id="viewTitle">Library / Upload</h1>
+          </div>
+          <div class="topbar-actions">
+            <label class="search-box" aria-label="검색">
+              <svg><use href="#icon-search" /></svg>
+              <input type="search" placeholder="경기, 원칙, 클립 검색" />
+            </label>
+            <button class="icon-button" type="button" aria-label="필터">
+              <svg><use href="#icon-filter" /></svg>
+            </button>
+            <button class="icon-button" type="button" aria-label="설정">
+              <svg><use href="#icon-settings" /></svg>
+            </button>
+          </div>
+        </header>
+
+        <section class="view active" data-view="library" aria-labelledby="library-heading">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">new analysis</p>
+              <h2 id="library-heading">경기 업로드</h2>
+            </div>
+            <button class="primary-button" type="button" data-jump="queue">
+              <svg><use href="#icon-upload" /></svg>
+              분석 시작
+            </button>
+          </div>
+
+          <div class="library-grid">
+            <article class="surface upload-surface">
+              <label class="dropzone" for="videoFile">
+                <input id="videoFile" type="file" accept="video/mp4,video/quicktime,video/x-m4v" />
+                <span class="dropzone-icon"><svg><use href="#icon-upload" /></svg></span>
+                <strong id="fileName">seoul-u18-vs-suwon-fullmatch.mp4</strong>
+                <span>1080p · 90:42 · 5.8GB</span>
+              </label>
+              <div class="upload-meta">
+                <label>
+                  <span>분석 대상</span>
+                  <select>
+                    <option>FC Seoul U18 · Home</option>
+                    <option>Suwon U18 · Away</option>
+                  </select>
+                </label>
+                <label>
+                  <span>전술 템플릿</span>
+                  <select>
+                    <option>4-4-2 mid block + wide press</option>
+                    <option>3-2 build-up + rest defense</option>
+                  </select>
+                </label>
+                <div class="swatch-row" aria-label="유니폼 색상">
+                  <button class="swatch navy active" type="button" aria-label="네이비"></button>
+                  <button class="swatch white" type="button" aria-label="화이트"></button>
+                  <button class="swatch amber" type="button" aria-label="앰버"></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="surface metric-stack" aria-label="최근 분석 지표">
+              <div class="metric-card success">
+                <span>이행 점수</span>
+                <strong>76</strong>
+                <i style="--value: 76%"></i>
+              </div>
+              <div class="metric-card accent">
+                <span>압박 성공</span>
+                <strong>61%</strong>
+                <i style="--value: 61%"></i>
+              </div>
+              <div class="metric-card warning">
+                <span>검수 필요</span>
+                <strong>14</strong>
+                <i style="--value: 38%"></i>
+              </div>
+            </article>
+          </div>
+
+          <div class="content-grid">
+            <article class="surface table-surface">
+              <div class="panel-title">
+                <h3>최근 경기</h3>
+                <button class="ghost-button" type="button">전체 보기</button>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">경기</th>
+                      <th scope="col">상대</th>
+                      <th scope="col">상태</th>
+                      <th scope="col">점수</th>
+                      <th scope="col">검수</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Round 12</th>
+                      <td>Suwon U18</td>
+                      <td><span class="badge success">Ready</span></td>
+                      <td>76</td>
+                      <td>14</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Round 11</th>
+                      <td>Incheon U18</td>
+                      <td><span class="badge">Reviewed</span></td>
+                      <td>82</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Friendly</th>
+                      <td>Daejeon U18</td>
+                      <td><span class="badge warning">Queue</span></td>
+                      <td>-</td>
+                      <td>6</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="surface goals-surface">
+              <div class="panel-title">
+                <h3>전술 원칙</h3>
+                <button class="ghost-button" type="button" data-jump="playbook">편집</button>
+              </div>
+              <ol class="principle-list">
+                <li><span class="phase build">Build-up</span><strong>후방 3-2 구조 유지</strong><small>센터백 벌림 + 6번 하강</small></li>
+                <li><span class="phase press">Press</span><strong>측면 패스 유도 후 1차 압박</strong><small>윙어 방향 제한 + 8번 전진</small></li>
+                <li><span class="phase rest">Rest defense</span><strong>볼 상실 전 2+3 안정성</strong><small>반대 풀백 높이 조절</small></li>
+              </ol>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" data-view="queue" aria-labelledby="queue-heading">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">processing</p>
+              <h2 id="queue-heading">영상 처리 대기열</h2>
+            </div>
+            <button class="secondary-button" type="button" data-jump="workspace">
+              워크스페이스 열기
+            </button>
+          </div>
+
+          <div class="queue-layout">
+            <article class="surface processing-card">
+              <div class="job-header">
+                <div>
+                  <span class="badge success">72% complete</span>
+                  <h3>Round 12 · FC Seoul U18 vs Suwon U18</h3>
+                </div>
+                <strong>11:28</strong>
+              </div>
+              <ol class="stepper">
+                <li class="done"><span><svg><use href="#icon-check" /></svg></span><strong>Ingest</strong><small>원본 확인</small></li>
+                <li class="done"><span><svg><use href="#icon-check" /></svg></span><strong>Transcode</strong><small>프록시 생성</small></li>
+                <li class="done"><span><svg><use href="#icon-check" /></svg></span><strong>Field Calibration</strong><small>피치 좌표 보정</small></li>
+                <li class="current"><span></span><strong>Tracking</strong><small>선수/공 추적</small></li>
+                <li><span></span><strong>Tactical Inference</strong><small>전술 원칙 매칭</small></li>
+                <li><span></span><strong>Report Build</strong><small>클립 묶음 생성</small></li>
+              </ol>
+            </article>
+
+            <article class="surface diagnostics-card">
+              <div class="panel-title">
+                <h3>품질 진단</h3>
+                <span class="badge warning">검수 예정</span>
+              </div>
+              <div class="diagnostics-grid">
+                <div><span>피치 보정</span><strong>0.91</strong></div>
+                <div><span>대상 팀 분류</span><strong>0.86</strong></div>
+                <div><span>공 추적</span><strong>0.74</strong></div>
+                <div><span>장면 전환</span><strong>18</strong></div>
+              </div>
+              <ul class="log-list">
+                <li><span></span>42:18 카메라 줌 구간 추적 확신도 하락</li>
+                <li><span></span>58:04 측면 압박 후보 클립 생성</li>
+                <li><span></span>71:36 수비 라인 보정 필요</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" data-view="workspace" aria-labelledby="workspace-heading">
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">analysis workspace</p>
+              <h2 id="workspace-heading">Round 12 · 4-4-2 압박 리뷰</h2>
+            </div>
+            <div class="action-group">
+              <button class="secondary-button" type="button">클립 추가</button>
+              <button class="primary-button" type="button">
+                <svg><use href="#icon-export" /></svg>
+                리포트 생성
+              </button>
+            </div>
+          </div>
+
+          <div class="workspace-grid">
+            <article class="surface video-surface">
+              <div class="video-frame">
+                <img src="./assets/pitch-map.svg" alt="전술 피치맵 오버레이" />
+                <div class="frame-hud top-left">
+                  <strong>42:18</strong>
+                  <span>Wide press trigger</span>
+                </div>
+                <div class="frame-hud bottom-right">
+                  <strong>AI 0.82</strong>
+                  <span>human review needed</span>
+                </div>
+              </div>
+              <div class="player-bar" aria-label="영상 제어">
+                <button class="icon-button filled" type="button" aria-label="재생">
+                  <svg><use href="#icon-play" /></svg>
+                </button>
+                <span class="timecode">42:18 / 90:42</span>
+                <div class="scrubber"><i style="--pos: 47%"></i></div>
+                <button class="icon-button" type="button" aria-label="일시정지">
+                  <svg><use href="#icon-pause" /></svg>
+                </button>
+              </div>
+            </article>
+
+            <aside class="surface review-panel">
+              <div class="panel-title">
+                <h3>원칙 판정</h3>
+                <span class="badge warning">부분 성공</span>
+              </div>
+              <div class="score-ring" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68">
+                <span>68</span>
+              </div>
+              <ol class="check-cards">
+                <li class="passed"><span></span><strong>윙어 압박 방향 제한</strong><small>상대 풀백 터치라인 유도</small></li>
+                <li class="warning"><span></span><strong>8번 커버 거리</strong><small>권장 거리보다 3.4m 늦음</small></li>
+                <li class="failed"><span></span><strong>반대 풀백 rest defense</strong><small>전환 대비 위치 이탈</small></li>
+              </ol>
+            </aside>
+          </div>
+
+          <article class="surface timeline-surface">
+            <div class="panel-title">
+              <h3>전술 타임라인</h3>
+              <div class="timeline-legend">
+                <span><i class="build"></i>Build-up</span>
+                <span><i class="press"></i>Press</span>
+                <span><i class="review"></i>Review</span>
+              </div>
+            </div>
+            <div class="timeline">
+              <span class="segment build" style="--start: 4%; --width: 18%"></span>
+              <span class="segment press" style="--start: 25%; --width: 12%"></span>
+              <span class="segment review" style="--start: 45%; --width: 9%"></span>
+              <span class="segment build" style="--start: 58%; --width: 15%"></span>
+              <span class="segment press" style="--start: 76%; --width: 13%"></span>
+              <button class="marker" style="--left: 47%" type="button" aria-label="42분 18초"></button>
+            </div>
+          </article>
+        </section>
+
+        <section class="view" data-view="playbook" aria-labelledby="playbook-heading">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">team playbook</p>
+              <h2 id="playbook-heading">전술 원칙 편집</h2>
+            </div>
+            <button class="primary-button" type="button">원칙 저장</button>
+          </div>
+          <div class="playbook-grid">
+            <article class="surface condition-card">
+              <h3>측면 압박 트리거</h3>
+              <div class="condition-row"><span>공 위치</span><strong>wide third</strong></div>
+              <div class="condition-row"><span>윙어 거리</span><strong>&lt; 6m</strong></div>
+              <div class="condition-row"><span>8번 전진</span><strong>&lt; 2.5s</strong></div>
+            </article>
+            <article class="surface condition-card">
+              <h3>후방 3-2 빌드업</h3>
+              <div class="condition-row"><span>6번 하강</span><strong>center lane</strong></div>
+              <div class="condition-row"><span>풀백 위치</span><strong>asymmetric</strong></div>
+              <div class="condition-row"><span>센터백 폭</span><strong>&gt; 32m</strong></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" data-view="reports" aria-labelledby="reports-heading">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">execution report</p>
+              <h2 id="reports-heading">코칭스태프 리포트</h2>
+            </div>
+            <button class="primary-button" type="button">
+              <svg><use href="#icon-export" /></svg>
+              PDF 내보내기
+            </button>
+          </div>
+          <div class="report-grid">
+            <article class="surface report-card">
+              <span class="badge success">Strength</span>
+              <h3>전반 20분까지 압박 방향 제한이 안정적입니다.</h3>
+              <p>상대 풀백 터치라인 유도 후 2차 압박 연결 장면이 7회 반복됐습니다.</p>
+            </article>
+            <article class="surface report-card">
+              <span class="badge danger">Priority</span>
+              <h3>반대 풀백의 rest defense 위치가 늦습니다.</h3>
+              <p>볼 상실 직전 2+3 구조가 깨진 장면 5개를 선수 미팅 클립으로 묶었습니다.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./mockup.js"></script>
+  </body>
+</html>

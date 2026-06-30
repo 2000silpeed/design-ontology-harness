@@ -1,0 +1,267 @@
+{
+  "schema_version": "geist-reference-page/v1",
+  "slug": "combobox",
+  "kind": "component",
+  "title": "Combobox",
+  "url": "https://vercel.com/geist/combobox",
+  "final_url": "https://vercel.com/geist/combobox",
+  "canonical_url": "https://vercel.com/geist/combobox",
+  "redirected": false,
+  "description": "Filters large lists to selectable options based on the matching query.",
+  "source_hash": "sha256:2bbcba48259d67253cf4033ff8bed77d61e399e2d12f26bd326ed8cb6c3a9375",
+  "body_text_length": 3861,
+  "sections": [
+    {
+      "level": "h2",
+      "text": "Uncontrolled"
+    },
+    {
+      "level": "h2",
+      "text": "Controlled"
+    },
+    {
+      "level": "h2",
+      "text": "Disabled"
+    },
+    {
+      "level": "h2",
+      "text": "Errored"
+    },
+    {
+      "level": "h2",
+      "text": "Custom width input"
+    },
+    {
+      "level": "h2",
+      "text": "Custom width list"
+    },
+    {
+      "level": "h2",
+      "text": "Custom empty message"
+    },
+    {
+      "level": "h2",
+      "text": "Clearable"
+    },
+    {
+      "level": "h2",
+      "text": "With prefix icons"
+    },
+    {
+      "level": "h2",
+      "text": "With suffix icons"
+    },
+    {
+      "level": "h2",
+      "text": "With label"
+    },
+    {
+      "level": "h2",
+      "text": "Sizes"
+    },
+    {
+      "level": "h2",
+      "text": "Used inside a Modal"
+    },
+    {
+      "level": "h2",
+      "text": "Best Practices"
+    },
+    {
+      "level": "h3",
+      "text": "When to use"
+    },
+    {
+      "level": "h3",
+      "text": "Behavior"
+    },
+    {
+      "level": "h3",
+      "text": "Content"
+    },
+    {
+      "level": "h3",
+      "text": "Accessibility"
+    }
+  ],
+  "section_count": 18,
+  "symbol_metadata": {
+    "code_example_count": 13,
+    "import_symbols": [
+      "Combobox",
+      "ComboboxInput",
+      "ComboboxList",
+      "ComboboxOption",
+      "useState",
+      "type JSX",
+      "LogoIconVercelSvg",
+      "useId",
+      "Modal",
+      "Button",
+      "Label",
+      "ModalBody",
+      "ModalHeader",
+      "ModalTitle",
+      "ModalSubtitle",
+      "ModalInset",
+      "ModalActions",
+      "ModalAction"
+    ],
+    "import_sources": [
+      "@vercel/geistcn/components",
+      "react",
+      "@vercel/geistcn-assets/logos"
+    ],
+    "jsx_tags": [
+      "Combobox",
+      "ComboboxInput",
+      "ComboboxList",
+      "ComboboxOption",
+      "LogoIconVercelSvg",
+      "Button",
+      "Modal",
+      "ModalBody",
+      "ModalHeader",
+      "ModalTitle",
+      "ModalSubtitle",
+      "ModalInset",
+      "Label",
+      "ModalActions",
+      "ModalAction"
+    ],
+    "prop_names": [
+      "aria-label",
+      "placeholder",
+      "value",
+      "onChange",
+      "width",
+      "maxWidth",
+      "emptyMessage",
+      "prefix",
+      "suffix",
+      "htmlFor",
+      "id",
+      "size",
+      "key",
+      "onClick",
+      "active",
+      "onClickOutside",
+      "variant"
+    ]
+  },
+  "token_refs": {
+    "css_var_count": 64,
+    "css_vars": [
+      "--accents-1",
+      "--accents-2",
+      "--accents-3",
+      "--accents-8",
+      "--cross-color",
+      "--ds-amber-800",
+      "--ds-background-100",
+      "--ds-blue-300",
+      "--ds-blue-700",
+      "--ds-blue-900",
+      "--ds-focus-color",
+      "--ds-focus-ring",
+      "--ds-gray-100",
+      "--ds-gray-1000",
+      "--ds-gray-200",
+      "--ds-gray-400",
+      "--ds-gray-700",
+      "--ds-gray-900",
+      "--ds-gray-alpha-100",
+      "--ds-gray-alpha-200",
+      "--ds-gray-alpha-400",
+      "--ds-gray-alpha-500",
+      "--ds-gray-alpha-600",
+      "--ds-red-300",
+      "--ds-red-400",
+      "--ds-red-800",
+      "--ds-red-900",
+      "--ds-shadow-border",
+      "--ds-shadow-border-small",
+      "--font-mono",
+      "--font-sans",
+      "--geist-foreground",
+      "--geist-form-small-font",
+      "--geist-form-small-height",
+      "--geist-gap-half",
+      "--geist-icon-size",
+      "--grid-columns",
+      "--grid-rows",
+      "--guide-color",
+      "--guide-width",
+      "--height",
+      "--lg-cell-columns",
+      "--lg-cell-rows",
+      "--max-width",
+      "--md-cell-columns",
+      "--md-cell-rows",
+      "--min-width",
+      "--sm-cell-columns",
+      "--sm-cell-rows",
+      "--sm-grid-column",
+      "--sm-grid-row",
+      "--sm-height",
+      "--smd-cell-columns",
+      "--smd-cell-rows",
+      "--spinner-size",
+      "--themed-bg",
+      "--themed-border",
+      "--themed-fg",
+      "--themed-hover-bg",
+      "--x",
+      "--x-padding",
+      "--xs-cell-columns",
+      "--xs-cell-rows",
+      "--y"
+    ],
+    "geist_data_attrs": [
+      "data-geist-button",
+      "data-geist-combobox-option-prefix",
+      "data-geist-combobox-option-suffix",
+      "data-geist-kbd",
+      "data-geist-textarea-wrapper"
+    ]
+  },
+  "accessibility_terms": [
+    "Keyboard",
+    "aria-autocomplete",
+    "aria-checked",
+    "aria-controls",
+    "aria-disabled",
+    "aria-expanded",
+    "aria-haspopup",
+    "aria-hidden",
+    "aria-invalid",
+    "aria-label",
+    "aria-labelledby",
+    "aria-owns",
+    "aria-pressable",
+    "aria-selected",
+    "focus",
+    "keyboard",
+    "role"
+  ],
+  "absorption_policy": {
+    "allowed": [
+      "component names",
+      "component taxonomy",
+      "state coverage hints",
+      "section headings",
+      "import and JSX symbol references",
+      "token identifiers",
+      "accessibility and interaction evidence labels"
+    ],
+    "denied": [
+      "verbatim product copy beyond short labels",
+      "brand logos or protected imagery",
+      "unlicensed implementation source code",
+      "full documentation text",
+      "Vercel-specific IA as product IA"
+    ],
+    "rule": "Store structured reference metadata for local reimplementation; keep source URLs as evidence."
+  },
+  "nav_index": 23
+}

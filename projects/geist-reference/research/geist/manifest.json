@@ -1,0 +1,38 @@
+{
+  "schema_version": "geist-reference-manifest/v1",
+  "captured_at": "2026-06-30T01:23:47Z",
+  "source": "https://vercel.com/geist/introduction",
+  "output_dir": "projects/geist-reference/research/geist",
+  "page_count": 77,
+  "component_count": 71,
+  "foundation_count": 4,
+  "asset_page_count": 2,
+  "package_refs": [
+    "@vercel/geistcn-assets/icons",
+    "@vercel/geistcn-assets/logos",
+    "@vercel/geistcn/components",
+    "@vercel/geistcn/utils",
+    "@vercel/microfrontends/next/client",
+    "date-fns",
+    "react"
+  ],
+  "policy": {
+    "allowed": [
+      "component names",
+      "component taxonomy",
+      "state coverage hints",
+      "section headings",
+      "import and JSX symbol references",
+      "token identifiers",
+      "accessibility and interaction evidence labels"
+    ],
+    "denied": [
+      "verbatim product copy beyond short labels",
+      "brand logos or protected imagery",
+      "unlicensed implementation source code",
+      "full documentation text",
+      "Vercel-specific IA as product IA"
+    ],
+    "rule": "Store structured reference metadata for local reimplementation; keep source URLs as evidence."
+  }
+}

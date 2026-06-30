@@ -1,0 +1,1132 @@
+{
+  "mode": "local-images",
+  "query": [
+    "mobile fintech onboarding funnel",
+    "compact image selection cards",
+    "privacy consent mobile flow",
+    "mobile AI generation result viewer"
+  ],
+  "preferred_count": 8,
+  "weights": {
+    "layout": 0.35,
+    "component_shape": 0.25,
+    "color_balance": 0.1,
+    "typography_mood": 0.15,
+    "surface_style": 0.15
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "Current screenshots are baseline audit evidence, not a target visual style.",
+    "External or Lazyweb references may inform density and hierarchy only; color, typography, IA, and copy stay governed by this profile and generated system docs.",
+    "Do not copy or use contract-copilot-mock as reference."
+  ],
+  "must_include": [
+    "single primary CTA per screen",
+    "real item image visibility",
+    "credit boundary clarity",
+    "privacy reassurance without long legal blocks"
+  ],
+  "avoid_patterns": [
+    "marketing hero dominance after entry",
+    "nested cards",
+    "large decorative gradients",
+    "shopping price cards",
+    "dense legal wall before trust summary"
+  ],
+  "sources": [
+    {
+      "source_id": "source-01",
+      "kind": "image",
+      "label": "Current landing baseline",
+      "status": "resolved",
+      "original_path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/landing-mobile.png",
+      "resolved_path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/landing-mobile.png",
+      "url": null,
+      "tags": [
+        "current",
+        "landing",
+        "mobile"
+      ],
+      "image_count": 1
+    },
+    {
+      "source_id": "source-02",
+      "kind": "image",
+      "label": "Current Colorfit item set selector baseline",
+      "status": "resolved",
+      "original_path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/style-mobile.png",
+      "resolved_path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/style-mobile.png",
+      "url": null,
+      "tags": [
+        "current",
+        "item-set",
+        "mobile"
+      ],
+      "image_count": 1
+    },
+    {
+      "source_id": "source-03",
+      "kind": "image",
+      "label": "Current AI result baseline",
+      "status": "resolved",
+      "original_path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/result-mobile.png",
+      "resolved_path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/result-mobile.png",
+      "url": null,
+      "tags": [
+        "current",
+        "result",
+        "mobile"
+      ],
+      "image_count": 1
+    }
+  ],
+  "images": [
+    {
+      "image_id": "source-01-image-01",
+      "source_id": "source-01",
+      "source_label": "Current landing baseline",
+      "label": "landing-mobile",
+      "tags": [
+        "current",
+        "landing",
+        "mobile"
+      ],
+      "path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/landing-mobile.png",
+      "relative_path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/landing-mobile.png",
+      "file_name": "landing-mobile.png",
+      "extension": ".png",
+      "mime_type": "image/png",
+      "file_size_bytes": 106049,
+      "width": 390,
+      "height": 844,
+      "aspect_ratio": 0.4621,
+      "aspect_ratio_bucket": "other",
+      "orientation": "portrait",
+      "signal_terms": [
+        "baseline",
+        "current",
+        "landing",
+        "mobile",
+        "playwright"
+      ],
+      "observed_colors": [
+        {
+          "hex": "#FFFFFF",
+          "count": 2744.0,
+          "share": 0.2318,
+          "temperature": "neutral",
+          "luminance": 1.0,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#4976D9",
+          "count": 2131.0,
+          "share": 0.18,
+          "temperature": "cool",
+          "luminance": 0.1938,
+          "role_hint": "accent-dark"
+        },
+        {
+          "hex": "#E9F0F4",
+          "count": 1885.0,
+          "share": 0.1592,
+          "temperature": "neutral",
+          "luminance": 0.8618,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#F7FAFB",
+          "count": 1461.0,
+          "share": 0.1234,
+          "temperature": "neutral",
+          "luminance": 0.9511,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#F1F6F9",
+          "count": 1369.0,
+          "share": 0.1156,
+          "temperature": "neutral",
+          "luminance": 0.9145,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#DBDBDE",
+          "count": 1334.0,
+          "share": 0.1127,
+          "temperature": "neutral",
+          "luminance": 0.71,
+          "role_hint": "neutral-mid"
+        },
+        {
+          "hex": "#FCFDFD",
+          "count": 561.0,
+          "share": 0.0474,
+          "temperature": "neutral",
+          "luminance": 0.9804,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#2B57AD",
+          "count": 355.0,
+          "share": 0.03,
+          "temperature": "cool",
+          "luminance": 0.1035,
+          "role_hint": "accent-dark"
+        }
+      ],
+      "svg_features": {},
+      "sha256": "b4abd3d0a9aa8517831e67e82d66082af2828eb16e3d97775a231399bab5da0e"
+    },
+    {
+      "image_id": "source-02-image-01",
+      "source_id": "source-02",
+      "source_label": "Current Colorfit item set selector baseline",
+      "label": "style-mobile",
+      "tags": [
+        "current",
+        "item-set",
+        "mobile"
+      ],
+      "path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/style-mobile.png",
+      "relative_path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/style-mobile.png",
+      "file_name": "style-mobile.png",
+      "extension": ".png",
+      "mime_type": "image/png",
+      "file_size_bytes": 180226,
+      "width": 390,
+      "height": 844,
+      "aspect_ratio": 0.4621,
+      "aspect_ratio_bucket": "other",
+      "orientation": "portrait",
+      "signal_terms": [
+        "baseline",
+        "colorfit",
+        "current",
+        "item",
+        "mobile",
+        "playwright",
+        "selector",
+        "set",
+        "style"
+      ],
+      "observed_colors": [
+        {
+          "hex": "#FFFFFF",
+          "count": 4832.0,
+          "share": 0.4081,
+          "temperature": "neutral",
+          "luminance": 1.0,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#E8EAED",
+          "count": 1953.0,
+          "share": 0.1649,
+          "temperature": "neutral",
+          "luminance": 0.8212,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#C6CEDE",
+          "count": 1447.0,
+          "share": 0.1222,
+          "temperature": "cool",
+          "luminance": 0.6142,
+          "role_hint": "neutral-mid"
+        },
+        {
+          "hex": "#F4F6F7",
+          "count": 1413.0,
+          "share": 0.1193,
+          "temperature": "neutral",
+          "luminance": 0.9186,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FBFCFD",
+          "count": 1161.0,
+          "share": 0.0981,
+          "temperature": "neutral",
+          "luminance": 0.9722,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#7B808C",
+          "count": 770.0,
+          "share": 0.065,
+          "temperature": "cool",
+          "luminance": 0.2154,
+          "role_hint": "neutral-mid"
+        },
+        {
+          "hex": "#FEFFFF",
+          "count": 227.0,
+          "share": 0.0192,
+          "temperature": "neutral",
+          "luminance": 0.9981,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FFFFFE",
+          "count": 37.0,
+          "share": 0.0031,
+          "temperature": "neutral",
+          "luminance": 0.9994,
+          "role_hint": "neutral-light"
+        }
+      ],
+      "svg_features": {},
+      "sha256": "74e82bee94c940851aeda8848547085ae70dc5e6d6b3ab3ad3a010ae92f5ef1a"
+    },
+    {
+      "image_id": "source-03-image-01",
+      "source_id": "source-03",
+      "source_label": "Current AI result baseline",
+      "label": "result-mobile",
+      "tags": [
+        "current",
+        "result",
+        "mobile"
+      ],
+      "path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/result-mobile.png",
+      "relative_path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/result-mobile.png",
+      "file_name": "result-mobile.png",
+      "extension": ".png",
+      "mime_type": "image/png",
+      "file_size_bytes": 79408,
+      "width": 390,
+      "height": 844,
+      "aspect_ratio": 0.4621,
+      "aspect_ratio_bucket": "other",
+      "orientation": "portrait",
+      "signal_terms": [
+        "ai",
+        "baseline",
+        "current",
+        "mobile",
+        "playwright",
+        "result"
+      ],
+      "observed_colors": [
+        {
+          "hex": "#FFFFFF",
+          "count": 3294.0,
+          "share": 0.2782,
+          "temperature": "neutral",
+          "luminance": 1.0,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#F5F7FA",
+          "count": 2422.0,
+          "share": 0.2046,
+          "temperature": "neutral",
+          "luminance": 0.9284,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FEFEFE",
+          "count": 1786.0,
+          "share": 0.1508,
+          "temperature": "neutral",
+          "luminance": 0.9911,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#A8B9CE",
+          "count": 1718.0,
+          "share": 0.1451,
+          "temperature": "cool",
+          "luminance": 0.4748,
+          "role_hint": "accent"
+        },
+        {
+          "hex": "#FAFBFC",
+          "count": 1378.0,
+          "share": 0.1164,
+          "temperature": "neutral",
+          "luminance": 0.9635,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FCFDFE",
+          "count": 1233.0,
+          "share": 0.1041,
+          "temperature": "neutral",
+          "luminance": 0.981,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FFFDFB",
+          "count": 7.0,
+          "share": 0.0006,
+          "temperature": "neutral",
+          "luminance": 0.9848,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FFFFFE",
+          "count": 2.0,
+          "share": 0.0002,
+          "temperature": "neutral",
+          "luminance": 0.9994,
+          "role_hint": "neutral-light"
+        }
+      ],
+      "svg_features": {},
+      "sha256": "114b6e83c933f6eab8bd80c9bd40db7de4ff15f5a475f606d1082cc02506df2b"
+    }
+  ],
+  "selected_images": [
+    {
+      "image_id": "source-01-image-01",
+      "source_id": "source-01",
+      "source_label": "Current landing baseline",
+      "label": "landing-mobile",
+      "tags": [
+        "current",
+        "landing",
+        "mobile"
+      ],
+      "path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/landing-mobile.png",
+      "relative_path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/landing-mobile.png",
+      "file_name": "landing-mobile.png",
+      "extension": ".png",
+      "mime_type": "image/png",
+      "file_size_bytes": 106049,
+      "width": 390,
+      "height": 844,
+      "aspect_ratio": 0.4621,
+      "aspect_ratio_bucket": "other",
+      "orientation": "portrait",
+      "signal_terms": [
+        "baseline",
+        "current",
+        "landing",
+        "mobile",
+        "playwright"
+      ],
+      "observed_colors": [
+        {
+          "hex": "#FFFFFF",
+          "count": 2744.0,
+          "share": 0.2318,
+          "temperature": "neutral",
+          "luminance": 1.0,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#4976D9",
+          "count": 2131.0,
+          "share": 0.18,
+          "temperature": "cool",
+          "luminance": 0.1938,
+          "role_hint": "accent-dark"
+        },
+        {
+          "hex": "#E9F0F4",
+          "count": 1885.0,
+          "share": 0.1592,
+          "temperature": "neutral",
+          "luminance": 0.8618,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#F7FAFB",
+          "count": 1461.0,
+          "share": 0.1234,
+          "temperature": "neutral",
+          "luminance": 0.9511,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#F1F6F9",
+          "count": 1369.0,
+          "share": 0.1156,
+          "temperature": "neutral",
+          "luminance": 0.9145,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#DBDBDE",
+          "count": 1334.0,
+          "share": 0.1127,
+          "temperature": "neutral",
+          "luminance": 0.71,
+          "role_hint": "neutral-mid"
+        },
+        {
+          "hex": "#FCFDFD",
+          "count": 561.0,
+          "share": 0.0474,
+          "temperature": "neutral",
+          "luminance": 0.9804,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#2B57AD",
+          "count": 355.0,
+          "share": 0.03,
+          "temperature": "cool",
+          "luminance": 0.1035,
+          "role_hint": "accent-dark"
+        }
+      ],
+      "svg_features": {},
+      "sha256": "b4abd3d0a9aa8517831e67e82d66082af2828eb16e3d97775a231399bab5da0e"
+    },
+    {
+      "image_id": "source-02-image-01",
+      "source_id": "source-02",
+      "source_label": "Current Colorfit item set selector baseline",
+      "label": "style-mobile",
+      "tags": [
+        "current",
+        "item-set",
+        "mobile"
+      ],
+      "path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/style-mobile.png",
+      "relative_path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/style-mobile.png",
+      "file_name": "style-mobile.png",
+      "extension": ".png",
+      "mime_type": "image/png",
+      "file_size_bytes": 180226,
+      "width": 390,
+      "height": 844,
+      "aspect_ratio": 0.4621,
+      "aspect_ratio_bucket": "other",
+      "orientation": "portrait",
+      "signal_terms": [
+        "baseline",
+        "colorfit",
+        "current",
+        "item",
+        "mobile",
+        "playwright",
+        "selector",
+        "set",
+        "style"
+      ],
+      "observed_colors": [
+        {
+          "hex": "#FFFFFF",
+          "count": 4832.0,
+          "share": 0.4081,
+          "temperature": "neutral",
+          "luminance": 1.0,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#E8EAED",
+          "count": 1953.0,
+          "share": 0.1649,
+          "temperature": "neutral",
+          "luminance": 0.8212,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#C6CEDE",
+          "count": 1447.0,
+          "share": 0.1222,
+          "temperature": "cool",
+          "luminance": 0.6142,
+          "role_hint": "neutral-mid"
+        },
+        {
+          "hex": "#F4F6F7",
+          "count": 1413.0,
+          "share": 0.1193,
+          "temperature": "neutral",
+          "luminance": 0.9186,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FBFCFD",
+          "count": 1161.0,
+          "share": 0.0981,
+          "temperature": "neutral",
+          "luminance": 0.9722,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#7B808C",
+          "count": 770.0,
+          "share": 0.065,
+          "temperature": "cool",
+          "luminance": 0.2154,
+          "role_hint": "neutral-mid"
+        },
+        {
+          "hex": "#FEFFFF",
+          "count": 227.0,
+          "share": 0.0192,
+          "temperature": "neutral",
+          "luminance": 0.9981,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FFFFFE",
+          "count": 37.0,
+          "share": 0.0031,
+          "temperature": "neutral",
+          "luminance": 0.9994,
+          "role_hint": "neutral-light"
+        }
+      ],
+      "svg_features": {},
+      "sha256": "74e82bee94c940851aeda8848547085ae70dc5e6d6b3ab3ad3a010ae92f5ef1a"
+    },
+    {
+      "image_id": "source-03-image-01",
+      "source_id": "source-03",
+      "source_label": "Current AI result baseline",
+      "label": "result-mobile",
+      "tags": [
+        "current",
+        "result",
+        "mobile"
+      ],
+      "path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/result-mobile.png",
+      "relative_path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/result-mobile.png",
+      "file_name": "result-mobile.png",
+      "extension": ".png",
+      "mime_type": "image/png",
+      "file_size_bytes": 79408,
+      "width": 390,
+      "height": 844,
+      "aspect_ratio": 0.4621,
+      "aspect_ratio_bucket": "other",
+      "orientation": "portrait",
+      "signal_terms": [
+        "ai",
+        "baseline",
+        "current",
+        "mobile",
+        "playwright",
+        "result"
+      ],
+      "observed_colors": [
+        {
+          "hex": "#FFFFFF",
+          "count": 3294.0,
+          "share": 0.2782,
+          "temperature": "neutral",
+          "luminance": 1.0,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#F5F7FA",
+          "count": 2422.0,
+          "share": 0.2046,
+          "temperature": "neutral",
+          "luminance": 0.9284,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FEFEFE",
+          "count": 1786.0,
+          "share": 0.1508,
+          "temperature": "neutral",
+          "luminance": 0.9911,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#A8B9CE",
+          "count": 1718.0,
+          "share": 0.1451,
+          "temperature": "cool",
+          "luminance": 0.4748,
+          "role_hint": "accent"
+        },
+        {
+          "hex": "#FAFBFC",
+          "count": 1378.0,
+          "share": 0.1164,
+          "temperature": "neutral",
+          "luminance": 0.9635,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FCFDFE",
+          "count": 1233.0,
+          "share": 0.1041,
+          "temperature": "neutral",
+          "luminance": 0.981,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FFFDFB",
+          "count": 7.0,
+          "share": 0.0006,
+          "temperature": "neutral",
+          "luminance": 0.9848,
+          "role_hint": "neutral-light"
+        },
+        {
+          "hex": "#FFFFFE",
+          "count": 2.0,
+          "share": 0.0002,
+          "temperature": "neutral",
+          "luminance": 0.9994,
+          "role_hint": "neutral-light"
+        }
+      ],
+      "svg_features": {},
+      "sha256": "114b6e83c933f6eab8bd80c9bd40db7de4ff15f5a475f606d1082cc02506df2b"
+    }
+  ],
+  "duplicate_groups": [],
+  "similar_groups": [
+    {
+      "type": "shape-family",
+      "signature": "other / portrait / .png",
+      "image_ids": [
+        "source-01-image-01",
+        "source-02-image-01",
+        "source-03-image-01"
+      ],
+      "paths": [
+        "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/landing-mobile.png",
+        "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/style-mobile.png",
+        "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/result-mobile.png"
+      ]
+    }
+  ],
+  "coverage": {
+    "source_count": 3,
+    "resolved_source_count": 3,
+    "image_count": 3,
+    "selected_image_count": 3,
+    "format_counts": {
+      ".png": 3
+    },
+    "orientation_counts": {
+      "portrait": 3
+    },
+    "aspect_ratio_buckets": {
+      "other": 3
+    }
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "airy",
+      "confidence": 0.53,
+      "evidence": [
+        "editorial x0.1",
+        "landing x2.4",
+        "hero x0.15"
+      ],
+      "candidates": [
+        {
+          "value": "airy",
+          "score": 5.3
+        },
+        {
+          "value": "dense",
+          "score": 0.3
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.24,
+      "evidence": [
+        "editorial x0.1"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 0.1
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "typography_mood": {
+      "value": "editorial",
+      "confidence": 0.25,
+      "evidence": [
+        "editorial x0.1"
+      ],
+      "candidates": [
+        {
+          "value": "editorial",
+          "score": 0.3
+        },
+        {
+          "value": "playful",
+          "score": 0.3
+        },
+        {
+          "value": "premium",
+          "score": 0.3
+        },
+        {
+          "value": "utilitarian",
+          "score": 0.3
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image signals plus query and brand context."
+      }
+    },
+    "corner_style": {
+      "value": "medium",
+      "confidence": 0.24,
+      "evidence": [
+        "fallback=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from selected image geometry and supporting signal terms."
+      }
+    },
+    "color_balance": {
+      "observed": true,
+      "temperature": "cool",
+      "contrast_profile": "high",
+      "neutral_bias": "high",
+      "dominant": [
+        {
+          "hex": "#FFFFFF",
+          "count": 10870.0,
+          "temperature": "neutral",
+          "luminance": 1.0,
+          "role_hint": "neutral-light",
+          "share": 0.306
+        },
+        {
+          "hex": "#F5F7FA",
+          "count": 2422.0,
+          "temperature": "neutral",
+          "luminance": 0.9284,
+          "role_hint": "neutral-light",
+          "share": 0.0682
+        },
+        {
+          "hex": "#4976D9",
+          "count": 2131.0,
+          "temperature": "cool",
+          "luminance": 0.1938,
+          "role_hint": "accent-dark",
+          "share": 0.06
+        }
+      ],
+      "supporting": [
+        {
+          "hex": "#E8EAED",
+          "count": 1953.0,
+          "temperature": "neutral",
+          "luminance": 0.8212,
+          "role_hint": "neutral-light",
+          "share": 0.055
+        },
+        {
+          "hex": "#E9F0F4",
+          "count": 1885.0,
+          "temperature": "neutral",
+          "luminance": 0.8618,
+          "role_hint": "neutral-light",
+          "share": 0.0531
+        },
+        {
+          "hex": "#FEFEFE",
+          "count": 1786.0,
+          "temperature": "neutral",
+          "luminance": 0.9911,
+          "role_hint": "neutral-light",
+          "share": 0.0503
+        },
+        {
+          "hex": "#A8B9CE",
+          "count": 1718.0,
+          "temperature": "cool",
+          "luminance": 0.4748,
+          "role_hint": "accent",
+          "share": 0.0484
+        },
+        {
+          "hex": "#F7FAFB",
+          "count": 1461.0,
+          "temperature": "neutral",
+          "luminance": 0.9511,
+          "role_hint": "neutral-light",
+          "share": 0.0411
+        }
+      ],
+      "provenance": {
+        "level": "observed",
+        "detail": "Observed directly from sampled image colors."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 3,
+      "available_image_count": 3,
+      "provenance": {
+        "level": "observed",
+        "detail": "Selection is grounded in resolved local image files."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "landing-narrative",
+      "label": "Narrative landing flow",
+      "confidence": 0.78,
+      "evidence": [
+        "landing x2.4",
+        "hero x0.15",
+        "cta x0.9",
+        "marketing x0.15"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.36,
+      "evidence": [
+        "grid x0.9",
+        "audit x0.2"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.31,
+      "evidence": [
+        "editorial x0.1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    },
+    {
+      "id": "split-pane-workspace",
+      "label": "Split-pane workspace",
+      "confidence": 0.28,
+      "evidence": [
+        "app x0.8"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from selected image signals and reference context."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. 중간 반경으로 제품 UI 절제 유지.",
+      "confidence": 0.53,
+      "evidence": [
+        "surface=tinted",
+        "density=airy",
+        "corner=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "navigation": {
+      "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
+      "confidence": 0.45,
+      "evidence": [
+        "Split-pane workspace"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "typography": {
+      "direction": "headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다.",
+      "confidence": 0.25,
+      "evidence": [
+        "typography_mood=editorial"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.53,
+      "evidence": [
+        "layout=data-review-surface",
+        "density=airy"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    },
+    "hero": {
+      "direction": "대형 hero와 trust strip, CTA cluster를 허용하되 과장된 glass/gradient 효과는 지양한다.",
+      "confidence": 0.78,
+      "evidence": [
+        "Narrative landing flow"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "marketing-hero-stack",
+      "label": "Marketing hero stack",
+      "family": "marketing",
+      "confidence": 0.94,
+      "suggested_components": [
+        "hero-section",
+        "hero-headline",
+        "hero-visual",
+        "cta-button-group",
+        "trust-strip"
+      ],
+      "supports_primitives": [
+        "hero section",
+        "pricing and plans",
+        "social proof"
+      ],
+      "evidence": [
+        "layout=landing-narrative (0.78)",
+        "hero x0.15",
+        "landing x2.4",
+        "cta x0.9",
+        "marketing x0.15"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    },
+    {
+      "id": "review-coverage-system",
+      "label": "Review coverage system",
+      "family": "editorial",
+      "confidence": 0.67,
+      "suggested_components": [
+        "review-card",
+        "score-badge",
+        "comparison-table",
+        "ranking-list",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "comparison and ranking",
+        "search and filter",
+        "tags and labels"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.36)",
+        "layout=editorial-feed (0.31)",
+        "layout=landing-narrative (0.78)"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Narrative landing flow",
+    "recommended_direction": [
+      "layout는 Narrative landing flow 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 editorial 축 유지",
+      "density는 airy 기준으로 primitive spacing 조정",
+      "palette temperature는 cool 쪽을 우선"
+    ],
+    "avoidance": [
+      "marketing hero dominance after entry",
+      "nested cards",
+      "large decorative gradients",
+      "shopping price cards",
+      "dense legal wall before trust summary"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "hero",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "LookMe Toss In-App",
+    "system_name": "LookMe Try-On System",
+    "brand_keywords": [
+      "clear",
+      "fast",
+      "trustworthy",
+      "personal",
+      "curated",
+      "mobile-first"
+    ],
+    "anti_keywords": [
+      "shopping-mall",
+      "generic-fashion-commerce",
+      "overdecorated",
+      "dashboard-heavy",
+      "playful",
+      "luxury-editorial",
+      "neon",
+      "glassmorphism"
+    ],
+    "visual_keywords": [
+      "compact mobile funnel",
+      "real item image evidence",
+      "quiet financial-app trust",
+      "scan-first cards",
+      "clear step hierarchy",
+      "low elevation surfaces"
+    ],
+    "interaction_keywords": [
+      "single-primary-action",
+      "predictable forward flow",
+      "explicit paid boundary",
+      "fast selection",
+      "recoverable errors",
+      "touch-safe controls"
+    ],
+    "product_primitives": [
+      "Toss short funnel landing",
+      "required and optional consent groups",
+      "face photo capture/upload",
+      "body sample selector",
+      "Colorfit real item image set selector",
+      "generation progress state",
+      "AI outfit result viewer",
+      "save and share actions",
+      "credit wallet and paywall",
+      "paid wardrobe item upload",
+      "wardrobe item grid",
+      "wardrobe generation flow",
+      "toast and error feedback"
+    ]
+  }
+}

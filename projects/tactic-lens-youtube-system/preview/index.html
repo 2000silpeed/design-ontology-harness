@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TacticLens YouTube System Preview</title>
+    <link rel="icon" href="./favicon.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="header">
+        <div>
+          <p class="eyebrow">TacticLens YouTube System</p>
+          <h1>축구 전술 분석 영상 키트</h1>
+        </div>
+        <div class="token-strip" aria-label="색상 토큰">
+          <span style="--swatch: #50c878">Pitch Green</span>
+          <span style="--swatch: #00b1d2">Tracking Cyan</span>
+          <span style="--swatch: #ffbf00">Coach Amber</span>
+          <span style="--swatch: #bd2e4a">Error Crimson</span>
+        </div>
+      </header>
+
+      <section class="grid">
+        <article class="frame thumbnail">
+          <div class="series-label">TACTICAL BREAKDOWN</div>
+          <div class="thumb-copy">
+            <strong>4-4-2 압박,<br />왜 무너졌나</strong>
+            <span>42:18 · wide press trigger</span>
+          </div>
+          <div class="pitch-diagram" aria-label="썸네일 피치맵">
+            <i class="halfway"></i>
+            <i class="circle"></i>
+            <b class="player p1">6</b>
+            <b class="player p2">8</b>
+            <b class="player p3">11</b>
+            <b class="opponent o1"></b>
+            <b class="opponent o2"></b>
+            <svg viewBox="0 0 520 300" aria-hidden="true">
+              <path class="cyan" d="M95 76 C160 110 210 140 277 128 C340 115 388 150 444 118" />
+              <path class="green" d="M86 210 C180 150 255 216 344 175 C390 154 430 202 462 228" />
+              <path class="amber" d="M74 166 C170 72 290 112 365 166 C405 194 434 183 468 158" />
+            </svg>
+          </div>
+          <div class="badge">EP. 04</div>
+        </article>
+
+        <article class="frame title-card">
+          <div class="title-layout">
+            <p class="eyebrow">ROUND 12 · FC SEOUL U18</p>
+            <h2>후방 3-2 빌드업은<br />어디서 끊겼나</h2>
+            <p>빌드업 구조, 압박 유도, 잔류 수비를 장면 근거로 분해합니다.</p>
+          </div>
+          <div class="chapter-number">01</div>
+        </article>
+
+        <article class="frame video-scene">
+          <div class="fake-video">
+            <div class="field-lines"></div>
+            <span class="dot d1"></span>
+            <span class="dot d2"></span>
+            <span class="dot d3"></span>
+            <span class="dot bad"></span>
+            <svg viewBox="0 0 760 420" aria-hidden="true">
+              <path class="cyan" d="M140 130 C230 170 312 180 430 152 C520 130 590 166 650 120" />
+              <path class="danger" d="M506 120 L608 205" />
+              <path class="amber" d="M180 270 C300 198 436 274 584 242" />
+            </svg>
+            <div class="timecode">42:18</div>
+            <div class="lower-third">
+              <span>PRESS TRIGGER</span>
+              <strong>측면 패스 유도 후 8번 커버가 늦습니다.</strong>
+            </div>
+            <div class="caption">압박 방향은 맞았지만, 반대 풀백의 잔류 위치가 비었습니다.</div>
+          </div>
+        </article>
+
+        <article class="frame component-board">
+          <h2>Production Components</h2>
+          <div class="component-list">
+            <div>
+              <span>Lower third</span>
+              <strong>cyan label + chalk body</strong>
+            </div>
+            <div>
+              <span>Evidence card</span>
+              <strong>timestamp + principle + result</strong>
+            </div>
+            <div>
+              <span>Chapter card</span>
+              <strong>phase + one-line claim</strong>
+            </div>
+            <div>
+              <span>Summary card</span>
+              <strong>3 coaching takeaways</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="frame shorts-frame">
+          <div class="shorts-safe top">TOP SAFE</div>
+          <div class="shorts-content">
+            <span class="shorts-tag">SHORTS</span>
+            <h2>역압박 5초 룰</h2>
+            <p>이 장면에서 첫 반응이 1.4초 늦습니다.</p>
+          </div>
+          <div class="shorts-pitch">
+            <span></span>
+            <span></span>
+            <span></span>
+            <i></i>
+          </div>
+          <div class="shorts-caption">볼 상실 직후, 가장 가까운 3명의 거리가 벌어집니다.</div>
+          <div class="shorts-safe bottom">BOTTOM SAFE</div>
+        </article>
+
+        <article class="frame summary-card">
+          <p class="eyebrow">SUMMARY CARD</p>
+          <h2>오늘의 결론</h2>
+          <ol>
+            <li><strong>압박 방향</strong><span>성공</span></li>
+            <li><strong>8번 커버 거리</strong><span>부분 성공</span></li>
+            <li><strong>잔류 수비</strong><span>수정 필요</span></li>
+          </ol>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

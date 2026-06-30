@@ -1,0 +1,537 @@
+{
+  "brand_name": "Omnigen CRM",
+  "system_name": "Omnigen CRM Design System",
+  "product_summary": "영업팀과 CS 리드가 고객 연락처, 파이프라인, KPI, 설정을 한 화면에서 빠르게 점검하는 고밀도 CRM 분석 대시보드",
+  "audiences": [
+    "영업 운영 매니저",
+    "CS 리드",
+    "B2B SaaS 대표와 세일즈 리더"
+  ],
+  "brand_keywords": [
+    "crm",
+    "analytics",
+    "dashboard",
+    "contacts",
+    "pipeline",
+    "dense",
+    "precise",
+    "trustworthy",
+    "operational"
+  ],
+  "anti_keywords": [
+    "decorative",
+    "playful",
+    "marketing-heavy",
+    "skeuomorphic",
+    "noisy",
+    "generic-card-wall"
+  ],
+  "tone_of_voice": [
+    "명확한",
+    "간결한",
+    "운영 중심",
+    "침착한"
+  ],
+  "visual_keywords": [
+    "dense dashboard grid",
+    "flat card surfaces",
+    "thin dividers",
+    "compact contacts table",
+    "restrained blue accent",
+    "status badges",
+    "split-pane workspace",
+    "settings tabs",
+    "numeric KPI emphasis"
+  ],
+  "interaction_keywords": [
+    "keyboard-first filtering",
+    "sticky table header",
+    "inline status menu",
+    "saved view tabs",
+    "quick search",
+    "side panel detail",
+    "low-noise toast"
+  ],
+  "platforms": [
+    "web",
+    "desktop-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA"
+  ],
+  "product_primitives": [
+    "sidebar navigation",
+    "workspace header",
+    "kpi card grid",
+    "contacts table",
+    "pipeline stage board",
+    "filter toolbar",
+    "saved view tabs",
+    "status badge",
+    "activity feed",
+    "settings tabs",
+    "detail side panel",
+    "command search"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "design token",
+      "data density",
+      "table",
+      "forms"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "marketing-only"
+    ]
+  },
+  "seeds": [
+    {
+      "url": "https://primer.style",
+      "kind": "design-system",
+      "title": "Primer",
+      "notes": "Practical component and interaction reference"
+    },
+    {
+      "url": "https://carbondesignsystem.com",
+      "kind": "design-system",
+      "title": "Carbon",
+      "notes": "Enterprise data UI and accessibility reference"
+    },
+    {
+      "url": "https://atlassian.design",
+      "kind": "design-system",
+      "title": "Atlassian Design System",
+      "notes": "Operational workspace and navigation reference"
+    }
+  ],
+  "color_reference": {
+    "path": "../../docs/color-reference.md",
+    "preferred_families": [
+      "Cool Grays",
+      "Standard Blues",
+      "Deep Blues",
+      "Natural Blues"
+    ],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "cool",
+      "contrast": "balanced",
+      "diversity": "restrained",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "신뢰감",
+        "정확함",
+        "차분함"
+      ],
+      "avoid_moods": [
+        "과장",
+        "장식적",
+        "유아적"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 8,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "CRM 운영 콘솔이므로 surface/text는 cool gray 계열을 우선한다",
+      "primary accent는 blue 한 계열로 제한한다",
+      "semantic status는 success/warning/danger/info 네 역할만 쓴다"
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "crm analytics dashboard contacts settings table kpi",
+      "sales pipeline dashboard dense table ui"
+    ],
+    "sources": [
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen app-design reference 1",
+        "path": "build/visuals/omnigen-selected/01-a-crm-sales-pipeline-app__f44327ed9916.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "app-design",
+          "a-crm-sales-pipeline-app",
+          "data-dense-dashboard",
+          "blue-accent",
+          "dark-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 303,
+          "subject": "a CRM sales pipeline app",
+          "style": "data-dense dashboard",
+          "palette": "blue accent",
+          "mood": "dark theme",
+          "score": 57,
+          "source_path": "~/.omnigen-vault/images/app-design/landscape/a-crm-sales-pipeline-app__1536x1024__f44327ed9916.png",
+          "thumb_path": "~/.omnigen-vault/thumbs/app-design/landscape/f44327ed99167d13.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen web-design reference 2",
+        "path": "build/visuals/omnigen-selected/02-an-admin-crm-contacts-table__618df365258e.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "web-design",
+          "an-admin-crm-contacts-table",
+          "data-dense-dashboard",
+          "orange-accent",
+          "pastel-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 275,
+          "subject": "an admin CRM contacts table",
+          "style": "data-dense dashboard",
+          "palette": "orange accent",
+          "mood": "pastel theme",
+          "score": 55,
+          "source_path": "~/.omnigen-vault/images/web-design/landscape/an-admin-crm-contacts-table__1536x1024__618df365258e.png",
+          "thumb_path": "~/.omnigen-vault/thumbs/web-design/landscape/618df365258e8b25.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen app-design reference 3",
+        "path": "build/visuals/omnigen-selected/03-a-crm-sales-pipeline-app__56029e3077e3.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "app-design",
+          "a-crm-sales-pipeline-app",
+          "swiss-grid-layout",
+          "indigo-accent",
+          "pastel-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 1179,
+          "subject": "a CRM sales pipeline app",
+          "style": "Swiss grid layout",
+          "palette": "indigo accent",
+          "mood": "pastel theme",
+          "score": 51,
+          "source_path": "~/.omnigen-vault/images/app-design/landscape/a-crm-sales-pipeline-app__1536x1024__56029e3077e3.png",
+          "thumb_path": "~/.omnigen-vault/thumbs/app-design/landscape/56029e3077e38662.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen web-design reference 4",
+        "path": "build/visuals/omnigen-selected/04-an-admin-crm-contacts-table__0c04307fa4ca.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "web-design",
+          "an-admin-crm-contacts-table",
+          "sleek-dark-ui",
+          "orange-accent",
+          "muted-neutral-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 1696,
+          "subject": "an admin CRM contacts table",
+          "style": "sleek dark UI",
+          "palette": "orange accent",
+          "mood": "muted neutral theme",
+          "score": 45,
+          "source_path": "~/.omnigen-vault/images/web-design/landscape/an-admin-crm-contacts-table__1580x996__0c04307fa4ca.png",
+          "thumb_path": "~/.omnigen-vault/thumbs/web-design/landscape/0c04307fa4ca408f.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen web-design reference 5",
+        "path": "build/visuals/omnigen-selected/05-a-modern-analytics-dashboard-screen__705119287d0a.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "web-design",
+          "a-modern-analytics-dashboard-screen",
+          "data-dense-dashboard",
+          "indigo-accent",
+          "high-contrast-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 237,
+          "subject": "a modern analytics dashboard screen",
+          "style": "data-dense dashboard",
+          "palette": "indigo accent",
+          "mood": "high-contrast theme",
+          "score": 43,
+          "source_path": "~/.omnigen-vault/images/web-design/landscape/a-modern-analytics-dashboard-screen__1672x941__705119287d0a.png",
+          "thumb_path": "~/.omnigen-vault/thumbs/web-design/landscape/705119287d0a0127.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen app-design reference 6",
+        "path": "build/visuals/omnigen-selected/06-an-analytics-bi-dashboard-app__f6a11d6e029f.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "app-design",
+          "an-analytics-bi-dashboard-app",
+          "data-dense-dashboard",
+          "monochrome-accent",
+          "light-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 129,
+          "subject": "an analytics BI dashboard app",
+          "style": "data-dense dashboard",
+          "palette": "monochrome accent",
+          "mood": "light theme",
+          "score": 43,
+          "source_path": "~/.omnigen-vault/images/app-design/landscape/an-analytics-bi-dashboard-app__1536x1024__f6a11d6e029f.png",
+          "thumb_path": "~/.omnigen-vault/thumbs/app-design/landscape/f6a11d6e029f31d0.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen app-design reference 7",
+        "path": "build/visuals/omnigen-selected/07-a-desktop-productivity-app-dashboard__062ead9c2e3f.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "app-design",
+          "a-desktop-productivity-app-dashboard",
+          "data-dense-dashboard",
+          "orange-accent",
+          "vibrant-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 1280,
+          "subject": "a desktop productivity app dashboard",
+          "style": "data-dense dashboard",
+          "palette": "orange accent",
+          "mood": "vibrant theme",
+          "score": 35,
+          "source_path": "~/.omnigen-vault/images/app-design/landscape/a-desktop-productivity-app-dashboard__1536x1024__062ead9c2e3f.png",
+          "thumb_path": "~/.omnigen-vault/thumbs/app-design/landscape/062ead9c2e3feb8c.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen web-design reference 8",
+        "path": "build/visuals/omnigen-selected/08-a-fintech-banking-web-dashboard__72183b050f96.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "web-design",
+          "a-fintech-banking-web-dashboard",
+          "data-dense-dashboard",
+          "pink-accent",
+          "high-contrast-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 171,
+          "subject": "a fintech banking web dashboard",
+          "style": "data-dense dashboard",
+          "palette": "pink accent",
+          "mood": "high-contrast theme",
+          "score": 35,
+          "source_path": "~/.omnigen-vault/images/web-design/landscape/a-fintech-banking-web-dashboard__1536x1024__72183b050f96.png",
+          "thumb_path": "~/.omnigen-vault/thumbs/web-design/landscape/72183b050f96838d.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen web-design reference 9",
+        "path": "build/visuals/omnigen-selected/09-a-modern-analytics-dashboard-screen__153a14216c38.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "web-design",
+          "a-modern-analytics-dashboard-screen",
+          "neumorphic-ui",
+          "blue-accent",
+          "light-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 802,
+          "subject": "a modern analytics dashboard screen",
+          "style": "neumorphic UI",
+          "palette": "blue accent",
+          "mood": "light theme",
+          "score": 35,
+          "source_path": "~/.omnigen-vault/images/web-design/landscape/a-modern-analytics-dashboard-screen__1536x1024__153a14216c38.png",
+          "thumb_path": "~/.omnigen-vault/thumbs/web-design/landscape/153a14216c38084d.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen web-design reference 10",
+        "path": "build/visuals/omnigen-selected/10-a-settings-page-with-tabs-and-toggles__a3b1389ae301.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "web-design",
+          "a-settings-page-with-tabs-and-toggles",
+          "data-dense-dashboard",
+          "teal-accent",
+          "vibrant-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 530,
+          "subject": "a settings page with tabs and toggles",
+          "style": "data-dense dashboard",
+          "palette": "teal accent",
+          "mood": "vibrant theme",
+          "score": 35,
+          "source_path": "~/.omnigen-vault/images/web-design/landscape/a-settings-page-with-tabs-and-toggles__1536x1024__a3b1389ae301.png",
+          "thumb_path": "~/.omnigen-vault/thumbs/web-design/landscape/a3b1389ae301d8af.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen app-design reference 11",
+        "path": "build/visuals/omnigen-selected/11-an-analytics-bi-dashboard-app__23755beeba4b.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "app-design",
+          "an-analytics-bi-dashboard-app",
+          "minimal-clean-ui",
+          "teal-accent",
+          "dark-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 800,
+          "subject": "an analytics BI dashboard app",
+          "style": "minimal clean UI",
+          "palette": "teal accent",
+          "mood": "dark theme",
+          "score": 35,
+          "source_path": "~/.omnigen-vault/images/app-design/landscape/an-analytics-bi-dashboard-app__1536x1024__23755beeba4b.png",
+          "thumb_path": "~/.omnigen-vault/thumbs/app-design/landscape/23755beeba4b8262.jpg"
+        }
+      },
+      {
+        "kind": "image",
+        "provider_id": "omnigen-vault",
+        "label": "Omnigen app-design reference 12",
+        "path": "build/visuals/omnigen-selected/12-a-finance-budgeting-app-dashboard__5d88f976a14b.png",
+        "tags": [
+          "omnigen-vault",
+          "synthetic-ui",
+          "app-design",
+          "a-finance-budgeting-app-dashboard",
+          "data-dense-dashboard",
+          "pink-accent",
+          "muted-neutral-theme"
+        ],
+        "source_url": null,
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "omnigen": {
+          "id": 1375,
+          "subject": "a finance budgeting app dashboard",
+          "style": "data-dense dashboard",
+          "palette": "pink accent",
+          "mood": "muted neutral theme",
+          "score": 31,
+          "source_path": "~/.omnigen-vault/images/app-design/landscape/a-finance-budgeting-app-dashboard__1536x1024__5d88f976a14b.png",
+          "thumb_path": "~/.omnigen-vault/thumbs/app-design/landscape/5d88f976a14beaa6.jpg"
+        }
+      }
+    ],
+    "preferred_count": 12,
+    "weights": {
+      "layout": 0.35,
+      "component_shape": 0.25,
+      "color_balance": 0.15,
+      "typography_mood": 0.15,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "contacts table",
+      "kpi card",
+      "filter toolbar",
+      "settings tabs"
+    ],
+    "avoid_patterns": [
+      "decorative gradient hero",
+      "oversized marketing layout",
+      "emoji-heavy UI",
+      "stock illustration"
+    ],
+    "notes": [
+      "Omnigen vault 이미지는 배포물에 포함하지 않고 build/visuals symlink로만 연결한다",
+      "이미지에서 가져오는 것은 density, layout rhythm, component morphology에 한정한다",
+      "색상·타이포·IA는 spec, KB, color_reference를 우선한다"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "이번 데모에서는 Pinterest 대신 로컬 Omnigen vault만 사용한다"
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "preset_id": "monitoring-ops--bold-confident",
+  "preset_api_version": "1.0.0",
+  "adapter_id": "raw-css-variables",
+  "adapter_version": "0.1.0",
+  "harness_version": "0.1.0",
+  "color_mode": "light",
+  "locale": "ko",
+  "installed_at": "2026-05-27T12:39:54Z",
+  "content_hash": "sha256:0b31e6374e92c7c8e0b96a7c1a109f89e2420d400fe096b2731816c153b6a494",
+  "proposed_files": [],
+  "counts": {
+    "created": 26,
+    "merged": 0,
+    "overwritten": 0,
+    "proposed": 0,
+    "skipped": 0
+  }
+}

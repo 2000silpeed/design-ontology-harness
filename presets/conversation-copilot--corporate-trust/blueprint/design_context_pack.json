@@ -1,0 +1,326 @@
+{
+  "schema_version": "design-context-pack/v1",
+  "activation_state": "planned",
+  "purpose": "Unify local screenshots, curated exports, corpus providers, and search assists into ontology-safe design research context.",
+  "artifact_outputs": [
+    "build/visuals/design_context_pack.json",
+    "build/system/blueprint/design_context_pack.json"
+  ],
+  "providers": [
+    {
+      "provider_id": "pinterest",
+      "kind": "pinterest",
+      "label": "Pinterest-assisted capture",
+      "status": "preview",
+      "access_mode": "manual-or-playwright-capture",
+      "truth_role": "search assist and shortlist support",
+      "allowed_outputs": [
+        "component morphology",
+        "layout density",
+        "panel/card proportions",
+        "hierarchy rhythm",
+        "interaction affordance patterns",
+        "flow pattern labels"
+      ],
+      "denied_outputs": [
+        "color palette",
+        "palette composition",
+        "typography scale",
+        "domain information architecture",
+        "product copy",
+        "redistributable imagery unless explicitly licensed"
+      ],
+      "config": {
+        "capture_mode": "manual-save",
+        "capture_dir": "references/visual/pinterest-assisted"
+      }
+    },
+    {
+      "provider_id": "lazyweb",
+      "kind": "lazyweb",
+      "label": "Lazyweb MCP real-app corpus",
+      "status": "suggested",
+      "access_mode": "mcp-or-manual-export",
+      "truth_role": "real app flow and screen corpus provider",
+      "allowed_outputs": [
+        "component morphology",
+        "layout density",
+        "panel/card proportions",
+        "hierarchy rhythm",
+        "interaction affordance patterns",
+        "flow pattern labels"
+      ],
+      "denied_outputs": [
+        "color palette",
+        "palette composition",
+        "typography scale",
+        "domain information architecture",
+        "product copy",
+        "redistributable imagery unless explicitly licensed"
+      ],
+      "config": {
+        "activation_hint": "Connect Lazyweb MCP or export selected screens into visual_reference.sources.",
+        "recommended_for": [
+          "real app screens",
+          "flow search",
+          "competitive morphology"
+        ]
+      }
+    }
+  ],
+  "context_cards": [
+    {
+      "context_id": "research-query-01",
+      "kind": "research-query",
+      "label": "chatgpt enterprise admin console",
+      "provider_id": "lazyweb",
+      "status": "research-needed",
+      "provenance_level": "planned",
+      "source_path": null,
+      "source_url": null,
+      "flows": [
+        "settings"
+      ],
+      "morphology": [
+        "general-interface-composition"
+      ],
+      "absorbed_traits": [
+        "Use as search intent only until real screenshots are selected.",
+        "intent=general",
+        "primitive=unknown"
+      ],
+      "must_not_absorb": [
+        "color palette",
+        "palette composition",
+        "typography scale",
+        "domain information architecture",
+        "product copy",
+        "redistributable imagery unless explicitly licensed"
+      ]
+    },
+    {
+      "context_id": "research-query-02",
+      "kind": "research-query",
+      "label": "anthropic claude enterprise workspace",
+      "provider_id": "lazyweb",
+      "status": "research-needed",
+      "provenance_level": "planned",
+      "source_path": null,
+      "source_url": null,
+      "flows": [
+        "navigation"
+      ],
+      "morphology": [
+        "general-interface-composition"
+      ],
+      "absorbed_traits": [
+        "Use as search intent only until real screenshots are selected.",
+        "intent=general",
+        "primitive=unknown"
+      ],
+      "must_not_absorb": [
+        "color palette",
+        "palette composition",
+        "typography scale",
+        "domain information architecture",
+        "product copy",
+        "redistributable imagery unless explicitly licensed"
+      ]
+    },
+    {
+      "context_id": "research-query-03",
+      "kind": "research-query",
+      "label": "stripe dialog documentation",
+      "provider_id": "lazyweb",
+      "status": "research-needed",
+      "provenance_level": "planned",
+      "source_path": null,
+      "source_url": null,
+      "flows": [
+        "general-product-ui"
+      ],
+      "morphology": [
+        "general-interface-composition"
+      ],
+      "absorbed_traits": [
+        "Use as search intent only until real screenshots are selected.",
+        "intent=general",
+        "primitive=unknown"
+      ],
+      "must_not_absorb": [
+        "color palette",
+        "palette composition",
+        "typography scale",
+        "domain information architecture",
+        "product copy",
+        "redistributable imagery unless explicitly licensed"
+      ]
+    },
+    {
+      "context_id": "research-query-04",
+      "kind": "research-query",
+      "label": "salesforce einstein assistant",
+      "provider_id": "lazyweb",
+      "status": "research-needed",
+      "provenance_level": "planned",
+      "source_path": null,
+      "source_url": null,
+      "flows": [
+        "messaging"
+      ],
+      "morphology": [
+        "general-interface-composition"
+      ],
+      "absorbed_traits": [
+        "Use as search intent only until real screenshots are selected.",
+        "intent=general",
+        "primitive=unknown"
+      ],
+      "must_not_absorb": [
+        "color palette",
+        "palette composition",
+        "typography scale",
+        "domain information architecture",
+        "product copy",
+        "redistributable imagery unless explicitly licensed"
+      ]
+    },
+    {
+      "context_id": "research-query-05",
+      "kind": "research-query",
+      "label": "intercom fin ai copilot",
+      "provider_id": "lazyweb",
+      "status": "research-needed",
+      "provenance_level": "planned",
+      "source_path": null,
+      "source_url": null,
+      "flows": [
+        "general-product-ui"
+      ],
+      "morphology": [
+        "general-interface-composition"
+      ],
+      "absorbed_traits": [
+        "Use as search intent only until real screenshots are selected.",
+        "intent=general",
+        "primitive=unknown"
+      ],
+      "must_not_absorb": [
+        "color palette",
+        "palette composition",
+        "typography scale",
+        "domain information architecture",
+        "product copy",
+        "redistributable imagery unless explicitly licensed"
+      ]
+    }
+  ],
+  "flow_index": [
+    {
+      "flow": "general-product-ui",
+      "context_count": 2,
+      "providers": [
+        "lazyweb"
+      ],
+      "status": "covered"
+    },
+    {
+      "flow": "messaging",
+      "context_count": 1,
+      "providers": [
+        "lazyweb"
+      ],
+      "status": "covered"
+    },
+    {
+      "flow": "navigation",
+      "context_count": 1,
+      "providers": [
+        "lazyweb"
+      ],
+      "status": "covered"
+    },
+    {
+      "flow": "settings",
+      "context_count": 1,
+      "providers": [
+        "lazyweb"
+      ],
+      "status": "covered"
+    },
+    {
+      "flow": "data-review",
+      "context_count": 0,
+      "providers": [],
+      "status": "gap"
+    },
+    {
+      "flow": "document",
+      "context_count": 0,
+      "providers": [],
+      "status": "gap"
+    }
+  ],
+  "component_morphology_index": [
+    {
+      "morphology": "general-interface-composition",
+      "context_count": 5,
+      "examples": [
+        "research-query-01",
+        "research-query-02",
+        "research-query-03",
+        "research-query-04"
+      ]
+    }
+  ],
+  "absorption_policy": {
+    "authority_order": [
+      "product task flow and information architecture",
+      "token_schema.json and generated CSS variables",
+      "components/component_specs.* and component_inventory.json",
+      "system_spec.md and system_ontology.json",
+      "external reference context"
+    ],
+    "allowed": [
+      "component morphology",
+      "layout density",
+      "panel/card proportions",
+      "hierarchy rhythm",
+      "interaction affordance patterns",
+      "flow pattern labels"
+    ],
+    "denied": [
+      "color palette",
+      "palette composition",
+      "typography scale",
+      "domain information architecture",
+      "product copy",
+      "redistributable imagery unless explicitly licensed"
+    ],
+    "rule": "Reference context is research input only; it never overrides product IA, tokens, component specs, or governance."
+  },
+  "research_gaps": [
+    {
+      "id": "no-observed-screens",
+      "severity": "high",
+      "detail": "No selected local screenshots are available; visual signals are query/planning-only.",
+      "recommended_action": "Capture or export 3-8 representative screens before treating morphology guidance as grounded."
+    },
+    {
+      "id": "real-app-corpus-provider-not-connected",
+      "severity": "medium",
+      "detail": "A real-app corpus provider is only suggested, not connected.",
+      "recommended_action": "Connect Lazyweb MCP or export selected Lazyweb screens into visual_reference.sources with provenance."
+    },
+    {
+      "id": "flow-coverage-gaps",
+      "severity": "medium",
+      "detail": "Some product flows are not covered by selected reference screens.",
+      "flows": [
+        "data-review",
+        "document"
+      ],
+      "recommended_action": "Search corpus/provider screens by these flows before mock generation."
+    }
+  ]
+}

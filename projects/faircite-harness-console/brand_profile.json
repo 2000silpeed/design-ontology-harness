@@ -1,0 +1,283 @@
+{
+  "brand_name": "FairCite",
+  "system_name": "FairCite Evidence Console System",
+  "product_summary": "공정거래위원회 의결서 500건을 chunk 단위까지 추적 가능한 형태로 재구성한 근거추적 듀얼 모드 웹서비스. 본사·원청은 사전 예방용으로, 가맹점주·수급사업자는 사후 인지·대응용으로 같은 데이터를 다른 시점에서 활용한다.",
+  "audiences": [
+    "기업 컴플라이언스팀 — 자사 거래구조와 산업 영역의 공정거래 리스크를 사전 점검하고 사내 보고용 근거 자료를 만드는 실무자",
+    "사내 법무팀 변호사 — 의결서 chunk, 현행 조문, 처분 사례를 빠르게 비교해 외부 의견서 전 단계의 조사 근거를 확보하는 전문가",
+    "가맹점주·중소 수급사업자·중소 입찰업체 — 자신이 겪은 상황과 공정위 인정 유사 패턴을 비교하고 사실관계 정리와 증거 체크리스트를 준비하는 사용자",
+    "공모전 평가위원 — Track 2 서비스 결과물이 자동지표와 분리되어 있고 정성 5축을 명확히 증명하는지 빠르게 확인하는 심사자"
+  ],
+  "brand_keywords": [
+    "fair-trade",
+    "evidence-traceability",
+    "decision-document",
+    "chunk-citation",
+    "dual-mode-console",
+    "compliance",
+    "rights-protection",
+    "legal-reference",
+    "law-diff",
+    "sanction-anatomy",
+    "case-briefing",
+    "source-label",
+    "policy-grade",
+    "calm-authoritative",
+    "korean-public-service"
+  ],
+  "anti_keywords": [
+    "marketing-landing",
+    "hero-heavy",
+    "decorative-gradient",
+    "cartoon-legal",
+    "one-note-purple",
+    "one-note-blue",
+    "beige-law-office",
+    "black-box-ai",
+    "legal-advice-claim",
+    "prediction-focused",
+    "consumer-social-feed",
+    "overdecorated-card-stack"
+  ],
+  "tone_of_voice": [
+    "정확한",
+    "차분한",
+    "근거 중심",
+    "법률 자문이 아닌 참고 판단",
+    "평이하지만 단정하지 않는",
+    "공공 서비스처럼 신뢰감 있는"
+  ],
+  "visual_keywords": [
+    "dense evidence console",
+    "public-sector trust",
+    "split-pane workflow",
+    "citation drawer",
+    "source label badges",
+    "legal document snippets",
+    "structured risk matrix",
+    "paired case comparison",
+    "law lookup hover",
+    "neutral surfaces with restrained status accents",
+    "Korean professional UI",
+    "audit-friendly data panels"
+  ],
+  "interaction_keywords": [
+    "mode switch between compliance and shield",
+    "right-side evidence drawer",
+    "inline chunk citation reveal",
+    "source label tooltip",
+    "law hover lookup",
+    "risk matrix drilldown",
+    "sanction structure stepper",
+    "pattern catalog card select",
+    "paired case perspective toggle",
+    "clear inputs privacy action",
+    "PDF export affordance",
+    "keyboard-friendly dashboard navigation"
+  ],
+  "platforms": [
+    "web",
+    "desktop-web",
+    "responsive-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "keyboard navigable",
+    "high contrast source labels",
+    "Korean keep-all line wrapping"
+  ],
+  "product_primitives": [
+    "app shell",
+    "mode selector",
+    "sidebar navigation",
+    "privacy banner",
+    "diagnosis form",
+    "structured textarea",
+    "segmented controls",
+    "risk matrix",
+    "risk row meter",
+    "case result card",
+    "citation drawer",
+    "source label badge",
+    "source label tooltip",
+    "evidence map",
+    "chunk card",
+    "law lookup card",
+    "sanction anatomy stepper",
+    "pattern catalog",
+    "paired case comparison",
+    "metric strip",
+    "data status card",
+    "legal disclaimer footer",
+    "PDF export button",
+    "graph preview panel"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "government",
+      "public service",
+      "data table",
+      "compliance",
+      "audit",
+      "evidence",
+      "legal",
+      "policy",
+      "dashboard",
+      "split pane",
+      "enterprise"
+    ],
+    "avoid_sources_containing": [
+      "marketing-only",
+      "portfolio-only",
+      "social-feed-only",
+      "neon",
+      "game",
+      "fashion-commerce",
+      "consumer-onboarding-only"
+    ]
+  },
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Standard Blues",
+      "Pantone Trend Blues",
+      "Standard Greens",
+      "Standard Oranges",
+      "Standard Violets"
+    ],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "cool-neutral-with-warm-evidence-accent",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "신뢰",
+        "전문성",
+        "공공성",
+        "정돈",
+        "근거",
+        "차분",
+        "감사 가능성"
+      ],
+      "avoid_moods": [
+        "귀여움",
+        "과장",
+        "네온",
+        "법률사무소 베이지",
+        "단색 위주",
+        "마케팅 랜딩",
+        "고채도 보라"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Primary는 공공·데이터 신뢰를 주는 청록/블루 계열을 우선하되, 화면 전체가 한 가지 파랑으로 읽히지 않도록 한다.",
+      "Accent는 법령·주의·권익보호 모드를 구분하는 절제된 오렌지/골드 계열을 허용한다.",
+      "Evidence label 4종은 primary/accent/success/violet 역할로 분리해 출처 유형을 즉시 구분하게 한다.",
+      "Canvas는 밝은 회색 계열, panel은 white 중심. dark blue/slate one-note dashboard로 흐르지 않게 한다."
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "Pretendard",
+      "weights": [
+        600,
+        700,
+        800
+      ],
+      "notes": "Korean public-service dashboard heading. 영문/숫자와 한글 혼합에서도 안정적인 professional tone."
+    },
+    "body": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600
+      ],
+      "notes": "의결서 요약, 법령 안내, 카드 설명에 사용. keep-all line wrapping과 1.45~1.6 line-height 권장."
+    },
+    "mono": {
+      "name": "JetBrains Mono",
+      "weights": [
+        400,
+        500,
+        700
+      ],
+      "notes": "chunk_id, doc_id, score, timestamp, baseline metric 표기에만 사용."
+    },
+    "korean": {
+      "name": "Pretendard",
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "notes": "서비스 전체 기본 한글 서체. UI 버튼·표·긴 설명 모두 letter-spacing 0."
+    }
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "government evidence dashboard split pane",
+      "legal research citation drawer",
+      "compliance risk matrix enterprise console",
+      "public service data dashboard korean",
+      "audit trail evidence map UI",
+      "source citation card dense dashboard"
+    ],
+    "sources": [],
+    "preferred_count": 12,
+    "weights": {
+      "layout": 0.35,
+      "component_shape": 0.25,
+      "color_balance": 0.15,
+      "typography_mood": 0.15,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "split-pane evidence workflow",
+      "source provenance labels",
+      "dense but readable Korean dashboard",
+      "mode switch visible in first viewport"
+    ],
+    "avoid_patterns": [
+      "hero landing page",
+      "decorative orbs",
+      "nested cards",
+      "stock legal imagery",
+      "purple-blue gradient SaaS homepage"
+    ],
+    "notes": [
+      "Visual references may inform morphology and density only. FairCite IA, copy, palette roles, labels, and legal-safety language come from this brand_profile and spec.md.",
+      "No external image asset is required for the primary console. The service result should prove data and evidence, not atmosphere."
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "Do not use Pinterest content as domain source. It is morphology-only if later connected."
+      ]
+    }
+  },
+  "seeds": []
+}

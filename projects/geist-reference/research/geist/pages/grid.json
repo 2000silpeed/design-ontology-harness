@@ -1,0 +1,232 @@
+{
+  "schema_version": "geist-reference-page/v1",
+  "slug": "grid",
+  "kind": "component",
+  "title": "Grid",
+  "url": "https://vercel.com/geist/grid",
+  "final_url": "https://vercel.com/geist/grid",
+  "canonical_url": "https://vercel.com/geist/grid",
+  "redirected": false,
+  "description": "Display elements in a grid layout.",
+  "source_hash": "sha256:acfc2e1f5b40c420c4a9ec20834002fb6c9bdc2ffef79f020b6aaeb9623341e4",
+  "body_text_length": 3297,
+  "sections": [
+    {
+      "level": "h2",
+      "text": "Grid"
+    },
+    {
+      "level": "h2",
+      "text": "Basic grid"
+    },
+    {
+      "level": "h2",
+      "text": "Solid cells"
+    },
+    {
+      "level": "h2",
+      "text": "Responsive grid"
+    },
+    {
+      "level": "h2",
+      "text": "Responsive Grid with responsive guide clipping cells"
+    },
+    {
+      "level": "h2",
+      "text": "Grid with hidden row guides"
+    },
+    {
+      "level": "h2",
+      "text": "Grid with hidden column guides"
+    },
+    {
+      "level": "h2",
+      "text": "Grid with overlaying cells"
+    },
+    {
+      "level": "h2",
+      "text": "Specific Grid with Guide Clipping"
+    },
+    {
+      "level": "h2",
+      "text": "Grid with cross"
+    },
+    {
+      "level": "h2",
+      "text": "Dashed grid with cross"
+    },
+    {
+      "level": "h2",
+      "text": "Dashed grid with grid page"
+    },
+    {
+      "level": "h2",
+      "text": "Best Practices"
+    },
+    {
+      "level": "h3",
+      "text": "When to use"
+    },
+    {
+      "level": "h3",
+      "text": "Behavior"
+    },
+    {
+      "level": "h3",
+      "text": "Accessibility"
+    }
+  ],
+  "section_count": 16,
+  "symbol_metadata": {
+    "code_example_count": 12,
+    "import_symbols": [
+      "Grid",
+      "GridSystem",
+      "GridCell",
+      "GridCross",
+      "GridPage"
+    ],
+    "import_sources": [
+      "@vercel/geistcn/components"
+    ],
+    "jsx_tags": [
+      "GridSystem",
+      "Grid",
+      "GridCell",
+      "GridCross",
+      "GridPage"
+    ],
+    "prop_names": [
+      "guideWidth",
+      "columns",
+      "height",
+      "rows",
+      "column",
+      "row",
+      "hideGuides"
+    ]
+  },
+  "token_refs": {
+    "css_var_count": 85,
+    "css_vars": [
+      "--accents-1",
+      "--accents-2",
+      "--accents-3",
+      "--accents-8",
+      "--banner-min-height",
+      "--cross-color",
+      "--cross-column",
+      "--cross-half-size",
+      "--cross-row",
+      "--cross-size",
+      "--ds-amber-800",
+      "--ds-background-100",
+      "--ds-blue-300",
+      "--ds-blue-700",
+      "--ds-blue-900",
+      "--ds-focus-color",
+      "--ds-focus-ring",
+      "--ds-gray-100",
+      "--ds-gray-1000",
+      "--ds-gray-200",
+      "--ds-gray-400",
+      "--ds-gray-700",
+      "--ds-gray-900",
+      "--ds-gray-alpha-100",
+      "--ds-gray-alpha-200",
+      "--ds-gray-alpha-400",
+      "--ds-gray-alpha-500",
+      "--ds-gray-alpha-600",
+      "--ds-shadow-border",
+      "--ds-shadow-border-small",
+      "--font-mono",
+      "--font-sans",
+      "--geist-foreground",
+      "--geist-form-small-font",
+      "--geist-form-small-height",
+      "--geist-gap-half",
+      "--geist-icon-size",
+      "--grid-columns",
+      "--grid-rows",
+      "--guide-color",
+      "--guide-width",
+      "--height",
+      "--lg-cell-columns",
+      "--lg-cell-rows",
+      "--lg-grid-column",
+      "--lg-grid-columns",
+      "--lg-grid-row",
+      "--lg-grid-rows",
+      "--lg-stack-padding",
+      "--max-width",
+      "--md-cell-columns",
+      "--md-cell-rows",
+      "--md-grid-columns",
+      "--md-grid-rows",
+      "--md-stack-padding",
+      "--min-width",
+      "--sm-cell-columns",
+      "--sm-cell-rows",
+      "--sm-grid-column",
+      "--sm-grid-columns",
+      "--sm-grid-row",
+      "--sm-grid-rows",
+      "--sm-height",
+      "--sm-stack-padding",
+      "--smd-cell-columns",
+      "--smd-cell-rows",
+      "--smd-grid-column",
+      "--smd-grid-row",
+      "--spinner-size",
+      "--stack-align",
+      "--stack-direction",
+      "--stack-flex",
+      "--stack-gap",
+      "--stack-justify",
+      "--themed-bg",
+      "--themed-border",
+      "--themed-fg",
+      "--themed-hover-bg",
+      "--width",
+      "--x"
+    ],
+    "geist_data_attrs": [
+      "data-geist-button",
+      "data-geist-kbd",
+      "data-geist-textarea-wrapper"
+    ]
+  },
+  "accessibility_terms": [
+    "Keyboard",
+    "aria-checked",
+    "aria-controls",
+    "aria-disabled",
+    "aria-expanded",
+    "aria-hidden",
+    "aria-label",
+    "aria-pressable",
+    "focus",
+    "keyboard",
+    "role"
+  ],
+  "absorption_policy": {
+    "allowed": [
+      "component names",
+      "component taxonomy",
+      "state coverage hints",
+      "section headings",
+      "import and JSX symbol references",
+      "token identifiers",
+      "accessibility and interaction evidence labels"
+    ],
+    "denied": [
+      "verbatim product copy beyond short labels",
+      "brand logos or protected imagery",
+      "unlicensed implementation source code",
+      "full documentation text",
+      "Vercel-specific IA as product IA"
+    ],
+    "rule": "Store structured reference metadata for local reimplementation; keep source URLs as evidence."
+  },
+  "nav_index": 5
+}

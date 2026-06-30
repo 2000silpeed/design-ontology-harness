@@ -1,0 +1,236 @@
+{
+  "brand_name": "LookMe Toss In-App",
+  "system_name": "LookMe Try-On System",
+  "product_summary": "Toss 인앱 환경에서 얼굴 사진, 바디 샘플, 실제 Colorfit 의류/소품 이미지 세트를 조합해 무료 얼굴 착장샷을 만들고, 크레딧 구매 후 내 아이템 착장샷을 생성하는 모바일 퍼널",
+  "audiences": [
+    "Toss 안에서 짧은 시간 안에 AI 얼굴 착장샷을 시험해보고 싶은 모바일 사용자",
+    "자신의 옷과 소품 이미지를 등록해 착장샷을 만들어보고 싶은 유료 사용자",
+    "개인정보와 얼굴 사진 처리에 민감하며 명확한 동의와 삭제 정책을 기대하는 사용자"
+  ],
+  "brand_keywords": [
+    "clear",
+    "fast",
+    "trustworthy",
+    "personal",
+    "curated",
+    "mobile-first"
+  ],
+  "anti_keywords": [
+    "shopping-mall",
+    "generic-fashion-commerce",
+    "overdecorated",
+    "dashboard-heavy",
+    "playful",
+    "luxury-editorial",
+    "neon",
+    "glassmorphism"
+  ],
+  "tone_of_voice": [
+    "concise",
+    "reassuring",
+    "direct",
+    "privacy-aware"
+  ],
+  "visual_keywords": [
+    "compact mobile funnel",
+    "real item image evidence",
+    "quiet financial-app trust",
+    "scan-first cards",
+    "clear step hierarchy",
+    "low elevation surfaces"
+  ],
+  "interaction_keywords": [
+    "single-primary-action",
+    "predictable forward flow",
+    "explicit paid boundary",
+    "fast selection",
+    "recoverable errors",
+    "touch-safe controls"
+  ],
+  "platforms": [
+    "mobile web",
+    "desktop browser preview"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "44px minimum touch target",
+    "16px minimum form text",
+    "reduced motion friendly"
+  ],
+  "product_primitives": [
+    "Toss short funnel landing",
+    "required and optional consent groups",
+    "face photo capture/upload",
+    "body sample selector",
+    "Colorfit real item image set selector",
+    "generation progress state",
+    "AI outfit result viewer",
+    "save and share actions",
+    "credit wallet and paywall",
+    "paid wardrobe item upload",
+    "wardrobe item grid",
+    "wardrobe generation flow",
+    "toast and error feedback"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "mobile",
+      "components",
+      "accessibility",
+      "forms",
+      "design token",
+      "financial"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "fashion commerce checkout",
+      "contract-copilot-mock"
+    ]
+  },
+  "seeds": [
+    {
+      "url": "local:/Users/sungwoon/ai-projects/lookme-toss-inapp/PRD.md",
+      "kind": "product-spec",
+      "title": "LookMe Toss In-App PRD",
+      "notes": "Target repo product objective and changed positioning: free face try-on, paid wardrobe generation"
+    },
+    {
+      "url": "local:/Users/sungwoon/ai-projects/lookme-toss-inapp/web/app.js",
+      "kind": "implementation-audit",
+      "title": "Current SPA routes and component rendering",
+      "notes": "Route and component structure only; not visual authority"
+    },
+    {
+      "url": "local:/Users/sungwoon/ai-projects/lookme-toss-inapp/seeds/style_sets.json",
+      "kind": "asset-evidence",
+      "title": "Colorfit item image set seed",
+      "notes": "Real extracted clothing/accessory images are the visual evidence layer"
+    }
+  ],
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Deep Blues",
+      "Standard Blues",
+      "Natural Greens",
+      "Pastel Blues"
+    ],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "cool",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "신뢰감",
+        "안정감",
+        "깔끔함",
+        "현대적"
+      ],
+      "avoid_moods": [
+        "화려함",
+        "귀여움",
+        "고급 부티크",
+        "강한 쇼핑몰"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 8,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "Primary action should feel Toss-adjacent and trustworthy without copying Toss brand assets.",
+      "Colorfit item photos carry fashion texture; UI chrome must stay quiet and legible.",
+      "Avoid beige-only editorial palettes and purple-blue gradients."
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "mobile fintech onboarding funnel",
+      "compact image selection cards",
+      "privacy consent mobile flow",
+      "mobile AI generation result viewer"
+    ],
+    "sources": [
+      {
+        "kind": "image",
+        "path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/landing-mobile.png",
+        "label": "Current landing baseline",
+        "tags": [
+          "current",
+          "landing",
+          "mobile"
+        ]
+      },
+      {
+        "kind": "image",
+        "path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/style-mobile.png",
+        "label": "Current Colorfit item set selector baseline",
+        "tags": [
+          "current",
+          "item-set",
+          "mobile"
+        ]
+      },
+      {
+        "kind": "image",
+        "path": "/Users/sungwoon/ai-projects/lookme-toss-inapp/output/playwright/result-mobile.png",
+        "label": "Current AI result baseline",
+        "tags": [
+          "current",
+          "result",
+          "mobile"
+        ]
+      }
+    ],
+    "preferred_count": 8,
+    "weights": {
+      "layout": 0.35,
+      "component_shape": 0.25,
+      "color_balance": 0.1,
+      "typography_mood": 0.15,
+      "surface_style": 0.15
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "single primary CTA per screen",
+      "real item image visibility",
+      "credit boundary clarity",
+      "privacy reassurance without long legal blocks"
+    ],
+    "avoid_patterns": [
+      "marketing hero dominance after entry",
+      "nested cards",
+      "large decorative gradients",
+      "shopping price cards",
+      "dense legal wall before trust summary"
+    ],
+    "notes": [
+      "Current screenshots are baseline audit evidence, not a target visual style.",
+      "External or Lazyweb references may inform density and hierarchy only; color, typography, IA, and copy stay governed by this profile and generated system docs.",
+      "Do not copy or use contract-copilot-mock as reference."
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "Pinterest/Lazyweb is optional and advisory only.",
+        "No external reference assets are final app assets."
+      ]
+    }
+  }
+}

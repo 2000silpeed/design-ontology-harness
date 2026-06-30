@@ -1,0 +1,173 @@
+{
+  "schema_version": "geist-reference-page/v1",
+  "slug": "search-input",
+  "kind": "component",
+  "title": "Search Input",
+  "url": "https://vercel.com/geist/search-input",
+  "final_url": "https://vercel.com/geist/search-input",
+  "canonical_url": "https://vercel.com/geist/search-input",
+  "redirected": false,
+  "description": "Pre-configured search input with a magnifying glass icon and clear button.",
+  "source_hash": "sha256:ac76c69bf063f7395bf16740a79112838111a3a27e68e1bd609a7853f2feec89",
+  "body_text_length": 1192,
+  "sections": [
+    {
+      "level": "h2",
+      "text": "Default"
+    },
+    {
+      "level": "h2",
+      "text": "With Cmdk"
+    },
+    {
+      "level": "h2",
+      "text": "Disabled"
+    },
+    {
+      "level": "h2",
+      "text": "Loading"
+    },
+    {
+      "level": "h2",
+      "text": "Custom Prefix"
+    }
+  ],
+  "section_count": 5,
+  "symbol_metadata": {
+    "code_example_count": 5,
+    "import_symbols": [
+      "SearchInput",
+      "useState",
+      "IconSparkles"
+    ],
+    "import_sources": [
+      "@vercel/geistcn/components",
+      "react",
+      "@vercel/geistcn-assets/icons"
+    ],
+    "jsx_tags": [
+      "SearchInput",
+      "IconSparkles"
+    ],
+    "prop_names": [
+      "aria-label",
+      "onChange",
+      "placeholder",
+      "value",
+      "prefix"
+    ]
+  },
+  "token_refs": {
+    "css_var_count": 65,
+    "css_vars": [
+      "--accents-1",
+      "--accents-2",
+      "--accents-3",
+      "--accents-8",
+      "--animation-delay",
+      "--animation-duration",
+      "--cross-color",
+      "--ds-amber-800",
+      "--ds-background-100",
+      "--ds-blue-300",
+      "--ds-blue-700",
+      "--ds-blue-900",
+      "--ds-focus-color",
+      "--ds-focus-ring",
+      "--ds-gray-100",
+      "--ds-gray-1000",
+      "--ds-gray-200",
+      "--ds-gray-400",
+      "--ds-gray-700",
+      "--ds-gray-900",
+      "--ds-gray-alpha-100",
+      "--ds-gray-alpha-200",
+      "--ds-gray-alpha-400",
+      "--ds-gray-alpha-500",
+      "--ds-gray-alpha-600",
+      "--ds-shadow-border",
+      "--ds-shadow-border-small",
+      "--duration",
+      "--font-mono",
+      "--font-sans",
+      "--geist-foreground",
+      "--geist-form-small-font",
+      "--geist-form-small-height",
+      "--geist-gap-half",
+      "--geist-icon-size",
+      "--grid-columns",
+      "--grid-rows",
+      "--guide-color",
+      "--guide-width",
+      "--height",
+      "--lg-cell-columns",
+      "--lg-cell-rows",
+      "--max-width",
+      "--md-cell-columns",
+      "--md-cell-rows",
+      "--min-width",
+      "--padding",
+      "--sm-cell-columns",
+      "--sm-cell-rows",
+      "--sm-grid-column",
+      "--sm-grid-row",
+      "--sm-height",
+      "--smd-cell-columns",
+      "--smd-cell-rows",
+      "--spinner-size",
+      "--themed-bg",
+      "--themed-border",
+      "--themed-fg",
+      "--themed-hover-bg",
+      "--timing",
+      "--x",
+      "--x-padding",
+      "--xs-cell-columns",
+      "--xs-cell-rows",
+      "--y"
+    ],
+    "geist_data_attrs": [
+      "data-geist-button",
+      "data-geist-input",
+      "data-geist-input-prefix",
+      "data-geist-input-suffix",
+      "data-geist-input-wrapper",
+      "data-geist-kbd",
+      "data-geist-textarea-wrapper"
+    ]
+  },
+  "accessibility_terms": [
+    "Keyboard",
+    "aria-checked",
+    "aria-controls",
+    "aria-disabled",
+    "aria-expanded",
+    "aria-hidden",
+    "aria-invalid",
+    "aria-label",
+    "aria-pressable",
+    "focus",
+    "keyboard",
+    "role"
+  ],
+  "absorption_policy": {
+    "allowed": [
+      "component names",
+      "component taxonomy",
+      "state coverage hints",
+      "section headings",
+      "import and JSX symbol references",
+      "token identifiers",
+      "accessibility and interaction evidence labels"
+    ],
+    "denied": [
+      "verbatim product copy beyond short labels",
+      "brand logos or protected imagery",
+      "unlicensed implementation source code",
+      "full documentation text",
+      "Vercel-specific IA as product IA"
+    ],
+    "rule": "Store structured reference metadata for local reimplementation; keep source URLs as evidence."
+  },
+  "nav_index": 57
+}
