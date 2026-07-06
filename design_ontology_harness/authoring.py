@@ -1280,6 +1280,28 @@ def build_system_spec_markdown(
 {visual_substance_rule_lines}
 - **Promoted visual substance failure patterns**:
 {visual_substance_failure_lines}"""
+    html_prototype_policy = governance.get("html_prototype_contract_policy", {})
+    html_prototype_applies_to = ", ".join(html_prototype_policy.get("applies_to", [])) or "static HTML mockups, product workflow prototypes"
+    html_prototype_contract_lines = "\n".join(
+        f"- {item}" for item in html_prototype_policy.get("required_contracts", [])
+    ) or "- No HTML prototype contracts defined."
+    html_prototype_rule_lines = "\n".join(
+        f"- {item}" for item in html_prototype_policy.get("implementation_rules", [])
+    ) or "- No HTML prototype implementation rules defined."
+    html_prototype_failure_lines = "\n".join(
+        f"- **{item.get('id', 'html-prototype-failure')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in html_prototype_policy.get("failure_patterns", [])
+    ) or "- No HTML prototype failure patterns defined."
+    html_prototype_section = f"""### HTML Prototype Contract
+
+- **Rule**: {html_prototype_policy.get('rule', 'HTML mockups must behave as thin executable product prototypes.')}
+- **Applies to**: {html_prototype_applies_to}
+- **Required contracts**:
+{html_prototype_contract_lines}
+- **Implementation rules**:
+{html_prototype_rule_lines}
+- **Promoted prototype failure patterns**:
+{html_prototype_failure_lines}"""
     visual_medium_policy = governance.get("visual_asset_medium_selection_policy", {})
     visual_medium_override_lines = "\n".join(
         (
@@ -1436,6 +1458,8 @@ def build_system_spec_markdown(
 {app_icon_section}
 
 {visual_substance_section}
+
+{html_prototype_section}
 
 {visual_medium_section}
 

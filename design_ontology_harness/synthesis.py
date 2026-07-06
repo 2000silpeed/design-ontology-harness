@@ -62,6 +62,11 @@ AI_SYNTHESIS_PRINCIPLES = [
         "detail": "AI는 사이트, 앱, 랜딩, 제품 소개, 콘텐츠 카드, 스포츠/장소/상품/포트폴리오 목업을 이미지 없는 카드와 그라디언트 블록만으로 끝내지 않는다. 도메인 실체를 드러내는 생성 이미지, 라이선스 검증 이미지, 사용자 제공 이미지, 브랜드 identity asset을 적극적으로 배치하고 manifest/alt/crop/반응형 검증까지 완료한다. 단 대시보드·운영 UI에서는 이미지가 표, 필터, 상태, 출처 같은 핵심 작업 표면을 밀어내지 않게 한다.",
     },
     {
+        "id": "html_mockups_are_product_prototypes",
+        "rule": "HTML 목업은 제품 표면 계약이다",
+        "detail": "AI는 HTML 목업을 그림판처럼 쓰지 않는다. 차트, 그래프, 지도, 캘린더, 칸반, 간트, 스프레드시트, 에디터 캔버스 같은 복합 표면은 data-runtime-surface/data-product-surface, 데이터 모델, 출처, 항목 ID, 상태 세트를 드러내야 한다. 관계나 수치 기준을 설명하지 못하면 장식 그래프 대신 table, ledger, timeline처럼 검증 가능한 표면을 사용한다.",
+    },
+    {
         "id": "no_homogeneous_card_wall",
         "rule": "카드벽을 기본 레이아웃으로 쓰지 않는다",
         "detail": "AI는 페이지 섹션 전체를 카드 안에 다시 넣거나, 동일한 radius/shadow/padding을 가진 카드 묶음으로 화면을 채우지 않는다. 반복되는 객체에는 카드가 가능하지만, 1차 작업 표면은 canvas, map, table, row list, rail, inspector, sheet 같은 도메인 구조로 먼저 만든다.",
@@ -403,6 +408,58 @@ MOCKUP_VISUAL_SUBSTANCE_POLICY = {
         },
     ],
     "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "visual QA", "compare-visuals"],
+}
+
+HTML_PROTOTYPE_CONTRACT_POLICY = {
+    "id": "html-prototype-contract",
+    "rule": "HTML mockups must behave as thin executable product prototypes, not static screenshots made from divs.",
+    "applies_to": [
+        "static HTML mockups",
+        "Vite/Next demo screens",
+        "product workflow prototypes",
+        "data dashboards",
+        "maps/charts/calendars/boards",
+        "editor or canvas surfaces",
+    ],
+    "required_contracts": [
+        "Mark the primary surface with data-product-prototype or an equivalent prototype marker when it is a reviewable mockup.",
+        "Each major product surface declares data-runtime-surface or data-product-surface so reviewers know whether it represents a map SDK, chart layer, table view, calendar, board, media slot, editor canvas, or empty/loading state.",
+        "Data-heavy surfaces expose model/source/id metadata such as data-model, data-source, data-row-id, data-item-id, data-event-id, data-node-id, and data-edge-id.",
+        "Prototype reviews include a state set: default, selected, loading, empty, error, disabled, pending, approved/blocked, or domain-specific equivalents.",
+        "Charts, graphs, maps, calendars, kanban boards, gantt views, spreadsheets, and editor canvases use a proven library or one semantic SVG/canvas/table coordinate system with labels, axes, direction, state, and provenance.",
+        "Playwright QA captures desktop and mobile viewports and verifies no horizontal overflow, clipped labels, or incoherent overlaps before the mockup is called complete.",
+    ],
+    "implementation_rules": [
+        "Do not use mock/placeholder/fake/static chart, map, calendar, board, graph, or canvas classes without a runtime/data contract.",
+        "Do not satisfy the contract with aria labels alone; labels help accessibility, but product structure needs model/source/id/state metadata.",
+        "Prefer table, ledger, timeline, or row list when the relationship is simple enough that a graph would be decorative.",
+        "If a complex surface cannot be backed by data or a real interaction model yet, render an explicit empty/loading/pending state instead of a fake finished surface.",
+        "Sample numbers must be visibly labeled as sample/demo and paired with a source or update context.",
+    ],
+    "failure_patterns": [
+        {
+            "id": "complex-mock-surface-without-contract",
+            "trigger": "A chart, graph, map, calendar, kanban, gantt, spreadsheet, timeline, board, inspector, or canvas surface is labeled mock/placeholder/fake/static/sample but has no runtime, model, source, id, or state metadata.",
+            "rule": "A complex HTML mock surface needs a product contract before it can be visually judged.",
+            "prevention": "Add data-runtime-surface or data-product-surface plus model/source/id/state metadata, or replace the surface with a simpler table, ledger, or explicit empty/loading state.",
+            "technical_controls": ["lint-implementation DS084", "IMPLEMENTATION_CONTRACT.md", "Playwright screenshot QA"],
+        },
+        {
+            "id": "single-state-html-prototype",
+            "trigger": "A screen is marked as an HTML/product prototype but exposes only one happy-path state.",
+            "rule": "Prototype fidelity includes state coverage, not only a polished default screenshot.",
+            "prevention": "Add data-prototype-state-set or visible data-state scenarios for default, selected, loading, empty, error, and domain-specific states.",
+            "technical_controls": ["lint-implementation DS085", "component_specs.md states", "Playwright desktop/mobile screenshots"],
+        },
+        {
+            "id": "decorative-data-visualization",
+            "trigger": "A chart, graph, or map shows bars, curves, pins, or cells without axes, labels, source, update context, or data values.",
+            "rule": "Data visualization must explain its criteria and relationship model.",
+            "prevention": "Use a chart/graph/map library, semantic SVG/canvas with data values and labels, or a table/ledger when the data model is small.",
+            "technical_controls": ["lint-implementation DS084", "lint-implementation DS082/DS083", "visual QA review"],
+        },
+    ],
+    "outputs": ["design_system_blueprint.governance", "system_spec.md", "IMPLEMENTATION_CONTRACT.md", "lint-implementation", "visual QA"],
 }
 
 VISUAL_ASSET_MEDIUM_SELECTION_POLICY = {
@@ -903,6 +960,7 @@ def build_blueprint(
                 "상용 제품형 화면은 피치덱식 히어로/균일 카드벽보다 실제 작업 표면, 데이터 밀도, 상태, 필터, 출처를 첫 화면에 우선 배치한다",
                 "데이터·스포츠·운영 UI에서 정확한 수치, 예측, 순위, 투표수는 출처/업데이트 시각/샘플 라벨 없이 확정값처럼 보이게 하지 않는다",
                 "사이트·앱·랜딩·제품·장소·콘텐츠·게임 목업은 도메인 실체를 보여주는 이미지/미디어/identity asset을 적극적으로 사용하고, 이미지 없는 카드·그라디언트만으로 완성 처리하지 않는다",
+                "HTML 목업은 정적 그림이 아니라 제품 표면 계약으로 취급한다. 차트/그래프/지도/캘린더/보드/캔버스는 data-runtime-surface, data-model, data-source, item/node/event id, 상태 세트를 드러낸다",
                 "만화·웹툰·잡지 표지, 컷 미리보기, 서사 콘텐츠 미디어 슬롯은 image_gen/사용자 제공/라이선스 소스/승인된 고품질 아트워크를 기본값으로 삼고, 즉석 SVG 스케치나 기하학 플레이스홀더를 최종 자산으로 쓰지 않는다",
                 "사용자·리뷰어가 'SVG 만들지 말고', '실제 그림파일', 'PNG/WebP/JPEG', '검색해서 넣어'처럼 매체를 지정하면 해당 범위는 raster-only medium override로 기록하고 SVG/inline vector/아이콘 스프라이트로 대체하지 않는다",
                 "생성 이미지와 장식 비주얼은 도메인 맥락을 보조해야 하며 일정, 결과, 표, 필터, 상태 같은 핵심 작업 표면을 압도하지 않는다",
@@ -921,6 +979,7 @@ def build_blueprint(
             "icon_refactor_policy": ICON_REFACTOR_POLICY,
             "app_icon_identity_policy": APP_ICON_IDENTITY_POLICY,
             "mockup_visual_substance_policy": MOCKUP_VISUAL_SUBSTANCE_POLICY,
+            "html_prototype_contract_policy": HTML_PROTOTYPE_CONTRACT_POLICY,
             "visual_asset_medium_selection_policy": VISUAL_ASSET_MEDIUM_SELECTION_POLICY,
             "commercial_product_realism_policy": COMMERCIAL_PRODUCT_REALISM_POLICY,
             "feedback_promotion_policy": REFERENCE_ABSORPTION_SCOPE["promotion_policy"],

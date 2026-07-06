@@ -11,6 +11,7 @@ from design_ontology_harness.synthesis import (
     APP_ICON_IDENTITY_POLICY,
     COLOR_MODE_PARITY_POLICY,
     COMMERCIAL_PRODUCT_REALISM_POLICY,
+    HTML_PROTOTYPE_CONTRACT_POLICY,
     ICON_REFACTOR_POLICY,
     MOCKUP_VISUAL_SUBSTANCE_POLICY,
     REFERENCE_ABSORPTION_SCOPE,
@@ -308,6 +309,107 @@ def test_allows_semantic_svg_workflow_graph(tmp_path: Path):
 
     assert "DS082" not in codes
     assert "DS083" not in codes
+
+
+def test_flags_complex_mock_surface_without_product_contract(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section class="placeholder-chart mock-chart">
+            <div class="bar"></div>
+            <div class="bar tall"></div>
+            <div class="bar short"></div>
+          </section>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS084" in codes
+
+
+def test_allows_complex_surface_with_runtime_model_source_and_state(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section
+            class="chart-surface"
+            data-runtime-surface="chart-layer"
+            data-model="revenue-series"
+            data-source="sample:billing-ledger"
+            data-state="selected"
+          >
+            <div class="bar" data-item-id="q1" data-value="42" data-label="1분기"></div>
+            <div class="bar" data-item-id="q2" data-value="68" data-label="2분기"></div>
+          </section>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS084" not in codes
+
+
+def test_flags_marked_html_prototype_without_state_set(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <main data-product-prototype="ops-console">
+          <section
+            class="chart-surface"
+            data-runtime-surface="chart-layer"
+            data-model="incident-volume"
+            data-source="sample:incidents"
+          >
+            <div class="bar" data-item-id="p1" data-value="12">12</div>
+          </section>
+          <button>필터</button>
+          <button>승인</button>
+          <button>내보내기</button>
+          <button>동기화</button>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS085" in codes
+
+
+def test_allows_marked_html_prototype_with_state_set(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <main
+          data-product-prototype="ops-console"
+          data-prototype-state-set="default,selected,loading,empty,error"
+        >
+          <section
+            class="chart-surface"
+            data-runtime-surface="chart-layer"
+            data-model="incident-volume"
+            data-source="sample:incidents"
+            data-state="selected"
+          >
+            <div class="bar" data-item-id="p1" data-value="12">12</div>
+          </section>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS085" not in codes
 
 
 def test_allows_evidence_ledger_instead_of_node_link_placeholder(tmp_path: Path):
@@ -943,7 +1045,10 @@ def test_implementation_contract_declares_reference_scope():
     assert "Icon And Visual Affordance Coverage" in contract
     assert "Visual Evidence And Screenshot Comparison" in contract
     assert "Mock Fidelity And Runtime Representation" in contract
+    assert "HTML Prototype Contract" in contract
     assert "data-runtime-surface" in contract
+    assert "data-product-surface" in contract
+    assert "data-prototype-state-set" in contract
     assert "compare-visuals" in contract
     assert "image_gen" in contract
     assert "DS070" in contract
@@ -960,6 +1065,8 @@ def test_implementation_contract_declares_reference_scope():
     assert "DS079" in contract
     assert "DS080" in contract
     assert "DS081" in contract
+    assert "DS084" in contract
+    assert "DS085" in contract
     assert "raster-only/no-SVG" in contract
     assert "uv run design-ontology lint-implementation --target-repo ." in contract
 
@@ -1044,6 +1151,27 @@ def test_mockup_visual_substance_policy_flags_low_information_svg():
     assert "lint-implementation DS076" in media["technical_controls"]
     tile = next(item for item in MOCKUP_VISUAL_SUBSTANCE_POLICY["failure_patterns"] if item["id"] == "media-tile-without-asset")
     assert "lint-implementation DS078" in tile["technical_controls"]
+
+
+def test_html_prototype_contract_policy_is_structured_for_ontology():
+    assert HTML_PROTOTYPE_CONTRACT_POLICY["id"] == "html-prototype-contract"
+    assert "static HTML mockups" in HTML_PROTOTYPE_CONTRACT_POLICY["applies_to"]
+    assert any("data-runtime-surface" in item for item in HTML_PROTOTYPE_CONTRACT_POLICY["required_contracts"])
+    failure_ids = {item["id"] for item in HTML_PROTOTYPE_CONTRACT_POLICY["failure_patterns"]}
+    assert "complex-mock-surface-without-contract" in failure_ids
+    assert "single-state-html-prototype" in failure_ids
+    complex_surface = next(
+        item for item in HTML_PROTOTYPE_CONTRACT_POLICY["failure_patterns"]
+        if item["id"] == "complex-mock-surface-without-contract"
+    )
+    single_state = next(
+        item for item in HTML_PROTOTYPE_CONTRACT_POLICY["failure_patterns"]
+        if item["id"] == "single-state-html-prototype"
+    )
+    assert "lint-implementation DS084" in complex_surface["technical_controls"]
+    assert "lint-implementation DS085" in single_state["technical_controls"]
+    assert "data-prototype-state-set" in single_state["prevention"]
+    assert "lint-implementation" in HTML_PROTOTYPE_CONTRACT_POLICY["outputs"]
 
 
 def test_visual_asset_medium_selection_policy_is_structured_for_ontology():

@@ -209,6 +209,33 @@ SEMANTIC_GRAPH_LABEL_RE = re.compile(
     r"(?:<text\b|\bdata-label\s*=|\baria-label\s*=)",
     re.IGNORECASE,
 )
+COMPLEX_SURFACE_ATTR_RE = re.compile(
+    r"<(?P<tag>section|main|div|article|aside|figure)\b(?P<attrs>[^>]*(?:class|className|role|aria-label)\s*=\s*['\"][^'\"]*(?:chart|graph|map|calendar|kanban|gantt|spreadsheet|workflow|board|timeline|table|ledger|inspector|canvas)[^'\"]*['\"][^>]*)>",
+    re.IGNORECASE | re.DOTALL,
+)
+MOCK_SURFACE_HINT_RE = re.compile(
+    r"\b(?:mock|placeholder|fake|static|demo|sample|dummy|wireframe|목업|플레이스홀더|샘플|더미|가짜|임시)\b",
+    re.IGNORECASE,
+)
+SURFACE_CONTRACT_RE = re.compile(
+    r"(?:data-(?:runtime-surface|product-surface|model|source|collection|schema|state|row-id|item-id|node-id|edge-id|event-id|from|to|value|label)\s*=|"
+    r"<table\b|role\s*=\s*['\"](?:table|grid|treegrid|listbox)['\"])",
+    re.IGNORECASE,
+)
+HTML_PROTOTYPE_MARKER_RE = re.compile(
+    r"(?:data-(?:product-)?prototype\s*=|class(?:Name)?\s*=\s*['\"][^'\"]*(?:html-mockup|product-mockup|app-mockup|prototype)[^'\"]*['\"])",
+    re.IGNORECASE,
+)
+PROTOTYPE_STATE_SET_RE = re.compile(
+    r"(?:data-(?:prototype-)?state-set\s*=|data-scenario\s*=|data-view-state\s*=)",
+    re.IGNORECASE,
+)
+STATE_VARIANT_RE = re.compile(
+    r"(?:data-state\s*=\s*['\"](?P<data>[^'\"]+)['\"]|"
+    r"aria-(?:selected|current|busy|disabled|expanded)\s*=|"
+    r"class(?:Name)?\s*=\s*['\"][^'\"]*(?:is-|state-|selected|active|empty|loading|error|disabled|pending|approved|blocked|success|warning)[^'\"]*['\"])",
+    re.IGNORECASE,
+)
 RUNTIME_SURFACE_MARKER_RE = re.compile(r"\bdata-runtime-surface\s*=", re.IGNORECASE)
 MEDIA_RUNTIME_SURFACE_RE = re.compile(
     r"\bdata-runtime-surface\s*=\s*['\"][^'\"]*(?:media|photo|thumbnail|image|generated|sourced)[^'\"]*['\"]",
@@ -639,6 +666,32 @@ def _lint_project_composition(
             )
         )
 
+    uncontracted_surface = _find_complex_mock_surface_without_contract(combined)
+    if uncontracted_surface:
+        issues.append(
+            _issue(
+                "DS084",
+                first_ui_path,
+                1,
+                1,
+                "Complex HTML mock surface lacks a product/runtime contract; add data-runtime-surface or data-product-surface plus model/source/id/state metadata, or replace the surface with a simpler table/ledger.",
+                uncontracted_surface[0],
+            )
+        )
+
+    single_state_prototype = _find_single_state_html_prototype(combined)
+    if single_state_prototype:
+        issues.append(
+            _issue(
+                "DS085",
+                first_ui_path,
+                1,
+                1,
+                "HTML prototype is marked as a product prototype but exposes no state set; include default/selected/loading/empty/error or equivalent data-state scenarios before visual QA.",
+                single_state_prototype[0],
+            )
+        )
+
     if not (target / artifact_dir).exists():
         return issues
 
@@ -844,6 +897,60 @@ def _has_semantic_graph_edge_model(svg_body: str) -> bool:
             SEMANTIC_GRAPH_LABEL_RE,
         )
     )
+
+
+def _find_complex_mock_surface_without_contract(text: str) -> list[str]:
+    """Detect static-looking complex surfaces that do not expose product intent.
+
+    HTML mockups can represent maps, charts, calendars, boards, and editors, but
+    those surfaces need a visible runtime/data contract. This check stays narrow:
+    it only fires when a complex surface is also described as mock/sample/fake/
+    placeholder/static and the nearby markup has no runtime, model, source, id,
+    state, table, or grid contract.
+    """
+
+    snippets: list[str] = []
+    for match in COMPLEX_SURFACE_ATTR_RE.finditer(text):
+        context_start = max(0, match.start() - 220)
+        context_end = min(len(text), match.end() + 900)
+        context = text[context_start:context_end]
+        if not MOCK_SURFACE_HINT_RE.search(context):
+            continue
+        if SURFACE_CONTRACT_RE.search(context):
+            continue
+        snippets.append(_single_line_snippet(context, limit=260))
+    return snippets
+
+
+def _find_single_state_html_prototype(text: str) -> list[str]:
+    if not HTML_PROTOTYPE_MARKER_RE.search(text):
+        return []
+
+    surface_count = len(COMPLEX_SURFACE_ATTR_RE.findall(text))
+    interaction_count = len(INTERACTIVE_UI_RE.findall(text))
+    if surface_count < 1 and interaction_count < 4:
+        return []
+    if PROTOTYPE_STATE_SET_RE.search(text):
+        return []
+
+    state_values = set()
+    generic_state_markers = 0
+    for match in STATE_VARIANT_RE.finditer(text):
+        data_value = match.groupdict().get("data")
+        if data_value:
+            state_values.add(data_value.lower())
+        else:
+            generic_state_markers += 1
+
+    if len(state_values) + generic_state_markers >= 2:
+        return []
+
+    prototype_match = HTML_PROTOTYPE_MARKER_RE.search(text)
+    if not prototype_match:
+        return []
+    context_start = max(0, prototype_match.start() - 220)
+    context_end = min(len(text), prototype_match.end() + 900)
+    return [_single_line_snippet(text[context_start:context_end], limit=260)]
 
 
 def _find_svg_usage_under_raster_directive(text: str) -> list[str]:
