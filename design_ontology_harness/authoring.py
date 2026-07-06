@@ -40,6 +40,7 @@ PRIMITIVE_COMPONENTS = {
     "workspace navigation": ["app-shell", "sidebar-nav", "topbar", "breadcrumb", "workspace-switcher"],
     "rich text editor": ["editor-canvas", "editor-toolbar", "inline-format-menu", "slash-command-menu", "block-controls"],
     "command palette": ["command-palette", "command-result-item", "shortcut-hint", "scope-switcher"],
+    "operational overview": ["metric-strip", "status-summary-row", "task-surface-header", "source-ledger", "operational-rail", "section-header"],
     "dashboard cards": ["stat-card", "insight-card", "activity-card", "section-header"],
     "data tables": ["data-table", "column-header", "filter-chip", "row-actions", "pagination"],
     "forms": ["text-field", "select", "checkbox", "radio", "textarea", "form-section"],
@@ -47,8 +48,9 @@ PRIMITIVE_COMPONENTS = {
 }
 
 LAYOUT_PRIMITIVE_KEYWORDS = {
-    "workspace navigation", "dashboard cards", "data tables", "layout", "grid",
+    "workspace navigation", "operational overview", "dashboard cards", "data tables", "layout", "grid",
     "sidebar", "table", "card", "navigation", "archive browser", "audit log",
+    "status rail", "metric strip", "source ledger", "task surface",
 }
 
 INTERACTION_PRIMITIVE_KEYWORDS = {
@@ -752,7 +754,11 @@ def classify_component_family(component_name: str) -> str:
         "site-logo", "site-nav",
     ]):
         return "marketing"
-    if any(token in component_name for token in ["chart", "table", "grid", "summary", "score"]):
+    if any(token in component_name for token in [
+        "chart", "table", "grid", "summary", "score", "metric", "ledger",
+        "status-summary", "source-ledger", "surface-header", "insight-row",
+        "list", "queue", "timeline", "strip",
+    ]):
         return "data-display"
     if any(token in component_name for token in ["editor", "block", "slash"]):
         return "editorial"

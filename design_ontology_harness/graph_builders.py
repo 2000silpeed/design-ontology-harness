@@ -354,7 +354,7 @@ def build_typography_layer(
 
 
 DEFAULT_LAYOUT_PATTERNS = [
-    "workspace navigation", "dashboard cards", "data tables",
+    "workspace navigation", "operational overview", "data tables",
 ]
 DEFAULT_INTERACTION_PATTERNS = [
     "command palette", "forms", "notifications",
@@ -471,6 +471,87 @@ def build_accessibility_layer(graph: DesignOntologyGraph, component_inventory: d
             graph.add_edge(OntologyEdge(type=EdgeType.requires, source=fid, target="a11y:label-association"))
 
 
+ROW_SURFACE_TOKENS = (
+    "table",
+    "row",
+    "list",
+    "queue",
+    "ledger",
+    "timeline",
+    "strip",
+    "rail",
+    "feed",
+    "roster",
+    "matrix",
+    "diff",
+    "viewer",
+    "column-header",
+    "cell",
+    "pane",
+    "canvas",
+    "inspector",
+)
+
+FRAMED_SURFACE_TOKENS = (
+    "card",
+    "tile",
+    "panel",
+    "sheet",
+    "drawer",
+    "modal",
+    "dialog",
+    "hero",
+    "banner",
+    "toast",
+    "alert",
+    "empty-state",
+    "callout",
+    "admonition",
+    "chart",
+)
+
+
+def _component_surface_profile(component_name: str, family: str, is_interactive: bool) -> dict[str, str | bool]:
+    """Choose token slots by product surface role, not by one universal card shell."""
+    low = component_name.lower()
+    framed = any(token in low for token in FRAMED_SURFACE_TOKENS) or family in {"overlay", "feedback"}
+    row_surface = any(token in low for token in ROW_SURFACE_TOKENS)
+
+    if row_surface and not framed:
+        return {
+            "spacing": "spacing:8",
+            "radius": "radius:none",
+            "surface_tint": False,
+        }
+
+    if is_interactive:
+        return {
+            "spacing": "spacing:12",
+            "radius": "radius:md",
+            "surface_tint": False,
+        }
+
+    if framed or family == "marketing":
+        return {
+            "spacing": "spacing:12",
+            "radius": "radius:md",
+            "surface_tint": True,
+        }
+
+    if family == "navigation":
+        return {
+            "spacing": "spacing:8",
+            "radius": "radius:none",
+            "surface_tint": False,
+        }
+
+    return {
+        "spacing": "spacing:12",
+        "radius": "radius:none",
+        "surface_tint": False,
+    }
+
+
 def build_component_token_layer(
     graph: DesignOntologyGraph,
     component_inventory: dict,
@@ -505,17 +586,16 @@ def build_component_token_layer(
             if graph.get_node(fid):
                 font_ids[role] = fid
 
-    spacing_md = "spacing:12"
-    radius_md = "radius:md"
-
     interactive = {"button", "input", "navigation", "overlay"}
 
     for comp in component_inventory.get("components", []):
-        cid = f"component:{slugify(comp['name'])}"
+        component_name = comp["name"]
+        cid = f"component:{slugify(component_name)}"
         if not graph.get_node(cid):
             continue
         family = comp.get("family", "")
         is_interactive = family in interactive
+        surface_profile = _component_surface_profile(component_name, family, is_interactive)
 
         if is_interactive and "primary" in role_token_ids:
             graph.add_edge(OntologyEdge(
@@ -527,20 +607,22 @@ def build_component_token_layer(
                 type=EdgeType.uses_token, source=cid, target=role_token_ids["accent"],
                 meta={"slot": "emphasis"},
             ))
-        if "surface_tint" in role_token_ids:
+        if surface_profile["surface_tint"] and "surface_tint" in role_token_ids:
             graph.add_edge(OntologyEdge(
                 type=EdgeType.uses_token, source=cid, target=role_token_ids["surface_tint"],
                 meta={"slot": "background"},
             ))
 
-        if graph.get_node(spacing_md):
+        spacing_token = str(surface_profile["spacing"])
+        radius_token = str(surface_profile["radius"])
+        if graph.get_node(spacing_token):
             graph.add_edge(OntologyEdge(
-                type=EdgeType.uses_token, source=cid, target=spacing_md,
+                type=EdgeType.uses_token, source=cid, target=spacing_token,
                 meta={"slot": "padding"},
             ))
-        if graph.get_node(radius_md):
+        if graph.get_node(radius_token):
             graph.add_edge(OntologyEdge(
-                type=EdgeType.uses_token, source=cid, target=radius_md,
+                type=EdgeType.uses_token, source=cid, target=radius_token,
                 meta={"slot": "radius"},
             ))
 

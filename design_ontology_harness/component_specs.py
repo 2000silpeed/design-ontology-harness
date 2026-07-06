@@ -512,6 +512,27 @@ CARD_COMPONENT_TOKENS = (
     "banner",
 )
 
+ROW_SURFACE_TOKENS = (
+    "table",
+    "row",
+    "list",
+    "queue",
+    "ledger",
+    "timeline",
+    "strip",
+    "rail",
+    "feed",
+    "roster",
+    "matrix",
+    "diff",
+    "viewer",
+    "column-header",
+    "cell",
+    "pane",
+    "canvas",
+    "inspector",
+)
+
 CTA_COMPONENT_TOKENS = (
     "button",
     "cta",
@@ -985,11 +1006,22 @@ def _build_visual_adaptation_notes(
     panel_signal = hints.get("panel")
 
     card_like = archetype_key == "surface-card" or _matches_any_token(low_name, CARD_COMPONENT_TOKENS)
+    row_surface_family = family in {
+        "data-display",
+        "document",
+        "foundation",
+        "layout",
+        "navigation",
+        "overlay",
+        "tool-chrome",
+        "workflow",
+    }
+    row_surface_like = row_surface_family and _matches_any_token(low_name, ROW_SURFACE_TOKENS)
     cta_like = family == "button" or archetype_key == "cta-inverse" or _matches_any_token(low_name, CTA_COMPONENT_TOKENS)
     nav_like = family == "navigation" or archetype_key == "nav-bar" or _matches_any_token(low_name, NAV_DENSITY_TOKENS)
     data_panel_like = family == "data-display" or _matches_any_token(low_name, DATA_PANEL_TOKENS)
 
-    if card_like or data_panel_like:
+    if card_like or (data_panel_like and not row_surface_like):
         notes.append(
             _make_visual_note(
                 aspect="card_elevation_tendency",
@@ -1006,6 +1038,17 @@ def _build_visual_adaptation_notes(
                 source_hint="cards",
                 signal=card_signal,
                 extra_evidence=[f"surface={surface_style}"],
+            )
+        )
+
+    if row_surface_like:
+        notes.append(
+            _make_visual_note(
+                aspect="operational_surface_role",
+                summary=_describe_operational_surface_role(density),
+                source_hint="data_display",
+                signal=data_signal,
+                extra_evidence=[f"density={density}", f"layout={top_layout_cue or 'n/a'}"],
             )
         )
 
@@ -1209,6 +1252,15 @@ def _describe_card_elevation_tendency(surface_style: str, density: str) -> str:
         "dense": "압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다.",
     }.get(density, "spacing 계층은 안정적으로 유지한다.")
     return f"{base} {density_note}"
+
+
+def _describe_operational_surface_role(density: str) -> str:
+    density_note = {
+        "airy": "행 간격은 읽기 편하게 두되 반복 항목은 같은 카드 껍질로 감싸지 않는다.",
+        "balanced": "핵심 정보는 행, divider, status chip, inline action으로 스캔되게 한다.",
+        "dense": "압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다.",
+    }.get(density, "반복 정보는 행·표·레일 구조로 먼저 풀고 카드는 예외적으로만 쓴다.")
+    return f"주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. {density_note}"
 
 
 def _describe_border_fill_emphasis(surface_style: str) -> str:

@@ -30,9 +30,13 @@ PRIMITIVE_QUERY_TEMPLATES: dict[str, list[dict[str, str]]] = {
         {"phrase": "command palette overlay ui", "intent": "overlay"},
         {"phrase": "spotlight quick action interface", "intent": "interaction"},
     ],
+    "operational overview": [
+        {"phrase": "operations dashboard table toolbar side rail", "intent": "data-display"},
+        {"phrase": "enterprise list detail workspace status strip", "intent": "layout"},
+    ],
     "dashboard cards": [
-        {"phrase": "analytics dashboard cards", "intent": "data-display"},
-        {"phrase": "operations insight panel ui", "intent": "data-display"},
+        {"phrase": "dashboard summary card pattern single topic", "intent": "data-display"},
+        {"phrase": "kpi card row restrained dashboard", "intent": "data-display"},
     ],
     "data tables": [
         {"phrase": "data review table ui", "intent": "data-display"},
@@ -358,6 +362,7 @@ def _build_crosscutting_queries(
     has_data = any(
         primitive in {
             "workspace navigation",
+            "operational overview",
             "dashboard cards",
             "data tables",
             "charts and visualization",
@@ -462,6 +467,7 @@ def _infer_density_hint(brand_profile: dict, active_primitives: list[str]) -> st
         for primitive in active_primitives
         if primitive in {
             "workspace navigation",
+            "operational overview",
             "dashboard cards",
             "data tables",
             "charts and visualization",

@@ -12,7 +12,7 @@ class VisualQueryGenerationTests(unittest.TestCase):
             "interaction_keywords": ["predictable states", "low-noise motion"],
             "product_primitives": [
                 "workspace navigation",
-                "dashboard cards",
+                "operational overview",
                 "data tables",
                 "hero section",
                 "pricing and plans",
@@ -35,6 +35,8 @@ class VisualQueryGenerationTests(unittest.TestCase):
         self.assertLessEqual(report["query_count"], 12)
         queries = [item["query"] for item in report["queries"]]
         self.assertTrue(any("dashboard" in query or "control panel" in query for query in queries))
+        self.assertTrue(any("side rail" in query or "status strip" in query for query in queries))
+        self.assertFalse(any("analytics dashboard cards" in query for query in queries))
         self.assertTrue(any("hero" in query or "landing" in query for query in queries))
         self.assertIn("generic", report["avoid_terms"])
         self.assertEqual(report["style_axes"]["temperature_hint"], "warm")

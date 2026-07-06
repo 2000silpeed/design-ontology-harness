@@ -227,15 +227,15 @@ COMPONENT_ARCHETYPE_DEFINITIONS = [
         "label": "Dashboard insight module",
         "family": "data-display",
         "suggested_components": [
-            "stat-card",
-            "insight-card",
+            "metric-strip",
+            "status-summary-row",
             "chart-panel",
             "section-header",
             "filter-chip",
         ],
         "layout_matches": ["dashboard-grid"],
         "keywords": {"dashboard": 3, "analytics": 2, "metric": 2, "kpi": 2, "chart": 2, "insight": 2},
-        "primitive_matches": ["dashboard cards", "charts and visualization"],
+        "primitive_matches": ["operational overview", "dashboard cards", "charts and visualization"],
     },
     {
         "id": "data-review-table",
@@ -857,7 +857,7 @@ def _build_component_style_hints(
         },
     }
 
-    if "dashboard cards" in primitives or data_layout in {"dashboard-grid", "data-review-surface"}:
+    if primitives & {"operational overview", "dashboard cards"} or data_layout in {"dashboard-grid", "data-review-surface"}:
         hints["data_display"] = {
             "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
             "confidence": round(max(0.3 if query_only else 0.52, (visual_motifs.get("density") or {}).get("confidence", 0.0)), 2),

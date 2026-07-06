@@ -1024,9 +1024,10 @@ def _build_component_strategy(brand_profile: dict, prioritized_concepts: list[di
     primitives = brand_profile.get("product_primitives", [])
     concept_ids = {item["concept_id"] for item in prioritized_concepts}
     required_families = ["button", "input", "navigation", "feedback", "overlay"]
-    if "data tables" in [primitive.lower() for primitive in primitives]:
+    primitive_keys = [primitive.lower() for primitive in primitives]
+    if any(primitive in primitive_keys for primitive in ["data tables", "operational overview", "dashboard cards"]):
         required_families.append("data-display")
-    if "rich text editor" in [primitive.lower() for primitive in primitives]:
+    if "rich text editor" in primitive_keys:
         required_families.append("editorial")
 
     return {

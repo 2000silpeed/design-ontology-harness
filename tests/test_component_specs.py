@@ -54,6 +54,10 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
             {"name": "site-nav", "family": "navigation", "role": "Primary nav", "source": "spec"},
             {"name": "filter-chip", "family": "feedback", "role": "Filter chip", "source": "spec"},
             {"name": "chart-panel", "family": "data-display", "role": "Chart panel", "source": "spec"},
+            {"name": "metric-strip", "family": "data-display", "role": "Operational metric strip", "source": "spec"},
+            {"name": "policy-matrix", "family": "data-display", "role": "Policy matrix", "source": "spec"},
+            {"name": "diff-viewer", "family": "document", "role": "Diff viewer", "source": "spec"},
+            {"name": "column-header", "family": "data-display", "role": "Column header", "source": "spec"},
         ]
 
         specs_data = generate_component_specs(
@@ -89,6 +93,15 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
         self.assertIn("chart_panel_framing", panel_aspects)
         self.assertIn("loading", by_name["chart-panel"]["anatomy"]["states"])
         self.assertIn("데이터 테이블은 scope와 caption 필수", by_name["chart-panel"]["accessibility"])
+
+        strip_aspects = {note["aspect"] for note in by_name["metric-strip"]["visual_adaptation"]}
+        self.assertIn("operational_surface_role", strip_aspects)
+        self.assertNotIn("card_elevation_tendency", strip_aspects)
+
+        for surface_name in ["policy-matrix", "diff-viewer", "column-header"]:
+            surface_aspects = {note["aspect"] for note in by_name[surface_name]["visual_adaptation"]}
+            self.assertIn("operational_surface_role", surface_aspects)
+            self.assertNotIn("card_elevation_tendency", surface_aspects)
 
     def test_missing_visual_reference_keeps_visual_adaptation_empty(self) -> None:
         brand_profile = {
@@ -165,6 +178,44 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
         self.assertEqual(policy_matrix["archetype"], "advanced:policy-matrix")
         self.assertIn("status-cell", policy_matrix["anatomy"]["parts"])
         self.assertIn("caption describes policy scope", policy_matrix["accessibility"])
+
+    def test_operational_surfaces_suppress_card_named_advanced_recommendations(self) -> None:
+        brand_profile = {
+            "brand_name": "Northline Ops",
+            "brand_keywords": ["operations", "dashboard", "risk", "workflow"],
+            "anti_keywords": ["card wall", "decorative dashboard"],
+            "product_summary": "운영팀이 SLA 위험, 예외 queue, source ledger를 처리하는 operational overview.",
+            "product_primitives": [
+                "operational overview",
+                "metric strip",
+                "status summary row",
+                "source ledger",
+                "data tables",
+                "operational rail",
+            ],
+        }
+        blueprint = {
+            "app_mode": "dashboard",
+            "component_strategy": {
+                "product_primitives": [
+                    "operational overview",
+                    "data tables",
+                    "source ledger",
+                ],
+            },
+        }
+
+        recommendations = recommend_advanced_components(
+            brand_profile=brand_profile,
+            blueprint=blueprint,
+            existing_components=[],
+            limit=12,
+        )
+        names = {item["name"] for item in recommendations}
+
+        self.assertIn("bulk-action-table", names)
+        self.assertIn("saved-view-bar", names)
+        self.assertFalse({name for name in names if name.endswith("-card")})
 
     def test_responsive_guidance_flows_into_button_specs(self) -> None:
         brand_profile = {
