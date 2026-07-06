@@ -405,11 +405,61 @@ def test_allows_marked_html_prototype_with_state_set(tmp_path: Path):
         """,
         encoding="utf-8",
     )
+    (tmp_path / "styles.css").write_text(
+        """
+        .chart-surface {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 12px;
+          padding: 16px;
+          border: 1px solid var(--ds-color-border);
+          border-radius: var(--ds-radius-md);
+          background: var(--ds-color-surface);
+          color: var(--ds-color-ink);
+        }
+        """,
+        encoding="utf-8",
+    )
 
     report = lint_implementation(tmp_path)
     codes = {issue.code for issue in report.issues}
 
     assert "DS085" not in codes
+    assert "DS086" not in codes
+
+
+def test_flags_metadata_only_html_prototype_without_surface_styling(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <main
+          data-product-prototype="ops-console"
+          data-prototype-state-set="default,selected,loading,empty,error"
+        >
+          <section
+            class="chart-surface"
+            data-runtime-surface="chart-layer"
+            data-model="incident-volume"
+            data-source="sample:incidents"
+            data-state="selected"
+          >
+            <h1>사고 처리량</h1>
+            <div data-item-id="p1" data-value="12">12</div>
+            <div data-item-id="p2" data-value="24">24</div>
+          </section>
+          <button data-state="selected">필터</button>
+          <button data-state="pending">승인</button>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS084" not in codes
+    assert "DS085" not in codes
+    assert "DS086" in codes
 
 
 def test_allows_evidence_ledger_instead_of_node_link_placeholder(tmp_path: Path):
@@ -1049,6 +1099,8 @@ def test_implementation_contract_declares_reference_scope():
     assert "data-runtime-surface" in contract
     assert "data-product-surface" in contract
     assert "data-prototype-state-set" in contract
+    assert "metadata-only" in contract
+    assert "DS086" in contract
     assert "compare-visuals" in contract
     assert "image_gen" in contract
     assert "DS070" in contract
@@ -1067,6 +1119,7 @@ def test_implementation_contract_declares_reference_scope():
     assert "DS081" in contract
     assert "DS084" in contract
     assert "DS085" in contract
+    assert "DS086" in contract
     assert "raster-only/no-SVG" in contract
     assert "uv run design-ontology lint-implementation --target-repo ." in contract
 
@@ -1160,6 +1213,8 @@ def test_html_prototype_contract_policy_is_structured_for_ontology():
     failure_ids = {item["id"] for item in HTML_PROTOTYPE_CONTRACT_POLICY["failure_patterns"]}
     assert "complex-mock-surface-without-contract" in failure_ids
     assert "single-state-html-prototype" in failure_ids
+    assert "metadata-only-html-prototype" in failure_ids
+    assert len(HTML_PROTOTYPE_CONTRACT_POLICY["improvement_loop"]) == 5
     complex_surface = next(
         item for item in HTML_PROTOTYPE_CONTRACT_POLICY["failure_patterns"]
         if item["id"] == "complex-mock-surface-without-contract"
@@ -1168,8 +1223,13 @@ def test_html_prototype_contract_policy_is_structured_for_ontology():
         item for item in HTML_PROTOTYPE_CONTRACT_POLICY["failure_patterns"]
         if item["id"] == "single-state-html-prototype"
     )
+    metadata_only = next(
+        item for item in HTML_PROTOTYPE_CONTRACT_POLICY["failure_patterns"]
+        if item["id"] == "metadata-only-html-prototype"
+    )
     assert "lint-implementation DS084" in complex_surface["technical_controls"]
     assert "lint-implementation DS085" in single_state["technical_controls"]
+    assert "lint-implementation DS086" in metadata_only["technical_controls"]
     assert "data-prototype-state-set" in single_state["prevention"]
     assert "lint-implementation" in HTML_PROTOTYPE_CONTRACT_POLICY["outputs"]
 

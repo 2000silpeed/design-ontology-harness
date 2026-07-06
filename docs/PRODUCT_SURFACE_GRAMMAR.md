@@ -26,9 +26,19 @@
 - 워크플로/관계/근거 그래프는 장식용 곡선이 아니다. 노드와 엣지는 하나의 좌표계 안에서 `data-node-id`, `data-edge-id`, `data-from`, `data-to`, 방향, 조건 라벨, 상태를 가져야 한다. 이 기준을 못 채우면 그래프 대신 table, timeline, ledger를 쓴다.
 - HTML 목업은 정적 스크린샷이 아니라 얇은 제품 프로토타입이다. `chart`, `graph`, `map`, `calendar`, `kanban`, `gantt`, `spreadsheet`, `timeline`, `canvas` 계열 표면은 `data-runtime-surface` 또는 `data-product-surface`와 함께 `data-model`, `data-source`, 항목/노드/이벤트 ID, 상태 정보를 드러낸다.
 - `data-product-prototype` 또는 prototype/mockup 클래스로 표시한 HTML 목업은 `data-prototype-state-set`이나 `data-state` 시나리오로 기본, 선택, 로딩, 빈 상태, 오류, 비활성, 승인/차단 같은 상태 세트를 보여준다.
+- 계약 메타데이터만 있고 브라우저 기본 HTML처럼 보이면 제품 프로토타입이 아니다. token-bound layout, surface, typography, state, affordance styling을 갖추거나 non-visual fixture로 명시한다.
 - 구현 후 `DS070`이 발생하면 카드 수를 줄이는 데서 멈추지 말고, 주 작업 표면을 표/행/레일/캔버스/인스펙터 중 하나로 승격한다.
 - 구현 후 `DS082` 또는 `DS083`이 발생하면 선을 다듬지 말고, 관계 모델을 먼저 정의한다. 좌표계가 분리된 HTML 노드 + SVG 곡선 조합은 금지한다.
 - 구현 후 `DS084` 또는 `DS085`가 발생하면 표면을 꾸미지 말고, 런타임 의도·데이터 모델·출처·상태 세트를 먼저 채운다.
+- 구현 후 `DS086`이 발생하면 데이터 속성을 더 붙이지 말고, 제품 표면 스타일과 시각 affordance를 구현한 뒤 다시 검수한다.
+
+## 개선 Loop
+
+1. 관찰: 리뷰어 지적, 현재 스크린샷/DOM, 대상 파일을 고정한다.
+2. 분류: 구현 결함인지, 계약 누락인지, 시각 표면 누락인지, 관계 모델 오류인지, 반복 가능한 온톨로지 gap인지 나눈다.
+3. 승격: 반복 가능한 실패면 governance, `IMPLEMENTATION_CONTRACT`, `lint-implementation`, 회귀 테스트로 올린다.
+4. 수리: 색만 바꾸지 말고 주 작업 표면, 데이터 계약, 상태 세트, token-bound styling을 함께 고친다.
+5. 검증: lint, targeted test, desktop/mobile visual QA를 돌리고 새 실패가 보이면 다시 분류한다.
 
 ## 좋은 대체 패턴
 
@@ -51,4 +61,5 @@
 - 표/행/레일/인스펙터 같은 도메인 구조가 적어도 하나의 주 표면으로 승격되어 있는가?
 - 그래프가 있다면 연결선이 노드 포트에 정확히 붙고, 방향·조건·상태·데이터 출처가 보이는가?
 - 복합 HTML 표면이 있다면 그것이 실제 앱에서 무엇으로 구현될지, 어떤 데이터와 상태를 갖는지 마크업에서 확인할 수 있는가?
+- 계약은 있는데 화면이 브라우저 기본 스타일처럼 보이지는 않는가?
 - 수치, 상태, 예측, 순위에는 출처나 업데이트 시각, 샘플 라벨이 붙어 있는가?

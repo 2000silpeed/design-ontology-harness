@@ -615,7 +615,9 @@ calling the current screen complete. Current-screen fixes alone are not enough.
 - Complex surfaces such as charts, graphs, maps, calendars, kanban boards, gantt views, spreadsheets, timelines, inspectors, and editor canvases need `data-runtime-surface` or `data-product-surface`.
 - Data-heavy surfaces need model/source/id metadata such as `data-model`, `data-source`, `data-row-id`, `data-item-id`, `data-event-id`, `data-node-id`, `data-edge-id`, and `data-value`.
 - Prototype reviews need a state set through `data-prototype-state-set`, `data-state`, or equivalent visible scenarios before screenshot QA.
-- `lint-implementation` promotes complex mock surfaces without runtime/data contracts to DS084 and single-state HTML prototypes to DS085.
+- Contract metadata is not enough. The prototype must include token-bound layout, surface, typography, state, and affordance styling; otherwise it is only a non-visual fixture.
+- HTML prototype feedback follows a loop: observe reviewer evidence, classify the failure, promote repeatable gaps into governance/lint/tests, repair the artifact, then rerun lint plus desktop/mobile visual QA.
+- `lint-implementation` promotes complex mock surfaces without runtime/data contracts to DS084, single-state HTML prototypes to DS085, and metadata-only browser-default prototypes to DS086.
 
 ## Mock Fidelity And Runtime Representation
 
@@ -625,7 +627,7 @@ calling the current screen complete. Current-screen fixes alone are not enough.
 - Each visible media/evidence tile such as `place-photo`, `texture-card`, `media-card`, `evidence-card`, or `thumbnail-card` needs its own media asset or an explicit empty/loading/pending state.
 - Use `data-runtime-surface` to mark runtime intent such as `map-sdk-layer`, `generated-place-photo`, `sourced-thumbnail`, `chart-layer`, `table-view`, or `empty-state`.
 - App-shell marks, favicons, and manifest icons must use a brand-specific identity asset, not a generic initials tile. SVG is the default source format; PNG/WebP/JPEG is required when a raster-only/no-SVG directive is active.
-- `lint-implementation` promotes ambiguous schematic/mock/placeholder visual surfaces without runtime intent to DS075, media/photo runtime surfaces without assets to DS076, generic initials app marks to DS077, individual media/evidence tiles without assets to DS078, complex mock surfaces without runtime/data contracts to DS084, and single-state HTML prototypes to DS085.
+- `lint-implementation` promotes ambiguous schematic/mock/placeholder visual surfaces without runtime intent to DS075, media/photo runtime surfaces without assets to DS076, generic initials app marks to DS077, individual media/evidence tiles without assets to DS078, complex mock surfaces without runtime/data contracts to DS084, single-state HTML prototypes to DS085, and metadata-only browser-default prototypes to DS086.
 
 ## Visual Asset Medium Selection
 

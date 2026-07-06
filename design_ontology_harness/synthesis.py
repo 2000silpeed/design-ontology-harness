@@ -426,15 +426,39 @@ HTML_PROTOTYPE_CONTRACT_POLICY = {
         "Each major product surface declares data-runtime-surface or data-product-surface so reviewers know whether it represents a map SDK, chart layer, table view, calendar, board, media slot, editor canvas, or empty/loading state.",
         "Data-heavy surfaces expose model/source/id metadata such as data-model, data-source, data-row-id, data-item-id, data-event-id, data-node-id, and data-edge-id.",
         "Prototype reviews include a state set: default, selected, loading, empty, error, disabled, pending, approved/blocked, or domain-specific equivalents.",
+        "Contract metadata is not enough: prototypes must include token-bound layout, surface, typography, state, and affordance styling so they do not render as browser-default HTML.",
         "Charts, graphs, maps, calendars, kanban boards, gantt views, spreadsheets, and editor canvases use a proven library or one semantic SVG/canvas/table coordinate system with labels, axes, direction, state, and provenance.",
         "Playwright QA captures desktop and mobile viewports and verifies no horizontal overflow, clipped labels, or incoherent overlaps before the mockup is called complete.",
     ],
     "implementation_rules": [
         "Do not use mock/placeholder/fake/static chart, map, calendar, board, graph, or canvas classes without a runtime/data contract.",
         "Do not satisfy the contract with aria labels alone; labels help accessibility, but product structure needs model/source/id/state metadata.",
+        "Do not stop at metadata-only fixtures. If the page still looks like default browser HTML, add product-surface styling or mark the artifact as a non-visual test fixture.",
         "Prefer table, ledger, timeline, or row list when the relationship is simple enough that a graph would be decorative.",
         "If a complex surface cannot be backed by data or a real interaction model yet, render an explicit empty/loading/pending state instead of a fake finished surface.",
         "Sample numbers must be visibly labeled as sample/demo and paired with a source or update context.",
+    ],
+    "improvement_loop": [
+        {
+            "step": "observe",
+            "rule": "Collect the reviewer complaint, current screenshot or DOM evidence, and the exact artifact path before making changes.",
+        },
+        {
+            "step": "classify",
+            "rule": "Decide whether the issue is implementation-only, missing product contract, missing visual styling, wrong visualization model, responsive failure, or a repeatable ontology gap.",
+        },
+        {
+            "step": "promote",
+            "rule": "If the failure can recur, promote it into governance, IMPLEMENTATION_CONTRACT, lint-implementation, and a regression test before calling the screen fixed.",
+        },
+        {
+            "step": "repair",
+            "rule": "Repair the artifact using product-surface structures, token-bound styling, runtime metadata, and state scenarios rather than cosmetic color changes.",
+        },
+        {
+            "step": "verify",
+            "rule": "Run lint-implementation, targeted tests, and desktop/mobile visual QA or screenshot comparison. If a new failure appears, loop back to classify.",
+        },
     ],
     "failure_patterns": [
         {
@@ -450,6 +474,13 @@ HTML_PROTOTYPE_CONTRACT_POLICY = {
             "rule": "Prototype fidelity includes state coverage, not only a polished default screenshot.",
             "prevention": "Add data-prototype-state-set or visible data-state scenarios for default, selected, loading, empty, error, and domain-specific states.",
             "technical_controls": ["lint-implementation DS085", "component_specs.md states", "Playwright desktop/mobile screenshots"],
+        },
+        {
+            "id": "metadata-only-html-prototype",
+            "trigger": "A screen has data-product-prototype, runtime metadata, and state values, but renders as browser-default HTML because it lacks layout, surface, typography, state, and affordance styling.",
+            "rule": "A prototype contract is not visually complete until the product surface is styled and reviewable.",
+            "prevention": "Add token-bound product-surface CSS, icon/visual affordances, stable layout, and desktop/mobile visual QA; otherwise mark it as a non-visual fixture.",
+            "technical_controls": ["lint-implementation DS086", "HTML Prototype Improvement Loop", "visual QA review"],
         },
         {
             "id": "decorative-data-visualization",

@@ -1288,6 +1288,11 @@ def build_system_spec_markdown(
     html_prototype_rule_lines = "\n".join(
         f"- {item}" for item in html_prototype_policy.get("implementation_rules", [])
     ) or "- No HTML prototype implementation rules defined."
+    html_prototype_loop_lines = "\n".join(
+        f"- **{item.get('step', 'loop')}**: {item.get('rule', '')}"
+        for item in html_prototype_policy.get("improvement_loop", [])
+        if isinstance(item, dict)
+    ) or "- No HTML prototype improvement loop defined."
     html_prototype_failure_lines = "\n".join(
         f"- **{item.get('id', 'html-prototype-failure')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
         for item in html_prototype_policy.get("failure_patterns", [])
@@ -1300,6 +1305,8 @@ def build_system_spec_markdown(
 {html_prototype_contract_lines}
 - **Implementation rules**:
 {html_prototype_rule_lines}
+- **Improvement loop**:
+{html_prototype_loop_lines}
 - **Promoted prototype failure patterns**:
 {html_prototype_failure_lines}"""
     visual_medium_policy = governance.get("visual_asset_medium_selection_policy", {})

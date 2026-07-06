@@ -236,6 +236,15 @@ STATE_VARIANT_RE = re.compile(
     r"class(?:Name)?\s*=\s*['\"][^'\"]*(?:is-|state-|selected|active|empty|loading|error|disabled|pending|approved|blocked|success|warning)[^'\"]*['\"])",
     re.IGNORECASE,
 )
+PROTOTYPE_STYLE_DECL_RE = re.compile(
+    r"\b(?:display|grid-template-columns|grid-template-rows|flex-wrap|gap|padding|border|background|border-radius|font-family|min-height|align-items|justify-content|overflow|color)\s*:",
+    re.IGNORECASE,
+)
+TAILWIND_SURFACE_CLASS_RE = re.compile(
+    r"\b(?:grid|flex|gap-\d|p-\d|px-\d|py-\d|rounded|border|bg-|text-|min-h-|items-|justify-)\b",
+    re.IGNORECASE,
+)
+DS_TOKEN_USAGE_RE = re.compile(r"var\(\s*--ds-", re.IGNORECASE)
 RUNTIME_SURFACE_MARKER_RE = re.compile(r"\bdata-runtime-surface\s*=", re.IGNORECASE)
 MEDIA_RUNTIME_SURFACE_RE = re.compile(
     r"\bdata-runtime-surface\s*=\s*['\"][^'\"]*(?:media|photo|thumbnail|image|generated|sourced)[^'\"]*['\"]",
@@ -692,6 +701,19 @@ def _lint_project_composition(
             )
         )
 
+    metadata_only_prototype = _find_metadata_only_html_prototype(combined)
+    if metadata_only_prototype:
+        issues.append(
+            _issue(
+                "DS086",
+                first_ui_path,
+                1,
+                1,
+                "HTML prototype has product/runtime metadata but no product-surface styling; add token-bound layout, surface, typography, state, and affordance styling before review.",
+                metadata_only_prototype[0],
+            )
+        )
+
     if not (target / artifact_dir).exists():
         return issues
 
@@ -951,6 +973,32 @@ def _find_single_state_html_prototype(text: str) -> list[str]:
     context_start = max(0, prototype_match.start() - 220)
     context_end = min(len(text), prototype_match.end() + 900)
     return [_single_line_snippet(text[context_start:context_end], limit=260)]
+
+
+def _find_metadata_only_html_prototype(text: str) -> list[str]:
+    """Detect prototypes that satisfy metadata gates but still render as raw HTML."""
+
+    prototype_match = HTML_PROTOTYPE_MARKER_RE.search(text)
+    if not prototype_match:
+        return []
+
+    surface_count = len(COMPLEX_SURFACE_ATTR_RE.findall(text))
+    interaction_count = len(INTERACTIVE_UI_RE.findall(text))
+    if surface_count < 1 and interaction_count < 4:
+        return []
+    if _prototype_has_surface_styling(text):
+        return []
+
+    context_start = max(0, prototype_match.start() - 220)
+    context_end = min(len(text), prototype_match.end() + 900)
+    return [_single_line_snippet(text[context_start:context_end], limit=260)]
+
+
+def _prototype_has_surface_styling(text: str) -> bool:
+    style_decl_count = len(PROTOTYPE_STYLE_DECL_RE.findall(text))
+    token_count = len(DS_TOKEN_USAGE_RE.findall(text))
+    utility_count = len(TAILWIND_SURFACE_CLASS_RE.findall(text))
+    return style_decl_count >= 8 or token_count >= 6 or utility_count >= 10
 
 
 def _find_svg_usage_under_raster_directive(text: str) -> list[str]:
