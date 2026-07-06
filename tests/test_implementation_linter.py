@@ -219,6 +219,97 @@ def test_flags_ad_hoc_node_link_placeholder_graph(tmp_path: Path):
     assert "DS082" in codes
 
 
+def test_flags_freehand_svg_connector_graph_with_positioned_nodes(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <section class="canvas-plane" aria-label="온보딩 그래프">
+          <svg class="wires" viewBox="0 0 900 540">
+            <path d="M165 154 C260 154 260 250 360 250" />
+            <path d="M540 250 C650 250 650 156 760 156" />
+            <path d="M540 250 C650 250 650 380 760 380" />
+          </svg>
+          <div class="flow-node start" style="left:58px;top:112px">시작</div>
+          <div class="flow-node active" style="left:350px;top:208px">KYC 확인</div>
+          <div class="flow-node" style="left:640px;top:114px">자동 승인</div>
+        </section>
+        """,
+        encoding="utf-8",
+    )
+    (tmp_path / "styles.css").write_text(
+        """
+        .canvas-plane { position: relative; }
+        .wires { position: absolute; inset: 0; }
+        .flow-node { position: absolute; border: var(--app-border); }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS083" in codes
+
+
+def test_flags_freehand_svg_connector_graph_with_arrowheads_but_no_edge_model(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <section class="canvas-plane" aria-label="온보딩 그래프">
+          <svg class="connector-layer" viewBox="0 0 900 540" aria-label="온보딩 흐름">
+            <title>온보딩 흐름</title>
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5">
+                <path d="M0 0 10 5 0 10Z" />
+              </marker>
+            </defs>
+            <path d="M165 154 C260 154 260 250 360 250" marker-end="url(#arrow)" />
+            <path d="M540 250 C650 250 650 156 760 156" marker-end="url(#arrow)" />
+            <text x="272" y="205">가입 요청</text>
+          </svg>
+          <div class="flow-node start" style="left:58px;top:112px">시작</div>
+          <div class="flow-node active" style="left:350px;top:208px">KYC 확인</div>
+          <div class="flow-node" style="left:640px;top:114px">자동 승인</div>
+        </section>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS083" in codes
+
+
+def test_allows_semantic_svg_workflow_graph(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <section class="canvas-plane" aria-label="온보딩 그래프">
+          <svg class="workflow-graph" viewBox="0 0 900 540" role="img" aria-labelledby="workflow-title workflow-desc">
+            <title id="workflow-title">온보딩 정책 워크플로</title>
+            <desc id="workflow-desc">시작은 KYC 확인으로 이동하고 위험 등급에 따라 분기된다.</desc>
+            <defs>
+              <marker id="edge-arrow" viewBox="0 0 10 10" refX="8" refY="5">
+                <path d="M0 0 10 5 0 10Z" />
+              </marker>
+            </defs>
+            <path data-edge-id="start-to-kyc" data-from="start" data-to="kyc" d="M240 208 C292 208 308 258 360 258" marker-end="url(#edge-arrow)" />
+            <text x="272" y="205">가입 요청</text>
+            <g data-node-id="start"><rect width="180" height="76" /><text>시작</text></g>
+            <g data-node-id="kyc"><rect width="180" height="76" /><text>KYC 확인</text></g>
+          </svg>
+        </section>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS082" not in codes
+    assert "DS083" not in codes
+
+
 def test_allows_evidence_ledger_instead_of_node_link_placeholder(tmp_path: Path):
     (tmp_path / "index.html").write_text(
         """

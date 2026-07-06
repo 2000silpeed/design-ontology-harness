@@ -596,9 +596,10 @@ calling the current screen complete. Current-screen fixes alone are not enough.
 - Domain surfaces for places, products, articles, games, sports, venues, or visual content need at least one real or deterministic domain visual: image, illustration, map, sketch, media, texture, or object/identity asset.
 - Deterministic inline SVG visuals must be semantically readable: include visible labels/legend or title/desc plus data-subject landmarks when representing maps, scenes, products, objects, or places.
 - Do not use rough ad-hoc `sketch`, `doodle`, or hand-drawn SVG scene art as the product/domain visual. If the slot needs an illustration/photo, use `image_gen`, a sourced/user-supplied asset, or an approved asset pipeline; if it is product logic, use a polished schematic map/chart/diagram instead.
+- Workflow, relation, evidence, or canvas graphs must not be freehand connector art. Keep nodes and edges in one semantic coordinate system with node/edge ids, direction, labels, arrowheads, and runtime state; otherwise use a table, timeline, or ledger.
 - Comic, manga, webtoon, story, character, editorial-cover, or panel-preview media slots must not use SVG placeholders as final artwork. Use `image_gen`, user-supplied art, sourced licensed art, or approved production artwork.
 - SVG icons must use `currentColor` or design tokens, preserve accessible labels through adjacent text or aria, and must not be replaced by emoji glyphs. When raster-only/no-SVG is active, PNG/WebP/JPEG icon assets inherit the same accessibility requirements.
-- `lint-implementation` promotes icon-starved interactive surfaces to DS071, domain-visual gaps to DS072, low-information inline SVG visuals to DS073, amateur ad-hoc illustration to DS074, wrong-medium SVG narrative media to DS079, undeclared handmade icon sprites to DS080, and SVG usage under raster-only/no-SVG directives to DS081.
+- `lint-implementation` promotes icon-starved interactive surfaces to DS071, domain-visual gaps to DS072, low-information inline SVG visuals to DS073, amateur ad-hoc illustration to DS074, wrong-medium SVG narrative media to DS079, undeclared handmade icon sprites to DS080, SVG usage under raster-only/no-SVG directives to DS081, ad-hoc node-link placeholders to DS082, and freehand connector graphs to DS083.
 
 ## Visual Evidence And Screenshot Comparison
 

@@ -188,6 +188,27 @@ AD_HOC_NODE_LINK_LABEL_RE = re.compile(
     r"\b(?:Answer|CH-\d{2,3}|DOC-[a-z0-9-]+-CH-\d+|별표\s*\d+|하도급법|공정거래법|법령)\b",
     re.IGNORECASE,
 )
+FREEHAND_SVG_CONNECTOR_RE = re.compile(
+    r"<svg\b(?P<attrs>[^>]*(?:class|className)=['\"][^'\"]*(?:wires|connector-layer|flow-lines|graph-wires|workflow-wires|node-links)[^'\"]*['\"][^>]*)>(?P<body>.*?)</svg>",
+    re.IGNORECASE | re.DOTALL,
+)
+POSITIONED_GRAPH_NODE_RE = re.compile(
+    r"(?:class(?:Name)?=['\"][^'\"]*(?:flow-node|canvas-node|graph-node|trace-node|node-link-node)[^'\"]*['\"]|"
+    r"style=['\"][^'\"]*\b(?:left|top)\s*:|"
+    r"\.(?:flow-node|canvas-node|graph-node|trace-node|node-link-node)[^{]*\{[^}]*\bposition\s*:\s*absolute\b)",
+    re.IGNORECASE | re.DOTALL,
+)
+SEMANTIC_GRAPH_EDGE_ID_RE = re.compile(r"\bdata-edge-id\s*=", re.IGNORECASE)
+SEMANTIC_GRAPH_FROM_RE = re.compile(r"\bdata-from\s*=", re.IGNORECASE)
+SEMANTIC_GRAPH_TO_RE = re.compile(r"\bdata-to\s*=", re.IGNORECASE)
+SEMANTIC_GRAPH_DIRECTION_RE = re.compile(
+    r"(?:\bmarker-end\s*=|\bdata-direction\s*=|\baria-label\s*=)",
+    re.IGNORECASE,
+)
+SEMANTIC_GRAPH_LABEL_RE = re.compile(
+    r"(?:<text\b|\bdata-label\s*=|\baria-label\s*=)",
+    re.IGNORECASE,
+)
 RUNTIME_SURFACE_MARKER_RE = re.compile(r"\bdata-runtime-surface\s*=", re.IGNORECASE)
 MEDIA_RUNTIME_SURFACE_RE = re.compile(
     r"\bdata-runtime-surface\s*=\s*['\"][^'\"]*(?:media|photo|thumbnail|image|generated|sourced)[^'\"]*['\"]",
@@ -605,6 +626,19 @@ def _lint_project_composition(
             )
         )
 
+    freehand_connector_graph = _find_freehand_svg_connector_graph(combined)
+    if freehand_connector_graph:
+        issues.append(
+            _issue(
+                "DS083",
+                first_ui_path,
+                1,
+                1,
+                "Freehand SVG connector graph detected; keep nodes and edges in one semantic coordinate system with data-node/data-edge ids, arrowheads, labels, and runtime data, or replace the graph with a table/ledger.",
+                freehand_connector_graph[0],
+            )
+        )
+
     if not (target / artifact_dir).exists():
         return issues
 
@@ -770,6 +804,46 @@ def _find_ad_hoc_node_link_placeholder(text: str) -> list[str]:
             limit=240,
         )
     return [snippet]
+
+
+def _find_freehand_svg_connector_graph(text: str) -> list[str]:
+    """Detect SVG connector layers laid over separately positioned HTML nodes.
+
+    These often look plausible in one screenshot but have no shared graph model:
+    edges are path art, nodes are independent DOM boxes, and responsive changes
+    break the relationship. A legitimate workflow graph should use a graph
+    library, or a single SVG/canvas coordinate system with node/edge metadata.
+    """
+
+    snippets: list[str] = []
+    for match in FREEHAND_SVG_CONNECTOR_RE.finditer(text):
+        block = match.group(0)
+        body = match.group("body")
+        if len(re.findall(r"<path\b", body, flags=re.IGNORECASE)) < 2:
+            continue
+
+        context_start = max(0, match.start() - 1400)
+        context_end = min(len(text), match.end() + 1400)
+        context = text[context_start:context_end]
+        if not POSITIONED_GRAPH_NODE_RE.search(context):
+            continue
+        if _has_semantic_graph_edge_model(body):
+            continue
+        snippets.append(_single_line_snippet(context, limit=260))
+    return snippets
+
+
+def _has_semantic_graph_edge_model(svg_body: str) -> bool:
+    return all(
+        pattern.search(svg_body)
+        for pattern in (
+            SEMANTIC_GRAPH_EDGE_ID_RE,
+            SEMANTIC_GRAPH_FROM_RE,
+            SEMANTIC_GRAPH_TO_RE,
+            SEMANTIC_GRAPH_DIRECTION_RE,
+            SEMANTIC_GRAPH_LABEL_RE,
+        )
+    )
 
 
 def _find_svg_usage_under_raster_directive(text: str) -> list[str]:
