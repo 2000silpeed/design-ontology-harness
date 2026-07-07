@@ -67,11 +67,11 @@
         </header>
 
         <ol class="progress-rail" aria-label="EKOS 업무 흐름">
-          <li class="active">업무 선택</li>
-          <li>케이스 입력</li>
-          <li>필요 데이터 확인</li>
-          <li>판단 결과</li>
-          <li>검토 요청</li>
+          <li class="active" data-progress-screens="workflow-selection">업무 선택</li>
+          <li data-progress-screens="case-input">케이스 입력</li>
+          <li data-progress-screens="source-package-failed missing-data-resolution source-package-passed">필요 데이터 확인</li>
+          <li data-progress-screens="decision-report evidence-trace">판단 결과</li>
+          <li data-progress-screens="review-request">검토 요청</li>
         </ol>
 
         <section
@@ -137,7 +137,7 @@
           </div>
 
           <div class="split-layout">
-            <form class="panel form-panel" data-model="case-input-form">
+            <form class="panel form-panel" id="case-form" data-model="case-input-form">
               <label>
                 <span>Delivery 번호</span>
                 <input type="text" value="80001241" aria-label="Delivery 번호" />
@@ -162,14 +162,14 @@
               </div>
             </form>
 
-            <aside class="panel guidance-panel">
+            <aside class="panel guidance-panel" id="workflow-guidance">
               <p class="eyebrow">선택한 업무</p>
-              <h3>납품 지연 / 운송사 확인</h3>
-              <p>
+              <h3 id="workflow-guidance-title">납품 지연 / 운송사 확인</h3>
+              <p id="workflow-guidance-copy">
                 납품 지연 건에서 운송사 확인이 충분한지 검토합니다. EKOS는 SAP 변경이나
                 고객 영향 작업을 직접 승인하지 않습니다.
               </p>
-              <ul class="check-list">
+              <ul class="check-list" id="workflow-guidance-bullets">
                 <li>필요 데이터가 먼저 확인됩니다.</li>
                 <li>부족한 데이터가 있으면 판단 결과가 생성되지 않습니다.</li>
                 <li>결과는 “해도 되는 일”과 “하면 안 되는 일”로 표시됩니다.</li>
@@ -188,16 +188,16 @@
           <div class="decision-hero danger">
             <div>
               <p class="eyebrow">필요 데이터 확인 결과</p>
-              <h2>판단 불가</h2>
-              <p>필수 데이터가 부족합니다.</p>
+              <h2 id="failed-title">판단 불가</h2>
+              <p id="failed-subtitle">필수 데이터가 부족합니다.</p>
             </div>
             <span class="status-badge blocked">판단 결과 생성 안 됨</span>
           </div>
 
           <div class="plain-explanation danger-note">
-            <strong>부족한 정보</strong>
-            <p>운송사 최신 확인 정보와 승인 기준표가 없습니다.</p>
-            <p>
+            <strong id="failed-missing-title">부족한 정보</strong>
+            <p id="failed-missing-summary">운송사 최신 확인 정보와 승인 기준표가 없습니다.</p>
+            <p id="failed-missing-reason">
               이 두 정보가 없으면 EKOS는 운송사 확인이 최신인지, 승인 준비를 누구에게
               넘겨야 하는지 판단할 수 없습니다.
             </p>
@@ -207,7 +207,7 @@
             <div class="panel-header">
               <div>
                 <p class="eyebrow">필요 항목</p>
-                <h3>Delivery 80001241 데이터 상태</h3>
+                <h3 id="failed-source-heading">Delivery 80001241 데이터 상태</h3>
               </div>
               <button class="primary-button" type="button" data-go="missing-data-resolution">
                 <i data-lucide="plus-circle" aria-hidden="true"></i>
@@ -234,8 +234,8 @@
           <div class="screen-heading">
             <div>
               <p class="eyebrow">부족한 데이터 보강</p>
-              <h2>판단에 필요한 정보를 보강하세요</h2>
-              <p class="lead">
+              <h2 id="missing-title">판단에 필요한 정보를 보강하세요</h2>
+              <p class="lead" id="missing-lead">
                 아래 두 항목이 들어와야 EKOS가 승인 준비 가능 여부를 검토할 수 있습니다.
               </p>
             </div>
@@ -258,8 +258,8 @@
           <div class="decision-hero success">
             <div>
               <p class="eyebrow">필요 데이터 확인 완료</p>
-              <h2>판단 가능</h2>
-              <p>필수 항목이 확인되었습니다. 이제 판단 결과를 만들 수 있습니다.</p>
+              <h2 id="passed-title">판단 가능</h2>
+              <p id="passed-subtitle">필수 항목이 확인되었습니다. 이제 판단 결과를 만들 수 있습니다.</p>
             </div>
             <span class="status-badge ready">데이터 확인 완료</span>
           </div>
@@ -268,7 +268,7 @@
             <div class="panel-header">
               <div>
                 <p class="eyebrow">필요 항목</p>
-                <h3>보강 후 데이터 상태</h3>
+                <h3 id="passed-source-heading">보강 후 데이터 상태</h3>
               </div>
               <button class="primary-button" type="button" data-go="decision-report">
                 <i data-lucide="file-check-2" aria-hidden="true"></i>
@@ -289,7 +289,7 @@
           <div class="decision-report-layout">
             <article class="manager-card" data-model="decision-report">
               <p class="eyebrow">판단 결과</p>
-              <h2>Delivery 80001241</h2>
+              <h2 id="decision-primary-object">Delivery 80001241</h2>
               <div class="decision-summary-grid">
                 <div class="metric allowed">
                   <span>현재 해도 되는 일</span>
@@ -431,8 +431,8 @@
             <section class="panel review-card" data-model="review-request">
               <div class="panel-header">
                 <div>
-                  <p class="eyebrow">검토 대상</p>
-                  <h3>Delivery 80001241</h3>
+                <p class="eyebrow">검토 대상</p>
+                  <h3 id="review-primary-object">Delivery 80001241</h3>
                 </div>
                 <span class="status-badge review">검토 필요</span>
               </div>

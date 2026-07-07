@@ -41,9 +41,13 @@ http://127.0.0.1:4173/
 
 ## 정적 데이터
 
-Fixture는 `fixtures/`에 있습니다.
+현재 화면 렌더링은 아래 두 fixture를 사용합니다.
 
 - `workflows.json`
+- `workflow-flows.json`
+
+아래 파일은 초기 Delivery 단일 시나리오 fixture로 남아 있습니다.
+
 - `source-package-failed.json`
 - `source-package-passed.json`
 - `decision-report-delivery-delay.json`

@@ -1,25 +1,20 @@
 const fixturePaths = {
   workflows: "./fixtures/workflows.json",
-  failed: "./fixtures/source-package-failed.json",
-  passed: "./fixtures/source-package-passed.json",
-  decision: "./fixtures/decision-report-delivery-delay.json",
-  trace: "./fixtures/evidence-trace-delivery-delay.json",
-  review: "./fixtures/review-request.json"
+  flows: "./fixtures/workflow-flows.json"
 };
 
 const state = {
-  fixtures: {}
+  fixtures: {},
+  selectedWorkflow: "delivery_delay_confirmation"
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
   await loadFixtures();
+  initializeRouteState();
   renderWorkflows();
-  renderSourceTables();
-  renderMissingSources();
-  renderDecisionReport();
-  renderEvidenceTrace();
-  renderReviewRequest();
+  renderSelectedWorkflow();
   bindNavigation();
+  setInitialScreenFromRoute();
   refreshIcons();
 });
 
@@ -36,9 +31,34 @@ async function loadFixtures() {
   state.fixtures = Object.fromEntries(entries);
 }
 
+function initializeRouteState() {
+  const params = new URLSearchParams(window.location.search);
+  const workflowId = params.get("workflow");
+  if (workflowId && state.fixtures.flows.flows[workflowId]) {
+    state.selectedWorkflow = workflowId;
+  }
+}
+
+function setInitialScreenFromRoute() {
+  const params = new URLSearchParams(window.location.search);
+  const screen = params.get("screen");
+  if (screen && document.querySelector(`[data-screen="${CSS.escape(screen)}"]`)) {
+    setScreen(screen);
+  }
+}
+
 function bindNavigation() {
   document.querySelectorAll("[data-go]").forEach((button) => {
+    if (button.dataset.bound === "true") {
+      return;
+    }
+    button.dataset.bound = "true";
     button.addEventListener("click", () => {
+      const workflowId = button.getAttribute("data-select-workflow");
+      if (workflowId) {
+        state.selectedWorkflow = workflowId;
+        renderSelectedWorkflow();
+      }
       const target = button.getAttribute("data-go");
       if (target) {
         setScreen(target);
@@ -54,6 +74,11 @@ function setScreen(screenName) {
 
   document.querySelectorAll(".nav-item").forEach((item) => {
     item.classList.toggle("active", item.dataset.go === screenName);
+  });
+
+  document.querySelectorAll("[data-progress-screens]").forEach((item) => {
+    const screens = item.dataset.progressScreens.split(/\s+/);
+    item.classList.toggle("active", screens.includes(screenName));
   });
 
   document.body.dataset.state = screenName;
@@ -86,7 +111,7 @@ function renderWorkflows() {
           </dl>
           <div class="workflow-card-footer">
             <span class="status-badge ${statusClass}">${escapeHtml(workflow.status_label)}</span>
-            <button class="secondary-button" type="button" data-go="case-input" ${disabled}>
+            <button class="secondary-button" type="button" data-go="case-input" data-select-workflow="${escapeHtml(workflow.workflow_id)}" ${disabled}>
               <i data-lucide="arrow-right" aria-hidden="true"></i>
               ${cta}
             </button>
@@ -99,9 +124,89 @@ function renderWorkflows() {
   bindNavigation();
 }
 
+function renderSelectedWorkflow() {
+  renderCaseInput();
+  renderSourceTables();
+  renderMissingSources();
+  renderDecisionReport();
+  renderEvidenceTrace();
+  renderReviewRequest();
+  updateSelectedWorkflowMarkers();
+  refreshIcons();
+}
+
+function getSelectedFlow() {
+  return state.fixtures.flows.flows[state.selectedWorkflow] ||
+    state.fixtures.flows.flows.delivery_delay_confirmation;
+}
+
+function getSelectedWorkflow() {
+  return state.fixtures.workflows.workflows.find(
+    (workflow) => workflow.workflow_id === state.selectedWorkflow
+  ) || state.fixtures.workflows.workflows[0];
+}
+
+function updateSelectedWorkflowMarkers() {
+  const flow = getSelectedFlow();
+  const workflow = getSelectedWorkflow();
+  document.querySelector("#topbar-case").textContent = flow.case.primary_object;
+  document.querySelector("#screen-case-input").dataset.state = flow.case.screen_state;
+
+  document.querySelectorAll(".workflow-card").forEach((card) => {
+    card.classList.toggle("selected", card.dataset.itemId === workflow.workflow_id);
+  });
+}
+
+function renderCaseInput() {
+  const flow = getSelectedFlow();
+  const form = document.querySelector("#case-form");
+  form.innerHTML = `
+    ${flow.case_inputs
+      .map((field) => `
+        <label>
+          <span>${escapeHtml(field.label)}</span>
+          <input
+            type="text"
+            value="${escapeHtml(field.value || "")}"
+            placeholder="${escapeHtml(field.placeholder || "")}"
+            aria-label="${escapeHtml(field.label)}"
+          />
+        </label>
+      `)
+      .join("")}
+    <div class="action-row">
+      <button class="primary-button" type="button" data-go="source-package-failed">
+        <i data-lucide="search-check" aria-hidden="true"></i>
+        필요 데이터 확인
+      </button>
+    </div>
+  `;
+
+  document.querySelector("#workflow-guidance-title").textContent = flow.guidance.title;
+  document.querySelector("#workflow-guidance-copy").textContent = flow.guidance.copy;
+  document.querySelector("#workflow-guidance-bullets").innerHTML = flow.guidance.bullets
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join("");
+
+  bindNavigation();
+}
+
 function renderSourceTables() {
-  renderAliasRows("#failed-source-table", state.fixtures.failed.aliases);
-  renderAliasRows("#passed-source-table", state.fixtures.passed.aliases);
+  const flow = getSelectedFlow();
+  document.querySelector("#failed-title").textContent = flow.failed.title;
+  document.querySelector("#failed-subtitle").textContent = flow.failed.subtitle;
+  document.querySelector("#failed-source-heading").textContent = flow.failed.source_heading;
+  document.querySelector("#failed-missing-title").textContent = flow.failed.missing_title;
+  document.querySelector("#failed-missing-summary").textContent = flow.failed.missing_summary;
+  document.querySelector("#failed-missing-reason").textContent = flow.failed.missing_reason;
+  document.querySelector("#missing-title").textContent = flow.failed.missing_screen_title;
+  document.querySelector("#missing-lead").textContent = flow.failed.missing_screen_lead;
+  document.querySelector("#passed-title").textContent = flow.passed.title;
+  document.querySelector("#passed-subtitle").textContent = flow.passed.subtitle;
+  document.querySelector("#passed-source-heading").textContent = flow.passed.source_heading;
+
+  renderAliasRows("#failed-source-table", flow.failed.aliases);
+  renderAliasRows("#passed-source-table", flow.passed.aliases);
 }
 
 function renderAliasRows(selector, aliases) {
@@ -124,7 +229,7 @@ function renderAliasRows(selector, aliases) {
 
 function renderMissingSources() {
   const grid = document.querySelector("#missing-source-grid");
-  const sources = state.fixtures.failed.missing_sources;
+  const sources = getSelectedFlow().failed.missing_sources;
 
   grid.innerHTML = sources
     .map((source) => `
@@ -162,9 +267,11 @@ function renderMissingSources() {
 }
 
 function renderDecisionReport() {
-  const report = state.fixtures.decision;
+  const flow = getSelectedFlow();
+  const report = flow.decision;
   const manager = report.manager_view;
 
+  document.querySelector("#decision-primary-object").textContent = flow.case.primary_object;
   document.querySelector("#allowed-action").textContent = manager.current_allowed_action;
   document.querySelector("#blocked-action").textContent = manager.blocked_action;
   document.querySelector("#why-blocked-copy").textContent = manager.why_blocked;
@@ -192,7 +299,7 @@ function renderDecisionReport() {
 }
 
 function renderEvidenceTrace() {
-  const trace = state.fixtures.trace;
+  const trace = getSelectedFlow().trace;
   const evidenceList = document.querySelector("#evidence-list");
 
   evidenceList.innerHTML = trace.evidence_objects
@@ -216,8 +323,8 @@ function renderEvidenceTrace() {
 function renderPolicyAuthority(trace) {
   const target = document.querySelector("#policy-authority");
   target.innerHTML = [
-    ["Policy mapping", trace.policy_mapping],
-    ["Approval matrix entry", trace.approval_matrix_entry]
+    ["정책 기준", trace.policy_mapping],
+    ["승인 기준", trace.approval_matrix_entry]
   ]
     .map(([title, data]) => `
       <article class="policy-card" data-model="policy-authority-card">
@@ -238,9 +345,11 @@ function renderPolicyAuthority(trace) {
 }
 
 function renderReviewRequest() {
-  const review = state.fixtures.review;
+  const flow = getSelectedFlow();
+  const review = flow.review;
   const note = document.querySelector("#review-note");
   note.placeholder = review.reviewer_note_placeholder;
+  document.querySelector("#review-primary-object").textContent = flow.case.primary_object;
 
   renderDefinitionList("#review-meta", {
     검토자: review.assigned_reviewer,

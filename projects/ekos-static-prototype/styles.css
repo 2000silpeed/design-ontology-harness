@@ -370,6 +370,11 @@ textarea:focus-visible {
   background: color-mix(in srgb, var(--ds-color-surface-muted) 70%, var(--ds-color-surface));
 }
 
+.workflow-card.selected {
+  border-color: var(--ds-color-primary);
+  background: color-mix(in srgb, var(--ds-color-primary) 6%, var(--ds-color-surface));
+}
+
 .workflow-card h3,
 .panel h3,
 .manager-card h3,
