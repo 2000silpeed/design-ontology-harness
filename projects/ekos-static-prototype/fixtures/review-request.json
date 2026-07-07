@@ -1,0 +1,35 @@
+{
+  "workflow_id": "delivery_delay_confirmation",
+  "primary_object": "Delivery 80001241",
+  "assigned_reviewer": "Unassigned",
+  "required_role": "SAP logistics manager",
+  "packet_status": "review_required",
+  "boundary_copy": "No autonomous execution. Human review is required.",
+  "reviewer_note_placeholder": "Record what additional evidence is needed, or why the recommendation-only boundary is accepted.",
+  "actions": [
+    {
+      "action_id": "request_more_data",
+      "label": "Request more data",
+      "enabled": true,
+      "meaning": "Ask operations to obtain current carrier confirmation or clarify ownership."
+    },
+    {
+      "action_id": "accept_recommendation_boundary",
+      "label": "Accept recommendation-only boundary",
+      "enabled": true,
+      "meaning": "Confirm that EKOS should remain at recommendation-only until blockers are resolved."
+    },
+    {
+      "action_id": "approve_preparation",
+      "label": "Approve preparation if evidence supports it",
+      "enabled": false,
+      "meaning": "Disabled in this fixture because carrier confirmation is stale and explicit review is not complete."
+    },
+    {
+      "action_id": "reject_packet",
+      "label": "Reject packet",
+      "enabled": true,
+      "meaning": "Reject the decision packet and require correction before reuse."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "workflows": [
+    {
+      "workflow_id": "delivery_delay_confirmation",
+      "name": "Delivery Delay / Carrier Confirmation",
+      "description": "Checks whether EKOS can prepare a governed correction workflow packet for a delayed delivery.",
+      "required_source_package": [
+        "deliveries",
+        "tracking_events",
+        "carrier_updates",
+        "policies",
+        "approval_matrix"
+      ],
+      "process_owner": "SAP logistics operations",
+      "config_version": "delivery_delay_confirmation_source_package.yaml",
+      "supported_action_boundary": "Recommendation only or prepare-for-approval packet. No execution.",
+      "status": "configured"
+    },
+    {
+      "workflow_id": "idoc_material_lock_reprocessing",
+      "name": "IDoc Material Lock / Reprocessing",
+      "description": "Checks collision readiness before preparing an IDoc reprocessing plan.",
+      "required_source_package": [
+        "idoc_events",
+        "lock_events",
+        "incoming_idoc_queue",
+        "policy_idoc_reprocessing"
+      ],
+      "process_owner": "SAP integration operations",
+      "config_version": "idoc_material_lock_reprocessing.yaml",
+      "supported_action_boundary": "Recommendation only or prepare-for-approval packet. No SAP-changing execution.",
+      "status": "configured"
+    },
+    {
+      "workflow_id": "fo_planning_block",
+      "name": "Future: FO Planning Block",
+      "description": "Planned workflow for freight order planning blockers and transport readiness.",
+      "required_source_package": [
+        "freight_orders",
+        "planning_status",
+        "carrier_capacity",
+        "approval_matrix"
+      ],
+      "process_owner": "Transportation planning",
+      "config_version": "draft",
+      "supported_action_boundary": "Draft only. Not available for decision packet generation.",
+      "status": "draft"
+    },
+    {
+      "workflow_id": "invoice_block",
+      "name": "Future: Invoice Block",
+      "description": "Planned workflow for invoice block review and release-preparation boundaries.",
+      "required_source_package": [
+        "invoice_header",
+        "po_match",
+        "goods_receipt",
+        "approval_matrix"
+      ],
+      "process_owner": "Finance operations",
+      "config_version": "not_configured",
+      "supported_action_boundary": "Needs validation before use.",
+      "status": "needs validation"
+    }
+  ]
+}

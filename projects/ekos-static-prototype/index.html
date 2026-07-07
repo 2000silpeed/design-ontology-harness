@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EKOS Static Prototype</title>
+    <link rel="stylesheet" href="./design-system/tokens.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body
+    data-product-prototype="ekos-static-prototype"
+    data-prototype-state-set="workflow-selection,case-input,source-package-failed,missing-data-resolution,source-package-passed,decision-report,evidence-trace,review-request"
+  >
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Prototype navigation">
+        <div class="brand">
+          <div>
+            <p class="eyebrow">EKOS prototype</p>
+            <h1>Governed Workflow</h1>
+          </div>
+        </div>
+
+        <nav class="nav-list">
+          <button class="nav-item active" type="button" data-go="workflow-selection">
+            <i data-lucide="layout-dashboard" aria-hidden="true"></i>
+            <span>Workflows</span>
+          </button>
+          <button class="nav-item" type="button" data-go="source-package-failed">
+            <i data-lucide="package-check" aria-hidden="true"></i>
+            <span>Source package</span>
+          </button>
+          <button class="nav-item" type="button" data-go="decision-report">
+            <i data-lucide="shield-check" aria-hidden="true"></i>
+            <span>Decision boundary</span>
+          </button>
+          <button class="nav-item" type="button" data-go="evidence-trace">
+            <i data-lucide="git-branch" aria-hidden="true"></i>
+            <span>Evidence trace</span>
+          </button>
+          <button class="nav-item" type="button" data-go="review-request">
+            <i data-lucide="clipboard-check" aria-hidden="true"></i>
+            <span>Review</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-note">
+          <p>Not chat-first. EKOS checks enterprise inputs before judgment.</p>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Current case</p>
+            <strong id="topbar-case">Delivery 80001241</strong>
+          </div>
+          <div class="topbar-status">
+            <span class="status-badge review">review_required</span>
+            <span class="status-badge blocked">No autonomous execution</span>
+          </div>
+        </header>
+
+        <section
+          class="screen active"
+          id="screen-workflow-selection"
+          data-screen="workflow-selection"
+          data-product-surface="workflow-selection"
+          data-state="configured-and-draft-workflows"
+        >
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">Step 1</p>
+              <h2>Choose a governed business workflow</h2>
+              <p class="lead">
+                EKOS starts from a configured enterprise workflow, not a free-form chat box.
+              </p>
+            </div>
+            <button class="secondary-button" type="button" data-go="case-input">
+              <i data-lucide="arrow-right" aria-hidden="true"></i>
+              Start selected workflow
+            </button>
+          </div>
+
+          <figure
+            class="workflow-visual"
+            data-runtime-surface="workflow-state-map"
+            data-model="ekos-value-chain"
+            aria-label="EKOS governed workflow from source package to human review"
+          >
+            <figcaption>
+              <strong>Governed workflow path</strong>
+              <span>Source package checks happen before decision packet generation.</span>
+            </figcaption>
+            <div class="visual-flow" aria-hidden="true">
+              <span>Source package</span>
+              <span>Evidence</span>
+              <span>Authority boundary</span>
+              <span>Decision report</span>
+              <span>Human review</span>
+            </div>
+          </figure>
+
+          <div class="workflow-grid" id="workflow-grid" data-model="workflow-list"></div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-case-input"
+          data-screen="case-input"
+          data-product-surface="case-input"
+          data-state="delivery-delay-selected"
+        >
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">Step 2</p>
+              <h2>Identify the business case</h2>
+              <p class="lead">
+                EKOS will first check whether the required enterprise inputs are available. It
+                will not produce a decision if required sources are missing.
+              </p>
+            </div>
+          </div>
+
+          <div class="split-layout">
+            <form class="panel form-panel" data-model="case-input-form">
+              <label>
+                <span>Delivery ID</span>
+                <input type="text" value="80001241" aria-label="Delivery ID" />
+              </label>
+              <label>
+                <span>Plant</span>
+                <input type="text" placeholder="Optional" aria-label="Plant" />
+              </label>
+              <label>
+                <span>Carrier</span>
+                <input type="text" placeholder="Optional" aria-label="Carrier" />
+              </label>
+              <label>
+                <span>Date range</span>
+                <input type="text" placeholder="Optional" aria-label="Date range" />
+              </label>
+              <div class="action-row">
+                <button class="primary-button" type="button" data-go="source-package-failed">
+                  <i data-lucide="search-check" aria-hidden="true"></i>
+                  Check required data
+                </button>
+              </div>
+            </form>
+
+            <aside class="panel guidance-panel">
+              <p class="eyebrow">Workflow selected</p>
+              <h3>Delivery Delay / Carrier Confirmation</h3>
+              <p>
+                EKOS checks whether the source package supports a governed correction workflow
+                packet. It does not approve or execute SAP-changing actions.
+              </p>
+              <ul class="check-list">
+                <li>Required source aliases are checked first.</li>
+                <li>Missing critical sources block decision packet generation.</li>
+                <li>Business language appears before internal delegation levels.</li>
+              </ul>
+            </aside>
+          </div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-source-package-failed"
+          data-screen="source-package-failed"
+          data-product-surface="source-package-status"
+          data-state="failed"
+        >
+          <div class="decision-hero danger">
+            <div>
+              <p class="eyebrow">Step 3A</p>
+              <h2>EKOS cannot safely evaluate this case yet.</h2>
+              <p>Required source data is missing. Decision packet generation is disabled.</p>
+            </div>
+            <span class="status-badge blocked">Source package failed</span>
+          </div>
+
+          <div class="panel source-panel" data-runtime-surface="table-view" data-model="source-package-failed">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Minimum source package</p>
+                <h3>Delivery 80001241 readiness</h3>
+              </div>
+              <button class="secondary-button" type="button" data-go="missing-data-resolution">
+                <i data-lucide="plus-circle" aria-hidden="true"></i>
+                Add missing source
+              </button>
+            </div>
+            <div class="source-table" id="failed-source-table"></div>
+            <div class="action-row">
+              <button class="secondary-button" type="button" data-go="missing-data-resolution">
+                <i data-lucide="file-search" aria-hidden="true"></i>
+                View required fields
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-missing-data-resolution"
+          data-screen="missing-data-resolution"
+          data-product-surface="missing-data-resolution"
+          data-state="carrier-and-approval-missing"
+        >
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">Step 4</p>
+              <h2>Resolve missing workflow-critical sources</h2>
+              <p class="lead">
+                EKOS explains why the source is needed before allowing the workflow to proceed.
+              </p>
+            </div>
+            <button class="primary-button" type="button" data-go="source-package-passed">
+              <i data-lucide="upload" aria-hidden="true"></i>
+              Use controlled supplemental sources
+            </button>
+          </div>
+
+          <div class="missing-grid" id="missing-source-grid" data-model="missing-sources"></div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-source-package-passed"
+          data-screen="source-package-passed"
+          data-product-surface="source-package-status"
+          data-state="passed"
+        >
+          <div class="decision-hero success">
+            <div>
+              <p class="eyebrow">Step 3B</p>
+              <h2>All required sources are available.</h2>
+              <p>EKOS can now generate a decision packet. This is still not approval.</p>
+            </div>
+            <span class="status-badge ready">Source package passed</span>
+          </div>
+
+          <div class="panel source-panel" data-runtime-surface="table-view" data-model="source-package-passed">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Minimum source package</p>
+                <h3>Supplemental package readiness</h3>
+              </div>
+              <button class="primary-button" type="button" data-go="decision-report">
+                <i data-lucide="file-check-2" aria-hidden="true"></i>
+                Generate decision packet
+              </button>
+            </div>
+            <div class="source-table" id="passed-source-table"></div>
+          </div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-decision-report"
+          data-screen="decision-report"
+          data-product-surface="decision-report"
+          data-state="review-required"
+        >
+          <div class="decision-report-layout">
+            <article class="manager-card" data-model="decision-report">
+              <p class="eyebrow">Manager view</p>
+              <h2>Delivery 80001241 is delayed.</h2>
+              <div class="decision-summary-grid">
+                <div class="metric allowed">
+                  <span>Current allowed action</span>
+                  <strong id="allowed-action">Recommendation only</strong>
+                </div>
+                <div class="metric blocked">
+                  <span>Blocked action</span>
+                  <strong id="blocked-action">Prepare approval-ready correction workflow</strong>
+                </div>
+                <div class="metric review">
+                  <span>Governance status</span>
+                  <strong>review_required</strong>
+                </div>
+              </div>
+              <div class="why-blocked">
+                <h3>Why blocked</h3>
+                <p id="why-blocked-copy">
+                  Carrier confirmation is stale and governance review is required.
+                </p>
+              </div>
+              <div class="action-row">
+                <button class="secondary-button" type="button" data-go="evidence-trace">
+                  <i data-lucide="git-branch" aria-hidden="true"></i>
+                  Open evidence trace
+                </button>
+                <button class="primary-button" type="button" data-go="review-request">
+                  <i data-lucide="send" aria-hidden="true"></i>
+                  Request review
+                </button>
+              </div>
+            </article>
+
+            <aside class="decision-rail">
+              <section class="panel compact">
+                <h3>Required next action</h3>
+                <p id="next-action-copy">Request current carrier confirmation and submit for human review.</p>
+              </section>
+              <section class="panel compact">
+                <h3>Review status</h3>
+                <span class="status-badge review">review_required</span>
+                <p>No explicit human review artifact is attached.</p>
+              </section>
+            </aside>
+          </div>
+
+          <div class="report-sections" id="report-sections"></div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-evidence-trace"
+          data-screen="evidence-trace"
+          data-product-surface="evidence-policy-trace"
+          data-runtime-surface="audit-timeline"
+          data-state="trace-open"
+        >
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">Step 6</p>
+              <h2>Evidence and policy trace</h2>
+              <p class="lead">
+                Audit and process users can inspect how sources became evidence and authority
+                boundaries.
+              </p>
+            </div>
+            <button class="secondary-button" type="button" data-go="decision-report">
+              <i data-lucide="arrow-left" aria-hidden="true"></i>
+              Back to manager view
+            </button>
+          </div>
+
+          <div class="trace-layout">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Evidence objects</p>
+                  <h3>Source-to-decision impact</h3>
+                </div>
+              </div>
+              <div id="evidence-list" class="evidence-list" data-model="evidence-objects"></div>
+            </div>
+
+            <aside class="panel trace-panel" data-model="packet-provenance">
+              <p class="eyebrow">Packet provenance</p>
+              <h3>Configuration and source boundary</h3>
+              <dl id="packet-provenance"></dl>
+            </aside>
+          </div>
+
+          <figure
+            class="lineage-visual"
+            data-runtime-surface="lineage-map"
+            data-model="source-to-evidence-lineage"
+            aria-label="Source to evidence lineage map"
+          >
+            <figcaption>
+              <strong>Lineage map</strong>
+              <span>Each evidence object keeps its source alias, fields, and rule provenance.</span>
+            </figcaption>
+            <div class="visual-flow compact-flow" aria-hidden="true">
+              <span>carrier_updates.updated_at</span>
+              <span>freshness rule</span>
+              <span>carrier_update_stale</span>
+              <span>blocking risk</span>
+              <span>review_required</span>
+            </div>
+          </figure>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Policy and approval</p>
+                <h3>Authority mapping</h3>
+              </div>
+            </div>
+            <div id="policy-authority" class="policy-grid"></div>
+          </div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-review-request"
+          data-screen="review-request"
+          data-product-surface="review-request"
+          data-state="review-required"
+        >
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">Step 7</p>
+              <h2>Request human review</h2>
+              <p class="lead">No autonomous execution. Human review is required.</p>
+            </div>
+          </div>
+
+          <div class="review-layout">
+            <section class="panel review-card" data-model="review-request">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Packet status</p>
+                  <h3>Delivery 80001241</h3>
+                </div>
+                <span class="status-badge review">review_required</span>
+              </div>
+              <dl class="review-meta" id="review-meta"></dl>
+              <label class="review-note">
+                <span>Reviewer note</span>
+                <textarea id="review-note" rows="5"></textarea>
+              </label>
+            </section>
+
+            <aside class="panel approval-rail" data-runtime-surface="approval-rail">
+              <p class="eyebrow">Available reviewer actions</p>
+              <h3>Governed actions</h3>
+              <div id="review-actions" class="review-actions"></div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

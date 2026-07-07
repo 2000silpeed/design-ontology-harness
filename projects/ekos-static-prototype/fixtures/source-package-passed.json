@@ -1,0 +1,63 @@
+{
+  "workflow_id": "delivery_delay_confirmation",
+  "case_object": {
+    "type": "Delivery",
+    "id": "80001241"
+  },
+  "validation_result": "pass",
+  "decision_packet_generated": false,
+  "message": "All required sources are available. EKOS can generate a decision packet.",
+  "summary": "Projected SAP-like assets plus curated supplemental carrier and governance sources complete the minimum source package.",
+  "aliases": [
+    {
+      "alias": "deliveries",
+      "status": "available",
+      "readiness": "partial",
+      "policy": "partial_allowed",
+      "result": "pass",
+      "source_kind": "projected SAP-like asset",
+      "why_it_matters": "Identifies the primary delivery object and current logistics status."
+    },
+    {
+      "alias": "tracking_events",
+      "status": "available",
+      "readiness": "partial",
+      "policy": "partial_allowed",
+      "result": "pass",
+      "source_kind": "projected SAP-like asset",
+      "why_it_matters": "Provides delivery event context for the delay."
+    },
+    {
+      "alias": "policies",
+      "status": "ready",
+      "readiness": "ready",
+      "policy": "ready_required",
+      "result": "pass",
+      "source_kind": "curated policy mapping",
+      "why_it_matters": "Defines confirmation requirements before workflow preparation."
+    },
+    {
+      "alias": "carrier_updates",
+      "status": "ready",
+      "readiness": "ready",
+      "policy": "ready_required",
+      "result": "pass",
+      "source_kind": "supplemental carrier source",
+      "why_it_matters": "Determines whether external carrier confirmation is current, stale, missing, or trustworthy."
+    },
+    {
+      "alias": "approval_matrix",
+      "status": "ready",
+      "readiness": "ready",
+      "policy": "ready_required",
+      "result": "pass",
+      "source_kind": "supplemental governance source",
+      "why_it_matters": "Defines who may prepare, review, approve, or block the requested business action."
+    }
+  ],
+  "warnings": [
+    "Delivery and tracking records remain projected from local SAP-like assets.",
+    "This is controlled onboarding, not live SAP integration.",
+    "Decision packet generation still does not mean approval."
+  ]
+}

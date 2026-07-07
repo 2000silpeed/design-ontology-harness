@@ -1,0 +1,117 @@
+{
+  "workflow_id": "delivery_delay_confirmation",
+  "primary_object": "Delivery 80001241",
+  "evidence_objects": [
+    {
+      "evidence_id": "delivery_status_event",
+      "business_meaning": "Delivery 80001241 is delayed.",
+      "source_alias": "deliveries",
+      "source_kind": "projected SAP-like asset",
+      "freshness": "current enough for status context",
+      "decision_impact": "Provides the case context but does not by itself grant approval-preparation."
+    },
+    {
+      "evidence_id": "carrier_update_stale",
+      "business_meaning": "The latest carrier update is outside the confirmation window.",
+      "source_alias": "carrier_updates",
+      "source_kind": "supplemental carrier source",
+      "freshness": "stale",
+      "decision_impact": "Blocks approval-ready workflow preparation until current confirmation is obtained."
+    },
+    {
+      "evidence_id": "policy_confirmation_required",
+      "business_meaning": "Policy requires current external confirmation before correction workflow preparation.",
+      "source_alias": "policies",
+      "source_kind": "curated policy mapping",
+      "freshness": "governed mapping",
+      "decision_impact": "Creates the authority boundary for recommendation-only behavior."
+    }
+  ],
+  "source_records": [
+    {
+      "source_alias": "deliveries",
+      "source_record": "Delivery extract row for 80001241",
+      "fields_used": [
+        "delivery_id",
+        "current_status"
+      ]
+    },
+    {
+      "source_alias": "carrier_updates",
+      "source_record": "Supplemental carrier update row for 80001241",
+      "fields_used": [
+        "delivery_id",
+        "carrier_id",
+        "updated_at",
+        "confirmation_status",
+        "update_source"
+      ]
+    },
+    {
+      "source_alias": "policies",
+      "source_record": "delay_confirmation_policy v1",
+      "fields_used": [
+        "policy_id",
+        "requires_current_confirmation",
+        "confirmation_window_hours"
+      ]
+    },
+    {
+      "source_alias": "approval_matrix",
+      "source_record": "delivery_delay_confirmation approval matrix v1",
+      "fields_used": [
+        "workflow_id",
+        "requested_action",
+        "required_approver_role",
+        "can_prepare",
+        "can_execute"
+      ]
+    }
+  ],
+  "policy_mapping": {
+    "policy_id": "delay_confirmation_policy",
+    "policy_version": "v1",
+    "sop_reference": "SOP-DELAY-CONFIRMATION-001",
+    "requirement": "Current external carrier confirmation is required before correction workflow preparation."
+  },
+  "approval_matrix_entry": {
+    "workflow_id": "delivery_delay_confirmation",
+    "requested_action": "prepare_approval_ready_correction_workflow",
+    "required_approver_role": "SAP logistics manager",
+    "can_prepare": false,
+    "can_execute": false,
+    "approval_matrix_version": "v1"
+  },
+  "lineage": [
+    {
+      "evidence_id": "carrier_update_stale",
+      "rule_id": "carrier_update_stale",
+      "source_aliases": [
+        "carrier_updates",
+        "policies"
+      ],
+      "source_fields": [
+        "carrier_updates.updated_at",
+        "policies.confirmation_window_hours"
+      ],
+      "provenance_note": "Freshness comparison created stale carrier confirmation evidence."
+    },
+    {
+      "evidence_id": "policy_confirmation_required",
+      "rule_id": "policy_confirmation_required",
+      "source_aliases": [
+        "policies"
+      ],
+      "source_fields": [
+        "policies.requires_current_confirmation"
+      ],
+      "provenance_note": "Curated policy mapping created the confirmation requirement evidence."
+    }
+  ],
+  "packet_provenance": {
+    "source_provider": "source_package",
+    "config_path": "configs/onboarding/delivery_delay_confirmation_source_package.yaml",
+    "decision_packet_path": "out/ekos-configured-onboarding-delivery-delay-source-package-r1/decision_packet.json",
+    "claim_boundary": "Static prototype fixture. Not live SAP integration."
+  }
+}
