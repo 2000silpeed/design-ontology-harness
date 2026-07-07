@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="ko" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>EKOS Static Prototype</title>
+    <title>EKOS 업무 판단 검토</title>
     <link rel="stylesheet" href="./design-system/tokens.css" />
     <link rel="stylesheet" href="./styles.css" />
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
@@ -11,75 +11,88 @@
   </head>
   <body
     data-product-prototype="ekos-static-prototype"
-    data-prototype-state-set="workflow-selection,case-input,source-package-failed,missing-data-resolution,source-package-passed,decision-report,evidence-trace,review-request"
+    data-prototype-state-set="업무 선택,케이스 입력,필요 데이터 부족,부족한 데이터 보강,필요 데이터 확인 완료,판단 결과,근거 및 정책 확인,검토 요청"
   >
     <div class="app-shell">
-      <aside class="sidebar" aria-label="Prototype navigation">
+      <aside class="sidebar" aria-label="EKOS 화면 이동">
         <div class="brand">
           <div>
-            <p class="eyebrow">EKOS prototype</p>
-            <h1>Governed Workflow</h1>
+            <p class="eyebrow">EKOS</p>
+            <h1>업무 판단 검토</h1>
           </div>
         </div>
 
         <nav class="nav-list">
           <button class="nav-item active" type="button" data-go="workflow-selection">
-            <i data-lucide="layout-dashboard" aria-hidden="true"></i>
-            <span>Workflows</span>
+            <i data-lucide="briefcase-business" aria-hidden="true"></i>
+            <span>업무 선택</span>
+          </button>
+          <button class="nav-item" type="button" data-go="case-input">
+            <i data-lucide="scan-search" aria-hidden="true"></i>
+            <span>케이스 입력</span>
           </button>
           <button class="nav-item" type="button" data-go="source-package-failed">
             <i data-lucide="package-check" aria-hidden="true"></i>
-            <span>Source package</span>
+            <span>필요 데이터 확인</span>
           </button>
           <button class="nav-item" type="button" data-go="decision-report">
-            <i data-lucide="shield-check" aria-hidden="true"></i>
-            <span>Decision boundary</span>
+            <i data-lucide="shield-alert" aria-hidden="true"></i>
+            <span>판단 결과</span>
           </button>
           <button class="nav-item" type="button" data-go="evidence-trace">
             <i data-lucide="git-branch" aria-hidden="true"></i>
-            <span>Evidence trace</span>
+            <span>근거 보기</span>
           </button>
           <button class="nav-item" type="button" data-go="review-request">
             <i data-lucide="clipboard-check" aria-hidden="true"></i>
-            <span>Review</span>
+            <span>검토 요청</span>
           </button>
         </nav>
 
         <div class="sidebar-note">
-          <p>Not chat-first. EKOS checks enterprise inputs before judgment.</p>
+          <p>EKOS는 필요한 데이터가 부족하면 판단 결과를 만들지 않습니다.</p>
         </div>
       </aside>
 
       <main class="workspace">
         <header class="topbar">
           <div>
-            <p class="eyebrow">Current case</p>
+            <p class="eyebrow">현재 케이스</p>
             <strong id="topbar-case">Delivery 80001241</strong>
           </div>
           <div class="topbar-status">
-            <span class="status-badge review">review_required</span>
-            <span class="status-badge blocked">No autonomous execution</span>
+            <span class="status-badge review">검토 필요</span>
+            <span class="status-badge blocked">승인 아님</span>
           </div>
         </header>
+
+        <ol class="progress-rail" aria-label="EKOS 업무 흐름">
+          <li class="active">업무 선택</li>
+          <li>케이스 입력</li>
+          <li>필요 데이터 확인</li>
+          <li>판단 결과</li>
+          <li>검토 요청</li>
+        </ol>
 
         <section
           class="screen active"
           id="screen-workflow-selection"
           data-screen="workflow-selection"
           data-product-surface="workflow-selection"
-          data-state="configured-and-draft-workflows"
+          data-state="korean-task-first"
         >
-          <div class="screen-heading">
+          <div class="task-intro">
             <div>
-              <p class="eyebrow">Step 1</p>
-              <h2>Choose a governed business workflow</h2>
+              <p class="eyebrow">업무 선택</p>
+              <h2>EKOS 업무 판단 검토</h2>
               <p class="lead">
-                EKOS starts from a configured enterprise workflow, not a free-form chat box.
+                업무 케이스를 선택하면 EKOS가 필요한 데이터가 충분한지 먼저 확인하고,
+                지금 해도 되는 일과 하면 안 되는 일을 알려줍니다.
               </p>
             </div>
-            <button class="secondary-button" type="button" data-go="case-input">
+            <button class="primary-button" type="button" data-go="case-input">
               <i data-lucide="arrow-right" aria-hidden="true"></i>
-              Start selected workflow
+              검토 시작
             </button>
           </div>
 
@@ -87,18 +100,18 @@
             class="workflow-visual"
             data-runtime-surface="workflow-state-map"
             data-model="ekos-value-chain"
-            aria-label="EKOS governed workflow from source package to human review"
+            aria-label="업무 선택부터 검토 요청까지 이어지는 EKOS 화면 흐름"
           >
             <figcaption>
-              <strong>Governed workflow path</strong>
-              <span>Source package checks happen before decision packet generation.</span>
+              <strong>화면 흐름</strong>
+              <span>먼저 데이터가 충분한지 확인하고, 충분할 때만 판단 결과를 만듭니다.</span>
             </figcaption>
             <div class="visual-flow" aria-hidden="true">
-              <span>Source package</span>
-              <span>Evidence</span>
-              <span>Authority boundary</span>
-              <span>Decision report</span>
-              <span>Human review</span>
+              <span>업무 선택</span>
+              <span>필요 데이터 확인</span>
+              <span>부족한 데이터 보강</span>
+              <span>판단 결과</span>
+              <span>검토 요청</span>
             </div>
           </figure>
 
@@ -114,11 +127,11 @@
         >
           <div class="screen-heading">
             <div>
-              <p class="eyebrow">Step 2</p>
-              <h2>Identify the business case</h2>
+              <p class="eyebrow">케이스 입력</p>
+              <h2>검토할 케이스 입력</h2>
               <p class="lead">
-                EKOS will first check whether the required enterprise inputs are available. It
-                will not produce a decision if required sources are missing.
+                EKOS는 먼저 이 케이스를 판단할 수 있는 데이터가 충분한지 확인합니다.
+                필수 데이터가 부족하면 판단 결과를 만들지 않습니다.
               </p>
             </div>
           </div>
@@ -126,40 +139,40 @@
           <div class="split-layout">
             <form class="panel form-panel" data-model="case-input-form">
               <label>
-                <span>Delivery ID</span>
-                <input type="text" value="80001241" aria-label="Delivery ID" />
+                <span>Delivery 번호</span>
+                <input type="text" value="80001241" aria-label="Delivery 번호" />
               </label>
               <label>
                 <span>Plant</span>
-                <input type="text" placeholder="Optional" aria-label="Plant" />
+                <input type="text" placeholder="선택 입력" aria-label="Plant" />
               </label>
               <label>
-                <span>Carrier</span>
-                <input type="text" placeholder="Optional" aria-label="Carrier" />
+                <span>운송사</span>
+                <input type="text" placeholder="선택 입력" aria-label="운송사" />
               </label>
               <label>
-                <span>Date range</span>
-                <input type="text" placeholder="Optional" aria-label="Date range" />
+                <span>기준일</span>
+                <input type="text" placeholder="선택 입력" aria-label="기준일" />
               </label>
               <div class="action-row">
                 <button class="primary-button" type="button" data-go="source-package-failed">
                   <i data-lucide="search-check" aria-hidden="true"></i>
-                  Check required data
+                  필요 데이터 확인
                 </button>
               </div>
             </form>
 
             <aside class="panel guidance-panel">
-              <p class="eyebrow">Workflow selected</p>
-              <h3>Delivery Delay / Carrier Confirmation</h3>
+              <p class="eyebrow">선택한 업무</p>
+              <h3>납품 지연 / 운송사 확인</h3>
               <p>
-                EKOS checks whether the source package supports a governed correction workflow
-                packet. It does not approve or execute SAP-changing actions.
+                납품 지연 건에서 운송사 확인이 충분한지 검토합니다. EKOS는 SAP 변경이나
+                고객 영향 작업을 직접 승인하지 않습니다.
               </p>
               <ul class="check-list">
-                <li>Required source aliases are checked first.</li>
-                <li>Missing critical sources block decision packet generation.</li>
-                <li>Business language appears before internal delegation levels.</li>
+                <li>필요 데이터가 먼저 확인됩니다.</li>
+                <li>부족한 데이터가 있으면 판단 결과가 생성되지 않습니다.</li>
+                <li>결과는 “해도 되는 일”과 “하면 안 되는 일”로 표시됩니다.</li>
               </ul>
             </aside>
           </div>
@@ -169,34 +182,43 @@
           class="screen"
           id="screen-source-package-failed"
           data-screen="source-package-failed"
-          data-product-surface="source-package-status"
+          data-product-surface="required-data-status"
           data-state="failed"
         >
           <div class="decision-hero danger">
             <div>
-              <p class="eyebrow">Step 3A</p>
-              <h2>EKOS cannot safely evaluate this case yet.</h2>
-              <p>Required source data is missing. Decision packet generation is disabled.</p>
+              <p class="eyebrow">필요 데이터 확인 결과</p>
+              <h2>판단 불가</h2>
+              <p>필수 데이터가 부족합니다.</p>
             </div>
-            <span class="status-badge blocked">Source package failed</span>
+            <span class="status-badge blocked">판단 결과 생성 안 됨</span>
           </div>
 
-          <div class="panel source-panel" data-runtime-surface="table-view" data-model="source-package-failed">
+          <div class="plain-explanation danger-note">
+            <strong>부족한 정보</strong>
+            <p>운송사 최신 확인 정보와 승인 기준표가 없습니다.</p>
+            <p>
+              이 두 정보가 없으면 EKOS는 운송사 확인이 최신인지, 승인 준비를 누구에게
+              넘겨야 하는지 판단할 수 없습니다.
+            </p>
+          </div>
+
+          <div class="panel source-panel" data-runtime-surface="table-view" data-model="required-data-failed">
             <div class="panel-header">
               <div>
-                <p class="eyebrow">Minimum source package</p>
-                <h3>Delivery 80001241 readiness</h3>
+                <p class="eyebrow">필요 항목</p>
+                <h3>Delivery 80001241 데이터 상태</h3>
               </div>
-              <button class="secondary-button" type="button" data-go="missing-data-resolution">
+              <button class="primary-button" type="button" data-go="missing-data-resolution">
                 <i data-lucide="plus-circle" aria-hidden="true"></i>
-                Add missing source
+                부족한 데이터 보강
               </button>
             </div>
             <div class="source-table" id="failed-source-table"></div>
             <div class="action-row">
               <button class="secondary-button" type="button" data-go="missing-data-resolution">
                 <i data-lucide="file-search" aria-hidden="true"></i>
-                View required fields
+                필수 항목 보기
               </button>
             </div>
           </div>
@@ -211,15 +233,15 @@
         >
           <div class="screen-heading">
             <div>
-              <p class="eyebrow">Step 4</p>
-              <h2>Resolve missing workflow-critical sources</h2>
+              <p class="eyebrow">부족한 데이터 보강</p>
+              <h2>판단에 필요한 정보를 보강하세요</h2>
               <p class="lead">
-                EKOS explains why the source is needed before allowing the workflow to proceed.
+                아래 두 항목이 들어와야 EKOS가 승인 준비 가능 여부를 검토할 수 있습니다.
               </p>
             </div>
             <button class="primary-button" type="button" data-go="source-package-passed">
               <i data-lucide="upload" aria-hidden="true"></i>
-              Use controlled supplemental sources
+              보강 데이터 적용
             </button>
           </div>
 
@@ -230,27 +252,27 @@
           class="screen"
           id="screen-source-package-passed"
           data-screen="source-package-passed"
-          data-product-surface="source-package-status"
+          data-product-surface="required-data-status"
           data-state="passed"
         >
           <div class="decision-hero success">
             <div>
-              <p class="eyebrow">Step 3B</p>
-              <h2>All required sources are available.</h2>
-              <p>EKOS can now generate a decision packet. This is still not approval.</p>
+              <p class="eyebrow">필요 데이터 확인 완료</p>
+              <h2>판단 가능</h2>
+              <p>필수 항목이 확인되었습니다. 이제 판단 결과를 만들 수 있습니다.</p>
             </div>
-            <span class="status-badge ready">Source package passed</span>
+            <span class="status-badge ready">데이터 확인 완료</span>
           </div>
 
-          <div class="panel source-panel" data-runtime-surface="table-view" data-model="source-package-passed">
+          <div class="panel source-panel" data-runtime-surface="table-view" data-model="required-data-passed">
             <div class="panel-header">
               <div>
-                <p class="eyebrow">Minimum source package</p>
-                <h3>Supplemental package readiness</h3>
+                <p class="eyebrow">필요 항목</p>
+                <h3>보강 후 데이터 상태</h3>
               </div>
               <button class="primary-button" type="button" data-go="decision-report">
                 <i data-lucide="file-check-2" aria-hidden="true"></i>
-                Generate decision packet
+                판단 결과 생성
               </button>
             </div>
             <div class="source-table" id="passed-source-table"></div>
@@ -266,49 +288,50 @@
         >
           <div class="decision-report-layout">
             <article class="manager-card" data-model="decision-report">
-              <p class="eyebrow">Manager view</p>
-              <h2>Delivery 80001241 is delayed.</h2>
+              <p class="eyebrow">판단 결과</p>
+              <h2>Delivery 80001241</h2>
               <div class="decision-summary-grid">
                 <div class="metric allowed">
-                  <span>Current allowed action</span>
-                  <strong id="allowed-action">Recommendation only</strong>
+                  <span>현재 해도 되는 일</span>
+                  <strong id="allowed-action">추천만 가능</strong>
                 </div>
                 <div class="metric blocked">
-                  <span>Blocked action</span>
-                  <strong id="blocked-action">Prepare approval-ready correction workflow</strong>
+                  <span>현재 막힌 일</span>
+                  <strong id="blocked-action">승인 준비용 Correction Workflow 작성</strong>
                 </div>
                 <div class="metric review">
-                  <span>Governance status</span>
-                  <strong>review_required</strong>
+                  <span>상태</span>
+                  <strong>검토 필요 · 승인 아님</strong>
                 </div>
               </div>
               <div class="why-blocked">
-                <h3>Why blocked</h3>
+                <h3>왜 막혔나</h3>
                 <p id="why-blocked-copy">
-                  Carrier confirmation is stale and governance review is required.
+                  운송사 확인 정보가 오래되었고, 현재 확인이 필요합니다. 또한 최종 검토가 완료되지 않았습니다.
                 </p>
               </div>
               <div class="action-row">
                 <button class="secondary-button" type="button" data-go="evidence-trace">
                   <i data-lucide="git-branch" aria-hidden="true"></i>
-                  Open evidence trace
+                  근거 보기
                 </button>
                 <button class="primary-button" type="button" data-go="review-request">
                   <i data-lucide="send" aria-hidden="true"></i>
-                  Request review
+                  검토 요청
                 </button>
               </div>
             </article>
 
             <aside class="decision-rail">
               <section class="panel compact">
-                <h3>Required next action</h3>
-                <p id="next-action-copy">Request current carrier confirmation and submit for human review.</p>
+                <h3>다음 조치</h3>
+                <p id="next-action-copy">운송사 최신 확인을 요청하고 담당자 검토를 진행하세요.</p>
               </section>
               <section class="panel compact">
-                <h3>Review status</h3>
-                <span class="status-badge review">review_required</span>
-                <p>No explicit human review artifact is attached.</p>
+                <h3>승인 상태</h3>
+                <span class="status-badge review">검토 필요</span>
+                <span class="status-badge blocked">승인 아님</span>
+                <p>명시적인 담당자 검토 기록이 아직 없습니다.</p>
               </section>
             </aside>
           </div>
@@ -326,16 +349,16 @@
         >
           <div class="screen-heading">
             <div>
-              <p class="eyebrow">Step 6</p>
-              <h2>Evidence and policy trace</h2>
+              <p class="eyebrow">근거 및 정책 확인</p>
+              <h2>감사/검토 담당자를 위한 상세 근거</h2>
               <p class="lead">
-                Audit and process users can inspect how sources became evidence and authority
-                boundaries.
+                이 화면은 감사/검토 담당자를 위한 상세 근거입니다. 운영 담당자는 먼저
+                판단 결과 화면을 보면 됩니다.
               </p>
             </div>
             <button class="secondary-button" type="button" data-go="decision-report">
               <i data-lucide="arrow-left" aria-hidden="true"></i>
-              Back to manager view
+              판단 결과로 돌아가기
             </button>
           </div>
 
@@ -343,16 +366,16 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <p class="eyebrow">Evidence objects</p>
-                  <h3>Source-to-decision impact</h3>
+                  <p class="eyebrow">사용한 근거</p>
+                  <h3>데이터가 판단에 영향을 준 방식</h3>
                 </div>
               </div>
               <div id="evidence-list" class="evidence-list" data-model="evidence-objects"></div>
             </div>
 
             <aside class="panel trace-panel" data-model="packet-provenance">
-              <p class="eyebrow">Packet provenance</p>
-              <h3>Configuration and source boundary</h3>
+              <p class="eyebrow">상세 정보</p>
+              <h3>감사용 세부 정보</h3>
               <dl id="packet-provenance"></dl>
             </aside>
           </div>
@@ -361,26 +384,26 @@
             class="lineage-visual"
             data-runtime-surface="lineage-map"
             data-model="source-to-evidence-lineage"
-            aria-label="Source to evidence lineage map"
+            aria-label="데이터 출처에서 판단 결과까지 이어지는 근거 흐름"
           >
             <figcaption>
-              <strong>Lineage map</strong>
-              <span>Each evidence object keeps its source alias, fields, and rule provenance.</span>
+              <strong>판단 경로</strong>
+              <span>데이터 출처, 최신성, 정책 기준, 승인 기준이 함께 검토됩니다.</span>
             </figcaption>
             <div class="visual-flow compact-flow" aria-hidden="true">
-              <span>carrier_updates.updated_at</span>
-              <span>freshness rule</span>
-              <span>carrier_update_stale</span>
-              <span>blocking risk</span>
-              <span>review_required</span>
+              <span>운송사 확인</span>
+              <span>최신성 확인</span>
+              <span>정책 기준</span>
+              <span>차단 사유</span>
+              <span>검토 필요</span>
             </div>
           </figure>
 
           <div class="panel">
             <div class="panel-header">
               <div>
-                <p class="eyebrow">Policy and approval</p>
-                <h3>Authority mapping</h3>
+                <p class="eyebrow">정책 및 승인 기준</p>
+                <h3>누가 무엇을 할 수 있는지</h3>
               </div>
             </div>
             <div id="policy-authority" class="policy-grid"></div>
@@ -396,9 +419,11 @@
         >
           <div class="screen-heading">
             <div>
-              <p class="eyebrow">Step 7</p>
-              <h2>Request human review</h2>
-              <p class="lead">No autonomous execution. Human review is required.</p>
+              <p class="eyebrow">검토 요청</p>
+              <h2>담당자 검토 요청</h2>
+              <p class="lead">
+                이 화면은 실행 승인이 아닙니다. 실제 SAP 변경이나 고객 영향 작업은 별도 승인 절차가 필요합니다.
+              </p>
             </div>
           </div>
 
@@ -406,21 +431,21 @@
             <section class="panel review-card" data-model="review-request">
               <div class="panel-header">
                 <div>
-                  <p class="eyebrow">Packet status</p>
+                  <p class="eyebrow">검토 대상</p>
                   <h3>Delivery 80001241</h3>
                 </div>
-                <span class="status-badge review">review_required</span>
+                <span class="status-badge review">검토 필요</span>
               </div>
               <dl class="review-meta" id="review-meta"></dl>
               <label class="review-note">
-                <span>Reviewer note</span>
+                <span>담당자 메모</span>
                 <textarea id="review-note" rows="5"></textarea>
               </label>
             </section>
 
             <aside class="panel approval-rail" data-runtime-surface="approval-rail">
-              <p class="eyebrow">Available reviewer actions</p>
-              <h3>Governed actions</h3>
+              <p class="eyebrow">요청 가능한 조치</p>
+              <h3>검토 담당자 조치</h3>
               <div id="review-actions" class="review-actions"></div>
             </aside>
           </div>

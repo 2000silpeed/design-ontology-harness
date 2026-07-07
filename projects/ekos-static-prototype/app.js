@@ -8,8 +8,7 @@ const fixturePaths = {
 };
 
 const state = {
-  fixtures: {},
-  selectedWorkflow: "delivery_delay_confirmation"
+  fixtures: {}
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -70,23 +69,23 @@ function renderWorkflows() {
     .map((workflow) => {
       const statusClass = normalizeStatusClass(workflow.status);
       const disabled = workflow.status === "configured" ? "" : "disabled";
-      const cta = workflow.status === "configured" ? "Start check" : "Needs validation";
+      const cta = workflow.status === "configured" ? "검토 시작" : "준비 중";
+      const futureClass = workflow.status === "configured" ? "" : "future";
 
       return `
-        <article class="workflow-card" data-model="workflow" data-item-id="${escapeHtml(workflow.workflow_id)}">
+        <article class="workflow-card ${futureClass}" data-model="workflow" data-item-id="${escapeHtml(workflow.workflow_id)}">
           <div>
-            <p class="eyebrow">${escapeHtml(workflow.workflow_id)}</p>
+            <p class="eyebrow">${escapeHtml(workflow.category_label || workflow.workflow_id)}</p>
             <h3>${escapeHtml(workflow.name)}</h3>
             <p>${escapeHtml(workflow.description)}</p>
           </div>
           <dl class="workflow-meta">
-            <div><dt>Required source package</dt><dd>${workflow.required_source_package.length} aliases</dd></div>
-            <div><dt>Process owner</dt><dd>${escapeHtml(workflow.process_owner)}</dd></div>
-            <div><dt>Config version</dt><dd>${escapeHtml(workflow.config_version)}</dd></div>
-            <div><dt>Action boundary</dt><dd>${escapeHtml(workflow.supported_action_boundary)}</dd></div>
+            <div><dt>필요 데이터</dt><dd>${workflow.required_source_package.length}개 항목</dd></div>
+            <div><dt>업무 담당</dt><dd>${escapeHtml(workflow.process_owner)}</dd></div>
+            <div><dt>결과</dt><dd>${escapeHtml(workflow.result_summary)}</dd></div>
           </dl>
           <div class="workflow-card-footer">
-            <span class="status-badge ${statusClass}">${escapeHtml(workflow.status)}</span>
+            <span class="status-badge ${statusClass}">${escapeHtml(workflow.status_label)}</span>
             <button class="secondary-button" type="button" data-go="case-input" ${disabled}>
               <i data-lucide="arrow-right" aria-hidden="true"></i>
               ${cta}
@@ -113,10 +112,10 @@ function renderAliasRows(selector, aliases) {
       const readinessClass = normalizeStatusClass(alias.readiness);
       return `
         <article class="source-row" data-model="source-alias" data-item-id="${escapeHtml(alias.alias)}">
-          <strong>${escapeHtml(alias.alias)}</strong>
-          <span class="status-badge ${readinessClass}">${escapeHtml(alias.readiness)}</span>
+          <strong>${escapeHtml(alias.label || alias.alias)}</strong>
+          <span class="status-badge ${readinessClass}">${escapeHtml(alias.readiness_label || alias.readiness)}</span>
           <p>${escapeHtml(alias.why_it_matters)}</p>
-          <span class="status-badge ${resultClass}">${escapeHtml(alias.result)}</span>
+          <span class="status-badge ${resultClass}">${escapeHtml(alias.result_label || alias.result)}</span>
         </article>
       `;
     })
@@ -136,20 +135,20 @@ function renderMissingSources() {
           <p>${escapeHtml(source.why_needed)}</p>
         </div>
         <section>
-          <h4>Accepted sources</h4>
+          <h4>가능한 입력</h4>
           <ul class="source-list">
             ${source.accepted_sources.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
           </ul>
         </section>
         <section>
-          <h4>Required fields</h4>
+          <h4>필요 항목</h4>
           <ul class="field-list">
             ${source.required_fields.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
           </ul>
         </section>
         <div class="workflow-meta">
-          <div><dt>Suggested owner</dt><dd>${escapeHtml(source.suggested_owner)}</dd></div>
-          <div><dt>Trust level</dt><dd>${escapeHtml(source.trust_level)}</dd></div>
+          <div><dt>담당 권장</dt><dd>${escapeHtml(source.suggested_owner)}</dd></div>
+          <div><dt>신뢰 기준</dt><dd>${escapeHtml(source.trust_level)}</dd></div>
         </div>
         <button class="secondary-button" type="button" data-go="source-package-passed">
           <i data-lucide="upload" aria-hidden="true"></i>
@@ -172,11 +171,11 @@ function renderDecisionReport() {
   document.querySelector("#next-action-copy").textContent = manager.required_next_action;
 
   const labels = {
-    allows_now: "What EKOS allows now",
-    blocks_now: "What EKOS blocks now",
-    why: "Why",
-    required_human_action: "Required next human action",
-    review_status: "Review status"
+    allows_now: "현재 허용되는 일",
+    blocks_now: "현재 막힌 일",
+    why: "왜 막혔나",
+    required_human_action: "다음 조치",
+    review_status: "검토 상태"
   };
 
   const sections = document.querySelector("#report-sections");
@@ -201,11 +200,11 @@ function renderEvidenceTrace() {
       <article class="evidence-item" data-model="evidence-object" data-item-id="${escapeHtml(evidence.evidence_id)}">
         <header>
           <h4>${escapeHtml(evidence.evidence_id)}</h4>
-          <span class="status-badge ${normalizeStatusClass(evidence.freshness)}">${escapeHtml(evidence.freshness)}</span>
+          <span class="status-badge ${normalizeStatusClass(evidence.freshness)}">${escapeHtml(evidence.freshness_label || evidence.freshness)}</span>
         </header>
-        <p><strong>Business meaning:</strong> ${escapeHtml(evidence.business_meaning)}</p>
-        <p><strong>Source:</strong> ${escapeHtml(evidence.source_alias)} / ${escapeHtml(evidence.source_kind)}</p>
-        <p><strong>Decision impact:</strong> ${escapeHtml(evidence.decision_impact)}</p>
+        <p><strong>의미:</strong> ${escapeHtml(evidence.business_meaning)}</p>
+        <p><strong>데이터 출처:</strong> ${escapeHtml(evidence.source_alias_label || evidence.source_alias)} / ${escapeHtml(evidence.source_kind)}</p>
+        <p><strong>판단 영향:</strong> ${escapeHtml(evidence.decision_impact)}</p>
       </article>
     `)
     .join("");
@@ -244,10 +243,10 @@ function renderReviewRequest() {
   note.placeholder = review.reviewer_note_placeholder;
 
   renderDefinitionList("#review-meta", {
-    assigned_reviewer: review.assigned_reviewer,
-    required_role: review.required_role,
-    packet_status: review.packet_status,
-    boundary: review.boundary_copy
+    검토자: review.assigned_reviewer,
+    필요_역할: review.required_role,
+    검토_상태: review.packet_status_label || review.packet_status,
+    경계: review.boundary_copy
   });
 
   const actions = document.querySelector("#review-actions");
@@ -256,7 +255,7 @@ function renderReviewRequest() {
       <article class="review-action ${action.enabled ? "" : "disabled"}" data-model="review-action" data-item-id="${escapeHtml(action.action_id)}">
         <header>
           <h4>${escapeHtml(action.label)}</h4>
-          <span class="status-badge ${action.enabled ? "ready" : "blocked"}">${action.enabled ? "available" : "disabled"}</span>
+          <span class="status-badge ${action.enabled ? "ready" : "blocked"}">${action.enabled ? "가능" : "비활성"}</span>
         </header>
         <p>${escapeHtml(action.meaning)}</p>
       </article>
@@ -277,15 +276,22 @@ function renderDefinitionList(selector, data) {
 function normalizeStatusClass(value) {
   const normalized = String(value).toLowerCase().replace(/[^a-z0-9]+/g, "-");
   if (normalized.includes("missing")) return "missing";
+  if (normalized.includes("부족")) return "missing";
   if (normalized.includes("fail")) return "fail";
+  if (normalized.includes("실패")) return "fail";
   if (normalized.includes("stale")) return "blocked";
+  if (normalized.includes("오래")) return "blocked";
   if (normalized.includes("review")) return "review";
+  if (normalized.includes("검토")) return "review";
   if (normalized.includes("partial")) return "partial";
+  if (normalized.includes("일부")) return "partial";
   if (normalized.includes("manual")) return "manual";
   if (normalized.includes("draft")) return "draft";
   if (normalized.includes("needs-validation")) return "needs-validation";
   if (normalized.includes("pass")) return "pass";
+  if (normalized.includes("통과")) return "pass";
   if (normalized.includes("ready")) return "ready";
+  if (normalized.includes("확인")) return "ready";
   if (normalized.includes("configured")) return "configured";
   return normalized;
 }

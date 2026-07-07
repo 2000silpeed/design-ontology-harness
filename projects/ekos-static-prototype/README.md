@@ -1,55 +1,47 @@
-# EKOS Static Prototype
+# EKOS 정적 프로토타입
 
-This prototype demonstrates the first EKOS governed workflow UI using static fixture data.
+이 프로토타입은 한국 SAP 운영 사용자가 EKOS의 핵심 흐름을 빠르게 이해할 수 있도록 만든 정적 UI입니다.
 
-It is not a chatbot. The main surface is source package status and the governed decision boundary:
+EKOS는 업무 케이스를 검토해서 필요한 데이터가 충분한지 먼저 확인하고, 충분하면 지금 해도 되는 일과 하면 안 되는 일을 근거와 함께 보여주는 시스템입니다.
 
-Workflow selection -> case input -> source package status -> missing data resolution -> decision report -> evidence trace -> review request.
-
-## Preview
+## 실행
 
 ```bash
 cd projects/ekos-static-prototype
 python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
-Open:
+브라우저에서 엽니다.
 
 ```text
 http://127.0.0.1:4173/
 ```
 
-The local server is required because the prototype loads JSON fixtures with `fetch`.
+이 프로토타입은 JSON fixture를 `fetch`로 읽기 때문에 로컬 HTTP 서버가 필요합니다.
 
-## Design System
+## 화면 흐름
 
-The prototype uses the local `dashboard--corporate-trust` preset installed through Design Ontology:
+- 업무 선택
+- 케이스 입력
+- 필요 데이터 확인
+- 부족한 데이터 보강
+- 필요 데이터 확인 완료
+- 판단 결과
+- 근거 및 정책 확인
+- 검토 요청
 
-```bash
-uv run design-ontology install-preset \
-  --preset-id dashboard--corporate-trust \
-  --target-repo projects/ekos-static-prototype \
-  --adapter raw-css-variables \
-  --color-mode light \
-  --locale ko
-```
+## 주요 UX 원칙
 
-The implementation consumes tokens from `design-system/tokens.css`. It adapts the dashboard and monitoring operations patterns for EKOS workflow cards, source package status, evidence trace, audit rail, and review actions.
+- 영어와 내부 용어보다 한국어 업무 표현을 먼저 보여줍니다.
+- 사용자가 무엇을 선택하고 입력해야 하는지 먼저 보여줍니다.
+- 필수 데이터가 부족하면 판단 결과를 만들지 않습니다.
+- 판단 결과는 “현재 해도 되는 일”과 “현재 막힌 일”로 표시합니다.
+- `검토 필요`는 `승인`처럼 보이지 않게 구분합니다.
+- 근거, 정책, provenance 같은 상세 정보는 감사/검토 화면으로 분리합니다.
 
-## Screens
+## 정적 데이터
 
-- Workflow Selection
-- Case Input
-- Source Package Failed State
-- Missing Data Resolution
-- Source Package Passed State
-- Decision Report
-- Evidence / Policy Trace
-- Review Request
-
-## Fixtures
-
-Static data lives in `fixtures/`:
+Fixture는 `fixtures/`에 있습니다.
 
 - `workflows.json`
 - `source-package-failed.json`
@@ -58,23 +50,21 @@ Static data lives in `fixtures/`:
 - `evidence-trace-delivery-delay.json`
 - `review-request.json`
 
-The content is based on EKOS output concepts: source package validation, source package readiness, decision packets, evidence objects, and human-readable governance reports.
+## 경계
 
-## Claim Boundaries
+- 정적 프로토타입입니다.
+- EKOS 백엔드와 연결하지 않습니다.
+- Live SAP 연동이 아닙니다.
+- 운영 승인 또는 생산 승인 도구가 아닙니다.
+- SAP 변경 작업을 실행하지 않습니다.
+- provider 호출이 없습니다.
+- 사람 검증을 주장하지 않습니다.
+- RAG를 핵심 판단 권한으로 사용하지 않습니다.
+- 기본 화면에서 raw JSON을 보여주지 않습니다.
 
-- Static prototype only.
-- No EKOS backend integration.
-- No live SAP integration.
-- No production approval.
-- No autonomous execution.
-- No provider calls.
-- No human validation claim.
-- RAG is not the core decision authority.
-- Raw JSON is intentionally not shown by default.
+## 검증
 
-## Validation
-
-From the repository root:
+저장소 루트에서 실행합니다.
 
 ```bash
 uv run design-ontology lint-implementation --target-repo projects/ekos-static-prototype

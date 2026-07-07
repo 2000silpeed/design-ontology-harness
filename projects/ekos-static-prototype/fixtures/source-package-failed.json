@@ -6,97 +6,112 @@
   },
   "validation_result": "fail",
   "decision_packet_generated": false,
-  "message": "EKOS cannot safely evaluate this case yet. Required source data is missing.",
-  "summary": "Projected SAP-like assets provide partial delivery and tracking context, but carrier confirmation and approval authority sources are missing.",
+  "message": "필수 데이터가 부족해서 판단 결과를 만들 수 없습니다.",
+  "summary": "납품 정보와 Tracking 이벤트는 일부 확인됐지만, 운송사 최신 확인 정보와 승인 기준표가 없습니다.",
   "aliases": [
     {
       "alias": "deliveries",
+      "label": "납품 정보",
       "status": "available",
       "readiness": "partial",
+      "readiness_label": "일부 확인됨",
       "policy": "partial_allowed",
       "result": "pass",
-      "source_kind": "projected SAP-like asset",
-      "why_it_matters": "Identifies the primary delivery object and current logistics status."
+      "result_label": "통과",
+      "source_kind": "SAP 유사 자산",
+      "why_it_matters": "검토할 Delivery와 현재 납품 상태를 확인합니다."
     },
     {
       "alias": "tracking_events",
+      "label": "Tracking 이벤트",
       "status": "available",
       "readiness": "partial",
+      "readiness_label": "일부 확인됨",
       "policy": "partial_allowed",
       "result": "pass",
-      "source_kind": "projected SAP-like asset",
-      "why_it_matters": "Provides delivery event context for the delay."
+      "result_label": "통과",
+      "source_kind": "SAP 유사 자산",
+      "why_it_matters": "납품 지연이 발생한 배경 이벤트를 확인합니다."
     },
     {
       "alias": "policies",
+      "label": "정책 기준",
       "status": "available",
       "readiness": "needs_manual_mapping",
+      "readiness_label": "수동 매핑됨",
       "policy": "manual_mapping_allowed",
       "result": "pass",
-      "source_kind": "curated policy mapping",
-      "why_it_matters": "Defines confirmation requirements before workflow preparation."
+      "result_label": "통과",
+      "source_kind": "운영 기준 매핑",
+      "why_it_matters": "승인 준비 전에 현재 운송사 확인이 필요한지 판단합니다."
     },
     {
       "alias": "carrier_updates",
+      "label": "운송사 최신 확인 정보",
       "status": "missing",
       "readiness": "missing",
+      "readiness_label": "부족함",
       "policy": "ready_required",
       "result": "fail",
-      "source_kind": "not supplied",
-      "why_it_matters": "Determines whether external carrier confirmation is current, stale, missing, or trustworthy."
+      "result_label": "실패",
+      "source_kind": "미입력",
+      "why_it_matters": "운송사 확인이 최신인지, 오래된 정보인지 판단합니다."
     },
     {
       "alias": "approval_matrix",
+      "label": "승인 기준표",
       "status": "missing",
       "readiness": "missing",
+      "readiness_label": "부족함",
       "policy": "ready_required",
       "result": "fail",
-      "source_kind": "not supplied",
-      "why_it_matters": "Defines who may prepare, review, approve, or block the requested business action."
+      "result_label": "실패",
+      "source_kind": "미입력",
+      "why_it_matters": "누가 검토하고 승인 준비를 넘길 수 있는지 판단합니다."
     }
   ],
   "missing_sources": [
     {
       "alias": "carrier_updates",
-      "label": "Carrier updates",
-      "why_needed": "EKOS cannot determine whether external carrier confirmation is current without this source.",
+      "label": "운송사 최신 확인 정보",
+      "why_needed": "운송사 확인이 최신인지 판단해야 승인 준비 가능 여부를 검토할 수 있습니다.",
       "accepted_sources": [
-        "LE tracking event table",
-        "3PL or carrier extract",
-        "curated carrier update CSV"
+        "LE Tracking 테이블",
+        "3PL / 운송사 파일",
+        "운영팀 관리 CSV"
       ],
       "required_fields": [
-        "delivery_id",
-        "carrier_id",
-        "updated_at",
-        "confirmation_status",
-        "update_source"
+        "Delivery 번호",
+        "운송사",
+        "최신 ETA",
+        "확인 시각",
+        "확인 상태",
+        "출처"
       ],
-      "suggested_owner": "Logistics operations data steward",
-      "upload_option": "Upload controlled carrier update extract",
-      "trust_level": "External carrier or governed operations source"
+      "suggested_owner": "물류 운영 데이터 담당자",
+      "upload_option": "운송사 확인 정보 적용",
+      "trust_level": "운영팀 또는 운송사 확인 출처"
     },
     {
       "alias": "approval_matrix",
-      "label": "Approval matrix",
-      "why_needed": "EKOS cannot route or define the authority boundary without a governed approval matrix.",
+      "label": "승인 기준표",
+      "why_needed": "누가 이 업무를 검토하거나 승인 준비할 수 있는지 알아야 합니다.",
       "accepted_sources": [
-        "governed approval matrix CSV",
-        "workflow customizing export",
-        "policy or governance maintained table"
+        "Governance 승인 기준 CSV",
+        "Workflow customizing export",
+        "정책 / 통제팀 관리 테이블"
       ],
       "required_fields": [
-        "workflow_id",
-        "requested_action",
-        "action_category",
-        "required_approver_role",
-        "can_prepare",
-        "can_execute",
-        "approval_matrix_version"
+        "업무 유형",
+        "요청 작업",
+        "필요 승인 역할",
+        "준비 가능 여부",
+        "실행 가능 여부",
+        "기준 버전"
       ],
-      "suggested_owner": "Workflow owner with audit or control reviewer",
-      "upload_option": "Upload governed approval matrix",
-      "trust_level": "Governance-curated source"
+      "suggested_owner": "업무 오너 또는 통제 담당자",
+      "upload_option": "승인 기준표 적용",
+      "trust_level": "통제팀이 관리한 기준"
     }
   ]
 }

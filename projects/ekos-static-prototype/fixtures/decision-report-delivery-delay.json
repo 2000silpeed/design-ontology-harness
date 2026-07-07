@@ -6,47 +6,47 @@
     "label": "Delivery 80001241"
   },
   "manager_view": {
-    "current_allowed_action": "Recommendation only",
-    "blocked_action": "Prepare approval-ready correction workflow",
-    "why_blocked": "Carrier confirmation is stale and governance review is required.",
-    "governance_status": "review_required",
-    "required_next_action": "Request current carrier confirmation and submit for human review."
+    "current_allowed_action": "추천만 가능",
+    "blocked_action": "승인 준비용 Correction Workflow 작성",
+    "why_blocked": "운송사 확인 정보가 오래되었고, 현재 확인이 필요합니다. 또한 최종 검토가 완료되지 않았습니다.",
+    "governance_status": "검토 필요",
+    "required_next_action": "운송사 최신 확인을 요청하고 담당자 검토를 진행하세요."
   },
   "sections": {
     "allows_now": [
-      "Recommend likely carrier-delay classification.",
-      "Request current carrier confirmation.",
-      "Ask a human operator to verify the delay owner.",
-      "Preserve the decision packet for review."
+      "운송사 지연 가능성을 추천할 수 있습니다.",
+      "운송사 최신 확인을 요청할 수 있습니다.",
+      "운영 담당자에게 지연 원인 확인을 요청할 수 있습니다.",
+      "검토용 기록을 보존할 수 있습니다."
     ],
     "blocks_now": [
-      "Do not prepare an approval-ready correction workflow.",
-      "Do not stage a workflow packet as ready for approval.",
-      "Do not execute customer-facing or SAP-changing actions.",
-      "Do not treat this synthetic demo result as operational approval."
+      "승인 준비용 Correction Workflow를 작성하지 않습니다.",
+      "승인 준비가 끝난 업무처럼 넘기지 않습니다.",
+      "고객 영향 작업이나 SAP 변경 작업을 실행하지 않습니다.",
+      "이 데모 결과를 운영 승인으로 취급하지 않습니다."
     ],
     "why": [
-      "The carrier update is stale.",
-      "Policy requires current external confirmation.",
-      "The current package still requires governance review before approval-preparation."
+      "운송사 확인 정보가 오래되었습니다.",
+      "정책상 현재 운송사 확인이 필요합니다.",
+      "명시적인 담당자 검토가 아직 완료되지 않았습니다."
     ],
     "required_human_action": [
-      "Obtain current carrier confirmation.",
-      "Verify delay owner if required by operations.",
-      "Review the decision packet and evidence trace.",
-      "Decide whether more data is needed before approval-preparation."
+      "운송사 최신 확인을 확보합니다.",
+      "필요하면 지연 담당자를 확인합니다.",
+      "근거와 정책 기준을 검토합니다.",
+      "승인 준비를 허용할지, 추가 데이터를 요청할지 결정합니다."
     ],
     "review_status": [
-      "No explicit human review artifact is attached.",
-      "The result remains review_required.",
-      "EKOS does not fabricate approval."
+      "담당자 검토 기록이 없습니다.",
+      "상태는 검토 필요입니다.",
+      "EKOS는 승인을 만들어내지 않습니다."
     ]
   },
   "decision_packet": {
     "delegation_level_requested": 2,
     "maximum_safe_delegation_level": 1,
     "action_category": "recommend",
-    "required_approver_role": "SAP logistics manager",
+    "required_approver_role": "SAP 물류 관리자",
     "confidence": "medium",
     "execution_preconditions": [
       "obtain_current_carrier_confirmation"

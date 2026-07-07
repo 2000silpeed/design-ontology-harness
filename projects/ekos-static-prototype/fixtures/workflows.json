@@ -2,8 +2,9 @@
   "workflows": [
     {
       "workflow_id": "delivery_delay_confirmation",
-      "name": "Delivery Delay / Carrier Confirmation",
-      "description": "Checks whether EKOS can prepare a governed correction workflow packet for a delayed delivery.",
+      "category_label": "운영 검토 업무",
+      "name": "납품 지연 / 운송사 확인",
+      "description": "납품 지연 건에서 운송사 확인이 충분한지 검토합니다.",
       "required_source_package": [
         "deliveries",
         "tracking_events",
@@ -11,55 +12,66 @@
         "policies",
         "approval_matrix"
       ],
-      "process_owner": "SAP logistics operations",
+      "process_owner": "SAP 물류 운영",
       "config_version": "delivery_delay_confirmation_source_package.yaml",
-      "supported_action_boundary": "Recommendation only or prepare-for-approval packet. No execution.",
-      "status": "configured"
+      "result_summary": "추천 가능 / 승인 준비 차단 여부 판단",
+      "supported_action_boundary": "추천 또는 승인 준비 검토까지. 실행은 하지 않음.",
+      "status": "configured",
+      "status_label": "설정 완료"
     },
     {
       "workflow_id": "idoc_material_lock_reprocessing",
-      "name": "IDoc Material Lock / Reprocessing",
-      "description": "Checks collision readiness before preparing an IDoc reprocessing plan.",
+      "category_label": "운영 검토 업무",
+      "name": "IDoc 자재 Lock / 재처리 충돌",
+      "description": "IDoc 재처리 전 자재 Lock과 신규 IDoc 충돌 위험을 확인합니다.",
       "required_source_package": [
         "idoc_events",
         "lock_events",
         "incoming_idoc_queue",
         "policy_idoc_reprocessing"
       ],
-      "process_owner": "SAP integration operations",
+      "process_owner": "SAP 인터페이스 운영",
       "config_version": "idoc_material_lock_reprocessing.yaml",
-      "supported_action_boundary": "Recommendation only or prepare-for-approval packet. No SAP-changing execution.",
-      "status": "configured"
+      "result_summary": "재처리 계획 준비 가능 여부 판단",
+      "supported_action_boundary": "추천 또는 승인 준비 검토까지. SAP 변경은 하지 않음.",
+      "status": "configured",
+      "status_label": "설정 완료"
     },
     {
       "workflow_id": "fo_planning_block",
-      "name": "Future: FO Planning Block",
-      "description": "Planned workflow for freight order planning blockers and transport readiness.",
+      "category_label": "예정 업무",
+      "name": "향후: FO Planning Block",
+      "description": "운송 계획 차단 사유와 준비 가능 여부를 검토하는 예정 업무입니다.",
       "required_source_package": [
         "freight_orders",
         "planning_status",
         "carrier_capacity",
         "approval_matrix"
       ],
-      "process_owner": "Transportation planning",
+      "process_owner": "운송 계획",
       "config_version": "draft",
-      "supported_action_boundary": "Draft only. Not available for decision packet generation.",
-      "status": "draft"
+      "result_summary": "아직 검증 전",
+      "supported_action_boundary": "초안 상태입니다.",
+      "status": "draft",
+      "status_label": "준비 중"
     },
     {
       "workflow_id": "invoice_block",
-      "name": "Future: Invoice Block",
-      "description": "Planned workflow for invoice block review and release-preparation boundaries.",
+      "category_label": "예정 업무",
+      "name": "향후: Invoice Block",
+      "description": "Invoice block 검토와 release 준비 가능 여부를 다루는 예정 업무입니다.",
       "required_source_package": [
         "invoice_header",
         "po_match",
         "goods_receipt",
         "approval_matrix"
       ],
-      "process_owner": "Finance operations",
+      "process_owner": "재무 운영",
       "config_version": "not_configured",
-      "supported_action_boundary": "Needs validation before use.",
-      "status": "needs validation"
+      "result_summary": "업무 검증 필요",
+      "supported_action_boundary": "아직 사용할 수 없습니다.",
+      "status": "needs validation",
+      "status_label": "검증 필요"
     }
   ]
 }

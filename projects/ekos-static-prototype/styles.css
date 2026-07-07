@@ -189,6 +189,33 @@ textarea:focus-visible {
   align-items: center;
 }
 
+.progress-rail {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.progress-rail li {
+  min-width: 0;
+  padding: 10px 12px;
+  border: var(--ekos-soft-border);
+  border-radius: var(--ds-radius-md);
+  background: var(--ds-color-surface);
+  color: var(--ds-color-ink-muted);
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.progress-rail li.active {
+  border-color: var(--ds-color-primary);
+  background: color-mix(in srgb, var(--ds-color-primary) 8%, var(--ds-color-surface));
+  color: var(--ds-color-info);
+}
+
 .screen {
   display: none;
 }
@@ -198,6 +225,7 @@ textarea:focus-visible {
   gap: 20px;
 }
 
+.task-intro,
 .screen-heading,
 .panel-header,
 .decision-hero {
@@ -208,9 +236,23 @@ textarea:focus-visible {
   justify-content: space-between;
 }
 
+.task-intro {
+  padding: 26px;
+  border: var(--ekos-soft-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-color-surface);
+  box-shadow: var(--ekos-shadow-subtle);
+}
+
+.task-intro .lead {
+  font-size: 18px;
+  font-weight: 650;
+}
+
 .screen-heading h2,
+.task-intro h2,
 .decision-hero h2 {
-  font-size: clamp(28px, 4vw, 46px);
+  font-size: clamp(28px, 3.4vw, 40px);
 }
 
 .primary-button,
@@ -321,6 +363,11 @@ textarea:focus-visible {
   display: grid;
   gap: 16px;
   padding: 18px;
+}
+
+.workflow-card.future {
+  opacity: 0.72;
+  background: color-mix(in srgb, var(--ds-color-surface-muted) 70%, var(--ds-color-surface));
 }
 
 .workflow-card h3,
@@ -468,7 +515,7 @@ textarea {
 }
 
 .decision-hero {
-  padding: 22px;
+  padding: 24px;
 }
 
 .decision-hero.danger {
@@ -479,6 +526,25 @@ textarea {
 .decision-hero.success {
   border-color: color-mix(in srgb, var(--ds-color-success) 35%, var(--ds-color-border));
   background: color-mix(in srgb, var(--ds-color-success) 7%, var(--ds-color-surface));
+}
+
+.plain-explanation {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  border: var(--ekos-soft-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-color-surface);
+}
+
+.plain-explanation p {
+  margin: 0;
+  color: var(--ds-color-ink-muted);
+}
+
+.danger-note {
+  border-color: color-mix(in srgb, var(--ds-color-danger) 28%, var(--ds-color-border));
+  background: color-mix(in srgb, var(--ds-color-danger) 6%, var(--ds-color-surface));
 }
 
 .source-table {
@@ -776,6 +842,7 @@ textarea {
 
   .workflow-grid,
   .visual-flow,
+  .progress-rail,
   .missing-grid,
   .split-layout,
   .decision-report-layout,
@@ -798,6 +865,7 @@ textarea {
   }
 
   .screen-heading,
+  .task-intro,
   .panel-header,
   .decision-hero {
     display: grid;

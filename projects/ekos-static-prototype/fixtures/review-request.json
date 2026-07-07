@@ -1,35 +1,36 @@
 {
   "workflow_id": "delivery_delay_confirmation",
   "primary_object": "Delivery 80001241",
-  "assigned_reviewer": "Unassigned",
-  "required_role": "SAP logistics manager",
+  "assigned_reviewer": "미지정",
+  "required_role": "SAP 물류 관리자",
   "packet_status": "review_required",
-  "boundary_copy": "No autonomous execution. Human review is required.",
-  "reviewer_note_placeholder": "Record what additional evidence is needed, or why the recommendation-only boundary is accepted.",
+  "packet_status_label": "검토 필요",
+  "boundary_copy": "이 화면은 실행 승인이 아닙니다. 실제 SAP 변경이나 고객 영향 작업은 별도 승인 절차가 필요합니다.",
+  "reviewer_note_placeholder": "추가로 필요한 근거, 추천 단계 유지 사유, 반려 사유를 적어주세요.",
   "actions": [
     {
       "action_id": "request_more_data",
-      "label": "Request more data",
+      "label": "추가 데이터 요청",
       "enabled": true,
-      "meaning": "Ask operations to obtain current carrier confirmation or clarify ownership."
+      "meaning": "운송사 최신 확인이나 담당자 확인이 더 필요하다고 요청합니다."
     },
     {
       "action_id": "accept_recommendation_boundary",
-      "label": "Accept recommendation-only boundary",
+      "label": "추천 단계 유지",
       "enabled": true,
-      "meaning": "Confirm that EKOS should remain at recommendation-only until blockers are resolved."
+      "meaning": "차단 사유가 풀릴 때까지 EKOS 결과를 추천 단계로 유지합니다."
     },
     {
       "action_id": "approve_preparation",
-      "label": "Approve preparation if evidence supports it",
+      "label": "승인 준비 허용",
       "enabled": false,
-      "meaning": "Disabled in this fixture because carrier confirmation is stale and explicit review is not complete."
+      "meaning": "이 예시는 운송사 확인이 오래되었기 때문에 비활성화되어 있습니다."
     },
     {
       "action_id": "reject_packet",
-      "label": "Reject packet",
+      "label": "반려",
       "enabled": true,
-      "meaning": "Reject the decision packet and require correction before reuse."
+      "meaning": "판단 결과를 반려하고 보완을 요구합니다."
     }
   ]
 }

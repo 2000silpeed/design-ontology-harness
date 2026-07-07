@@ -6,58 +6,73 @@
   },
   "validation_result": "pass",
   "decision_packet_generated": false,
-  "message": "All required sources are available. EKOS can generate a decision packet.",
-  "summary": "Projected SAP-like assets plus curated supplemental carrier and governance sources complete the minimum source package.",
+  "message": "필요 데이터가 확인되었습니다. 판단 결과를 만들 수 있습니다.",
+  "summary": "보강 데이터가 적용되어 운송사 확인 정보와 승인 기준표가 확인되었습니다.",
   "aliases": [
     {
       "alias": "deliveries",
+      "label": "납품 정보",
       "status": "available",
       "readiness": "partial",
+      "readiness_label": "일부 확인됨",
       "policy": "partial_allowed",
       "result": "pass",
-      "source_kind": "projected SAP-like asset",
-      "why_it_matters": "Identifies the primary delivery object and current logistics status."
+      "result_label": "통과",
+      "source_kind": "SAP 유사 자산",
+      "why_it_matters": "검토할 Delivery와 현재 납품 상태를 확인합니다."
     },
     {
       "alias": "tracking_events",
+      "label": "Tracking 이벤트",
       "status": "available",
       "readiness": "partial",
+      "readiness_label": "일부 확인됨",
       "policy": "partial_allowed",
       "result": "pass",
-      "source_kind": "projected SAP-like asset",
-      "why_it_matters": "Provides delivery event context for the delay."
+      "result_label": "통과",
+      "source_kind": "SAP 유사 자산",
+      "why_it_matters": "납품 지연이 발생한 배경 이벤트를 확인합니다."
     },
     {
       "alias": "policies",
+      "label": "정책 기준",
       "status": "ready",
       "readiness": "ready",
+      "readiness_label": "확인됨",
       "policy": "ready_required",
       "result": "pass",
-      "source_kind": "curated policy mapping",
-      "why_it_matters": "Defines confirmation requirements before workflow preparation."
+      "result_label": "통과",
+      "source_kind": "운영 기준 매핑",
+      "why_it_matters": "현재 운송사 확인이 필요한지 판단합니다."
     },
     {
       "alias": "carrier_updates",
+      "label": "운송사 확인 정보",
       "status": "ready",
       "readiness": "ready",
+      "readiness_label": "확인됨",
       "policy": "ready_required",
       "result": "pass",
-      "source_kind": "supplemental carrier source",
-      "why_it_matters": "Determines whether external carrier confirmation is current, stale, missing, or trustworthy."
+      "result_label": "통과",
+      "source_kind": "보강 운송사 자료",
+      "why_it_matters": "운송사 확인이 최신인지, 오래된 정보인지 판단합니다."
     },
     {
       "alias": "approval_matrix",
+      "label": "승인 기준표",
       "status": "ready",
       "readiness": "ready",
+      "readiness_label": "확인됨",
       "policy": "ready_required",
       "result": "pass",
-      "source_kind": "supplemental governance source",
-      "why_it_matters": "Defines who may prepare, review, approve, or block the requested business action."
+      "result_label": "통과",
+      "source_kind": "보강 승인 기준",
+      "why_it_matters": "누가 검토하고 승인 준비를 넘길 수 있는지 판단합니다."
     }
   ],
   "warnings": [
-    "Delivery and tracking records remain projected from local SAP-like assets.",
-    "This is controlled onboarding, not live SAP integration.",
-    "Decision packet generation still does not mean approval."
+    "납품 정보와 Tracking 이벤트는 일부 확인 상태입니다.",
+    "이 화면은 운영 데모입니다. Live SAP 연동이 아닙니다.",
+    "판단 결과 생성은 승인과 다릅니다."
   ]
 }
