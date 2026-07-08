@@ -7,7 +7,7 @@
       "description": "납품 지연 건에서 운송사 확인이 충분한지 검토합니다.",
       "review_purpose": "납품 지연 건에서 운송사 확인 정보와 승인 기준이 충분한지 확인합니다.",
       "decision_actions": [
-        "추천 가능 여부",
+        "조치 권고 가능 여부",
         "승인 준비 가능 여부",
         "추가 확인 필요 여부"
       ],
@@ -27,8 +27,8 @@
       ],
       "process_owner": "SAP 물류 운영",
       "config_version": "v1 / 납품지연",
-      "result_summary": "추천 가능 / 승인 준비 차단 여부 판단",
-      "supported_action_boundary": "추천 또는 승인 준비 검토까지. 실행은 하지 않음.",
+      "result_summary": "조치 권고 / 승인 준비 차단 여부 판단",
+      "supported_action_boundary": "조치 권고 또는 승인 준비 검토까지. 실행은 하지 않음.",
       "status": "configured",
       "status_label": "설정 완료"
     },
@@ -39,7 +39,7 @@
       "description": "IDoc 재처리 전 자재 Lock과 신규 IDoc 충돌 위험을 확인합니다.",
       "review_purpose": "IDoc 재처리 전에 자재 Lock, 신규 IDoc Queue, 재처리 정책 기준이 충분한지 확인합니다.",
       "decision_actions": [
-        "재처리 추천 가능 여부",
+        "재처리 조치 권고 가능 여부",
         "재처리 계획 준비 가능 여부",
         "충돌 위험 보강 필요 여부"
       ],
@@ -59,7 +59,7 @@
       "process_owner": "SAP 인터페이스 운영",
       "config_version": "v1 / IDoc Lock",
       "result_summary": "재처리 계획 준비 가능 여부 판단",
-      "supported_action_boundary": "추천 또는 승인 준비 검토까지. SAP 변경은 하지 않음.",
+      "supported_action_boundary": "조치 권고 또는 승인 준비 검토까지. SAP 변경은 하지 않음.",
       "status": "configured",
       "status_label": "설정 완료"
     },

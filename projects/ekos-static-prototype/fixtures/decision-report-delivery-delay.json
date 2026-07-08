@@ -6,7 +6,7 @@
     "label": "Delivery 80001241"
   },
   "manager_view": {
-    "current_allowed_action": "추천만 가능",
+    "current_allowed_action": "조치 권고만 가능",
     "blocked_action": "승인 준비용 Correction Workflow 작성",
     "why_blocked": "운송사 확인 정보가 오래되었고, 현재 확인이 필요합니다. 또한 최종 검토가 완료되지 않았습니다.",
     "governance_status": "검토 필요",
@@ -14,7 +14,7 @@
   },
   "sections": {
     "allows_now": [
-      "운송사 지연 가능성을 추천할 수 있습니다.",
+      "운송사 지연 가능성이 있다는 판단을 기록하고, 최신 확인을 요청하라고 권고할 수 있습니다.",
       "운송사 최신 확인을 요청할 수 있습니다.",
       "운영 담당자에게 지연 원인 확인을 요청할 수 있습니다.",
       "검토용 기록을 보존할 수 있습니다."

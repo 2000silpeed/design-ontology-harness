@@ -41,7 +41,7 @@
         "subtitle": "필수 데이터가 부족합니다.",
         "conclusion": "판단 불가",
         "reason": "필수 데이터 2개가 부족합니다.",
-        "business_impact": "이 상태에서는 승인 준비용 Correction Workflow를 만들 수 없습니다. 추천 또는 데이터 보강 요청까지만 가능합니다.",
+        "business_impact": "이 상태에서는 승인 준비용 Correction Workflow를 만들 수 없습니다. 조치 권고 또는 데이터 보강 요청까지만 가능합니다.",
         "source_heading": "Delivery 80001241 데이터 상태",
         "missing_title": "부족한 정보",
         "missing_summary": "운송사 최신 확인 정보와 승인 기준표가 없습니다.",
@@ -247,8 +247,8 @@
       },
       "decision": {
         "manager_view": {
-          "conclusion": "추천만 가능",
-          "current_allowed_action": "추천만 가능",
+          "conclusion": "조치 권고만 가능",
+          "current_allowed_action": "조치 권고만 가능",
           "blocked_action": "승인 준비용 Correction Workflow 작성",
           "why_blocked": "운송사 확인 정보가 오래되었고, 현재 확인이 필요합니다. 또한 최종 검토가 완료되지 않았습니다.",
           "required_next_action": "운송사 최신 확인을 요청하고 담당자 검토를 진행하세요.",
@@ -277,12 +277,12 @@
           {
             "category": "데이터 최신성",
             "title": "운송사 확인 오래됨",
-            "body": "운송사 확인 정보가 기준 시간을 넘어 현재 상태로 보기 어렵습니다. 추천과 데이터 보강 요청까지만 가능합니다."
+            "body": "운송사 확인 정보가 기준 시간을 넘어 현재 상태로 보기 어렵습니다. 조치 권고와 데이터 보강 요청까지만 가능합니다."
           }
         ],
         "sections": {
           "allows_now": [
-            "운송사 지연 가능성을 추천할 수 있습니다.",
+            "운송사 지연 가능성이 있다는 판단을 기록하고, 최신 확인을 요청하라고 권고할 수 있습니다.",
             "운송사 최신 확인을 요청할 수 있습니다.",
             "운영 담당자에게 지연 원인 확인을 요청할 수 있습니다.",
             "검토용 기록을 보존할 수 있습니다."
@@ -350,7 +350,7 @@
             "source_kind": "운영 기준 매핑",
             "freshness": "governed_mapping",
             "freshness_label": "기준 확인됨",
-            "decision_impact": "추천만 가능하다는 판단 경계를 만듭니다.",
+            "decision_impact": "조치 권고만 가능하다는 판단 경계를 만듭니다.",
             "label": "현재 확인 정책 필요"
           }
         ],
@@ -402,7 +402,7 @@
         {
           "time": "09:40",
           "event": "판단 결과 생성",
-          "status": "추천만 가능"
+          "status": "조치 권고만 가능"
         },
         {
           "time": "09:45",
@@ -416,7 +416,7 @@
         "request_reason": "운송사 확인 정보가 오래되어 승인 준비 가능 여부를 담당자가 확인해야 합니다.",
         "packet_status_label": "검토 필요",
         "boundary_copy": "이 화면은 실행 승인이 아닙니다. 실제 SAP 변경이나 고객 영향 작업은 별도 승인 절차가 필요합니다.",
-        "reviewer_note_placeholder": "추가로 필요한 근거, 추천 단계 유지 사유, 반려 사유를 적어주세요.",
+        "reviewer_note_placeholder": "추가로 필요한 근거, 조치 권고 단계 유지 사유, 반려 사유를 적어주세요.",
         "pre_review_checklist": [
           "운송사 최신 ETA 확인 여부",
           "지연 담당자 확인 여부",
@@ -432,9 +432,9 @@
           },
           {
             "action_id": "accept_recommendation_boundary",
-            "label": "추천 단계 유지",
+            "label": "조치 권고 단계 유지",
             "enabled": true,
-            "meaning": "차단 사유가 풀릴 때까지 EKOS 결과를 추천 단계로 유지합니다."
+            "meaning": "차단 사유가 풀릴 때까지 EKOS 결과를 조치 권고 단계로 유지합니다."
           },
           {
             "action_id": "approve_preparation",
@@ -544,7 +544,7 @@
             "result": "pass",
             "result_label": "통과",
             "why_it_matters": "Lock 해제 전 재처리를 막아야 하는 기준을 확인합니다.",
-            "business_impact": "Lock clearance 요구 확인",
+            "business_impact": "Lock 해제 조건 확인",
             "owner": "운영 정책 담당",
             "next_action": "버전 확인"
           }
@@ -571,7 +571,7 @@
             "upload_option": "자재 Lock 정보 적용",
             "trust_level": "SAP 운영 또는 인터페이스 운영 출처",
             "blocked_action": "승인 준비용 IDoc 재처리 계획 작성",
-            "expected_result": "재처리 전 Lock 충돌 가능성을 판단할 수 있습니다."
+            "expected_result": "재처리 전에 활성 Lock으로 인한 충돌 위험을 확인할 수 있습니다."
           },
           {
             "alias": "incoming_idoc_queue",
@@ -594,7 +594,7 @@
             "upload_option": "신규 IDoc Queue 적용",
             "trust_level": "SAP 인터페이스 운영 출처",
             "blocked_action": "IDoc 배치 재처리 계획 준비",
-            "expected_result": "신규 IDoc과 수동 재처리 충돌 가능성을 판단할 수 있습니다."
+            "expected_result": "신규 IDoc 처리와 수동 재처리가 충돌할 위험을 확인할 수 있습니다."
           }
         ]
       },
@@ -609,11 +609,11 @@
             "필수 5개 항목 확인"
           ],
           [
-            "stale source 여부",
+            "오래된 데이터 여부",
             "활성 Lock 확인"
           ],
           [
-            "manual mapping 여부",
+            "수동 매핑 여부",
             "재처리 정책 기준 수동 매핑"
           ],
           [
@@ -671,8 +671,8 @@
       },
       "decision": {
         "manager_view": {
-          "conclusion": "추천만 가능",
-          "current_allowed_action": "추천만 가능",
+          "conclusion": "조치 권고만 가능",
+          "current_allowed_action": "조치 권고만 가능",
           "blocked_action": "승인 준비용 IDoc 재처리 계획 작성",
           "why_blocked": "자재 Lock이 활성이고 신규 IDoc Queue가 있어 재처리 충돌 위험이 있습니다. 최종 검토도 완료되지 않았습니다.",
           "required_next_action": "Lock 해제 여부와 신규 IDoc Queue 상태를 확인한 뒤 담당자 검토를 진행하세요.",
@@ -695,18 +695,18 @@
           },
           {
             "category": "정책 / 승인 기준",
-            "title": "Lock clear 선행 필요",
+            "title": "Lock 해제 선행 필요",
             "body": "policy_idoc_reprocessing v1 기준 Lock 해제와 Queue 확인 전에는 재처리 계획 준비가 막힙니다."
           },
           {
             "category": "데이터 최신성",
-            "title": "active lock / active queue",
-            "body": "현재 자료상 Lock과 Queue가 활성 상태라 추천과 확인 요청까지만 가능합니다."
+            "title": "Lock / Queue 활성",
+            "body": "현재 자료상 Lock과 Queue가 활성 상태라 재처리 보류와 확인 요청까지만 권고할 수 있습니다."
           }
         ],
         "sections": {
           "allows_now": [
-            "자재 Lock 충돌 가능성을 추천할 수 있습니다.",
+            "재처리를 보류하고 Lock 해제와 신규 Queue 상태를 먼저 확인하라고 권고할 수 있습니다.",
             "Lock 해제 확인을 요청할 수 있습니다.",
             "신규 IDoc Queue 상태 확인을 요청할 수 있습니다.",
             "재처리 판단 기록을 보존할 수 있습니다."
@@ -826,7 +826,7 @@
         {
           "time": "10:15",
           "event": "판단 결과 생성",
-          "status": "추천만 가능"
+          "status": "조치 권고만 가능"
         },
         {
           "time": "10:16",
@@ -856,9 +856,9 @@
           },
           {
             "action_id": "accept_recommendation_boundary",
-            "label": "추천 단계 유지",
+            "label": "조치 권고 단계 유지",
             "enabled": true,
-            "meaning": "충돌 위험이 풀릴 때까지 EKOS 결과를 추천 단계로 유지합니다."
+            "meaning": "충돌 위험이 풀릴 때까지 EKOS 결과를 조치 권고 단계로 유지합니다."
           },
           {
             "action_id": "approve_preparation",

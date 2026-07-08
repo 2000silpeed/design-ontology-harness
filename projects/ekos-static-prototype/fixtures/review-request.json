@@ -6,7 +6,7 @@
   "packet_status": "review_required",
   "packet_status_label": "검토 필요",
   "boundary_copy": "이 화면은 실행 승인이 아닙니다. 실제 SAP 변경이나 고객 영향 작업은 별도 승인 절차가 필요합니다.",
-  "reviewer_note_placeholder": "추가로 필요한 근거, 추천 단계 유지 사유, 반려 사유를 적어주세요.",
+  "reviewer_note_placeholder": "추가로 필요한 근거, 조치 권고 단계 유지 사유, 반려 사유를 적어주세요.",
   "actions": [
     {
       "action_id": "request_more_data",
@@ -16,9 +16,9 @@
     },
     {
       "action_id": "accept_recommendation_boundary",
-      "label": "추천 단계 유지",
+      "label": "조치 권고 단계 유지",
       "enabled": true,
-      "meaning": "차단 사유가 풀릴 때까지 EKOS 결과를 추천 단계로 유지합니다."
+      "meaning": "차단 사유가 풀릴 때까지 EKOS 결과를 조치 권고 단계로 유지합니다."
     },
     {
       "action_id": "approve_preparation",

@@ -30,7 +30,7 @@
       "source_kind": "운영 기준 매핑",
       "freshness": "governed_mapping",
       "freshness_label": "기준 확인됨",
-      "decision_impact": "추천만 가능하다는 판단 경계를 만듭니다."
+      "decision_impact": "조치 권고만 가능하다는 판단 경계를 만듭니다."
     }
   ],
   "source_records": [
