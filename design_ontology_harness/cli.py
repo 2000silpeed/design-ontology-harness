@@ -702,38 +702,28 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def _component_specs_source_from_inventory(component_list: list[dict], component_inventory: dict | None) -> list[dict]:
-    """Merge spec-detected components with generated inventory components.
+    """Return the authoritative component-spec source.
 
-    `run-project` first detects components from spec.md, then `build_blueprint`
-    may add ontology-recommended advanced components. Component specs should cover
-    both sets so agents can implement the richer inventory directly.
+    `run-project` first detects broad components from spec.md, then
+    `build_blueprint` prunes and layers them through component_inventory. Once
+    inventory exists, it is authoritative; merging the raw spec list back in
+    would resurrect rejected generic/preset components.
     """
 
-    by_name: dict[str, dict] = {}
-    for component in component_list:
-        name = component.get("name")
-        if name:
-            by_name[name] = dict(component)
+    if isinstance(component_inventory, dict):
+        inventory_components = [
+            dict(component)
+            for component in component_inventory.get("components", [])
+            if isinstance(component, dict) and component.get("name")
+        ]
+        if inventory_components:
+            return inventory_components
 
-    if not isinstance(component_inventory, dict):
-        return list(by_name.values())
-
-    for component in component_inventory.get("components", []):
-        if not isinstance(component, dict):
-            continue
-        name = component.get("name")
-        if not name:
-            continue
-        if name in by_name:
-            merged = dict(by_name[name])
-            for key, value in component.items():
-                if key not in merged or merged[key] in (None, "", []):
-                    merged[key] = value
-            by_name[name] = merged
-        else:
-            by_name[name] = dict(component)
-
-    return list(by_name.values())
+    return [
+        dict(component)
+        for component in component_list
+        if isinstance(component, dict) and component.get("name")
+    ]
 
 
 def main() -> None:

@@ -2,6 +2,7 @@ import unittest
 
 from design_ontology_harness.authoring import build_component_inventory
 from design_ontology_harness.advanced_components import recommend_advanced_components
+from design_ontology_harness.cli import _component_specs_source_from_inventory
 from design_ontology_harness.component_specs import generate_component_specs
 from design_ontology_harness.spec_analyzer import build_component_list
 from design_ontology_harness.synthesis import RESPONSIVE_RESILIENCE_POLICY
@@ -218,6 +219,97 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
         reference_systems = {item["id"] for item in inventory["reference_baseline"]["systems"]}
         self.assertEqual(reference_systems, {"astryx", "geist"})
         self.assertIn("ghost-button", inventory["reference_baseline"]["contextual_not_baseline"])
+
+    def test_product_specific_primitives_keep_baseline_as_coverage_only(self) -> None:
+        brand_profile = {
+            "brand_name": "ThreadSense",
+            "brand_keywords": ["editorial", "personal", "tactile", "decisive"],
+            "anti_keywords": ["generic", "dashboard-like", "infinite-card-wall"],
+            "product_summary": "Korean-first mobile fashion curation app for shoppable outfit edits.",
+            "application_concept": {
+                "primary_job": "사용자가 오늘의 상황과 취향 신호를 바탕으로 하나의 착장 에디트를 확정한다.",
+                "domain_objects": ["taste signal", "outfit edit", "garment item", "saved closet"],
+            },
+            "layout_skeleton": {
+                "composition": "taste-signal rail with outfit edit canvas and shop drawer",
+                "avoid_layouts": [
+                    "generic hero plus card grid",
+                    "uniform product card wall",
+                    "dashboard metric cards",
+                    "infinite feed without curation decision",
+                ],
+            },
+            "product_primitives": [
+                "taste signal chip rail",
+                "outfit edit canvas",
+                "garment stack",
+                "why-this-works note",
+                "fit and size note",
+                "save edit action",
+                "shop drawer",
+                "alternative item carousel",
+                "closet compatibility indicator",
+            ],
+            "_spec_components": [
+                {"name": "product-grid", "family": "commerce", "source": "spec"},
+                {"name": "data-table", "family": "data-display", "source": "spec"},
+                {"name": "hero-cta-group", "family": "button", "source": "spec"},
+                {"name": "dashboard-card", "family": "dashboard-wellness", "source": "spec"},
+            ],
+        }
+        blueprint = {
+            "component_strategy": {
+                "required_component_families": ["button", "input", "navigation", "feedback", "overlay"],
+                "product_primitives": brand_profile["product_primitives"],
+            },
+        }
+
+        inventory = build_component_inventory(brand_profile, blueprint)
+        inventory_names = {item["name"] for item in inventory["components"]}
+        coverage_names = {item["name"] for item in inventory["baseline_coverage_components"]}
+        rejected_names = {item["name"] for item in inventory["rejected_components"]}
+        advanced_names = {item["name"] for item in inventory["advanced_recommendations"]}
+
+        self.assertEqual(inventory["decision_model"]["implementation_basis"], "product-primitives-first")
+        self.assertEqual(inventory["decision_model"]["baseline_policy"], "coverage-only")
+        self.assertTrue({
+            "taste-signal-rail",
+            "outfit-edit-canvas",
+            "garment-row",
+            "why-this-works-note",
+            "shop-drawer",
+            "alternative-item-rail",
+        } <= inventory_names)
+        self.assertTrue({"primary-button", "segmented-control", "toast"} <= coverage_names)
+        self.assertFalse({"primary-button", "segmented-control", "data-table"} & inventory_names)
+        self.assertTrue({"product-grid", "data-table", "hero-cta-group", "dashboard-card"} <= rejected_names)
+        self.assertFalse({"inspector-drawer", "resizable-split-pane", "command-palette"} & advanced_names)
+
+    def test_component_specs_use_pruned_inventory_when_available(self) -> None:
+        raw_spec_components = [
+            {"name": "product-grid", "family": "commerce", "source": "spec"},
+            {"name": "hero-container", "family": "marketing", "source": "spec"},
+        ]
+        inventory = {
+            "components": [
+                {
+                    "name": "outfit-edit-canvas",
+                    "family": "content",
+                    "supports_primitive": "outfit edit canvas",
+                },
+                {
+                    "name": "shop-drawer",
+                    "family": "overlay",
+                    "supports_primitive": "shop drawer",
+                },
+            ],
+            "rejected_components": raw_spec_components,
+        }
+
+        source = _component_specs_source_from_inventory(raw_spec_components, inventory)
+        names = {item["name"] for item in source}
+
+        self.assertEqual(names, {"outfit-edit-canvas", "shop-drawer"})
 
     def test_operational_surfaces_suppress_card_named_advanced_recommendations(self) -> None:
         brand_profile = {

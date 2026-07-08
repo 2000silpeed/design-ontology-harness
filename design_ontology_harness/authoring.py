@@ -51,6 +51,36 @@ PRIMITIVE_COMPONENTS = {
     "data tables": ["data-table", "column-header", "filter-chip", "row-actions", "pagination"],
     "forms": ["text-field", "select", "checkbox", "radio", "textarea", "form-section"],
     "notifications": ["toast", "inline-alert", "empty-state", "banner"],
+    "taste signal chip rail": ["taste-signal-rail", "taste-signal-chip"],
+    "outfit edit canvas": ["outfit-edit-canvas", "edit-confidence-badge"],
+    "garment stack": ["garment-stack", "garment-row", "fabric-swatch"],
+    "why-this-works note": ["why-this-works-note", "reason-note"],
+    "fit and size note": ["fit-note", "size-chip-group"],
+    "save edit action": ["save-edit-button", "saved-state-toast"],
+    "shop drawer": ["shop-drawer", "price-size-summary"],
+    "alternative item carousel": ["alternative-item-rail", "alternative-item-tile"],
+    "closet compatibility indicator": ["closet-compatibility-badge"],
+}
+
+COMPONENT_FAMILY_OVERRIDES = {
+    "taste-signal-rail": "input",
+    "taste-signal-chip": "input",
+    "outfit-edit-canvas": "content",
+    "edit-confidence-badge": "feedback",
+    "garment-stack": "content",
+    "garment-row": "content",
+    "fabric-swatch": "content",
+    "why-this-works-note": "content",
+    "reason-note": "content",
+    "fit-note": "content",
+    "size-chip-group": "input",
+    "save-edit-button": "button",
+    "saved-state-toast": "feedback",
+    "shop-drawer": "overlay",
+    "price-size-summary": "content",
+    "alternative-item-rail": "content",
+    "alternative-item-tile": "content",
+    "closet-compatibility-badge": "feedback",
 }
 
 LAYOUT_PRIMITIVE_KEYWORDS = {
@@ -554,47 +584,60 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
     primitives = brand_profile.get("product_primitives", [])
     visual_reference = brand_profile.get("_resolved_visual_reference") or {}
     candidate_archetypes = visual_reference.get("candidate_component_archetypes", []) or []
+    spec_components = brand_profile.get("_spec_components") or []
+    product_specific_context = bool(primitives or spec_components or candidate_archetypes)
+    required_families = blueprint.get("component_strategy", {}).get("required_component_families", [])
     families: dict[str, dict] = {}
     all_components: list[dict] = []
+    rejected_components: list[dict] = []
+    baseline_coverage_components: list[dict] = []
 
     family_specs = FAMILY_SPECS
 
-    for family in blueprint.get("component_strategy", {}).get("required_component_families", []):
-        spec = family_specs.get(family, {"states": ["default"], "priority": "medium"})
-        families[family] = {
-            "family": family,
-            "priority": spec["priority"],
-            "required_states": spec["states"],
-            "components": [],
-            "visual_reference_signals": [],
-        }
+    def ensure_family(family: str) -> dict:
+        return families.setdefault(
+            family,
+            {
+                "family": family,
+                "priority": family_specs.get(family, {}).get("priority", "medium"),
+                "required_states": family_specs.get(family, {}).get("states", ["default"]),
+                "components": [],
+                "visual_reference_signals": [],
+            },
+        )
+
+    def append_component(component: dict) -> None:
+        component_name = component["name"]
+        family = component["family"]
+        family_entry = ensure_family(family)
+        if component_name not in family_entry["components"]:
+            family_entry["components"].append(component_name)
+        if not any(existing.get("name") == component_name for existing in all_components):
+            all_components.append(component)
+
+    if not product_specific_context:
+        for family in required_families:
+            ensure_family(family)
+    else:
+        baseline_coverage_components = _baseline_coverage_components(required_families)
 
     for primitive in primitives:
         component_names = PRIMITIVE_COMPONENTS.get(primitive.lower(), [])
         for component_name in component_names:
             family = classify_component_family(component_name)
-            component = {
+            append_component({
                 "name": component_name,
                 "family": family,
                 "supports_primitive": primitive,
+                "decision_layer": "core-product-primitive",
                 "status": "planned",
                 "must_document": ["anatomy", "states", "content rules", "accessibility", "dos and donts"],
-            }
-            all_components.append(component)
-            families.setdefault(
-                family,
-                {
-                    "family": family,
-                    "priority": "medium",
-                    "required_states": ["default"],
-                    "components": [],
-                    "visual_reference_signals": [],
-                },
-            )
-            families[family]["components"].append(component_name)
+            })
 
     for family_name, baseline_components in BASELINE_FAMILY_COMPONENTS.items():
         if family_name not in families:
+            continue
+        if product_specific_context:
             continue
         existing = set(families[family_name]["components"])
         for component_name in baseline_components:
@@ -610,13 +653,13 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
                     "supports_primitive": "reference baseline",
                     "source": "astryx-geist-reference-baseline",
                     "reference_components": component_meta.get("reference_components", []),
+                    "decision_layer": "baseline-implementation-fallback",
                     "status": "planned",
                     "must_document": ["anatomy", "states", "content rules", "accessibility", "dos and donts"],
                 }
             )
             existing.add(component_name)
 
-    spec_components = brand_profile.get("_spec_components") or []
     for entry in spec_components:
         if not isinstance(entry, dict):
             continue
@@ -625,28 +668,29 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
             continue
         family = entry.get("family") or classify_component_family(component_name)
         primitive = entry.get("source") or entry.get("supports_primitive") or "spec-detected"
-        families.setdefault(
+        rejection_reason = _component_rejection_reason(
+            component_name,
             family,
-            {
-                "family": family,
-                "priority": family_specs.get(family, {}).get("priority", "medium"),
-                "required_states": family_specs.get(family, {}).get("states", ["default"]),
-                "components": [],
-                "visual_reference_signals": [],
-            },
+            brand_profile,
+            blueprint,
+            primitive,
         )
-        if component_name in families[family]["components"]:
-            continue
-        families[family]["components"].append(component_name)
-        all_components.append(
-            {
+        if rejection_reason:
+            rejected_components.append({
                 "name": component_name,
                 "family": family,
-                "supports_primitive": primitive,
-                "status": "planned",
-                "must_document": ["anatomy", "states", "content rules", "accessibility", "dos and donts"],
-            }
-        )
+                "source": primitive,
+                "reason": rejection_reason,
+            })
+            continue
+        append_component({
+            "name": component_name,
+            "family": family,
+            "supports_primitive": primitive,
+            "decision_layer": "spec-detected",
+            "status": "planned",
+            "must_document": ["anatomy", "states", "content rules", "accessibility", "dos and donts"],
+        })
 
     advanced_recommendations = recommend_advanced_components(
         brand_profile=brand_profile,
@@ -654,38 +698,43 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
         existing_components=[component["name"] for component in all_components],
         limit=12,
     )
+    accepted_advanced_recommendations: list[dict] = []
     for recommendation in advanced_recommendations:
         component_name = recommendation["name"]
         component_spec = get_advanced_component(component_name) or {}
         family = recommendation.get("family") or component_spec.get("family") or classify_component_family(component_name)
-        families.setdefault(
+        rejection_reason = _component_rejection_reason(
+            component_name,
             family,
-            {
-                "family": family,
-                "priority": family_specs.get(family, {}).get("priority", "medium"),
-                "required_states": family_specs.get(family, {}).get("states", ["default"]),
-                "components": [],
-                "visual_reference_signals": [],
-            },
+            brand_profile,
+            blueprint,
+            "advanced-component-catalog",
         )
-        if component_name not in families[family]["components"]:
-            families[family]["components"].append(component_name)
-        all_components.append(
-            {
+        if rejection_reason:
+            rejected_components.append({
                 "name": component_name,
                 "family": family,
-                "role": recommendation.get("role", component_spec.get("role", "")),
-                "supports_primitive": "advanced-component-catalog",
-                "status": "recommended-advanced",
-                "advanced_component": True,
-                "usage_guidance": recommendation.get("use_when", []),
-                "avoid_when": recommendation.get("avoid_when", []),
-                "pairs_with": recommendation.get("pairs_with", []),
+                "source": "advanced-component-catalog",
                 "matched_signals": recommendation.get("matched_signals", []),
-                "score": recommendation.get("score"),
-                "must_document": ["anatomy", "states", "content rules", "accessibility", "dos and donts"],
-            }
-        )
+                "reason": rejection_reason,
+            })
+            continue
+        accepted_advanced_recommendations.append(recommendation)
+        append_component({
+            "name": component_name,
+            "family": family,
+            "role": recommendation.get("role", component_spec.get("role", "")),
+            "supports_primitive": "advanced-component-catalog",
+            "decision_layer": "advanced-context-match",
+            "status": "recommended-advanced",
+            "advanced_component": True,
+            "usage_guidance": recommendation.get("use_when", []),
+            "avoid_when": recommendation.get("avoid_when", []),
+            "pairs_with": recommendation.get("pairs_with", []),
+            "matched_signals": recommendation.get("matched_signals", []),
+            "score": recommendation.get("score"),
+            "must_document": ["anatomy", "states", "content rules", "accessibility", "dos and donts"],
+        })
 
     existing_components_by_name = {component["name"]: component for component in all_components}
     for archetype in candidate_archetypes:
@@ -714,6 +763,22 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
             (archetype.get("supports_primitives") or ["visual-reference"])[0]
         )
         for component_name in archetype.get("suggested_components", [])[:5]:
+            rejection_reason = _component_rejection_reason(
+                component_name,
+                family,
+                brand_profile,
+                blueprint,
+                supports_primitive,
+            )
+            if rejection_reason:
+                rejected_components.append({
+                    "name": component_name,
+                    "family": family,
+                    "source": "visual-reference",
+                    "archetype": archetype.get("id"),
+                    "reason": rejection_reason,
+                })
+                continue
             existing_component = existing_components_by_name.get(component_name)
             if existing_component:
                 existing_family = existing_component.get("family")
@@ -748,14 +813,195 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
     return {
         "families": sorted(families.values(), key=lambda item: (item["priority"] != "high", item["family"])),
         "components": all_components,
+        "decision_model": {
+            "implementation_basis": (
+                "product-primitives-first" if product_specific_context else "baseline-fallback"
+            ),
+            "baseline_policy": (
+                "coverage-only" if product_specific_context else "implementation-fallback"
+            ),
+        },
+        "baseline_coverage_components": baseline_coverage_components,
+        "rejected_components": rejected_components,
         "candidate_component_archetypes": candidate_archetypes,
         "reference_baseline": reference_baseline_summary(),
         "advanced_component_catalog": catalog_entries(),
-        "advanced_recommendations": advanced_recommendations,
+        "advanced_recommendations": accepted_advanced_recommendations,
     }
 
 
+def _baseline_coverage_components(families: list[str]) -> list[dict]:
+    coverage: list[dict] = []
+    for family_name in families:
+        for component_name in BASELINE_FAMILY_COMPONENTS.get(family_name, ()):
+            component_meta = baseline_component_meta(component_name)
+            coverage.append({
+                "name": component_name,
+                "family": family_name,
+                "role": component_meta.get("role", ""),
+                "source": "astryx-geist-reference-baseline",
+                "reference_components": component_meta.get("reference_components", []),
+                "decision_layer": "baseline-coverage-only",
+                "status": "coverage-only",
+            })
+    return coverage
+
+
+def _component_rejection_reason(
+    component_name: str,
+    family: str,
+    brand_profile: dict,
+    blueprint: dict,
+    supports_primitive: str | None = None,
+) -> str | None:
+    context = _component_decision_text(brand_profile, blueprint)
+    positive_context = _positive_component_decision_text(brand_profile, blueprint)
+    name = component_name.lower()
+    family_name = family.lower()
+    support = (supports_primitive or "").lower()
+
+    explicit_marketing = _has_any(positive_context, ["marketing-landing", "marketing website", "landing page"])
+    explicit_dashboard = _has_any(positive_context, ["dashboard", "operational overview", "metric strip"])
+    explicit_document = _has_any(positive_context, ["document-content", "document editor", "redline", "draft review"])
+    explicit_workflow = _has_any(positive_context, ["approval", "reviewer", "handoff", "workflow owner"])
+    explicit_data_table = _has_any(positive_context, ["data tables", "data table", "record table"])
+    explicit_product_catalog = _has_any(positive_context, ["product catalog", "marketplace grid", "product grid"])
+
+    avoid_marketing = _has_any(context, ["marketing hero", "magazine landing", "landing page", "brand-story text"])
+    avoid_dashboard = _has_any(context, ["dashboard", "dashboard metric cards", "metric cards", "saas dashboard"])
+    avoid_product_grid = _has_any(context, [
+        "product card wall",
+        "marketplace grid",
+        "generic fashion marketplace grid",
+        "uniform product card wall",
+        "two-column product cards",
+        "infinite feed",
+    ])
+
+    if support == "baseline":
+        return "baseline component is coverage-only when product primitives are explicit"
+    if support == "tags and labels":
+        return "generic tag/chip component must be replaced by product-specific signal components"
+    if support == "modal and dialog":
+        return "generic dialog component must be replaced by product-specific drawer/sheet primitive"
+    if support == "operational overview" and not explicit_dashboard:
+        return "operational overview component requires an explicit operational product primitive"
+    if support == "dashboard cards":
+        return "dashboard card component conflicts with product-context pruning"
+    if support == "data tables" and not explicit_data_table:
+        return "data-table primitive is not part of this product skeleton"
+    if support == "product catalog" and not explicit_product_catalog:
+        return "generic product catalog component conflicts with curation skeleton"
+    if support == "forms" and not _has_any(positive_context, ["forms", "form", "input flow"]):
+        return "generic form component requires an explicit form workflow"
+    if support in {"comments and discussion", "kanban and board", "user profile and avatar"}:
+        return "generic collaboration/profile component is outside this product skeleton"
+    if support == "notifications":
+        return "generic notification component is outside this product skeleton"
+    if support == "workspace navigation":
+        mobile_nav_allowed = name in {"app-shell", "topbar", "tab-bar"} and _has_any(
+            context,
+            ["bottom tab", "bottom navigation", "compact top", "top app bar"],
+        )
+        if not mobile_nav_allowed:
+            return "workspace navigation component conflicts with mobile task skeleton"
+
+    if family_name == "marketing" and (avoid_marketing or not explicit_marketing):
+        return "marketing family is outside the first-screen product skeleton"
+    if family_name == "dashboard-wellness":
+        return "dashboard-wellness family is not supported by this product concept"
+    if family_name == "document" and not explicit_document:
+        return "document review surface is not supported by this product concept"
+    if family_name == "workflow" and not explicit_workflow:
+        return "workflow approval surface is not supported by this product concept"
+    if ("dashboard" in name or "metric" in name or "kpi" in name) and avoid_dashboard and not explicit_dashboard:
+        return "dashboard/metric component conflicts with avoid_layouts"
+    if name in {"data-table", "column-header", "row-actions"} and not explicit_data_table:
+        return "table component requires an explicit data-table primitive"
+    if (
+        name in {"product-grid", "product-card", "product-hero-image", "cross-sell-grid"}
+        and (avoid_product_grid or not explicit_product_catalog)
+    ):
+        return "generic product catalog/grid component conflicts with curation skeleton"
+    if name.startswith("hero-") and not explicit_marketing:
+        return "hero component requires an explicit landing-page surface"
+    return None
+
+
+def _component_decision_text(brand_profile: dict, blueprint: dict) -> str:
+    values: list[str] = []
+
+    def collect(value) -> None:
+        if isinstance(value, str):
+            values.append(value.lower())
+        elif isinstance(value, list):
+            for item in value:
+                collect(item)
+        elif isinstance(value, dict):
+            for item in value.values():
+                collect(item)
+
+    for key in (
+        "product_summary",
+        "brand_keywords",
+        "anti_keywords",
+        "tone_of_voice",
+        "visual_keywords",
+        "interaction_keywords",
+        "product_primitives",
+        "application_concept",
+        "layout_skeleton",
+        "design_differentiation",
+    ):
+        collect(brand_profile.get(key))
+
+    component_strategy = blueprint.get("component_strategy") or {}
+    collect(component_strategy.get("product_primitives"))
+    collect(component_strategy.get("layout_skeleton"))
+    collect(component_strategy.get("differentiation_strategy"))
+    collect(blueprint.get("app_mode"))
+    collect(blueprint.get("product_archetype"))
+    return " ".join(values)
+
+
+def _positive_component_decision_text(brand_profile: dict, blueprint: dict) -> str:
+    values: list[str] = []
+
+    def collect(value) -> None:
+        if isinstance(value, str):
+            values.append(value.lower())
+        elif isinstance(value, list):
+            for item in value:
+                collect(item)
+        elif isinstance(value, dict):
+            for item in value.values():
+                collect(item)
+
+    for key in (
+        "product_summary",
+        "brand_keywords",
+        "tone_of_voice",
+        "visual_keywords",
+        "interaction_keywords",
+        "product_primitives",
+        "application_concept",
+    ):
+        collect(brand_profile.get(key))
+
+    component_strategy = blueprint.get("component_strategy") or {}
+    collect(component_strategy.get("product_primitives"))
+    collect(blueprint.get("app_mode"))
+    collect(blueprint.get("product_archetype"))
+    return " ".join(values)
+
+
+def _has_any(text: str, needles: list[str]) -> bool:
+    return any(needle in text for needle in needles)
+
+
 def classify_component_family(component_name: str) -> str:
+    if component_name in COMPONENT_FAMILY_OVERRIDES:
+        return COMPONENT_FAMILY_OVERRIDES[component_name]
     if any(token in component_name for token in [
         "hero", "feature-card", "feature-grid", "feature-icon", "feature-title",
         "feature-description", "feature-section", "logo-cloud", "customer-logo",
@@ -1122,7 +1368,16 @@ def build_system_spec_markdown(
             )
         )
         for family in component_inventory.get("families", [])
-    )
+    ) or "- No implementation families selected."
+    decision_model = component_inventory.get("decision_model") or {}
+    baseline_coverage_lines = "\n".join(
+        f"- **{item.get('name')}** ({item.get('family')}): {item.get('role')}"
+        for item in component_inventory.get("baseline_coverage_components", [])[:16]
+    ) or "- No baseline-only coverage components recorded."
+    rejected_component_lines = "\n".join(
+        f"- **{item.get('name')}** ({item.get('family')}): {item.get('reason')}"
+        for item in component_inventory.get("rejected_components", [])[:16]
+    ) or "- No components rejected by product-context pruning."
     archetype_lines = "\n".join(
         f"- **{item.get('label')}** ({item.get('family')} / {item.get('confidence')}): "
         f"{', '.join(item.get('suggested_components', [])[:5])}"
@@ -1481,10 +1736,19 @@ def build_system_spec_markdown(
 ## 8. Component Strategy
 
 - **Product primitives**: {', '.join(brand_profile.get('product_primitives', []))}
-- **Required families**: {', '.join(item['family'] for item in component_inventory.get('families', []))}
+- **Decision model**: implementation_basis={decision_model.get('implementation_basis', 'unknown')}; baseline_policy={decision_model.get('baseline_policy', 'unknown')}
+- **Implementation families**: {', '.join(item['family'] for item in component_inventory.get('families', [])) or 'none'}
 - **Reference baseline**: {reference_baseline_systems}
 - **Reference absorption rule**: {reference_baseline_policy}
 - **Contextual, not baseline**: {contextual_not_baseline}
+- **Baseline coverage only**:
+
+{baseline_coverage_lines}
+
+- **Rejected/deferred components**:
+
+{rejected_component_lines}
+
 - **Advanced component recommendations**:
 
 {advanced_component_lines}

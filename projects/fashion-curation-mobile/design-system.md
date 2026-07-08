@@ -67,6 +67,8 @@ Keep these as the first implementation surface:
 
 Remove or defer generic dashboard, marketing, data table, hero CTA, and ecommerce grid components unless the app flow explicitly asks for them.
 
+Generated component inventory should use `product-primitives-first`. Astryx and Vercel Geist remain `coverage-only` references for state, anatomy, and accessibility checks; they should not repopulate the implementation list with generic buttons, dashboards, product grids, or marketing hero components when ThreadSense primitives are already explicit.
+
 ## 5. LLM Invocation Contract
 
 This system should not select a preset. The calling LLM must derive the visual direction from the brand profile, domain objects, and skeleton UI.

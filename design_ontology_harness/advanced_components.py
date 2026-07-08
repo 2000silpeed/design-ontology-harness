@@ -7,6 +7,7 @@ requiring the user to already know component names.
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
 
@@ -729,15 +730,19 @@ def recommend_advanced_components(
 
         score = 0
         matched: list[str] = []
+        mode_matched = False
+        primitive_matched = False
 
         for app_mode in app_modes:
             if app_mode in spec.get("recommended_for", []):
                 score += 4
                 matched.append(f"mode:{app_mode}")
+                mode_matched = True
 
         if name in _defaults_for_modes(app_modes):
             score += 2
             matched.append("mode-default")
+            mode_matched = True
 
         for trigger in spec.get("keyword_triggers", []):
             if _contains_signal(signals, trigger):
@@ -748,13 +753,17 @@ def recommend_advanced_components(
             if _contains_signal(signals, trigger):
                 score += 3
                 matched.append(trigger)
+                primitive_matched = True
 
         for pair in spec.get("pairs_with", []):
             if pair.lower() in existing:
                 score += 1
                 matched.append(f"pairs:{pair}")
+                primitive_matched = True
 
         if score <= 0:
+            continue
+        if not mode_matched and not primitive_matched:
             continue
 
         rows.append(
@@ -860,9 +869,32 @@ def _app_mode_signals(signals: list[str]) -> set[str]:
         modes.add("monitoring-ops")
     if "document" in joined or "draft" in joined or "redline" in joined:
         modes.add("document-content")
-    if "canvas" in joined or "inspector" in joined:
+    if _canvas_tool_requested(joined):
         modes.add("canvas-tool")
     return modes
+
+
+def _canvas_tool_requested(joined_signals: str) -> bool:
+    if "canvas-tool" in joined_signals:
+        return True
+    if "inspector" in joined_signals:
+        return True
+    if "canvas" not in joined_signals:
+        return False
+    tool_terms = [
+        "workspace",
+        "editor",
+        "drawing",
+        "whiteboard",
+        "figma",
+        "layer",
+        "toolbar",
+        "object",
+        "selection",
+        "zoom",
+        "pan",
+    ]
+    return any(_contains_term(joined_signals, term) for term in tool_terms)
 
 
 def _defaults_for_modes(app_modes: set[str]) -> set[str]:
@@ -877,6 +909,11 @@ def _contains_signal(signals: list[str], needle: str) -> bool:
     dashed = normalized.replace(" ", "-")
     spaced = normalized.replace("-", " ")
     return any(normalized in signal or dashed in signal or spaced in signal for signal in signals)
+
+
+def _contains_term(text: str, term: str) -> bool:
+    pattern = rf"(?<![a-z0-9]){re.escape(term.lower())}(?![a-z0-9])"
+    return re.search(pattern, text.lower()) is not None
 
 
 def _has_any_signal(signals: list[str], needles: tuple[str, ...]) -> bool:
