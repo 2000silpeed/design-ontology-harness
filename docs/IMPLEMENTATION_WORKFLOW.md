@@ -125,6 +125,43 @@ uv run design-ontology run-project --project-dir projects/my-app
 
 `visual_reference`가 연결돼 있으면 위 산출물 안에 visual direction, layout rhythm, image-derived component hints도 함께 반영됩니다.
 
+### 5.5. 목업 구현: 토큰 방출과 발산 게이트 (필수)
+
+blueprint는 프로젝트마다 다른 팔레트와 서체를 생성하지만, 구현 단계에서 이를 소비하지
+않으면 구현 LLM의 기본 미감으로 회귀해 매번 같은 화면이 나온다. 목업/프로토타입을
+직접 구현할 때는 아래 순서를 강제한다. 전체 규칙은
+`skills/design-ontology-mockup-builder`를 사용한다.
+
+```bash
+# 1. blueprint의 active palette / font_system / radius를 프로젝트 로컬 토큰으로 방출
+uv run design-ontology emit-tokens --project-dir projects/my-app
+# -> projects/my-app/design-system/tokens.css (--ds-color-*, --ds-color-brand-*, --ds-font-*, --ds-radius-*, --ds-space-*)
+
+# 2. 구현: HTML에서 tokens.css를 링크하고 구현 CSS는 var(--ds-*)만 사용
+
+# 3. 토큰 바인딩 강제 (하드코딩 hex/font-family/radius가 있으면 실패)
+uv run design-ontology lint-implementation --target-repo projects/my-app
+
+# 4. 교차 프로젝트 스타일 발산 게이트
+uv run design-ontology check-style-divergence --project-dir projects/my-app --register-on-pass
+```
+
+`check-style-divergence`는 최종 HTML/CSS에서 스타일 지문(surface tone, accent hue
+bucket, 폰트 페어링, serif accent, radius 프로파일)을 추출해
+`registry/style_fingerprints.json`의 최근 프로젝트들과 비교하고, 아래 두 경우 실패한다.
+
+1. 알려진 수렴 attractor와 일치 — 예: 크림/페이퍼 배경 + 딥 레드/틸 액센트 + 세리프
+   디스플레이 (`warm-editorial-default`), 화이트 배경 + 인디고 단일 액센트
+   (`indigo-saas-default`)
+2. 최근 등록된 지문과 유사도가 임계값(기본 0.62) 이상
+
+실패 리포트의 `[FIX]` 제안을 따르되, 구현 CSS에서 색을 즉흥 수정하지 말고
+`brand_profile.json`의 `color_reference.palette_strategy`를 조정한 뒤
+`run-project → emit-tokens`로 tokens.css 자체를 재생성한다.
+
+게이트를 통과한 산출물은 `--register-on-pass` 또는 `fingerprint-style`로 레지스트리에
+등록해, 다음 프로젝트가 같은 look으로 회귀하지 못하게 한다.
+
 ### 6. 프리셋 승격과 Style Capsule 생성
 
 구현 repo에 설치하려면 프로젝트 산출물을 프리셋으로 승격합니다. 이 단계에서 `STYLE.md`와 `DESIGN.md`가 생성됩니다.

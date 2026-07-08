@@ -382,6 +382,57 @@ def build_parser() -> argparse.ArgumentParser:
     )
     lint_impl_parser.add_argument("--json", action="store_true", help="Emit JSON report")
 
+    emit_tokens_parser = subparsers.add_parser(
+        "emit-tokens",
+        help="Emit blueprint palette/typography/radius as project-local design-system/tokens.css",
+    )
+    emit_tokens_parser.add_argument("--project-dir", required=True, help="Harness project directory")
+    emit_tokens_parser.add_argument("--output", default=None, help="Optional explicit output path")
+
+    fingerprint_parser = subparsers.add_parser(
+        "fingerprint-style",
+        help="Extract the final mockup's style fingerprint and register it in the cross-project registry",
+    )
+    fingerprint_parser.add_argument("--project-dir", required=True, help="Directory holding the final HTML/CSS")
+    fingerprint_parser.add_argument(
+        "--registry",
+        default="registry/style_fingerprints.json",
+        help="Fingerprint registry path (default: registry/style_fingerprints.json)",
+    )
+    fingerprint_parser.add_argument("--project-name", default=None, help="Override registry project name")
+    fingerprint_parser.add_argument("--note", default=None, help="Optional registry note")
+    fingerprint_parser.add_argument("--no-register", action="store_true", help="Extract only; do not write registry")
+    fingerprint_parser.add_argument("--json", action="store_true", help="Emit JSON fingerprint")
+
+    divergence_parser = subparsers.add_parser(
+        "check-style-divergence",
+        help="Fail when the final mockup is too similar to recent projects or a known default aesthetic",
+    )
+    divergence_parser.add_argument("--project-dir", required=True, help="Directory holding the final HTML/CSS")
+    divergence_parser.add_argument(
+        "--registry",
+        default="registry/style_fingerprints.json",
+        help="Fingerprint registry path (default: registry/style_fingerprints.json)",
+    )
+    divergence_parser.add_argument(
+        "--threshold",
+        type=float,
+        default=None,
+        help="Similarity fail threshold (default: 0.62)",
+    )
+    divergence_parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Number of recent registry entries to compare (default: 10)",
+    )
+    divergence_parser.add_argument(
+        "--register-on-pass",
+        action="store_true",
+        help="Register the fingerprint when the divergence check passes",
+    )
+    divergence_parser.add_argument("--json", action="store_true", help="Emit JSON report")
+
     visual_compare_parser = subparsers.add_parser(
         "compare-visuals",
         help="Compare before/after screenshots and fail when visual change is not evidenced",
@@ -806,6 +857,72 @@ def main() -> None:
         )
         print(format_json(report) if args.json else format_report(report))
         if not report.ok:
+            raise SystemExit(1)
+        return
+
+    if args.command == "emit-tokens":
+        from .token_emitter import emit_project_tokens
+
+        target = emit_project_tokens(
+            Path(args.project_dir),
+            output_path=Path(args.output) if args.output else None,
+        )
+        print(f"Wrote {target}")
+        return
+
+    if args.command == "fingerprint-style":
+        import json as _json
+
+        from .style_fingerprint import extract_style_fingerprint, register_fingerprint
+
+        fingerprint = extract_style_fingerprint(
+            Path(args.project_dir),
+            project_name=args.project_name,
+        )
+        if not args.no_register:
+            register_fingerprint(
+                Path(args.registry),
+                fingerprint,
+                note=args.note,
+            )
+        if args.json:
+            print(_json.dumps(fingerprint.to_dict(), ensure_ascii=False, indent=2))
+        else:
+            print(
+                f"Fingerprint {fingerprint.project}: surface={fingerprint.surface_tone}, "
+                f"accents={','.join(fingerprint.accent_hue_buckets) or '-'}, "
+                f"fonts={','.join(fingerprint.font_families) or '-'}, "
+                f"serif_accent={fingerprint.serif_accent}"
+                + ("" if args.no_register else f" -> registered in {args.registry}")
+            )
+        return
+
+    if args.command == "check-style-divergence":
+        import json as _json
+
+        from .style_fingerprint import (
+            DEFAULT_COMPARE_LIMIT,
+            DEFAULT_SIMILARITY_THRESHOLD,
+            check_style_divergence,
+            format_divergence_report,
+            register_fingerprint,
+        )
+        from .style_fingerprint import StyleFingerprint as _StyleFingerprint
+
+        report = check_style_divergence(
+            Path(args.project_dir),
+            registry_path=Path(args.registry),
+            threshold=args.threshold if args.threshold is not None else DEFAULT_SIMILARITY_THRESHOLD,
+            limit=args.limit if args.limit is not None else DEFAULT_COMPARE_LIMIT,
+        )
+        if report["verdict"] == "ok" and args.register_on_pass:
+            register_fingerprint(
+                Path(args.registry),
+                _StyleFingerprint(**report["fingerprint"]),
+                note="registered on divergence pass",
+            )
+        print(_json.dumps(report, ensure_ascii=False, indent=2) if args.json else format_divergence_report(report))
+        if report["verdict"] != "ok":
             raise SystemExit(1)
         return
 

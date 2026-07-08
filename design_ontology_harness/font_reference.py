@@ -738,6 +738,11 @@ def resolve_font_system(brand_profile: dict) -> dict:
     heading_font = _pick_best(heading_scores)
     body_font = _pick_best(body_scores, exclude=heading_font if _should_contrast(brand_keywords) else None)
     mono_font = _pick_best(mono_scores) if needs_mono else None
+    display_font = _pick_display_font(
+        heading_scores,
+        product_type=product_type,
+        needs_korean=needs_korean,
+    )
 
     pairing = _find_proven_pairing(heading_font, body_font, needs_korean)
     if pairing:
@@ -748,13 +753,16 @@ def resolve_font_system(brand_profile: dict) -> dict:
     explicit_body = _explicit_font(explicit_system, "body")
     explicit_mono = _explicit_font(explicit_system, "mono")
     explicit_korean = _explicit_font(explicit_system, "korean")
-    explicit_any = any([explicit_heading, explicit_body, explicit_mono, explicit_korean])
+    explicit_display = _explicit_font(explicit_system, "display")
+    explicit_any = any([explicit_heading, explicit_body, explicit_mono, explicit_korean, explicit_display])
     if explicit_heading:
         heading_font = explicit_heading
     if explicit_body:
         body_font = explicit_body
     if explicit_mono:
         mono_font = explicit_mono
+    if explicit_display:
+        display_font = explicit_display
 
     korean_font = _pick_korean_font(
         body_font,
@@ -814,6 +822,7 @@ def resolve_font_system(brand_profile: dict) -> dict:
 
     result = {
         "heading": _font_summary(heading_font),
+        "display": _font_summary(display_font) if display_font else None,
         "body": _font_summary(body_font),
         "korean": _font_summary(korean_font) if korean_font else None,
         "korean_rationale": korean_rationale,
@@ -899,6 +908,48 @@ def _format_weight_range(weights: object) -> str:
     return "400-700"
 
 
+# display 슬롯이 브랜드 보이스를 담당하는 도메인.
+# heading/body는 UI 가독성용 산세리프로 두고, 브랜드 스테이트먼트에만 display를 쓴다.
+DISPLAY_VOICE_PRODUCT_TYPES = {"editorial", "fashion", "luxury", "content"}
+
+
+def _pick_display_font(
+    heading_scores: dict[str, float],
+    *,
+    product_type: str,
+    needs_korean: bool,
+) -> dict | None:
+    """Pick a serif/display voice font for domains where that is the norm.
+
+    UI headings stay sans (small-size legibility), so this is a separate slot:
+    brand statements, editorial lines, and hero numerals use the display font.
+    """
+
+    if product_type not in DISPLAY_VOICE_PRODUCT_TYPES:
+        return None
+    serif_candidates = [
+        font
+        for font in FONT_DB
+        if str(font.get("family", "")).startswith("serif")
+    ]
+    if not serif_candidates:
+        return None
+    if needs_korean:
+        korean_serifs = [f for f in serif_candidates if f.get("korean_native")]
+        # 웹 한글 세리프는 사실상 Noto Serif KR — 있으면 그것을 쓴다.
+        preferred = [f for f in korean_serifs if "noto serif" in f["name"].lower()]
+        if preferred:
+            return preferred[0]
+        if korean_serifs:
+            return korean_serifs[0]
+    scored = sorted(
+        serif_candidates,
+        key=lambda f: heading_scores.get(f["name"], 0.0),
+        reverse=True,
+    )
+    return scored[0]
+
+
 def _infer_product_type(summary: str, keywords: list[str], visual_kw: list[str]) -> str:
     type_signals = {
         "editorial": [
@@ -942,6 +993,12 @@ def _infer_product_type(summary: str, keywords: list[str], visual_kw: list[str])
 
     if not scores:
         return "saas"
+
+    # "mobile"은 도메인이 아니라 폼팩터다. 실제 도메인 타입이 같은 점수로 잡히면
+    # 도메인이 이긴다 — 그렇지 않으면 "mobile fashion app"이 항상 mobile로 수렴한다.
+    domain_scores = {k: v for k, v in scores.items() if k != "mobile"}
+    if domain_scores and max(domain_scores.values()) >= scores.get("mobile", 0):
+        return max(domain_scores, key=domain_scores.get)
     return max(scores, key=scores.get)
 
 

@@ -439,6 +439,7 @@
       "contrast": "balanced",
       "diversity": "high",
       "surface_style": "layered",
+      "chrome_strategy": "achromatic-photographic",
       "prefer_moods": [
         "세련",
         "명확함",

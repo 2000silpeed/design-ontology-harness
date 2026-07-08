@@ -110,6 +110,31 @@ TAILWIND_FIXED_WIDTH_RE = re.compile(r"\b(?P<class>(?:min-w|w)-\[(?P<value>\d+)p
 TAILWIND_SCREEN_WIDTH_RE = re.compile(r"\bw-screen\b")
 TAILWIND_NOWRAP_RE = re.compile(r"\bwhitespace-nowrap\b")
 EMOJI_RE = re.compile(r"[\U0001F300-\U0001FAFF\u2600-\u27BF]")
+
+# \u2500\u2500 LLM-default UI tells (DS090+) \u2500\u2500
+# \uBB38\uC11C/\uBE14\uB85C\uADF8 \uBB38\uBC95\uC774 \uC571 UI\uB85C \uC0C8\uB294 \uD328\uD134\uACFC, \uAD6C\uD604 LLM\uC774 \uAE30\uBCF8\uAC12\uC73C\uB85C \uBC18\uBCF5\uD558\uB294 \uC870\uD615 \uC2B5\uAD00.
+DOC_CALLOUT_SELECTOR_RE = re.compile(
+    r"(?:note|callout|quote|hint|tip|banner|admonition|notice|caution|info-box|infobox)",
+    re.IGNORECASE,
+)
+DOC_CALLOUT_BORDER_RE = re.compile(
+    r"\bborder-(?:left|inline-start)\s*:\s*(?P<width>\d+(?:\.\d+)?)px\s+solid\b",
+    re.IGNORECASE,
+)
+RADIUS_TOKEN_USAGE_RE = re.compile(r"var\(\s*(--ds-radius-[a-z0-9-]+)\s*\)", re.IGNORECASE)
+FONT_WEIGHT_DECL_RE = re.compile(r"\bfont-weight\s*:\s*(?P<value>\d{3})\b", re.IGNORECASE)
+FONT_SIZE_DECL_RE = re.compile(
+    r"\bfont-size\s*:\s*(?P<value>\d+(?:\.\d+)?)(?P<unit>rem|px)\b", re.IGNORECASE
+)
+PLACEHOLDER_COPY_RE = re.compile(
+    r"(?:\blorem\b|\bipsum\b|\uD56D\uBAA9\s*\d|\bItem\s+\d\b|\uC5EC\uAE30\uC5D0\s*(?:\uB0B4\uC6A9|\uD14D\uC2A4\uD2B8)|\uC0D8\uD50C\s*\uD14D\uC2A4\uD2B8|placeholder\s+text)",
+    re.IGNORECASE,
+)
+CSS_PAINTED_GRIDFIELD_RE = re.compile(
+    r"background\s*:[^;]*linear-gradient\([^;]*?1px[^;]*?transparent[^;]*?"
+    r"linear-gradient\([^;]*?1px[^;]*?transparent[^;]*?;[^}]*?background-size\s*:",
+    re.IGNORECASE | re.DOTALL,
+)
 COLOR_SCHEME_DARK_RE = re.compile(r"\bcolor-scheme\s*:\s*dark\b", re.IGNORECASE)
 COLOR_SCHEME_LIGHT_RE = re.compile(r"\bcolor-scheme\s*:\s*light\b", re.IGNORECASE)
 DARK_MODE_MARKER_RE = re.compile(r"(?:data-theme=['\"]dark['\"]|prefers-color-scheme\s*:\s*dark|\bcolor-scheme\s*:\s*dark\b)", re.IGNORECASE)
@@ -267,7 +292,11 @@ SVG_MEDIUM_ALLOWED_CONTEXT_RE = re.compile(
     re.IGNORECASE,
 )
 RASTER_ONLY_DIRECTIVE_RE = re.compile(
-    r"(?:no[-_\s]?svg|svg\s*(?:금지|없이|만들지\s*말고)|raster[-_\s]?only|래스터|비트맵|실제\s*(?:그림|이미지)\s*파일|png|webp|jpe?g)",
+    # 명시적 지시문만 매칭한다. bare "png"/"jpg" 토큰까지 잡으면 사진 URL(fm=jpg)이
+    # 있는 모든 프로젝트가 래스터 전용으로 오판되어 정상적인 사진+SVG 혼용을 막는다.
+    r"(?:no[-_\s]?svg|svg\s*(?:금지|없이|만들지\s*말고)|raster[-_\s]?only"
+    r"|래스터\s*(?:전용|만)|비트맵\s*(?:전용|만)|실제\s*(?:그림|이미지)\s*파일"
+    r"|(?:png|webp|jpe?g)[-\s]?(?:only|전용|만\b))",
     re.IGNORECASE,
 )
 SVG_USAGE_RE = re.compile(
@@ -568,6 +597,24 @@ def _lint_text(text: str, rel_path: str) -> list[ImplementationIssue]:
                 )
             )
 
+        callout_border = DOC_CALLOUT_BORDER_RE.search(line)
+        if (
+            callout_border
+            and float(callout_border.group("width")) >= 2
+            and selector_for_line
+            and DOC_CALLOUT_SELECTOR_RE.search(selector_for_line)
+        ):
+            issues.append(
+                _issue(
+                    "DS090",
+                    rel_path,
+                    line_no,
+                    callout_border.start() + 1,
+                    "Doc-grammar callout (border-left quote bar) leaking into app UI; app guidance copy is an undecorated muted caption — emphasize with placement, not decoration.",
+                    raw_line,
+                )
+            )
+
         issues.extend(_lint_responsive_overflow(line, selector_for_line, rel_path, line_no, raw_line))
         issues.extend(_lint_emoji_ui(line, selector_for_line, rel_path, line_no, raw_line))
 
@@ -620,6 +667,8 @@ def _lint_project_composition(
     combined = "\n".join(file_texts.values())
     first_ui_path = sorted(ui_files)[0]
     issues: list[ImplementationIssue] = []
+
+    issues.extend(_lint_llm_default_tells(file_texts, first_ui_path, combined))
 
     card_panel_count = len(CARD_PANEL_TOKEN_RE.findall(combined))
     layout_diversity_count = len(LAYOUT_DIVERSITY_TOKEN_RE.findall(combined))
@@ -837,6 +886,107 @@ def _lint_project_composition(
                 1,
                 "Generic initials used as app-shell brand mark without a wired app icon asset; create a brand-specific SVG app icon and connect favicon/manifest/app-shell surfaces.",
                 _single_line_snippet(GENERIC_APP_MARK_RE.search(combined).group(0)),
+            )
+        )
+
+    return issues
+
+
+def _lint_llm_default_tells(
+    file_texts: dict[str, str],
+    first_ui_path: str,
+    combined: str,
+) -> list[ImplementationIssue]:
+    """Aggregate checks for shapes the implementing LLM repeats by default.
+
+    These are taste failures that survive token binding: the palette can be
+    correct while the surface still reads as generated. Each rule targets one
+    measurable habit with a threshold high enough to avoid false positives.
+    """
+
+    issues: list[ImplementationIssue] = []
+    css_text = "\n".join(
+        text for rel, text in file_texts.items() if rel.lower().endswith(".css")
+    )
+
+    # DS091 — radius monoculture: 모든 요소에 같은 라운딩 토큰 하나만 바르는 습관
+    radius_usages = [
+        token.lower()
+        for token in RADIUS_TOKEN_USAGE_RE.findall(css_text)
+        if not token.lower().endswith(("-pill", "-none"))
+    ]
+    distinct_radius = set(radius_usages)
+    if len(radius_usages) >= 8 and len(distinct_radius) == 1:
+        issues.append(
+            _issue(
+                "DS091",
+                first_ui_path,
+                1,
+                1,
+                "Radius monoculture: one radius token applied everywhere reads as a default theme; reserve rounding for interactive/elevated surfaces (max 2 steps per screen, 0 is a valid choice).",
+                f"radius_usages={len(radius_usages)}, distinct={sorted(distinct_radius)}",
+            )
+        )
+
+    # DS092 — hedging weights: 500과 600을 함께 쓰는 중간 굵기 회피 습관
+    weights = {match.group("value") for match in FONT_WEIGHT_DECL_RE.finditer(css_text)}
+    if {"500", "600"} <= weights:
+        issues.append(
+            _issue(
+                "DS092",
+                first_ui_path,
+                1,
+                1,
+                "Hedging font weights: both 500 and 600 in one surface flattens hierarchy; commit to two anchored weights (e.g. 400/700) and express the rest with size and spacing.",
+                f"font_weights={sorted(weights)}",
+            )
+        )
+
+    # DS093 — compressed type scale: 프로토타입인데 디스플레이 스케일이 없음
+    if HTML_PROTOTYPE_MARKER_RE.search(combined):
+        sizes_rem: list[float] = []
+        for match in FONT_SIZE_DECL_RE.finditer(css_text):
+            value = float(match.group("value"))
+            sizes_rem.append(value / 16 if match.group("unit").lower() == "px" else value)
+        if len(set(sizes_rem)) >= 6 and sizes_rem and max(sizes_rem) < 1.5:
+            issues.append(
+                _issue(
+                    "DS093",
+                    first_ui_path,
+                    1,
+                    1,
+                    "Compressed type scale: many sizes but no display tier (max < 1.5rem) reads as a settings page; give the screen one hero-scale element and drop intermediate sizes.",
+                    f"distinct_sizes={len(set(sizes_rem))}, max={max(sizes_rem):.3g}rem",
+                )
+            )
+
+    # DS095 — CSS로 그림 흉내 낸 격자 필드: 계기/차트 표면은 실제 렌더링 매체가 필요
+    painted_grid = CSS_PAINTED_GRIDFIELD_RE.search(css_text)
+    if painted_grid and HTML_PROTOTYPE_MARKER_RE.search(combined):
+        issues.append(
+            _issue(
+                "DS095",
+                first_ui_path,
+                1,
+                1,
+                "CSS-painted grid field: instrument/chart/coordinate surfaces need a real rendering medium (inline SVG with grid, ticks, and crosshair in one coordinate system, or canvas/chart library); dual linear-gradient grids with a positioned dot read as box art.",
+                _single_line_snippet(painted_grid.group(0), limit=200),
+            )
+        )
+
+    # DS094 — placeholder copy: 실데이터 대신 채움말
+    placeholder = PLACEHOLDER_COPY_RE.search(combined)
+    if placeholder:
+        issues.append(
+            _issue(
+                "DS094",
+                first_ui_path,
+                1,
+                1,
+                "Placeholder copy in the surface; replace with realistic domain data (real garment/product/user names and values) before visual QA.",
+                _single_line_snippet(
+                    combined[max(0, placeholder.start() - 60) : placeholder.end() + 60]
+                ),
             )
         )
 

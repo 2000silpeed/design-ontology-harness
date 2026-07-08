@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "tinge-mockup",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4321", "--directory", "projects/fashion-curation-mobile"],
+      "port": 4321,
+      "autoPort": false
+    }
+  ]
+}

@@ -22,8 +22,54 @@ DEFAULT_PALETTE_STRATEGY = {
     "contrast": "balanced",
     "diversity": "balanced",
     "surface_style": "tinted",
+    "chrome_strategy": "chromatic",
     "prefer_moods": [],
     "avoid_moods": [],
+}
+
+# 사진이 컬러를 담당하는 제품(패션, 갤러리, 커머스 등)을 위한 무채색 크롬 램프.
+# UI 크롬은 상품 이미지와 색으로 경쟁하지 않고, 유채색은 restrained_accent 하나만 남긴다.
+ACHROMATIC_CHROME_ROLES = {
+    "chrome_ink": {
+        "name": "Chrome Ink",
+        "family": "Chrome Strategy",
+        "hex": "#141414",
+        "mood": "무채색 크롬 잉크. 텍스트와 primary action을 담당",
+        "usage": "본문, 헤딩, 블랙 CTA. 상품 이미지가 컬러를 담당하므로 크롬은 무채색을 유지한다.",
+        "source_type": "chrome-strategy",
+    },
+    "chrome_paper": {
+        "name": "Chrome Paper",
+        "family": "Chrome Strategy",
+        "hex": "#FFFFFF",
+        "mood": "순백 표면",
+        "usage": "카드/시트 표면. 사진의 색이 그대로 읽히는 바탕.",
+        "source_type": "chrome-strategy",
+    },
+    "chrome_canvas": {
+        "name": "Chrome Canvas",
+        "family": "Chrome Strategy",
+        "hex": "#FAFAFA",
+        "mood": "미세 그레이 캔버스",
+        "usage": "앱 배경. 표면과 1단계 분리.",
+        "source_type": "chrome-strategy",
+    },
+    "chrome_line": {
+        "name": "Chrome Line",
+        "family": "Chrome Strategy",
+        "hex": "#E5E5E5",
+        "mood": "헤어라인",
+        "usage": "구분선, 보더. 그림자보다 라인 분리를 우선.",
+        "source_type": "chrome-strategy",
+    },
+    "chrome_muted": {
+        "name": "Chrome Muted",
+        "family": "Chrome Strategy",
+        "hex": "#737373",
+        "mood": "보조 텍스트 그레이",
+        "usage": "메타 정보, 캡션, 비활성 라벨.",
+        "source_type": "chrome-strategy",
+    },
 }
 
 DEFAULT_PALETTE_EXPANSION = {
@@ -381,6 +427,10 @@ def resolve_color_reference(
                 brand_profile=profile,
             )
 
+    active_palette, resolved_roles, resolved_selected = _apply_chrome_strategy(
+        active_palette, strategy
+    )
+
     semantic_ontology = build_semantic_color_context(
         parsed_reference=parsed,
         active_palette=active_palette,
@@ -427,6 +477,9 @@ def resolve_semantic_color_reference(
         "selected_colors": resolved_selected,
         "candidate_id": (semantic_color_selection.get("active_palette") or {}).get("id"),
     }
+    active_palette, resolved_roles, resolved_selected = _apply_chrome_strategy(
+        active_palette, strategy
+    )
     semantic_ontology = build_semantic_color_context(
         parsed_reference={"title": "Semantic OS color ontology", "colors": []},
         active_palette=active_palette,
@@ -483,11 +536,67 @@ def _normalize_palette_strategy(raw_strategy: dict | None) -> dict:
     strategy["contrast"] = _pick_enum(strategy["contrast"], {"soft", "balanced", "vivid"}, "balanced")
     strategy["diversity"] = _pick_enum(strategy["diversity"], {"cohesive", "balanced", "exploratory"}, "balanced")
     strategy["surface_style"] = _pick_enum(strategy["surface_style"], {"airy", "tinted", "grounded"}, "tinted")
+    strategy["chrome_strategy"] = _pick_enum(
+        strategy.get("chrome_strategy"), {"chromatic", "achromatic-photographic"}, "chromatic"
+    )
     strategy["candidate_count"] = max(1, min(8, int(strategy.get("candidate_count", 3) or 3)))
     strategy["active_candidate"] = strategy.get("active_candidate", 1)
     strategy["prefer_moods"] = _normalize_text_list(strategy.get("prefer_moods", []))
     strategy["avoid_moods"] = _normalize_text_list(strategy.get("avoid_moods", []))
     return strategy
+
+
+def _apply_chrome_strategy(
+    active_palette: dict,
+    strategy: dict,
+) -> tuple[dict, dict, list[dict]]:
+    """Rewrite the active palette for the configured chrome strategy.
+
+    ``achromatic-photographic``: the ontology-selected palette is demoted to a
+    single ``restrained_accent``; every other UI role becomes an achromatic
+    chrome ramp so product imagery carries the color. Returns
+    (active_palette, roles, selected_colors) — unchanged for ``chromatic``.
+    """
+
+    if strategy.get("chrome_strategy") != "achromatic-photographic":
+        return active_palette, active_palette.get("roles", {}), active_palette.get("selected_colors", [])
+
+    source_roles = active_palette.get("roles") or {}
+    accent_pick: dict | None = None
+    best_score = -1.0
+    for color in source_roles.values():
+        if not isinstance(color, dict) or not color.get("hex"):
+            continue
+        saturation = _hex_saturation(color.get("hex"))
+        lightness = _hex_lightness(color.get("hex"))
+        # 액센트는 충분히 유채색이고 중간 명도일 것
+        if saturation < 20 or not 18 <= lightness <= 78:
+            continue
+        score = saturation - abs(lightness - 48)
+        if score > best_score:
+            best_score = score
+            accent_pick = color
+
+    roles: dict[str, dict] = {key: dict(value) for key, value in ACHROMATIC_CHROME_ROLES.items()}
+    if accent_pick:
+        accent = dict(accent_pick)
+        accent["usage"] = (
+            "유일한 유채색 액센트. 세일/알림/포커스처럼 정말 시선이 필요한 지점 하나에만 쓴다. "
+            "버튼 기본색은 chrome_ink."
+        )
+        roles["restrained_accent"] = accent
+
+    selected = _ordered_unique_colors_any_roles(roles)
+    rewritten = dict(active_palette)
+    rewritten["roles"] = roles
+    rewritten["selected_colors"] = selected
+    rewritten["chrome_strategy"] = "achromatic-photographic"
+    rewritten["chrome_notes"] = [
+        "UI 크롬은 무채색 램프로 유지하고 상품/도메인 이미지가 컬러를 담당한다.",
+        "유채색은 restrained_accent 하나만 허용된다.",
+        "온톨로지가 고른 원 팔레트는 accent 선정 근거로만 쓰였다.",
+    ]
+    return rewritten, roles, selected
 
 
 def _normalize_palette_expansion(raw_expansion: dict | None) -> dict:

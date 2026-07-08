@@ -1,0 +1,662 @@
+"""Cross-project style fingerprint registry and anti-convergence gate.
+
+The harness already produces diverse blueprints per project, but the final
+mockup implementation step tends to collapse back into the implementing
+LLM's default aesthetic (warm paper surface + oxblood/teal/citron accents +
+serif display accent + the same font pairing). This module gives the harness
+memory across projects:
+
+1. ``extract_style_fingerprint`` reads the *final* HTML/CSS of a project and
+   distills it into a comparable fingerprint (surface tone, accent hue
+   buckets, font families, serif-accent usage, radius profile).
+2. ``registry/style_fingerprints.json`` stores one fingerprint per project.
+3. ``check_style_divergence`` compares a new implementation against recent
+   registry entries and against known convergence attractors, and fails when
+   the new surface is too close to what was already shipped.
+
+The gate is intentionally applied to implementation output, not blueprints:
+blueprint tokens were already diverse, the repetition happens in CSS.
+"""
+
+from __future__ import annotations
+
+import colorsys
+import re
+from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+from .utils import write_json
+
+FINGERPRINT_SCHEMA_VERSION = "style-fingerprint/v1"
+REGISTRY_SCHEMA_VERSION = "style-fingerprint-registry/v1"
+DEFAULT_REGISTRY_RELATIVE_PATH = Path("registry") / "style_fingerprints.json"
+DEFAULT_SIMILARITY_THRESHOLD = 0.62
+DEFAULT_COMPARE_LIMIT = 10
+
+HUE_BUCKET_NAMES = [
+    "red",
+    "orange",
+    "amber",
+    "yellow",
+    "lime",
+    "green",
+    "teal",
+    "cyan",
+    "blue",
+    "indigo",
+    "violet",
+    "magenta",
+]
+
+GENERIC_FONT_TOKENS = {
+    "system-ui",
+    "sans-serif",
+    "serif",
+    "monospace",
+    "ui-monospace",
+    "ui-serif",
+    "ui-sans-serif",
+    "ui-rounded",
+    "-apple-system",
+    "blinkmacsystemfont",
+    "segoe ui",
+    "apple sd gothic neo",
+    "malgun gothic",
+    "sfmono-regular",
+    "menlo",
+    "monaco",
+    "consolas",
+    "helvetica",
+    "helvetica neue",
+    "arial",
+    "roboto",
+    "inherit",
+    "initial",
+    "emoji",
+    "apple color emoji",
+    "segoe ui emoji",
+    "noto color emoji",
+}
+
+HEX_RE = re.compile(r"#(?P<hex>[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b")
+RGB_RE = re.compile(
+    r"rgba?\(\s*(?P<r>\d{1,3})\s*[, ]\s*(?P<g>\d{1,3})\s*[, ]\s*(?P<b>\d{1,3})"
+)
+FONT_FAMILY_DECL_RE = re.compile(r"font-family\s*:\s*(?P<value>[^;{}]+)", re.IGNORECASE)
+GOOGLE_FONTS_FAMILY_RE = re.compile(r"family=(?P<family>[A-Za-z0-9+ _-]+)")
+CUSTOM_PROP_RE = re.compile(
+    r"(?P<name>--[\w-]+)\s*:\s*(?P<value>#[0-9a-fA-F]{3,8}|rgba?\([^)]*\))"
+)
+BACKGROUND_DECL_RE = re.compile(
+    r"(?:^|[;{\s])background(?:-color)?\s*:\s*(?P<value>[^;{}]+)", re.IGNORECASE
+)
+BORDER_RADIUS_RE = re.compile(r"border-radius\s*:\s*(?P<value>[^;{}]+)", re.IGNORECASE)
+RADIUS_PX_RE = re.compile(r"(\d+(?:\.\d+)?)px")
+
+KNOWN_ATTRACTORS: list[dict[str, Any]] = [
+    {
+        "id": "warm-editorial-default",
+        "label": "웜 페이퍼 + 딥 레드/틸 액센트 + 세리프 디스플레이",
+        "description": (
+            "구현 LLM이 브랜드와 무관하게 반복 생산하는 기본 미감: 크림/페이퍼 배경, "
+            "옥스블러드·버건디 계열 primary, 틸 secondary, 시트론 하이라이트, 세리프 디스플레이 서체."
+        ),
+        "surface_tones": {"warm-paper"},
+        "required_hue_groups": [{"red", "magenta"}, {"teal", "cyan", "green"}],
+        "requires_serif_accent": True,
+    },
+    {
+        "id": "indigo-saas-default",
+        "label": "뉴트럴 라이트 + 인디고/바이올렛 단일 액센트 SaaS 기본형",
+        "description": (
+            "흰 배경에 인디고~바이올렛 계열 primary 하나로 끝나는 범용 SaaS 대시보드 미감."
+        ),
+        "surface_tones": {"neutral-light"},
+        "required_hue_groups": [{"blue", "indigo", "violet"}],
+        "restrict_to_hues": {"blue", "indigo", "violet"},
+        "requires_serif_accent": False,
+    },
+]
+
+
+@dataclass
+class StyleFingerprint:
+    project: str
+    schema_version: str = FINGERPRINT_SCHEMA_VERSION
+    source_files: list[str] = field(default_factory=list)
+    surface_tone: str = "unknown"
+    surface_hexes: list[str] = field(default_factory=list)
+    accent_hue_buckets: list[str] = field(default_factory=list)
+    accent_hexes: list[str] = field(default_factory=list)
+    font_families: list[str] = field(default_factory=list)
+    serif_accent: bool = False
+    radius_values_px: list[float] = field(default_factory=list)
+    uses_pill_shapes: bool = False
+    color_count: int = 0
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+# ---------------------------------------------------------------------------
+# Color helpers
+
+
+def _normalize_hex(value: str) -> str:
+    raw = value.lstrip("#")
+    if len(raw) == 3:
+        raw = "".join(ch * 2 for ch in raw)
+    return "#" + raw.upper()
+
+
+def _hex_to_hls(value: str) -> tuple[float, float, float]:
+    raw = value.lstrip("#")
+    r = int(raw[0:2], 16) / 255.0
+    g = int(raw[2:4], 16) / 255.0
+    b = int(raw[4:6], 16) / 255.0
+    return colorsys.rgb_to_hls(r, g, b)
+
+
+def _hue_bucket(hue: float) -> str:
+    index = int((hue * 360.0) // 30) % 12
+    return HUE_BUCKET_NAMES[index]
+
+
+def _classify_surface(hexes: list[str]) -> tuple[str, list[str]]:
+    """Classify the dominant surface tone from candidate background colors."""
+
+    if not hexes:
+        return "unknown", []
+    scored: list[tuple[str, float, float, float]] = []
+    for value in hexes:
+        h, l, s = _hex_to_hls(value)
+        scored.append((value, h, l, s))
+
+    darks = [item for item in scored if item[2] < 0.35]
+    lights = [item for item in scored if item[2] >= 0.78]
+    pool = lights or scored
+    # Saturated component backgrounds (badges, chips) also appear as
+    # background declarations, so only call the surface dark when dark
+    # backgrounds actually outnumber light ones.
+    if darks and len(darks) > len(lights):
+        return "dark", [item[0] for item in darks[:4]]
+
+    def tone_of(h: float, s: float) -> str:
+        if s < 0.08:
+            return "neutral-light"
+        hue_deg = h * 360.0
+        if 20.0 <= hue_deg <= 75.0:
+            return "warm-paper"
+        if 75.0 < hue_deg <= 260.0:
+            return "cool-tinted"
+        return "rose-tinted"
+
+    votes: dict[str, int] = {}
+    for _, h, _, s in pool:
+        votes[tone_of(h, s)] = votes.get(tone_of(h, s), 0) + 1
+    tone = max(votes, key=lambda key: votes[key])
+    return tone, [item[0] for item in pool[:4]]
+
+
+def _resolve_color_token(value: str, custom_props: dict[str, str]) -> str | None:
+    value = value.strip()
+    match = HEX_RE.search(value)
+    if match:
+        return _normalize_hex(match.group(0))
+    rgb = RGB_RE.search(value)
+    if rgb:
+        r, g, b = (min(int(rgb.group(k)), 255) for k in ("r", "g", "b"))
+        return _normalize_hex(f"#{r:02X}{g:02X}{b:02X}")
+    var_match = re.search(r"var\(\s*(--[\w-]+)", value)
+    if var_match:
+        resolved = custom_props.get(var_match.group(1))
+        if resolved:
+            return _resolve_color_token(resolved, {})
+    return None
+
+
+# ---------------------------------------------------------------------------
+# Extraction
+
+
+def _collect_source_files(project_dir: Path) -> list[Path]:
+    out: list[Path] = []
+    for pattern in ("*.html", "*.css"):
+        out.extend(sorted(project_dir.glob(pattern)))
+        out.extend(sorted(project_dir.glob(f"mockup/{pattern}")))
+        out.extend(sorted(project_dir.glob(f"src/{pattern}")))
+        out.extend(sorted(project_dir.glob(f"styles/{pattern}")))
+        out.extend(sorted(project_dir.glob(f"assets/{pattern}")))
+    # Token-bound projects keep their actual palette in design-system/*.css.
+    out.extend(sorted(project_dir.glob("design-system/*.css")))
+    seen: set[Path] = set()
+    unique: list[Path] = []
+    for path in out:
+        if path in seen or "build" in path.parts or "node_modules" in path.parts:
+            continue
+        seen.add(path)
+        unique.append(path)
+    return unique
+
+
+def _extract_fonts(text: str) -> tuple[list[str], bool]:
+    families: list[str] = []
+    serif_accent = False
+    for match in FONT_FAMILY_DECL_RE.finditer(text):
+        raw_value = match.group("value")
+        if "var(--" in raw_value and not HEX_RE.search(raw_value):
+            stripped = re.sub(r"var\([^)]*\)", "", raw_value)
+        else:
+            stripped = raw_value
+        parts = [
+            part.strip().strip("'\"").strip()
+            for part in stripped.split(",")
+            if part.strip()
+        ]
+        parts = [
+            part
+            for part in parts
+            if part and "(" not in part and ")" not in part and not part.startswith("--")
+        ]
+        named = [part for part in parts if part.lower() not in GENERIC_FONT_TOKENS]
+        generics = {part.lower() for part in parts} & {"serif", "ui-serif"}
+        if generics and named:
+            serif_accent = True
+        for name in named:
+            if name and name not in families:
+                families.append(name)
+    for match in re.finditer(r"--ds-font-[\w-]+\s*:\s*(?P<value>[^;{}]+)", text):
+        for part in match.group("value").split(","):
+            name = part.strip().strip("'\"").strip()
+            if not name or "(" in name or ")" in name:
+                continue
+            if name.lower() in GENERIC_FONT_TOKENS:
+                continue
+            if name not in families:
+                families.append(name)
+    for match in GOOGLE_FONTS_FAMILY_RE.finditer(text):
+        name = match.group("family").replace("+", " ").strip()
+        name = re.sub(r":.*$", "", name)
+        if name and name not in families and name.lower() not in GENERIC_FONT_TOKENS:
+            families.append(name)
+        if "serif" in name.lower():
+            serif_accent = True
+    return families, serif_accent
+
+
+def extract_style_fingerprint(
+    project_dir: Path,
+    *,
+    project_name: str | None = None,
+    source_files: list[Path] | None = None,
+) -> StyleFingerprint:
+    project_dir = project_dir.resolve()
+    files = source_files or _collect_source_files(project_dir)
+    if not files:
+        raise FileNotFoundError(
+            f"No HTML/CSS implementation files found under {project_dir}. "
+            "Run this against the directory that holds the final mockup."
+        )
+
+    texts: dict[str, str] = {}
+    for path in files:
+        try:
+            texts[path.name] = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+
+    combined = "\n".join(texts.values())
+    custom_props: dict[str, str] = {}
+    for match in CUSTOM_PROP_RE.finditer(combined):
+        custom_props.setdefault(match.group("name"), match.group("value"))
+
+    color_counts: dict[str, int] = {}
+    for match in HEX_RE.finditer(combined):
+        value = _normalize_hex(match.group(0))
+        color_counts[value] = color_counts.get(value, 0) + 1
+    for match in RGB_RE.finditer(combined):
+        r, g, b = (min(int(match.group(k)), 255) for k in ("r", "g", "b"))
+        value = _normalize_hex(f"#{r:02X}{g:02X}{b:02X}")
+        color_counts[value] = color_counts.get(value, 0) + 1
+
+    background_hexes: list[str] = []
+    for match in BACKGROUND_DECL_RE.finditer(combined):
+        resolved = _resolve_color_token(match.group("value"), custom_props)
+        if resolved:
+            background_hexes.append(resolved)
+    if not background_hexes:
+        background_hexes = [
+            value for value in color_counts if _hex_to_hls(value)[1] >= 0.78
+        ]
+
+    surface_tone, surface_hexes = _classify_surface(background_hexes)
+
+    accent_entries: list[tuple[str, str, int]] = []
+    for value, count in color_counts.items():
+        _, l, s = _hex_to_hls(value)
+        if s >= 0.22 and 0.14 <= l <= 0.74:
+            accent_entries.append((_hue_bucket(_hex_to_hls(value)[0]), value, count))
+    accent_entries.sort(key=lambda item: item[2], reverse=True)
+    accent_buckets: list[str] = []
+    accent_hexes: list[str] = []
+    for bucket, value, _ in accent_entries:
+        if bucket not in accent_buckets:
+            accent_buckets.append(bucket)
+        if len(accent_hexes) < 8:
+            accent_hexes.append(value)
+
+    families, serif_accent = _extract_fonts(combined)
+
+    radius_values: set[float] = set()
+    uses_pill = False
+    for match in BORDER_RADIUS_RE.finditer(combined):
+        value = match.group("value")
+        if "%" in value or "9999" in value or "999px" in value:
+            uses_pill = True
+        for px in RADIUS_PX_RE.finditer(value):
+            number = float(px.group(1))
+            if number >= 200:
+                uses_pill = True
+            else:
+                radius_values.add(number)
+
+    return StyleFingerprint(
+        project=project_name or project_dir.name,
+        source_files=[path.name for path in files],
+        surface_tone=surface_tone,
+        surface_hexes=surface_hexes,
+        accent_hue_buckets=accent_buckets,
+        accent_hexes=accent_hexes,
+        font_families=families,
+        serif_accent=serif_accent,
+        radius_values_px=sorted(radius_values),
+        uses_pill_shapes=uses_pill,
+        color_count=len(color_counts),
+    )
+
+
+# ---------------------------------------------------------------------------
+# Registry
+
+
+def default_registry_path(repo_root: Path) -> Path:
+    return repo_root / DEFAULT_REGISTRY_RELATIVE_PATH
+
+
+def load_registry(registry_path: Path) -> dict[str, Any]:
+    if not registry_path.exists():
+        return {"schema_version": REGISTRY_SCHEMA_VERSION, "entries": []}
+    import json
+
+    data = json.loads(registry_path.read_text(encoding="utf-8"))
+    data.setdefault("schema_version", REGISTRY_SCHEMA_VERSION)
+    data.setdefault("entries", [])
+    return data
+
+
+def register_fingerprint(
+    registry_path: Path,
+    fingerprint: StyleFingerprint,
+    *,
+    note: str | None = None,
+) -> dict[str, Any]:
+    registry = load_registry(registry_path)
+    entries = registry["entries"]
+    entry = {
+        "project": fingerprint.project,
+        "recorded_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "note": note,
+        "fingerprint": fingerprint.to_dict(),
+    }
+    entries[:] = [item for item in entries if item.get("project") != fingerprint.project]
+    entries.append(entry)
+    registry_path.parent.mkdir(parents=True, exist_ok=True)
+    write_json(registry_path, registry)
+    return entry
+
+
+# ---------------------------------------------------------------------------
+# Comparison / divergence gate
+
+
+def compare_fingerprints(a: StyleFingerprint | dict, b: StyleFingerprint | dict) -> dict[str, Any]:
+    fa = a.to_dict() if isinstance(a, StyleFingerprint) else a
+    fb = b.to_dict() if isinstance(b, StyleFingerprint) else b
+
+    reasons: list[str] = []
+    score = 0.0
+
+    if fa.get("surface_tone") == fb.get("surface_tone") and fa.get("surface_tone") != "unknown":
+        score += 0.25
+        reasons.append(f"surface tone 동일 ({fa.get('surface_tone')})")
+
+    buckets_a = set(fa.get("accent_hue_buckets") or [])
+    buckets_b = set(fb.get("accent_hue_buckets") or [])
+    if buckets_a or buckets_b:
+        jaccard = len(buckets_a & buckets_b) / max(len(buckets_a | buckets_b), 1)
+        score += 0.35 * jaccard
+        if jaccard >= 0.5:
+            shared = ", ".join(sorted(buckets_a & buckets_b))
+            reasons.append(f"accent hue 중복 {jaccard:.0%} ({shared})")
+
+    fonts_a = {name.lower() for name in fa.get("font_families") or []}
+    fonts_b = {name.lower() for name in fb.get("font_families") or []}
+    if fonts_a or fonts_b:
+        font_jaccard = len(fonts_a & fonts_b) / max(len(fonts_a | fonts_b), 1)
+        score += 0.20 * font_jaccard
+        if font_jaccard >= 0.5:
+            reasons.append(
+                "font pairing 중복 (" + ", ".join(sorted(fonts_a & fonts_b)) + ")"
+            )
+
+    if fa.get("serif_accent") and fb.get("serif_accent"):
+        score += 0.10
+        reasons.append("둘 다 serif display accent 사용")
+    elif not fa.get("serif_accent") and not fb.get("serif_accent"):
+        score += 0.03
+
+    radii_a = fa.get("radius_values_px") or []
+    radii_b = fb.get("radius_values_px") or []
+    if radii_a and radii_b:
+        max_a, max_b = max(radii_a), max(radii_b)
+        if abs(max_a - max_b) <= 4 and fa.get("uses_pill_shapes") == fb.get("uses_pill_shapes"):
+            score += 0.10
+
+    return {
+        "project_a": fa.get("project"),
+        "project_b": fb.get("project"),
+        "similarity": round(min(score, 1.0), 4),
+        "reasons": reasons,
+    }
+
+
+def detect_attractors(
+    fingerprint: StyleFingerprint | dict,
+    *,
+    serif_sanctioned: bool = False,
+) -> list[dict[str, Any]]:
+    """Match known convergence attractors.
+
+    ``serif_sanctioned=True`` means the project's blueprint font_system chose a
+    serif display/heading on purpose (editorial, fashion, luxury domains). In
+    that case serif-based attractors are waived — the ban targets improvised
+    serif accents, not domain-appropriate token-bound ones.
+    """
+
+    fp = fingerprint.to_dict() if isinstance(fingerprint, StyleFingerprint) else fingerprint
+    buckets = set(fp.get("accent_hue_buckets") or [])
+    matches: list[dict[str, Any]] = []
+    for attractor in KNOWN_ATTRACTORS:
+        if attractor.get("requires_serif_accent") and serif_sanctioned:
+            continue
+        if fp.get("surface_tone") not in attractor["surface_tones"]:
+            continue
+        if attractor.get("requires_serif_accent") and not fp.get("serif_accent"):
+            continue
+        restrict = attractor.get("restrict_to_hues")
+        if restrict is not None and (not buckets or not buckets <= restrict):
+            continue
+        groups_ok = all(buckets & group for group in attractor["required_hue_groups"])
+        if not groups_ok:
+            continue
+        matches.append(
+            {
+                "id": attractor["id"],
+                "label": attractor["label"],
+                "description": attractor["description"],
+            }
+        )
+    return matches
+
+
+def _divergence_suggestions(
+    fingerprint: StyleFingerprint,
+    recent_entries: list[dict[str, Any]],
+) -> list[str]:
+    suggestions: list[str] = []
+    used_buckets: dict[str, int] = {}
+    used_tones: dict[str, int] = {}
+    used_fonts: dict[str, int] = {}
+    for entry in recent_entries:
+        fp = entry.get("fingerprint") or {}
+        for bucket in fp.get("accent_hue_buckets") or []:
+            used_buckets[bucket] = used_buckets.get(bucket, 0) + 1
+        tone = fp.get("surface_tone")
+        if tone:
+            used_tones[tone] = used_tones.get(tone, 0) + 1
+        for font in fp.get("font_families") or []:
+            used_fonts[font.lower()] = used_fonts.get(font.lower(), 0) + 1
+
+    unused_buckets = [name for name in HUE_BUCKET_NAMES if name not in used_buckets]
+    if recent_entries and unused_buckets:
+        suggestions.append(
+            "최근 프로젝트들이 쓰지 않은 accent hue 계열에서 primary를 고르세요: "
+            + ", ".join(unused_buckets[:6])
+        )
+    overused = [name for name, count in used_buckets.items() if count >= 2]
+    if overused:
+        suggestions.append(
+            "최근 2회 이상 반복된 accent hue는 피하세요: " + ", ".join(sorted(overused))
+        )
+    tone_counts = sorted(used_tones.items(), key=lambda item: item[1], reverse=True)
+    if tone_counts and fingerprint.surface_tone == tone_counts[0][0]:
+        suggestions.append(
+            f"surface tone `{fingerprint.surface_tone}`이 최근 가장 많이 반복된 톤입니다. "
+            "blueprint token_schema의 배경 토큰을 그대로 쓰거나 다른 톤 계열로 옮기세요."
+        )
+    repeated_fonts = [
+        name for name in (f.lower() for f in fingerprint.font_families)
+        if used_fonts.get(name, 0) >= 2 and name != "pretendard"
+    ]
+    if repeated_fonts:
+        suggestions.append(
+            "display/accent 서체가 최근 프로젝트들과 중복됩니다: "
+            + ", ".join(sorted(set(repeated_fonts)))
+            + " — docs/font-reference.md에서 다른 계열을 고르세요."
+        )
+    suggestions.append(
+        "색·서체를 임의로 정하지 말고 build/system/blueprint/token_schema.json의 "
+        "active palette와 recommended_fonts를 tokens.css로 방출해 소비하세요 (emit-tokens)."
+    )
+    return suggestions
+
+
+def _blueprint_sanctions_serif(project_dir: Path) -> bool:
+    """True when the project blueprint's font_system chose a serif on purpose."""
+
+    import json
+
+    blueprint_path = (
+        project_dir / "build" / "system" / "blueprint" / "design_system_blueprint.json"
+    )
+    if not blueprint_path.exists():
+        return False
+    try:
+        blueprint = json.loads(blueprint_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    font_system = blueprint.get("font_system") or {}
+    for slot in ("display", "heading"):
+        entry = font_system.get(slot)
+        if isinstance(entry, dict) and "serif" in str(entry.get("family", "")).lower():
+            return True
+    return False
+
+
+def check_style_divergence(
+    project_dir: Path,
+    *,
+    registry_path: Path,
+    threshold: float = DEFAULT_SIMILARITY_THRESHOLD,
+    limit: int = DEFAULT_COMPARE_LIMIT,
+    fingerprint: StyleFingerprint | None = None,
+) -> dict[str, Any]:
+    fingerprint = fingerprint or extract_style_fingerprint(project_dir)
+    serif_sanctioned = _blueprint_sanctions_serif(Path(project_dir))
+    registry = load_registry(registry_path)
+    entries = [
+        entry
+        for entry in registry.get("entries", [])
+        if entry.get("project") != fingerprint.project
+    ]
+    recent = entries[-limit:]
+
+    comparisons = [
+        {
+            **compare_fingerprints(fingerprint, entry.get("fingerprint") or {}),
+            "project_b": entry.get("project"),
+        }
+        for entry in recent
+    ]
+    comparisons.sort(key=lambda item: item["similarity"], reverse=True)
+    too_similar = [item for item in comparisons if item["similarity"] >= threshold]
+    attractors = detect_attractors(fingerprint, serif_sanctioned=serif_sanctioned)
+
+    verdict = "fail" if (too_similar or attractors) else "ok"
+    report: dict[str, Any] = {
+        "schema_version": "style-divergence-report/v1",
+        "project": fingerprint.project,
+        "verdict": verdict,
+        "threshold": threshold,
+        "serif_sanctioned_by_blueprint": serif_sanctioned,
+        "fingerprint": fingerprint.to_dict(),
+        "attractor_matches": attractors,
+        "too_similar_to": too_similar,
+        "comparisons": comparisons,
+    }
+    if verdict == "fail":
+        report["suggestions"] = _divergence_suggestions(fingerprint, recent)
+    return report
+
+
+def format_divergence_report(report: dict[str, Any]) -> str:
+    lines: list[str] = []
+    verdict = report.get("verdict", "unknown").upper()
+    lines.append(f"Style divergence: {verdict} (project={report.get('project')})")
+    fp = report.get("fingerprint") or {}
+    lines.append(
+        "  fingerprint: "
+        f"surface={fp.get('surface_tone')}, "
+        f"accents={','.join(fp.get('accent_hue_buckets') or []) or '-'}, "
+        f"fonts={','.join(fp.get('font_families') or []) or '-'}, "
+        f"serif_accent={fp.get('serif_accent')}"
+    )
+    for attractor in report.get("attractor_matches") or []:
+        lines.append(f"  [ATTRACTOR] {attractor['label']}")
+        lines.append(f"    {attractor['description']}")
+    for item in report.get("too_similar_to") or []:
+        lines.append(
+            f"  [TOO-SIMILAR] {item['project_b']} similarity={item['similarity']:.2f}"
+        )
+        for reason in item.get("reasons", []):
+            lines.append(f"    - {reason}")
+    for suggestion in report.get("suggestions") or []:
+        lines.append(f"  [FIX] {suggestion}")
+    if verdict == "OK" and report.get("comparisons"):
+        top = report["comparisons"][0]
+        lines.append(
+            f"  closest: {top['project_b']} similarity={top['similarity']:.2f}"
+        )
+    return "\n".join(lines)

@@ -15,10 +15,16 @@ Tinge is a style calibration tool. The interface should feel like tuning color, 
 
 ## Visual Language
 
-- Color is mixed, not monochrome: ink, oxblood, mineral teal, citron, paper, and clay.
-- Typography uses a compact sans body and a restrained serif accent for calibration language.
+시각 값의 단일 진실 소스는 `design-system/tokens.css`다 (`emit-tokens`로 blueprint에서 생성).
+구현 CSS는 `var(--ds-*)`만 소비하고, 여기에 색·서체 이름을 다시 쓰지 않는다.
+
+- Palette: blueprint active palette — deep green anchor, teal fresh accent, quiet green tint.
+  Supporting colors(claret, prussian blue, lavender, apricot)는 옷장 원단 표현에만 쓴다.
+- Typography: Pretendard 단일 서체, weight 대비로 위계. 세리프 디스플레이 액센트 금지
+  (tokens.css가 지정하지 않는 한).
 - Surfaces are layered with fine borders and firm spacing. Avoid a wall of cards.
 - Imagery must reveal garments, fabric, or silhouette, not abstract decoration.
+- 검증: `lint-implementation` + `check-style-divergence`를 통과해야 완료로 간주한다.
 
 ## Component Contract
 

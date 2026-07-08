@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tinge Style Compass</title>
+    <title>Tinge — 스타일 캘리브레이션</title>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,224 +12,294 @@
       rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="./design-system/tokens.css" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="app-shell" aria-label="Tinge 패션 큐레이션 모바일 앱">
+    <main
+      class="app-shell app-mockup"
+      data-prototype-state-set="default,calibrating,saved"
+      data-state="default"
+      aria-label="Tinge 스타일 캘리브레이션 모바일 앱"
+    >
       <header class="status-topline">
-        <div>
-          <p>금요일 18:40 · 한남</p>
-          <h1>Tinge</h1>
-        </div>
-        <button class="icon-button" type="button" aria-label="캘리브레이션 설정">
+        <h1 class="brand-mark">Tinge</h1>
+        <p class="topline-meta">금요일 18:40 · 한남</p>
+        <button class="topline-action" type="button" aria-label="캘리브레이션 설정">
           <i data-lucide="sliders-horizontal" aria-hidden="true"></i>
         </button>
       </header>
 
       <section class="occasion-pulse" aria-label="오늘의 상황 신호">
-        <button class="pulse-token is-active" type="button">
-          <span>venue</span>
-          갤러리 오프닝
+        <button class="pulse-token" type="button" data-state="active">
+          <span class="pulse-key">Venue</span>
+          <strong class="pulse-value">갤러리 오프닝</strong>
+          <span class="pulse-hint">드레스 기대 · 세미</span>
         </button>
-        <button class="pulse-token" type="button">
-          <span>weather</span>
-          비 온 뒤 19도
+        <button class="pulse-token" type="button" data-state="default">
+          <span class="pulse-key">Weather</span>
+          <strong class="pulse-value">비 온 뒤 19도</strong>
+          <span class="pulse-hint">방습 소재 우선</span>
         </button>
-        <button class="pulse-token" type="button">
-          <span>pace</span>
-          도보 28분
+        <button class="pulse-token" type="button" data-state="default">
+          <span class="pulse-key">Pace</span>
+          <strong class="pulse-value">도보 28분</strong>
+          <span class="pulse-hint">활동량 중간</span>
         </button>
       </section>
 
-      <section class="compass-stage" aria-labelledby="compass-title">
-        <div class="compass-copy">
-          <p class="micro-label">style compass</p>
-          <h2 id="compass-title">조용하지만 납작하지 않게.</h2>
-        </div>
-
-        <div class="compass-field" aria-label="취향 좌표">
-          <span class="axis-label top">bold</span>
-          <span class="axis-label right">sharp</span>
-          <span class="axis-label bottom">quiet</span>
-          <span class="axis-label left">soft</span>
+      <section class="compass-stage" data-state="default" aria-labelledby="compass-title">
+        <p class="micro-label">Style Compass</p>
+        <h2 id="compass-title" class="compass-statement">조용하지만,<br />납작하지 않게.</h2>
+        <div class="compass-field" id="compassField" aria-label="취향 좌표 필드">
+          <svg
+            class="compass-instrument"
+            viewBox="0 0 320 200"
+            preserveAspectRatio="none"
+            data-product-surface="style-compass"
+            aria-hidden="true"
+          >
+            <title>스타일 컴퍼스 좌표 필드</title>
+            <defs>
+              <radialGradient id="fieldGlow">
+                <stop offset="0%" stop-color="var(--ds-color-accent)" stop-opacity="0.22" />
+                <stop offset="55%" stop-color="var(--ds-color-accent)" stop-opacity="0.07" />
+                <stop offset="100%" stop-color="var(--ds-color-accent)" stop-opacity="0" />
+              </radialGradient>
+              <pattern id="minorGrid" width="16" height="16" patternUnits="userSpaceOnUse">
+                <path d="M 16 0 L 0 0 0 16" fill="none" stroke="var(--ds-color-border)" stroke-width="0.5" opacity="0.55" />
+              </pattern>
+            </defs>
+            <rect x="0" y="0" width="320" height="200" fill="var(--ds-color-surface)" />
+            <rect x="0" y="0" width="320" height="200" fill="url(#minorGrid)" />
+            <g stroke="var(--ds-color-border)" stroke-width="1">
+              <line x1="80" y1="0" x2="80" y2="200" />
+              <line x1="240" y1="0" x2="240" y2="200" />
+              <line x1="0" y1="50" x2="320" y2="50" />
+              <line x1="0" y1="150" x2="320" y2="150" />
+            </g>
+            <g stroke="var(--ds-color-border-strong)" stroke-width="1">
+              <line x1="160" y1="0" x2="160" y2="200" />
+              <line x1="0" y1="100" x2="320" y2="100" />
+            </g>
+            <g id="axisTicks" stroke="var(--ds-color-border-strong)" stroke-width="1"></g>
+            <circle id="handleGlow" cx="198" cy="118" r="52" fill="url(#fieldGlow)" />
+            <g id="crosshair" stroke="var(--ds-color-ink)" stroke-width="0.75" stroke-dasharray="3 4" opacity="0.45">
+              <line id="crosshairX" x1="198" y1="118" x2="198" y2="200" />
+              <line id="crosshairY" x1="0" y1="118" x2="198" y2="118" />
+            </g>
+            <g id="handleMark">
+              <circle id="handleOuter" cx="198" cy="118" r="15" fill="none" stroke="var(--ds-color-ink)" stroke-width="1" />
+              <circle id="handleDot" cx="198" cy="118" r="11" fill="var(--ds-color-accent)" stroke="var(--ds-color-surface)" stroke-width="2.5" />
+            </g>
+            <rect x="0.5" y="0.5" width="319" height="199" fill="none" stroke="var(--ds-color-border-strong)" stroke-width="1" />
+          </svg>
+          <span class="compass-axis axis-top">또렷함</span>
+          <span class="compass-axis axis-right">선명함</span>
+          <span class="compass-axis axis-bottom">조용함</span>
+          <span class="compass-axis axis-left">부드러움</span>
           <button
             class="compass-handle"
+            id="compassHandle"
             type="button"
-            aria-label="현재 취향 좌표: quiet 62, sharp 41"
-            data-compass-handle
-          >
-            <span>62</span>
-          </button>
+            data-state="default"
+            aria-label="현재 취향 좌표: 조용함 62, 선명함 41. 드래그하거나 방향키로 이동"
+          ></button>
         </div>
-
-        <div class="temperature-band" aria-label="소재 온도">
-          <span>cool silk</span>
-          <strong data-temperature-label>soft contrast</strong>
-          <span>warm grain</span>
+        <div class="compass-readline">
+          <p class="coordinate-read">
+            <span class="coordinate-numeral" id="handleReadout">62</span>
+            <span class="coordinate-caption" id="directionRead">soft contrast</span>
+          </p>
+          <div class="calibration-meter" aria-label="캘리브레이션 측정값">
+            <div class="meter-row" data-state="balanced">
+              <span class="meter-name">절제</span>
+              <span class="meter-bar" aria-hidden="true"><span class="meter-fill" id="meterRestraint"></span></span>
+              <span class="meter-value" id="meterRestraintValue">72</span>
+            </div>
+            <div class="meter-row" data-state="default">
+              <span class="meter-name">대비</span>
+              <span class="meter-bar" aria-hidden="true"><span class="meter-fill" id="meterContrast"></span></span>
+              <span class="meter-value" id="meterContrastValue">44</span>
+            </div>
+            <div class="meter-row" data-state="warning">
+              <span class="meter-name">보행성</span>
+              <span class="meter-bar" aria-hidden="true"><span class="meter-fill" id="meterWalk"></span></span>
+              <span class="meter-value" id="meterWalkValue">58</span>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="closet-tape" aria-label="보유 옷 기억">
-        <div class="tape-heading">
-          <span>closet tape</span>
-          <strong>최근 14일 매칭</strong>
+      <section class="closet-tape" aria-label="옷장 기억 테이프">
+        <div class="section-head">
+          <p class="micro-label">Closet Tape</p>
+          <span class="section-meta">최근 14일 착장 기준</span>
         </div>
-        <div class="tape-scroll" role="list">
-          <button class="closet-token is-matched" type="button" role="listitem">
+        <div class="tape-track" role="list">
+          <button class="closet-token" type="button" role="listitem" data-state="matched">
             <img
               src="https://images.unsplash.com/photo-1525450824786-227cbef70703?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=500"
-              alt="화이트 셔츠 원단"
+              alt="오프화이트 셔츠 원단 질감"
+              loading="lazy"
             />
-            <span>화이트 셔츠</span>
+            <span class="token-name">오프화이트 셔츠</span>
+            <span class="token-note">면 포플린 · 3일 전</span>
           </button>
-          <button class="closet-token" type="button" role="listitem">
-            <span class="fabric-block clay"></span>
-            <span>브라운 슬랙스</span>
+          <button class="closet-token" type="button" role="listitem" data-state="matched">
+            <span class="token-swatch swatch-slacks" aria-hidden="true"></span>
+            <span class="token-name">네이비 슬랙스</span>
+            <span class="token-note">울 트윌 · 어제</span>
           </button>
-          <button class="closet-token" type="button" role="listitem">
-            <span class="fabric-block teal"></span>
-            <span>청록 스카프</span>
+          <button class="closet-token" type="button" role="listitem" data-state="default">
+            <span class="token-swatch swatch-knit" aria-hidden="true"></span>
+            <span class="token-name">라벤더 니트</span>
+            <span class="token-note">램스울 · 9일 전</span>
           </button>
-          <button class="closet-token is-muted" type="button" role="listitem">
-            <span class="fabric-block citron"></span>
-            <span>라임 니트</span>
+          <button class="closet-token" type="button" role="listitem" data-state="default">
+            <span class="token-swatch swatch-scarf" aria-hidden="true"></span>
+            <span class="token-name">와인 스카프</span>
+            <span class="token-note">실크 · 12일 전</span>
+          </button>
+          <button class="closet-token" type="button" role="listitem" data-state="muted">
+            <span class="token-swatch swatch-coat" aria-hidden="true"></span>
+            <span class="token-name">카멜 코트</span>
+            <span class="token-note">캐시미어 · 보관</span>
           </button>
         </div>
       </section>
 
-      <section class="silhouette-preview" aria-labelledby="silhouette-title">
-        <div class="preview-image">
+      <section class="silhouette-preview" data-state="updated" aria-labelledby="silhouette-title">
+        <figure class="silhouette-figure">
           <img
             src="https://images.unsplash.com/photo-1516762689617-e1cffcef479d?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=82&w=1100"
-            alt="옷걸이에 걸린 다양한 색감의 의류"
+            alt="옷걸이에 걸린 셔츠와 하의 중심의 착장 구성"
+            loading="lazy"
           />
-          <div class="calibration-meter" aria-label="캘리브레이션 수치">
-            <span>restraint</span>
-            <meter min="0" max="100" value="72">72</meter>
-            <span>walkable</span>
-            <meter min="0" max="100" value="84">84</meter>
+          <figcaption class="silhouette-overlay">
+            <p class="micro-label micro-label-inverse">Silhouette Direction</p>
+            <h2 id="silhouette-title" class="silhouette-line">셔츠의 선은 살리고,<br />포인트는 하나만.</h2>
+          </figcaption>
+        </figure>
+        <div class="layer-list">
+          <div class="silhouette-layer" data-state="selected">
+            <span class="layer-key">Base</span>
+            <span class="layer-value">오프화이트 셔츠 + 네이비 슬랙스</span>
           </div>
-        </div>
-        <div class="preview-copy">
-          <p class="micro-label">silhouette direction</p>
-          <h2 id="silhouette-title">셔츠의 선은 살리고, 포인트는 하나만.</h2>
-          <div class="silhouette-layer">
-            <span>base</span>
-            <strong>화이트 셔츠 + 브라운 슬랙스</strong>
+          <div class="silhouette-layer" data-state="default">
+            <span class="layer-key">Texture</span>
+            <span class="layer-value">포플린 위 램스울 반매트</span>
           </div>
-          <div class="silhouette-layer">
-            <span>texture</span>
-            <strong>광택 낮은 실크 스카프</strong>
-          </div>
-        </div>
-      </section>
-
-      <section class="control-panel" aria-label="세부 조정">
-        <label class="contrast-slider">
-          <span>contrast</span>
-          <input type="range" min="0" max="100" value="58" data-contrast-slider />
-          <strong data-contrast-value>58</strong>
-        </label>
-
-        <div class="fit-passport" aria-label="핏 패스포트">
-          <div class="fit-measure-row">
-            <span>hem</span>
-            <strong>발등 2cm 위</strong>
-            <em>ok</em>
-          </div>
-          <div class="fit-measure-row">
-            <span>outer</span>
-            <strong>트렌치 안쪽 여유</strong>
-            <em>check</em>
+          <div class="silhouette-layer" data-state="default">
+            <span class="layer-key">Accent</span>
+            <span class="layer-value">아래 트레이에서 1개 선택</span>
           </div>
         </div>
       </section>
 
       <section class="accent-tray" aria-labelledby="accent-title">
-        <div class="tray-heading">
-          <div>
-            <p class="micro-label">bounded accent</p>
-            <h2 id="accent-title">오늘은 하나만 더합니다.</h2>
-          </div>
-          <span data-accent-count>1 / 3</span>
+        <div class="section-head">
+          <p class="micro-label">Accent Tray</p>
+          <span class="section-meta" data-accent-count>1 / 3</span>
         </div>
-        <div class="accent-options" role="list">
+        <h2 id="accent-title" class="tray-title">오늘은 하나만 더합니다.</h2>
+        <div class="tray-track" role="radiogroup" aria-label="포인트 후보 선택">
           <button
-            class="accent-swatch is-selected"
+            class="accent-swatch"
             type="button"
-            role="listitem"
-            data-accent="청록 실크"
-            data-tone="soft contrast"
+            role="radio"
+            aria-checked="true"
+            data-state="selected"
+            data-accent="청록 니트 스카프"
           >
-            <span class="swatch teal"></span>
-            <strong>청록 실크</strong>
-            <em>목선 정리</em>
+            <span class="swatch-chip chip-teal" aria-hidden="true"></span>
+            <span class="swatch-name">청록 니트 스카프</span>
+            <span class="swatch-note">채도 보강 · 목선</span>
           </button>
           <button
             class="accent-swatch"
             type="button"
-            role="listitem"
-            data-accent="와인 벨트"
-            data-tone="warm edge"
+            role="radio"
+            aria-checked="false"
+            data-state="default"
+            data-accent="와인 레더 벨트"
           >
-            <span class="swatch wine"></span>
-            <strong>와인 벨트</strong>
-            <em>허리선 강조</em>
+            <span class="swatch-chip chip-wine" aria-hidden="true"></span>
+            <span class="swatch-name">와인 레더 벨트</span>
+            <span class="swatch-note">허리선 분리 · 저광택</span>
           </button>
           <button
             class="accent-swatch"
             type="button"
-            role="listitem"
-            data-accent="라임 니트"
-            data-tone="bright lift"
+            role="radio"
+            aria-checked="false"
+            data-state="default"
+            data-accent="애프리콧 삭스"
           >
-            <span class="swatch citron"></span>
-            <strong>라임 니트</strong>
-            <em>채도 상승</em>
+            <span class="swatch-chip chip-apricot" aria-hidden="true"></span>
+            <span class="swatch-name">애프리콧 삭스</span>
+            <span class="swatch-note">발목 포인트 · 보행 안전</span>
           </button>
+        </div>
+        <p class="restraint-note">현재 좌표에서 포인트를 두 개 이상 더하면 셔츠의 선이 흐려집니다.</p>
+      </section>
+
+      <section class="fit-passport" aria-label="핏 패스포트">
+        <div class="section-head">
+          <p class="micro-label">Fit Passport</p>
+        </div>
+        <div class="passport-list">
+          <div class="fit-measure-row" data-state="ok">
+            <span class="measure-name">어깨 여유</span>
+            <span class="measure-read">+1.5cm · 안정</span>
+            <span class="measure-flag">OK</span>
+          </div>
+          <div class="fit-measure-row" data-state="ok">
+            <span class="measure-name">밑단 길이</span>
+            <span class="measure-read">발목 위 2cm · 비 온 뒤 적합</span>
+            <span class="measure-flag">OK</span>
+          </div>
+          <div class="fit-measure-row" data-state="check">
+            <span class="measure-name">겉옷 호환</span>
+            <span class="measure-read">카멜 코트와 톤 확인 필요</span>
+            <span class="measure-flag">CHECK</span>
+          </div>
         </div>
       </section>
 
-      <p class="restraint-note" data-restraint-note>
-        현재 좌표에서는 포인트를 두 개 이상 더하면 셔츠의 선이 흐려집니다.
+      <div class="decision-dock" data-state="pending" aria-label="결정 액션">
+        <button class="dock-action action-save" type="button" data-state="default" data-save-calibration>
+          좌표 저장
+        </button>
+        <button class="dock-action action-shortlist" type="button" data-state="default" data-shortlist-accent>
+          포인트 후보 담기
+        </button>
+      </div>
+      <p class="confirmation-pill" data-state="hidden" role="status" aria-live="polite" data-confirmation>
+        오늘 좌표를 저장했어요
       </p>
 
       <nav class="bottom-mode-tabs" aria-label="주요 모드">
-        <button class="is-active" type="button">
+        <button type="button" class="mode-tab" aria-current="page">
           <i data-lucide="compass" aria-hidden="true"></i>
           튜닝
         </button>
-        <button type="button">
+        <button type="button" class="mode-tab">
           <i data-lucide="shirt" aria-hidden="true"></i>
           옷장
         </button>
-        <button type="button">
+        <button type="button" class="mode-tab">
           <i data-lucide="bookmark" aria-hidden="true"></i>
           저장
         </button>
-        <button type="button">
-          <i data-lucide="sparkle" aria-hidden="true"></i>
+        <button type="button" class="mode-tab">
+          <i data-lucide="shopping-bag" aria-hidden="true"></i>
           후보
         </button>
       </nav>
-
-      <div class="decision-dock" aria-label="결정 액션">
-        <button class="save-calibration-action" type="button" data-save-calibration>
-          <i data-lucide="bookmark-check" aria-hidden="true"></i>
-          좌표 저장
-        </button>
-        <button class="shortlist-action" type="button" data-shortlist-accent>
-          <i data-lucide="shopping-bag" aria-hidden="true"></i>
-          포인트 후보
-        </button>
-      </div>
-
-      <div class="confirmation-pill" role="status" aria-live="polite" data-confirmation>
-        캘리브레이션을 저장했습니다.
-      </div>
     </main>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>

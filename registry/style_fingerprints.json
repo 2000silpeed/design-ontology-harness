@@ -1,0 +1,644 @@
+{
+  "schema_version": "style-fingerprint-registry/v1",
+  "entries": [
+    {
+      "project": "agent-org-network",
+      "recorded_at": "2026-07-08T09:33:28+00:00",
+      "note": "backfill 2026-07-08",
+      "fingerprint": {
+        "project": "agent-org-network",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css"
+        ],
+        "surface_tone": "cool-tinted",
+        "surface_hexes": [
+          "#F5F7FA",
+          "#F5F7FA",
+          "#FFFFFF",
+          "#DFF2EB"
+        ],
+        "accent_hue_buckets": [
+          "green",
+          "teal",
+          "cyan",
+          "orange",
+          "red",
+          "blue",
+          "lime"
+        ],
+        "accent_hexes": [
+          "#006A4E",
+          "#24323C",
+          "#27503D",
+          "#0F5FBE",
+          "#147A4D",
+          "#A76700",
+          "#B72D22",
+          "#6F4BC4"
+        ],
+        "font_families": [],
+        "serif_accent": false,
+        "radius_values_px": [
+          3.0,
+          6.0
+        ],
+        "uses_pill_shapes": true,
+        "color_count": 50
+      }
+    },
+    {
+      "project": "ai-chat-mobile-mock",
+      "recorded_at": "2026-07-08T09:33:29+00:00",
+      "note": "backfill 2026-07-08",
+      "fingerprint": {
+        "project": "ai-chat-mobile-mock",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css"
+        ],
+        "surface_tone": "neutral-light",
+        "surface_hexes": [
+          "#EEF2F6",
+          "#F6F7F9",
+          "#FFFFFF",
+          "#FFFFFF"
+        ],
+        "accent_hue_buckets": [
+          "orange",
+          "teal",
+          "red",
+          "lime",
+          "magenta",
+          "cyan"
+        ],
+        "accent_hexes": [
+          "#F4C80E",
+          "#53C6E8",
+          "#FF8C6A",
+          "#73D58B",
+          "#FFDF4D",
+          "#FF4F5E",
+          "#12627C",
+          "#1DCC68"
+        ],
+        "font_families": [
+          "Inter"
+        ],
+        "serif_accent": false,
+        "radius_values_px": [
+          2.0,
+          3.0,
+          8.0,
+          10.0,
+          12.0,
+          14.0,
+          16.0,
+          18.0,
+          20.0,
+          30.0,
+          40.0
+        ],
+        "uses_pill_shapes": true,
+        "color_count": 27
+      }
+    },
+    {
+      "project": "contract-copilot-mock",
+      "recorded_at": "2026-07-08T09:33:29+00:00",
+      "note": "backfill 2026-07-08",
+      "fingerprint": {
+        "project": "contract-copilot-mock",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css",
+          "fonts.css",
+          "tokens.css"
+        ],
+        "surface_tone": "neutral-light",
+        "surface_hexes": [
+          "#F7F8FA",
+          "#F7F8FA",
+          "#FFFFFF",
+          "#EEF1F6"
+        ],
+        "accent_hue_buckets": [
+          "red",
+          "teal",
+          "magenta",
+          "lime",
+          "cyan"
+        ],
+        "accent_hexes": [
+          "#D7A170",
+          "#05ADFF",
+          "#B87333",
+          "#0071A8",
+          "#CF3A7E",
+          "#3B6C9C",
+          "#0094DB",
+          "#5FC27D"
+        ],
+        "font_families": [
+          "Pretendard Variable"
+        ],
+        "serif_accent": false,
+        "radius_values_px": [],
+        "uses_pill_shapes": true,
+        "color_count": 32
+      }
+    },
+    {
+      "project": "ekos-static-prototype",
+      "recorded_at": "2026-07-08T09:33:29+00:00",
+      "note": "backfill 2026-07-08",
+      "fingerprint": {
+        "project": "ekos-static-prototype",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css",
+          "tokens.css"
+        ],
+        "surface_tone": "neutral-light",
+        "surface_hexes": [
+          "#F7F8FA",
+          "#FFFFFF",
+          "#EEF1F6",
+          "#EEF1F6"
+        ],
+        "accent_hue_buckets": [
+          "cyan",
+          "orange",
+          "red",
+          "teal",
+          "green"
+        ],
+        "accent_hexes": [
+          "#799FF3",
+          "#2563EB",
+          "#F9C163",
+          "#EA9786",
+          "#197CD3",
+          "#00D69E",
+          "#FFA970",
+          "#F59E0B"
+        ],
+        "font_families": [],
+        "serif_accent": false,
+        "radius_values_px": [],
+        "uses_pill_shapes": false,
+        "color_count": 32
+      }
+    },
+    {
+      "project": "faircite-dual-mode-console",
+      "recorded_at": "2026-07-08T09:33:29+00:00",
+      "note": "backfill 2026-07-08",
+      "fingerprint": {
+        "project": "faircite-dual-mode-console",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css"
+        ],
+        "surface_tone": "neutral-light",
+        "surface_hexes": [
+          "#F4F6F8",
+          "#FFFFFF",
+          "#EDF1F5",
+          "#FBFCFD"
+        ],
+        "accent_hue_buckets": [
+          "teal",
+          "orange",
+          "blue",
+          "lime",
+          "magenta",
+          "cyan"
+        ],
+        "accent_hexes": [
+          "#1F6F78",
+          "#164F59",
+          "#B56D12",
+          "#6D5BD0",
+          "#2F7D51",
+          "#B66A00",
+          "#A13C4B",
+          "#8F5208"
+        ],
+        "font_families": [],
+        "serif_accent": false,
+        "radius_values_px": [],
+        "uses_pill_shapes": true,
+        "color_count": 26
+      }
+    },
+    {
+      "project": "faircite-harness-console",
+      "recorded_at": "2026-07-08T09:33:29+00:00",
+      "note": "backfill 2026-07-08",
+      "fingerprint": {
+        "project": "faircite-harness-console",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css",
+          "fonts.css",
+          "tokens.css"
+        ],
+        "surface_tone": "neutral-light",
+        "surface_hexes": [
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF"
+        ],
+        "accent_hue_buckets": [
+          "green",
+          "orange",
+          "magenta",
+          "teal",
+          "lime"
+        ],
+        "accent_hexes": [
+          "#27503D",
+          "#F59E0B",
+          "#8B2252",
+          "#0F4C81",
+          "#50C878",
+          "#CC7722"
+        ],
+        "font_families": [],
+        "serif_accent": false,
+        "radius_values_px": [],
+        "uses_pill_shapes": true,
+        "color_count": 15
+      }
+    },
+    {
+      "project": "fashion-magazine-pipeline-test",
+      "recorded_at": "2026-07-08T09:33:29+00:00",
+      "note": "backfill 2026-07-08",
+      "fingerprint": {
+        "project": "fashion-magazine-pipeline-test",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "reference-gallery.html",
+          "index.html"
+        ],
+        "surface_tone": "neutral-light",
+        "surface_hexes": [
+          "#F5F7FA",
+          "#FFFFFF",
+          "#EEF6F3",
+          "#FFFFFF"
+        ],
+        "accent_hue_buckets": [
+          "green",
+          "teal",
+          "magenta",
+          "orange"
+        ],
+        "accent_hexes": [
+          "#95C7B5",
+          "#0F5B7F",
+          "#28785F",
+          "#214536",
+          "#0C5C8A",
+          "#7F1734",
+          "#BD2E4A",
+          "#27503D"
+        ],
+        "font_families": [
+          "Inter",
+          "Georgia",
+          "Times New Roman"
+        ],
+        "serif_accent": true,
+        "radius_values_px": [
+          8.0
+        ],
+        "uses_pill_shapes": true,
+        "color_count": 29
+      }
+    },
+    {
+      "project": "omnigen-crm-demo",
+      "recorded_at": "2026-07-08T09:33:30+00:00",
+      "note": "backfill 2026-07-08",
+      "fingerprint": {
+        "project": "omnigen-crm-demo",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "demo-report.html",
+          "index.html"
+        ],
+        "surface_tone": "cool-tinted",
+        "surface_hexes": [
+          "#F7F8FA",
+          "#F7F8FA",
+          "#FFFFFF",
+          "#FBFCFD"
+        ],
+        "accent_hue_buckets": [
+          "teal",
+          "cyan",
+          "red",
+          "green",
+          "orange"
+        ],
+        "accent_hexes": [
+          "#003153",
+          "#0F4C81",
+          "#172235",
+          "#CC5500",
+          "#157A4F",
+          "#1E3A5A",
+          "#0A3D6C",
+          "#6A3B04"
+        ],
+        "font_families": [
+          "Spoqa Han Sans Neo",
+          "Pretendard",
+          "Inter",
+          "IBM Plex Mono",
+          "JetBrains Mono"
+        ],
+        "serif_accent": false,
+        "radius_values_px": [
+          3.0,
+          6.0,
+          8.0
+        ],
+        "uses_pill_shapes": true,
+        "color_count": 42
+      }
+    },
+    {
+      "project": "panel-pop-mobile-mock",
+      "recorded_at": "2026-07-08T09:33:30+00:00",
+      "note": "backfill 2026-07-08",
+      "fingerprint": {
+        "project": "panel-pop-mobile-mock",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css",
+          "fonts.css",
+          "tokens.css"
+        ],
+        "surface_tone": "neutral-light",
+        "surface_hexes": [
+          "#F7F8FA",
+          "#F3E5AB",
+          "#FFFFFF",
+          "#FFFFFF"
+        ],
+        "accent_hue_buckets": [
+          "cyan",
+          "red",
+          "magenta",
+          "lime",
+          "orange"
+        ],
+        "accent_hexes": [
+          "#808DEF",
+          "#FF7D70",
+          "#FF6F61",
+          "#CF3A7E",
+          "#808DF0",
+          "#5FC27D",
+          "#C4B8A2",
+          "#8B2252"
+        ],
+        "font_families": [
+          "Pretendard Variable"
+        ],
+        "serif_accent": false,
+        "radius_values_px": [],
+        "uses_pill_shapes": true,
+        "color_count": 30
+      }
+    },
+    {
+      "project": "seoul-alley-mood-map",
+      "recorded_at": "2026-07-08T09:33:30+00:00",
+      "note": "backfill 2026-07-08",
+      "fingerprint": {
+        "project": "seoul-alley-mood-map",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css",
+          "tokens.css"
+        ],
+        "surface_tone": "neutral-light",
+        "surface_hexes": [
+          "#F7F8FA",
+          "#F7F8FA",
+          "#FFFFFF",
+          "#FFFFFF"
+        ],
+        "accent_hue_buckets": [
+          "yellow",
+          "teal",
+          "magenta",
+          "blue",
+          "orange"
+        ],
+        "accent_hexes": [
+          "#70BF57",
+          "#7FC3CF",
+          "#4F7942",
+          "#4F97A3",
+          "#CF3A7E",
+          "#0000DC",
+          "#62B6C4",
+          "#E5A565"
+        ],
+        "font_families": [],
+        "serif_accent": false,
+        "radius_values_px": [],
+        "uses_pill_shapes": true,
+        "color_count": 32
+      }
+    },
+    {
+      "project": "sprout-community-mock",
+      "recorded_at": "2026-07-08T09:33:30+00:00",
+      "note": "backfill 2026-07-08",
+      "fingerprint": {
+        "project": "sprout-community-mock",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css"
+        ],
+        "surface_tone": "neutral-light",
+        "surface_hexes": [
+          "#F9FFF7",
+          "#FFF8DC",
+          "#FFFFFF",
+          "#FFF8DC"
+        ],
+        "accent_hue_buckets": [
+          "green",
+          "red",
+          "teal",
+          "lime",
+          "orange"
+        ],
+        "accent_hexes": [
+          "#20443A",
+          "#F88379",
+          "#69BFE3",
+          "#3B866E",
+          "#DC6259",
+          "#3BBF73",
+          "#FADA5E",
+          "#284F46"
+        ],
+        "font_families": [],
+        "serif_accent": false,
+        "radius_values_px": [],
+        "uses_pill_shapes": true,
+        "color_count": 21
+      }
+    },
+    {
+      "project": "tactic-lens-mock",
+      "recorded_at": "2026-07-08T09:33:30+00:00",
+      "note": "backfill 2026-07-08",
+      "fingerprint": {
+        "project": "tactic-lens-mock",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css"
+        ],
+        "surface_tone": "warm-paper",
+        "surface_hexes": [
+          "#F8F8F4",
+          "#F8F8F4",
+          "#F8F8F4",
+          "#F8F8F4"
+        ],
+        "accent_hue_buckets": [
+          "lime",
+          "teal",
+          "orange",
+          "magenta"
+        ],
+        "accent_hexes": [
+          "#50C878",
+          "#00B1D2",
+          "#FFBF00",
+          "#BD2E4A",
+          "#12353A",
+          "#39B663",
+          "#003153"
+        ],
+        "font_families": [],
+        "serif_accent": false,
+        "radius_values_px": [],
+        "uses_pill_shapes": true,
+        "color_count": 22
+      }
+    },
+    {
+      "project": "world-cup-hub",
+      "recorded_at": "2026-07-08T09:33:30+00:00",
+      "note": "backfill 2026-07-08",
+      "fingerprint": {
+        "project": "world-cup-hub",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css",
+          "tokens.css"
+        ],
+        "surface_tone": "dark",
+        "surface_hexes": [
+          "#007A4D",
+          "#003893",
+          "#111111",
+          "#11457E"
+        ],
+        "accent_hue_buckets": [
+          "red",
+          "teal",
+          "lime",
+          "green",
+          "cyan",
+          "magenta",
+          "orange",
+          "blue"
+        ],
+        "accent_hexes": [
+          "#D52B1E",
+          "#0F4C81",
+          "#178A4C",
+          "#007A4D",
+          "#11457E",
+          "#C1272D",
+          "#F36C21",
+          "#003893"
+        ],
+        "font_families": [],
+        "serif_accent": false,
+        "radius_values_px": [],
+        "uses_pill_shapes": true,
+        "color_count": 60
+      }
+    },
+    {
+      "project": "fashion-curation-mobile",
+      "recorded_at": "2026-07-08T12:47:08+00:00",
+      "note": "registered on divergence pass",
+      "fingerprint": {
+        "project": "fashion-curation-mobile",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css",
+          "tokens.css"
+        ],
+        "surface_tone": "dark",
+        "surface_hexes": [
+          "#141414",
+          "#003153",
+          "#7F1734",
+          "#141414"
+        ],
+        "accent_hue_buckets": [
+          "green",
+          "red",
+          "magenta",
+          "teal"
+        ],
+        "accent_hexes": [
+          "#00A591",
+          "#4A0404",
+          "#006A4E",
+          "#7F1734",
+          "#9C1F4B",
+          "#003153"
+        ],
+        "font_families": [
+          "Noto Serif KR",
+          "Georgia",
+          "Playfair Display",
+          "Pretendard"
+        ],
+        "serif_accent": true,
+        "radius_values_px": [],
+        "uses_pill_shapes": false,
+        "color_count": 19
+      }
+    }
+  ]
+}

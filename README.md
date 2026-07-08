@@ -115,6 +115,24 @@ uv run design-ontology init-agent-pack \
 
 생성되는 Codex plugin에는 `design-system-concept-author`가 들어갑니다. 이 skill은 `run-project` 전에 LLM이 직접 `application_concept`, `layout_skeleton`, `design_differentiation`을 쓰도록 강제합니다.
 
+## 시각 반복 방지: 토큰 바인딩과 스타일 발산 게이트
+
+concept-author가 IA 반복을 막는다면, 시각 반복은 별도의 강제 장치가 막습니다.
+blueprint가 프로젝트마다 다른 팔레트를 만들어도 구현 단계에서 소비되지 않으면
+구현 LLM의 기본 미감(크림 배경 + 옥스블러드/틸 액센트 + 세리프 디스플레이)으로
+회귀하기 때문입니다.
+
+| 장치 | 명령 | 역할 |
+|---|---|---|
+| 토큰 방출 | `emit-tokens --project-dir` | blueprint의 active palette·font_system·radius를 `design-system/tokens.css`(`--ds-*`)로 방출. 구현 CSS의 유일한 시각 진실 소스 |
+| 토큰 바인딩 린트 | `lint-implementation --target-repo` | 구현 CSS의 하드코딩 색/폰트/라운딩을 실패 처리 |
+| 스타일 지문 등록 | `fingerprint-style --project-dir` | 최종 HTML/CSS에서 surface tone, accent hue, 폰트 페어링, serif accent를 추출해 `registry/style_fingerprints.json`에 기록 |
+| 발산 게이트 | `check-style-divergence --project-dir` | 최근 프로젝트 지문과의 유사도, 알려진 수렴 attractor 일치 시 실패 |
+
+목업을 직접 구현할 때는 `skills/design-ontology-mockup-builder` skill이 이 순서를
+강제합니다. 자세한 규칙은 [docs/IMPLEMENTATION_WORKFLOW.md](docs/IMPLEMENTATION_WORKFLOW.md)의
+5.5절을 참고하세요.
+
 ## 전체 흐름
 
 ```mermaid

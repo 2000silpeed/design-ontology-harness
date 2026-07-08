@@ -54,6 +54,11 @@ uv run design-ontology run-project --project-dir projects/<name> --kb-dir kb/def
    - `build/system/blueprint/system_spec.md`
    - `build/system/blueprint/token_schema.json`
    - `build/system/blueprint/component_inventory.json`
+9. When the goal is an actual mockup/prototype, hand off to the
+   `design-ontology-mockup-builder` skill. It enforces `emit-tokens`,
+   `var(--ds-*)` binding, `lint-implementation`, and
+   `check-style-divergence` so the implementation cannot regress into the
+   default aesthetic this skill's fields were written to avoid.
 
 ## Output Contract
 
