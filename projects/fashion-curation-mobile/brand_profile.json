@@ -1,0 +1,246 @@
+{
+  "brand_name": "ThreadSense",
+  "system_name": "ThreadSense Mobile System",
+  "product_summary": "A Korean-first mobile fashion curation app that turns personal taste signals into shoppable outfit edits.",
+  "audiences": [
+    "20-30대 모바일 쇼핑 사용자",
+    "자기 취향은 있지만 매일의 착장 조합에는 시간을 적게 쓰고 싶은 사용자",
+    "브랜드보다 핏, 분위기, 상황 맥락으로 옷을 고르는 사용자"
+  ],
+  "brand_keywords": [
+    "editorial",
+    "personal",
+    "tactile",
+    "decisive",
+    "refined"
+  ],
+  "anti_keywords": [
+    "generic",
+    "dashboard-like",
+    "noisy",
+    "luxury-cliche",
+    "infinite-card-wall"
+  ],
+  "tone_of_voice": [
+    "curated",
+    "warm",
+    "precise",
+    "low-pressure"
+  ],
+  "visual_keywords": [
+    "editorial mobile",
+    "tactile fabric",
+    "soft contrast",
+    "quiet commerce",
+    "magazine-like but operational"
+  ],
+  "interaction_keywords": [
+    "swipe taste signals",
+    "compare outfits",
+    "save edit",
+    "shop drawer",
+    "size-aware decision"
+  ],
+  "platforms": [
+    "mobile-web",
+    "ios",
+    "android"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "Korean copy wrapping",
+    "44px minimum touch targets"
+  ],
+  "application_concept": {
+    "primary_job": "사용자가 오늘의 상황과 취향 신호를 바탕으로 하나의 착장 에디트를 빠르게 확정하고 저장하거나 구매 후보로 넘긴다.",
+    "domain_objects": [
+      "taste signal",
+      "outfit edit",
+      "garment item",
+      "occasion",
+      "fit note",
+      "price and size option",
+      "saved closet"
+    ],
+    "operating_mode": "taste-led mobile curation",
+    "success_moment": "사용자가 오늘의 에디트를 저장하고, 각 아이템의 사이즈/가격/대체 후보를 확인한 상태.",
+    "differentiation": [
+      "첫 화면이 상품 그리드가 아니라 취향 신호와 완성된 착장 에디트가 함께 보이는 구조",
+      "추천 이유가 감성 카피가 아니라 소재, 실루엣, 상황, 보유 옷과의 연결로 설명됨",
+      "쇼핑은 별도 페이지가 아니라 착장 에디트 안에서 bottom drawer로 열림"
+    ]
+  },
+  "layout_skeleton": {
+    "composition": "taste-signal rail with outfit edit canvas and shop drawer",
+    "navigation_model": "bottom tab plus local taste chips",
+    "density": "balanced",
+    "primary_regions": [
+      {
+        "name": "Taste signal rail",
+        "role": "오늘의 상황, 무드, 날씨, 피하고 싶은 요소를 빠르게 조정",
+        "priority": "primary"
+      },
+      {
+        "name": "Outfit edit canvas",
+        "role": "완성된 착장 후보와 핵심 아이템을 시각적으로 비교",
+        "priority": "primary"
+      },
+      {
+        "name": "Why this works",
+        "role": "소재, 실루엣, 보유 옷과의 연결 근거를 짧게 설명",
+        "priority": "secondary"
+      },
+      {
+        "name": "Shop drawer",
+        "role": "사이즈/가격/대체 후보를 확인하고 저장 또는 구매 후보로 이동",
+        "priority": "secondary"
+      }
+    ],
+    "first_screen_contract": [
+      "첫 viewport 안에 taste signal rail과 outfit edit canvas가 함께 보여야 함",
+      "상품 목록보다 오늘의 착장 에디트와 추천 근거가 먼저 보여야 함",
+      "저장, 대체 후보 보기, 쇼핑 drawer 열기 액션이 thumb zone 안에 있어야 함",
+      "패션 이미지는 텍스트 장식이 아니라 실제 garment/outfit 맥락을 보여야 함"
+    ],
+    "avoid_layouts": [
+      "generic hero plus card grid",
+      "uniform product card wall",
+      "dashboard metric cards",
+      "luxury black-gold cliche",
+      "infinite feed without curation decision"
+    ]
+  },
+  "design_differentiation": {
+    "must_feel_different_from": [
+      "generic fashion marketplace grid",
+      "template shopping app home",
+      "magazine landing page",
+      "SaaS dashboard"
+    ],
+    "signature_moves": [
+      "Taste chips remain horizontally available above the outfit canvas instead of becoming a hidden filter sheet.",
+      "The main surface shows one decisive outfit edit with supporting alternatives, not a waterfall of products.",
+      "A shop drawer slides from the outfit context so commerce stays attached to the curation decision."
+    ],
+    "repetition_risks": [
+      "same two-column product cards",
+      "oversized editorial hero without a decision action",
+      "brand-story text before the actual outfit edit",
+      "too many pastel cards with no curation hierarchy"
+    ]
+  },
+  "product_primitives": [
+    "taste signal chip rail",
+    "outfit edit canvas",
+    "garment stack",
+    "why-this-works note",
+    "fit and size note",
+    "save edit action",
+    "shop drawer",
+    "alternative item carousel",
+    "closet compatibility indicator"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "mobile",
+      "accessibility"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "enterprise-dashboard"
+    ]
+  },
+  "seeds": [],
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Rose Red",
+      "Rose Quartz",
+      "Green Ash",
+      "Prussian Blue",
+      "Blanched Almond"
+    ],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "warm-neutral",
+      "contrast": "balanced",
+      "diversity": "medium",
+      "surface_style": "soft-editorial",
+      "prefer_moods": [
+        "세련",
+        "부드러움",
+        "감각적",
+        "자연스러움"
+      ],
+      "avoid_moods": [
+        "강렬함",
+        "과시적",
+        "테크 대시보드"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 8,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "패션 이미지와 충돌하지 않는 warm neutral surface를 기본으로 사용",
+      "accent는 저장/쇼핑 액션에 제한하고 대면적 채도 사용을 피함",
+      "semantic status color는 브랜드 accent와 분리"
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "mobile fashion curation app outfit edit canvas",
+      "Korean mobile shopping wardrobe styling interface",
+      "editorial fashion app taste chips outfit recommendation"
+    ],
+    "sources": [],
+    "preferred_count": 12,
+    "weights": {
+      "layout": 0.34,
+      "component_shape": 0.22,
+      "color_balance": 0.14,
+      "typography_mood": 0.14,
+      "surface_style": 0.16
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "outfit imagery",
+      "taste signal controls",
+      "save or shop action"
+    ],
+    "avoid_patterns": [
+      "generic ecommerce grid",
+      "dashboard cards",
+      "full-screen hero with no task"
+    ],
+    "notes": [
+      "visual references may inform morphology and density only",
+      "do not copy reference palette, typography, IA, or product copy"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "Pinterest는 query 생성과 후보 수집 보조에만 사용",
+        "최종 분석 입력은 항상 visual_reference.sources의 로컬 파일로 고정"
+      ]
+    }
+  }
+}

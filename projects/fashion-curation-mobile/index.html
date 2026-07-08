@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ThreadSense Today Edit</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-screen" aria-label="ThreadSense 모바일 패션 큐레이션">
+      <header class="topbar">
+        <div class="identity">
+          <p class="context-line">
+            <i data-lucide="map-pin" aria-hidden="true"></i>
+            성수 · 비 온 뒤 18도
+          </p>
+          <h1>ThreadSense</h1>
+        </div>
+        <div class="top-actions">
+          <button class="icon-button" type="button" aria-label="취향 조건 조정">
+            <i data-lucide="sliders-horizontal" aria-hidden="true"></i>
+          </button>
+          <button class="icon-button" type="button" aria-label="프로필 열기">
+            <i data-lucide="user-round" aria-hidden="true"></i>
+          </button>
+        </div>
+      </header>
+
+      <nav class="taste-rail" aria-label="오늘의 취향 신호">
+        <button class="taste-chip is-active" type="button" data-signal="출근">
+          출근
+        </button>
+        <button class="taste-chip is-active" type="button" data-signal="비 온 뒤">
+          비 온 뒤
+        </button>
+        <button class="taste-chip" type="button" data-signal="로고 제외">
+          로고 제외
+        </button>
+        <button class="taste-chip" type="button" data-signal="차분한 핏">
+          차분한 핏
+        </button>
+        <button class="taste-chip" type="button" data-signal="낮은 채도">
+          낮은 채도
+        </button>
+      </nav>
+
+      <section class="mode-strip" aria-label="추천 모드">
+        <button class="mode-button is-active" type="button" data-mode="today">
+          오늘핏
+        </button>
+        <button class="mode-button" type="button" data-mode="closet">
+          보유옷
+        </button>
+        <button class="mode-button" type="button" data-mode="new">
+          새 아이템
+        </button>
+      </section>
+
+      <figure class="outfit-canvas" aria-labelledby="edit-title">
+        <!-- Image source: Unsplash, clothing racks with neutral toned garments. -->
+        <img
+          src="https://images.unsplash.com/photo-1603400521630-9f2de124b33b?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=1600"
+          alt="차분한 톤의 재킷과 셔츠가 걸린 의류 랙"
+        />
+        <div class="canvas-topline">
+          <span>Today edit</span>
+          <strong>92%</strong>
+        </div>
+        <figcaption class="canvas-caption">
+          <p class="eyebrow">Soft Utility Edit</p>
+          <h2 id="edit-title">비 온 뒤 출근길, 밝은 트렌치와 낮은 채도의 니트.</h2>
+          <p>
+            젖은 보도와 실내 냉방 사이에서 무게가 가벼운 레이어를 먼저 잡았습니다.
+          </p>
+        </figcaption>
+      </figure>
+
+      <section class="reason-band" aria-labelledby="reason-title">
+        <div class="section-title-row">
+          <h2 id="reason-title">맞는 이유</h2>
+          <span class="signal-summary">출근 · 비 온 뒤</span>
+        </div>
+        <div class="reason-list">
+          <article class="reason-note">
+            <span class="note-index">01</span>
+            <p>방수감 있는 겉감과 얇은 니트가 온도 차를 흡수합니다.</p>
+          </article>
+          <article class="reason-note">
+            <span class="note-index">02</span>
+            <p>보유 중인 크림 데님과 톤이 이어져 새 구매를 줄입니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="garment-stack" aria-labelledby="stack-title">
+        <div class="section-title-row">
+          <h2 id="stack-title">착장 구성</h2>
+          <button class="text-button" type="button" data-open-shop>
+            쇼핑 서랍 열기
+          </button>
+        </div>
+
+        <article
+          class="garment-row is-selected"
+          data-item="light-trench"
+          data-title="라이트 트렌치"
+          data-price="158,000원"
+          data-fit="반 사이즈 여유"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=800"
+            alt="베이지와 뉴트럴 컬러 의류가 걸린 행거"
+          />
+          <div class="garment-copy">
+            <p class="garment-label">outer</p>
+            <h3>라이트 트렌치</h3>
+            <p>가벼운 발수감 · 반 사이즈 여유</p>
+          </div>
+          <button class="row-action" type="button" aria-label="라이트 트렌치 저장">
+            <i data-lucide="bookmark" aria-hidden="true"></i>
+          </button>
+        </article>
+
+        <article
+          class="garment-row"
+          data-item="rib-knit"
+          data-title="세이지 리브 니트"
+          data-price="74,000원"
+          data-fit="정사이즈"
+        >
+          <div class="fabric-swatch sage" aria-hidden="true"></div>
+          <div class="garment-copy">
+            <p class="garment-label">top</p>
+            <h3>세이지 리브 니트</h3>
+            <p>낮은 채도 · 단독 착용 가능</p>
+          </div>
+          <button class="row-action" type="button" aria-label="세이지 리브 니트 저장">
+            <i data-lucide="bookmark" aria-hidden="true"></i>
+          </button>
+        </article>
+
+        <article
+          class="garment-row"
+          data-item="cream-denim"
+          data-title="크림 스트레이트 데님"
+          data-price="보유 옷"
+          data-fit="허리 여유 2cm"
+        >
+          <div class="fabric-swatch cream" aria-hidden="true"></div>
+          <div class="garment-copy">
+            <p class="garment-label">bottom</p>
+            <h3>크림 스트레이트 데님</h3>
+            <p>이미 보유 · 허리 여유 2cm</p>
+          </div>
+          <button class="row-action" type="button" aria-label="크림 스트레이트 데님 확인">
+            <i data-lucide="shirt" aria-hidden="true"></i>
+          </button>
+        </article>
+      </section>
+
+      <section class="alternative-rail" aria-labelledby="alt-title">
+        <div class="section-title-row">
+          <h2 id="alt-title">대체 후보</h2>
+          <span>3개</span>
+        </div>
+        <div class="alternative-list" role="list">
+          <button class="alternative-tile is-active" type="button" role="listitem">
+            <span class="tile-color trench"></span>
+            밝은 트렌치
+          </button>
+          <button class="alternative-tile" type="button" role="listitem">
+            <span class="tile-color navy"></span>
+            네이비 재킷
+          </button>
+          <button class="alternative-tile" type="button" role="listitem">
+            <span class="tile-color rose"></span>
+            로즈 셔츠
+          </button>
+        </div>
+      </section>
+
+      <aside class="shop-drawer" aria-label="선택 아이템 쇼핑 서랍" data-shop-drawer>
+        <button class="drawer-handle" type="button" aria-expanded="false" data-open-shop>
+          <span></span>
+          <i data-lucide="chevron-up" aria-hidden="true"></i>
+        </button>
+        <div class="drawer-content">
+          <div class="drawer-item">
+            <div class="drawer-image">
+              <img
+                src="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=600"
+                alt=""
+              />
+            </div>
+            <div>
+              <p class="garment-label">selected</p>
+              <h2 data-drawer-title>라이트 트렌치</h2>
+              <p data-drawer-fit>반 사이즈 여유</p>
+            </div>
+            <strong data-drawer-price>158,000원</strong>
+          </div>
+
+          <div class="size-row" aria-label="사이즈 선택">
+            <button type="button">XS</button>
+            <button class="is-active" type="button">S</button>
+            <button type="button">M</button>
+            <button type="button">L</button>
+          </div>
+
+          <div class="drawer-actions">
+            <button class="secondary-action" type="button" data-save-edit>
+              <i data-lucide="bookmark" aria-hidden="true"></i>
+              저장
+            </button>
+            <button class="primary-action" type="button">
+              <i data-lucide="shopping-bag" aria-hidden="true"></i>
+              후보 담기
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <nav class="bottom-nav" aria-label="주요 탭">
+        <button class="is-active" type="button">
+          <i data-lucide="home" aria-hidden="true"></i>
+          오늘
+        </button>
+        <button type="button">
+          <i data-lucide="shirt" aria-hidden="true"></i>
+          클로젯
+        </button>
+        <button type="button">
+          <i data-lucide="layers-3" aria-hidden="true"></i>
+          에딧
+        </button>
+        <button type="button">
+          <i data-lucide="shopping-bag" aria-hidden="true"></i>
+          쇼핑
+        </button>
+      </nav>
+
+      <div class="toast" role="status" aria-live="polite" data-toast>
+        오늘의 에딧을 저장했습니다.
+      </div>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
