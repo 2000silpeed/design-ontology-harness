@@ -2,7 +2,7 @@
   "id": "monitoring-ops--corporate-trust",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "seoul-alley-mood-map",
-  "content_hash": "sha256:bb3d3771bc7b81a724e6032de4bf3bdaddb47f978f559c73e863ce81361d677f",
+  "content_hash": "sha256:ef4da118b40e7a82b2e3080d05e45fc041bc7fb1949ae35c97a23d7ca6eb378b",
   "app_mode": "monitoring-ops",
   "brand_tone": "corporate-trust",
   "color_modes": [
@@ -29,6 +29,6 @@
   "locale_pairings": {},
   "owner": "codex",
   "tier": "P3",
-  "generated_at": "2026-05-17T14:03:23Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "Mobile-first sensory place curation system for Seoul alley mood mapping"
 }

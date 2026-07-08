@@ -2,7 +2,7 @@
   "id": "conversation-copilot--editorial-warm",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "quill",
-  "content_hash": "sha256:f103645688d0882311c337ef399b4be9c05a516ebe684b8fd4e8c254dbd3aac9",
+  "content_hash": "sha256:0bca55b82932f0445ff40e0aece05bc565e1d29556d690983e34534c1a2dc1d8",
   "app_mode": "conversation-copilot",
   "brand_tone": "editorial-warm",
   "color_modes": [
@@ -33,6 +33,6 @@
   },
   "owner": "maintainer",
   "tier": "P2",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "writing/editorial AI copilot — editorial-warm 톤, chat·prompt·artifact(draft)·thread·composer, 차분한 warm neutral + serif-ish pairing, 한국어 1급"
 }

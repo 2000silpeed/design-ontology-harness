@@ -2,7 +2,7 @@
   "id": "document-content--playful-soft",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "panel-pop",
-  "content_hash": "sha256:bb4a92eb7c684586e864c18234ef21f00559b7bd2ab12949e8094cefcafcd08e",
+  "content_hash": "sha256:f77f96a1d695f788899485a8f6364e15493851ecc82373c579469ffe6d6173b1",
   "app_mode": "document-content",
   "brand_tone": "playful-soft",
   "color_modes": [
@@ -35,6 +35,6 @@
   },
   "owner": "codex",
   "tier": "P3",
-  "generated_at": "2026-05-19T14:03:48Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "모바일 만화 잡지 앱 — playful-soft 톤, 주간 이슈·표지·연재 회차·컷 미리보기·보관함 중심 한국어 UI"
 }

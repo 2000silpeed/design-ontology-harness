@@ -20,15 +20,15 @@
 > light/dark 변형은 어댑터(`nextjs-tailwind-shadcn` 등)가 파생. 원본 팔레트는 위 HEX 1세트.
 
 ## Typography
-- heading: Spoqa Han Sans Neo
-- body: Spoqa Han Sans Neo
+- heading: Inter
+- body: Inter
 - mono: JetBrains Mono
-- korean: Spoqa Han Sans Neo
+- korean: Pretendard
 
 ## 대표 컴포넌트
-- **inline-alert** — parts: container, icon, message, action(optional), close-button(optional) | states: info, success, warning, danger
-- **chart-container** — parts: container, header, content-area, footer(optional), action(optional) | states: default, loading, empty, error
-- **chart-tooltip** — parts: backdrop, container, header, content, footer(optional) | states: closed, opening, open, closing
+- **ticket-queue** — parts: container, header, content-area, footer(optional), action(optional) | states: default, loading, empty, error
+- **alert-list** — parts: container, header, content-area, footer(optional), action(optional) | states: default, loading, empty, error
+- **icon-button** — parts: container, label, leading-icon(optional), trailing-icon(optional) | states: default, hover, active, disabled
 
 ## Locale Pairings
 - ko: heading=Pretendard / body=Pretendard

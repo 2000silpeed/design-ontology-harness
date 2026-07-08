@@ -1,0 +1,1180 @@
+{
+  "schema_version": "aesthetic-evaluation-ontology/v1",
+  "dimensions": [
+    {
+      "id": "visual_harmony",
+      "label": "Visual harmony",
+      "weight": 0.24,
+      "description": "How coherently color, type, spacing, and composition work together.",
+      "metrics": [
+        "color_harmony",
+        "spacing_consistency",
+        "typography_balance",
+        "composition_order"
+      ]
+    },
+    {
+      "id": "clarity",
+      "label": "Clarity",
+      "weight": 0.2,
+      "description": "How quickly the intended hierarchy, action, and information structure can be read.",
+      "metrics": [
+        "hierarchy_clarity",
+        "contrast_legibility",
+        "content_density_control",
+        "task_focus"
+      ]
+    },
+    {
+      "id": "brand_fit",
+      "label": "Brand fit",
+      "weight": 0.18,
+      "description": "How well the candidate expresses the intended brand posture and avoids anti-keywords.",
+      "metrics": [
+        "keyword_alignment",
+        "tone_alignment",
+        "domain_fit",
+        "anti_keyword_avoidance"
+      ]
+    },
+    {
+      "id": "emotional_appeal",
+      "label": "Emotional appeal",
+      "weight": 0.14,
+      "description": "How desirable, confident, and affectively appropriate the surface feels.",
+      "metrics": [
+        "desirability",
+        "confidence_signal",
+        "warmth_or_energy"
+      ]
+    },
+    {
+      "id": "craft_quality",
+      "label": "Craft quality",
+      "weight": 0.14,
+      "description": "How polished and implementation-ready the candidate is across fit, tokens, and affordances.",
+      "metrics": [
+        "responsive_fit",
+        "token_binding",
+        "accessibility_baseline",
+        "interaction_affordance",
+        "asset_completeness"
+      ]
+    },
+    {
+      "id": "novelty",
+      "label": "Novelty",
+      "weight": 0.1,
+      "description": "How distinctive the design is without breaking its product and brand constraints.",
+      "metrics": [
+        "distinctiveness",
+        "reference_transformation",
+        "memorability"
+      ]
+    },
+    {
+      "id": "brand_semantic_fit",
+      "label": "Brand semantic fit",
+      "weight": 0.22,
+      "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+      "metrics": [
+        "brand_keyword:situated-3b442b1a",
+        "brand_keyword:quiet-58bdb05d",
+        "brand_keyword:sensory-cfa2f267",
+        "brand_keyword:curated-ab349f69",
+        "brand_keyword:walkable-be4e1cdd",
+        "brand_keyword:trustworthy-a4bdbf4a",
+        "brand_keyword:local-939bb46a",
+        "brand_tone:calm-2ec3d0c7",
+        "brand_tone:observational-26c3d617",
+        "brand_tone:specific-660cffc2",
+        "brand_tone:warm-d83fc386",
+        "brand_tone:non-salesy-e870af69"
+      ],
+      "research_basis": [
+        "kansei",
+        "aesthemos"
+      ]
+    },
+    {
+      "id": "brand_boundary_fit",
+      "label": "Brand boundary fit",
+      "weight": 0.16,
+      "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+      "metrics": [
+        "anti_keyword:generic-map-ade26edd",
+        "anti_keyword:tourism-brochure-a13bf8ab",
+        "anti_keyword:photo-influencer-feed-875c9ea6",
+        "anti_keyword:commerce-led-ef6f50d0",
+        "anti_keyword:real-estate-f7b2cd1a",
+        "anti_keyword:overdecorated-c3af2e6e",
+        "anti_keyword:neon-09407639",
+        "anti_keyword:glassmorphism-d83b9e03",
+        "avoid_pattern:full-screen-marketing-hero-68220066",
+        "avoid_pattern:nested-cards-02257046",
+        "avoid_pattern:large-decorative-gradients-2fcbbfd8",
+        "avoid_pattern:tour-package-cards-e7d3d3aa",
+        "avoid_pattern:price-or-booking-language-f24e27e4",
+        "avoid_pattern:photo-feed-dominance-600f12b6"
+      ],
+      "research_basis": [
+        "kansei"
+      ]
+    },
+    {
+      "id": "product_ontology_fit",
+      "label": "Product ontology fit",
+      "weight": 0.22,
+      "description": "How clearly product primitives and ontology-required signals appear in the design.",
+      "metrics": [
+        "product_primitive:neighborhood-switcher-ce0ab6e2",
+        "product_primitive:time-of-day-segmented-control-b40d47da",
+        "product_primitive:sensory-filter-chips-f8334414",
+        "product_primitive:mood-match-score-2bb95a49",
+        "product_primitive:map-pin-layer-6e0f4c80",
+        "product_primitive:place-list-card-2fd8680f",
+        "product_primitive:sensory-evidence-strip-b3db4843",
+        "product_primitive:place-detail-sheet-16250014",
+        "product_primitive:light-sound-crowding-profile-0a597f5b",
+        "product_primitive:emotion-tag-cluster-af9eca64",
+        "must_include:list-alternative-to-the-map-9b20cdfb",
+        "must_include:sensory-metadata-visible-on-cards-054b344f",
+        "must_include:place-confidence-and-evidence-state-17220f68",
+        "must_include:ontology-inspector-that-exposes-rela-c7644752"
+      ],
+      "research_basis": [
+        "beauvis",
+        "kansei"
+      ]
+    },
+    {
+      "id": "audience_context_fit",
+      "label": "Audience context fit",
+      "weight": 0.12,
+      "description": "How well the design serves declared users, platforms, and accessibility floors.",
+      "metrics": [
+        "audience_need:혼자-산책하거나-작업할-조용한-장소를-찾는-서울-거주자-404c3c82",
+        "audience_need:카페-서점-작은-공원-골목길을-분위기-기준으로-저장하고-비교하고-391e7fa8",
+        "audience_need:관광-명소보다-시간대-빛-소리-혼잡도-같은-실제-경험-신호를-믿고-7c17e345",
+        "accessibility_target:wcag-2-2-aa-41a998cd",
+        "accessibility_target:44px-minimum-touch-target-c097c2da",
+        "accessibility_target:16px-minimum-form-text-95f7f127",
+        "accessibility_target:reduced-motion-friendly-1a39accd",
+        "accessibility_target:map-alternatives-through-list-and-ta-795fa436"
+      ],
+      "research_basis": [
+        "visawi",
+        "aesthemos"
+      ]
+    }
+  ],
+  "metrics": {
+    "color_harmony": {
+      "label": "Color harmony",
+      "improvement": "Tighten the palette around one primary accent, one neutral surface ladder, and explicit semantic roles.",
+      "expected_lift": 0.08
+    },
+    "spacing_consistency": {
+      "label": "Spacing consistency",
+      "improvement": "Normalize page rhythm with shared spacing steps for section, cluster, and control gaps.",
+      "expected_lift": 0.07
+    },
+    "typography_balance": {
+      "label": "Typography balance",
+      "improvement": "Rebalance type hierarchy so headings, body, captions, and controls use distinct but restrained roles.",
+      "expected_lift": 0.07
+    },
+    "composition_order": {
+      "label": "Composition order",
+      "improvement": "Strengthen alignment, focal sequence, and proportional grouping before adding more decoration.",
+      "expected_lift": 0.08
+    },
+    "hierarchy_clarity": {
+      "label": "Hierarchy clarity",
+      "improvement": "Make the primary state, primary action, and next-best secondary action visible in the first scan.",
+      "expected_lift": 0.09
+    },
+    "contrast_legibility": {
+      "label": "Contrast and legibility",
+      "improvement": "Raise text/background and control/border contrast while preserving the selected token roles.",
+      "expected_lift": 0.08
+    },
+    "content_density_control": {
+      "label": "Content density control",
+      "improvement": "Reduce competing modules or group dense content into scannable rows, tables, rails, or panels.",
+      "expected_lift": 0.07
+    },
+    "task_focus": {
+      "label": "Task focus",
+      "improvement": "Move decorative or pitch-like content below the operational surface that supports the user's main task.",
+      "expected_lift": 0.08
+    },
+    "keyword_alignment": {
+      "label": "Keyword alignment",
+      "improvement": "Map the strongest brand keywords to visible choices in layout, tone, density, and component emphasis.",
+      "expected_lift": 0.08
+    },
+    "tone_alignment": {
+      "label": "Tone alignment",
+      "improvement": "Adjust copy weight, control styling, and visual temperature to match the intended voice.",
+      "expected_lift": 0.06
+    },
+    "domain_fit": {
+      "label": "Domain fit",
+      "improvement": "Add domain-native structures such as tables, maps, media, timelines, inspectors, or product objects where relevant.",
+      "expected_lift": 0.08
+    },
+    "anti_keyword_avoidance": {
+      "label": "Anti-keyword avoidance",
+      "improvement": "Remove visual tropes that match the brand profile's anti-keywords before polishing details.",
+      "expected_lift": 0.06
+    },
+    "desirability": {
+      "label": "Desirability",
+      "improvement": "Give the primary surface a more intentional visual reward: stronger imagery, tactile controls, or clearer payoff.",
+      "expected_lift": 0.07
+    },
+    "confidence_signal": {
+      "label": "Confidence signal",
+      "improvement": "Add evidence, provenance, precision, or stable UI states that make the surface feel trustworthy.",
+      "expected_lift": 0.07
+    },
+    "warmth_or_energy": {
+      "label": "Warmth or energy",
+      "improvement": "Tune motion, image choice, accent placement, or microcopy energy to the target audience.",
+      "expected_lift": 0.06
+    },
+    "responsive_fit": {
+      "label": "Responsive fit",
+      "improvement": "Verify mobile and desktop fit, then fix overflow, clipped labels, and unstable control sizing.",
+      "expected_lift": 0.08
+    },
+    "token_binding": {
+      "label": "Token binding",
+      "improvement": "Replace local visual constants with design-system tokens and keep semantic roles consistent.",
+      "expected_lift": 0.06
+    },
+    "accessibility_baseline": {
+      "label": "Accessibility baseline",
+      "improvement": "Check contrast, focus states, labels, and target sizes as part of visual polish, not after it.",
+      "expected_lift": 0.07
+    },
+    "interaction_affordance": {
+      "label": "Interaction affordance",
+      "improvement": "Make controls, filters, state chips, and navigation visually legible with icons, state, and hit-area clarity.",
+      "expected_lift": 0.07
+    },
+    "asset_completeness": {
+      "label": "Asset completeness",
+      "improvement": "Use concrete product, place, object, identity, or content assets where the domain expects visual substance.",
+      "expected_lift": 0.08
+    },
+    "distinctiveness": {
+      "label": "Distinctiveness",
+      "improvement": "Introduce one memorable composition or interaction pattern while keeping the rest of the system restrained.",
+      "expected_lift": 0.06
+    },
+    "reference_transformation": {
+      "label": "Reference transformation",
+      "improvement": "Absorb reference morphology without copying palette, copy, IA, or protected asset choices.",
+      "expected_lift": 0.06
+    },
+    "memorability": {
+      "label": "Memorability",
+      "improvement": "Create a recognizable signature in the first viewport through layout, identity asset, or product-native visual.",
+      "expected_lift": 0.06
+    },
+    "brand_keyword:situated-3b442b1a": {
+      "label": "Expresses brand keyword: situated",
+      "improvement": "Make 'situated' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "situated"
+    },
+    "brand_keyword:quiet-58bdb05d": {
+      "label": "Expresses brand keyword: quiet",
+      "improvement": "Make 'quiet' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "quiet"
+    },
+    "brand_keyword:sensory-cfa2f267": {
+      "label": "Expresses brand keyword: sensory",
+      "improvement": "Make 'sensory' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "sensory"
+    },
+    "brand_keyword:curated-ab349f69": {
+      "label": "Expresses brand keyword: curated",
+      "improvement": "Make 'curated' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "curated"
+    },
+    "brand_keyword:walkable-be4e1cdd": {
+      "label": "Expresses brand keyword: walkable",
+      "improvement": "Make 'walkable' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "walkable"
+    },
+    "brand_keyword:trustworthy-a4bdbf4a": {
+      "label": "Expresses brand keyword: trustworthy",
+      "improvement": "Make 'trustworthy' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "trustworthy"
+    },
+    "brand_keyword:local-939bb46a": {
+      "label": "Expresses brand keyword: local",
+      "improvement": "Make 'local' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "local"
+    },
+    "brand_tone:calm-2ec3d0c7": {
+      "label": "Expresses tone of voice: calm",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'calm'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "calm"
+    },
+    "brand_tone:observational-26c3d617": {
+      "label": "Expresses tone of voice: observational",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'observational'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "observational"
+    },
+    "brand_tone:specific-660cffc2": {
+      "label": "Expresses tone of voice: specific",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'specific'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "specific"
+    },
+    "brand_tone:warm-d83fc386": {
+      "label": "Expresses tone of voice: warm",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'warm'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "warm"
+    },
+    "brand_tone:non-salesy-e870af69": {
+      "label": "Expresses tone of voice: non-salesy",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'non-salesy'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "non-salesy"
+    },
+    "anti_keyword:generic-map-ade26edd": {
+      "label": "Avoids anti-keyword: generic-map",
+      "improvement": "Remove cues that make the product read as 'generic-map'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "generic-map"
+    },
+    "anti_keyword:tourism-brochure-a13bf8ab": {
+      "label": "Avoids anti-keyword: tourism-brochure",
+      "improvement": "Remove cues that make the product read as 'tourism-brochure'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "tourism-brochure"
+    },
+    "anti_keyword:photo-influencer-feed-875c9ea6": {
+      "label": "Avoids anti-keyword: photo-influencer-feed",
+      "improvement": "Remove cues that make the product read as 'photo-influencer-feed'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "photo-influencer-feed"
+    },
+    "anti_keyword:commerce-led-ef6f50d0": {
+      "label": "Avoids anti-keyword: commerce-led",
+      "improvement": "Remove cues that make the product read as 'commerce-led'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "commerce-led"
+    },
+    "anti_keyword:real-estate-f7b2cd1a": {
+      "label": "Avoids anti-keyword: real-estate",
+      "improvement": "Remove cues that make the product read as 'real-estate'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "real-estate"
+    },
+    "anti_keyword:overdecorated-c3af2e6e": {
+      "label": "Avoids anti-keyword: overdecorated",
+      "improvement": "Remove cues that make the product read as 'overdecorated'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "overdecorated"
+    },
+    "anti_keyword:neon-09407639": {
+      "label": "Avoids anti-keyword: neon",
+      "improvement": "Remove cues that make the product read as 'neon'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "neon"
+    },
+    "anti_keyword:glassmorphism-d83b9e03": {
+      "label": "Avoids anti-keyword: glassmorphism",
+      "improvement": "Remove cues that make the product read as 'glassmorphism'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "glassmorphism"
+    },
+    "avoid_pattern:full-screen-marketing-hero-68220066": {
+      "label": "Avoids visual pattern: full-screen marketing hero",
+      "improvement": "Replace 'full-screen marketing hero' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "full-screen marketing hero"
+    },
+    "avoid_pattern:nested-cards-02257046": {
+      "label": "Avoids visual pattern: nested cards",
+      "improvement": "Replace 'nested cards' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "nested cards"
+    },
+    "avoid_pattern:large-decorative-gradients-2fcbbfd8": {
+      "label": "Avoids visual pattern: large decorative gradients",
+      "improvement": "Replace 'large decorative gradients' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "large decorative gradients"
+    },
+    "avoid_pattern:tour-package-cards-e7d3d3aa": {
+      "label": "Avoids visual pattern: tour package cards",
+      "improvement": "Replace 'tour package cards' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "tour package cards"
+    },
+    "avoid_pattern:price-or-booking-language-f24e27e4": {
+      "label": "Avoids visual pattern: price or booking language",
+      "improvement": "Replace 'price or booking language' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "price or booking language"
+    },
+    "avoid_pattern:photo-feed-dominance-600f12b6": {
+      "label": "Avoids visual pattern: photo feed dominance",
+      "improvement": "Replace 'photo feed dominance' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "photo feed dominance"
+    },
+    "product_primitive:neighborhood-switcher-ce0ab6e2": {
+      "label": "Embodies product primitive: neighborhood switcher",
+      "improvement": "Represent 'neighborhood switcher' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "neighborhood switcher"
+    },
+    "product_primitive:time-of-day-segmented-control-b40d47da": {
+      "label": "Embodies product primitive: time-of-day segmented control",
+      "improvement": "Represent 'time-of-day segmented control' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "time-of-day segmented control"
+    },
+    "product_primitive:sensory-filter-chips-f8334414": {
+      "label": "Embodies product primitive: sensory filter chips",
+      "improvement": "Represent 'sensory filter chips' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "sensory filter chips"
+    },
+    "product_primitive:mood-match-score-2bb95a49": {
+      "label": "Embodies product primitive: mood match score",
+      "improvement": "Represent 'mood match score' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "mood match score"
+    },
+    "product_primitive:map-pin-layer-6e0f4c80": {
+      "label": "Embodies product primitive: map pin layer",
+      "improvement": "Represent 'map pin layer' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "map pin layer"
+    },
+    "product_primitive:place-list-card-2fd8680f": {
+      "label": "Embodies product primitive: place list card",
+      "improvement": "Represent 'place list card' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "place list card"
+    },
+    "product_primitive:sensory-evidence-strip-b3db4843": {
+      "label": "Embodies product primitive: sensory evidence strip",
+      "improvement": "Represent 'sensory evidence strip' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "sensory evidence strip"
+    },
+    "product_primitive:place-detail-sheet-16250014": {
+      "label": "Embodies product primitive: place detail sheet",
+      "improvement": "Represent 'place detail sheet' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "place detail sheet"
+    },
+    "product_primitive:light-sound-crowding-profile-0a597f5b": {
+      "label": "Embodies product primitive: light sound crowding profile",
+      "improvement": "Represent 'light sound crowding profile' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "light sound crowding profile"
+    },
+    "product_primitive:emotion-tag-cluster-af9eca64": {
+      "label": "Embodies product primitive: emotion tag cluster",
+      "improvement": "Represent 'emotion tag cluster' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "emotion tag cluster"
+    },
+    "must_include:list-alternative-to-the-map-9b20cdfb": {
+      "label": "Includes required visual/system signal: list alternative to the map",
+      "improvement": "Make 'list alternative to the map' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "list alternative to the map"
+    },
+    "must_include:sensory-metadata-visible-on-cards-054b344f": {
+      "label": "Includes required visual/system signal: sensory metadata visible on cards",
+      "improvement": "Make 'sensory metadata visible on cards' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "sensory metadata visible on cards"
+    },
+    "must_include:place-confidence-and-evidence-state-17220f68": {
+      "label": "Includes required visual/system signal: place confidence and evidence state",
+      "improvement": "Make 'place confidence and evidence state' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "place confidence and evidence state"
+    },
+    "must_include:ontology-inspector-that-exposes-rela-c7644752": {
+      "label": "Includes required visual/system signal: ontology inspector that exposes relations without feeling like an engineering dashboard",
+      "improvement": "Make 'ontology inspector that exposes relations without feeling like an engineering dashboard' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "ontology inspector that exposes relations without feeling like an engineering dashboard"
+    },
+    "audience_need:혼자-산책하거나-작업할-조용한-장소를-찾는-서울-거주자-404c3c82": {
+      "label": "Fits audience context: 혼자 산책하거나 작업할 조용한 장소를 찾는 서울 거주자",
+      "improvement": "Adjust density, language, workflow order, and controls for '혼자 산책하거나 작업할 조용한 장소를 찾는 서울 거주자'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "혼자 산책하거나 작업할 조용한 장소를 찾는 서울 거주자"
+    },
+    "audience_need:카페-서점-작은-공원-골목길을-분위기-기준으로-저장하고-비교하고-391e7fa8": {
+      "label": "Fits audience context: 카페, 서점, 작은 공원, 골목길을 분위기 기준으로 저장하고 비교하고 싶은 사용자",
+      "improvement": "Adjust density, language, workflow order, and controls for '카페, 서점, 작은 공원, 골목길을 분위기 기준으로 저장하고 비교하고 싶은 사용자'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "카페, 서점, 작은 공원, 골목길을 분위기 기준으로 저장하고 비교하고 싶은 사용자"
+    },
+    "audience_need:관광-명소보다-시간대-빛-소리-혼잡도-같은-실제-경험-신호를-믿고-7c17e345": {
+      "label": "Fits audience context: 관광 명소보다 시간대, 빛, 소리, 혼잡도 같은 실제 경험 신호를 믿고 싶은 사용자",
+      "improvement": "Adjust density, language, workflow order, and controls for '관광 명소보다 시간대, 빛, 소리, 혼잡도 같은 실제 경험 신호를 믿고 싶은 사용자'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "관광 명소보다 시간대, 빛, 소리, 혼잡도 같은 실제 경험 신호를 믿고 싶은 사용자"
+    },
+    "accessibility_target:wcag-2-2-aa-41a998cd": {
+      "label": "Supports accessibility target: WCAG 2.2 AA",
+      "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "WCAG 2.2 AA"
+    },
+    "accessibility_target:44px-minimum-touch-target-c097c2da": {
+      "label": "Supports accessibility target: 44px minimum touch target",
+      "improvement": "Verify '44px minimum touch target' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "44px minimum touch target"
+    },
+    "accessibility_target:16px-minimum-form-text-95f7f127": {
+      "label": "Supports accessibility target: 16px minimum form text",
+      "improvement": "Verify '16px minimum form text' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "16px minimum form text"
+    },
+    "accessibility_target:reduced-motion-friendly-1a39accd": {
+      "label": "Supports accessibility target: reduced motion friendly",
+      "improvement": "Verify 'reduced motion friendly' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "reduced motion friendly"
+    },
+    "accessibility_target:map-alternatives-through-list-and-ta-795fa436": {
+      "label": "Supports accessibility target: map alternatives through list and table views",
+      "improvement": "Verify 'map alternatives through list and table views' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "map alternatives through list and table views"
+    }
+  },
+  "relations": [
+    {
+      "source": "DesignCandidate",
+      "relation": "evaluated_by",
+      "target": "AestheticDimension"
+    },
+    {
+      "source": "AestheticDimension",
+      "relation": "measured_by",
+      "target": "AestheticMetric"
+    },
+    {
+      "source": "AestheticMetric",
+      "relation": "improved_by",
+      "target": "ImprovementAction"
+    },
+    {
+      "source": "AestheticEvaluation",
+      "relation": "gates",
+      "target": "Execution"
+    }
+  ],
+  "context": {
+    "brand_name": "Seoul Alley Mood Map",
+    "system_name": "Alley Sense System",
+    "product_summary": "서울의 골목 장소를 감각 속성과 감정 태그로 기록하고 추천하는 모바일 우선 장소 큐레이션 도구",
+    "audiences": [
+      "혼자 산책하거나 작업할 조용한 장소를 찾는 서울 거주자",
+      "카페, 서점, 작은 공원, 골목길을 분위기 기준으로 저장하고 비교하고 싶은 사용자",
+      "관광 명소보다 시간대, 빛, 소리, 혼잡도 같은 실제 경험 신호를 믿고 싶은 사용자"
+    ],
+    "brand_keywords": [
+      "situated",
+      "quiet",
+      "sensory",
+      "curated",
+      "walkable",
+      "trustworthy",
+      "local"
+    ],
+    "anti_keywords": [
+      "generic-map",
+      "tourism-brochure",
+      "photo-influencer-feed",
+      "commerce-led",
+      "real-estate",
+      "overdecorated",
+      "neon",
+      "glassmorphism",
+      "beige-only-editorial",
+      "gamified"
+    ],
+    "tone_of_voice": [
+      "calm",
+      "observational",
+      "specific",
+      "warm",
+      "non-salesy"
+    ],
+    "product_primitives": [
+      "neighborhood switcher",
+      "time-of-day segmented control",
+      "sensory filter chips",
+      "mood match score",
+      "map pin layer",
+      "place list card",
+      "sensory evidence strip",
+      "place detail sheet",
+      "light sound crowding profile",
+      "emotion tag cluster",
+      "recommendation queue",
+      "ontology inspector panel",
+      "place relationship graph",
+      "add place form",
+      "empty and uncertain evidence states"
+    ]
+  },
+  "brand_aesthetic_contract": {
+    "schema_version": "brand-aesthetic-contract/v1",
+    "brand_name": "Seoul Alley Mood Map",
+    "system_name": "Alley Sense System",
+    "research_basis": [
+      {
+        "id": "visawi",
+        "label": "VisAWI",
+        "construct": "perceived website visual aesthetics",
+        "operational_use": "Map simplicity, diversity, colorfulness, and craftsmanship into visual system coherence metrics.",
+        "source_url": "https://www.sciencedirect.com/science/article/pii/S1071581910000777"
+      },
+      {
+        "id": "apid",
+        "label": "APiD",
+        "construct": "aesthetic pleasure in designed artifacts",
+        "operational_use": "Keep a direct pleasure/desirability layer instead of only formal pixel metrics.",
+        "source_url": "https://opus.lib.uts.edu.au/handle/10453/81276"
+      },
+      {
+        "id": "beauvis",
+        "label": "BeauVis",
+        "construct": "aesthetic pleasure of visual representations",
+        "operational_use": "Treat scores as comparative, context-bound judgments rather than universal beauty values.",
+        "source_url": "https://arxiv.org/abs/2207.14147"
+      },
+      {
+        "id": "aesthemos",
+        "label": "AESTHEMOS",
+        "construct": "aesthetic emotions",
+        "operational_use": "Translate brand tone and target affect into measurable emotional-response proxies.",
+        "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0178899"
+      },
+      {
+        "id": "kansei",
+        "label": "Kansei / semantic differential",
+        "construct": "design element to impression mapping",
+        "operational_use": "Use brand keywords and anti-keywords as semantic impression targets and boundaries.",
+        "source_url": "https://www.mdpi.com/2073-8994/12/8/1340"
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "brand_semantic_fit",
+        "label": "Brand semantic fit",
+        "weight": 0.22,
+        "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+        "metrics": [
+          "brand_keyword:situated-3b442b1a",
+          "brand_keyword:quiet-58bdb05d",
+          "brand_keyword:sensory-cfa2f267",
+          "brand_keyword:curated-ab349f69",
+          "brand_keyword:walkable-be4e1cdd",
+          "brand_keyword:trustworthy-a4bdbf4a",
+          "brand_keyword:local-939bb46a",
+          "brand_tone:calm-2ec3d0c7",
+          "brand_tone:observational-26c3d617",
+          "brand_tone:specific-660cffc2",
+          "brand_tone:warm-d83fc386",
+          "brand_tone:non-salesy-e870af69"
+        ],
+        "research_basis": [
+          "kansei",
+          "aesthemos"
+        ]
+      },
+      {
+        "id": "brand_boundary_fit",
+        "label": "Brand boundary fit",
+        "weight": 0.16,
+        "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+        "metrics": [
+          "anti_keyword:generic-map-ade26edd",
+          "anti_keyword:tourism-brochure-a13bf8ab",
+          "anti_keyword:photo-influencer-feed-875c9ea6",
+          "anti_keyword:commerce-led-ef6f50d0",
+          "anti_keyword:real-estate-f7b2cd1a",
+          "anti_keyword:overdecorated-c3af2e6e",
+          "anti_keyword:neon-09407639",
+          "anti_keyword:glassmorphism-d83b9e03",
+          "avoid_pattern:full-screen-marketing-hero-68220066",
+          "avoid_pattern:nested-cards-02257046",
+          "avoid_pattern:large-decorative-gradients-2fcbbfd8",
+          "avoid_pattern:tour-package-cards-e7d3d3aa",
+          "avoid_pattern:price-or-booking-language-f24e27e4",
+          "avoid_pattern:photo-feed-dominance-600f12b6"
+        ],
+        "research_basis": [
+          "kansei"
+        ]
+      },
+      {
+        "id": "product_ontology_fit",
+        "label": "Product ontology fit",
+        "weight": 0.22,
+        "description": "How clearly product primitives and ontology-required signals appear in the design.",
+        "metrics": [
+          "product_primitive:neighborhood-switcher-ce0ab6e2",
+          "product_primitive:time-of-day-segmented-control-b40d47da",
+          "product_primitive:sensory-filter-chips-f8334414",
+          "product_primitive:mood-match-score-2bb95a49",
+          "product_primitive:map-pin-layer-6e0f4c80",
+          "product_primitive:place-list-card-2fd8680f",
+          "product_primitive:sensory-evidence-strip-b3db4843",
+          "product_primitive:place-detail-sheet-16250014",
+          "product_primitive:light-sound-crowding-profile-0a597f5b",
+          "product_primitive:emotion-tag-cluster-af9eca64",
+          "must_include:list-alternative-to-the-map-9b20cdfb",
+          "must_include:sensory-metadata-visible-on-cards-054b344f",
+          "must_include:place-confidence-and-evidence-state-17220f68",
+          "must_include:ontology-inspector-that-exposes-rela-c7644752"
+        ],
+        "research_basis": [
+          "beauvis",
+          "kansei"
+        ]
+      },
+      {
+        "id": "audience_context_fit",
+        "label": "Audience context fit",
+        "weight": 0.12,
+        "description": "How well the design serves declared users, platforms, and accessibility floors.",
+        "metrics": [
+          "audience_need:혼자-산책하거나-작업할-조용한-장소를-찾는-서울-거주자-404c3c82",
+          "audience_need:카페-서점-작은-공원-골목길을-분위기-기준으로-저장하고-비교하고-391e7fa8",
+          "audience_need:관광-명소보다-시간대-빛-소리-혼잡도-같은-실제-경험-신호를-믿고-7c17e345",
+          "accessibility_target:wcag-2-2-aa-41a998cd",
+          "accessibility_target:44px-minimum-touch-target-c097c2da",
+          "accessibility_target:16px-minimum-form-text-95f7f127",
+          "accessibility_target:reduced-motion-friendly-1a39accd",
+          "accessibility_target:map-alternatives-through-list-and-ta-795fa436"
+        ],
+        "research_basis": [
+          "visawi",
+          "aesthemos"
+        ]
+      }
+    ],
+    "metrics": {
+      "brand_keyword:situated-3b442b1a": {
+        "label": "Expresses brand keyword: situated",
+        "improvement": "Make 'situated' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "situated"
+      },
+      "brand_keyword:quiet-58bdb05d": {
+        "label": "Expresses brand keyword: quiet",
+        "improvement": "Make 'quiet' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "quiet"
+      },
+      "brand_keyword:sensory-cfa2f267": {
+        "label": "Expresses brand keyword: sensory",
+        "improvement": "Make 'sensory' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "sensory"
+      },
+      "brand_keyword:curated-ab349f69": {
+        "label": "Expresses brand keyword: curated",
+        "improvement": "Make 'curated' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "curated"
+      },
+      "brand_keyword:walkable-be4e1cdd": {
+        "label": "Expresses brand keyword: walkable",
+        "improvement": "Make 'walkable' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "walkable"
+      },
+      "brand_keyword:trustworthy-a4bdbf4a": {
+        "label": "Expresses brand keyword: trustworthy",
+        "improvement": "Make 'trustworthy' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "trustworthy"
+      },
+      "brand_keyword:local-939bb46a": {
+        "label": "Expresses brand keyword: local",
+        "improvement": "Make 'local' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "local"
+      },
+      "brand_tone:calm-2ec3d0c7": {
+        "label": "Expresses tone of voice: calm",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'calm'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "calm"
+      },
+      "brand_tone:observational-26c3d617": {
+        "label": "Expresses tone of voice: observational",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'observational'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "observational"
+      },
+      "brand_tone:specific-660cffc2": {
+        "label": "Expresses tone of voice: specific",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'specific'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "specific"
+      },
+      "brand_tone:warm-d83fc386": {
+        "label": "Expresses tone of voice: warm",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'warm'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "warm"
+      },
+      "brand_tone:non-salesy-e870af69": {
+        "label": "Expresses tone of voice: non-salesy",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'non-salesy'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "non-salesy"
+      },
+      "anti_keyword:generic-map-ade26edd": {
+        "label": "Avoids anti-keyword: generic-map",
+        "improvement": "Remove cues that make the product read as 'generic-map'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "generic-map"
+      },
+      "anti_keyword:tourism-brochure-a13bf8ab": {
+        "label": "Avoids anti-keyword: tourism-brochure",
+        "improvement": "Remove cues that make the product read as 'tourism-brochure'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "tourism-brochure"
+      },
+      "anti_keyword:photo-influencer-feed-875c9ea6": {
+        "label": "Avoids anti-keyword: photo-influencer-feed",
+        "improvement": "Remove cues that make the product read as 'photo-influencer-feed'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "photo-influencer-feed"
+      },
+      "anti_keyword:commerce-led-ef6f50d0": {
+        "label": "Avoids anti-keyword: commerce-led",
+        "improvement": "Remove cues that make the product read as 'commerce-led'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "commerce-led"
+      },
+      "anti_keyword:real-estate-f7b2cd1a": {
+        "label": "Avoids anti-keyword: real-estate",
+        "improvement": "Remove cues that make the product read as 'real-estate'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "real-estate"
+      },
+      "anti_keyword:overdecorated-c3af2e6e": {
+        "label": "Avoids anti-keyword: overdecorated",
+        "improvement": "Remove cues that make the product read as 'overdecorated'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "overdecorated"
+      },
+      "anti_keyword:neon-09407639": {
+        "label": "Avoids anti-keyword: neon",
+        "improvement": "Remove cues that make the product read as 'neon'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "neon"
+      },
+      "anti_keyword:glassmorphism-d83b9e03": {
+        "label": "Avoids anti-keyword: glassmorphism",
+        "improvement": "Remove cues that make the product read as 'glassmorphism'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "glassmorphism"
+      },
+      "avoid_pattern:full-screen-marketing-hero-68220066": {
+        "label": "Avoids visual pattern: full-screen marketing hero",
+        "improvement": "Replace 'full-screen marketing hero' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "full-screen marketing hero"
+      },
+      "avoid_pattern:nested-cards-02257046": {
+        "label": "Avoids visual pattern: nested cards",
+        "improvement": "Replace 'nested cards' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "nested cards"
+      },
+      "avoid_pattern:large-decorative-gradients-2fcbbfd8": {
+        "label": "Avoids visual pattern: large decorative gradients",
+        "improvement": "Replace 'large decorative gradients' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "large decorative gradients"
+      },
+      "avoid_pattern:tour-package-cards-e7d3d3aa": {
+        "label": "Avoids visual pattern: tour package cards",
+        "improvement": "Replace 'tour package cards' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "tour package cards"
+      },
+      "avoid_pattern:price-or-booking-language-f24e27e4": {
+        "label": "Avoids visual pattern: price or booking language",
+        "improvement": "Replace 'price or booking language' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "price or booking language"
+      },
+      "avoid_pattern:photo-feed-dominance-600f12b6": {
+        "label": "Avoids visual pattern: photo feed dominance",
+        "improvement": "Replace 'photo feed dominance' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "photo feed dominance"
+      },
+      "product_primitive:neighborhood-switcher-ce0ab6e2": {
+        "label": "Embodies product primitive: neighborhood switcher",
+        "improvement": "Represent 'neighborhood switcher' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "neighborhood switcher"
+      },
+      "product_primitive:time-of-day-segmented-control-b40d47da": {
+        "label": "Embodies product primitive: time-of-day segmented control",
+        "improvement": "Represent 'time-of-day segmented control' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "time-of-day segmented control"
+      },
+      "product_primitive:sensory-filter-chips-f8334414": {
+        "label": "Embodies product primitive: sensory filter chips",
+        "improvement": "Represent 'sensory filter chips' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "sensory filter chips"
+      },
+      "product_primitive:mood-match-score-2bb95a49": {
+        "label": "Embodies product primitive: mood match score",
+        "improvement": "Represent 'mood match score' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "mood match score"
+      },
+      "product_primitive:map-pin-layer-6e0f4c80": {
+        "label": "Embodies product primitive: map pin layer",
+        "improvement": "Represent 'map pin layer' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "map pin layer"
+      },
+      "product_primitive:place-list-card-2fd8680f": {
+        "label": "Embodies product primitive: place list card",
+        "improvement": "Represent 'place list card' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "place list card"
+      },
+      "product_primitive:sensory-evidence-strip-b3db4843": {
+        "label": "Embodies product primitive: sensory evidence strip",
+        "improvement": "Represent 'sensory evidence strip' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "sensory evidence strip"
+      },
+      "product_primitive:place-detail-sheet-16250014": {
+        "label": "Embodies product primitive: place detail sheet",
+        "improvement": "Represent 'place detail sheet' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "place detail sheet"
+      },
+      "product_primitive:light-sound-crowding-profile-0a597f5b": {
+        "label": "Embodies product primitive: light sound crowding profile",
+        "improvement": "Represent 'light sound crowding profile' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "light sound crowding profile"
+      },
+      "product_primitive:emotion-tag-cluster-af9eca64": {
+        "label": "Embodies product primitive: emotion tag cluster",
+        "improvement": "Represent 'emotion tag cluster' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "emotion tag cluster"
+      },
+      "must_include:list-alternative-to-the-map-9b20cdfb": {
+        "label": "Includes required visual/system signal: list alternative to the map",
+        "improvement": "Make 'list alternative to the map' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "list alternative to the map"
+      },
+      "must_include:sensory-metadata-visible-on-cards-054b344f": {
+        "label": "Includes required visual/system signal: sensory metadata visible on cards",
+        "improvement": "Make 'sensory metadata visible on cards' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "sensory metadata visible on cards"
+      },
+      "must_include:place-confidence-and-evidence-state-17220f68": {
+        "label": "Includes required visual/system signal: place confidence and evidence state",
+        "improvement": "Make 'place confidence and evidence state' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "place confidence and evidence state"
+      },
+      "must_include:ontology-inspector-that-exposes-rela-c7644752": {
+        "label": "Includes required visual/system signal: ontology inspector that exposes relations without feeling like an engineering dashboard",
+        "improvement": "Make 'ontology inspector that exposes relations without feeling like an engineering dashboard' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "ontology inspector that exposes relations without feeling like an engineering dashboard"
+      },
+      "audience_need:혼자-산책하거나-작업할-조용한-장소를-찾는-서울-거주자-404c3c82": {
+        "label": "Fits audience context: 혼자 산책하거나 작업할 조용한 장소를 찾는 서울 거주자",
+        "improvement": "Adjust density, language, workflow order, and controls for '혼자 산책하거나 작업할 조용한 장소를 찾는 서울 거주자'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "혼자 산책하거나 작업할 조용한 장소를 찾는 서울 거주자"
+      },
+      "audience_need:카페-서점-작은-공원-골목길을-분위기-기준으로-저장하고-비교하고-391e7fa8": {
+        "label": "Fits audience context: 카페, 서점, 작은 공원, 골목길을 분위기 기준으로 저장하고 비교하고 싶은 사용자",
+        "improvement": "Adjust density, language, workflow order, and controls for '카페, 서점, 작은 공원, 골목길을 분위기 기준으로 저장하고 비교하고 싶은 사용자'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "카페, 서점, 작은 공원, 골목길을 분위기 기준으로 저장하고 비교하고 싶은 사용자"
+      },
+      "audience_need:관광-명소보다-시간대-빛-소리-혼잡도-같은-실제-경험-신호를-믿고-7c17e345": {
+        "label": "Fits audience context: 관광 명소보다 시간대, 빛, 소리, 혼잡도 같은 실제 경험 신호를 믿고 싶은 사용자",
+        "improvement": "Adjust density, language, workflow order, and controls for '관광 명소보다 시간대, 빛, 소리, 혼잡도 같은 실제 경험 신호를 믿고 싶은 사용자'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "관광 명소보다 시간대, 빛, 소리, 혼잡도 같은 실제 경험 신호를 믿고 싶은 사용자"
+      },
+      "accessibility_target:wcag-2-2-aa-41a998cd": {
+        "label": "Supports accessibility target: WCAG 2.2 AA",
+        "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "WCAG 2.2 AA"
+      },
+      "accessibility_target:44px-minimum-touch-target-c097c2da": {
+        "label": "Supports accessibility target: 44px minimum touch target",
+        "improvement": "Verify '44px minimum touch target' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "44px minimum touch target"
+      },
+      "accessibility_target:16px-minimum-form-text-95f7f127": {
+        "label": "Supports accessibility target: 16px minimum form text",
+        "improvement": "Verify '16px minimum form text' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "16px minimum form text"
+      },
+      "accessibility_target:reduced-motion-friendly-1a39accd": {
+        "label": "Supports accessibility target: reduced motion friendly",
+        "improvement": "Verify 'reduced motion friendly' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "reduced motion friendly"
+      },
+      "accessibility_target:map-alternatives-through-list-and-ta-795fa436": {
+        "label": "Supports accessibility target: map alternatives through list and table views",
+        "improvement": "Verify 'map alternatives through list and table views' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "map alternatives through list and table views"
+      }
+    },
+    "rule": "Brand-owned aesthetic quality is evaluated as fit to declared semantic targets, explicit boundaries, product ontology, audience context, and visual craft."
+  },
+  "interpretation_rule": "Scores represent observed or reviewed response proxies in a declared context; they are not universal beauty claims."
+}

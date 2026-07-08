@@ -2,7 +2,7 @@
   "id": "document-content--bold-confident",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "broadside",
-  "content_hash": "sha256:0d9c96caabd2e43f7ad16f15bddfcac20230808f570fe0bda12d3c233f553a00",
+  "content_hash": "sha256:3e110fe4da30ffb405b5befa46606660b4b6911549eac8d4f135d0c2be86f805",
   "app_mode": "document-content",
   "brand_tone": "bold-confident",
   "color_modes": [
@@ -33,6 +33,6 @@
   },
   "owner": "maintainer",
   "tier": "P2",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "bold-confident magazine/opinion long-form — saturated primary + high-contrast + impact typography, article · TOC · pull-quote · masthead, 한국어 1급"
 }

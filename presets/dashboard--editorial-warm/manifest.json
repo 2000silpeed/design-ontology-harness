@@ -2,7 +2,7 @@
   "id": "dashboard--editorial-warm",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "curator",
-  "content_hash": "sha256:a4f76a372ba0f966cf3913b0a056a14eb3e5b665e855b6c94b19ff96b8affbf1",
+  "content_hash": "sha256:57b3cb4f551ada735727adf762bdb817be463ede51064c09397e121024240ee2",
   "app_mode": "dashboard",
   "brand_tone": "editorial-warm",
   "color_modes": [
@@ -33,6 +33,6 @@
   },
   "owner": "maintainer",
   "tier": "P2",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "editorial-warm 운영/큐레이션 대시보드 — sidebar-nav · data-table · kpi-card · filter-chip · editorial-calendar · curation-queue · publishing-pipeline, warm neutral + serif heading + muted accent, 한국어 1급"
 }

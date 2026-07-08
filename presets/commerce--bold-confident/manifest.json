@@ -2,7 +2,7 @@
   "id": "commerce--bold-confident",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "drop",
-  "content_hash": "sha256:d5ca51823ac8798aaf3476c088c4f270ee348df7fe38da548e00e088517a177b",
+  "content_hash": "sha256:6d381f6a904fc7aa6b3926911e706bee744f1894b5e3411a3d61b01b25326d8d",
   "app_mode": "commerce",
   "brand_tone": "bold-confident",
   "color_modes": [
@@ -33,6 +33,6 @@
   },
   "owner": "maintainer",
   "tier": "P2",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "젊은 B2C 커머스 — bold-confident 톤 드롭·제품 그리드·장바구니·체크아웃, 한국어 1급"
 }

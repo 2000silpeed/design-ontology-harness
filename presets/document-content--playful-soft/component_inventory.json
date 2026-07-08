@@ -13,10 +13,7 @@
       "components": [
         "primary-button",
         "secondary-button",
-        "ghost-button",
         "icon-button",
-        "cta-button",
-        "link-button",
         "hero-cta-group",
         "form-actions"
       ],
@@ -32,7 +29,6 @@
         "error"
       ],
       "components": [
-        "source-card",
         "citation-drawer"
       ],
       "visual_reference_signals": []
@@ -44,10 +40,13 @@
         "default",
         "sorted",
         "filtered",
-        "empty"
+        "empty",
+        "loading"
       ],
       "components": [
         "data-table",
+        "list",
+        "metadata-list",
         "tag",
         "column-header",
         "row-actions",
@@ -59,7 +58,8 @@
         "mention-highlight",
         "bulk-action-table",
         "audit-timeline",
-        "decision-record-card"
+        "evidence-graph",
+        "exception-queue"
       ],
       "visual_reference_signals": []
     },
@@ -92,7 +92,8 @@
         "info",
         "success",
         "warning",
-        "danger"
+        "danger",
+        "loading"
       ],
       "components": [
         "filter-chip",
@@ -100,6 +101,8 @@
         "inline-alert",
         "empty-state",
         "banner",
+        "badge",
+        "status-dot",
         "status-badge",
         "step-progress"
       ],
@@ -112,7 +115,8 @@
         "default",
         "focus",
         "error",
-        "disabled"
+        "disabled",
+        "selected"
       ],
       "components": [
         "text-field",
@@ -120,10 +124,11 @@
         "checkbox",
         "radio",
         "textarea",
-        "search-field",
+        "switch",
         "segmented-control",
         "chip",
         "filter-chip",
+        "search-field",
         "filter-panel",
         "radio-group",
         "form-section",
@@ -138,8 +143,7 @@
       "priority": "high",
       "required_states": [
         "default",
-        "resizing",
-        "collapsed"
+        "responsive"
       ],
       "components": [
         "resizable-split-pane"
@@ -179,16 +183,14 @@
         "collapsed"
       ],
       "components": [
+        "pagination",
         "sidebar-nav",
         "topbar",
         "breadcrumb",
         "workspace-switcher",
-        "mobile-topbar",
-        "mobile-tab-bar",
-        "back-button",
-        "section-tabs",
+        "breadcrumbs",
+        "tabs",
         "wizard-layout",
-        "pagination",
         "app-shell",
         "tab-bar",
         "prev-next-pager",
@@ -219,7 +221,6 @@
       "components": [
         "column-header",
         "row-actions",
-        "pagination",
         "app-shell",
         "form-section"
       ],
@@ -256,8 +257,9 @@
         "open"
       ],
       "components": [
-        "bottom-sheet",
-        "modal-dialog",
+        "dialog",
+        "popover",
+        "tooltip",
         "tooltip-guide",
         "autocomplete",
         "mention-popup",
@@ -334,7 +336,7 @@
     },
     {
       "name": "pagination",
-      "family": "foundation",
+      "family": "navigation",
       "supports_primitive": "data tables",
       "status": "planned",
       "must_document": [
@@ -543,7 +545,13 @@
     {
       "name": "primary-button",
       "family": "button",
-      "supports_primitive": "system baseline",
+      "role": "Primary action button for the most important local action.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Button",
+        "Geist Button"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -556,20 +564,13 @@
     {
       "name": "secondary-button",
       "family": "button",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "ghost-button",
-      "family": "button",
-      "supports_primitive": "system baseline",
+      "role": "Secondary action button with lower emphasis than the primary action.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Button",
+        "Geist Button"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -582,7 +583,14 @@
     {
       "name": "icon-button",
       "family": "button",
-      "supports_primitive": "system baseline",
+      "role": "Icon-only action with explicit accessible name and stable hit target.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Icon Button",
+        "Geist Copy Button",
+        "Geist Dots Menu"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -593,100 +601,15 @@
       ]
     },
     {
-      "name": "cta-button",
-      "family": "button",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "mobile-topbar",
-      "family": "navigation",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "mobile-tab-bar",
-      "family": "navigation",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "back-button",
-      "family": "navigation",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "section-tabs",
-      "family": "navigation",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "bottom-sheet",
-      "family": "overlay",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "modal-dialog",
-      "family": "overlay",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "search-field",
+      "name": "switch",
       "family": "input",
-      "supports_primitive": "system baseline",
+      "role": "Immediate on/off preference control.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Switch",
+        "Geist Switch"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -699,7 +622,13 @@
     {
       "name": "segmented-control",
       "family": "input",
-      "supports_primitive": "system baseline",
+      "role": "Small mutually exclusive mode switcher.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Segmented Control",
+        "Geist Toggle"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -710,9 +639,167 @@
       ]
     },
     {
-      "name": "link-button",
-      "family": "button",
-      "supports_primitive": "baseline",
+      "name": "breadcrumbs",
+      "family": "navigation",
+      "role": "Hierarchy trail for deep product areas.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Breadcrumbs",
+        "Geist Breadcrumbs"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tabs",
+      "family": "navigation",
+      "role": "Peer view switcher for related panels.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Tabs",
+        "Geist Tabs"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "badge",
+      "family": "feedback",
+      "role": "Compact status, category, or count label.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Badge",
+        "Geist Badge"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "status-dot",
+      "family": "feedback",
+      "role": "Small operational status indicator paired with visible text.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Status Dot",
+        "Geist Status Dot"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "dialog",
+      "family": "overlay",
+      "role": "Modal decision or focused task surface.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Dialog",
+        "Geist Modal"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "popover",
+      "family": "overlay",
+      "role": "Anchored transient surface for short forms or contextual controls.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Popover",
+        "Geist Context Menu"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tooltip",
+      "family": "overlay",
+      "role": "Short accessible explanation for icon-only or compact controls.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Tooltip",
+        "Geist Tooltip"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "list",
+      "family": "data-display",
+      "role": "Stacked item collection with stable row rhythm.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx List",
+        "Geist Entity"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "metadata-list",
+      "family": "data-display",
+      "role": "Key-value detail list for records, settings, and source facts.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Metadata List",
+        "Geist Description"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -827,8 +914,8 @@
       ]
     },
     {
-      "name": "pagination",
-      "family": "navigation",
+      "name": "filter-chip",
+      "family": "input",
       "supports_primitive": "data tables",
       "status": "planned",
       "must_document": [
@@ -840,9 +927,9 @@
       ]
     },
     {
-      "name": "filter-chip",
+      "name": "search-field",
       "family": "input",
-      "supports_primitive": "data tables",
+      "supports_primitive": "search and filter",
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -1552,41 +1639,6 @@
       ]
     },
     {
-      "name": "source-card",
-      "family": "copilot-artifact",
-      "role": "Compact source record card with title, excerpt, metadata, and verification state",
-      "supports_primitive": "advanced-component-catalog",
-      "status": "recommended-advanced",
-      "advanced_component": true,
-      "usage_guidance": [
-        "AI output depends on external or internal source records",
-        "users need a repeatable citation preview component"
-      ],
-      "avoid_when": [
-        "source metadata is unavailable"
-      ],
-      "pairs_with": [
-        "citation-drawer",
-        "evidence-graph",
-        "inline-citation"
-      ],
-      "matched_signals": [
-        "document",
-        "mode-default",
-        "mode:conversation-copilot",
-        "mode:document-content",
-        "reference"
-      ],
-      "score": 14,
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
       "name": "reviewer-assignment-picker",
       "family": "input",
       "role": "Reviewer picker with role, availability, and escalation hints",
@@ -1884,27 +1936,59 @@
       ]
     },
     {
-      "name": "decision-record-card",
+      "name": "evidence-graph",
       "family": "data-display",
-      "role": "Auditable decision record summarizing decision, actor, evidence, and retention",
+      "role": "Node-link evidence map connecting claims, sources, policies, and decisions",
       "supports_primitive": "advanced-component-catalog",
       "status": "recommended-advanced",
       "advanced_component": true,
       "usage_guidance": [
-        "a reviewer or AI-assisted workflow reaches a durable decision",
-        "regulated teams need record ids and retention status"
+        "trust depends on seeing relationships between claims and sources",
+        "auditors need to trace why an answer or decision was made"
       ],
       "avoid_when": [
-        "the action is transient and not auditable"
+        "a simple source list communicates the relationship"
       ],
       "pairs_with": [
-        "audit-timeline",
-        "approval-rail",
-        "citation-drawer"
+        "citation-drawer",
+        "decision-record-card",
+        "policy-matrix"
       ],
       "matched_signals": [
-        "mode-default",
+        "graph",
         "mode:conversation-copilot"
+      ],
+      "score": 6,
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "exception-queue",
+      "family": "data-display",
+      "role": "Work queue for unresolved policy, data, or workflow exceptions",
+      "supports_primitive": "advanced-component-catalog",
+      "status": "recommended-advanced",
+      "advanced_component": true,
+      "usage_guidance": [
+        "multiple issues require triage, assignment, and resolution",
+        "reviewers need to batch handle exceptions"
+      ],
+      "avoid_when": [
+        "exceptions are rare and single-item"
+      ],
+      "pairs_with": [
+        "bulk-action-table",
+        "policy-matrix",
+        "approval-rail"
+      ],
+      "matched_signals": [
+        "mode:conversation-copilot",
+        "queue"
       ],
       "score": 6,
       "must_document": [
@@ -2083,6 +2167,88 @@
       }
     }
   ],
+  "reference_baseline": {
+    "schema_version": "component-reference-baseline/v1",
+    "systems": [
+      {
+        "id": "astryx",
+        "name": "Astryx",
+        "url": "https://astryx.atmeta.com/components",
+        "role": "broad React component taxonomy, templates, themes, and agent-ready docs",
+        "use_for": [
+          "component family breadth",
+          "state and anatomy coverage hints",
+          "agent documentation and CLI workflow patterns"
+        ]
+      },
+      {
+        "id": "geist",
+        "name": "Vercel Geist",
+        "url": "https://vercel.com/geist/introduction",
+        "role": "compact developer-tool UI baseline with precise, minimal interaction patterns",
+        "use_for": [
+          "developer-console primitives",
+          "compact monochrome surface behavior",
+          "accessibility and async state coverage labels"
+        ]
+      }
+    ],
+    "absorption_policy": {
+      "allowed": [
+        "component names and taxonomy",
+        "family grouping",
+        "state coverage hints",
+        "interaction and accessibility labels",
+        "token category ideas"
+      ],
+      "denied": [
+        "verbatim docs beyond short labels",
+        "brand logos or protected imagery",
+        "site-specific IA or product copy",
+        "implementation source code unless the project license and target use allow it"
+      ],
+      "rule": "Use Astryx and Geist as taxonomy and behavior evidence; implement with local primitives and local tokens."
+    },
+    "core_components": [
+      "primary-button",
+      "secondary-button",
+      "icon-button"
+    ],
+    "contextual_not_baseline": {
+      "ghost-button": {
+        "replacement": "secondary-button",
+        "reason": "variant, not a baseline component"
+      },
+      "link-button": {
+        "replacement": "link",
+        "reason": "content/link primitive, not an action baseline"
+      },
+      "cta-button": {
+        "replacement": "primary-button",
+        "reason": "marketing emphasis variant"
+      },
+      "mobile-topbar": {
+        "replacement": "app-shell or top-nav",
+        "reason": "platform-specific navigation"
+      },
+      "mobile-tab-bar": {
+        "replacement": "tabs",
+        "reason": "mobile-specific navigation variant"
+      },
+      "back-button": {
+        "replacement": "breadcrumbs",
+        "reason": "flow-specific control"
+      },
+      "bottom-sheet": {
+        "replacement": "dialog or drawer",
+        "reason": "mobile-specific overlay variant"
+      },
+      "modal-dialog": {
+        "replacement": "dialog",
+        "reason": "duplicate naming"
+      }
+    }
+  },
   "advanced_component_catalog": [
     {
       "name": "resizable-split-pane",
@@ -2573,33 +2739,6 @@
       "status": "recommended-advanced"
     },
     {
-      "name": "source-card",
-      "family": "copilot-artifact",
-      "role": "Compact source record card with title, excerpt, metadata, and verification state",
-      "use_when": [
-        "AI output depends on external or internal source records",
-        "users need a repeatable citation preview component"
-      ],
-      "avoid_when": [
-        "source metadata is unavailable"
-      ],
-      "pairs_with": [
-        "citation-drawer",
-        "evidence-graph",
-        "inline-citation"
-      ],
-      "score": 14,
-      "matched_signals": [
-        "document",
-        "mode-default",
-        "mode:conversation-copilot",
-        "mode:document-content",
-        "reference"
-      ],
-      "source": "advanced-component-catalog",
-      "status": "recommended-advanced"
-    },
-    {
       "name": "reviewer-assignment-picker",
       "family": "input",
       "role": "Reviewer picker with role, availability, and escalation hints",
@@ -2825,25 +2964,49 @@
       "status": "recommended-advanced"
     },
     {
-      "name": "decision-record-card",
+      "name": "evidence-graph",
       "family": "data-display",
-      "role": "Auditable decision record summarizing decision, actor, evidence, and retention",
+      "role": "Node-link evidence map connecting claims, sources, policies, and decisions",
       "use_when": [
-        "a reviewer or AI-assisted workflow reaches a durable decision",
-        "regulated teams need record ids and retention status"
+        "trust depends on seeing relationships between claims and sources",
+        "auditors need to trace why an answer or decision was made"
       ],
       "avoid_when": [
-        "the action is transient and not auditable"
+        "a simple source list communicates the relationship"
       ],
       "pairs_with": [
-        "audit-timeline",
-        "approval-rail",
-        "citation-drawer"
+        "citation-drawer",
+        "decision-record-card",
+        "policy-matrix"
       ],
       "score": 6,
       "matched_signals": [
-        "mode-default",
+        "graph",
         "mode:conversation-copilot"
+      ],
+      "source": "advanced-component-catalog",
+      "status": "recommended-advanced"
+    },
+    {
+      "name": "exception-queue",
+      "family": "data-display",
+      "role": "Work queue for unresolved policy, data, or workflow exceptions",
+      "use_when": [
+        "multiple issues require triage, assignment, and resolution",
+        "reviewers need to batch handle exceptions"
+      ],
+      "avoid_when": [
+        "exceptions are rare and single-item"
+      ],
+      "pairs_with": [
+        "bulk-action-table",
+        "policy-matrix",
+        "approval-rail"
+      ],
+      "score": 6,
+      "matched_signals": [
+        "mode:conversation-copilot",
+        "queue"
       ],
       "source": "advanced-component-catalog",
       "status": "recommended-advanced"

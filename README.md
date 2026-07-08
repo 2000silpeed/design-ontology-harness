@@ -27,6 +27,7 @@
 | Omnigen 외부 소스를 pack으로 묶는 범용 계층 추가 | `reference_packs.py`, `build-reference-pack`, `select-visual-references` |
 | provider-neutral reference layer 추가 | `reference_context.py`, `design_context_pack.json` |
 | 공개 웹페이지를 advisory reference로 정찰 | `website_inspection.py`, `inspect-reference-site` |
+| Astryx + Vercel/Geist 기반 컴포넌트 baseline 정리 | `component_reference_baseline.py`, `scripts/extract-astryx-reference.py`, `scripts/extract-geist-reference.py` |
 | Pinterest-assisted 검색/캡처/선택 흐름 추가 | `generate-visual-queries`, `capture-pinterest`, `select-pinterest-candidates` |
 | 이미지 에셋 governance 확장 | `GeneratedVisualAsset`, `SourcedVisualAsset`, `LicensePolicy` |
 | `system_spec.md` 후반 섹션 확장 | 22-26번 섹션 |
@@ -45,6 +46,74 @@
 | 로컬 이미지/Omnigen vault를 레퍼런스로 연결 | 이 harness |
 | 새 preset을 만들고 plugin 레포로 싱크 | 이 harness |
 | KB, ontology, visual reference 파이프라인을 유지보수 | 이 harness |
+
+## 핵심 입력: 앱 컨셉과 레이아웃 스켈레톤
+
+하네스의 기본 목적은 preset을 고르는 것이 아니라, 제품 컨셉과 화면 뼈대를 기준으로 새 디자인 시스템을 다시 쓰는 것입니다. 비슷한 앱이 반복 생성되지 않게 하려면 `brand_profile.json`에서 아래 세 영역을 먼저 채웁니다.
+
+이 판단은 룰베이스가 아니라 호출한 LLM이 직접 개입하는 skill 단계로 처리하는 것이 권장됩니다. 레포에는 `skills/design-ontology-concept-author`가 포함되어 있고, 새 프로젝트를 돌리기 전에 이 skill로 `brand_profile.json`을 먼저 저작합니다.
+
+```text
+Use $design-ontology-concept-author to turn this app idea and spec.md into
+application_concept, layout_skeleton, and design_differentiation before running the harness.
+```
+
+| 입력 | 역할 |
+|---|---|
+| `application_concept` | 사용자가 첫 번째로 끝내야 하는 일, 도메인 객체, 성공 상태를 정의 |
+| `layout_skeleton` | 첫 화면 composition, navigation model, primary regions, density를 정의 |
+| `design_differentiation` | generic dashboard/card wall로 회귀하지 않도록 signature move와 반복 위험을 정의 |
+
+예시:
+
+```json
+{
+  "application_concept": {
+    "primary_job": "검토 대기 중인 증거를 비교하고 승인/반려 결정을 남긴다",
+    "domain_objects": ["claim", "evidence item", "source trail"],
+    "operating_mode": "review",
+    "success_moment": "검토자가 근거와 함께 승인 또는 반려 상태를 확정한다",
+    "differentiation": ["큐와 상세 검토면이 첫 화면에서 동시에 살아 있어야 한다"]
+  },
+  "layout_skeleton": {
+    "composition": "split-workbench",
+    "navigation_model": "task-rail",
+    "density": "dense",
+    "primary_regions": [
+      {
+        "name": "Evidence queue",
+        "role": "검토 대기 항목",
+        "priority": "primary"
+      },
+      {
+        "name": "Claim detail",
+        "role": "선택된 항목의 판단 근거",
+        "priority": "primary"
+      }
+    ],
+    "first_screen_contract": [
+      "큐와 상세 검토면을 첫 viewport에 함께 노출",
+      "상태, 출처, 결정 액션을 장식 요소보다 먼저 배치"
+    ],
+    "avoid_layouts": ["generic hero plus card grid", "uniform dashboard metric cards"]
+  },
+  "design_differentiation": {
+    "must_feel_different_from": ["generic SaaS dashboard"],
+    "signature_moves": ["Queue and claim detail remain co-present"],
+    "repetition_risks": ["metric cards before the evidence surface"]
+  }
+}
+```
+
+agent pack을 생성할 때도 같은 역할의 skill이 포함됩니다.
+
+```bash
+uv run design-ontology init-agent-pack \
+  --target-repo ../my-app \
+  --targets codex,claude
+```
+
+생성되는 Codex plugin에는 `design-system-concept-author`가 들어갑니다. 이 skill은 `run-project` 전에 LLM이 직접 `application_concept`, `layout_skeleton`, `design_differentiation`을 쓰도록 강제합니다.
 
 ## 전체 흐름
 
@@ -210,6 +279,22 @@ uv run design-ontology export-reference-gallery \
 ```
 
 `metadata` pack은 원본 이미지를 복사하지 않고 URL과 메타데이터만 남깁니다. 실제 이미지 분석이 필요하면 local folder pack을 `--materialize copy`로 만들거나, 웹 이미지를 내부 용도로 `--materialize download`로 내려받으면 됩니다. 검색어와 같은 단어를 공통 `--tags`에 넣으면 모든 asset 점수가 비슷해지므로, 공통 tag는 `public-web`, `reference-only`처럼 중립적으로 두는 편이 좋습니다. 자세한 내용은 [docs/VISUAL_REFERENCE_PACKS.md](./docs/VISUAL_REFERENCE_PACKS.md)를 참고하세요.
+
+### 2-0. Component Reference Extraction
+
+기본 컴포넌트 기준은 Astryx와 Vercel Geist를 함께 봅니다. 둘 다 구현 소스를 복사하는 경로가 아니라, taxonomy, state coverage, accessibility label, token category를 확인하는 metadata-only reference입니다.
+
+```bash
+uv run python scripts/extract-astryx-reference.py \
+  --output-dir projects/astryx-reference/research/astryx \
+  --mirror-build-system
+
+uv run python scripts/extract-geist-reference.py \
+  --output-dir projects/geist-reference/research/geist \
+  --mirror-build-system
+```
+
+생성기는 `component_reference_baseline.py`를 기준으로 core component를 얇게 시작합니다. `ghost-button`, `cta-button`, `mobile-topbar`, `bottom-sheet` 같은 예전 기본값은 baseline이 아니라 제품 primitive가 요구할 때만 붙이는 contextual component로 둡니다.
 
 ### 2-1. Website Reference Inspection
 

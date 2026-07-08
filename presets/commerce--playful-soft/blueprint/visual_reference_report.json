@@ -55,94 +55,93 @@
   "visual_motifs": {
     "density": {
       "value": "balanced",
-      "confidence": 0.66,
+      "confidence": 0.29,
       "evidence": [
-        "product x8"
+        "product x5.45"
       ],
       "candidates": [
         {
           "value": "balanced",
-          "score": 8.0
+          "score": 5.45
         },
         {
           "value": "airy",
-          "score": 6.0
+          "score": 0.8
         },
         {
           "value": "dense",
-          "score": 6.0
+          "score": 0.75
         }
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Derived from selected image signals plus query and brand context."
+        "detail": "Derived from query and brand context only because no local image selection was available."
       }
     },
     "surface_style": {
       "value": "tinted",
-      "confidence": 0.94,
+      "confidence": 0.44,
       "evidence": [
-        "warm x6",
-        "editorial x2",
-        "cream x2",
-        "soft x11"
+        "warm x3.3",
+        "editorial x0.25",
+        "cream x1.7000000000000002",
+        "soft x6.15"
       ],
       "candidates": [
         {
           "value": "tinted",
-          "score": 23.0
+          "score": 13.1
         },
         {
           "value": "elevated",
-          "score": 6.0
+          "score": 3.0
         },
         {
           "value": "flat",
-          "score": 2.0
+          "score": 0.2
         }
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Derived from selected image signals plus query and brand context."
+        "detail": "Derived from query and brand context only because no local image selection was available."
       }
     },
     "typography_mood": {
-      "value": "editorial",
-      "confidence": 0.75,
+      "value": "playful",
+      "confidence": 0.28,
       "evidence": [
-        "editorial x2",
-        "magazine x2",
-        "serif x1"
+        "playful x0.95",
+        "friendly x3.2"
       ],
       "candidates": [
         {
-          "value": "editorial",
-          "score": 12.0
+          "value": "playful",
+          "score": 6.05
         },
         {
-          "value": "playful",
-          "score": 10.0
+          "value": "editorial",
+          "score": 1.45
         },
         {
           "value": "utilitarian",
-          "score": 6.0
+          "score": 0.65
         }
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Derived from selected image signals plus query and brand context."
+        "detail": "Derived from query and brand context only because no local image selection was available."
       }
     },
     "corner_style": {
       "value": "round",
-      "confidence": 0.94,
+      "confidence": 0.48,
       "evidence": [
-        "rounded x10",
-        "soft x11"
+        "rounded x7.050000000000001",
+        "soft x6.15"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Derived from selected image geometry and supporting signal terms."
+        "detail": "Derived from query and brand context only because no local image geometry was available."
       }
     },
     "color_balance": {
@@ -170,61 +169,38 @@
     {
       "id": "data-review-surface",
       "label": "Data review surface",
-      "confidence": 0.92,
+      "confidence": 0.45,
       "evidence": [
-        "table x1",
-        "grid x4",
-        "data x1"
+        "table x0.15",
+        "grid x2.1",
+        "data x0.15",
+        "review x3.0500000000000003"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Layout cue inferred from selected image signals and reference context."
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
       "id": "editorial-feed",
       "label": "Editorial feed",
-      "confidence": 0.87,
+      "confidence": 0.37,
       "evidence": [
-        "editorial x2",
-        "feed x1",
-        "magazine x2"
+        "editorial x0.25",
+        "feed x0.45",
+        "magazine x0.25",
+        "review x3.0500000000000003"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Layout cue inferred from selected image signals and reference context."
-      }
-    },
-    {
-      "id": "dashboard-grid",
-      "label": "Dashboard grid",
-      "confidence": 0.5,
-      "evidence": [
-        "dashboard x1",
-        "table x1"
-      ],
-      "provenance": {
-        "level": "inferred",
-        "detail": "Layout cue inferred from selected image signals and reference context."
-      }
-    },
-    {
-      "id": "landing-narrative",
-      "label": "Narrative landing flow",
-      "confidence": 0.4,
-      "evidence": [
-        "hero x1"
-      ],
-      "provenance": {
-        "level": "inferred",
-        "detail": "Layout cue inferred from selected image signals and reference context."
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
       }
     }
   ],
   "component_style_hints": {
     "cards": {
       "direction": "low-elevation tinted cards를 기본으로 하고, 균형 잡힌 spacing과 명확한 slot hierarchy. soft round corner를 기본값으로 유지.",
-      "confidence": 0.94,
+      "confidence": 0.24,
       "evidence": [
         "surface=tinted",
         "density=balanced",
@@ -232,50 +208,77 @@
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
       }
     },
     "navigation": {
       "direction": "navigation은 정보 구조를 안정적으로 고정하고 시각적 장식보다 위치 신호를 우선한다.",
-      "confidence": 0.92,
+      "confidence": 0.25,
       "evidence": [
         "Data review surface"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
       }
     },
     "typography": {
-      "direction": "headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다.",
-      "confidence": 0.75,
+      "direction": "표현력은 허용하되 제품 UI에서는 heading 수와 accent를 엄격히 제한한다.",
+      "confidence": 0.15,
       "evidence": [
-        "typography_mood=editorial"
+        "typography_mood=playful"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
       }
     },
     "data_display": {
       "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
-      "confidence": 0.66,
+      "confidence": 0.17,
       "evidence": [
-        "layout=dashboard-grid",
+        "layout=data-review-surface",
         "density=balanced"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
       }
     }
   },
   "candidate_component_archetypes": [
     {
+      "id": "review-coverage-system",
+      "label": "Review coverage system",
+      "family": "editorial",
+      "confidence": 0.48,
+      "suggested_components": [
+        "review-card",
+        "score-badge",
+        "comparison-table",
+        "ranking-list",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "comparison and ranking",
+        "search and filter",
+        "tags and labels"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.45)",
+        "layout=editorial-feed (0.37)",
+        "review x3.0500000000000003"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
       "id": "data-review-table",
       "label": "Data review table",
       "family": "data-display",
-      "confidence": 0.94,
+      "confidence": 0.34,
       "suggested_components": [
         "data-table",
         "column-header",
@@ -288,91 +291,14 @@
         "search and filter"
       ],
       "evidence": [
-        "layout=data-review-surface (0.92)",
-        "layout=dashboard-grid (0.5)",
-        "table x1",
-        "data x1",
-        "grid x4"
+        "layout=data-review-surface (0.45)",
+        "table x0.15",
+        "data x0.15",
+        "grid x2.1"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
-      }
-    },
-    {
-      "id": "editorial-content-block",
-      "label": "Editorial content block",
-      "family": "editorial",
-      "confidence": 0.94,
-      "suggested_components": [
-        "content-card",
-        "featured-story-card",
-        "section-header",
-        "content-meta",
-        "byline-row"
-      ],
-      "supports_primitives": [
-        "rich text editor"
-      ],
-      "evidence": [
-        "layout=editorial-feed (0.87)",
-        "editorial x2",
-        "magazine x2"
-      ],
-      "provenance": {
-        "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
-      }
-    },
-    {
-      "id": "dashboard-insight-module",
-      "label": "Dashboard insight module",
-      "family": "data-display",
-      "confidence": 0.54,
-      "suggested_components": [
-        "stat-card",
-        "insight-card",
-        "chart-panel",
-        "section-header",
-        "filter-chip"
-      ],
-      "supports_primitives": [
-        "dashboard cards",
-        "charts and visualization"
-      ],
-      "evidence": [
-        "layout=dashboard-grid (0.5)",
-        "dashboard x1"
-      ],
-      "provenance": {
-        "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
-      }
-    },
-    {
-      "id": "marketing-hero-stack",
-      "label": "Marketing hero stack",
-      "family": "marketing",
-      "confidence": 0.51,
-      "suggested_components": [
-        "hero-section",
-        "hero-headline",
-        "hero-visual",
-        "cta-button-group",
-        "trust-strip"
-      ],
-      "supports_primitives": [
-        "hero section",
-        "pricing and plans",
-        "social proof"
-      ],
-      "evidence": [
-        "layout=landing-narrative (0.4)",
-        "hero x1"
-      ],
-      "provenance": {
-        "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
       }
     }
   ],
@@ -381,7 +307,7 @@
     "recommended_direction": [
       "layout는 Data review surface 기준으로 정리",
       "surface language는 tinted 성향 우선",
-      "typography mood는 editorial 축 유지",
+      "typography mood는 playful 축 유지",
       "density는 balanced 기준으로 primitive spacing 조정",
       "palette temperature는 unknown 쪽을 우선"
     ],

@@ -1,0 +1,1151 @@
+{
+  "schema_version": "aesthetic-evaluation-ontology/v1",
+  "dimensions": [
+    {
+      "id": "visual_harmony",
+      "label": "Visual harmony",
+      "weight": 0.24,
+      "description": "How coherently color, type, spacing, and composition work together.",
+      "metrics": [
+        "color_harmony",
+        "spacing_consistency",
+        "typography_balance",
+        "composition_order"
+      ]
+    },
+    {
+      "id": "clarity",
+      "label": "Clarity",
+      "weight": 0.2,
+      "description": "How quickly the intended hierarchy, action, and information structure can be read.",
+      "metrics": [
+        "hierarchy_clarity",
+        "contrast_legibility",
+        "content_density_control",
+        "task_focus"
+      ]
+    },
+    {
+      "id": "brand_fit",
+      "label": "Brand fit",
+      "weight": 0.18,
+      "description": "How well the candidate expresses the intended brand posture and avoids anti-keywords.",
+      "metrics": [
+        "keyword_alignment",
+        "tone_alignment",
+        "domain_fit",
+        "anti_keyword_avoidance"
+      ]
+    },
+    {
+      "id": "emotional_appeal",
+      "label": "Emotional appeal",
+      "weight": 0.14,
+      "description": "How desirable, confident, and affectively appropriate the surface feels.",
+      "metrics": [
+        "desirability",
+        "confidence_signal",
+        "warmth_or_energy"
+      ]
+    },
+    {
+      "id": "craft_quality",
+      "label": "Craft quality",
+      "weight": 0.14,
+      "description": "How polished and implementation-ready the candidate is across fit, tokens, and affordances.",
+      "metrics": [
+        "responsive_fit",
+        "token_binding",
+        "accessibility_baseline",
+        "interaction_affordance",
+        "asset_completeness"
+      ]
+    },
+    {
+      "id": "novelty",
+      "label": "Novelty",
+      "weight": 0.1,
+      "description": "How distinctive the design is without breaking its product and brand constraints.",
+      "metrics": [
+        "distinctiveness",
+        "reference_transformation",
+        "memorability"
+      ]
+    },
+    {
+      "id": "brand_semantic_fit",
+      "label": "Brand semantic fit",
+      "weight": 0.22,
+      "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+      "metrics": [
+        "brand_keyword:document-content-ffc9ffd8",
+        "brand_keyword:magazine-2c26d6e2",
+        "brand_keyword:editorial-feature-d016ecea",
+        "brand_keyword:opinion-b0af31bd",
+        "brand_keyword:manifesto-6358b5cb",
+        "brand_keyword:long-form-a04c67f1",
+        "brand_keyword:article-565cecd7",
+        "brand_keyword:feature-story-01e07653",
+        "brand_tone:confident-39a449bf",
+        "brand_tone:energetic-10392295",
+        "brand_tone:opinionated-40338970",
+        "brand_tone:impactful-4a616e00",
+        "brand_tone:declarative-199cf7f4"
+      ],
+      "research_basis": [
+        "kansei",
+        "aesthemos"
+      ]
+    },
+    {
+      "id": "brand_boundary_fit",
+      "label": "Brand boundary fit",
+      "weight": 0.16,
+      "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+      "metrics": [
+        "anti_keyword:minimal-tech-54872a07",
+        "anti_keyword:editorial-warm-88c4bd1f",
+        "anti_keyword:playful-pastel-2f4f8e24",
+        "anti_keyword:corporate-conservative-a1f48f23",
+        "anti_keyword:dashboard-heavy-98cd5dbc",
+        "anti_keyword:commerce-heavy-5b857b54",
+        "anti_keyword:streetwear-drop-32b1d356",
+        "anti_keyword:reading-calm-2812af75",
+        "avoid_pattern:saturated-commerce-hero-f0728f90",
+        "avoid_pattern:calm-editorial-warm-magazine-lora-se-44c94512",
+        "avoid_pattern:minimal-developer-docs-reference-0f944b11",
+        "avoid_pattern:playful-pastel-feed-c19480cc",
+        "avoid_pattern:streetwear-drop-banner-9ff38ad5"
+      ],
+      "research_basis": [
+        "kansei"
+      ]
+    },
+    {
+      "id": "product_ontology_fit",
+      "label": "Product ontology fit",
+      "weight": 0.22,
+      "description": "How clearly product primitives and ontology-required signals appear in the design.",
+      "metrics": [
+        "product_primitive:masthead-7fb1f8f4",
+        "product_primitive:issue-header-9322a85e",
+        "product_primitive:issue-number-6f301255",
+        "product_primitive:kicker-eyebrow-9db08f18",
+        "product_primitive:feature-article-633e0384",
+        "product_primitive:cover-story-0c78eb40",
+        "product_primitive:opening-spread-fca51c9d",
+        "product_primitive:article-body-a0499ff1",
+        "product_primitive:pull-quote-cce46cfa",
+        "product_primitive:byline-acb6e3f1",
+        "must_include:issue-cover-with-masthead-issue-numb-e45a0d1a",
+        "must_include:feature-article-opening-spread-with-b790c05a",
+        "must_include:opinion-manifesto-section-with-opini-f2a696a7",
+        "must_include:table-of-contents-feature-grid-index-da628fed",
+        "must_include:archive-index-with-issue-thumbnail-i-48274fee"
+      ],
+      "research_basis": [
+        "beauvis",
+        "kansei"
+      ]
+    },
+    {
+      "id": "audience_context_fit",
+      "label": "Audience context fit",
+      "weight": 0.12,
+      "description": "How well the design serves declared users, platforms, and accessibility floors.",
+      "metrics": [
+        "audience_need:정치-사회-opinion-저널을-탐독하는-독자-the-atlant-b39baf32",
+        "audience_need:bold-컬처-음악-영화-리뷰-매거진-reader-pitchfor-83e23675",
+        "audience_need:declaration-manifesto-단일호-zine-구독자-g-764bed51",
+        "accessibility_target:wcag-2-2-aa-41a998cd"
+      ],
+      "research_basis": [
+        "visawi",
+        "aesthemos"
+      ]
+    }
+  ],
+  "metrics": {
+    "color_harmony": {
+      "label": "Color harmony",
+      "improvement": "Tighten the palette around one primary accent, one neutral surface ladder, and explicit semantic roles.",
+      "expected_lift": 0.08
+    },
+    "spacing_consistency": {
+      "label": "Spacing consistency",
+      "improvement": "Normalize page rhythm with shared spacing steps for section, cluster, and control gaps.",
+      "expected_lift": 0.07
+    },
+    "typography_balance": {
+      "label": "Typography balance",
+      "improvement": "Rebalance type hierarchy so headings, body, captions, and controls use distinct but restrained roles.",
+      "expected_lift": 0.07
+    },
+    "composition_order": {
+      "label": "Composition order",
+      "improvement": "Strengthen alignment, focal sequence, and proportional grouping before adding more decoration.",
+      "expected_lift": 0.08
+    },
+    "hierarchy_clarity": {
+      "label": "Hierarchy clarity",
+      "improvement": "Make the primary state, primary action, and next-best secondary action visible in the first scan.",
+      "expected_lift": 0.09
+    },
+    "contrast_legibility": {
+      "label": "Contrast and legibility",
+      "improvement": "Raise text/background and control/border contrast while preserving the selected token roles.",
+      "expected_lift": 0.08
+    },
+    "content_density_control": {
+      "label": "Content density control",
+      "improvement": "Reduce competing modules or group dense content into scannable rows, tables, rails, or panels.",
+      "expected_lift": 0.07
+    },
+    "task_focus": {
+      "label": "Task focus",
+      "improvement": "Move decorative or pitch-like content below the operational surface that supports the user's main task.",
+      "expected_lift": 0.08
+    },
+    "keyword_alignment": {
+      "label": "Keyword alignment",
+      "improvement": "Map the strongest brand keywords to visible choices in layout, tone, density, and component emphasis.",
+      "expected_lift": 0.08
+    },
+    "tone_alignment": {
+      "label": "Tone alignment",
+      "improvement": "Adjust copy weight, control styling, and visual temperature to match the intended voice.",
+      "expected_lift": 0.06
+    },
+    "domain_fit": {
+      "label": "Domain fit",
+      "improvement": "Add domain-native structures such as tables, maps, media, timelines, inspectors, or product objects where relevant.",
+      "expected_lift": 0.08
+    },
+    "anti_keyword_avoidance": {
+      "label": "Anti-keyword avoidance",
+      "improvement": "Remove visual tropes that match the brand profile's anti-keywords before polishing details.",
+      "expected_lift": 0.06
+    },
+    "desirability": {
+      "label": "Desirability",
+      "improvement": "Give the primary surface a more intentional visual reward: stronger imagery, tactile controls, or clearer payoff.",
+      "expected_lift": 0.07
+    },
+    "confidence_signal": {
+      "label": "Confidence signal",
+      "improvement": "Add evidence, provenance, precision, or stable UI states that make the surface feel trustworthy.",
+      "expected_lift": 0.07
+    },
+    "warmth_or_energy": {
+      "label": "Warmth or energy",
+      "improvement": "Tune motion, image choice, accent placement, or microcopy energy to the target audience.",
+      "expected_lift": 0.06
+    },
+    "responsive_fit": {
+      "label": "Responsive fit",
+      "improvement": "Verify mobile and desktop fit, then fix overflow, clipped labels, and unstable control sizing.",
+      "expected_lift": 0.08
+    },
+    "token_binding": {
+      "label": "Token binding",
+      "improvement": "Replace local visual constants with design-system tokens and keep semantic roles consistent.",
+      "expected_lift": 0.06
+    },
+    "accessibility_baseline": {
+      "label": "Accessibility baseline",
+      "improvement": "Check contrast, focus states, labels, and target sizes as part of visual polish, not after it.",
+      "expected_lift": 0.07
+    },
+    "interaction_affordance": {
+      "label": "Interaction affordance",
+      "improvement": "Make controls, filters, state chips, and navigation visually legible with icons, state, and hit-area clarity.",
+      "expected_lift": 0.07
+    },
+    "asset_completeness": {
+      "label": "Asset completeness",
+      "improvement": "Use concrete product, place, object, identity, or content assets where the domain expects visual substance.",
+      "expected_lift": 0.08
+    },
+    "distinctiveness": {
+      "label": "Distinctiveness",
+      "improvement": "Introduce one memorable composition or interaction pattern while keeping the rest of the system restrained.",
+      "expected_lift": 0.06
+    },
+    "reference_transformation": {
+      "label": "Reference transformation",
+      "improvement": "Absorb reference morphology without copying palette, copy, IA, or protected asset choices.",
+      "expected_lift": 0.06
+    },
+    "memorability": {
+      "label": "Memorability",
+      "improvement": "Create a recognizable signature in the first viewport through layout, identity asset, or product-native visual.",
+      "expected_lift": 0.06
+    },
+    "brand_keyword:document-content-ffc9ffd8": {
+      "label": "Expresses brand keyword: document-content",
+      "improvement": "Make 'document-content' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "document-content"
+    },
+    "brand_keyword:magazine-2c26d6e2": {
+      "label": "Expresses brand keyword: magazine",
+      "improvement": "Make 'magazine' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "magazine"
+    },
+    "brand_keyword:editorial-feature-d016ecea": {
+      "label": "Expresses brand keyword: editorial-feature",
+      "improvement": "Make 'editorial-feature' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "editorial-feature"
+    },
+    "brand_keyword:opinion-b0af31bd": {
+      "label": "Expresses brand keyword: opinion",
+      "improvement": "Make 'opinion' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "opinion"
+    },
+    "brand_keyword:manifesto-6358b5cb": {
+      "label": "Expresses brand keyword: manifesto",
+      "improvement": "Make 'manifesto' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "manifesto"
+    },
+    "brand_keyword:long-form-a04c67f1": {
+      "label": "Expresses brand keyword: long-form",
+      "improvement": "Make 'long-form' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "long-form"
+    },
+    "brand_keyword:article-565cecd7": {
+      "label": "Expresses brand keyword: article",
+      "improvement": "Make 'article' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "article"
+    },
+    "brand_keyword:feature-story-01e07653": {
+      "label": "Expresses brand keyword: feature-story",
+      "improvement": "Make 'feature-story' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "feature-story"
+    },
+    "brand_tone:confident-39a449bf": {
+      "label": "Expresses tone of voice: confident",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'confident'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "confident"
+    },
+    "brand_tone:energetic-10392295": {
+      "label": "Expresses tone of voice: energetic",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'energetic'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "energetic"
+    },
+    "brand_tone:opinionated-40338970": {
+      "label": "Expresses tone of voice: opinionated",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'opinionated'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "opinionated"
+    },
+    "brand_tone:impactful-4a616e00": {
+      "label": "Expresses tone of voice: impactful",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'impactful'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "impactful"
+    },
+    "brand_tone:declarative-199cf7f4": {
+      "label": "Expresses tone of voice: declarative",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'declarative'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "declarative"
+    },
+    "anti_keyword:minimal-tech-54872a07": {
+      "label": "Avoids anti-keyword: minimal-tech",
+      "improvement": "Remove cues that make the product read as 'minimal-tech'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "minimal-tech"
+    },
+    "anti_keyword:editorial-warm-88c4bd1f": {
+      "label": "Avoids anti-keyword: editorial-warm",
+      "improvement": "Remove cues that make the product read as 'editorial-warm'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "editorial-warm"
+    },
+    "anti_keyword:playful-pastel-2f4f8e24": {
+      "label": "Avoids anti-keyword: playful-pastel",
+      "improvement": "Remove cues that make the product read as 'playful-pastel'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "playful-pastel"
+    },
+    "anti_keyword:corporate-conservative-a1f48f23": {
+      "label": "Avoids anti-keyword: corporate-conservative",
+      "improvement": "Remove cues that make the product read as 'corporate-conservative'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "corporate-conservative"
+    },
+    "anti_keyword:dashboard-heavy-98cd5dbc": {
+      "label": "Avoids anti-keyword: dashboard-heavy",
+      "improvement": "Remove cues that make the product read as 'dashboard-heavy'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "dashboard-heavy"
+    },
+    "anti_keyword:commerce-heavy-5b857b54": {
+      "label": "Avoids anti-keyword: commerce-heavy",
+      "improvement": "Remove cues that make the product read as 'commerce-heavy'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "commerce-heavy"
+    },
+    "anti_keyword:streetwear-drop-32b1d356": {
+      "label": "Avoids anti-keyword: streetwear-drop",
+      "improvement": "Remove cues that make the product read as 'streetwear-drop'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "streetwear-drop"
+    },
+    "anti_keyword:reading-calm-2812af75": {
+      "label": "Avoids anti-keyword: reading-calm",
+      "improvement": "Remove cues that make the product read as 'reading-calm'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "reading-calm"
+    },
+    "avoid_pattern:saturated-commerce-hero-f0728f90": {
+      "label": "Avoids visual pattern: saturated commerce hero",
+      "improvement": "Replace 'saturated commerce hero' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "saturated commerce hero"
+    },
+    "avoid_pattern:calm-editorial-warm-magazine-lora-se-44c94512": {
+      "label": "Avoids visual pattern: calm editorial-warm magazine (Lora serif warm)",
+      "improvement": "Replace 'calm editorial-warm magazine (Lora serif warm)' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "calm editorial-warm magazine (Lora serif warm)"
+    },
+    "avoid_pattern:minimal-developer-docs-reference-0f944b11": {
+      "label": "Avoids visual pattern: minimal developer docs reference",
+      "improvement": "Replace 'minimal developer docs reference' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "minimal developer docs reference"
+    },
+    "avoid_pattern:playful-pastel-feed-c19480cc": {
+      "label": "Avoids visual pattern: playful pastel feed",
+      "improvement": "Replace 'playful pastel feed' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "playful pastel feed"
+    },
+    "avoid_pattern:streetwear-drop-banner-9ff38ad5": {
+      "label": "Avoids visual pattern: streetwear drop banner",
+      "improvement": "Replace 'streetwear drop banner' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "streetwear drop banner"
+    },
+    "product_primitive:masthead-7fb1f8f4": {
+      "label": "Embodies product primitive: masthead",
+      "improvement": "Represent 'masthead' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "masthead"
+    },
+    "product_primitive:issue-header-9322a85e": {
+      "label": "Embodies product primitive: issue-header",
+      "improvement": "Represent 'issue-header' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "issue-header"
+    },
+    "product_primitive:issue-number-6f301255": {
+      "label": "Embodies product primitive: issue-number",
+      "improvement": "Represent 'issue-number' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "issue-number"
+    },
+    "product_primitive:kicker-eyebrow-9db08f18": {
+      "label": "Embodies product primitive: kicker-eyebrow",
+      "improvement": "Represent 'kicker-eyebrow' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "kicker-eyebrow"
+    },
+    "product_primitive:feature-article-633e0384": {
+      "label": "Embodies product primitive: feature-article",
+      "improvement": "Represent 'feature-article' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "feature-article"
+    },
+    "product_primitive:cover-story-0c78eb40": {
+      "label": "Embodies product primitive: cover-story",
+      "improvement": "Represent 'cover-story' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "cover-story"
+    },
+    "product_primitive:opening-spread-fca51c9d": {
+      "label": "Embodies product primitive: opening-spread",
+      "improvement": "Represent 'opening-spread' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "opening-spread"
+    },
+    "product_primitive:article-body-a0499ff1": {
+      "label": "Embodies product primitive: article-body",
+      "improvement": "Represent 'article-body' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "article-body"
+    },
+    "product_primitive:pull-quote-cce46cfa": {
+      "label": "Embodies product primitive: pull-quote",
+      "improvement": "Represent 'pull-quote' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "pull-quote"
+    },
+    "product_primitive:byline-acb6e3f1": {
+      "label": "Embodies product primitive: byline",
+      "improvement": "Represent 'byline' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "byline"
+    },
+    "must_include:issue-cover-with-masthead-issue-numb-e45a0d1a": {
+      "label": "Includes required visual/system signal: issue cover with masthead + issue number + cover-story hero + kicker-eyebrow",
+      "improvement": "Make 'issue cover with masthead + issue number + cover-story hero + kicker-eyebrow' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "issue cover with masthead + issue number + cover-story hero + kicker-eyebrow"
+    },
+    "must_include:feature-article-opening-spread-with-b790c05a": {
+      "label": "Includes required visual/system signal: feature article opening spread with drop cap + pull-quote + byline + section-break",
+      "improvement": "Make 'feature article opening spread with drop cap + pull-quote + byline + section-break' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "feature article opening spread with drop cap + pull-quote + byline + section-break"
+    },
+    "must_include:opinion-manifesto-section-with-opini-f2a696a7": {
+      "label": "Includes required visual/system signal: opinion/manifesto section with opinion-byline + bold callout + reading-progress-bar",
+      "improvement": "Make 'opinion/manifesto section with opinion-byline + bold callout + reading-progress-bar' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "opinion/manifesto section with opinion-byline + bold callout + reading-progress-bar"
+    },
+    "must_include:table-of-contents-feature-grid-index-da628fed": {
+      "label": "Includes required visual/system signal: table-of-contents / feature-grid-index number-heavy tile + kicker + title + byline",
+      "improvement": "Make 'table-of-contents / feature-grid-index number-heavy tile + kicker + title + byline' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "table-of-contents / feature-grid-index number-heavy tile + kicker + title + byline"
+    },
+    "must_include:archive-index-with-issue-thumbnail-i-48274fee": {
+      "label": "Includes required visual/system signal: archive index with issue thumbnail + issue-number + publish date",
+      "improvement": "Make 'archive index with issue thumbnail + issue-number + publish date' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "archive index with issue thumbnail + issue-number + publish date"
+    },
+    "audience_need:정치-사회-opinion-저널을-탐독하는-독자-the-atlant-b39baf32": {
+      "label": "Fits audience context: 정치·사회 opinion 저널을 탐독하는 독자 (The Atlantic / New Yorker 성향)",
+      "improvement": "Adjust density, language, workflow order, and controls for '정치·사회 opinion 저널을 탐독하는 독자 (The Atlantic / New Yorker 성향)'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "정치·사회 opinion 저널을 탐독하는 독자 (The Atlantic / New Yorker 성향)"
+    },
+    "audience_need:bold-컬처-음악-영화-리뷰-매거진-reader-pitchfor-83e23675": {
+      "label": "Fits audience context: bold 컬처/음악/영화 리뷰 매거진 reader (Pitchfork / Vice 성향)",
+      "improvement": "Adjust density, language, workflow order, and controls for 'bold 컬처/음악/영화 리뷰 매거진 reader (Pitchfork / Vice 성향)'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "bold 컬처/음악/영화 리뷰 매거진 reader (Pitchfork / Vice 성향)"
+    },
+    "audience_need:declaration-manifesto-단일호-zine-구독자-g-764bed51": {
+      "label": "Fits audience context: declaration/manifesto 단일호 zine 구독자 (Gen Z 젊은 에디토리얼)",
+      "improvement": "Adjust density, language, workflow order, and controls for 'declaration/manifesto 단일호 zine 구독자 (Gen Z 젊은 에디토리얼)'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "declaration/manifesto 단일호 zine 구독자 (Gen Z 젊은 에디토리얼)"
+    },
+    "accessibility_target:wcag-2-2-aa-41a998cd": {
+      "label": "Supports accessibility target: WCAG 2.2 AA",
+      "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "WCAG 2.2 AA"
+    }
+  },
+  "relations": [
+    {
+      "source": "DesignCandidate",
+      "relation": "evaluated_by",
+      "target": "AestheticDimension"
+    },
+    {
+      "source": "AestheticDimension",
+      "relation": "measured_by",
+      "target": "AestheticMetric"
+    },
+    {
+      "source": "AestheticMetric",
+      "relation": "improved_by",
+      "target": "ImprovementAction"
+    },
+    {
+      "source": "AestheticEvaluation",
+      "relation": "gates",
+      "target": "Execution"
+    }
+  ],
+  "context": {
+    "brand_name": "Broadside",
+    "system_name": "Broadside System",
+    "product_summary": "bold-confident 톤 magazine/opinion long-form reading — masthead · issue-header · cover-story · feature-article · pull-quote · drop-cap · article · table-of-contents · reading-pane · archive-index · manifesto-section, saturated primary + high-contrast + impact typography, 한국어 1급",
+    "audiences": [
+      "정치·사회 opinion 저널을 탐독하는 독자 (The Atlantic / New Yorker 성향)",
+      "bold 컬처/음악/영화 리뷰 매거진 reader (Pitchfork / Vice 성향)",
+      "declaration/manifesto 단일호 zine 구독자 (Gen Z 젊은 에디토리얼)"
+    ],
+    "brand_keywords": [
+      "document-content",
+      "magazine",
+      "editorial-feature",
+      "opinion",
+      "manifesto",
+      "long-form",
+      "article",
+      "feature-story",
+      "pull-quote",
+      "masthead",
+      "bold",
+      "energetic",
+      "high-contrast",
+      "impact",
+      "zine"
+    ],
+    "anti_keywords": [
+      "minimal-tech",
+      "editorial-warm",
+      "playful-pastel",
+      "corporate-conservative",
+      "dashboard-heavy",
+      "commerce-heavy",
+      "streetwear-drop",
+      "reading-calm",
+      "muted"
+    ],
+    "tone_of_voice": [
+      "confident",
+      "energetic",
+      "opinionated",
+      "impactful",
+      "declarative"
+    ],
+    "product_primitives": [
+      "masthead",
+      "issue-header",
+      "issue-number",
+      "kicker-eyebrow",
+      "feature-article",
+      "cover-story",
+      "opening-spread",
+      "article-body",
+      "pull-quote",
+      "byline",
+      "credit-line",
+      "drop-cap",
+      "section-break",
+      "callout",
+      "table-of-contents",
+      "heading-anchor",
+      "footnote",
+      "reading-pane",
+      "prose-block",
+      "article-gallery",
+      "subscription-callout",
+      "manifesto-section",
+      "opinion-byline",
+      "feature-grid-index",
+      "archive-index",
+      "issue-archive",
+      "reading-progress-bar"
+    ]
+  },
+  "brand_aesthetic_contract": {
+    "schema_version": "brand-aesthetic-contract/v1",
+    "brand_name": "Broadside",
+    "system_name": "Broadside System",
+    "research_basis": [
+      {
+        "id": "visawi",
+        "label": "VisAWI",
+        "construct": "perceived website visual aesthetics",
+        "operational_use": "Map simplicity, diversity, colorfulness, and craftsmanship into visual system coherence metrics.",
+        "source_url": "https://www.sciencedirect.com/science/article/pii/S1071581910000777"
+      },
+      {
+        "id": "apid",
+        "label": "APiD",
+        "construct": "aesthetic pleasure in designed artifacts",
+        "operational_use": "Keep a direct pleasure/desirability layer instead of only formal pixel metrics.",
+        "source_url": "https://opus.lib.uts.edu.au/handle/10453/81276"
+      },
+      {
+        "id": "beauvis",
+        "label": "BeauVis",
+        "construct": "aesthetic pleasure of visual representations",
+        "operational_use": "Treat scores as comparative, context-bound judgments rather than universal beauty values.",
+        "source_url": "https://arxiv.org/abs/2207.14147"
+      },
+      {
+        "id": "aesthemos",
+        "label": "AESTHEMOS",
+        "construct": "aesthetic emotions",
+        "operational_use": "Translate brand tone and target affect into measurable emotional-response proxies.",
+        "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0178899"
+      },
+      {
+        "id": "kansei",
+        "label": "Kansei / semantic differential",
+        "construct": "design element to impression mapping",
+        "operational_use": "Use brand keywords and anti-keywords as semantic impression targets and boundaries.",
+        "source_url": "https://www.mdpi.com/2073-8994/12/8/1340"
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "brand_semantic_fit",
+        "label": "Brand semantic fit",
+        "weight": 0.22,
+        "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+        "metrics": [
+          "brand_keyword:document-content-ffc9ffd8",
+          "brand_keyword:magazine-2c26d6e2",
+          "brand_keyword:editorial-feature-d016ecea",
+          "brand_keyword:opinion-b0af31bd",
+          "brand_keyword:manifesto-6358b5cb",
+          "brand_keyword:long-form-a04c67f1",
+          "brand_keyword:article-565cecd7",
+          "brand_keyword:feature-story-01e07653",
+          "brand_tone:confident-39a449bf",
+          "brand_tone:energetic-10392295",
+          "brand_tone:opinionated-40338970",
+          "brand_tone:impactful-4a616e00",
+          "brand_tone:declarative-199cf7f4"
+        ],
+        "research_basis": [
+          "kansei",
+          "aesthemos"
+        ]
+      },
+      {
+        "id": "brand_boundary_fit",
+        "label": "Brand boundary fit",
+        "weight": 0.16,
+        "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+        "metrics": [
+          "anti_keyword:minimal-tech-54872a07",
+          "anti_keyword:editorial-warm-88c4bd1f",
+          "anti_keyword:playful-pastel-2f4f8e24",
+          "anti_keyword:corporate-conservative-a1f48f23",
+          "anti_keyword:dashboard-heavy-98cd5dbc",
+          "anti_keyword:commerce-heavy-5b857b54",
+          "anti_keyword:streetwear-drop-32b1d356",
+          "anti_keyword:reading-calm-2812af75",
+          "avoid_pattern:saturated-commerce-hero-f0728f90",
+          "avoid_pattern:calm-editorial-warm-magazine-lora-se-44c94512",
+          "avoid_pattern:minimal-developer-docs-reference-0f944b11",
+          "avoid_pattern:playful-pastel-feed-c19480cc",
+          "avoid_pattern:streetwear-drop-banner-9ff38ad5"
+        ],
+        "research_basis": [
+          "kansei"
+        ]
+      },
+      {
+        "id": "product_ontology_fit",
+        "label": "Product ontology fit",
+        "weight": 0.22,
+        "description": "How clearly product primitives and ontology-required signals appear in the design.",
+        "metrics": [
+          "product_primitive:masthead-7fb1f8f4",
+          "product_primitive:issue-header-9322a85e",
+          "product_primitive:issue-number-6f301255",
+          "product_primitive:kicker-eyebrow-9db08f18",
+          "product_primitive:feature-article-633e0384",
+          "product_primitive:cover-story-0c78eb40",
+          "product_primitive:opening-spread-fca51c9d",
+          "product_primitive:article-body-a0499ff1",
+          "product_primitive:pull-quote-cce46cfa",
+          "product_primitive:byline-acb6e3f1",
+          "must_include:issue-cover-with-masthead-issue-numb-e45a0d1a",
+          "must_include:feature-article-opening-spread-with-b790c05a",
+          "must_include:opinion-manifesto-section-with-opini-f2a696a7",
+          "must_include:table-of-contents-feature-grid-index-da628fed",
+          "must_include:archive-index-with-issue-thumbnail-i-48274fee"
+        ],
+        "research_basis": [
+          "beauvis",
+          "kansei"
+        ]
+      },
+      {
+        "id": "audience_context_fit",
+        "label": "Audience context fit",
+        "weight": 0.12,
+        "description": "How well the design serves declared users, platforms, and accessibility floors.",
+        "metrics": [
+          "audience_need:정치-사회-opinion-저널을-탐독하는-독자-the-atlant-b39baf32",
+          "audience_need:bold-컬처-음악-영화-리뷰-매거진-reader-pitchfor-83e23675",
+          "audience_need:declaration-manifesto-단일호-zine-구독자-g-764bed51",
+          "accessibility_target:wcag-2-2-aa-41a998cd"
+        ],
+        "research_basis": [
+          "visawi",
+          "aesthemos"
+        ]
+      }
+    ],
+    "metrics": {
+      "brand_keyword:document-content-ffc9ffd8": {
+        "label": "Expresses brand keyword: document-content",
+        "improvement": "Make 'document-content' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "document-content"
+      },
+      "brand_keyword:magazine-2c26d6e2": {
+        "label": "Expresses brand keyword: magazine",
+        "improvement": "Make 'magazine' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "magazine"
+      },
+      "brand_keyword:editorial-feature-d016ecea": {
+        "label": "Expresses brand keyword: editorial-feature",
+        "improvement": "Make 'editorial-feature' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "editorial-feature"
+      },
+      "brand_keyword:opinion-b0af31bd": {
+        "label": "Expresses brand keyword: opinion",
+        "improvement": "Make 'opinion' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "opinion"
+      },
+      "brand_keyword:manifesto-6358b5cb": {
+        "label": "Expresses brand keyword: manifesto",
+        "improvement": "Make 'manifesto' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "manifesto"
+      },
+      "brand_keyword:long-form-a04c67f1": {
+        "label": "Expresses brand keyword: long-form",
+        "improvement": "Make 'long-form' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "long-form"
+      },
+      "brand_keyword:article-565cecd7": {
+        "label": "Expresses brand keyword: article",
+        "improvement": "Make 'article' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "article"
+      },
+      "brand_keyword:feature-story-01e07653": {
+        "label": "Expresses brand keyword: feature-story",
+        "improvement": "Make 'feature-story' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "feature-story"
+      },
+      "brand_tone:confident-39a449bf": {
+        "label": "Expresses tone of voice: confident",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'confident'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "confident"
+      },
+      "brand_tone:energetic-10392295": {
+        "label": "Expresses tone of voice: energetic",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'energetic'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "energetic"
+      },
+      "brand_tone:opinionated-40338970": {
+        "label": "Expresses tone of voice: opinionated",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'opinionated'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "opinionated"
+      },
+      "brand_tone:impactful-4a616e00": {
+        "label": "Expresses tone of voice: impactful",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'impactful'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "impactful"
+      },
+      "brand_tone:declarative-199cf7f4": {
+        "label": "Expresses tone of voice: declarative",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'declarative'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "declarative"
+      },
+      "anti_keyword:minimal-tech-54872a07": {
+        "label": "Avoids anti-keyword: minimal-tech",
+        "improvement": "Remove cues that make the product read as 'minimal-tech'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "minimal-tech"
+      },
+      "anti_keyword:editorial-warm-88c4bd1f": {
+        "label": "Avoids anti-keyword: editorial-warm",
+        "improvement": "Remove cues that make the product read as 'editorial-warm'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "editorial-warm"
+      },
+      "anti_keyword:playful-pastel-2f4f8e24": {
+        "label": "Avoids anti-keyword: playful-pastel",
+        "improvement": "Remove cues that make the product read as 'playful-pastel'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "playful-pastel"
+      },
+      "anti_keyword:corporate-conservative-a1f48f23": {
+        "label": "Avoids anti-keyword: corporate-conservative",
+        "improvement": "Remove cues that make the product read as 'corporate-conservative'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "corporate-conservative"
+      },
+      "anti_keyword:dashboard-heavy-98cd5dbc": {
+        "label": "Avoids anti-keyword: dashboard-heavy",
+        "improvement": "Remove cues that make the product read as 'dashboard-heavy'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "dashboard-heavy"
+      },
+      "anti_keyword:commerce-heavy-5b857b54": {
+        "label": "Avoids anti-keyword: commerce-heavy",
+        "improvement": "Remove cues that make the product read as 'commerce-heavy'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "commerce-heavy"
+      },
+      "anti_keyword:streetwear-drop-32b1d356": {
+        "label": "Avoids anti-keyword: streetwear-drop",
+        "improvement": "Remove cues that make the product read as 'streetwear-drop'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "streetwear-drop"
+      },
+      "anti_keyword:reading-calm-2812af75": {
+        "label": "Avoids anti-keyword: reading-calm",
+        "improvement": "Remove cues that make the product read as 'reading-calm'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "reading-calm"
+      },
+      "avoid_pattern:saturated-commerce-hero-f0728f90": {
+        "label": "Avoids visual pattern: saturated commerce hero",
+        "improvement": "Replace 'saturated commerce hero' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "saturated commerce hero"
+      },
+      "avoid_pattern:calm-editorial-warm-magazine-lora-se-44c94512": {
+        "label": "Avoids visual pattern: calm editorial-warm magazine (Lora serif warm)",
+        "improvement": "Replace 'calm editorial-warm magazine (Lora serif warm)' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "calm editorial-warm magazine (Lora serif warm)"
+      },
+      "avoid_pattern:minimal-developer-docs-reference-0f944b11": {
+        "label": "Avoids visual pattern: minimal developer docs reference",
+        "improvement": "Replace 'minimal developer docs reference' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "minimal developer docs reference"
+      },
+      "avoid_pattern:playful-pastel-feed-c19480cc": {
+        "label": "Avoids visual pattern: playful pastel feed",
+        "improvement": "Replace 'playful pastel feed' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "playful pastel feed"
+      },
+      "avoid_pattern:streetwear-drop-banner-9ff38ad5": {
+        "label": "Avoids visual pattern: streetwear drop banner",
+        "improvement": "Replace 'streetwear drop banner' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "streetwear drop banner"
+      },
+      "product_primitive:masthead-7fb1f8f4": {
+        "label": "Embodies product primitive: masthead",
+        "improvement": "Represent 'masthead' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "masthead"
+      },
+      "product_primitive:issue-header-9322a85e": {
+        "label": "Embodies product primitive: issue-header",
+        "improvement": "Represent 'issue-header' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "issue-header"
+      },
+      "product_primitive:issue-number-6f301255": {
+        "label": "Embodies product primitive: issue-number",
+        "improvement": "Represent 'issue-number' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "issue-number"
+      },
+      "product_primitive:kicker-eyebrow-9db08f18": {
+        "label": "Embodies product primitive: kicker-eyebrow",
+        "improvement": "Represent 'kicker-eyebrow' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "kicker-eyebrow"
+      },
+      "product_primitive:feature-article-633e0384": {
+        "label": "Embodies product primitive: feature-article",
+        "improvement": "Represent 'feature-article' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "feature-article"
+      },
+      "product_primitive:cover-story-0c78eb40": {
+        "label": "Embodies product primitive: cover-story",
+        "improvement": "Represent 'cover-story' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "cover-story"
+      },
+      "product_primitive:opening-spread-fca51c9d": {
+        "label": "Embodies product primitive: opening-spread",
+        "improvement": "Represent 'opening-spread' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "opening-spread"
+      },
+      "product_primitive:article-body-a0499ff1": {
+        "label": "Embodies product primitive: article-body",
+        "improvement": "Represent 'article-body' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "article-body"
+      },
+      "product_primitive:pull-quote-cce46cfa": {
+        "label": "Embodies product primitive: pull-quote",
+        "improvement": "Represent 'pull-quote' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "pull-quote"
+      },
+      "product_primitive:byline-acb6e3f1": {
+        "label": "Embodies product primitive: byline",
+        "improvement": "Represent 'byline' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "byline"
+      },
+      "must_include:issue-cover-with-masthead-issue-numb-e45a0d1a": {
+        "label": "Includes required visual/system signal: issue cover with masthead + issue number + cover-story hero + kicker-eyebrow",
+        "improvement": "Make 'issue cover with masthead + issue number + cover-story hero + kicker-eyebrow' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "issue cover with masthead + issue number + cover-story hero + kicker-eyebrow"
+      },
+      "must_include:feature-article-opening-spread-with-b790c05a": {
+        "label": "Includes required visual/system signal: feature article opening spread with drop cap + pull-quote + byline + section-break",
+        "improvement": "Make 'feature article opening spread with drop cap + pull-quote + byline + section-break' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "feature article opening spread with drop cap + pull-quote + byline + section-break"
+      },
+      "must_include:opinion-manifesto-section-with-opini-f2a696a7": {
+        "label": "Includes required visual/system signal: opinion/manifesto section with opinion-byline + bold callout + reading-progress-bar",
+        "improvement": "Make 'opinion/manifesto section with opinion-byline + bold callout + reading-progress-bar' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "opinion/manifesto section with opinion-byline + bold callout + reading-progress-bar"
+      },
+      "must_include:table-of-contents-feature-grid-index-da628fed": {
+        "label": "Includes required visual/system signal: table-of-contents / feature-grid-index number-heavy tile + kicker + title + byline",
+        "improvement": "Make 'table-of-contents / feature-grid-index number-heavy tile + kicker + title + byline' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "table-of-contents / feature-grid-index number-heavy tile + kicker + title + byline"
+      },
+      "must_include:archive-index-with-issue-thumbnail-i-48274fee": {
+        "label": "Includes required visual/system signal: archive index with issue thumbnail + issue-number + publish date",
+        "improvement": "Make 'archive index with issue thumbnail + issue-number + publish date' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "archive index with issue thumbnail + issue-number + publish date"
+      },
+      "audience_need:정치-사회-opinion-저널을-탐독하는-독자-the-atlant-b39baf32": {
+        "label": "Fits audience context: 정치·사회 opinion 저널을 탐독하는 독자 (The Atlantic / New Yorker 성향)",
+        "improvement": "Adjust density, language, workflow order, and controls for '정치·사회 opinion 저널을 탐독하는 독자 (The Atlantic / New Yorker 성향)'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "정치·사회 opinion 저널을 탐독하는 독자 (The Atlantic / New Yorker 성향)"
+      },
+      "audience_need:bold-컬처-음악-영화-리뷰-매거진-reader-pitchfor-83e23675": {
+        "label": "Fits audience context: bold 컬처/음악/영화 리뷰 매거진 reader (Pitchfork / Vice 성향)",
+        "improvement": "Adjust density, language, workflow order, and controls for 'bold 컬처/음악/영화 리뷰 매거진 reader (Pitchfork / Vice 성향)'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "bold 컬처/음악/영화 리뷰 매거진 reader (Pitchfork / Vice 성향)"
+      },
+      "audience_need:declaration-manifesto-단일호-zine-구독자-g-764bed51": {
+        "label": "Fits audience context: declaration/manifesto 단일호 zine 구독자 (Gen Z 젊은 에디토리얼)",
+        "improvement": "Adjust density, language, workflow order, and controls for 'declaration/manifesto 단일호 zine 구독자 (Gen Z 젊은 에디토리얼)'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "declaration/manifesto 단일호 zine 구독자 (Gen Z 젊은 에디토리얼)"
+      },
+      "accessibility_target:wcag-2-2-aa-41a998cd": {
+        "label": "Supports accessibility target: WCAG 2.2 AA",
+        "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "WCAG 2.2 AA"
+      }
+    },
+    "rule": "Brand-owned aesthetic quality is evaluated as fit to declared semantic targets, explicit boundaries, product ontology, audience context, and visual craft."
+  },
+  "interpretation_rule": "Scores represent observed or reviewed response proxies in a declared context; they are not universal beauty claims."
+}

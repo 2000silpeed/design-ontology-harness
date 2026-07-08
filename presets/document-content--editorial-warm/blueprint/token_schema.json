@@ -82,7 +82,7 @@
           "Natural Oranges",
           "Pastel Oranges"
         ],
-        "selection_mode": "brand-guided",
+        "selection_mode": "semantic-ontology",
         "strategy": {
           "mode": "brand-guided",
           "candidate_count": 3,
@@ -109,113 +109,111 @@
         },
         "selected_colors": [
           {
-            "name": "Ochre",
-            "family": "Standard Oranges",
-            "hex": "#CC7722",
-            "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성",
-            "pairings": [
-              "#1C2E4A",
-              "#4C7A77",
-              "#D7B899",
-              "#F3E9DA",
-              "#6E7B8B",
-              "#B6B995"
-            ]
+            "name": "Navy Blue",
+            "family": "blue.deep",
+            "hex": "#000080",
+            "mood": "신뢰, 권위, 집중, 전문성, 절제된 우아함",
+            "pairings": []
           },
           {
-            "name": "Apricot",
-            "family": "Natural Oranges",
-            "hex": "#FFB27F",
-            "mood": "밝은 명도, 낮은 채도, 살짝 핑크빛이 도는 부드러운 오렌지 / 따뜻함, 부드러움, 친근함, 여유, 자연스러움",
-            "pairings": [
-              "#F8F3ED",
-              "#B9B4A5",
-              "#9A9E56",
-              "#F88379",
-              "#6B90B4",
-              "#7E5A45"
-            ]
+            "name": "Prussian Blue",
+            "family": "blue.deep",
+            "hex": "#003153",
+            "mood": "고전, 예술, 집중, 권위, 깊이감",
+            "pairings": []
           },
           {
-            "name": "Wheat",
-            "family": "Natural Yellows",
-            "hex": "#F5DEB3",
-            "mood": "중명도, 저채도, 베이지 옐로 계열의 따뜻한 톤 / 따뜻함, 자연스러움, 부드러움, 안정감",
-            "pairings": [
-              "#7A8450",
-              "#8B5A2B",
-              "#D7AFAF",
-              "#AFC8D9",
-              "#FAF8F2",
-              "#4C4C4C"
-            ]
+            "name": "Classic Blue",
+            "family": "blue.pantone_trend",
+            "hex": "#0F4C81",
+            "mood": "신뢰, 평온함, 지성, 안정감",
+            "pairings": []
+          },
+          {
+            "name": "Amber",
+            "family": "yellow.standard",
+            "hex": "#FFBF00",
+            "mood": "따뜻함, 세련됨, 고급스러움, 안정감",
+            "pairings": []
+          },
+          {
+            "name": "Ice Blue",
+            "family": "blue.pastel",
+            "hex": "#D6EAF8",
+            "mood": "정제됨, 청결함, 섬세함, 평온, 투명",
+            "pairings": []
           }
         ],
         "palette_roles": {
-          "primary": {
-            "name": "Ochre",
-            "family": "Standard Oranges",
-            "hex": "#CC7722",
-            "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성",
-            "pairings": [
-              "#1C2E4A",
-              "#4C7A77",
-              "#D7B899",
-              "#F3E9DA",
-              "#6E7B8B",
-              "#B6B995"
-            ]
+          "anchor_background": {
+            "name": "Navy Blue",
+            "family": "blue.deep",
+            "hex": "#000080",
+            "mood": "신뢰, 권위, 집중, 전문성, 절제된 우아함",
+            "pairings": []
           },
-          "accent": {
-            "name": "Apricot",
-            "family": "Natural Oranges",
-            "hex": "#FFB27F",
-            "mood": "밝은 명도, 낮은 채도, 살짝 핑크빛이 도는 부드러운 오렌지 / 따뜻함, 부드러움, 친근함, 여유, 자연스러움",
-            "pairings": [
-              "#F8F3ED",
-              "#B9B4A5",
-              "#9A9E56",
-              "#F88379",
-              "#6B90B4",
-              "#7E5A45"
-            ]
+          "depth_support": {
+            "name": "Prussian Blue",
+            "family": "blue.deep",
+            "hex": "#003153",
+            "mood": "고전, 예술, 집중, 권위, 깊이감",
+            "pairings": []
           },
-          "surface_tint": {
-            "name": "Wheat",
-            "family": "Natural Yellows",
-            "hex": "#F5DEB3",
-            "mood": "중명도, 저채도, 베이지 옐로 계열의 따뜻한 톤 / 따뜻함, 자연스러움, 부드러움, 안정감",
-            "pairings": [
-              "#7A8450",
-              "#8B5A2B",
-              "#D7AFAF",
-              "#AFC8D9",
-              "#FAF8F2",
-              "#4C4C4C"
-            ]
+          "interface_surface": {
+            "name": "Classic Blue",
+            "family": "blue.pantone_trend",
+            "hex": "#0F4C81",
+            "mood": "신뢰, 평온함, 지성, 안정감",
+            "pairings": []
+          },
+          "highlight_air": {
+            "name": "Ice Blue",
+            "family": "blue.pastel",
+            "hex": "#D6EAF8",
+            "mood": "정제됨, 청결함, 섬세함, 평온, 투명",
+            "pairings": []
+          },
+          "proof_accent": {
+            "name": "Amber",
+            "family": "yellow.standard",
+            "hex": "#FFBF00",
+            "mood": "따뜻함, 세련됨, 고급스러움, 안정감",
+            "pairings": []
           }
         },
         "active_palette": {
-          "candidate_id": "signature-1",
-          "selection_mode": "brand-guided",
+          "candidate_id": "ontology-best-fit-1",
+          "selection_mode": "semantic-ontology",
           "roles": {
-            "primary": {
-              "name": "Ochre",
-              "family": "Standard Oranges",
-              "hex": "#CC7722",
-              "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성"
+            "anchor_background": {
+              "name": "Navy Blue",
+              "family": "blue.deep",
+              "hex": "#000080",
+              "mood": "신뢰, 권위, 집중, 전문성, 절제된 우아함"
             },
-            "accent": {
-              "name": "Apricot",
-              "family": "Natural Oranges",
-              "hex": "#FFB27F",
-              "mood": "밝은 명도, 낮은 채도, 살짝 핑크빛이 도는 부드러운 오렌지 / 따뜻함, 부드러움, 친근함, 여유, 자연스러움"
+            "depth_support": {
+              "name": "Prussian Blue",
+              "family": "blue.deep",
+              "hex": "#003153",
+              "mood": "고전, 예술, 집중, 권위, 깊이감"
             },
-            "surface_tint": {
-              "name": "Wheat",
-              "family": "Natural Yellows",
-              "hex": "#F5DEB3",
-              "mood": "중명도, 저채도, 베이지 옐로 계열의 따뜻한 톤 / 따뜻함, 자연스러움, 부드러움, 안정감"
+            "interface_surface": {
+              "name": "Classic Blue",
+              "family": "blue.pantone_trend",
+              "hex": "#0F4C81",
+              "mood": "신뢰, 평온함, 지성, 안정감"
+            },
+            "highlight_air": {
+              "name": "Ice Blue",
+              "family": "blue.pastel",
+              "hex": "#D6EAF8",
+              "mood": "정제됨, 청결함, 섬세함, 평온, 투명"
+            },
+            "proof_accent": {
+              "name": "Amber",
+              "family": "yellow.standard",
+              "hex": "#FFBF00",
+              "mood": "따뜻함, 세련됨, 고급스러움, 안정감"
             }
           }
         },
@@ -305,20 +303,30 @@
             "supporting_color_count": 12,
             "combination_count": 4,
             "seed_roles": {
-              "primary": {
-                "name": "Ochre",
-                "hex": "#CC7722",
-                "family": "Standard Oranges"
+              "anchor_background": {
+                "name": "Navy Blue",
+                "hex": "#000080",
+                "family": "blue.deep"
               },
-              "accent": {
-                "name": "Apricot",
-                "hex": "#FFB27F",
-                "family": "Natural Oranges"
+              "depth_support": {
+                "name": "Prussian Blue",
+                "hex": "#003153",
+                "family": "blue.deep"
               },
-              "surface_tint": {
-                "name": "Wheat",
-                "hex": "#F5DEB3",
-                "family": "Natural Yellows"
+              "interface_surface": {
+                "name": "Classic Blue",
+                "hex": "#0F4C81",
+                "family": "blue.pantone_trend"
+              },
+              "highlight_air": {
+                "name": "Ice Blue",
+                "hex": "#D6EAF8",
+                "family": "blue.pastel"
+              },
+              "proof_accent": {
+                "name": "Amber",
+                "hex": "#FFBF00",
+                "family": "yellow.standard"
               }
             },
             "preferred_families": [
@@ -331,6 +339,44 @@
             ]
           },
           "supporting_colors": [
+            {
+              "name": "Wheat",
+              "family": "Natural Yellows",
+              "hex": "#F5DEB3",
+              "mood": "중명도, 저채도, 베이지 옐로 계열의 따뜻한 톤 / 따뜻함, 자연스러움, 부드러움, 안정감",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 18.1,
+              "search_reasons": [
+                "Wheat reinforces the brand mood signals."
+              ]
+            },
+            {
+              "name": "Ochre",
+              "family": "Standard Oranges",
+              "hex": "#CC7722",
+              "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 17.8,
+              "search_reasons": [
+                "Ochre stays inside the preferred families.",
+                "Ochre reinforces the brand mood signals."
+              ]
+            },
+            {
+              "name": "Apricot",
+              "family": "Natural Oranges",
+              "hex": "#FFB27F",
+              "mood": "밝은 명도, 낮은 채도, 살짝 핑크빛이 도는 부드러운 오렌지 / 따뜻함, 부드러움, 친근함, 여유, 자연스러움",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 17.6,
+              "search_reasons": [
+                "Apricot stays inside the preferred families.",
+                "Apricot reinforces the brand mood signals."
+              ]
+            },
             {
               "name": "Terracotta",
               "family": "Natural Reds",
@@ -351,34 +397,9 @@
               "mood": "중명도, 중채도, 대중적인 옐로 오렌지 계열의 톤 / 따뜻함, 세련됨, 고급스러움, 안정감",
               "source_type": "reference-color",
               "source_seed_names": [],
-              "search_score": 16.45,
+              "search_score": 15.3,
               "search_reasons": [
                 "Amber reinforces the brand mood signals."
-              ]
-            },
-            {
-              "name": "Persimmon",
-              "family": "Natural Oranges",
-              "hex": "#EC5800",
-              "mood": "명도, 고채도, 오렌지와 레드 사이의 진한 웜톤 / 생동감, 따뜻함, 안정감, 자연의 활기",
-              "source_type": "reference-color",
-              "source_seed_names": [],
-              "search_score": 16.1,
-              "search_reasons": [
-                "Persimmon stays inside the preferred families.",
-                "Persimmon reinforces the brand mood signals."
-              ]
-            },
-            {
-              "name": "Ochre Yellow",
-              "family": "Deep Yellows",
-              "hex": "#CB9D06",
-              "mood": "중명도, 중채도, 골든 옐로 + 흙기 섞인 옐로 브라운 계열 / 따뜻함, 견고함, 전통미, 안정감, 고전적 깊이",
-              "source_type": "reference-color",
-              "source_seed_names": [],
-              "search_score": 15.6,
-              "search_reasons": [
-                "Ochre Yellow reinforces the brand mood signals."
               ]
             },
             {
@@ -406,19 +427,6 @@
               ]
             },
             {
-              "name": "Pumpkin",
-              "family": "Natural Oranges",
-              "hex": "#FF7518",
-              "mood": "중명도와 중채도, 오렌지와 브라운 사이의 따뜻한 톤 / 풍요로움, 활기, 따뜻한 계절감, 안정된 에너지",
-              "source_type": "reference-color",
-              "source_seed_names": [],
-              "search_score": 15.1,
-              "search_reasons": [
-                "Pumpkin stays inside the preferred families.",
-                "Pumpkin reinforces the brand mood signals."
-              ]
-            },
-            {
               "name": "Forest Green",
               "family": "Deep Greens",
               "hex": "#27503D",
@@ -431,15 +439,16 @@
               ]
             },
             {
-              "name": "Autumn Blaze",
-              "family": "Pantone Trend Yellows",
-              "hex": "#D1933F",
-              "mood": "중명도, 중채도, 브라운 오렌지 골드 계열 / 따뜻함, 온기, 성숙함, 자연스러움, 가을의 깊이",
+              "name": "Persimmon",
+              "family": "Natural Oranges",
+              "hex": "#EC5800",
+              "mood": "명도, 고채도, 오렌지와 레드 사이의 진한 웜톤 / 생동감, 따뜻함, 안정감, 자연의 활기",
               "source_type": "reference-color",
               "source_seed_names": [],
-              "search_score": 13.45,
+              "search_score": 13.8,
               "search_reasons": [
-                "Autumn Blaze reinforces the brand mood signals."
+                "Persimmon stays inside the preferred families.",
+                "Persimmon reinforces the brand mood signals."
               ]
             },
             {
@@ -455,49 +464,32 @@
               ]
             },
             {
-              "name": "Chili Oil",
-              "family": "Pantone Trend Oranges",
-              "hex": "#944537",
-              "mood": "저명도, 저채도, 레드 브라운 계열의 딥한 오렌지 톤 / 고급스러움, 안정감, 따뜻함, 자연",
+              "name": "Ochre Yellow",
+              "family": "Deep Yellows",
+              "hex": "#CB9D06",
+              "mood": "중명도, 중채도, 골든 옐로 + 흙기 섞인 옐로 브라운 계열 / 따뜻함, 견고함, 전통미, 안정감, 고전적 깊이",
               "source_type": "reference-color",
               "source_seed_names": [],
-              "search_score": 12.6,
+              "search_score": 13.3,
               "search_reasons": [
-                "Chili Oil reinforces the brand mood signals."
+                "Ochre Yellow reinforces the brand mood signals."
               ]
             },
             {
-              "name": "Rust",
-              "family": "Deep Oranges",
-              "hex": "#B7410E",
-              "mood": "저명도, 중채도, 오렌지와 브라운의 중간 영역 / 빈티지, 견고함, 따뜻한 노스탤지어, 공예적 감성",
+              "name": "Pumpkin",
+              "family": "Natural Oranges",
+              "hex": "#FF7518",
+              "mood": "중명도와 중채도, 오렌지와 브라운 사이의 따뜻한 톤 / 풍요로움, 활기, 따뜻한 계절감, 안정된 에너지",
               "source_type": "reference-color",
               "source_seed_names": [],
-              "search_score": 12.6,
+              "search_score": 12.8,
               "search_reasons": [
-                "Rust reinforces the brand mood signals."
+                "Pumpkin stays inside the preferred families.",
+                "Pumpkin reinforces the brand mood signals."
               ]
             }
           ],
           "semantic_roles": {
-            "brand_primary": {
-              "name": "Ochre",
-              "family": "Standard Oranges",
-              "hex": "#CC7722",
-              "source_type": null
-            },
-            "brand_accent": {
-              "name": "Apricot",
-              "family": "Natural Oranges",
-              "hex": "#FFB27F",
-              "source_type": null
-            },
-            "surface_tint": {
-              "name": "Wheat",
-              "family": "Natural Yellows",
-              "hex": "#F5DEB3",
-              "source_type": null
-            },
             "canvas": {
               "name": "Canvas White",
               "family": "Generated Fallback",
@@ -535,10 +527,10 @@
               "source_type": "generated-fallback"
             },
             "ink": {
-              "name": "Ink",
-              "family": "Generated Fallback",
-              "hex": "#111111",
-              "source_type": "generated-fallback"
+              "name": "Prussian Blue",
+              "family": "blue.deep",
+              "hex": "#003153",
+              "source_type": "active-role:depth_support"
             },
             "ink_muted": {
               "name": "Muted Ink",
@@ -558,22 +550,10 @@
               "hex": "#FFFFFF",
               "source_type": "generated-fallback"
             },
-            "primary_support": {
-              "name": "Persimmon",
-              "family": "Natural Oranges",
-              "hex": "#EC5800",
-              "source_type": "reference-color"
-            },
-            "accent_support": {
-              "name": "Persimmon",
-              "family": "Natural Oranges",
-              "hex": "#EC5800",
-              "source_type": "reference-color"
-            },
             "info": {
-              "name": "Classic Blue",
-              "family": "Pantone Trend Blues",
-              "hex": "#0F4C81",
+              "name": "Lavender Violet",
+              "family": "Natural Violets",
+              "hex": "#967BB6",
               "source_type": "reference-color"
             },
             "success": {
@@ -583,28 +563,16 @@
               "source_type": "reference-color"
             },
             "warning": {
-              "name": "Apricot",
-              "family": "Natural Oranges",
-              "hex": "#FFB27F",
-              "source_type": null
+              "name": "Wheat",
+              "family": "Natural Yellows",
+              "hex": "#F5DEB3",
+              "source_type": "reference-color"
             },
             "danger": {
               "name": "Terracotta",
               "family": "Natural Reds",
               "hex": "#E2725B",
               "source_type": "reference-color"
-            },
-            "link": {
-              "name": "Ochre",
-              "family": "Standard Oranges",
-              "hex": "#CC7722",
-              "source_type": null
-            },
-            "link_hover": {
-              "name": "Link Hover",
-              "family": "Generated Fallback",
-              "hex": "#A9631C",
-              "source_type": "generated-fallback"
             }
           },
           "combination_lists": [
@@ -614,25 +582,39 @@
               "purpose": "기본 테마를 이루는 핵심 색",
               "colors": [
                 {
-                  "role": "primary",
-                  "name": "Ochre",
-                  "hex": "#CC7722",
-                  "family": "Standard Oranges",
-                  "source_type": null
+                  "role": "anchor_background",
+                  "name": "Navy Blue",
+                  "hex": "#000080",
+                  "family": "blue.deep",
+                  "source_type": "semantic-color-ontology"
                 },
                 {
-                  "role": "accent",
-                  "name": "Apricot",
-                  "hex": "#FFB27F",
-                  "family": "Natural Oranges",
-                  "source_type": null
+                  "role": "depth_support",
+                  "name": "Prussian Blue",
+                  "hex": "#003153",
+                  "family": "blue.deep",
+                  "source_type": "semantic-color-ontology"
                 },
                 {
-                  "role": "surface_tint",
-                  "name": "Wheat",
-                  "hex": "#F5DEB3",
-                  "family": "Natural Yellows",
-                  "source_type": null
+                  "role": "interface_surface",
+                  "name": "Classic Blue",
+                  "hex": "#0F4C81",
+                  "family": "blue.pantone_trend",
+                  "source_type": "semantic-color-ontology"
+                },
+                {
+                  "role": "highlight_air",
+                  "name": "Ice Blue",
+                  "hex": "#D6EAF8",
+                  "family": "blue.pastel",
+                  "source_type": "semantic-color-ontology"
+                },
+                {
+                  "role": "proof_accent",
+                  "name": "Amber",
+                  "hex": "#FFBF00",
+                  "family": "yellow.standard",
+                  "source_type": "semantic-color-ontology"
                 }
               ]
             },
@@ -656,13 +638,6 @@
                   "source_type": "generated-fallback"
                 },
                 {
-                  "role": "surface_tint",
-                  "name": "Wheat",
-                  "hex": "#F5DEB3",
-                  "family": "Natural Yellows",
-                  "source_type": null
-                },
-                {
                   "role": "border",
                   "name": "Border Neutral",
                   "hex": "#D6DDE6",
@@ -671,10 +646,10 @@
                 },
                 {
                   "role": "ink",
-                  "name": "Ink",
-                  "hex": "#111111",
-                  "family": "Generated Fallback",
-                  "source_type": "generated-fallback"
+                  "name": "Prussian Blue",
+                  "hex": "#003153",
+                  "family": "blue.deep",
+                  "source_type": "active-role:depth_support"
                 },
                 {
                   "role": "ink_muted",
@@ -692,6 +667,27 @@
               "colors": [
                 {
                   "role": "support",
+                  "name": "Wheat",
+                  "hex": "#F5DEB3",
+                  "family": "Natural Yellows",
+                  "source_type": "reference-color"
+                },
+                {
+                  "role": "support",
+                  "name": "Ochre",
+                  "hex": "#CC7722",
+                  "family": "Standard Oranges",
+                  "source_type": "reference-color"
+                },
+                {
+                  "role": "support",
+                  "name": "Apricot",
+                  "hex": "#FFB27F",
+                  "family": "Natural Oranges",
+                  "source_type": "reference-color"
+                },
+                {
+                  "role": "support",
                   "name": "Terracotta",
                   "hex": "#E2725B",
                   "family": "Natural Reds",
@@ -706,30 +702,9 @@
                 },
                 {
                   "role": "support",
-                  "name": "Persimmon",
-                  "hex": "#EC5800",
-                  "family": "Natural Oranges",
-                  "source_type": "reference-color"
-                },
-                {
-                  "role": "support",
-                  "name": "Ochre Yellow",
-                  "hex": "#CB9D06",
-                  "family": "Deep Yellows",
-                  "source_type": "reference-color"
-                },
-                {
-                  "role": "support",
                   "name": "Classic Blue",
                   "hex": "#0F4C81",
                   "family": "Pantone Trend Blues",
-                  "source_type": "reference-color"
-                },
-                {
-                  "role": "support",
-                  "name": "Navy Blue",
-                  "hex": "#000080",
-                  "family": "Deep Blues",
                   "source_type": "reference-color"
                 }
               ]
@@ -741,9 +716,9 @@
               "colors": [
                 {
                   "role": "info",
-                  "name": "Classic Blue",
-                  "hex": "#0F4C81",
-                  "family": "Pantone Trend Blues",
+                  "name": "Lavender Violet",
+                  "hex": "#967BB6",
+                  "family": "Natural Violets",
                   "source_type": "reference-color"
                 },
                 {
@@ -755,10 +730,10 @@
                 },
                 {
                   "role": "warning",
-                  "name": "Apricot",
-                  "hex": "#FFB27F",
-                  "family": "Natural Oranges",
-                  "source_type": null
+                  "name": "Wheat",
+                  "hex": "#F5DEB3",
+                  "family": "Natural Yellows",
+                  "source_type": "reference-color"
                 },
                 {
                   "role": "danger",
@@ -771,9 +746,675 @@
             }
           ]
         },
+        "semantic_ontology": {
+          "schema_version": "design-ontology-harness/semantic-color-context-v1",
+          "source": {
+            "repo": "semantic-os",
+            "path": "domains/color/ontology/build/graph.json",
+            "built_at": "2026-05-23T13:56:25.001610+00:00",
+            "source_schema_version": "default-video-production-ontology-v1",
+            "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included."
+          },
+          "node_count": 137,
+          "edge_count": 487,
+          "matched_keywords": [
+            {
+              "id": "color-keyword-navy-blue",
+              "role": "anchor_background",
+              "name": "Navy Blue",
+              "hex": "#000080",
+              "spectrum": "blue",
+              "family": "deep",
+              "mood_tags": [
+                "신뢰",
+                "권위",
+                "집중",
+                "전문성",
+                "절제된 우아함"
+              ],
+              "tone_axes": [
+                "low_value",
+                "mid_chroma",
+                "cool_bias"
+              ]
+            },
+            {
+              "id": "color-keyword-prussian-blue",
+              "role": "depth_support",
+              "name": "Prussian Blue",
+              "hex": "#003153",
+              "spectrum": "blue",
+              "family": "deep",
+              "mood_tags": [
+                "고전",
+                "예술",
+                "집중",
+                "권위",
+                "깊이감"
+              ],
+              "tone_axes": [
+                "low_value",
+                "low_chroma",
+                "cool_bias"
+              ]
+            },
+            {
+              "id": "color-keyword-classic-blue",
+              "role": "interface_surface",
+              "name": "Classic Blue",
+              "hex": "#0F4C81",
+              "spectrum": "blue",
+              "family": "pantone_trend",
+              "mood_tags": [
+                "신뢰",
+                "평온함",
+                "지성",
+                "안정감"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "low_value",
+                "mid_chroma",
+                "cool_bias"
+              ]
+            },
+            {
+              "id": "color-keyword-ice-blue",
+              "role": "highlight_air",
+              "name": "Ice Blue",
+              "hex": "#D6EAF8",
+              "spectrum": "blue",
+              "family": "pastel",
+              "mood_tags": [
+                "정제됨",
+                "청결함",
+                "섬세함",
+                "평온",
+                "투명"
+              ],
+              "tone_axes": [
+                "high_value",
+                "low_chroma",
+                "cool_bias",
+                "pastel"
+              ]
+            },
+            {
+              "id": "color-keyword-amber",
+              "role": "proof_accent",
+              "name": "Amber",
+              "hex": "#FFBF00",
+              "spectrum": "yellow",
+              "family": "standard",
+              "mood_tags": [
+                "따뜻함",
+                "세련됨",
+                "고급스러움",
+                "안정감"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "mid_chroma",
+                "warm_bias"
+              ]
+            }
+          ],
+          "recommended_keywords": [
+            {
+              "id": "color-keyword-coral-blush",
+              "name": "Coral Blush",
+              "hex": "#F88379",
+              "spectrum": "orange",
+              "family": "pastel",
+              "score": 16.5,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches 'pastel'",
+                "matches 'orange'"
+              ]
+            },
+            {
+              "id": "color-keyword-apricot",
+              "name": "Apricot",
+              "hex": "#FFB27F",
+              "spectrum": "orange",
+              "family": "natural",
+              "score": 16.0,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches 'orange'",
+                "matches '자연스러움'"
+              ]
+            },
+            {
+              "id": "color-keyword-peach-puff",
+              "name": "Peach Puff",
+              "hex": "#FFDAB9",
+              "spectrum": "orange",
+              "family": "pastel",
+              "score": 16.0,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches 'pastel'",
+                "matches 'orange'"
+              ]
+            },
+            {
+              "id": "color-keyword-chili-oil",
+              "name": "Chili Oil",
+              "hex": "#944537",
+              "spectrum": "orange",
+              "family": "pantone_trend",
+              "score": 14.5,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches 'orange'",
+                "matches '고급스러움'"
+              ]
+            },
+            {
+              "id": "color-keyword-copper",
+              "name": "Copper",
+              "hex": "#B87333",
+              "spectrum": "orange",
+              "family": "deep",
+              "score": 14.5,
+              "reasons": [
+                "matches 'orange'",
+                "matches '고급스러움'",
+                "matches 'deep'"
+              ]
+            },
+            {
+              "id": "color-keyword-wheat",
+              "name": "Wheat",
+              "hex": "#F5DEB3",
+              "spectrum": "yellow",
+              "family": "natural",
+              "score": 14.5,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches '자연스러움'",
+                "matches '부드러움'"
+              ]
+            },
+            {
+              "id": "color-keyword-burnt-orange",
+              "name": "Burnt Orange",
+              "hex": "#CC5500",
+              "spectrum": "orange",
+              "family": "deep",
+              "score": 14.0,
+              "reasons": [
+                "matches 'orange'",
+                "matches 'deep'",
+                "matches 'warm'"
+              ]
+            },
+            {
+              "id": "color-keyword-buttercream",
+              "name": "Buttercream",
+              "hex": "#F3E5AB",
+              "spectrum": "yellow",
+              "family": "pastel",
+              "score": 14.0,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches 'pastel'",
+                "matches '부드러움'"
+              ]
+            }
+          ],
+          "guidelines": [
+            {
+              "id": "guideline-rgb-cmyk-split-by-output-medium",
+              "label": "RGB와 CMYK는 산출 매체 기준으로 분리한다",
+              "summary": "디지털 산출물은 RGB/sRGB 기준, 인쇄 산출물은 CMYK/프로파일 기준으로 판단한다. 화면색을 인쇄색으로 그대로 기대하지 않는다."
+            },
+            {
+              "id": "guideline-color-values-are-reference-not-absolute",
+              "label": "색상 수치는 절댓값이 아니라 기준값이다",
+              "summary": "디스플레이와 출력 환경에 따라 색 차이가 생기므로 HEX/CMYK는 재현 기준점으로 쓰고, 최종 판단은 매체별 proof에서 확인한다."
+            },
+            {
+              "id": "guideline-mood-tags-before-palette-expansion",
+              "label": "팔레트 확장 전 mood tag를 먼저 잠근다",
+              "summary": "무드보드나 브랜드 컬러를 늘리기 전에 에너지, 안정, 깊이, 회복 같은 감정 태그를 먼저 고정하면 색상 후보가 흔들리지 않는다."
+            },
+            {
+              "id": "guideline-no-palette-table-reconstruction",
+              "label": "배색표를 재구성할 수 있는 수준의 pair 목록은 만들지 않는다",
+              "summary": "paid source의 조합표, 페이지 배열, 순서, 행/열 구조를 그대로 되살릴 수 있는 palette_pair edge 묶음은 온톨로지에 넣지 않는다."
+            },
+            {
+              "id": "guideline-palette-pair-edges-require-transformative-brief",
+              "label": "palette_pair edge는 변형된 brief와 함께만 추가한다",
+              "summary": "두 색의 직접 pair edge는 브랜드/화면/인쇄/제품 같은 새로운 산출 맥락에서 역할, 대비, 위험, proof 조건이 함께 설명될 때만 추가한다."
+            }
+          ],
+          "rules": [
+            "Treat RGB/HEX as digital reference values, not absolute reproduction guarantees.",
+            "Split RGB/sRGB and CMYK/print-profile decisions by output medium.",
+            "Choose mood tags and semantic roles before expanding support colors.",
+            "Do not reconstruct paid-source palette tables, page order, or row/column structures.",
+            "Publish palette candidates as role, contrast, caveat, and proof conditions."
+          ],
+          "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included."
+        },
+        "semantic_color_selection": {
+          "schema_version": "design-ontology-harness/semantic-color-selection-v1",
+          "selection_method": "ontology-search-per-run",
+          "matched_pattern": {
+            "id": "pattern-brief-palette-deep-blue-cold-luxury-web",
+            "label": "딥 블루 cold luxury 웹 팔레트 후보",
+            "summary": "딥 블루 계열 브랜드 웹사이트 brief를 위해 Navy Blue, Prussian Blue, Classic Blue, Ice Blue를 source row가 아니라 화면 역할과 대비 이유로 재배치한 테스트 팔레트다.",
+            "brief_question": "딥 블루 계열로 차갑고 고급스러운 브랜드 웹사이트를 만들되, 바다나 물로 고정하지 않고 색 사용 방식만 살린다.",
+            "output_medium": "digital_brand_website",
+            "role_model": "brief_specific_candidate_not_source_row"
+          },
+          "role_model": [
+            {
+              "role": "anchor_background",
+              "behavior": "low-value base, trust, authority, restrained elegance",
+              "keyword_evidence": "Navy Blue",
+              "source_pattern_role": "anchor_background: Navy Blue #000080 — low-value base, trust, authority, restrained elegance"
+            },
+            {
+              "role": "depth_support",
+              "behavior": "lowered-chroma depth for editorial panels and shadowed sections",
+              "keyword_evidence": "Prussian Blue",
+              "source_pattern_role": "depth_support: Prussian Blue #003153 — lowered-chroma depth for editorial panels and shadowed sections"
+            },
+            {
+              "role": "interface_surface",
+              "behavior": "active surface, nav affordance, and calm intelligent signal",
+              "keyword_evidence": "Classic Blue",
+              "source_pattern_role": "interface_surface: Classic Blue #0F4C81 — active surface, nav affordance, and calm intelligent signal"
+            },
+            {
+              "role": "highlight_air",
+              "behavior": "thin edge highlights, glass lines, and spacing breath",
+              "keyword_evidence": "Ice Blue",
+              "source_pattern_role": "highlight_air: Ice Blue #D6EAF8 — thin edge highlights, glass lines, and spacing breath"
+            },
+            {
+              "role": "proof_accent",
+              "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+            }
+          ],
+          "active_palette": {
+            "id": "ontology-best-fit-1",
+            "label": "Best Fit",
+            "score": 151.28,
+            "rationale": [
+              "Navy Blue supports anchor_background behavior.",
+              "Navy Blue is direct ontology role evidence.",
+              "Prussian Blue supports depth_support behavior.",
+              "Prussian Blue is direct ontology role evidence.",
+              "Classic Blue supports interface_surface behavior.",
+              "Classic Blue is direct ontology role evidence."
+            ],
+            "roles": {
+              "anchor_background": {
+                "name": "Navy Blue",
+                "hex": "#000080",
+                "spectrum": "blue",
+                "family": "deep",
+                "score": 34.0,
+                "reason": "Navy Blue supports anchor_background behavior.",
+                "behavior": "low-value base, trust, authority, restrained elegance"
+              },
+              "depth_support": {
+                "name": "Prussian Blue",
+                "hex": "#003153",
+                "spectrum": "blue",
+                "family": "deep",
+                "score": 35.65,
+                "reason": "Prussian Blue supports depth_support behavior.",
+                "behavior": "lowered-chroma depth for editorial panels and shadowed sections"
+              },
+              "interface_surface": {
+                "name": "Classic Blue",
+                "hex": "#0F4C81",
+                "spectrum": "blue",
+                "family": "pantone_trend",
+                "score": 30.8,
+                "reason": "Classic Blue supports interface_surface behavior.",
+                "behavior": "active surface, nav affordance, and calm intelligent signal"
+              },
+              "highlight_air": {
+                "name": "Ice Blue",
+                "hex": "#D6EAF8",
+                "spectrum": "blue",
+                "family": "pastel",
+                "score": 34.95,
+                "reason": "Ice Blue supports highlight_air behavior.",
+                "behavior": "thin edge highlights, glass lines, and spacing breath"
+              },
+              "proof_accent": {
+                "name": "Amber",
+                "hex": "#FFBF00",
+                "spectrum": "yellow",
+                "family": "standard",
+                "score": 15.88,
+                "reason": "Amber supports proof_accent behavior.",
+                "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+              }
+            }
+          },
+          "candidate_palettes": [
+            {
+              "id": "ontology-best-fit-1",
+              "label": "Best Fit",
+              "score": 151.28,
+              "rationale": [
+                "Navy Blue supports anchor_background behavior.",
+                "Navy Blue is direct ontology role evidence.",
+                "Prussian Blue supports depth_support behavior.",
+                "Prussian Blue is direct ontology role evidence.",
+                "Classic Blue supports interface_surface behavior.",
+                "Classic Blue is direct ontology role evidence."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Navy Blue",
+                  "hex": "#000080",
+                  "spectrum": "blue",
+                  "family": "deep",
+                  "score": 34.0,
+                  "reason": "Navy Blue supports anchor_background behavior.",
+                  "behavior": "low-value base, trust, authority, restrained elegance"
+                },
+                "depth_support": {
+                  "name": "Prussian Blue",
+                  "hex": "#003153",
+                  "spectrum": "blue",
+                  "family": "deep",
+                  "score": 35.65,
+                  "reason": "Prussian Blue supports depth_support behavior.",
+                  "behavior": "lowered-chroma depth for editorial panels and shadowed sections"
+                },
+                "interface_surface": {
+                  "name": "Classic Blue",
+                  "hex": "#0F4C81",
+                  "spectrum": "blue",
+                  "family": "pantone_trend",
+                  "score": 30.8,
+                  "reason": "Classic Blue supports interface_surface behavior.",
+                  "behavior": "active surface, nav affordance, and calm intelligent signal"
+                },
+                "highlight_air": {
+                  "name": "Ice Blue",
+                  "hex": "#D6EAF8",
+                  "spectrum": "blue",
+                  "family": "pastel",
+                  "score": 34.95,
+                  "reason": "Ice Blue supports highlight_air behavior.",
+                  "behavior": "thin edge highlights, glass lines, and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Amber",
+                  "hex": "#FFBF00",
+                  "spectrum": "yellow",
+                  "family": "standard",
+                  "score": 15.88,
+                  "reason": "Amber supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            },
+            {
+              "id": "ontology-quiet-surface-2",
+              "label": "Quiet Surface",
+              "score": 103.62,
+              "rationale": [
+                "Prussian Blue supports anchor_background behavior.",
+                "Prussian Blue has depth for structural roles.",
+                "Powder Blue supports depth_support behavior.",
+                "Coral Blush supports interface_surface behavior.",
+                "Coral Blush can hold repeated surfaces.",
+                "Mauve supports highlight_air behavior."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Prussian Blue",
+                  "hex": "#003153",
+                  "spectrum": "blue",
+                  "family": "deep",
+                  "score": 23.7,
+                  "reason": "Prussian Blue supports anchor_background behavior.",
+                  "behavior": "low-value base, trust, authority, restrained elegance"
+                },
+                "depth_support": {
+                  "name": "Powder Blue",
+                  "hex": "#B0E0E6",
+                  "spectrum": "blue",
+                  "family": "pastel",
+                  "score": 21.6,
+                  "reason": "Powder Blue supports depth_support behavior.",
+                  "behavior": "lowered-chroma depth for editorial panels and shadowed sections"
+                },
+                "interface_surface": {
+                  "name": "Coral Blush",
+                  "hex": "#F88379",
+                  "spectrum": "orange",
+                  "family": "pastel",
+                  "score": 21.1,
+                  "reason": "Coral Blush supports interface_surface behavior.",
+                  "behavior": "active surface, nav affordance, and calm intelligent signal"
+                },
+                "highlight_air": {
+                  "name": "Mauve",
+                  "hex": "#E0B0FF",
+                  "spectrum": "violet",
+                  "family": "pastel",
+                  "score": 21.6,
+                  "reason": "Mauve supports highlight_air behavior.",
+                  "behavior": "thin edge highlights, glass lines, and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Burnt Orange",
+                  "hex": "#CC5500",
+                  "spectrum": "orange",
+                  "family": "deep",
+                  "score": 15.62,
+                  "reason": "Burnt Orange supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            },
+            {
+              "id": "ontology-clear-structure-3",
+              "label": "Clear Structure",
+              "score": 95.43,
+              "rationale": [
+                "Classic Blue supports anchor_background behavior.",
+                "Classic Blue has depth for structural roles.",
+                "Misty Blue supports depth_support behavior.",
+                "Azure Blue supports interface_surface behavior.",
+                "Azure Blue can hold repeated surfaces.",
+                "Mauve supports highlight_air behavior."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Classic Blue",
+                  "hex": "#0F4C81",
+                  "spectrum": "blue",
+                  "family": "pantone_trend",
+                  "score": 21.9,
+                  "reason": "Classic Blue supports anchor_background behavior.",
+                  "behavior": "low-value base, trust, authority, restrained elegance"
+                },
+                "depth_support": {
+                  "name": "Misty Blue",
+                  "hex": "#B5C7EB",
+                  "spectrum": "blue",
+                  "family": "pastel",
+                  "score": 19.0,
+                  "reason": "Misty Blue supports depth_support behavior.",
+                  "behavior": "lowered-chroma depth for editorial panels and shadowed sections"
+                },
+                "interface_surface": {
+                  "name": "Azure Blue",
+                  "hex": "#007FFF",
+                  "spectrum": "blue",
+                  "family": "standard",
+                  "score": 18.5,
+                  "reason": "Azure Blue supports interface_surface behavior.",
+                  "behavior": "active surface, nav affordance, and calm intelligent signal"
+                },
+                "highlight_air": {
+                  "name": "Mauve",
+                  "hex": "#E0B0FF",
+                  "spectrum": "violet",
+                  "family": "pastel",
+                  "score": 19.0,
+                  "reason": "Mauve supports highlight_air behavior.",
+                  "behavior": "thin edge highlights, glass lines, and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Byzantium",
+                  "hex": "#702963",
+                  "spectrum": "violet",
+                  "family": "deep",
+                  "score": 17.02,
+                  "reason": "Byzantium supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            },
+            {
+              "id": "ontology-strong-signal-4",
+              "label": "Strong Signal",
+              "score": 95.17,
+              "rationale": [
+                "Ice Blue supports anchor_background behavior.",
+                "Burnt Orange supports depth_support behavior.",
+                "Burnt Orange has depth for structural roles.",
+                "Azure Blue supports interface_surface behavior.",
+                "Azure Blue can hold repeated surfaces.",
+                "Misty Blue supports highlight_air behavior."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Ice Blue",
+                  "hex": "#D6EAF8",
+                  "spectrum": "blue",
+                  "family": "pastel",
+                  "score": 18.5,
+                  "reason": "Ice Blue supports anchor_background behavior.",
+                  "behavior": "low-value base, trust, authority, restrained elegance"
+                },
+                "depth_support": {
+                  "name": "Burnt Orange",
+                  "hex": "#CC5500",
+                  "spectrum": "orange",
+                  "family": "deep",
+                  "score": 18.95,
+                  "reason": "Burnt Orange supports depth_support behavior.",
+                  "behavior": "lowered-chroma depth for editorial panels and shadowed sections"
+                },
+                "interface_surface": {
+                  "name": "Azure Blue",
+                  "hex": "#007FFF",
+                  "spectrum": "blue",
+                  "family": "standard",
+                  "score": 18.85,
+                  "reason": "Azure Blue supports interface_surface behavior.",
+                  "behavior": "active surface, nav affordance, and calm intelligent signal"
+                },
+                "highlight_air": {
+                  "name": "Misty Blue",
+                  "hex": "#B5C7EB",
+                  "spectrum": "blue",
+                  "family": "pastel",
+                  "score": 21.8,
+                  "reason": "Misty Blue supports highlight_air behavior.",
+                  "behavior": "thin edge highlights, glass lines, and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Byzantium",
+                  "hex": "#702963",
+                  "spectrum": "violet",
+                  "family": "deep",
+                  "score": 17.07,
+                  "reason": "Byzantium supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            },
+            {
+              "id": "ontology-cross-family-5",
+              "label": "Cross Family",
+              "score": 106.82,
+              "rationale": [
+                "Misty Blue supports anchor_background behavior.",
+                "Ice Blue supports depth_support behavior.",
+                "Classic Blue supports interface_surface behavior.",
+                "Classic Blue is direct ontology role evidence.",
+                "Cornsilk supports highlight_air behavior.",
+                "Cornsilk can hold repeated surfaces."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Misty Blue",
+                  "hex": "#B5C7EB",
+                  "spectrum": "blue",
+                  "family": "pastel",
+                  "score": 19.9,
+                  "reason": "Misty Blue supports anchor_background behavior.",
+                  "behavior": "low-value base, trust, authority, restrained elegance"
+                },
+                "depth_support": {
+                  "name": "Ice Blue",
+                  "hex": "#D6EAF8",
+                  "spectrum": "blue",
+                  "family": "pastel",
+                  "score": 18.9,
+                  "reason": "Ice Blue supports depth_support behavior.",
+                  "behavior": "lowered-chroma depth for editorial panels and shadowed sections"
+                },
+                "interface_surface": {
+                  "name": "Classic Blue",
+                  "hex": "#0F4C81",
+                  "spectrum": "blue",
+                  "family": "pantone_trend",
+                  "score": 29.5,
+                  "reason": "Classic Blue supports interface_surface behavior.",
+                  "behavior": "active surface, nav affordance, and calm intelligent signal"
+                },
+                "highlight_air": {
+                  "name": "Cornsilk",
+                  "hex": "#FFF8DC",
+                  "spectrum": "yellow",
+                  "family": "pastel",
+                  "score": 21.9,
+                  "reason": "Cornsilk supports highlight_air behavior.",
+                  "behavior": "thin edge highlights, glass lines, and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Byzantium",
+                  "hex": "#702963",
+                  "spectrum": "violet",
+                  "family": "deep",
+                  "score": 16.62,
+                  "reason": "Byzantium supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            }
+          ],
+          "rules": [
+            "Search Semantic OS ColorPattern and ColorKeyword nodes for every app brief.",
+            "Do not ship pre-authored palette sets as fixed presets.",
+            "Use ColorPattern role language as a role model, not as a copied palette table.",
+            "Publish colors as role, reason, caveat, and proof conditions."
+          ]
+        },
         "rules": [
           "컬러 레퍼런스의 mood와 pairings를 semantic token 설계의 출발점으로 사용",
           "chosen palette는 semantic roles로 번역하고 raw reference color를 그대로 남용하지 않기",
+          "앱 내용 기반 색상 선택은 미리 만든 팔레트 세트가 아니라 Semantic OS ontology 검색으로 매번 수행하기",
           "seed color만 쓰지 말고 expanded palette에서 surface/text/border/support 역할까지 확장하기",
           "surface/text/border 대비는 레퍼런스보다 접근성 기준을 우선"
         ]
@@ -809,7 +1450,9 @@
         "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
         "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
         "폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다.",
-        "Noto Serif KR는 작은 UI 라벨/배지용으로 쓰지 않고, 그런 슬롯은 sans body font로 분리한다."
+        "Noto Serif KR는 작은 UI 라벨/배지용으로 쓰지 않고, 그런 슬롯은 sans body font로 분리한다.",
+        "Noto Serif KR 같은 한글 display 헤딩은 line-height를 1.08 미만으로 낮추지 않는다.",
+        "한글 display 헤딩 tracking은 -0.03em ~ 0em 범위를 벗어나지 않는다."
       ],
       "recommended_fonts": {
         "heading": "Noto Serif KR",
@@ -912,6 +1555,20 @@
           "headline_start": "one-step-smaller",
           "guidance": "한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다."
         },
+        "implementation_constraints": {
+          "headline_display": {
+            "line_height_min": "1.08",
+            "letter_spacing_min": "-0.03em",
+            "letter_spacing_max": "0em",
+            "recommended_line_height": "1.2-1.4",
+            "recommended_letter_spacing": "-0.02em",
+            "forced_breaks_policy": "disallow-before-breakpoint-qa"
+          },
+          "ui_label": {
+            "serif_usage": "disallow",
+            "body_line_height": "1.4-1.5"
+          }
+        },
         "warnings": [
           "UI 라벨 — 작은 크기에서 가독성 저하",
           "모바일 본문 — 화면이 좁으면 답답함"
@@ -921,7 +1578,9 @@
           "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
           "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
           "폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다.",
-          "Noto Serif KR는 작은 UI 라벨/배지용으로 쓰지 않고, 그런 슬롯은 sans body font로 분리한다."
+          "Noto Serif KR는 작은 UI 라벨/배지용으로 쓰지 않고, 그런 슬롯은 sans body font로 분리한다.",
+          "Noto Serif KR 같은 한글 display 헤딩은 line-height를 1.08 미만으로 낮추지 않는다.",
+          "한글 display 헤딩 tracking은 -0.03em ~ 0em 범위를 벗어나지 않는다."
         ]
       },
       "type_scale": {
@@ -963,6 +1622,33 @@
         "compact"
       ],
       "visual_density_bias": "airy"
+    },
+    "layout": {
+      "breakpoints_px": [
+        320,
+        360,
+        390,
+        430,
+        768,
+        1024,
+        1440
+      ],
+      "container_rules": [
+        "모든 section/container는 box-sizing: border-box 기준으로 320px viewport에서 overflow-x 없이 맞아야 함",
+        "grid/flex children에는 필요한 경우 min-width: 0 또는 min-inline-size: 0을 명시",
+        "repeat(N, 1fr) 고정 grid는 모바일에서 1열 또는 minmax(0, 1fr) fallback을 제공",
+        "padded container 내부에서 width: 100vw 사용 금지"
+      ],
+      "control_rules": [
+        "Buttons, CTA groups, tabs, filter chips, and toolbar actions must not rely on fixed px widths or mobile-hostile min-width values.",
+        "Every button-like control needs max-inline-size: 100%; controls inside flex/grid parents need min-inline-size: 0 so labels can shrink or wrap.",
+        "Action rows must wrap or stack at narrow widths; two-button rows need a <=480px fallback before implementation is complete.",
+        "Long Korean CTA labels must be tested with real copy. Prefer wrapping/stacking over clipping, overflow hidden, or forcing white-space: nowrap.",
+        "Horizontal rails, tickers, score strips, and carousels must not reveal partially clipped text. Either size cards so visible items are complete, or use compact labels such as icon+code in the rail and move full names to the detailed surface.",
+        "Do not use width: 100vw inside padded containers; it commonly creates horizontal scroll. Use width: 100%, max-width: 100%, or a documented full-bleed pattern.",
+        "Never hide body overflow-x as the fix for a layout bug; remove the overflowing width/min-width instead."
+      ],
+      "viewport_pass_condition": "document.documentElement.scrollWidth <= window.innerWidth and all primary controls remain reachable without horizontal scrolling."
     },
     "radius": {
       "scale": [

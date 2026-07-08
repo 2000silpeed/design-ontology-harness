@@ -20,10 +20,10 @@
 > light/dark 변형은 어댑터(`nextjs-tailwind-shadcn` 등)가 파생. 원본 팔레트는 위 HEX 1세트.
 
 ## Typography
-- heading: Spoqa Han Sans Neo
-- body: Spoqa Han Sans Neo
+- heading: Space Grotesk
+- body: Inter
 - mono: JetBrains Mono
-- korean: Spoqa Han Sans Neo
+- korean: Pretendard
 
 ## 대표 컴포넌트
 - **activation-funnel** — parts: container, header, content-area, footer(optional), action(optional) | states: default, loading, empty, error

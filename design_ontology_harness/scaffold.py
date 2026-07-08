@@ -44,6 +44,47 @@ def scaffold_project(
         "interaction_keywords": ["Describe the interaction qualities you want"],
         "platforms": ["web"],
         "accessibility_targets": ["WCAG 2.2 AA"],
+        "application_concept": {
+            "primary_job": "The first job this product helps users complete",
+            "domain_objects": ["Primary objects users inspect, create, compare, or decide on"],
+            "operating_mode": "monitoring | authoring | transaction | exploration | review | coordination",
+            "success_moment": "The visible state that proves the workflow succeeded",
+            "differentiation": [
+                "What should feel structurally different from a generic SaaS dashboard"
+            ],
+        },
+        "layout_skeleton": {
+            "composition": "command-center | split-workbench | document-canvas | feed-detail | marketplace-grid | wizard-flow | map-or-graph-canvas | timeline-ledger",
+            "navigation_model": "sidebar | topbar | local-tabs | command-palette | task-rail | none",
+            "density": "dense | balanced | spacious",
+            "primary_regions": [
+                {
+                    "name": "Main work surface",
+                    "role": "The region users operate most of the time",
+                    "priority": "primary",
+                }
+            ],
+            "first_screen_contract": [
+                "Name the actual task surface that must appear above the fold",
+                "Name the real controls or state indicators that must be visible before decoration",
+            ],
+            "avoid_layouts": [
+                "generic hero plus card grid",
+                "uniform dashboard metric cards",
+                "nested cards as page sections",
+            ],
+        },
+        "design_differentiation": {
+            "must_feel_different_from": ["generic SaaS dashboard", "template card wall"],
+            "signature_moves": [
+                "A distinctive structural move tied to the product's workflow"
+            ],
+            "repetition_risks": [
+                "same three-column cards",
+                "oversized generic page header",
+                "decorative panels before the real task surface",
+            ],
+        },
         "product_primitives": ["List the core UI building blocks of your product"],
         "reference_preferences": {
             "prioritize_sources_containing": ["components", "typography", "accessibility"],

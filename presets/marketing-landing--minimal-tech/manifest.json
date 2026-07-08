@@ -2,7 +2,7 @@
   "id": "marketing-landing--minimal-tech",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "beacon",
-  "content_hash": "sha256:4f1dea112e7f37cfce6fe0b6d66a6cf0a5277ff848a15b9bf0046eee1e03bf8e",
+  "content_hash": "sha256:177cc560372b1330433cf0af69bb666f36fd8122a7109065888a68caf4842a78",
   "app_mode": "marketing-landing",
   "brand_tone": "minimal-tech",
   "color_modes": [
@@ -33,6 +33,6 @@
   },
   "owner": "maintainer",
   "tier": "P2",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "B2B/SaaS 팀을 위한 minimal-tech 톤 마케팅 랜딩 — hero·feature·pricing·social proof·testimonial·faq·cta, 한국어 1급"
 }

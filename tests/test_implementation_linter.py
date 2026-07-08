@@ -11,6 +11,7 @@ from design_ontology_harness.synthesis import (
     APP_ICON_IDENTITY_POLICY,
     COLOR_MODE_PARITY_POLICY,
     COMMERCIAL_PRODUCT_REALISM_POLICY,
+    HTML_PROTOTYPE_CONTRACT_POLICY,
     ICON_REFACTOR_POLICY,
     MOCKUP_VISUAL_SUBSTANCE_POLICY,
     REFERENCE_ABSORPTION_SCOPE,
@@ -217,6 +218,248 @@ def test_flags_ad_hoc_node_link_placeholder_graph(tmp_path: Path):
 
     assert not report.ok
     assert "DS082" in codes
+
+
+def test_flags_freehand_svg_connector_graph_with_positioned_nodes(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <section class="canvas-plane" aria-label="온보딩 그래프">
+          <svg class="wires" viewBox="0 0 900 540">
+            <path d="M165 154 C260 154 260 250 360 250" />
+            <path d="M540 250 C650 250 650 156 760 156" />
+            <path d="M540 250 C650 250 650 380 760 380" />
+          </svg>
+          <div class="flow-node start" style="left:58px;top:112px">시작</div>
+          <div class="flow-node active" style="left:350px;top:208px">KYC 확인</div>
+          <div class="flow-node" style="left:640px;top:114px">자동 승인</div>
+        </section>
+        """,
+        encoding="utf-8",
+    )
+    (tmp_path / "styles.css").write_text(
+        """
+        .canvas-plane { position: relative; }
+        .wires { position: absolute; inset: 0; }
+        .flow-node { position: absolute; border: var(--app-border); }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS083" in codes
+
+
+def test_flags_freehand_svg_connector_graph_with_arrowheads_but_no_edge_model(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <section class="canvas-plane" aria-label="온보딩 그래프">
+          <svg class="connector-layer" viewBox="0 0 900 540" aria-label="온보딩 흐름">
+            <title>온보딩 흐름</title>
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5">
+                <path d="M0 0 10 5 0 10Z" />
+              </marker>
+            </defs>
+            <path d="M165 154 C260 154 260 250 360 250" marker-end="url(#arrow)" />
+            <path d="M540 250 C650 250 650 156 760 156" marker-end="url(#arrow)" />
+            <text x="272" y="205">가입 요청</text>
+          </svg>
+          <div class="flow-node start" style="left:58px;top:112px">시작</div>
+          <div class="flow-node active" style="left:350px;top:208px">KYC 확인</div>
+          <div class="flow-node" style="left:640px;top:114px">자동 승인</div>
+        </section>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS083" in codes
+
+
+def test_allows_semantic_svg_workflow_graph(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <section class="canvas-plane" aria-label="온보딩 그래프">
+          <svg class="workflow-graph" viewBox="0 0 900 540" role="img" aria-labelledby="workflow-title workflow-desc">
+            <title id="workflow-title">온보딩 정책 워크플로</title>
+            <desc id="workflow-desc">시작은 KYC 확인으로 이동하고 위험 등급에 따라 분기된다.</desc>
+            <defs>
+              <marker id="edge-arrow" viewBox="0 0 10 10" refX="8" refY="5">
+                <path d="M0 0 10 5 0 10Z" />
+              </marker>
+            </defs>
+            <path data-edge-id="start-to-kyc" data-from="start" data-to="kyc" d="M240 208 C292 208 308 258 360 258" marker-end="url(#edge-arrow)" />
+            <text x="272" y="205">가입 요청</text>
+            <g data-node-id="start"><rect width="180" height="76" /><text>시작</text></g>
+            <g data-node-id="kyc"><rect width="180" height="76" /><text>KYC 확인</text></g>
+          </svg>
+        </section>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS082" not in codes
+    assert "DS083" not in codes
+
+
+def test_flags_complex_mock_surface_without_product_contract(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section class="placeholder-chart mock-chart">
+            <div class="bar"></div>
+            <div class="bar tall"></div>
+            <div class="bar short"></div>
+          </section>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS084" in codes
+
+
+def test_allows_complex_surface_with_runtime_model_source_and_state(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <section
+            class="chart-surface"
+            data-runtime-surface="chart-layer"
+            data-model="revenue-series"
+            data-source="sample:billing-ledger"
+            data-state="selected"
+          >
+            <div class="bar" data-item-id="q1" data-value="42" data-label="1분기"></div>
+            <div class="bar" data-item-id="q2" data-value="68" data-label="2분기"></div>
+          </section>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS084" not in codes
+
+
+def test_flags_marked_html_prototype_without_state_set(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <main data-product-prototype="ops-console">
+          <section
+            class="chart-surface"
+            data-runtime-surface="chart-layer"
+            data-model="incident-volume"
+            data-source="sample:incidents"
+          >
+            <div class="bar" data-item-id="p1" data-value="12">12</div>
+          </section>
+          <button>필터</button>
+          <button>승인</button>
+          <button>내보내기</button>
+          <button>동기화</button>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS085" in codes
+
+
+def test_allows_marked_html_prototype_with_state_set(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <main
+          data-product-prototype="ops-console"
+          data-prototype-state-set="default,selected,loading,empty,error"
+        >
+          <section
+            class="chart-surface"
+            data-runtime-surface="chart-layer"
+            data-model="incident-volume"
+            data-source="sample:incidents"
+            data-state="selected"
+          >
+            <div class="bar" data-item-id="p1" data-value="12">12</div>
+          </section>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+    (tmp_path / "styles.css").write_text(
+        """
+        .chart-surface {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 12px;
+          padding: 16px;
+          border: 1px solid var(--ds-color-border);
+          border-radius: var(--ds-radius-md);
+          background: var(--ds-color-surface);
+          color: var(--ds-color-ink);
+        }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS085" not in codes
+    assert "DS086" not in codes
+
+
+def test_flags_metadata_only_html_prototype_without_surface_styling(tmp_path: Path):
+    (tmp_path / "index.html").write_text(
+        """
+        <main
+          data-product-prototype="ops-console"
+          data-prototype-state-set="default,selected,loading,empty,error"
+        >
+          <section
+            class="chart-surface"
+            data-runtime-surface="chart-layer"
+            data-model="incident-volume"
+            data-source="sample:incidents"
+            data-state="selected"
+          >
+            <h1>사고 처리량</h1>
+            <div data-item-id="p1" data-value="12">12</div>
+            <div data-item-id="p2" data-value="24">24</div>
+          </section>
+          <button data-state="selected">필터</button>
+          <button data-state="pending">승인</button>
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not report.ok
+    assert "DS084" not in codes
+    assert "DS085" not in codes
+    assert "DS086" in codes
 
 
 def test_allows_evidence_ledger_instead_of_node_link_placeholder(tmp_path: Path):
@@ -852,7 +1095,12 @@ def test_implementation_contract_declares_reference_scope():
     assert "Icon And Visual Affordance Coverage" in contract
     assert "Visual Evidence And Screenshot Comparison" in contract
     assert "Mock Fidelity And Runtime Representation" in contract
+    assert "HTML Prototype Contract" in contract
     assert "data-runtime-surface" in contract
+    assert "data-product-surface" in contract
+    assert "data-prototype-state-set" in contract
+    assert "metadata-only" in contract
+    assert "DS086" in contract
     assert "compare-visuals" in contract
     assert "image_gen" in contract
     assert "DS070" in contract
@@ -869,6 +1117,9 @@ def test_implementation_contract_declares_reference_scope():
     assert "DS079" in contract
     assert "DS080" in contract
     assert "DS081" in contract
+    assert "DS084" in contract
+    assert "DS085" in contract
+    assert "DS086" in contract
     assert "raster-only/no-SVG" in contract
     assert "uv run design-ontology lint-implementation --target-repo ." in contract
 
@@ -953,6 +1204,34 @@ def test_mockup_visual_substance_policy_flags_low_information_svg():
     assert "lint-implementation DS076" in media["technical_controls"]
     tile = next(item for item in MOCKUP_VISUAL_SUBSTANCE_POLICY["failure_patterns"] if item["id"] == "media-tile-without-asset")
     assert "lint-implementation DS078" in tile["technical_controls"]
+
+
+def test_html_prototype_contract_policy_is_structured_for_ontology():
+    assert HTML_PROTOTYPE_CONTRACT_POLICY["id"] == "html-prototype-contract"
+    assert "static HTML mockups" in HTML_PROTOTYPE_CONTRACT_POLICY["applies_to"]
+    assert any("data-runtime-surface" in item for item in HTML_PROTOTYPE_CONTRACT_POLICY["required_contracts"])
+    failure_ids = {item["id"] for item in HTML_PROTOTYPE_CONTRACT_POLICY["failure_patterns"]}
+    assert "complex-mock-surface-without-contract" in failure_ids
+    assert "single-state-html-prototype" in failure_ids
+    assert "metadata-only-html-prototype" in failure_ids
+    assert len(HTML_PROTOTYPE_CONTRACT_POLICY["improvement_loop"]) == 5
+    complex_surface = next(
+        item for item in HTML_PROTOTYPE_CONTRACT_POLICY["failure_patterns"]
+        if item["id"] == "complex-mock-surface-without-contract"
+    )
+    single_state = next(
+        item for item in HTML_PROTOTYPE_CONTRACT_POLICY["failure_patterns"]
+        if item["id"] == "single-state-html-prototype"
+    )
+    metadata_only = next(
+        item for item in HTML_PROTOTYPE_CONTRACT_POLICY["failure_patterns"]
+        if item["id"] == "metadata-only-html-prototype"
+    )
+    assert "lint-implementation DS084" in complex_surface["technical_controls"]
+    assert "lint-implementation DS085" in single_state["technical_controls"]
+    assert "lint-implementation DS086" in metadata_only["technical_controls"]
+    assert "data-prototype-state-set" in single_state["prevention"]
+    assert "lint-implementation" in HTML_PROTOTYPE_CONTRACT_POLICY["outputs"]
 
 
 def test_visual_asset_medium_selection_policy_is_structured_for_ontology():

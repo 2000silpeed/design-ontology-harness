@@ -2,7 +2,7 @@
   "id": "marketing-landing--editorial-warm",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "loom",
-  "content_hash": "sha256:82085510760f8f5a53816eb5b69aaec1272af3195cdeb64bdfc91f47325b5ad1",
+  "content_hash": "sha256:48a4d7fc634285af965fcfb32b4ba84a60ceb0d4d717761fbd8777edf16662c3",
   "app_mode": "marketing-landing",
   "brand_tone": "editorial-warm",
   "color_modes": [
@@ -34,6 +34,6 @@
   },
   "owner": "@bob-external",
   "tier": "P3",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "독립 뉴스레터·매거진 발행인용 editorial-warm 톤 마케팅 랜딩 — hero + featured issue + issue archive + subscribe pricing + testimonial + author profile + faq + cta, warm ochre + rust + wheat palette, reading-first, 한국어 1급"
 }

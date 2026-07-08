@@ -20,9 +20,9 @@
 > light/dark 변형은 어댑터(`nextjs-tailwind-shadcn` 등)가 파생. 원본 팔레트는 위 HEX 1세트.
 
 ## Typography
-- heading: Noto Serif KR
-- body: Pretendard
-- mono: n/a
+- heading: Fraunces
+- body: Inter
+- mono: JetBrains Mono
 - korean: Pretendard
 
 ## 대표 컴포넌트

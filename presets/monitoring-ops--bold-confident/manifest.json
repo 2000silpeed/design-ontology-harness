@@ -2,7 +2,7 @@
   "id": "monitoring-ops--bold-confident",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,11 +10,12 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "faircite-harness-console",
-  "content_hash": "sha256:0b31e6374e92c7c8e0b96a7c1a109f89e2420d400fe096b2731816c153b6a494",
+  "content_hash": "sha256:2d8e7c92b0dc22a182d5b9eea845cb6f0cd47175b394954ca0332b95f22d5e78",
   "app_mode": "monitoring-ops",
   "brand_tone": "bold-confident",
   "color_modes": [
-    "light"
+    "light",
+    "dark"
   ],
   "default_color_mode": "light",
   "tags": [
@@ -27,6 +28,6 @@
   "locale_pairings": {},
   "owner": "codex",
   "tier": "P3",
-  "generated_at": "2026-05-27T12:39:50Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "FairCite dual-mode evidence traceability console"
 }

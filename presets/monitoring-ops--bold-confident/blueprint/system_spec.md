@@ -63,6 +63,7 @@
 - **Hangul body defaults**: Pretendard | line-height 1.6-1.7 | label line-height 1.4-1.5
 - **Wrap defaults**: headline word-break=keep-all, headline text-wrap=balance, body word-break=keep-all
 - **Scale guidance**: 기본 스케일을 사용할 수 있지만 한글 문장 기준으로 실제 wrap을 먼저 검증한다.
+- **Hangul display safety**: line-height >= 1.02 | tracking -0.02em to 0.01em | forced <br /> 금지 until breakpoint QA
 - **Loading**: Pretendard(preload), JetBrains Mono(lazy) | display: swap
 
 ## 6. Color Reference
@@ -215,34 +216,38 @@
 ## 8. Component Strategy
 
 - **Product primitives**: app shell, mode selector, sidebar navigation, privacy banner, diagnosis form, structured textarea, segmented controls, risk matrix, risk row meter, case result card, citation drawer, source label badge, source label tooltip, evidence map, chunk card, law lookup card, sanction anatomy stepper, pattern catalog, paired case comparison, metric strip, data status card, legal disclaimer footer, PDF export button, graph preview panel
-- **Required families**: button, copilot-artifact, data-display, feedback, input, marketing, navigation, workflow, overlay
+- **Required families**: button, copilot-artifact, data-display, document, feedback, input, marketing, navigation, workflow, overlay
+- **Reference baseline**: Astryx (https://astryx.atmeta.com/components), Vercel Geist (https://vercel.com/geist/introduction)
+- **Reference absorption rule**: Use Astryx and Geist as taxonomy and behavior evidence; implement with local primitives and local tokens.
+- **Contextual, not baseline**: back-button, bottom-sheet, cta-button, ghost-button, link-button, mobile-tab-bar, mobile-topbar, modal-dialog
 - **Advanced component recommendations**:
 
-- **source-card** (copilot-artifact, score 16): AI output depends on external or internal source records; users need a repeatable citation preview component / pairs with: citation-drawer, evidence-graph, inline-citation
 - **approval-rail** (workflow, score 14): work requires review, approval, rejection, or handoff; users need to know who owns the next decision / pairs with: policy-matrix, risk-summary-card, diff-viewer
 - **audit-timeline** (data-display, score 14): regulated workflows require traceable user and AI actions; reviewers need to reconstruct what happened before approval / pairs with: decision-record-card, approval-rail, tool-call-trace
 - **citation-drawer** (copilot-artifact, score 14): answers must show supporting policy, document, or source records; users need to inspect evidence without losing conversation context / pairs with: inline-citation, source-card, evidence-graph
 - **evidence-graph** (data-display, score 14): trust depends on seeing relationships between claims and sources; auditors need to trace why an answer or decision was made / pairs with: citation-drawer, decision-record-card, policy-matrix
 - **policy-matrix** (data-display, score 14): multiple policy rules must be checked against multiple claims or fields; reviewers need dense scan-and-drill compliance status / pairs with: risk-summary-card, exception-queue, approval-rail
-- **risk-summary-card** (data-display, score 14): users need a fast read of risk before drilling into policy details; AI confidence or compliance severity must be visible / pairs with: policy-matrix, confidence-meter, exception-queue
 - **saved-view-bar** (navigation, score 14): teams revisit the same filtered views often; dense tools need stable scope memory / pairs with: filter-builder, bulk-action-table, exception-queue
+- **bulk-action-table** (data-display, score 12): users handle many records at once; selection count and destructive actions must stay visible / pairs with: saved-view-bar, filter-builder, exception-queue
+- **command-palette** (overlay, score 12): the product has many actions or navigation targets; expert users benefit from quick action search / pairs with: shortcut-hint, saved-view-bar, filter-builder
 
 - **Visual-reference archetypes**:
 
-- **Dashboard insight module** (data-display / 0.48): stat-card, insight-card, chart-panel, section-header, filter-chip
+- **Dashboard insight module** (data-display / 0.48): metric-strip, status-summary-row, chart-panel, section-header, filter-chip
 - **Data review table** (data-display / 0.48): data-table, column-header, row-actions, filter-toolbar, pagination
 - **Workspace shell** (navigation / 0.47): app-shell, sidebar-nav, workspace-switcher, breadcrumb, context-panel
 - **Review coverage system** (editorial / 0.36): review-card, score-badge, comparison-table, ranking-list, filter-chip
 
-- **button**: primary-button, secondary-button, ghost-button, icon-button, cta-button, link-button, form-actions, hero-cta-group
-- **copilot-artifact**: source-card, citation-drawer
-- **data-display**: data-table, column-header, row-actions, tag, stat-card, insight-card, activity-card, section-header
-- **feedback**: inline-alert, empty-state, toast, status-badge, step-progress, banner
-- **input**: text-field, search-field, segmented-control, filter-chip, chip, textarea, select, checkbox
+- **button**: primary-button, secondary-button, icon-button, form-actions, hero-cta-group
+- **copilot-artifact**: citation-drawer
+- **data-display**: data-table, column-header, row-actions, tag, metric-strip, status-summary-row, task-surface-header, source-ledger
+- **document**: redline-viewer
+- **feedback**: badge, inline-alert, empty-state, toast, status-dot, status-badge, step-progress, banner
+- **input**: text-field, select, checkbox, switch, segmented-control, filter-chip, chip, textarea
 - **marketing**: logo-cloud, customer-logo, metric-highlight, press-quote, hero-container, hero-eyebrow, hero-headline, hero-subheadline
-- **navigation**: mobile-topbar, mobile-tab-bar, back-button, section-tabs, pagination, wizard-layout, app-shell, sidebar-nav
+- **navigation**: breadcrumbs, tabs, pagination, wizard-layout, app-shell, sidebar-nav, topbar, breadcrumb
 - **workflow**: approval-rail
-- **overlay**: bottom-sheet, modal-dialog, confirm-dialog, tooltip-guide, chart-tooltip, command-palette
+- **overlay**: dialog, popover, tooltip, confirm-dialog, tooltip-guide, chart-tooltip, command-palette
 
 ## 9. Implementation Guardrails
 
@@ -258,9 +263,11 @@
 - 레퍼런스는 형태·밀도·컴포넌트 비례만 흡수하고, 색 조합·폰트 스케일·도메인 IA는 토큰과 제품 온톨로지를 따른다
 - 토큰을 사용하더라도 status/tint/info 역할을 섞어 레퍼런스처럼 보이는 새 팔레트를 만들지 않는다
 - 구현 중 사용자·리뷰어가 반복 가능한 실패 패턴을 지적하면 현재 화면 수정에 그치지 않고 governance/contract/linter로 승격한다
+- script_guardrails가 있으면 한글 display 헤딩의 min/max line-height·tracking 안전값을 구현 기본값으로 강제
 - 상용 제품형 화면은 피치덱식 히어로/균일 카드벽보다 실제 작업 표면, 데이터 밀도, 상태, 필터, 출처를 첫 화면에 우선 배치한다
 - 데이터·스포츠·운영 UI에서 정확한 수치, 예측, 순위, 투표수는 출처/업데이트 시각/샘플 라벨 없이 확정값처럼 보이게 하지 않는다
 - 사이트·앱·랜딩·제품·장소·콘텐츠·게임 목업은 도메인 실체를 보여주는 이미지/미디어/identity asset을 적극적으로 사용하고, 이미지 없는 카드·그라디언트만으로 완성 처리하지 않는다
+- HTML 목업은 정적 그림이 아니라 제품 표면 계약으로 취급한다. 차트/그래프/지도/캘린더/보드/캔버스는 data-runtime-surface, data-model, data-source, item/node/event id, 상태 세트를 드러낸다
 - 만화·웹툰·잡지 표지, 컷 미리보기, 서사 콘텐츠 미디어 슬롯은 image_gen/사용자 제공/라이선스 소스/승인된 고품질 아트워크를 기본값으로 삼고, 즉석 SVG 스케치나 기하학 플레이스홀더를 최종 자산으로 쓰지 않는다
 - 사용자·리뷰어가 'SVG 만들지 말고', '실제 그림파일', 'PNG/WebP/JPEG', '검색해서 넣어'처럼 매체를 지정하면 해당 범위는 raster-only medium override로 기록하고 SVG/inline vector/아이콘 스프라이트로 대체하지 않는다
 - 생성 이미지와 장식 비주얼은 도메인 맥락을 보조해야 하며 일정, 결과, 표, 필터, 상태 같은 핵심 작업 표면을 압도하지 않는다
@@ -378,6 +385,8 @@
 - Path-only inline SVGs with generic map/sketch/illustration classes do not count as visual substance unless the visual is semantically anchored with labels, legend, title/desc, or data-subject landmarks.
 - Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.
 - Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.
+- Do not represent evidence maps, relation maps, or product data graphs as hand-positioned HTML nodes connected by rotated CSS lines. Use a real graph/chart library, SVG/canvas visualization with semantic labels and runtime data, or a ledger/table when the relationship is simple.
+- Do not fake workflow graphs by overlaying freehand SVG curves on separately positioned HTML nodes. Graph nodes and edges must share one coordinate system and expose node/edge ids, direction, labels, and runtime state.
 - A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.
 - Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.
 - Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.
@@ -388,9 +397,42 @@
 - **low-information-inline-svg-visual**: Deterministic SVG visuals need semantic anchors; otherwise they are decorative placeholders, not visual substance. Prevention: Add visible labels, legend, title/desc, and data-subject landmarks, or replace the slot with a stronger generated, sourced, or user-supplied asset.
 - **amateur-ad-hoc-illustration**: A bad drawing does not become acceptable because it is labeled; low-confidence illustration should be removed or replaced. Prevention: Use image_gen, a sourced/user-supplied asset, a reference-backed illustration, or a clean product schematic/data visualization. Do not ship rough path art as visual substance.
 - **ambiguous-mock-runtime-surface**: Even a mockup must make the production representation legible. Prevention: Mark the surface as a map SDK layer, generated/sourced media, chart/table, product schematic, or explicit loading/empty state; avoid ambiguous decorative stand-ins.
+- **ad-hoc-node-link-placeholder-graph**: A hand-drawn node-link sketch is not a product-grade data visualization. Prevention: Use a proven graph/chart library, a semantically labeled SVG/canvas visualization backed by real runtime data, or replace simple relationships with an evidence ledger/table.
+- **freehand-svg-connector-graph**: A graph surface must encode the relationship model, not just draw curves between boxes. Prevention: Use a graph library, or author the graph as one semantic SVG/canvas surface with data-node-id, data-edge-id, data-from/data-to, arrowheads, edge labels, and runtime state. If the relationship is simple, use a table, timeline, or ledger.
 - **media-runtime-surface-without-asset**: Runtime media surfaces need actual media assets or explicit empty/loading states. Prevention: Bind a generated, sourced, or user-supplied image/video asset with alt text and manifest metadata, or render a clear empty/loading state instead of fake visual texture.
 - **media-tile-without-asset**: Every visible media/evidence tile needs its own asset or an explicit empty/loading/pending state. Prevention: Attach generated, sourced, or user-supplied media to each tile, or mark the tile as an intentional empty/loading/pending state with clear copy.
 - **unmanifested-mockup-image**: Integrated raster assets must be traceable. Prevention: Record acquisition_mode, asset_path, intended_for, alt_text, sha256, and source/prompt metadata before wiring the asset.
+
+### HTML Prototype Contract
+
+- **Rule**: HTML mockups must behave as thin executable product prototypes, not static screenshots made from divs.
+- **Applies to**: static HTML mockups, Vite/Next demo screens, product workflow prototypes, data dashboards, maps/charts/calendars/boards, editor or canvas surfaces
+- **Required contracts**:
+- Mark the primary surface with data-product-prototype or an equivalent prototype marker when it is a reviewable mockup.
+- Each major product surface declares data-runtime-surface or data-product-surface so reviewers know whether it represents a map SDK, chart layer, table view, calendar, board, media slot, editor canvas, or empty/loading state.
+- Data-heavy surfaces expose model/source/id metadata such as data-model, data-source, data-row-id, data-item-id, data-event-id, data-node-id, and data-edge-id.
+- Prototype reviews include a state set: default, selected, loading, empty, error, disabled, pending, approved/blocked, or domain-specific equivalents.
+- Contract metadata is not enough: prototypes must include token-bound layout, surface, typography, state, and affordance styling so they do not render as browser-default HTML.
+- Charts, graphs, maps, calendars, kanban boards, gantt views, spreadsheets, and editor canvases use a proven library or one semantic SVG/canvas/table coordinate system with labels, axes, direction, state, and provenance.
+- Playwright QA captures desktop and mobile viewports and verifies no horizontal overflow, clipped labels, or incoherent overlaps before the mockup is called complete.
+- **Implementation rules**:
+- Do not use mock/placeholder/fake/static chart, map, calendar, board, graph, or canvas classes without a runtime/data contract.
+- Do not satisfy the contract with aria labels alone; labels help accessibility, but product structure needs model/source/id/state metadata.
+- Do not stop at metadata-only fixtures. If the page still looks like default browser HTML, add product-surface styling or mark the artifact as a non-visual test fixture.
+- Prefer table, ledger, timeline, or row list when the relationship is simple enough that a graph would be decorative.
+- If a complex surface cannot be backed by data or a real interaction model yet, render an explicit empty/loading/pending state instead of a fake finished surface.
+- Sample numbers must be visibly labeled as sample/demo and paired with a source or update context.
+- **Improvement loop**:
+- **observe**: Collect the reviewer complaint, current screenshot or DOM evidence, and the exact artifact path before making changes.
+- **classify**: Decide whether the issue is implementation-only, missing product contract, missing visual styling, wrong visualization model, responsive failure, or a repeatable ontology gap.
+- **promote**: If the failure can recur, promote it into governance, IMPLEMENTATION_CONTRACT, lint-implementation, and a regression test before calling the screen fixed.
+- **repair**: Repair the artifact using product-surface structures, token-bound styling, runtime metadata, and state scenarios rather than cosmetic color changes.
+- **verify**: Run lint-implementation, targeted tests, and desktop/mobile visual QA or screenshot comparison. If a new failure appears, loop back to classify.
+- **Promoted prototype failure patterns**:
+- **complex-mock-surface-without-contract**: A complex HTML mock surface needs a product contract before it can be visually judged. Prevention: Add data-runtime-surface or data-product-surface plus model/source/id/state metadata, or replace the surface with a simpler table, ledger, or explicit empty/loading state.
+- **single-state-html-prototype**: Prototype fidelity includes state coverage, not only a polished default screenshot. Prevention: Add data-prototype-state-set or visible data-state scenarios for default, selected, loading, empty, error, and domain-specific states.
+- **metadata-only-html-prototype**: A prototype contract is not visually complete until the product surface is styled and reviewable. Prevention: Add token-bound product-surface CSS, icon/visual affordances, stable layout, and desktop/mobile visual QA; otherwise mark it as a non-visual fixture.
+- **decorative-data-visualization**: Data visualization must explain its criteria and relationship model. Prevention: Use a chart/graph/map library, semantic SVG/canvas with data values and labels, or a table/ledger when the data model is small.
 
 ### Visual Asset Medium Selection
 
@@ -509,6 +551,7 @@
 - **검색 이미지는 라이선스가 검증될 때만 사용한다**: AI는 image_gen을 사용할 수 없거나 실제 사진성이 더 중요한 경우에만 sourced visual fallback을 사용한다. 무료 provider는 per-asset license metadata가 필요하고, paid provider는 license_proof/usage_scope/licensed_to가 필요하다. Reference-only provider는 형태와 밀도 참고만 가능하며 이미지를 구현 에셋으로 복사하지 않는다. source_url, download_url, provider, author, license, attribution_required, sha256, alt_text를 manifest에 기록하지 못하는 이미지는 구현에 넣지 않는다. 런타임 hotlink와 stock/search 이미지를 앱 아이콘·로고·상태 아이콘으로 쓰는 것을 금지한다.
 - **사용자가 지정한 이미지 매체는 기본 SVG 규칙보다 우선한다**: 사용자나 리뷰어가 'SVG 만들지 말고', '실제 그림파일', '검색해서 넣어', 'PNG/WebP/JPEG', '래스터', '비트맵'처럼 시각 에셋 매체를 명시하면 그 지시는 온톨로지의 medium override가 된다. 해당 범위의 아바타, 캐릭터, 콘텐츠 이미지, 앱 아이콘, UI 아이콘은 SVG/inline vector로 대체하지 않고 생성·사용자 제공·라이선스 소스 기반의 실제 래스터 파일을 프로젝트에 복사해 사용한다. 예외가 필요하면 사용자의 명시 승인과 medium_decision 기록이 먼저 있어야 한다.
 - **목업은 관련 이미지를 적극적으로 사용한다**: AI는 사이트, 앱, 랜딩, 제품 소개, 콘텐츠 카드, 스포츠/장소/상품/포트폴리오 목업을 이미지 없는 카드와 그라디언트 블록만으로 끝내지 않는다. 도메인 실체를 드러내는 생성 이미지, 라이선스 검증 이미지, 사용자 제공 이미지, 브랜드 identity asset을 적극적으로 배치하고 manifest/alt/crop/반응형 검증까지 완료한다. 단 대시보드·운영 UI에서는 이미지가 표, 필터, 상태, 출처 같은 핵심 작업 표면을 밀어내지 않게 한다.
+- **HTML 목업은 제품 표면 계약이다**: AI는 HTML 목업을 그림판처럼 쓰지 않는다. 차트, 그래프, 지도, 캘린더, 칸반, 간트, 스프레드시트, 에디터 캔버스 같은 복합 표면은 data-runtime-surface/data-product-surface, 데이터 모델, 출처, 항목 ID, 상태 세트를 드러내야 한다. 관계나 수치 기준을 설명하지 못하면 장식 그래프 대신 table, ledger, timeline처럼 검증 가능한 표면을 사용한다.
 - **카드벽을 기본 레이아웃으로 쓰지 않는다**: AI는 페이지 섹션 전체를 카드 안에 다시 넣거나, 동일한 radius/shadow/padding을 가진 카드 묶음으로 화면을 채우지 않는다. 반복되는 객체에는 카드가 가능하지만, 1차 작업 표면은 canvas, map, table, row list, rail, inspector, sheet 같은 도메인 구조로 먼저 만든다.
 - **아이콘과 도메인 그림은 완성 조건이다**: AI는 필터, 상태, 액션, 추천 근거, 도메인 객체에 프로젝트의 활성 medium directive에 맞는 아이콘이나 이미지 자산을 적극적으로 연결한다. 기본값은 SVG 아이콘이나 deterministic SVG/이미지 자산이지만, no-SVG/raster-only directive가 있으면 PNG/WebP/JPEG 에셋을 사용한다. 도메인이 장소·상품·콘텐츠·게임·스포츠처럼 시각 실체를 갖는 경우, 텍스트와 테두리만으로 완료 처리하지 않는다.
 
@@ -754,39 +797,38 @@
 
 | Component | Tokens Used |
 |-----------|-------------|
-| activity-card | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | app-shell | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| approval-rail | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| audit-timeline | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| back-button | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| approval-rail | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| audit-timeline | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| badge | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | banner | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| bottom-sheet | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | breadcrumb | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| bulk-action-table | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| breadcrumbs | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| bulk-action-table | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
 | chart-container | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | chart-legend | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | chart-tooltip | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | chat-input | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chat-message | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chat-thread | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| chat-message | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| chat-thread | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
 | checkbox | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | chip | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | citation-drawer | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| column-header | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| column-header | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
 | command-palette | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| confidence-meter | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | confirm-dialog | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| cta-button | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | customer-logo | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| data-table | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| decision-record-card | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| data-table | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| dialog | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | empty-state | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| evidence-graph | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| feature-comparison | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| evidence-graph | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| exception-queue | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| feature-comparison | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
 | filter-builder | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | filter-chip | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | form-actions | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | form-section | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| ghost-button | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | hero-container | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | hero-cta-group | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | hero-eyebrow | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
@@ -796,37 +838,38 @@
 | hero-visual | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | icon-button | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | inline-alert | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| insight-card | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| link-button | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | logo-cloud | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | metric-highlight | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| mobile-tab-bar | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| mobile-topbar | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| modal-dialog | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| metric-strip | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| operational-rail | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
 | pagination | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| policy-matrix | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| policy-matrix | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| popover | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | press-quote | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | primary-button | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | radio-group | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| risk-summary-card | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| row-actions | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| redline-viewer | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| row-actions | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
 | saved-view-bar | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| search-field | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | secondary-button | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| section-header | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| section-tabs | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| section-header | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
 | segmented-control | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | select | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | sidebar-nav | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| source-card | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| stat-card | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| source-ledger | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
 | status-badge | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| status-dot | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| status-summary-row | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
 | step-progress | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| switch | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | tab-bar | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| tag | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| tabs | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| tag | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| task-surface-header | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
 | text-field | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | textarea | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | toast | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| tooltip | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | tooltip-guide | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | topbar | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | wizard-layout | `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
@@ -904,7 +947,7 @@
 - **PDF export button**: —
 - **graph preview panel**: —
 - **workspace navigation**: app-shell, sidebar-nav, topbar, breadcrumb, tab-bar
-- **dashboard cards**: stat-card, insight-card, activity-card, section-header
+- **operational overview**: metric-strip, status-summary-row, task-surface-header, source-ledger, operational-rail, section-header
 - **data tables**: data-table, column-header, filter-chip, row-actions, pagination
 
 ### Interaction Patterns
@@ -964,10 +1007,10 @@
 |------------|------|-----------------|--------|--------------|----------|--------|
 | Brand-aligned raster image | generated | high-fidelity-raster-support; SVG: False | Codex image_gen skill | only when the implementation surface would benefit from generated imagery | `public/generated/design-system/manifest.json` | no API fallback |
 | Brand-aligned raster image sourced fallback | sourced | high-fidelity-raster-support; SVG: False | Openverse, Wikimedia Commons, Unsplash, Pexels | only when the implementation surface would benefit from generated imagery | `public/generated/design-system/manifest.json` | license-verified sourced visual fallback |
-| Card thumbnail | generated | content-media; SVG: only for approved product schematics or semantic vector thumbnails | Codex image_gen skill | activity-card, decision-record-card, insight-card, risk-summary-card, section-header, source-card | `public/generated/design-system/manifest.json` | no API fallback |
-| Card thumbnail sourced fallback | sourced | content-media; SVG: only for approved product schematics or semantic vector thumbnails | Openverse, Wikimedia Commons, Unsplash, Pexels | activity-card, decision-record-card, insight-card, risk-summary-card, section-header, source-card | `public/generated/design-system/manifest.json` | license-verified sourced visual fallback |
-| Comic panel preview | generated | high-fidelity-narrative-media; SVG: denied unless approved production vector panel art exists | Codex image_gen skill | hero-trust-strip | `public/generated/design-system/manifest.json` | no API fallback |
-| Comic panel preview sourced fallback | sourced | high-fidelity-narrative-media; SVG: denied unless approved production vector panel art exists | Openverse, Wikimedia Commons, Unsplash, Pexels | hero-trust-strip | `public/generated/design-system/manifest.json` | license-verified sourced visual fallback |
+| Card thumbnail | generated | content-media; SVG: only for approved product schematics or semantic vector thumbnails | Codex image_gen skill | breadcrumbs, switch, data-display, marketing | `public/generated/design-system/manifest.json` | no API fallback |
+| Card thumbnail sourced fallback | sourced | content-media; SVG: only for approved product schematics or semantic vector thumbnails | Openverse, Wikimedia Commons, Unsplash, Pexels | breadcrumbs, switch, data-display, marketing | `public/generated/design-system/manifest.json` | license-verified sourced visual fallback |
+| Comic panel preview | generated | high-fidelity-narrative-media; SVG: denied unless approved production vector panel art exists | Codex image_gen skill | hero-trust-strip, metric-strip, tabs | `public/generated/design-system/manifest.json` | no API fallback |
+| Comic panel preview sourced fallback | sourced | high-fidelity-narrative-media; SVG: denied unless approved production vector panel art exists | Openverse, Wikimedia Commons, Unsplash, Pexels | hero-trust-strip, metric-strip, tabs | `public/generated/design-system/manifest.json` | license-verified sourced visual fallback |
 | Editorial cover | generated | high-fidelity-narrative-media; SVG: denied unless approved production vector artwork exists | Codex image_gen skill | press-quote, marketing | `public/generated/design-system/manifest.json` | no API fallback |
 | Editorial cover sourced fallback | sourced | high-fidelity-narrative-media; SVG: denied unless approved production vector artwork exists | Openverse, Wikimedia Commons, Unsplash, Pexels | press-quote, marketing | `public/generated/design-system/manifest.json` | license-verified sourced visual fallback |
 | Empty-state illustration | generated | supportive-illustration; SVG: allowed when polished, semantic, and not substituting for content media | Codex image_gen skill | empty-state, step-progress, tooltip-guide, wizard-layout, feedback | `public/generated/design-system/manifest.json` | no API fallback |
@@ -1016,18 +1059,18 @@
   - Path-only inline SVGs with generic map/sketch/illustration classes do not count as visual substance unless the visual is semantically anchored with labels, legend, title/desc, or data-subject landmarks.
   - Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.
   - Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.
+  - Do not represent evidence maps, relation maps, or product data graphs as hand-positioned HTML nodes connected by rotated CSS lines. Use a real graph/chart library, SVG/canvas visualization with semantic labels and runtime data, or a ledger/table when the relationship is simple.
+  - Do not fake workflow graphs by overlaying freehand SVG curves on separately positioned HTML nodes. Graph nodes and edges must share one coordinate system and expose node/edge ids, direction, labels, and runtime state.
   - A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.
-  - Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.
-  - Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.
 - **Promoted failure patterns**:
   - image-free-commercial-mockup: Add relevant generated, sourced, user-supplied, or deterministic visual assets and record them in the manifest before calling the mockup complete.
   - placeholder-gradient-as-image: Replace placeholder media with image_gen, sourced, user-supplied, or deterministic SVG assets that match the domain and slot.
   - low-information-inline-svg-visual: Add visible labels, legend, title/desc, and data-subject landmarks, or replace the slot with a stronger generated, sourced, or user-supplied asset.
   - amateur-ad-hoc-illustration: Use image_gen, a sourced/user-supplied asset, a reference-backed illustration, or a clean product schematic/data visualization. Do not ship rough path art as visual substance.
   - ambiguous-mock-runtime-surface: Mark the surface as a map SDK layer, generated/sourced media, chart/table, product schematic, or explicit loading/empty state; avoid ambiguous decorative stand-ins.
+  - ad-hoc-node-link-placeholder-graph: Use a proven graph/chart library, a semantically labeled SVG/canvas visualization backed by real runtime data, or replace simple relationships with an evidence ledger/table.
+  - freehand-svg-connector-graph: Use a graph library, or author the graph as one semantic SVG/canvas surface with data-node-id, data-edge-id, data-from/data-to, arrowheads, edge labels, and runtime state. If the relationship is simple, use a table, timeline, or ledger.
   - media-runtime-surface-without-asset: Bind a generated, sourced, or user-supplied image/video asset with alt text and manifest metadata, or render a clear empty/loading state instead of fake visual texture.
-  - media-tile-without-asset: Attach generated, sourced, or user-supplied media to each tile, or mark the tile as an intentional empty/loading/pending state with clear copy.
-  - unmanifested-mockup-image: Record acquisition_mode, asset_path, intended_for, alt_text, sha256, and source/prompt metadata before wiring the asset.
 
 ## 25. Reference Intelligence Pack
 

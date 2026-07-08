@@ -2,7 +2,7 @@
   "id": "conversation-copilot--minimal-tech",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "glacier",
-  "content_hash": "sha256:fa6330e030cbfaaaf586b62278eb8f04a5ebc5a5548ebda3a1eb4d0ccd2b77ee",
+  "content_hash": "sha256:a2515f10201657adaa05f3d2bf7474aa0474039d38d127bf1a2b30d9e56837b4",
   "app_mode": "conversation-copilot",
   "brand_tone": "minimal-tech",
   "color_modes": [
@@ -31,6 +31,6 @@
   },
   "owner": "maintainer",
   "tier": "P0",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "AI 코파일럿/대화형 워크스페이스 — 미니멀 테크 톤, chat + artifact + thread"
 }

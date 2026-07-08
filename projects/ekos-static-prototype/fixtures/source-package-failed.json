@@ -1,0 +1,117 @@
+{
+  "workflow_id": "delivery_delay_confirmation",
+  "case_object": {
+    "type": "Delivery",
+    "id": "80001241"
+  },
+  "validation_result": "fail",
+  "decision_packet_generated": false,
+  "message": "필수 데이터가 부족해서 판단 결과를 만들 수 없습니다.",
+  "summary": "납품 정보와 Tracking 이벤트는 일부 확인됐지만, 운송사 최신 확인 정보와 승인 기준표가 없습니다.",
+  "aliases": [
+    {
+      "alias": "deliveries",
+      "label": "납품 정보",
+      "status": "available",
+      "readiness": "partial",
+      "readiness_label": "일부 확인됨",
+      "policy": "partial_allowed",
+      "result": "pass",
+      "result_label": "통과",
+      "source_kind": "SAP 유사 자산",
+      "why_it_matters": "검토할 Delivery와 현재 납품 상태를 확인합니다."
+    },
+    {
+      "alias": "tracking_events",
+      "label": "Tracking 이벤트",
+      "status": "available",
+      "readiness": "partial",
+      "readiness_label": "일부 확인됨",
+      "policy": "partial_allowed",
+      "result": "pass",
+      "result_label": "통과",
+      "source_kind": "SAP 유사 자산",
+      "why_it_matters": "납품 지연이 발생한 배경 이벤트를 확인합니다."
+    },
+    {
+      "alias": "policies",
+      "label": "정책 기준",
+      "status": "available",
+      "readiness": "needs_manual_mapping",
+      "readiness_label": "수동 매핑됨",
+      "policy": "manual_mapping_allowed",
+      "result": "pass",
+      "result_label": "통과",
+      "source_kind": "운영 기준 매핑",
+      "why_it_matters": "승인 준비 전에 현재 운송사 확인이 필요한지 판단합니다."
+    },
+    {
+      "alias": "carrier_updates",
+      "label": "운송사 최신 확인 정보",
+      "status": "missing",
+      "readiness": "missing",
+      "readiness_label": "부족함",
+      "policy": "ready_required",
+      "result": "fail",
+      "result_label": "실패",
+      "source_kind": "미입력",
+      "why_it_matters": "운송사 확인이 최신인지, 오래된 정보인지 판단합니다."
+    },
+    {
+      "alias": "approval_matrix",
+      "label": "승인 기준표",
+      "status": "missing",
+      "readiness": "missing",
+      "readiness_label": "부족함",
+      "policy": "ready_required",
+      "result": "fail",
+      "result_label": "실패",
+      "source_kind": "미입력",
+      "why_it_matters": "누가 검토하고 승인 준비를 넘길 수 있는지 판단합니다."
+    }
+  ],
+  "missing_sources": [
+    {
+      "alias": "carrier_updates",
+      "label": "운송사 최신 확인 정보",
+      "why_needed": "운송사 확인이 최신인지 판단해야 승인 준비 가능 여부를 검토할 수 있습니다.",
+      "accepted_sources": [
+        "LE Tracking 테이블",
+        "3PL / 운송사 파일",
+        "운영팀 관리 CSV"
+      ],
+      "required_fields": [
+        "Delivery 번호",
+        "운송사",
+        "최신 ETA",
+        "확인 시각",
+        "확인 상태",
+        "출처"
+      ],
+      "suggested_owner": "물류 운영 데이터 담당자",
+      "upload_option": "운송사 확인 정보 적용",
+      "trust_level": "운영팀 또는 운송사 확인 출처"
+    },
+    {
+      "alias": "approval_matrix",
+      "label": "승인 기준표",
+      "why_needed": "누가 이 업무를 검토하거나 승인 준비할 수 있는지 알아야 합니다.",
+      "accepted_sources": [
+        "Governance 승인 기준 CSV",
+        "Workflow customizing export",
+        "정책 / 통제팀 관리 테이블"
+      ],
+      "required_fields": [
+        "업무 유형",
+        "요청 작업",
+        "필요 승인 역할",
+        "준비 가능 여부",
+        "실행 가능 여부",
+        "기준 버전"
+      ],
+      "suggested_owner": "업무 오너 또는 통제 담당자",
+      "upload_option": "승인 기준표 적용",
+      "trust_level": "통제팀이 관리한 기준"
+    }
+  ]
+}

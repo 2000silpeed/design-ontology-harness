@@ -5,6 +5,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from .component_reference_baseline import core_baseline_components
+
 
 UI_PATTERNS: dict[str, dict] = {
     "workspace navigation": {
@@ -34,14 +36,23 @@ UI_PATTERNS: dict[str, dict] = {
         ],
         "description": "키보드로 빠르게 명령을 실행하거나 검색하는 오버레이",
     },
-    "dashboard cards": {
+    "operational overview": {
         "terms": [
             "대시보드", "통계", "현황", "인사이트", "지표",
-            "KPI", "메트릭", "카드형", "활동 피드",
-            "dashboard", "stat card", "insight", "metric", "KPI",
-            "activity feed", "overview panel", "summary card",
+            "KPI", "메트릭", "활동 피드", "운영 화면", "업무 화면",
+            "dashboard", "overview", "insight", "metric", "KPI",
+            "activity feed", "overview panel", "summary", "status strip",
+            "status rail", "operational surface", "task surface",
         ],
-        "description": "주요 지표와 활동을 카드 형태로 보여주는 대시보드",
+        "description": "지표·상태·업무 흐름을 카드벽이 아닌 작업 표면, 행, 레일, 표로 보여주는 운영 개요",
+    },
+    "dashboard cards": {
+        "terms": [
+            "카드형", "통계 카드", "지표 카드", "요약 카드", "인사이트 카드",
+            "대시보드 카드", "kpi card", "stat card", "metric card",
+            "insight card", "summary card", "dashboard card",
+        ],
+        "description": "명시적으로 카드형 요약을 요구할 때만 쓰는 제한적 대시보드 카드 패턴",
     },
     "data tables": {
         "terms": [
@@ -570,6 +581,14 @@ PATTERN_COMPONENTS: dict[str, list[dict]] = {
         {"name": "command-result-item", "family": "overlay", "role": "검색/명령 결과 항목"},
         {"name": "shortcut-hint", "family": "feedback", "role": "키보드 단축키 힌트 표시"},
     ],
+    "operational overview": [
+        {"name": "metric-strip", "family": "data-display", "role": "핵심 지표를 한 줄 스캔 표면으로 압축하는 요약 스트립"},
+        {"name": "status-summary-row", "family": "data-display", "role": "상태, 변경량, 담당자, 업데이트 시각을 행 단위로 보여주는 운영 요약"},
+        {"name": "task-surface-header", "family": "data-display", "role": "현재 업무 범위, 필터, 주요 액션을 묶는 작업 표면 헤더"},
+        {"name": "source-ledger", "family": "data-display", "role": "수치와 판단의 출처, 업데이트 시각, 샘플 여부를 기록하는 출처 레저"},
+        {"name": "operational-rail", "family": "navigation", "role": "보조 상태와 다음 작업을 압축해 보여주는 측면 또는 상단 레일"},
+        {"name": "section-header", "family": "data-display", "role": "운영 표면의 구획과 정렬 맥락을 표시하는 헤더"},
+    ],
     "dashboard cards": [
         {"name": "stat-card", "family": "data-display", "role": "주요 수치를 표시하는 통계 카드"},
         {"name": "insight-card", "family": "data-display", "role": "인사이트나 트렌드를 요약하는 카드"},
@@ -643,8 +662,8 @@ PATTERN_COMPONENTS: dict[str, list[dict]] = {
         {"name": "section-header", "family": "data-display", "role": "랭킹/비교 섹션의 정렬 및 설명 헤더"},
     ],
     "modal and dialog": [
-        {"name": "modal-dialog", "family": "overlay", "role": "확인/입력을 받는 모달"},
-        {"name": "bottom-sheet", "family": "overlay", "role": "모바일용 하단 시트"},
+        {"name": "dialog", "family": "overlay", "role": "확인/입력을 받는 표준 다이얼로그"},
+        {"name": "popover", "family": "overlay", "role": "트리거에 붙는 짧은 보조 입력/정보 표면"},
         {"name": "confirm-dialog", "family": "overlay", "role": "삭제/위험 작업 확인 다이얼로그"},
     ],
     "onboarding and stepper": [
@@ -894,7 +913,7 @@ PATTERN_COMPONENTS: dict[str, list[dict]] = {
         {"name": "editorial-analytics-kpi", "family": "dashboard-editorial", "role": "편집 운영 kpi-card 스택 — 이슈 리드 타임 · 리뷰 처리 · 발행 지연율 · 기고자당 발행 수, mono tabular-nums, sidebar-nav 진입"},
         {"name": "reading-analytics-kpi", "family": "dashboard-editorial", "role": "리딩 kpi-card 스택 — 평균 체류 · 완독률 · 스크롤 심도 · 메일 오픈, Naples Yellow trend indicator, chart-container 연계"},
         {"name": "archive-shelf", "family": "dashboard-editorial", "role": "과거 이슈 / 발행 기사 아카이브 — filter-sidebar + data-table + kpi-card 조합, issue-number chip, 태그 필터, sidebar-nav 진입"},
-        {"name": "tag-taxonomy-manager", "family": "dashboard-editorial", "role": "섹션/카테고리/태그 체계 편집 — tree + data-table + modal-dialog, sidebar-nav 진입, muted warm divider"},
+        {"name": "tag-taxonomy-manager", "family": "dashboard-editorial", "role": "섹션/카테고리/태그 체계 편집 — tree + data-table + dialog, sidebar-nav 진입, muted warm divider"},
     ],
     "publishing workflow": [
         {"name": "publishing-pipeline", "family": "dashboard-editorial", "role": "수평 publishing 파이프라인 보드 — pipeline-stage column (아이디어 → 초안 → 리뷰 → 스케줄 → 발행 → 아카이브), data-table 연계, sidebar-nav 진입, filter-chip 필터, article-preview-pane drawer 연계"},
@@ -934,13 +953,7 @@ PATTERN_COMPONENTS: dict[str, list[dict]] = {
 }
 
 # 모든 프로젝트에 기본으로 포함되는 컴포넌트
-BASELINE_COMPONENTS: list[dict] = [
-    {"name": "primary-button", "family": "button", "role": "주요 행동을 유도하는 CTA 버튼"},
-    {"name": "secondary-button", "family": "button", "role": "보조 행동 버튼"},
-    {"name": "ghost-button", "family": "button", "role": "최소한의 시각적 무게를 가진 버튼"},
-    {"name": "icon-button", "family": "button", "role": "아이콘만 있는 액션 버튼"},
-    {"name": "link-button", "family": "button", "role": "텍스트 링크 스타일 버튼"},
-]
+BASELINE_COMPONENTS: list[dict] = core_baseline_components()
 
 
 def analyze_spec(spec_text: str) -> list[dict]:

@@ -226,24 +226,9 @@
       "label": "secondary-button"
     },
     {
-      "id": "component:ghost-button",
-      "type": "Component",
-      "label": "ghost-button"
-    },
-    {
       "id": "component:icon-button",
       "type": "Component",
       "label": "icon-button"
-    },
-    {
-      "id": "component:cta-button",
-      "type": "Component",
-      "label": "cta-button"
-    },
-    {
-      "id": "component:link-button",
-      "type": "Component",
-      "label": "link-button"
     },
     {
       "id": "component:form-actions",
@@ -282,32 +267,6 @@
       "id": "state:copilot-artifact-error",
       "type": "ComponentState",
       "label": "copilot-artifact/error"
-    },
-    {
-      "id": "component:source-card",
-      "type": "Component",
-      "label": "source-card",
-      "meta": {
-        "advanced_component": true,
-        "usage_guidance": [
-          "AI output depends on external or internal source records",
-          "users need a repeatable citation preview component"
-        ],
-        "pairs_with": [
-          "citation-drawer",
-          "evidence-graph",
-          "inline-citation"
-        ],
-        "matched_signals": [
-          "citation",
-          "document",
-          "evidence",
-          "mode-default",
-          "mode:document-content",
-          "reference",
-          "source"
-        ]
-      }
     },
     {
       "id": "component:citation-drawer",
@@ -363,6 +322,11 @@
       "label": "data-display/empty"
     },
     {
+      "id": "state:data-display-loading",
+      "type": "ComponentState",
+      "label": "data-display/loading"
+    },
+    {
       "id": "component:data-table",
       "type": "Component",
       "label": "data-table"
@@ -383,19 +347,24 @@
       "label": "tag"
     },
     {
-      "id": "component:stat-card",
+      "id": "component:metric-strip",
       "type": "Component",
-      "label": "stat-card"
+      "label": "metric-strip"
     },
     {
-      "id": "component:insight-card",
+      "id": "component:status-summary-row",
       "type": "Component",
-      "label": "insight-card"
+      "label": "status-summary-row"
     },
     {
-      "id": "component:activity-card",
+      "id": "component:task-surface-header",
       "type": "Component",
-      "label": "activity-card"
+      "label": "task-surface-header"
+    },
+    {
+      "id": "component:source-ledger",
+      "type": "Component",
+      "label": "source-ledger"
     },
     {
       "id": "component:section-header",
@@ -501,30 +470,6 @@
       }
     },
     {
-      "id": "component:risk-summary-card",
-      "type": "Component",
-      "label": "risk-summary-card",
-      "meta": {
-        "advanced_component": true,
-        "usage_guidance": [
-          "users need a fast read of risk before drilling into policy details",
-          "AI confidence or compliance severity must be visible"
-        ],
-        "pairs_with": [
-          "policy-matrix",
-          "confidence-meter",
-          "exception-queue"
-        ],
-        "matched_signals": [
-          "compliance",
-          "mode-default",
-          "mode:dashboard",
-          "mode:monitoring-ops",
-          "risk"
-        ]
-      }
-    },
-    {
       "id": "component:bulk-action-table",
       "type": "Component",
       "label": "bulk-action-table",
@@ -548,25 +493,76 @@
       }
     },
     {
-      "id": "component:decision-record-card",
+      "id": "component:exception-queue",
       "type": "Component",
-      "label": "decision-record-card",
+      "label": "exception-queue",
       "meta": {
         "advanced_component": true,
         "usage_guidance": [
-          "a reviewer or AI-assisted workflow reaches a durable decision",
-          "regulated teams need record ids and retention status"
+          "multiple issues require triage, assignment, and resolution",
+          "reviewers need to batch handle exceptions"
         ],
         "pairs_with": [
-          "audit-timeline",
-          "approval-rail",
-          "citation-drawer"
+          "bulk-action-table",
+          "policy-matrix",
+          "approval-rail"
         ],
         "matched_signals": [
-          "audit",
-          "decision",
+          "mode-default",
           "mode:dashboard",
           "mode:monitoring-ops"
+        ]
+      }
+    },
+    {
+      "id": "family:document",
+      "type": "ComponentFamily",
+      "label": "document",
+      "meta": {
+        "priority": "high"
+      }
+    },
+    {
+      "id": "state:document-default",
+      "type": "ComponentState",
+      "label": "document/default"
+    },
+    {
+      "id": "state:document-selected",
+      "type": "ComponentState",
+      "label": "document/selected"
+    },
+    {
+      "id": "state:document-commenting",
+      "type": "ComponentState",
+      "label": "document/commenting"
+    },
+    {
+      "id": "state:document-resolved",
+      "type": "ComponentState",
+      "label": "document/resolved"
+    },
+    {
+      "id": "component:redline-viewer",
+      "type": "Component",
+      "label": "redline-viewer",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "legal, compliance, or editorial text needs reviewer markup",
+          "comments must stay anchored to exact text ranges"
+        ],
+        "pairs_with": [
+          "diff-viewer",
+          "comment-thread",
+          "approval-rail"
+        ],
+        "matched_signals": [
+          "legal",
+          "mode-default",
+          "mode:document-content",
+          "policy",
+          "review"
         ]
       }
     },
@@ -599,6 +595,16 @@
       "label": "feedback/danger"
     },
     {
+      "id": "state:feedback-loading",
+      "type": "ComponentState",
+      "label": "feedback/loading"
+    },
+    {
+      "id": "component:badge",
+      "type": "Component",
+      "label": "badge"
+    },
+    {
       "id": "component:inline-alert",
       "type": "Component",
       "label": "inline-alert"
@@ -614,6 +620,11 @@
       "label": "toast"
     },
     {
+      "id": "component:status-dot",
+      "type": "Component",
+      "label": "status-dot"
+    },
+    {
       "id": "component:status-badge",
       "type": "Component",
       "label": "status-badge"
@@ -627,6 +638,28 @@
       "id": "component:banner",
       "type": "Component",
       "label": "banner"
+    },
+    {
+      "id": "component:confidence-meter",
+      "type": "Component",
+      "label": "confidence-meter",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "AI or policy outcome includes uncertainty",
+          "users must decide whether to trust, edit, or escalate"
+        ],
+        "pairs_with": [
+          "risk-summary-card",
+          "policy-matrix",
+          "tool-call-trace"
+        ],
+        "matched_signals": [
+          "mode:dashboard",
+          "mode:monitoring-ops",
+          "risk"
+        ]
+      }
     },
     {
       "id": "family:input",
@@ -657,14 +690,29 @@
       "label": "input/disabled"
     },
     {
+      "id": "state:input-selected",
+      "type": "ComponentState",
+      "label": "input/selected"
+    },
+    {
       "id": "component:text-field",
       "type": "Component",
       "label": "text-field"
     },
     {
-      "id": "component:search-field",
+      "id": "component:select",
       "type": "Component",
-      "label": "search-field"
+      "label": "select"
+    },
+    {
+      "id": "component:checkbox",
+      "type": "Component",
+      "label": "checkbox"
+    },
+    {
+      "id": "component:switch",
+      "type": "Component",
+      "label": "switch"
     },
     {
       "id": "component:segmented-control",
@@ -685,16 +733,6 @@
       "id": "component:textarea",
       "type": "Component",
       "label": "textarea"
-    },
-    {
-      "id": "component:select",
-      "type": "Component",
-      "label": "select"
-    },
-    {
-      "id": "component:checkbox",
-      "type": "Component",
-      "label": "checkbox"
     },
     {
       "id": "component:radio-group",
@@ -836,24 +874,14 @@
       "label": "navigation/collapsed"
     },
     {
-      "id": "component:mobile-topbar",
+      "id": "component:breadcrumbs",
       "type": "Component",
-      "label": "mobile-topbar"
+      "label": "breadcrumbs"
     },
     {
-      "id": "component:mobile-tab-bar",
+      "id": "component:tabs",
       "type": "Component",
-      "label": "mobile-tab-bar"
-    },
-    {
-      "id": "component:back-button",
-      "type": "Component",
-      "label": "back-button"
-    },
-    {
-      "id": "component:section-tabs",
-      "type": "Component",
-      "label": "section-tabs"
+      "label": "tabs"
     },
     {
       "id": "component:pagination",
@@ -889,6 +917,11 @@
       "id": "component:tab-bar",
       "type": "Component",
       "label": "tab-bar"
+    },
+    {
+      "id": "component:operational-rail",
+      "type": "Component",
+      "label": "operational-rail"
     },
     {
       "id": "component:saved-view-bar",
@@ -990,14 +1023,19 @@
       "label": "overlay/open"
     },
     {
-      "id": "component:bottom-sheet",
+      "id": "component:dialog",
       "type": "Component",
-      "label": "bottom-sheet"
+      "label": "dialog"
     },
     {
-      "id": "component:modal-dialog",
+      "id": "component:popover",
       "type": "Component",
-      "label": "modal-dialog"
+      "label": "popover"
+    },
+    {
+      "id": "component:tooltip",
+      "type": "Component",
+      "label": "tooltip"
     },
     {
       "id": "component:confirm-dialog",
@@ -1038,9 +1076,9 @@
       }
     },
     {
-      "id": "primitive:baseline",
+      "id": "primitive:reference-baseline",
       "type": "ProductPrimitive",
-      "label": "baseline"
+      "label": "reference baseline"
     },
     {
       "id": "primitive:data-tables",
@@ -1073,9 +1111,9 @@
       "label": "workspace navigation"
     },
     {
-      "id": "primitive:dashboard-cards",
+      "id": "primitive:operational-overview",
       "type": "ProductPrimitive",
-      "label": "dashboard cards"
+      "label": "operational overview"
     },
     {
       "id": "primitive:charts-and-visualization",
@@ -1776,9 +1814,9 @@
       "label": "workspace navigation"
     },
     {
-      "id": "pattern:layout-dashboard-cards",
+      "id": "pattern:layout-operational-overview",
       "type": "LayoutPattern",
-      "label": "dashboard cards"
+      "label": "operational overview"
     },
     {
       "id": "pattern:layout-data-tables",
@@ -1858,6 +1896,16 @@
         "url": "https://vercel.com/geist",
         "category": "devtool",
         "color_strategy": "monochrome with blue accent"
+      }
+    },
+    {
+      "id": "benchmark:astryx",
+      "type": "BenchmarkSystem",
+      "label": "Astryx",
+      "meta": {
+        "url": "https://astryx.atmeta.com",
+        "category": "devtool",
+        "color_strategy": "themeable neutral base with ready-made brand theme packages"
       }
     },
     {
@@ -2873,6 +2921,8 @@
           "Path-only inline SVGs with generic map/sketch/illustration classes do not count as visual substance unless the visual is semantically anchored with labels, legend, title/desc, or data-subject landmarks.",
           "Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.",
           "Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.",
+          "Do not represent evidence maps, relation maps, or product data graphs as hand-positioned HTML nodes connected by rotated CSS lines. Use a real graph/chart library, SVG/canvas visualization with semantic labels and runtime data, or a ledger/table when the relationship is simple.",
+          "Do not fake workflow graphs by overlaying freehand SVG curves on separately positioned HTML nodes. Graph nodes and edges must share one coordinate system and expose node/edge ids, direction, labels, and runtime state.",
           "A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.",
           "Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.",
           "Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.",
@@ -2962,6 +3012,36 @@
         "technical_controls": [
           "lint-implementation DS075",
           "IMPLEMENTATION_CONTRACT.md",
+          "visual QA screenshots"
+        ]
+      }
+    },
+    {
+      "id": "failure-pattern:ad-hoc-node-link-placeholder-graph",
+      "type": "ImplementationFailurePattern",
+      "label": "ad-hoc-node-link-placeholder-graph",
+      "meta": {
+        "trigger": "A mockup draws an evidence map, relation map, or graph using absolutely positioned nodes and rotated CSS lines such as graph-node/graph-edge or trace-node/trace-line.",
+        "rule": "A hand-drawn node-link sketch is not a product-grade data visualization.",
+        "prevention": "Use a proven graph/chart library, a semantically labeled SVG/canvas visualization backed by real runtime data, or replace simple relationships with an evidence ledger/table.",
+        "technical_controls": [
+          "lint-implementation DS082",
+          "component_specs.md data visualization notes",
+          "visual QA screenshots"
+        ]
+      }
+    },
+    {
+      "id": "failure-pattern:freehand-svg-connector-graph",
+      "type": "ImplementationFailurePattern",
+      "label": "freehand-svg-connector-graph",
+      "meta": {
+        "trigger": "A workflow, relation, or evidence graph uses an SVG connector layer such as wires/connector-layer plus separately positioned HTML nodes, with no node/edge ids, direction labels, or shared graph coordinate system.",
+        "rule": "A graph surface must encode the relationship model, not just draw curves between boxes.",
+        "prevention": "Use a graph library, or author the graph as one semantic SVG/canvas surface with data-node-id, data-edge-id, data-from/data-to, arrowheads, edge labels, and runtime state. If the relationship is simple, use a table, timeline, or ledger.",
+        "technical_controls": [
+          "lint-implementation DS083",
+          "component_specs.md graph validity notes",
           "visual QA screenshots"
         ]
       }
@@ -5322,22 +5402,7 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:ghost-button",
-      "target": "family:button"
-    },
-    {
-      "type": "member_of_family",
       "source": "component:icon-button",
-      "target": "family:button"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:cta-button",
-      "target": "family:button"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:link-button",
       "target": "family:button"
     },
     {
@@ -5372,11 +5437,6 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:source-card",
-      "target": "family:copilot-artifact"
-    },
-    {
-      "type": "member_of_family",
       "source": "component:citation-drawer",
       "target": "family:copilot-artifact"
     },
@@ -5401,6 +5461,11 @@
       "target": "state:data-display-empty"
     },
     {
+      "type": "has_state",
+      "source": "family:data-display",
+      "target": "state:data-display-loading"
+    },
+    {
       "type": "member_of_family",
       "source": "component:data-table",
       "target": "family:data-display"
@@ -5422,17 +5487,22 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:stat-card",
+      "source": "component:metric-strip",
       "target": "family:data-display"
     },
     {
       "type": "member_of_family",
-      "source": "component:insight-card",
+      "source": "component:status-summary-row",
       "target": "family:data-display"
     },
     {
       "type": "member_of_family",
-      "source": "component:activity-card",
+      "source": "component:task-surface-header",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:source-ledger",
       "target": "family:data-display"
     },
     {
@@ -5482,18 +5552,38 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:risk-summary-card",
-      "target": "family:data-display"
-    },
-    {
-      "type": "member_of_family",
       "source": "component:bulk-action-table",
       "target": "family:data-display"
     },
     {
       "type": "member_of_family",
-      "source": "component:decision-record-card",
+      "source": "component:exception-queue",
       "target": "family:data-display"
+    },
+    {
+      "type": "has_state",
+      "source": "family:document",
+      "target": "state:document-default"
+    },
+    {
+      "type": "has_state",
+      "source": "family:document",
+      "target": "state:document-selected"
+    },
+    {
+      "type": "has_state",
+      "source": "family:document",
+      "target": "state:document-commenting"
+    },
+    {
+      "type": "has_state",
+      "source": "family:document",
+      "target": "state:document-resolved"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:redline-viewer",
+      "target": "family:document"
     },
     {
       "type": "has_state",
@@ -5516,6 +5606,16 @@
       "target": "state:feedback-danger"
     },
     {
+      "type": "has_state",
+      "source": "family:feedback",
+      "target": "state:feedback-loading"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:badge",
+      "target": "family:feedback"
+    },
+    {
       "type": "member_of_family",
       "source": "component:inline-alert",
       "target": "family:feedback"
@@ -5532,6 +5632,11 @@
     },
     {
       "type": "member_of_family",
+      "source": "component:status-dot",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
       "source": "component:status-badge",
       "target": "family:feedback"
     },
@@ -5543,6 +5648,11 @@
     {
       "type": "member_of_family",
       "source": "component:banner",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:confidence-meter",
       "target": "family:feedback"
     },
     {
@@ -5566,13 +5676,28 @@
       "target": "state:input-disabled"
     },
     {
+      "type": "has_state",
+      "source": "family:input",
+      "target": "state:input-selected"
+    },
+    {
       "type": "member_of_family",
       "source": "component:text-field",
       "target": "family:input"
     },
     {
       "type": "member_of_family",
-      "source": "component:search-field",
+      "source": "component:select",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:checkbox",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:switch",
       "target": "family:input"
     },
     {
@@ -5593,16 +5718,6 @@
     {
       "type": "member_of_family",
       "source": "component:textarea",
-      "target": "family:input"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:select",
-      "target": "family:input"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:checkbox",
       "target": "family:input"
     },
     {
@@ -5712,22 +5827,12 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:mobile-topbar",
+      "source": "component:breadcrumbs",
       "target": "family:navigation"
     },
     {
       "type": "member_of_family",
-      "source": "component:mobile-tab-bar",
-      "target": "family:navigation"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:back-button",
-      "target": "family:navigation"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:section-tabs",
+      "source": "component:tabs",
       "target": "family:navigation"
     },
     {
@@ -5763,6 +5868,11 @@
     {
       "type": "member_of_family",
       "source": "component:tab-bar",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:operational-rail",
       "target": "family:navigation"
     },
     {
@@ -5812,12 +5922,17 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:bottom-sheet",
+      "source": "component:dialog",
       "target": "family:overlay"
     },
     {
       "type": "member_of_family",
-      "source": "component:modal-dialog",
+      "source": "component:popover",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:tooltip",
       "target": "family:overlay"
     },
     {
@@ -5842,8 +5957,98 @@
     },
     {
       "type": "supports",
-      "source": "component:link-button",
-      "target": "primitive:baseline"
+      "source": "component:primary-button",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:secondary-button",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:icon-button",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:text-field",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:select",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:checkbox",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:switch",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:segmented-control",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:breadcrumbs",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:tabs",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:pagination",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:badge",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:inline-alert",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:empty-state",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:toast",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:status-dot",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:dialog",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:popover",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:tooltip",
+      "target": "primitive:reference-baseline"
     },
     {
       "type": "supports",
@@ -5858,11 +6063,6 @@
     {
       "type": "supports",
       "source": "component:row-actions",
-      "target": "primitive:data-tables"
-    },
-    {
-      "type": "supports",
-      "source": "component:pagination",
       "target": "primitive:data-tables"
     },
     {
@@ -5888,16 +6088,6 @@
     {
       "type": "supports",
       "source": "component:textarea",
-      "target": "primitive:forms"
-    },
-    {
-      "type": "supports",
-      "source": "component:select",
-      "target": "primitive:forms"
-    },
-    {
-      "type": "supports",
-      "source": "component:checkbox",
       "target": "primitive:forms"
     },
     {
@@ -5962,23 +6152,33 @@
     },
     {
       "type": "supports",
-      "source": "component:stat-card",
-      "target": "primitive:dashboard-cards"
+      "source": "component:metric-strip",
+      "target": "primitive:operational-overview"
     },
     {
       "type": "supports",
-      "source": "component:insight-card",
-      "target": "primitive:dashboard-cards"
+      "source": "component:status-summary-row",
+      "target": "primitive:operational-overview"
     },
     {
       "type": "supports",
-      "source": "component:activity-card",
-      "target": "primitive:dashboard-cards"
+      "source": "component:task-surface-header",
+      "target": "primitive:operational-overview"
+    },
+    {
+      "type": "supports",
+      "source": "component:source-ledger",
+      "target": "primitive:operational-overview"
+    },
+    {
+      "type": "supports",
+      "source": "component:operational-rail",
+      "target": "primitive:operational-overview"
     },
     {
       "type": "supports",
       "source": "component:section-header",
-      "target": "primitive:dashboard-cards"
+      "target": "primitive:operational-overview"
     },
     {
       "type": "supports",
@@ -6077,11 +6277,6 @@
     },
     {
       "type": "supports",
-      "source": "component:source-card",
-      "target": "primitive:advanced-component-catalog"
-    },
-    {
-      "type": "supports",
       "source": "component:approval-rail",
       "target": "primitive:advanced-component-catalog"
     },
@@ -6107,11 +6302,6 @@
     },
     {
       "type": "supports",
-      "source": "component:risk-summary-card",
-      "target": "primitive:advanced-component-catalog"
-    },
-    {
-      "type": "supports",
       "source": "component:saved-view-bar",
       "target": "primitive:advanced-component-catalog"
     },
@@ -6127,12 +6317,22 @@
     },
     {
       "type": "supports",
-      "source": "component:decision-record-card",
+      "source": "component:filter-builder",
       "target": "primitive:advanced-component-catalog"
     },
     {
       "type": "supports",
-      "source": "component:filter-builder",
+      "source": "component:redline-viewer",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:confidence-meter",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:exception-queue",
       "target": "primitive:advanced-component-catalog"
     },
     {
@@ -6437,43 +6637,63 @@
     },
     {
       "type": "composed_of",
-      "source": "pattern:layout-dashboard-cards",
-      "target": "component:stat-card"
+      "source": "pattern:layout-operational-overview",
+      "target": "component:metric-strip"
     },
     {
       "type": "implements",
-      "source": "component:stat-card",
-      "target": "pattern:layout-dashboard-cards"
+      "source": "component:metric-strip",
+      "target": "pattern:layout-operational-overview"
     },
     {
       "type": "composed_of",
-      "source": "pattern:layout-dashboard-cards",
-      "target": "component:insight-card"
+      "source": "pattern:layout-operational-overview",
+      "target": "component:status-summary-row"
     },
     {
       "type": "implements",
-      "source": "component:insight-card",
-      "target": "pattern:layout-dashboard-cards"
+      "source": "component:status-summary-row",
+      "target": "pattern:layout-operational-overview"
     },
     {
       "type": "composed_of",
-      "source": "pattern:layout-dashboard-cards",
-      "target": "component:activity-card"
+      "source": "pattern:layout-operational-overview",
+      "target": "component:task-surface-header"
     },
     {
       "type": "implements",
-      "source": "component:activity-card",
-      "target": "pattern:layout-dashboard-cards"
+      "source": "component:task-surface-header",
+      "target": "pattern:layout-operational-overview"
     },
     {
       "type": "composed_of",
-      "source": "pattern:layout-dashboard-cards",
+      "source": "pattern:layout-operational-overview",
+      "target": "component:source-ledger"
+    },
+    {
+      "type": "implements",
+      "source": "component:source-ledger",
+      "target": "pattern:layout-operational-overview"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-operational-overview",
+      "target": "component:operational-rail"
+    },
+    {
+      "type": "implements",
+      "source": "component:operational-rail",
+      "target": "pattern:layout-operational-overview"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-operational-overview",
       "target": "component:section-header"
     },
     {
       "type": "implements",
       "source": "component:section-header",
-      "target": "pattern:layout-dashboard-cards"
+      "target": "pattern:layout-operational-overview"
     },
     {
       "type": "composed_of",
@@ -6689,27 +6909,6 @@
     },
     {
       "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:ghost-button",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
       "source": "component:icon-button",
       "target": "spacing:12",
       "meta": {
@@ -6731,7 +6930,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:cta-button",
+      "source": "component:text-field",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6739,7 +6938,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:cta-button",
+      "source": "component:text-field",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6747,12 +6946,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:cta-button",
+      "source": "component:text-field",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:mobile-topbar",
+      "source": "component:select",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6760,7 +6959,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:mobile-topbar",
+      "source": "component:select",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6768,12 +6967,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:mobile-topbar",
+      "source": "component:select",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:mobile-tab-bar",
+      "source": "component:checkbox",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6781,7 +6980,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:mobile-tab-bar",
+      "source": "component:checkbox",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6789,12 +6988,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:mobile-tab-bar",
+      "source": "component:checkbox",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:back-button",
+      "source": "component:switch",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6802,7 +7001,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:back-button",
+      "source": "component:switch",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6810,12 +7009,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:back-button",
+      "source": "component:switch",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:section-tabs",
+      "source": "component:segmented-control",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6823,7 +7022,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:section-tabs",
+      "source": "component:segmented-control",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6831,7 +7030,91 @@
     },
     {
       "type": "uses_font",
-      "source": "component:section-tabs",
+      "source": "component:segmented-control",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumbs",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumbs",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:breadcrumbs",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tabs",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tabs",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:tabs",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:pagination",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:badge",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:badge",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:badge",
       "target": "font:pretendard"
     },
     {
@@ -6899,7 +7182,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:bottom-sheet",
+      "source": "component:status-dot",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6907,7 +7190,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:bottom-sheet",
+      "source": "component:status-dot",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6915,12 +7198,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:bottom-sheet",
+      "source": "component:status-dot",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:modal-dialog",
+      "source": "component:dialog",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6928,7 +7211,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:modal-dialog",
+      "source": "component:dialog",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6936,12 +7219,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:modal-dialog",
+      "source": "component:dialog",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:text-field",
+      "source": "component:popover",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6949,7 +7232,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:text-field",
+      "source": "component:popover",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6957,12 +7240,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:text-field",
+      "source": "component:popover",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:search-field",
+      "source": "component:tooltip",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6970,7 +7253,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:search-field",
+      "source": "component:tooltip",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6978,55 +7261,13 @@
     },
     {
       "type": "uses_font",
-      "source": "component:search-field",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:segmented-control",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:segmented-control",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:segmented-control",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:link-button",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:link-button",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:link-button",
+      "source": "component:tooltip",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
       "source": "component:data-table",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -7034,7 +7275,7 @@
     {
       "type": "uses_token",
       "source": "component:data-table",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7047,7 +7288,7 @@
     {
       "type": "uses_token",
       "source": "component:column-header",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -7055,7 +7296,7 @@
     {
       "type": "uses_token",
       "source": "component:column-header",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7068,7 +7309,7 @@
     {
       "type": "uses_token",
       "source": "component:row-actions",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -7076,7 +7317,7 @@
     {
       "type": "uses_token",
       "source": "component:row-actions",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7084,27 +7325,6 @@
     {
       "type": "uses_font",
       "source": "component:row-actions",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pagination",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pagination",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:pagination",
       "target": "font:pretendard"
     },
     {
@@ -7139,7 +7359,7 @@
     {
       "type": "uses_token",
       "source": "component:tag",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7210,48 +7430,6 @@
     {
       "type": "uses_font",
       "source": "component:textarea",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:select",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:select",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:select",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:checkbox",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:checkbox",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:checkbox",
       "target": "font:pretendard"
     },
     {
@@ -7508,49 +7686,49 @@
     },
     {
       "type": "uses_token",
-      "source": "component:stat-card",
-      "target": "spacing:12",
+      "source": "component:metric-strip",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
     },
     {
       "type": "uses_token",
-      "source": "component:stat-card",
-      "target": "radius:md",
+      "source": "component:metric-strip",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
     },
     {
       "type": "uses_font",
-      "source": "component:stat-card",
+      "source": "component:metric-strip",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:insight-card",
-      "target": "spacing:12",
+      "source": "component:status-summary-row",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
     },
     {
       "type": "uses_token",
-      "source": "component:insight-card",
-      "target": "radius:md",
+      "source": "component:status-summary-row",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
     },
     {
       "type": "uses_font",
-      "source": "component:insight-card",
+      "source": "component:status-summary-row",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:activity-card",
+      "source": "component:task-surface-header",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7558,15 +7736,57 @@
     },
     {
       "type": "uses_token",
-      "source": "component:activity-card",
-      "target": "radius:md",
+      "source": "component:task-surface-header",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
     },
     {
       "type": "uses_font",
-      "source": "component:activity-card",
+      "source": "component:task-surface-header",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:source-ledger",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:source-ledger",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:source-ledger",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:operational-rail",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:operational-rail",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:operational-rail",
       "target": "font:pretendard"
     },
     {
@@ -7580,7 +7800,7 @@
     {
       "type": "uses_token",
       "source": "component:section-header",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7664,7 +7884,7 @@
     {
       "type": "uses_token",
       "source": "component:feature-comparison",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7790,7 +8010,7 @@
     {
       "type": "uses_token",
       "source": "component:chat-message",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7832,7 +8052,7 @@
     {
       "type": "uses_token",
       "source": "component:chat-thread",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7991,29 +8211,8 @@
     },
     {
       "type": "uses_token",
-      "source": "component:source-card",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:source-card",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:source-card",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
       "source": "component:approval-rail",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8021,7 +8220,7 @@
     {
       "type": "uses_token",
       "source": "component:approval-rail",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8034,7 +8233,7 @@
     {
       "type": "uses_token",
       "source": "component:audit-timeline",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8042,7 +8241,7 @@
     {
       "type": "uses_token",
       "source": "component:audit-timeline",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8084,7 +8283,7 @@
     {
       "type": "uses_token",
       "source": "component:evidence-graph",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8097,7 +8296,7 @@
     {
       "type": "uses_token",
       "source": "component:policy-matrix",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8105,7 +8304,7 @@
     {
       "type": "uses_token",
       "source": "component:policy-matrix",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8117,27 +8316,6 @@
     },
     {
       "type": "uses_token",
-      "source": "component:risk-summary-card",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:risk-summary-card",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:risk-summary-card",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
       "source": "component:saved-view-bar",
       "target": "spacing:12",
       "meta": {
@@ -8160,7 +8338,7 @@
     {
       "type": "uses_token",
       "source": "component:bulk-action-table",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8168,7 +8346,7 @@
     {
       "type": "uses_token",
       "source": "component:bulk-action-table",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8201,7 +8379,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:decision-record-card",
+      "source": "component:filter-builder",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8209,7 +8387,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:decision-record-card",
+      "source": "component:filter-builder",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -8217,12 +8395,33 @@
     },
     {
       "type": "uses_font",
-      "source": "component:decision-record-card",
+      "source": "component:filter-builder",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:filter-builder",
+      "source": "component:redline-viewer",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:redline-viewer",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:redline-viewer",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:confidence-meter",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8230,7 +8429,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:filter-builder",
+      "source": "component:confidence-meter",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -8238,7 +8437,28 @@
     },
     {
       "type": "uses_font",
-      "source": "component:filter-builder",
+      "source": "component:confidence-meter",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:exception-queue",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:exception-queue",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:exception-queue",
       "target": "font:pretendard"
     },
     {
@@ -8454,6 +8674,16 @@
     {
       "type": "requires",
       "source": "family:data-display",
+      "target": "a11y:contrast-aa"
+    },
+    {
+      "type": "requires",
+      "source": "family:document",
+      "target": "a11y:focus-visible"
+    },
+    {
+      "type": "requires",
+      "source": "family:document",
       "target": "a11y:contrast-aa"
     },
     {
@@ -10131,11 +10361,6 @@
     {
       "type": "enforces",
       "source": "governance:commercial-product-realism",
-      "target": "pattern:layout-dashboard-cards"
-    },
-    {
-      "type": "enforces",
-      "source": "governance:commercial-product-realism",
       "target": "pattern:layout-data-tables"
     },
     {
@@ -10152,6 +10377,11 @@
       "type": "enforces",
       "source": "governance:commercial-product-realism",
       "target": "component:status-badge"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:commercial-product-realism",
+      "target": "component:tabs"
     },
     {
       "type": "enforces",
@@ -10232,6 +10462,16 @@
       "type": "prevents",
       "source": "governance:mockup-visual-substance",
       "target": "failure-pattern:ambiguous-mock-runtime-surface"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:mockup-visual-substance",
+      "target": "failure-pattern:ad-hoc-node-link-placeholder-graph"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:mockup-visual-substance",
+      "target": "failure-pattern:freehand-svg-connector-graph"
     },
     {
       "type": "prevents",
@@ -10896,37 +11136,12 @@
     {
       "type": "intended_for",
       "source": "visual-asset:card-thumbnail",
-      "target": "component:activity-card"
+      "target": "component:breadcrumbs"
     },
     {
       "type": "intended_for",
       "source": "visual-asset:card-thumbnail",
-      "target": "component:decision-record-card"
-    },
-    {
-      "type": "intended_for",
-      "source": "visual-asset:card-thumbnail",
-      "target": "component:insight-card"
-    },
-    {
-      "type": "intended_for",
-      "source": "visual-asset:card-thumbnail",
-      "target": "component:risk-summary-card"
-    },
-    {
-      "type": "intended_for",
-      "source": "visual-asset:card-thumbnail",
-      "target": "component:section-header"
-    },
-    {
-      "type": "intended_for",
-      "source": "visual-asset:card-thumbnail",
-      "target": "component:source-card"
-    },
-    {
-      "type": "intended_for",
-      "source": "visual-asset:card-thumbnail",
-      "target": "component:stat-card"
+      "target": "component:switch"
     },
     {
       "type": "intended_for",
@@ -11006,37 +11221,12 @@
     {
       "type": "intended_for",
       "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:activity-card"
+      "target": "component:breadcrumbs"
     },
     {
       "type": "intended_for",
       "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:decision-record-card"
-    },
-    {
-      "type": "intended_for",
-      "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:insight-card"
-    },
-    {
-      "type": "intended_for",
-      "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:risk-summary-card"
-    },
-    {
-      "type": "intended_for",
-      "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:section-header"
-    },
-    {
-      "type": "intended_for",
-      "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:source-card"
-    },
-    {
-      "type": "intended_for",
-      "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:stat-card"
+      "target": "component:switch"
     },
     {
       "type": "intended_for",
@@ -11209,6 +11399,16 @@
       "target": "component:hero-trust-strip"
     },
     {
+      "type": "intended_for",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "component:metric-strip"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "component:tabs"
+    },
+    {
       "type": "governs",
       "source": "governance:sourced-visual-asset-fallback-contract",
       "target": "sourced-visual-asset:comic-panel-preview-fallback"
@@ -11277,6 +11477,16 @@
       "type": "intended_for",
       "source": "sourced-visual-asset:comic-panel-preview-fallback",
       "target": "component:hero-trust-strip"
+    },
+    {
+      "type": "intended_for",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "component:metric-strip"
+    },
+    {
+      "type": "intended_for",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "component:tabs"
     },
     {
       "type": "generated_with",
@@ -11590,15 +11800,15 @@
     }
   ],
   "stats": {
-    "node_count": 376,
-    "edge_count": 1047,
+    "node_count": 387,
+    "edge_count": 1073,
     "nodes_by_type": {
       "Brand": 1,
       "Principle": 4,
       "SpacingToken": 11,
       "RadiusToken": 6,
-      "ComponentFamily": 9,
-      "ComponentState": 35,
+      "ComponentFamily": 10,
+      "ComponentState": 42,
       "Component": 76,
       "ProductPrimitive": 15,
       "ColorPalette": 8,
@@ -11609,8 +11819,8 @@
       "LayoutPattern": 27,
       "InteractionPattern": 3,
       "AccessibilityRule": 8,
-      "BenchmarkSystem": 41,
-      "ImplementationFailurePattern": 40,
+      "BenchmarkSystem": 42,
+      "ImplementationFailurePattern": 42,
       "ColorMode": 2,
       "BrandIdentityAsset": 1,
       "DesignContextPack": 1,

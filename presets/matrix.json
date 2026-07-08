@@ -147,6 +147,28 @@
   ],
   "presets": [
     {
+      "id": "canvas-tool--corporate-trust",
+      "app_mode": "canvas-tool",
+      "brand_tone": "corporate-trust",
+      "color_modes": [
+        "light"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "ko",
+        "mobile",
+        "tryon",
+        "toss",
+        "privacy"
+      ],
+      "description": "LookMe Toss In-App custom mobile try-on system: trusted face try-on utility with real Colorfit item image sets and paid wardrobe generation",
+      "source_project": "lookme-toss-inapp",
+      "owner": "2000silpeed",
+      "preview_path": "presets/canvas-tool--corporate-trust/preview.md",
+      "locale_pairings": {},
+      "tier": "P3"
+    },
+    {
       "id": "canvas-tool--minimal-tech",
       "app_mode": "canvas-tool",
       "brand_tone": "minimal-tech",
@@ -584,6 +606,36 @@
       "tier": "P1"
     },
     {
+      "id": "document-content--playful-soft",
+      "app_mode": "document-content",
+      "brand_tone": "playful-soft",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "ko",
+        "mobile",
+        "comic",
+        "magazine",
+        "reader"
+      ],
+      "description": "모바일 만화 잡지 앱 — playful-soft 톤, 주간 이슈·표지·연재 회차·컷 미리보기·보관함 중심 한국어 UI",
+      "source_project": "panel-pop",
+      "owner": "codex",
+      "preview_path": "presets/document-content--playful-soft/preview.md",
+      "locale_pairings": {
+        "ko": {
+          "heading_font": "Pretendard",
+          "body_font": "Pretendard",
+          "mono_font": "JetBrains Mono",
+          "notes": "모바일 만화 잡지 앱 — 한국어 cover title / episode title / creator note keep-all line-height 1.5-1.65, issue number / episode number / reading progress는 mono 영문 고정 tabular-nums"
+        }
+      },
+      "tier": "P3"
+    },
+    {
       "id": "marketing-landing--bold-confident",
       "app_mode": "marketing-landing",
       "brand_tone": "bold-confident",
@@ -658,6 +710,29 @@
         }
       },
       "tier": "P2"
+    },
+    {
+      "id": "monitoring-ops--bold-confident",
+      "app_mode": "monitoring-ops",
+      "brand_tone": "bold-confident",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "ko",
+        "public-service",
+        "legal",
+        "evidence",
+        "compliance"
+      ],
+      "description": "FairCite dual-mode evidence traceability console",
+      "source_project": "faircite-harness-console",
+      "owner": "codex",
+      "preview_path": "presets/monitoring-ops--bold-confident/preview.md",
+      "locale_pairings": {},
+      "tier": "P3"
     },
     {
       "id": "monitoring-ops--corporate-trust",

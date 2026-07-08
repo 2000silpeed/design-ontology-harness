@@ -1,0 +1,1104 @@
+{
+  "schema_version": "aesthetic-evaluation-ontology/v1",
+  "dimensions": [
+    {
+      "id": "visual_harmony",
+      "label": "Visual harmony",
+      "weight": 0.24,
+      "description": "How coherently color, type, spacing, and composition work together.",
+      "metrics": [
+        "color_harmony",
+        "spacing_consistency",
+        "typography_balance",
+        "composition_order"
+      ]
+    },
+    {
+      "id": "clarity",
+      "label": "Clarity",
+      "weight": 0.2,
+      "description": "How quickly the intended hierarchy, action, and information structure can be read.",
+      "metrics": [
+        "hierarchy_clarity",
+        "contrast_legibility",
+        "content_density_control",
+        "task_focus"
+      ]
+    },
+    {
+      "id": "brand_fit",
+      "label": "Brand fit",
+      "weight": 0.18,
+      "description": "How well the candidate expresses the intended brand posture and avoids anti-keywords.",
+      "metrics": [
+        "keyword_alignment",
+        "tone_alignment",
+        "domain_fit",
+        "anti_keyword_avoidance"
+      ]
+    },
+    {
+      "id": "emotional_appeal",
+      "label": "Emotional appeal",
+      "weight": 0.14,
+      "description": "How desirable, confident, and affectively appropriate the surface feels.",
+      "metrics": [
+        "desirability",
+        "confidence_signal",
+        "warmth_or_energy"
+      ]
+    },
+    {
+      "id": "craft_quality",
+      "label": "Craft quality",
+      "weight": 0.14,
+      "description": "How polished and implementation-ready the candidate is across fit, tokens, and affordances.",
+      "metrics": [
+        "responsive_fit",
+        "token_binding",
+        "accessibility_baseline",
+        "interaction_affordance",
+        "asset_completeness"
+      ]
+    },
+    {
+      "id": "novelty",
+      "label": "Novelty",
+      "weight": 0.1,
+      "description": "How distinctive the design is without breaking its product and brand constraints.",
+      "metrics": [
+        "distinctiveness",
+        "reference_transformation",
+        "memorability"
+      ]
+    },
+    {
+      "id": "brand_semantic_fit",
+      "label": "Brand semantic fit",
+      "weight": 0.22,
+      "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+      "metrics": [
+        "brand_keyword:reference-docs-c031d4a5",
+        "brand_keyword:api-docs-6d2b359b",
+        "brand_keyword:developer-docs-09bb9bbd",
+        "brand_keyword:technical-writing-9f79bd02",
+        "brand_keyword:documentation-ba2a1650",
+        "brand_keyword:devtools-154cfec6",
+        "brand_keyword:minimal-5c482174",
+        "brand_keyword:precise-d53a4c62",
+        "brand_tone:precise-d53a4c62",
+        "brand_tone:matter-of-fact-c419d19b",
+        "brand_tone:technical-60944e57",
+        "brand_tone:clear-168cbb2e",
+        "brand_tone:reference-grade-4b18fdc1"
+      ],
+      "research_basis": [
+        "kansei",
+        "aesthemos"
+      ]
+    },
+    {
+      "id": "brand_boundary_fit",
+      "label": "Brand boundary fit",
+      "weight": 0.16,
+      "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+      "metrics": [
+        "anti_keyword:editorial-980a8caf",
+        "anti_keyword:magazine-style-de4a721e",
+        "anti_keyword:decorative-ddfe48cb",
+        "anti_keyword:playful-5a5e4a49",
+        "anti_keyword:marketing-heavy-401f18a1",
+        "anti_keyword:ornamental-4eab2773",
+        "anti_keyword:candy-pastel-123f8db2",
+        "avoid_pattern:magazine-serif-hero-21b7af4b",
+        "avoid_pattern:glassmorphism-d83b9e03",
+        "avoid_pattern:gradient-heavy-surfaces-eb390c87",
+        "avoid_pattern:playful-illustrations-46615ed4"
+      ],
+      "research_basis": [
+        "kansei"
+      ]
+    },
+    {
+      "id": "product_ontology_fit",
+      "label": "Product ontology fit",
+      "weight": 0.22,
+      "description": "How clearly product primitives and ontology-required signals appear in the design.",
+      "metrics": [
+        "product_primitive:article-body-ab3fb677",
+        "product_primitive:table-of-contents-d4f3d6cd",
+        "product_primitive:heading-anchor-358a397a",
+        "product_primitive:code-block-d91f08b5",
+        "product_primitive:inline-code-42fa73c3",
+        "product_primitive:api-reference-table-559a51d5",
+        "product_primitive:parameter-table-8065e336",
+        "product_primitive:callout-043e14e4",
+        "product_primitive:admonition-14554d9d",
+        "product_primitive:search-chrome-db1d973c",
+        "must_include:dense-toc-sidebar-2cd26c14",
+        "must_include:article-with-anchor-headings-d1e17fc0",
+        "must_include:code-block-with-copy-button-4f6fc57c",
+        "must_include:api-reference-parameter-table-f37c056b",
+        "must_include:callout-admonition-12eee40d"
+      ],
+      "research_basis": [
+        "beauvis",
+        "kansei"
+      ]
+    },
+    {
+      "id": "audience_context_fit",
+      "label": "Audience context fit",
+      "weight": 0.12,
+      "description": "How well the design serves declared users, platforms, and accessibility floors.",
+      "metrics": [
+        "audience_need:api-를-통합하는-외부-개발자-5252eae3",
+        "audience_need:sdk-라이브러리를-학습하는-개발자-36df76bd",
+        "audience_need:내부-플랫폼-엔지니어-devex-담당-8f228d20",
+        "accessibility_target:wcag-2-2-aa-41a998cd"
+      ],
+      "research_basis": [
+        "visawi",
+        "aesthemos"
+      ]
+    }
+  ],
+  "metrics": {
+    "color_harmony": {
+      "label": "Color harmony",
+      "improvement": "Tighten the palette around one primary accent, one neutral surface ladder, and explicit semantic roles.",
+      "expected_lift": 0.08
+    },
+    "spacing_consistency": {
+      "label": "Spacing consistency",
+      "improvement": "Normalize page rhythm with shared spacing steps for section, cluster, and control gaps.",
+      "expected_lift": 0.07
+    },
+    "typography_balance": {
+      "label": "Typography balance",
+      "improvement": "Rebalance type hierarchy so headings, body, captions, and controls use distinct but restrained roles.",
+      "expected_lift": 0.07
+    },
+    "composition_order": {
+      "label": "Composition order",
+      "improvement": "Strengthen alignment, focal sequence, and proportional grouping before adding more decoration.",
+      "expected_lift": 0.08
+    },
+    "hierarchy_clarity": {
+      "label": "Hierarchy clarity",
+      "improvement": "Make the primary state, primary action, and next-best secondary action visible in the first scan.",
+      "expected_lift": 0.09
+    },
+    "contrast_legibility": {
+      "label": "Contrast and legibility",
+      "improvement": "Raise text/background and control/border contrast while preserving the selected token roles.",
+      "expected_lift": 0.08
+    },
+    "content_density_control": {
+      "label": "Content density control",
+      "improvement": "Reduce competing modules or group dense content into scannable rows, tables, rails, or panels.",
+      "expected_lift": 0.07
+    },
+    "task_focus": {
+      "label": "Task focus",
+      "improvement": "Move decorative or pitch-like content below the operational surface that supports the user's main task.",
+      "expected_lift": 0.08
+    },
+    "keyword_alignment": {
+      "label": "Keyword alignment",
+      "improvement": "Map the strongest brand keywords to visible choices in layout, tone, density, and component emphasis.",
+      "expected_lift": 0.08
+    },
+    "tone_alignment": {
+      "label": "Tone alignment",
+      "improvement": "Adjust copy weight, control styling, and visual temperature to match the intended voice.",
+      "expected_lift": 0.06
+    },
+    "domain_fit": {
+      "label": "Domain fit",
+      "improvement": "Add domain-native structures such as tables, maps, media, timelines, inspectors, or product objects where relevant.",
+      "expected_lift": 0.08
+    },
+    "anti_keyword_avoidance": {
+      "label": "Anti-keyword avoidance",
+      "improvement": "Remove visual tropes that match the brand profile's anti-keywords before polishing details.",
+      "expected_lift": 0.06
+    },
+    "desirability": {
+      "label": "Desirability",
+      "improvement": "Give the primary surface a more intentional visual reward: stronger imagery, tactile controls, or clearer payoff.",
+      "expected_lift": 0.07
+    },
+    "confidence_signal": {
+      "label": "Confidence signal",
+      "improvement": "Add evidence, provenance, precision, or stable UI states that make the surface feel trustworthy.",
+      "expected_lift": 0.07
+    },
+    "warmth_or_energy": {
+      "label": "Warmth or energy",
+      "improvement": "Tune motion, image choice, accent placement, or microcopy energy to the target audience.",
+      "expected_lift": 0.06
+    },
+    "responsive_fit": {
+      "label": "Responsive fit",
+      "improvement": "Verify mobile and desktop fit, then fix overflow, clipped labels, and unstable control sizing.",
+      "expected_lift": 0.08
+    },
+    "token_binding": {
+      "label": "Token binding",
+      "improvement": "Replace local visual constants with design-system tokens and keep semantic roles consistent.",
+      "expected_lift": 0.06
+    },
+    "accessibility_baseline": {
+      "label": "Accessibility baseline",
+      "improvement": "Check contrast, focus states, labels, and target sizes as part of visual polish, not after it.",
+      "expected_lift": 0.07
+    },
+    "interaction_affordance": {
+      "label": "Interaction affordance",
+      "improvement": "Make controls, filters, state chips, and navigation visually legible with icons, state, and hit-area clarity.",
+      "expected_lift": 0.07
+    },
+    "asset_completeness": {
+      "label": "Asset completeness",
+      "improvement": "Use concrete product, place, object, identity, or content assets where the domain expects visual substance.",
+      "expected_lift": 0.08
+    },
+    "distinctiveness": {
+      "label": "Distinctiveness",
+      "improvement": "Introduce one memorable composition or interaction pattern while keeping the rest of the system restrained.",
+      "expected_lift": 0.06
+    },
+    "reference_transformation": {
+      "label": "Reference transformation",
+      "improvement": "Absorb reference morphology without copying palette, copy, IA, or protected asset choices.",
+      "expected_lift": 0.06
+    },
+    "memorability": {
+      "label": "Memorability",
+      "improvement": "Create a recognizable signature in the first viewport through layout, identity asset, or product-native visual.",
+      "expected_lift": 0.06
+    },
+    "brand_keyword:reference-docs-c031d4a5": {
+      "label": "Expresses brand keyword: reference-docs",
+      "improvement": "Make 'reference-docs' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "reference-docs"
+    },
+    "brand_keyword:api-docs-6d2b359b": {
+      "label": "Expresses brand keyword: api-docs",
+      "improvement": "Make 'api-docs' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "api-docs"
+    },
+    "brand_keyword:developer-docs-09bb9bbd": {
+      "label": "Expresses brand keyword: developer-docs",
+      "improvement": "Make 'developer-docs' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "developer-docs"
+    },
+    "brand_keyword:technical-writing-9f79bd02": {
+      "label": "Expresses brand keyword: technical-writing",
+      "improvement": "Make 'technical-writing' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "technical-writing"
+    },
+    "brand_keyword:documentation-ba2a1650": {
+      "label": "Expresses brand keyword: documentation",
+      "improvement": "Make 'documentation' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "documentation"
+    },
+    "brand_keyword:devtools-154cfec6": {
+      "label": "Expresses brand keyword: devtools",
+      "improvement": "Make 'devtools' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "devtools"
+    },
+    "brand_keyword:minimal-5c482174": {
+      "label": "Expresses brand keyword: minimal",
+      "improvement": "Make 'minimal' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "minimal"
+    },
+    "brand_keyword:precise-d53a4c62": {
+      "label": "Expresses brand keyword: precise",
+      "improvement": "Make 'precise' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "precise"
+    },
+    "brand_tone:precise-d53a4c62": {
+      "label": "Expresses tone of voice: precise",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'precise'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "precise"
+    },
+    "brand_tone:matter-of-fact-c419d19b": {
+      "label": "Expresses tone of voice: matter-of-fact",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'matter-of-fact'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "matter-of-fact"
+    },
+    "brand_tone:technical-60944e57": {
+      "label": "Expresses tone of voice: technical",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'technical'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "technical"
+    },
+    "brand_tone:clear-168cbb2e": {
+      "label": "Expresses tone of voice: clear",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'clear'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "clear"
+    },
+    "brand_tone:reference-grade-4b18fdc1": {
+      "label": "Expresses tone of voice: reference-grade",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'reference-grade'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "reference-grade"
+    },
+    "anti_keyword:editorial-980a8caf": {
+      "label": "Avoids anti-keyword: editorial",
+      "improvement": "Remove cues that make the product read as 'editorial'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "editorial"
+    },
+    "anti_keyword:magazine-style-de4a721e": {
+      "label": "Avoids anti-keyword: magazine-style",
+      "improvement": "Remove cues that make the product read as 'magazine-style'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "magazine-style"
+    },
+    "anti_keyword:decorative-ddfe48cb": {
+      "label": "Avoids anti-keyword: decorative",
+      "improvement": "Remove cues that make the product read as 'decorative'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "decorative"
+    },
+    "anti_keyword:playful-5a5e4a49": {
+      "label": "Avoids anti-keyword: playful",
+      "improvement": "Remove cues that make the product read as 'playful'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "playful"
+    },
+    "anti_keyword:marketing-heavy-401f18a1": {
+      "label": "Avoids anti-keyword: marketing-heavy",
+      "improvement": "Remove cues that make the product read as 'marketing-heavy'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "marketing-heavy"
+    },
+    "anti_keyword:ornamental-4eab2773": {
+      "label": "Avoids anti-keyword: ornamental",
+      "improvement": "Remove cues that make the product read as 'ornamental'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "ornamental"
+    },
+    "anti_keyword:candy-pastel-123f8db2": {
+      "label": "Avoids anti-keyword: candy-pastel",
+      "improvement": "Remove cues that make the product read as 'candy-pastel'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "candy-pastel"
+    },
+    "avoid_pattern:magazine-serif-hero-21b7af4b": {
+      "label": "Avoids visual pattern: magazine serif hero",
+      "improvement": "Replace 'magazine serif hero' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "magazine serif hero"
+    },
+    "avoid_pattern:glassmorphism-d83b9e03": {
+      "label": "Avoids visual pattern: glassmorphism",
+      "improvement": "Replace 'glassmorphism' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "glassmorphism"
+    },
+    "avoid_pattern:gradient-heavy-surfaces-eb390c87": {
+      "label": "Avoids visual pattern: gradient-heavy surfaces",
+      "improvement": "Replace 'gradient-heavy surfaces' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "gradient-heavy surfaces"
+    },
+    "avoid_pattern:playful-illustrations-46615ed4": {
+      "label": "Avoids visual pattern: playful illustrations",
+      "improvement": "Replace 'playful illustrations' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "playful illustrations"
+    },
+    "product_primitive:article-body-ab3fb677": {
+      "label": "Embodies product primitive: article body",
+      "improvement": "Represent 'article body' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "article body"
+    },
+    "product_primitive:table-of-contents-d4f3d6cd": {
+      "label": "Embodies product primitive: table of contents",
+      "improvement": "Represent 'table of contents' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "table of contents"
+    },
+    "product_primitive:heading-anchor-358a397a": {
+      "label": "Embodies product primitive: heading anchor",
+      "improvement": "Represent 'heading anchor' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "heading anchor"
+    },
+    "product_primitive:code-block-d91f08b5": {
+      "label": "Embodies product primitive: code block",
+      "improvement": "Represent 'code block' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "code block"
+    },
+    "product_primitive:inline-code-42fa73c3": {
+      "label": "Embodies product primitive: inline code",
+      "improvement": "Represent 'inline code' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "inline code"
+    },
+    "product_primitive:api-reference-table-559a51d5": {
+      "label": "Embodies product primitive: api reference table",
+      "improvement": "Represent 'api reference table' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "api reference table"
+    },
+    "product_primitive:parameter-table-8065e336": {
+      "label": "Embodies product primitive: parameter table",
+      "improvement": "Represent 'parameter table' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "parameter table"
+    },
+    "product_primitive:callout-043e14e4": {
+      "label": "Embodies product primitive: callout",
+      "improvement": "Represent 'callout' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "callout"
+    },
+    "product_primitive:admonition-14554d9d": {
+      "label": "Embodies product primitive: admonition",
+      "improvement": "Represent 'admonition' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "admonition"
+    },
+    "product_primitive:search-chrome-db1d973c": {
+      "label": "Embodies product primitive: search chrome",
+      "improvement": "Represent 'search chrome' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "search chrome"
+    },
+    "must_include:dense-toc-sidebar-2cd26c14": {
+      "label": "Includes required visual/system signal: dense toc sidebar",
+      "improvement": "Make 'dense toc sidebar' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "dense toc sidebar"
+    },
+    "must_include:article-with-anchor-headings-d1e17fc0": {
+      "label": "Includes required visual/system signal: article with anchor headings",
+      "improvement": "Make 'article with anchor headings' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "article with anchor headings"
+    },
+    "must_include:code-block-with-copy-button-4f6fc57c": {
+      "label": "Includes required visual/system signal: code block with copy button",
+      "improvement": "Make 'code block with copy button' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "code block with copy button"
+    },
+    "must_include:api-reference-parameter-table-f37c056b": {
+      "label": "Includes required visual/system signal: api reference parameter table",
+      "improvement": "Make 'api reference parameter table' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "api reference parameter table"
+    },
+    "must_include:callout-admonition-12eee40d": {
+      "label": "Includes required visual/system signal: callout admonition",
+      "improvement": "Make 'callout admonition' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "callout admonition"
+    },
+    "audience_need:api-를-통합하는-외부-개발자-5252eae3": {
+      "label": "Fits audience context: API 를 통합하는 외부 개발자",
+      "improvement": "Adjust density, language, workflow order, and controls for 'API 를 통합하는 외부 개발자'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "API 를 통합하는 외부 개발자"
+    },
+    "audience_need:sdk-라이브러리를-학습하는-개발자-36df76bd": {
+      "label": "Fits audience context: SDK/라이브러리를 학습하는 개발자",
+      "improvement": "Adjust density, language, workflow order, and controls for 'SDK/라이브러리를 학습하는 개발자'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "SDK/라이브러리를 학습하는 개발자"
+    },
+    "audience_need:내부-플랫폼-엔지니어-devex-담당-8f228d20": {
+      "label": "Fits audience context: 내부 플랫폼 엔지니어 / DevEx 담당",
+      "improvement": "Adjust density, language, workflow order, and controls for '내부 플랫폼 엔지니어 / DevEx 담당'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "내부 플랫폼 엔지니어 / DevEx 담당"
+    },
+    "accessibility_target:wcag-2-2-aa-41a998cd": {
+      "label": "Supports accessibility target: WCAG 2.2 AA",
+      "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "WCAG 2.2 AA"
+    }
+  },
+  "relations": [
+    {
+      "source": "DesignCandidate",
+      "relation": "evaluated_by",
+      "target": "AestheticDimension"
+    },
+    {
+      "source": "AestheticDimension",
+      "relation": "measured_by",
+      "target": "AestheticMetric"
+    },
+    {
+      "source": "AestheticMetric",
+      "relation": "improved_by",
+      "target": "ImprovementAction"
+    },
+    {
+      "source": "AestheticEvaluation",
+      "relation": "gates",
+      "target": "Execution"
+    }
+  ],
+  "context": {
+    "brand_name": "Lattice",
+    "system_name": "Lattice System",
+    "product_summary": "개발자용 API 레퍼런스 · 기술 문서 플랫폼 — TOC, article, code block, callout, API reference table 중심",
+    "audiences": [
+      "API 를 통합하는 외부 개발자",
+      "SDK/라이브러리를 학습하는 개발자",
+      "내부 플랫폼 엔지니어 / DevEx 담당"
+    ],
+    "brand_keywords": [
+      "reference-docs",
+      "api-docs",
+      "developer-docs",
+      "technical-writing",
+      "documentation",
+      "devtools",
+      "minimal",
+      "precise",
+      "reference",
+      "developer"
+    ],
+    "anti_keywords": [
+      "editorial",
+      "magazine-style",
+      "decorative",
+      "playful",
+      "marketing-heavy",
+      "ornamental",
+      "candy-pastel"
+    ],
+    "tone_of_voice": [
+      "precise",
+      "matter-of-fact",
+      "technical",
+      "clear",
+      "reference-grade"
+    ],
+    "product_primitives": [
+      "article body",
+      "table of contents",
+      "heading anchor",
+      "code block",
+      "inline code",
+      "api reference table",
+      "parameter table",
+      "callout",
+      "admonition",
+      "search chrome",
+      "version switcher",
+      "breadcrumbs",
+      "prev-next pager",
+      "footnote",
+      "link card",
+      "sidebar nav",
+      "language tab",
+      "reading pane",
+      "prose block"
+    ]
+  },
+  "brand_aesthetic_contract": {
+    "schema_version": "brand-aesthetic-contract/v1",
+    "brand_name": "Lattice",
+    "system_name": "Lattice System",
+    "research_basis": [
+      {
+        "id": "visawi",
+        "label": "VisAWI",
+        "construct": "perceived website visual aesthetics",
+        "operational_use": "Map simplicity, diversity, colorfulness, and craftsmanship into visual system coherence metrics.",
+        "source_url": "https://www.sciencedirect.com/science/article/pii/S1071581910000777"
+      },
+      {
+        "id": "apid",
+        "label": "APiD",
+        "construct": "aesthetic pleasure in designed artifacts",
+        "operational_use": "Keep a direct pleasure/desirability layer instead of only formal pixel metrics.",
+        "source_url": "https://opus.lib.uts.edu.au/handle/10453/81276"
+      },
+      {
+        "id": "beauvis",
+        "label": "BeauVis",
+        "construct": "aesthetic pleasure of visual representations",
+        "operational_use": "Treat scores as comparative, context-bound judgments rather than universal beauty values.",
+        "source_url": "https://arxiv.org/abs/2207.14147"
+      },
+      {
+        "id": "aesthemos",
+        "label": "AESTHEMOS",
+        "construct": "aesthetic emotions",
+        "operational_use": "Translate brand tone and target affect into measurable emotional-response proxies.",
+        "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0178899"
+      },
+      {
+        "id": "kansei",
+        "label": "Kansei / semantic differential",
+        "construct": "design element to impression mapping",
+        "operational_use": "Use brand keywords and anti-keywords as semantic impression targets and boundaries.",
+        "source_url": "https://www.mdpi.com/2073-8994/12/8/1340"
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "brand_semantic_fit",
+        "label": "Brand semantic fit",
+        "weight": 0.22,
+        "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+        "metrics": [
+          "brand_keyword:reference-docs-c031d4a5",
+          "brand_keyword:api-docs-6d2b359b",
+          "brand_keyword:developer-docs-09bb9bbd",
+          "brand_keyword:technical-writing-9f79bd02",
+          "brand_keyword:documentation-ba2a1650",
+          "brand_keyword:devtools-154cfec6",
+          "brand_keyword:minimal-5c482174",
+          "brand_keyword:precise-d53a4c62",
+          "brand_tone:precise-d53a4c62",
+          "brand_tone:matter-of-fact-c419d19b",
+          "brand_tone:technical-60944e57",
+          "brand_tone:clear-168cbb2e",
+          "brand_tone:reference-grade-4b18fdc1"
+        ],
+        "research_basis": [
+          "kansei",
+          "aesthemos"
+        ]
+      },
+      {
+        "id": "brand_boundary_fit",
+        "label": "Brand boundary fit",
+        "weight": 0.16,
+        "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+        "metrics": [
+          "anti_keyword:editorial-980a8caf",
+          "anti_keyword:magazine-style-de4a721e",
+          "anti_keyword:decorative-ddfe48cb",
+          "anti_keyword:playful-5a5e4a49",
+          "anti_keyword:marketing-heavy-401f18a1",
+          "anti_keyword:ornamental-4eab2773",
+          "anti_keyword:candy-pastel-123f8db2",
+          "avoid_pattern:magazine-serif-hero-21b7af4b",
+          "avoid_pattern:glassmorphism-d83b9e03",
+          "avoid_pattern:gradient-heavy-surfaces-eb390c87",
+          "avoid_pattern:playful-illustrations-46615ed4"
+        ],
+        "research_basis": [
+          "kansei"
+        ]
+      },
+      {
+        "id": "product_ontology_fit",
+        "label": "Product ontology fit",
+        "weight": 0.22,
+        "description": "How clearly product primitives and ontology-required signals appear in the design.",
+        "metrics": [
+          "product_primitive:article-body-ab3fb677",
+          "product_primitive:table-of-contents-d4f3d6cd",
+          "product_primitive:heading-anchor-358a397a",
+          "product_primitive:code-block-d91f08b5",
+          "product_primitive:inline-code-42fa73c3",
+          "product_primitive:api-reference-table-559a51d5",
+          "product_primitive:parameter-table-8065e336",
+          "product_primitive:callout-043e14e4",
+          "product_primitive:admonition-14554d9d",
+          "product_primitive:search-chrome-db1d973c",
+          "must_include:dense-toc-sidebar-2cd26c14",
+          "must_include:article-with-anchor-headings-d1e17fc0",
+          "must_include:code-block-with-copy-button-4f6fc57c",
+          "must_include:api-reference-parameter-table-f37c056b",
+          "must_include:callout-admonition-12eee40d"
+        ],
+        "research_basis": [
+          "beauvis",
+          "kansei"
+        ]
+      },
+      {
+        "id": "audience_context_fit",
+        "label": "Audience context fit",
+        "weight": 0.12,
+        "description": "How well the design serves declared users, platforms, and accessibility floors.",
+        "metrics": [
+          "audience_need:api-를-통합하는-외부-개발자-5252eae3",
+          "audience_need:sdk-라이브러리를-학습하는-개발자-36df76bd",
+          "audience_need:내부-플랫폼-엔지니어-devex-담당-8f228d20",
+          "accessibility_target:wcag-2-2-aa-41a998cd"
+        ],
+        "research_basis": [
+          "visawi",
+          "aesthemos"
+        ]
+      }
+    ],
+    "metrics": {
+      "brand_keyword:reference-docs-c031d4a5": {
+        "label": "Expresses brand keyword: reference-docs",
+        "improvement": "Make 'reference-docs' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "reference-docs"
+      },
+      "brand_keyword:api-docs-6d2b359b": {
+        "label": "Expresses brand keyword: api-docs",
+        "improvement": "Make 'api-docs' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "api-docs"
+      },
+      "brand_keyword:developer-docs-09bb9bbd": {
+        "label": "Expresses brand keyword: developer-docs",
+        "improvement": "Make 'developer-docs' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "developer-docs"
+      },
+      "brand_keyword:technical-writing-9f79bd02": {
+        "label": "Expresses brand keyword: technical-writing",
+        "improvement": "Make 'technical-writing' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "technical-writing"
+      },
+      "brand_keyword:documentation-ba2a1650": {
+        "label": "Expresses brand keyword: documentation",
+        "improvement": "Make 'documentation' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "documentation"
+      },
+      "brand_keyword:devtools-154cfec6": {
+        "label": "Expresses brand keyword: devtools",
+        "improvement": "Make 'devtools' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "devtools"
+      },
+      "brand_keyword:minimal-5c482174": {
+        "label": "Expresses brand keyword: minimal",
+        "improvement": "Make 'minimal' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "minimal"
+      },
+      "brand_keyword:precise-d53a4c62": {
+        "label": "Expresses brand keyword: precise",
+        "improvement": "Make 'precise' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "precise"
+      },
+      "brand_tone:precise-d53a4c62": {
+        "label": "Expresses tone of voice: precise",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'precise'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "precise"
+      },
+      "brand_tone:matter-of-fact-c419d19b": {
+        "label": "Expresses tone of voice: matter-of-fact",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'matter-of-fact'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "matter-of-fact"
+      },
+      "brand_tone:technical-60944e57": {
+        "label": "Expresses tone of voice: technical",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'technical'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "technical"
+      },
+      "brand_tone:clear-168cbb2e": {
+        "label": "Expresses tone of voice: clear",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'clear'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "clear"
+      },
+      "brand_tone:reference-grade-4b18fdc1": {
+        "label": "Expresses tone of voice: reference-grade",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'reference-grade'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "reference-grade"
+      },
+      "anti_keyword:editorial-980a8caf": {
+        "label": "Avoids anti-keyword: editorial",
+        "improvement": "Remove cues that make the product read as 'editorial'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "editorial"
+      },
+      "anti_keyword:magazine-style-de4a721e": {
+        "label": "Avoids anti-keyword: magazine-style",
+        "improvement": "Remove cues that make the product read as 'magazine-style'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "magazine-style"
+      },
+      "anti_keyword:decorative-ddfe48cb": {
+        "label": "Avoids anti-keyword: decorative",
+        "improvement": "Remove cues that make the product read as 'decorative'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "decorative"
+      },
+      "anti_keyword:playful-5a5e4a49": {
+        "label": "Avoids anti-keyword: playful",
+        "improvement": "Remove cues that make the product read as 'playful'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "playful"
+      },
+      "anti_keyword:marketing-heavy-401f18a1": {
+        "label": "Avoids anti-keyword: marketing-heavy",
+        "improvement": "Remove cues that make the product read as 'marketing-heavy'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "marketing-heavy"
+      },
+      "anti_keyword:ornamental-4eab2773": {
+        "label": "Avoids anti-keyword: ornamental",
+        "improvement": "Remove cues that make the product read as 'ornamental'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "ornamental"
+      },
+      "anti_keyword:candy-pastel-123f8db2": {
+        "label": "Avoids anti-keyword: candy-pastel",
+        "improvement": "Remove cues that make the product read as 'candy-pastel'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "candy-pastel"
+      },
+      "avoid_pattern:magazine-serif-hero-21b7af4b": {
+        "label": "Avoids visual pattern: magazine serif hero",
+        "improvement": "Replace 'magazine serif hero' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "magazine serif hero"
+      },
+      "avoid_pattern:glassmorphism-d83b9e03": {
+        "label": "Avoids visual pattern: glassmorphism",
+        "improvement": "Replace 'glassmorphism' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "glassmorphism"
+      },
+      "avoid_pattern:gradient-heavy-surfaces-eb390c87": {
+        "label": "Avoids visual pattern: gradient-heavy surfaces",
+        "improvement": "Replace 'gradient-heavy surfaces' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "gradient-heavy surfaces"
+      },
+      "avoid_pattern:playful-illustrations-46615ed4": {
+        "label": "Avoids visual pattern: playful illustrations",
+        "improvement": "Replace 'playful illustrations' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "playful illustrations"
+      },
+      "product_primitive:article-body-ab3fb677": {
+        "label": "Embodies product primitive: article body",
+        "improvement": "Represent 'article body' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "article body"
+      },
+      "product_primitive:table-of-contents-d4f3d6cd": {
+        "label": "Embodies product primitive: table of contents",
+        "improvement": "Represent 'table of contents' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "table of contents"
+      },
+      "product_primitive:heading-anchor-358a397a": {
+        "label": "Embodies product primitive: heading anchor",
+        "improvement": "Represent 'heading anchor' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "heading anchor"
+      },
+      "product_primitive:code-block-d91f08b5": {
+        "label": "Embodies product primitive: code block",
+        "improvement": "Represent 'code block' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "code block"
+      },
+      "product_primitive:inline-code-42fa73c3": {
+        "label": "Embodies product primitive: inline code",
+        "improvement": "Represent 'inline code' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "inline code"
+      },
+      "product_primitive:api-reference-table-559a51d5": {
+        "label": "Embodies product primitive: api reference table",
+        "improvement": "Represent 'api reference table' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "api reference table"
+      },
+      "product_primitive:parameter-table-8065e336": {
+        "label": "Embodies product primitive: parameter table",
+        "improvement": "Represent 'parameter table' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "parameter table"
+      },
+      "product_primitive:callout-043e14e4": {
+        "label": "Embodies product primitive: callout",
+        "improvement": "Represent 'callout' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "callout"
+      },
+      "product_primitive:admonition-14554d9d": {
+        "label": "Embodies product primitive: admonition",
+        "improvement": "Represent 'admonition' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "admonition"
+      },
+      "product_primitive:search-chrome-db1d973c": {
+        "label": "Embodies product primitive: search chrome",
+        "improvement": "Represent 'search chrome' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "search chrome"
+      },
+      "must_include:dense-toc-sidebar-2cd26c14": {
+        "label": "Includes required visual/system signal: dense toc sidebar",
+        "improvement": "Make 'dense toc sidebar' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "dense toc sidebar"
+      },
+      "must_include:article-with-anchor-headings-d1e17fc0": {
+        "label": "Includes required visual/system signal: article with anchor headings",
+        "improvement": "Make 'article with anchor headings' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "article with anchor headings"
+      },
+      "must_include:code-block-with-copy-button-4f6fc57c": {
+        "label": "Includes required visual/system signal: code block with copy button",
+        "improvement": "Make 'code block with copy button' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "code block with copy button"
+      },
+      "must_include:api-reference-parameter-table-f37c056b": {
+        "label": "Includes required visual/system signal: api reference parameter table",
+        "improvement": "Make 'api reference parameter table' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "api reference parameter table"
+      },
+      "must_include:callout-admonition-12eee40d": {
+        "label": "Includes required visual/system signal: callout admonition",
+        "improvement": "Make 'callout admonition' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "callout admonition"
+      },
+      "audience_need:api-를-통합하는-외부-개발자-5252eae3": {
+        "label": "Fits audience context: API 를 통합하는 외부 개발자",
+        "improvement": "Adjust density, language, workflow order, and controls for 'API 를 통합하는 외부 개발자'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "API 를 통합하는 외부 개발자"
+      },
+      "audience_need:sdk-라이브러리를-학습하는-개발자-36df76bd": {
+        "label": "Fits audience context: SDK/라이브러리를 학습하는 개발자",
+        "improvement": "Adjust density, language, workflow order, and controls for 'SDK/라이브러리를 학습하는 개발자'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "SDK/라이브러리를 학습하는 개발자"
+      },
+      "audience_need:내부-플랫폼-엔지니어-devex-담당-8f228d20": {
+        "label": "Fits audience context: 내부 플랫폼 엔지니어 / DevEx 담당",
+        "improvement": "Adjust density, language, workflow order, and controls for '내부 플랫폼 엔지니어 / DevEx 담당'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "내부 플랫폼 엔지니어 / DevEx 담당"
+      },
+      "accessibility_target:wcag-2-2-aa-41a998cd": {
+        "label": "Supports accessibility target: WCAG 2.2 AA",
+        "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "WCAG 2.2 AA"
+      }
+    },
+    "rule": "Brand-owned aesthetic quality is evaluated as fit to declared semantic targets, explicit boundaries, product ontology, audience context, and visual craft."
+  },
+  "interpretation_rule": "Scores represent observed or reviewed response proxies in a declared context; they are not universal beauty claims."
+}

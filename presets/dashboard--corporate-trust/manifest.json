@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "agent-org-network",
-  "content_hash": "sha256:29d6e3cf3e6585d4308f39be642884f1a9a00bd21b2bdd984b0d508324dfe085",
+  "content_hash": "sha256:6179861c279d33e2eb4e7045997353ed33a544cd5370dbcdc653f075ff6065e9",
   "app_mode": "dashboard",
   "brand_tone": "corporate-trust",
   "color_modes": [
@@ -28,6 +28,6 @@
   "locale_pairings": {},
   "owner": "sungwoon",
   "tier": "P1",
-  "generated_at": "2026-06-30T03:02:05Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "Agent Org Network question-routing console design system"
 }

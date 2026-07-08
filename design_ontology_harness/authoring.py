@@ -3,6 +3,12 @@ from __future__ import annotations
 from pathlib import Path
 
 from .advanced_components import catalog_entries, get_advanced_component, recommend_advanced_components
+from .component_reference_baseline import (
+    BASELINE_FAMILY_COMPONENTS,
+    FAMILY_SPECS,
+    baseline_component_meta,
+    reference_baseline_summary,
+)
 from .models import DocumentRecord, ReferenceLink
 from .utils import ensure_dir, write_json
 from .graph_builders import (
@@ -40,6 +46,7 @@ PRIMITIVE_COMPONENTS = {
     "workspace navigation": ["app-shell", "sidebar-nav", "topbar", "breadcrumb", "workspace-switcher"],
     "rich text editor": ["editor-canvas", "editor-toolbar", "inline-format-menu", "slash-command-menu", "block-controls"],
     "command palette": ["command-palette", "command-result-item", "shortcut-hint", "scope-switcher"],
+    "operational overview": ["metric-strip", "status-summary-row", "task-surface-header", "source-ledger", "operational-rail", "section-header"],
     "dashboard cards": ["stat-card", "insight-card", "activity-card", "section-header"],
     "data tables": ["data-table", "column-header", "filter-chip", "row-actions", "pagination"],
     "forms": ["text-field", "select", "checkbox", "radio", "textarea", "form-section"],
@@ -47,8 +54,9 @@ PRIMITIVE_COMPONENTS = {
 }
 
 LAYOUT_PRIMITIVE_KEYWORDS = {
-    "workspace navigation", "dashboard cards", "data tables", "layout", "grid",
+    "workspace navigation", "operational overview", "dashboard cards", "data tables", "layout", "grid",
     "sidebar", "table", "card", "navigation", "archive browser", "audit log",
+    "status rail", "metric strip", "source ledger", "task surface",
 }
 
 INTERACTION_PRIMITIVE_KEYWORDS = {
@@ -90,15 +98,6 @@ ONTOLOGY_RELATIONS = [
     {"id": "enforces", "from": "GovernanceRule", "to": "TokenCategory"},
     {"id": "prevents", "from": "GovernanceRule", "to": "ImplementationFailurePattern"},
 ]
-
-BASELINE_FAMILY_COMPONENTS = {
-    "button": ["primary-button", "secondary-button", "ghost-button", "icon-button", "cta-button"],
-    "navigation": ["mobile-topbar", "mobile-tab-bar", "back-button", "section-tabs"],
-    "feedback": ["inline-alert", "empty-state", "toast"],
-    "overlay": ["bottom-sheet", "modal-dialog"],
-    "input": ["text-field", "search-field", "segmented-control"],
-}
-
 
 def generate_system_pack(
     output_dir: Path,
@@ -235,6 +234,16 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
     font_system = brand_profile.get("_resolved_font_system")
     visual_reference = brand_profile.get("_resolved_visual_reference")
     responsive_policy = (blueprint.get("governance") or {}).get("responsive_resilience_policy") or {}
+    application_concept = blueprint.get("application_concept") or {}
+    layout_skeleton = blueprint.get("layout_skeleton") or {}
+    differentiation_strategy = blueprint.get("differentiation_strategy") or {}
+    layout_density = str(layout_skeleton.get("density") or "").lower()
+    if layout_density == "dense":
+        density_modes = ["compact", "dense"]
+    elif layout_density == "spacious":
+        density_modes = ["comfortable", "spacious"]
+    else:
+        density_modes = ["comfortable", "compact"] if calm_system else ["default", "dense"]
 
     schema = {
         "naming": {
@@ -274,13 +283,24 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
             "typography": _build_typography_category(editorial_system, font_system),
             "spacing": {
                 "scale": [0, 2, 4, 8, 12, 16, 24, 32, 48, 64, 96],
-                "density_modes": ["comfortable", "compact"] if calm_system else ["default", "dense"],
+                "density_modes": density_modes,
+                "layout_density": layout_skeleton.get("density"),
             },
             "layout": {
                 "breakpoints_px": responsive_policy.get("viewport_contract", {}).get(
                     "required_widths_px",
                     [320, 360, 390, 430, 768, 1024, 1440],
                 ),
+                "skeleton": {
+                    "composition": layout_skeleton.get("composition"),
+                    "navigation_model": layout_skeleton.get("navigation_model"),
+                    "density": layout_skeleton.get("density"),
+                    "primary_regions": layout_skeleton.get("primary_regions", []),
+                    "first_screen_contract": layout_skeleton.get("first_screen_contract", []),
+                    "avoid_layouts": layout_skeleton.get("avoid_layouts", []),
+                    "signature_moves": differentiation_strategy.get("signature_moves", []),
+                    "repetition_risks": differentiation_strategy.get("repetition_risks", []),
+                },
                 "container_rules": [
                     "모든 section/container는 box-sizing: border-box 기준으로 320px viewport에서 overflow-x 없이 맞아야 함",
                     "grid/flex children에는 필요한 경우 min-width: 0 또는 min-inline-size: 0을 명시",
@@ -311,6 +331,8 @@ def build_token_schema(brand_profile: dict, blueprint: dict) -> dict:
             "visual_keywords": brand_profile.get("visual_keywords", []),
             "interaction_keywords": brand_profile.get("interaction_keywords", []),
             "system_name": blueprint.get("system_name"),
+            "application_concept": application_concept,
+            "differentiation_strategy": differentiation_strategy,
         },
     }
     if color_reference:
@@ -535,21 +557,7 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
     families: dict[str, dict] = {}
     all_components: list[dict] = []
 
-    family_specs = {
-        "button": {"states": ["default", "hover", "active", "disabled", "loading"], "priority": "high"},
-        "input": {"states": ["default", "focus", "error", "disabled"], "priority": "high"},
-        "navigation": {"states": ["default", "active", "hover", "collapsed"], "priority": "high"},
-        "feedback": {"states": ["info", "success", "warning", "danger"], "priority": "high"},
-        "overlay": {"states": ["closed", "opening", "open"], "priority": "medium"},
-        "editorial": {"states": ["default", "selected", "editing"], "priority": "high"},
-        "data-display": {"states": ["default", "sorted", "filtered", "empty"], "priority": "high"},
-        "marketing": {"states": ["default", "hover", "in-view"], "priority": "high"},
-        "layout": {"states": ["default", "resizing", "collapsed"], "priority": "high"},
-        "workflow": {"states": ["pending", "active", "blocked", "approved"], "priority": "high"},
-        "document": {"states": ["default", "selected", "commenting", "resolved"], "priority": "high"},
-        "copilot-chat": {"states": ["default", "loading", "complete", "error"], "priority": "high"},
-        "copilot-artifact": {"states": ["default", "loading", "verified", "error"], "priority": "high"},
-    }
+    family_specs = FAMILY_SPECS
 
     for family in blueprint.get("component_strategy", {}).get("required_component_families", []):
         spec = family_specs.get(family, {"states": ["default"], "priority": "medium"})
@@ -592,12 +600,16 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
         for component_name in baseline_components:
             if component_name in existing:
                 continue
+            component_meta = baseline_component_meta(component_name)
             families[family_name]["components"].append(component_name)
             all_components.append(
                 {
                     "name": component_name,
                     "family": family_name,
-                    "supports_primitive": "system baseline",
+                    "role": component_meta.get("role", ""),
+                    "supports_primitive": "reference baseline",
+                    "source": "astryx-geist-reference-baseline",
+                    "reference_components": component_meta.get("reference_components", []),
                     "status": "planned",
                     "must_document": ["anatomy", "states", "content rules", "accessibility", "dos and donts"],
                 }
@@ -737,6 +749,7 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
         "families": sorted(families.values(), key=lambda item: (item["priority"] != "high", item["family"])),
         "components": all_components,
         "candidate_component_archetypes": candidate_archetypes,
+        "reference_baseline": reference_baseline_summary(),
         "advanced_component_catalog": catalog_entries(),
         "advanced_recommendations": advanced_recommendations,
     }
@@ -752,24 +765,30 @@ def classify_component_family(component_name: str) -> str:
         "site-logo", "site-nav",
     ]):
         return "marketing"
-    if any(token in component_name for token in ["chart", "table", "grid", "summary", "score"]):
+    if any(token in component_name for token in [
+        "chart", "table", "grid", "summary", "score", "metric", "ledger",
+        "status-summary", "source-ledger", "surface-header", "insight-row",
+        "list", "queue", "timeline", "strip",
+    ]):
         return "data-display"
     if any(token in component_name for token in ["editor", "block", "slash"]):
         return "editorial"
-    if any(token in component_name for token in ["nav", "breadcrumb", "switcher", "topbar", "sidebar"]):
+    if any(token in component_name for token in ["nav", "breadcrumb", "switcher", "topbar", "sidebar", "tab", "pagination"]):
         return "navigation"
-    if any(token in component_name for token in ["badge", "chip", "highlight"]):
+    if any(token in component_name for token in ["badge", "chip", "highlight", "status-dot"]):
         return "feedback"
     if any(token in component_name for token in ["toast", "alert", "banner", "empty-state"]):
         return "feedback"
-    if any(token in component_name for token in ["palette", "menu", "overlay", "modal"]):
+    if any(token in component_name for token in ["palette", "menu", "overlay", "modal", "dialog", "popover", "tooltip", "drawer"]):
         return "overlay"
     if any(token in component_name for token in ["sheet", "preview", "panel"]):
         return "overlay"
-    if any(token in component_name for token in ["field", "select", "checkbox", "radio", "textarea"]):
+    if any(token in component_name for token in ["field", "select", "checkbox", "radio", "textarea", "switch"]):
         return "input"
     if any(token in component_name for token in ["slider", "dropzone", "selector"]):
         return "input"
+    if any(token in component_name for token in ["card", "thumbnail", "avatar"]):
+        return "surface"
     return "button" if "button" in component_name else "foundation"
 
 
@@ -1119,6 +1138,18 @@ def build_system_spec_markdown(
         )
         for item in component_inventory.get("advanced_recommendations", [])[:8]
     ) or "- No advanced components recommended from this product context."
+    reference_baseline = component_inventory.get("reference_baseline") or {}
+    reference_baseline_systems = ", ".join(
+        f"{system.get('name')} ({system.get('url')})"
+        for system in reference_baseline.get("systems", [])
+    ) or "No reference baseline recorded."
+    reference_baseline_policy = (
+        (reference_baseline.get("absorption_policy") or {}).get("rule")
+        or "Use external systems only as advisory taxonomy evidence."
+    )
+    contextual_not_baseline = ", ".join(
+        sorted((reference_baseline.get("contextual_not_baseline") or {}).keys())
+    ) or "None"
     color_reference = brand_profile.get("_resolved_color_reference")
     visual_reference = brand_profile.get("_resolved_visual_reference")
     color_reference_lines = _build_color_reference_section(color_reference)
@@ -1274,6 +1305,35 @@ def build_system_spec_markdown(
 {visual_substance_rule_lines}
 - **Promoted visual substance failure patterns**:
 {visual_substance_failure_lines}"""
+    html_prototype_policy = governance.get("html_prototype_contract_policy", {})
+    html_prototype_applies_to = ", ".join(html_prototype_policy.get("applies_to", [])) or "static HTML mockups, product workflow prototypes"
+    html_prototype_contract_lines = "\n".join(
+        f"- {item}" for item in html_prototype_policy.get("required_contracts", [])
+    ) or "- No HTML prototype contracts defined."
+    html_prototype_rule_lines = "\n".join(
+        f"- {item}" for item in html_prototype_policy.get("implementation_rules", [])
+    ) or "- No HTML prototype implementation rules defined."
+    html_prototype_loop_lines = "\n".join(
+        f"- **{item.get('step', 'loop')}**: {item.get('rule', '')}"
+        for item in html_prototype_policy.get("improvement_loop", [])
+        if isinstance(item, dict)
+    ) or "- No HTML prototype improvement loop defined."
+    html_prototype_failure_lines = "\n".join(
+        f"- **{item.get('id', 'html-prototype-failure')}**: {item.get('rule', '')} Prevention: {item.get('prevention', '')}"
+        for item in html_prototype_policy.get("failure_patterns", [])
+    ) or "- No HTML prototype failure patterns defined."
+    html_prototype_section = f"""### HTML Prototype Contract
+
+- **Rule**: {html_prototype_policy.get('rule', 'HTML mockups must behave as thin executable product prototypes.')}
+- **Applies to**: {html_prototype_applies_to}
+- **Required contracts**:
+{html_prototype_contract_lines}
+- **Implementation rules**:
+{html_prototype_rule_lines}
+- **Improvement loop**:
+{html_prototype_loop_lines}
+- **Promoted prototype failure patterns**:
+{html_prototype_failure_lines}"""
     visual_medium_policy = governance.get("visual_asset_medium_selection_policy", {})
     visual_medium_override_lines = "\n".join(
         (
@@ -1348,6 +1408,13 @@ def build_system_spec_markdown(
         f"- **{target['concept_id']}**: {target['count']}"
         for target in blueprint.get("ontology_targets", [])
     )
+    application_concept_section = _build_application_concept_section(
+        blueprint.get("application_concept") or {},
+        blueprint.get("differentiation_strategy") or {},
+    )
+    layout_skeleton_section = _build_layout_skeleton_section(
+        blueprint.get("layout_skeleton") or {}
+    )
 
     quick_start_section = _build_quick_start_section(brand_profile, token_schema, color_reference)
     do_dont_section = _build_do_dont_section(brand_profile, blueprint)
@@ -1363,6 +1430,14 @@ def build_system_spec_markdown(
 - **Audience**: {', '.join(brand_profile.get('audiences', []))}
 - **Platforms**: {', '.join(brand_profile.get('platforms', []))}
 - **Accessibility floor**: {', '.join(brand_profile.get('accessibility_targets', []))}
+
+### Application Concept
+
+{application_concept_section}
+
+### Layout Skeleton
+
+{layout_skeleton_section}
 
 ## 2. Identity Guardrails
 
@@ -1407,6 +1482,9 @@ def build_system_spec_markdown(
 
 - **Product primitives**: {', '.join(brand_profile.get('product_primitives', []))}
 - **Required families**: {', '.join(item['family'] for item in component_inventory.get('families', []))}
+- **Reference baseline**: {reference_baseline_systems}
+- **Reference absorption rule**: {reference_baseline_policy}
+- **Contextual, not baseline**: {contextual_not_baseline}
 - **Advanced component recommendations**:
 
 {advanced_component_lines}
@@ -1430,6 +1508,8 @@ def build_system_spec_markdown(
 {app_icon_section}
 
 {visual_substance_section}
+
+{html_prototype_section}
 
 {visual_medium_section}
 
@@ -1557,6 +1637,56 @@ def _build_typography_category(editorial_system: bool, font_system: dict | None)
         }
 
     return base
+
+
+def _markdown_list(items: list | tuple, fallback: str = "Not specified.") -> str:
+    lines = [f"- {item}" for item in items if str(item).strip()]
+    return "\n".join(lines) if lines else f"- {fallback}"
+
+
+def _build_application_concept_section(application_concept: dict, differentiation_strategy: dict) -> str:
+    domain_objects = application_concept.get("domain_objects") or []
+    differentiation = application_concept.get("differentiation") or []
+    signature_moves = differentiation_strategy.get("signature_moves") or []
+    repetition_risks = differentiation_strategy.get("repetition_risks") or []
+    must_differ = differentiation_strategy.get("must_feel_different_from") or []
+    return f"""- **Primary job**: {application_concept.get('primary_job', 'Not specified.')}
+- **Operating mode**: {application_concept.get('operating_mode', 'Not specified.')}
+- **Success moment**: {application_concept.get('success_moment', 'Not specified.')}
+- **Domain objects**:
+{_markdown_list(domain_objects)}
+- **Differentiation intent**:
+{_markdown_list(differentiation)}
+- **Must feel different from**:
+{_markdown_list(must_differ)}
+- **Signature structural moves**:
+{_markdown_list(signature_moves)}
+- **Repetition risks**:
+{_markdown_list(repetition_risks)}
+- **Anti-convergence rule**: {differentiation_strategy.get('anti_convergence_rule', 'The first screen must not collapse into a generic template.')}"""
+
+
+def _build_layout_skeleton_section(layout_skeleton: dict) -> str:
+    primary_regions = layout_skeleton.get("primary_regions") or []
+    region_lines = []
+    for region in primary_regions:
+        if isinstance(region, dict):
+            region_lines.append(
+                "- "
+                f"**{region.get('name', 'Unnamed region')}** "
+                f"({region.get('priority', 'secondary')}): {region.get('role', '')}"
+            )
+        else:
+            region_lines.append(f"- {region}")
+    return f"""- **Composition**: {layout_skeleton.get('composition', 'task-led-product-surface')}
+- **Navigation model**: {layout_skeleton.get('navigation_model', 'contextual')}
+- **Density**: {layout_skeleton.get('density', 'balanced')}
+- **Primary regions**:
+{chr(10).join(region_lines) if region_lines else '- Primary task surface'}
+- **First-screen contract**:
+{_markdown_list(layout_skeleton.get('first_screen_contract') or [])}
+- **Avoid layouts**:
+{_markdown_list(layout_skeleton.get('avoid_layouts') or [])}"""
 
 
 def _build_typography_section(typography: dict) -> str:

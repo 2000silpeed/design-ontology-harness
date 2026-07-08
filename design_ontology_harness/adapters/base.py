@@ -596,9 +596,10 @@ calling the current screen complete. Current-screen fixes alone are not enough.
 - Domain surfaces for places, products, articles, games, sports, venues, or visual content need at least one real or deterministic domain visual: image, illustration, map, sketch, media, texture, or object/identity asset.
 - Deterministic inline SVG visuals must be semantically readable: include visible labels/legend or title/desc plus data-subject landmarks when representing maps, scenes, products, objects, or places.
 - Do not use rough ad-hoc `sketch`, `doodle`, or hand-drawn SVG scene art as the product/domain visual. If the slot needs an illustration/photo, use `image_gen`, a sourced/user-supplied asset, or an approved asset pipeline; if it is product logic, use a polished schematic map/chart/diagram instead.
+- Workflow, relation, evidence, or canvas graphs must not be freehand connector art. Keep nodes and edges in one semantic coordinate system with node/edge ids, direction, labels, arrowheads, and runtime state; otherwise use a table, timeline, or ledger.
 - Comic, manga, webtoon, story, character, editorial-cover, or panel-preview media slots must not use SVG placeholders as final artwork. Use `image_gen`, user-supplied art, sourced licensed art, or approved production artwork.
 - SVG icons must use `currentColor` or design tokens, preserve accessible labels through adjacent text or aria, and must not be replaced by emoji glyphs. When raster-only/no-SVG is active, PNG/WebP/JPEG icon assets inherit the same accessibility requirements.
-- `lint-implementation` promotes icon-starved interactive surfaces to DS071, domain-visual gaps to DS072, low-information inline SVG visuals to DS073, amateur ad-hoc illustration to DS074, wrong-medium SVG narrative media to DS079, undeclared handmade icon sprites to DS080, and SVG usage under raster-only/no-SVG directives to DS081.
+- `lint-implementation` promotes icon-starved interactive surfaces to DS071, domain-visual gaps to DS072, low-information inline SVG visuals to DS073, amateur ad-hoc illustration to DS074, wrong-medium SVG narrative media to DS079, undeclared handmade icon sprites to DS080, SVG usage under raster-only/no-SVG directives to DS081, ad-hoc node-link placeholders to DS082, and freehand connector graphs to DS083.
 
 ## Visual Evidence And Screenshot Comparison
 
@@ -606,6 +607,17 @@ calling the current screen complete. Current-screen fixes alone are not enough.
 - Run `uv run design-ontology compare-visuals --before <baseline.png> --after <revised.png>` for redesigns, screenshot QA, or feedback-driven visual changes.
 - If the before/after hashes are identical or the changed-pixel ratio is below the project threshold, treat the redesign as unverified and keep iterating.
 - Do not overwrite screenshots that are needed as comparison inputs; use versioned names such as `before-*`, `after-*`, or timestamped captures.
+
+## HTML Prototype Contract
+
+- Treat HTML mockups as thin executable product prototypes, not static screenshots.
+- Mark reviewable prototypes with `data-product-prototype` or an equivalent prototype marker.
+- Complex surfaces such as charts, graphs, maps, calendars, kanban boards, gantt views, spreadsheets, timelines, inspectors, and editor canvases need `data-runtime-surface` or `data-product-surface`.
+- Data-heavy surfaces need model/source/id metadata such as `data-model`, `data-source`, `data-row-id`, `data-item-id`, `data-event-id`, `data-node-id`, `data-edge-id`, and `data-value`.
+- Prototype reviews need a state set through `data-prototype-state-set`, `data-state`, or equivalent visible scenarios before screenshot QA.
+- Contract metadata is not enough. The prototype must include token-bound layout, surface, typography, state, and affordance styling; otherwise it is only a non-visual fixture.
+- HTML prototype feedback follows a loop: observe reviewer evidence, classify the failure, promote repeatable gaps into governance/lint/tests, repair the artifact, then rerun lint plus desktop/mobile visual QA.
+- `lint-implementation` promotes complex mock surfaces without runtime/data contracts to DS084, single-state HTML prototypes to DS085, and metadata-only browser-default prototypes to DS086.
 
 ## Mock Fidelity And Runtime Representation
 
@@ -615,7 +627,7 @@ calling the current screen complete. Current-screen fixes alone are not enough.
 - Each visible media/evidence tile such as `place-photo`, `texture-card`, `media-card`, `evidence-card`, or `thumbnail-card` needs its own media asset or an explicit empty/loading/pending state.
 - Use `data-runtime-surface` to mark runtime intent such as `map-sdk-layer`, `generated-place-photo`, `sourced-thumbnail`, `chart-layer`, `table-view`, or `empty-state`.
 - App-shell marks, favicons, and manifest icons must use a brand-specific identity asset, not a generic initials tile. SVG is the default source format; PNG/WebP/JPEG is required when a raster-only/no-SVG directive is active.
-- `lint-implementation` promotes ambiguous schematic/mock/placeholder visual surfaces without runtime intent to DS075, media/photo runtime surfaces without assets to DS076, generic initials app marks to DS077, and individual media/evidence tiles without assets to DS078.
+- `lint-implementation` promotes ambiguous schematic/mock/placeholder visual surfaces without runtime intent to DS075, media/photo runtime surfaces without assets to DS076, generic initials app marks to DS077, individual media/evidence tiles without assets to DS078, complex mock surfaces without runtime/data contracts to DS084, single-state HTML prototypes to DS085, and metadata-only browser-default prototypes to DS086.
 
 ## Visual Asset Medium Selection
 

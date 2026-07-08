@@ -188,6 +188,63 @@ AD_HOC_NODE_LINK_LABEL_RE = re.compile(
     r"\b(?:Answer|CH-\d{2,3}|DOC-[a-z0-9-]+-CH-\d+|별표\s*\d+|하도급법|공정거래법|법령)\b",
     re.IGNORECASE,
 )
+FREEHAND_SVG_CONNECTOR_RE = re.compile(
+    r"<svg\b(?P<attrs>[^>]*(?:class|className)=['\"][^'\"]*(?:wires|connector-layer|flow-lines|graph-wires|workflow-wires|node-links)[^'\"]*['\"][^>]*)>(?P<body>.*?)</svg>",
+    re.IGNORECASE | re.DOTALL,
+)
+POSITIONED_GRAPH_NODE_RE = re.compile(
+    r"(?:class(?:Name)?=['\"][^'\"]*(?:flow-node|canvas-node|graph-node|trace-node|node-link-node)[^'\"]*['\"]|"
+    r"style=['\"][^'\"]*\b(?:left|top)\s*:|"
+    r"\.(?:flow-node|canvas-node|graph-node|trace-node|node-link-node)[^{]*\{[^}]*\bposition\s*:\s*absolute\b)",
+    re.IGNORECASE | re.DOTALL,
+)
+SEMANTIC_GRAPH_EDGE_ID_RE = re.compile(r"\bdata-edge-id\s*=", re.IGNORECASE)
+SEMANTIC_GRAPH_FROM_RE = re.compile(r"\bdata-from\s*=", re.IGNORECASE)
+SEMANTIC_GRAPH_TO_RE = re.compile(r"\bdata-to\s*=", re.IGNORECASE)
+SEMANTIC_GRAPH_DIRECTION_RE = re.compile(
+    r"(?:\bmarker-end\s*=|\bdata-direction\s*=|\baria-label\s*=)",
+    re.IGNORECASE,
+)
+SEMANTIC_GRAPH_LABEL_RE = re.compile(
+    r"(?:<text\b|\bdata-label\s*=|\baria-label\s*=)",
+    re.IGNORECASE,
+)
+COMPLEX_SURFACE_ATTR_RE = re.compile(
+    r"<(?P<tag>section|main|div|article|aside|figure)\b(?P<attrs>[^>]*(?:class|className|role|aria-label)\s*=\s*['\"][^'\"]*(?:chart|graph|map|calendar|kanban|gantt|spreadsheet|workflow|board|timeline|table|ledger|inspector|canvas)[^'\"]*['\"][^>]*)>",
+    re.IGNORECASE | re.DOTALL,
+)
+MOCK_SURFACE_HINT_RE = re.compile(
+    r"\b(?:mock|placeholder|fake|static|demo|sample|dummy|wireframe|목업|플레이스홀더|샘플|더미|가짜|임시)\b",
+    re.IGNORECASE,
+)
+SURFACE_CONTRACT_RE = re.compile(
+    r"(?:data-(?:runtime-surface|product-surface|model|source|collection|schema|state|row-id|item-id|node-id|edge-id|event-id|from|to|value|label)\s*=|"
+    r"<table\b|role\s*=\s*['\"](?:table|grid|treegrid|listbox)['\"])",
+    re.IGNORECASE,
+)
+HTML_PROTOTYPE_MARKER_RE = re.compile(
+    r"(?:data-(?:product-)?prototype\s*=|class(?:Name)?\s*=\s*['\"][^'\"]*(?:html-mockup|product-mockup|app-mockup|prototype)[^'\"]*['\"])",
+    re.IGNORECASE,
+)
+PROTOTYPE_STATE_SET_RE = re.compile(
+    r"(?:data-(?:prototype-)?state-set\s*=|data-scenario\s*=|data-view-state\s*=)",
+    re.IGNORECASE,
+)
+STATE_VARIANT_RE = re.compile(
+    r"(?:data-state\s*=\s*['\"](?P<data>[^'\"]+)['\"]|"
+    r"aria-(?:selected|current|busy|disabled|expanded)\s*=|"
+    r"class(?:Name)?\s*=\s*['\"][^'\"]*(?:is-|state-|selected|active|empty|loading|error|disabled|pending|approved|blocked|success|warning)[^'\"]*['\"])",
+    re.IGNORECASE,
+)
+PROTOTYPE_STYLE_DECL_RE = re.compile(
+    r"\b(?:display|grid-template-columns|grid-template-rows|flex-wrap|gap|padding|border|background|border-radius|font-family|min-height|align-items|justify-content|overflow|color)\s*:",
+    re.IGNORECASE,
+)
+TAILWIND_SURFACE_CLASS_RE = re.compile(
+    r"\b(?:grid|flex|gap-\d|p-\d|px-\d|py-\d|rounded|border|bg-|text-|min-h-|items-|justify-)\b",
+    re.IGNORECASE,
+)
+DS_TOKEN_USAGE_RE = re.compile(r"var\(\s*--ds-", re.IGNORECASE)
 RUNTIME_SURFACE_MARKER_RE = re.compile(r"\bdata-runtime-surface\s*=", re.IGNORECASE)
 MEDIA_RUNTIME_SURFACE_RE = re.compile(
     r"\bdata-runtime-surface\s*=\s*['\"][^'\"]*(?:media|photo|thumbnail|image|generated|sourced)[^'\"]*['\"]",
@@ -605,6 +662,58 @@ def _lint_project_composition(
             )
         )
 
+    freehand_connector_graph = _find_freehand_svg_connector_graph(combined)
+    if freehand_connector_graph:
+        issues.append(
+            _issue(
+                "DS083",
+                first_ui_path,
+                1,
+                1,
+                "Freehand SVG connector graph detected; keep nodes and edges in one semantic coordinate system with data-node/data-edge ids, arrowheads, labels, and runtime data, or replace the graph with a table/ledger.",
+                freehand_connector_graph[0],
+            )
+        )
+
+    uncontracted_surface = _find_complex_mock_surface_without_contract(combined)
+    if uncontracted_surface:
+        issues.append(
+            _issue(
+                "DS084",
+                first_ui_path,
+                1,
+                1,
+                "Complex HTML mock surface lacks a product/runtime contract; add data-runtime-surface or data-product-surface plus model/source/id/state metadata, or replace the surface with a simpler table/ledger.",
+                uncontracted_surface[0],
+            )
+        )
+
+    single_state_prototype = _find_single_state_html_prototype(combined)
+    if single_state_prototype:
+        issues.append(
+            _issue(
+                "DS085",
+                first_ui_path,
+                1,
+                1,
+                "HTML prototype is marked as a product prototype but exposes no state set; include default/selected/loading/empty/error or equivalent data-state scenarios before visual QA.",
+                single_state_prototype[0],
+            )
+        )
+
+    metadata_only_prototype = _find_metadata_only_html_prototype(combined)
+    if metadata_only_prototype:
+        issues.append(
+            _issue(
+                "DS086",
+                first_ui_path,
+                1,
+                1,
+                "HTML prototype has product/runtime metadata but no product-surface styling; add token-bound layout, surface, typography, state, and affordance styling before review.",
+                metadata_only_prototype[0],
+            )
+        )
+
     if not (target / artifact_dir).exists():
         return issues
 
@@ -770,6 +879,125 @@ def _find_ad_hoc_node_link_placeholder(text: str) -> list[str]:
             limit=240,
         )
     return [snippet]
+
+
+def _find_freehand_svg_connector_graph(text: str) -> list[str]:
+    """Detect SVG connector layers laid over separately positioned HTML nodes.
+
+    These often look plausible in one screenshot but have no shared graph model:
+    edges are path art, nodes are independent DOM boxes, and responsive changes
+    break the relationship. A legitimate workflow graph should use a graph
+    library, or a single SVG/canvas coordinate system with node/edge metadata.
+    """
+
+    snippets: list[str] = []
+    for match in FREEHAND_SVG_CONNECTOR_RE.finditer(text):
+        body = match.group("body")
+        if len(re.findall(r"<path\b", body, flags=re.IGNORECASE)) < 2:
+            continue
+
+        context_start = max(0, match.start() - 1400)
+        context_end = min(len(text), match.end() + 1400)
+        context = text[context_start:context_end]
+        if not POSITIONED_GRAPH_NODE_RE.search(context):
+            continue
+        if _has_semantic_graph_edge_model(body):
+            continue
+        snippets.append(_single_line_snippet(context, limit=260))
+    return snippets
+
+
+def _has_semantic_graph_edge_model(svg_body: str) -> bool:
+    return all(
+        pattern.search(svg_body)
+        for pattern in (
+            SEMANTIC_GRAPH_EDGE_ID_RE,
+            SEMANTIC_GRAPH_FROM_RE,
+            SEMANTIC_GRAPH_TO_RE,
+            SEMANTIC_GRAPH_DIRECTION_RE,
+            SEMANTIC_GRAPH_LABEL_RE,
+        )
+    )
+
+
+def _find_complex_mock_surface_without_contract(text: str) -> list[str]:
+    """Detect static-looking complex surfaces that do not expose product intent.
+
+    HTML mockups can represent maps, charts, calendars, boards, and editors, but
+    those surfaces need a visible runtime/data contract. This check stays narrow:
+    it only fires when a complex surface is also described as mock/sample/fake/
+    placeholder/static and the nearby markup has no runtime, model, source, id,
+    state, table, or grid contract.
+    """
+
+    snippets: list[str] = []
+    for match in COMPLEX_SURFACE_ATTR_RE.finditer(text):
+        context_start = max(0, match.start() - 220)
+        context_end = min(len(text), match.end() + 900)
+        context = text[context_start:context_end]
+        if not MOCK_SURFACE_HINT_RE.search(context):
+            continue
+        if SURFACE_CONTRACT_RE.search(context):
+            continue
+        snippets.append(_single_line_snippet(context, limit=260))
+    return snippets
+
+
+def _find_single_state_html_prototype(text: str) -> list[str]:
+    if not HTML_PROTOTYPE_MARKER_RE.search(text):
+        return []
+
+    surface_count = len(COMPLEX_SURFACE_ATTR_RE.findall(text))
+    interaction_count = len(INTERACTIVE_UI_RE.findall(text))
+    if surface_count < 1 and interaction_count < 4:
+        return []
+    if PROTOTYPE_STATE_SET_RE.search(text):
+        return []
+
+    state_values = set()
+    generic_state_markers = 0
+    for match in STATE_VARIANT_RE.finditer(text):
+        data_value = match.groupdict().get("data")
+        if data_value:
+            state_values.add(data_value.lower())
+        else:
+            generic_state_markers += 1
+
+    if len(state_values) + generic_state_markers >= 2:
+        return []
+
+    prototype_match = HTML_PROTOTYPE_MARKER_RE.search(text)
+    if not prototype_match:
+        return []
+    context_start = max(0, prototype_match.start() - 220)
+    context_end = min(len(text), prototype_match.end() + 900)
+    return [_single_line_snippet(text[context_start:context_end], limit=260)]
+
+
+def _find_metadata_only_html_prototype(text: str) -> list[str]:
+    """Detect prototypes that satisfy metadata gates but still render as raw HTML."""
+
+    prototype_match = HTML_PROTOTYPE_MARKER_RE.search(text)
+    if not prototype_match:
+        return []
+
+    surface_count = len(COMPLEX_SURFACE_ATTR_RE.findall(text))
+    interaction_count = len(INTERACTIVE_UI_RE.findall(text))
+    if surface_count < 1 and interaction_count < 4:
+        return []
+    if _prototype_has_surface_styling(text):
+        return []
+
+    context_start = max(0, prototype_match.start() - 220)
+    context_end = min(len(text), prototype_match.end() + 900)
+    return [_single_line_snippet(text[context_start:context_end], limit=260)]
+
+
+def _prototype_has_surface_styling(text: str) -> bool:
+    style_decl_count = len(PROTOTYPE_STYLE_DECL_RE.findall(text))
+    token_count = len(DS_TOKEN_USAGE_RE.findall(text))
+    utility_count = len(TAILWIND_SURFACE_CLASS_RE.findall(text))
+    return style_decl_count >= 8 or token_count >= 6 or utility_count >= 10
 
 
 def _find_svg_usage_under_raster_directive(text: str) -> list[str]:

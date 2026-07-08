@@ -3,6 +3,7 @@ import unittest
 from design_ontology_harness.authoring import build_component_inventory
 from design_ontology_harness.advanced_components import recommend_advanced_components
 from design_ontology_harness.component_specs import generate_component_specs
+from design_ontology_harness.spec_analyzer import build_component_list
 from design_ontology_harness.synthesis import RESPONSIVE_RESILIENCE_POLICY
 
 
@@ -54,6 +55,10 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
             {"name": "site-nav", "family": "navigation", "role": "Primary nav", "source": "spec"},
             {"name": "filter-chip", "family": "feedback", "role": "Filter chip", "source": "spec"},
             {"name": "chart-panel", "family": "data-display", "role": "Chart panel", "source": "spec"},
+            {"name": "metric-strip", "family": "data-display", "role": "Operational metric strip", "source": "spec"},
+            {"name": "policy-matrix", "family": "data-display", "role": "Policy matrix", "source": "spec"},
+            {"name": "diff-viewer", "family": "document", "role": "Diff viewer", "source": "spec"},
+            {"name": "column-header", "family": "data-display", "role": "Column header", "source": "spec"},
         ]
 
         specs_data = generate_component_specs(
@@ -89,6 +94,15 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
         self.assertIn("chart_panel_framing", panel_aspects)
         self.assertIn("loading", by_name["chart-panel"]["anatomy"]["states"])
         self.assertIn("데이터 테이블은 scope와 caption 필수", by_name["chart-panel"]["accessibility"])
+
+        strip_aspects = {note["aspect"] for note in by_name["metric-strip"]["visual_adaptation"]}
+        self.assertIn("operational_surface_role", strip_aspects)
+        self.assertNotIn("card_elevation_tendency", strip_aspects)
+
+        for surface_name in ["policy-matrix", "diff-viewer", "column-header"]:
+            surface_aspects = {note["aspect"] for note in by_name[surface_name]["visual_adaptation"]}
+            self.assertIn("operational_surface_role", surface_aspects)
+            self.assertNotIn("card_elevation_tendency", surface_aspects)
 
     def test_missing_visual_reference_keeps_visual_adaptation_empty(self) -> None:
         brand_profile = {
@@ -165,6 +179,83 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
         self.assertEqual(policy_matrix["archetype"], "advanced:policy-matrix")
         self.assertIn("status-cell", policy_matrix["anatomy"]["parts"])
         self.assertIn("caption describes policy scope", policy_matrix["accessibility"])
+
+    def test_astryx_geist_baseline_replaces_legacy_contextual_defaults(self) -> None:
+        brand_profile = {
+            "brand_name": "Lean Console",
+            "brand_keywords": ["minimal", "precise"],
+            "anti_keywords": [],
+            "product_primitives": [],
+        }
+        blueprint = {
+            "component_strategy": {
+                "required_component_families": ["button", "input", "navigation", "feedback", "overlay"],
+            }
+        }
+
+        inventory = build_component_inventory(brand_profile, blueprint)
+        inventory_names = {item["name"] for item in inventory["components"]}
+        analyzer_names = {item["name"] for item in build_component_list([])}
+
+        self.assertTrue({"primary-button", "secondary-button", "icon-button"} <= inventory_names)
+        self.assertTrue({"text-field", "select", "checkbox", "switch", "segmented-control"} <= inventory_names)
+        self.assertTrue({"breadcrumbs", "tabs", "pagination"} <= inventory_names)
+        self.assertTrue({"dialog", "popover", "tooltip"} <= inventory_names)
+
+        legacy_defaults = {
+            "ghost-button",
+            "link-button",
+            "cta-button",
+            "mobile-topbar",
+            "mobile-tab-bar",
+            "back-button",
+            "bottom-sheet",
+            "modal-dialog",
+        }
+        self.assertFalse(legacy_defaults & inventory_names)
+        self.assertFalse({"ghost-button", "link-button", "cta-button"} & analyzer_names)
+
+        reference_systems = {item["id"] for item in inventory["reference_baseline"]["systems"]}
+        self.assertEqual(reference_systems, {"astryx", "geist"})
+        self.assertIn("ghost-button", inventory["reference_baseline"]["contextual_not_baseline"])
+
+    def test_operational_surfaces_suppress_card_named_advanced_recommendations(self) -> None:
+        brand_profile = {
+            "brand_name": "Northline Ops",
+            "brand_keywords": ["operations", "dashboard", "risk", "workflow"],
+            "anti_keywords": ["card wall", "decorative dashboard"],
+            "product_summary": "운영팀이 SLA 위험, 예외 queue, source ledger를 처리하는 operational overview.",
+            "product_primitives": [
+                "operational overview",
+                "metric strip",
+                "status summary row",
+                "source ledger",
+                "data tables",
+                "operational rail",
+            ],
+        }
+        blueprint = {
+            "app_mode": "dashboard",
+            "component_strategy": {
+                "product_primitives": [
+                    "operational overview",
+                    "data tables",
+                    "source ledger",
+                ],
+            },
+        }
+
+        recommendations = recommend_advanced_components(
+            brand_profile=brand_profile,
+            blueprint=blueprint,
+            existing_components=[],
+            limit=12,
+        )
+        names = {item["name"] for item in recommendations}
+
+        self.assertIn("bulk-action-table", names)
+        self.assertIn("saved-view-bar", names)
+        self.assertFalse({name for name in names if name.endswith("-card")})
 
     def test_responsive_guidance_flows_into_button_specs(self) -> None:
         brand_profile = {

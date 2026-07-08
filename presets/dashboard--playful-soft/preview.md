@@ -12,18 +12,18 @@
 - surface_tint: `#E0B0FF`
 
 ### Semantic
-- success: `#ACE1AF`
+- success: `#4A7C59`
 - warning: `#FFDAB9`
 - danger: `#FA8072`
-- info: `#B0E0E6`
+- info: `#8E9AF1`
 
 > light/dark 변형은 어댑터(`nextjs-tailwind-shadcn` 등)가 파생. 원본 팔레트는 위 HEX 1세트.
 
 ## Typography
-- heading: Noto Sans KR
-- body: Noto Sans KR
-- mono: Fira Code
-- korean: Noto Sans KR
+- heading: Nunito
+- body: Inter
+- mono: JetBrains Mono
+- korean: Pretendard
 
 ## 대표 컴포넌트
 - **dashboard-card** — parts: container, inner-content | states: default, hover, focus-visible

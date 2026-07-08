@@ -28,6 +28,7 @@ def test_recent_design_system_candidates_are_crawler_friendly_seeds():
     browser_required = set(_seed_urls(REPO_ROOT / "seeds/browser-required-official-design-systems.txt"))
 
     expected = {
+        "https://astryx.atmeta.com/",
         "https://cloudscape.design/",
         "https://paste.twilio.design/",
         "https://garden.zendesk.com/",
@@ -52,7 +53,9 @@ def test_recent_benchmark_systems_are_available_for_matching():
         "nord-health",
         "trimble-modus",
         "salesforce-slds2",
+        "astryx",
     }:
         assert system_id in systems
 
     assert systems["shopify-polaris"]["url"] == "https://shopify.dev/docs/api/app-home/web-components"
+    assert systems["astryx"]["url"] == "https://astryx.atmeta.com"

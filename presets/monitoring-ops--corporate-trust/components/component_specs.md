@@ -1,6 +1,6 @@
 # Seoul Alley Mood Map Component Specs
 
-총 92개 컴포넌트 | 패밀리: button, copilot-artifact, data-display, editorial, feedback, input, layout, navigation, overlay, tool-chrome
+총 93개 컴포넌트 | 패밀리: button, copilot-artifact, data-display, editorial, feedback, input, layout, navigation, overlay, tool-chrome
 
 ## 구현 원칙 (Non-negotiable)
 
@@ -34,9 +34,11 @@
 - Body: Pretendard | line-height 1.6-1.7 | label line-height 1.4-1.5
 - Wrap defaults: headline word-break=keep-all, headline text-wrap=balance, body word-break=keep-all
 - Scale guidance: 기본 스케일을 사용할 수 있지만 한글 문장 기준으로 실제 wrap을 먼저 검증한다.
+- Hangul display safety: line-height >= 1.02 | tracking -0.02em to 0.01em | forced <br /> 금지 until breakpoint QA
 - 한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.
 - 한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.
 - 한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.
+- Pretendard 같은 한글 display 헤딩은 line-height를 1.02 미만으로 낮추지 않는다.
 
 ## Responsive Resilience
 
@@ -52,7 +54,7 @@
 
 ## button / primary-button
 
-**역할**: 주요 행동을 유도하는 CTA 버튼
+**역할**: Primary action button for the most important local action.
 
 **탐지 출처**: baseline
 
@@ -128,83 +130,7 @@ motion: background var(--duration-180) var(--ease-standard)
 
 ## button / secondary-button
 
-**역할**: 보조 행동 버튼
-
-**탐지 출처**: baseline
-
-### 구조 (Anatomy)
-
-- container
-- label
-- leading-icon(optional)
-- trailing-icon(optional)
-
-### 상태 (States)
-
-| 상태 | 설명 |
-|------|------|
-| `default` | 기본 상태 |
-| `hover` | 마우스 오버 시 |
-| `active` | 클릭/탭 중 |
-| `disabled` | 비활성 (상호작용 불가) |
-| `loading` | 로딩 중 (스피너 표시) |
-
-### 토큰 바인딩
-
-```
-surface: var(--color-brand-primary)
-text: var(--color-text-inverse)
-border: var(--color-brand-primary)
-radius: var(--radius-md)
-padding: var(--space-12) var(--space-24)
-max-inline-size: 100%
-min-inline-size: 0
-label-wrap: white-space: normal
-font: var(--font-body) / var(--text-md) / semibold
-hover-surface: var(--color-link-hover)
-focus-ring: box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-brand-primary)
-motion: background var(--duration-180) var(--ease-standard)
-```
-
-### 접근성
-
-- role="button"
-- aria-disabled="true" when disabled
-- aria-busy="true" when loading
-- 최소 44x44 터치 영역
-- 텍스트 대비 4.5:1 이상
-- 320px viewport에서도 버튼 전체와 focus ring이 화면 밖으로 나가지 않아야 함
-
-### 브랜드 적용
-
-- [trustworthy] hover: 예측 가능하고 일관된 hover 패턴
-- [trustworthy] motion: 모든 전환에 동일한 easing/duration
-- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
-
-### Visual Adaptation Hints
-
-- **cta_prominence**: CTA prominence는 restrained이다. 데이터 작업 흐름을 가리지 않도록 primary만 선명하게 두고 나머지는 text/ghost로 낮춘다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium, layout=data-review-surface)
-
-### 레퍼런스 근거
-
-- **Carbon Design System**: These components can toggle between the AI variant and the default variant depending on the user’s interaction. If the user manually overrides the ...
-- **Primer**: I get so much joy from writing HTML and CSS, and design systems are one level up - systematically making UIs accessible and consistent. I love conc...
-
-### 구현 노트
-
-- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
-- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
-- size prop: sm / md / lg (터치 영역은 항상 최소 44px 보장)
-- 모든 버튼은 `max-inline-size: 100%`와 `min-inline-size: 0`을 기본 보호값으로 갖고, 긴 라벨은 모바일에서 wrap 또는 action-group stack으로 처리
-- fixed `width`/`min-width` px 값으로 CTA 폭을 고정하지 않음 — 필요하면 container query 또는 <=480px stack fallback을 함께 정의
-- 반응형 검증: 320px, 360px, 390px, 430px에서 control overflow와 viewport horizontal scroll이 없어야 함
-- action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음
-
----
-
-## button / ghost-button
-
-**역할**: 최소한의 시각적 무게를 가진 버튼
+**역할**: Secondary action button with lower emphasis than the primary action.
 
 **탐지 출처**: baseline
 
@@ -280,83 +206,7 @@ motion: background var(--duration-180) var(--ease-standard)
 
 ## button / icon-button
 
-**역할**: 아이콘만 있는 액션 버튼
-
-**탐지 출처**: baseline
-
-### 구조 (Anatomy)
-
-- container
-- label
-- leading-icon(optional)
-- trailing-icon(optional)
-
-### 상태 (States)
-
-| 상태 | 설명 |
-|------|------|
-| `default` | 기본 상태 |
-| `hover` | 마우스 오버 시 |
-| `active` | 클릭/탭 중 |
-| `disabled` | 비활성 (상호작용 불가) |
-| `loading` | 로딩 중 (스피너 표시) |
-
-### 토큰 바인딩
-
-```
-surface: var(--color-brand-primary)
-text: var(--color-text-inverse)
-border: var(--color-brand-primary)
-radius: var(--radius-md)
-padding: var(--space-12) var(--space-24)
-max-inline-size: 100%
-min-inline-size: 0
-label-wrap: white-space: normal
-font: var(--font-body) / var(--text-md) / semibold
-hover-surface: var(--color-link-hover)
-focus-ring: box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-brand-primary)
-motion: background var(--duration-180) var(--ease-standard)
-```
-
-### 접근성
-
-- role="button"
-- aria-disabled="true" when disabled
-- aria-busy="true" when loading
-- 최소 44x44 터치 영역
-- 텍스트 대비 4.5:1 이상
-- 320px viewport에서도 버튼 전체와 focus ring이 화면 밖으로 나가지 않아야 함
-
-### 브랜드 적용
-
-- [trustworthy] hover: 예측 가능하고 일관된 hover 패턴
-- [trustworthy] motion: 모든 전환에 동일한 easing/duration
-- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
-
-### Visual Adaptation Hints
-
-- **cta_prominence**: CTA prominence는 restrained이다. 데이터 작업 흐름을 가리지 않도록 primary만 선명하게 두고 나머지는 text/ghost로 낮춘다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium, layout=data-review-surface)
-
-### 레퍼런스 근거
-
-- **Carbon Design System**: These components can toggle between the AI variant and the default variant depending on the user’s interaction. If the user manually overrides the ...
-- **Primer**: I get so much joy from writing HTML and CSS, and design systems are one level up - systematically making UIs accessible and consistent. I love conc...
-
-### 구현 노트
-
-- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
-- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
-- size prop: sm / md / lg (터치 영역은 항상 최소 44px 보장)
-- 모든 버튼은 `max-inline-size: 100%`와 `min-inline-size: 0`을 기본 보호값으로 갖고, 긴 라벨은 모바일에서 wrap 또는 action-group stack으로 처리
-- fixed `width`/`min-width` px 값으로 CTA 폭을 고정하지 않음 — 필요하면 container query 또는 <=480px stack fallback을 함께 정의
-- 반응형 검증: 320px, 360px, 390px, 430px에서 control overflow와 viewport horizontal scroll이 없어야 함
-- action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음
-
----
-
-## button / link-button
-
-**역할**: 텍스트 링크 스타일 버튼
+**역할**: Icon-only action with explicit accessible name and stable hit target.
 
 **탐지 출처**: baseline
 
@@ -1181,8 +1031,7 @@ text-muted: var(--color-text-muted)
 
 ### Visual Adaptation Hints
 
-- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
 - **filter_nav_density**: filter/nav density는 compact하다. chip, scope, pagination을 촘촘하게 묶되 의미 단위별 group은 분리한다. (source=navigation; confidence=0.15; provenance=inferred; direction=navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.; evidence=Data review surface, layout=data-review-surface, density=dense)
 - **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
 
@@ -1251,8 +1100,7 @@ text-muted: var(--color-text-muted)
 
 ### Visual Adaptation Hints
 
-- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
 - **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
 
 ### 구현 노트
@@ -1313,8 +1161,7 @@ text-muted: var(--color-text-muted)
 
 ### Visual Adaptation Hints
 
-- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
 - **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
 
 ### 구현 노트
@@ -1735,6 +1582,381 @@ motion: opacity var(--duration-180) var(--ease-standard)
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
 - Escape / backdrop click으로 닫기, 열 때 첫 focusable 요소로 이동
+
+---
+
+## data-display / metric-strip
+
+**역할**: 핵심 지표를 한 줄 스캔 표면으로 압축하는 요약 스트립
+
+**탐지 출처**: operational overview
+
+### 구조 (Anatomy)
+
+- container
+- header
+- content-area
+- footer(optional)
+- action(optional)
+
+### 상태 (States)
+
+| 상태 | 설명 |
+|------|------|
+| `default` | 기본 상태 |
+| `loading` | 로딩 중 (스피너 표시) |
+| `empty` | 데이터 없음 |
+| `error` | 유효성 검증 실패 |
+
+### 토큰 바인딩
+
+```
+surface: var(--color-surface)
+border: var(--color-border)
+radius: var(--radius-md)
+padding: var(--space-16) var(--space-20)
+heading-font: var(--font-heading) / var(--text-md) / semibold
+body-font: var(--font-body) / var(--text-sm) / regular
+text: var(--color-text)
+text-muted: var(--color-text-muted)
+```
+
+### 접근성
+
+- 적절한 heading level 사용
+- 데이터 테이블은 scope와 caption 필수
+- 빈 상태에서 안내 텍스트 제공
+
+### 브랜드 적용
+
+- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
+
+### 구현 노트
+
+- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
+- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
+- 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
+
+---
+
+## data-display / status-summary-row
+
+**역할**: 상태, 변경량, 담당자, 업데이트 시각을 행 단위로 보여주는 운영 요약
+
+**탐지 출처**: operational overview
+
+### 구조 (Anatomy)
+
+- container
+- header
+- content-area
+- footer(optional)
+- action(optional)
+
+### 상태 (States)
+
+| 상태 | 설명 |
+|------|------|
+| `default` | 기본 상태 |
+| `loading` | 로딩 중 (스피너 표시) |
+| `empty` | 데이터 없음 |
+| `error` | 유효성 검증 실패 |
+
+### 토큰 바인딩
+
+```
+surface: var(--color-surface)
+border: var(--color-border)
+radius: var(--radius-md)
+padding: var(--space-16) var(--space-20)
+heading-font: var(--font-heading) / var(--text-md) / semibold
+body-font: var(--font-body) / var(--text-sm) / regular
+text: var(--color-text)
+text-muted: var(--color-text-muted)
+```
+
+### 접근성
+
+- 적절한 heading level 사용
+- 데이터 테이블은 scope와 caption 필수
+- 빈 상태에서 안내 텍스트 제공
+
+### 브랜드 적용
+
+- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
+
+### 구현 노트
+
+- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
+- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
+- 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
+
+---
+
+## data-display / task-surface-header
+
+**역할**: 현재 업무 범위, 필터, 주요 액션을 묶는 작업 표면 헤더
+
+**탐지 출처**: operational overview
+
+### 구조 (Anatomy)
+
+- container
+- header
+- content-area
+- footer(optional)
+- action(optional)
+
+### 상태 (States)
+
+| 상태 | 설명 |
+|------|------|
+| `default` | 기본 상태 |
+| `loading` | 로딩 중 (스피너 표시) |
+| `empty` | 데이터 없음 |
+| `error` | 유효성 검증 실패 |
+
+### 토큰 바인딩
+
+```
+surface: var(--color-surface)
+border: var(--color-border)
+radius: var(--radius-md)
+padding: var(--space-16) var(--space-20)
+heading-font: var(--font-heading) / var(--text-md) / semibold
+body-font: var(--font-body) / var(--text-sm) / regular
+text: var(--color-text)
+text-muted: var(--color-text-muted)
+```
+
+### 접근성
+
+- 적절한 heading level 사용
+- 데이터 테이블은 scope와 caption 필수
+- 빈 상태에서 안내 텍스트 제공
+
+### 브랜드 적용
+
+- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
+
+### 구현 노트
+
+- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
+- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
+- 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
+
+---
+
+## data-display / source-ledger
+
+**역할**: 수치와 판단의 출처, 업데이트 시각, 샘플 여부를 기록하는 출처 레저
+
+**탐지 출처**: operational overview
+
+### 구조 (Anatomy)
+
+- container
+- header
+- content-area
+- footer(optional)
+- action(optional)
+
+### 상태 (States)
+
+| 상태 | 설명 |
+|------|------|
+| `default` | 기본 상태 |
+| `loading` | 로딩 중 (스피너 표시) |
+| `empty` | 데이터 없음 |
+| `error` | 유효성 검증 실패 |
+
+### 토큰 바인딩
+
+```
+surface: var(--color-surface)
+border: var(--color-border)
+radius: var(--radius-md)
+padding: var(--space-16) var(--space-20)
+heading-font: var(--font-heading) / var(--text-md) / semibold
+body-font: var(--font-body) / var(--text-sm) / regular
+text: var(--color-text)
+text-muted: var(--color-text-muted)
+```
+
+### 접근성
+
+- 적절한 heading level 사용
+- 데이터 테이블은 scope와 caption 필수
+- 빈 상태에서 안내 텍스트 제공
+
+### 브랜드 적용
+
+- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
+
+### 구현 노트
+
+- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
+- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
+- 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
+
+---
+
+## navigation / operational-rail
+
+**역할**: 보조 상태와 다음 작업을 압축해 보여주는 측면 또는 상단 레일
+
+**탐지 출처**: operational overview
+
+### 구조 (Anatomy)
+
+- container
+- nav-item
+- icon(optional)
+- label
+- indicator(active)
+- badge(optional)
+
+### 상태 (States)
+
+| 상태 | 설명 |
+|------|------|
+| `default` | 기본 상태 |
+| `hover` | 마우스 오버 시 |
+| `active` | 클릭/탭 중 |
+| `collapsed` | 접힌 상태 |
+
+### 토큰 바인딩
+
+```
+surface: var(--color-surface)
+text: var(--color-text-muted)
+text-active: var(--color-text)
+indicator: var(--color-brand-accent)
+padding: var(--space-8) var(--space-16)
+font: var(--font-body) / var(--text-sm) / medium
+```
+
+### 접근성
+
+- nav landmark (role="navigation")
+- aria-current="page" for active item
+- 키보드 화살표 탐색 지원
+
+### 브랜드 적용
+
+- [trustworthy] hover: 예측 가능하고 일관된 hover 패턴
+- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+- [trustworthy] motion: 모든 전환에 동일한 easing/duration
+
+### Visual Adaptation Hints
+
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
+- **filter_nav_density**: filter/nav density는 compact하다. chip, scope, pagination을 촘촘하게 묶되 의미 단위별 group은 분리한다. (source=navigation; confidence=0.15; provenance=inferred; direction=navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.; evidence=Data review surface, layout=data-review-surface, density=dense)
+
+### 레퍼런스 근거
+
+- **Carbon Design System**: Library menu navigation There are two kinds of symbols — library symbols and document symbols. Library symbols are available in any Sketch document...
+- **Primer**: Octicon nav items navigation 12 px
+
+### 구현 노트
+
+- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
+- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
+- active 상태는 URL/라우터와 자동 동기화
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
+- 반응형 검증: 320px, 360px, 390px, 430px에서 control overflow와 viewport horizontal scroll이 없어야 함
+- action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음
+
+---
+
+## data-display / section-header
+
+**역할**: 운영 표면의 구획과 정렬 맥락을 표시하는 헤더
+
+**탐지 출처**: operational overview
+
+### 구조 (Anatomy)
+
+- container
+- header
+- content-area
+- footer(optional)
+- action(optional)
+
+### 상태 (States)
+
+| 상태 | 설명 |
+|------|------|
+| `default` | 기본 상태 |
+| `loading` | 로딩 중 (스피너 표시) |
+| `empty` | 데이터 없음 |
+| `error` | 유효성 검증 실패 |
+
+### 토큰 바인딩
+
+```
+surface: var(--color-surface)
+border: var(--color-border)
+radius: var(--radius-md)
+padding: var(--space-16) var(--space-20)
+heading-font: var(--font-heading) / var(--text-md) / semibold
+body-font: var(--font-body) / var(--text-sm) / regular
+text: var(--color-text)
+text-muted: var(--color-text-muted)
+```
+
+### 접근성
+
+- 적절한 heading level 사용
+- 데이터 테이블은 scope와 caption 필수
+- 빈 상태에서 안내 텍스트 제공
+
+### 브랜드 적용
+
+- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
+
+### 구현 노트
+
+- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
+- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
+- 빈 상태(empty-state)와 에러 상태를 반드시 처리
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 
 ---
 
@@ -2258,242 +2480,6 @@ font: var(--font-body) / var(--text-sm) / medium
 - 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 - 반응형 검증: 320px, 360px, 390px, 430px에서 control overflow와 viewport horizontal scroll이 없어야 함
 - action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음
-
----
-
-## data-display / stat-card
-
-**역할**: 주요 수치를 표시하는 통계 카드
-
-**탐지 출처**: dashboard cards
-
-**Slot archetype**: `surface-card`
-
-### 구조 (Anatomy)
-
-- container
-- inner-content
-
-### 상태 (States)
-
-| 상태 | 설명 |
-|------|------|
-| `default` | 기본 상태 |
-| `hover` | 마우스 오버 시 |
-| `focus-visible` | focus-visible |
-
-### 토큰 바인딩
-
-```
-surface: var(--color-surface)
-border: var(--color-border)
-border-hover: var(--color-border-strong)
-radius: var(--radius-lg)
-padding: var(--space-32)
-gap: var(--space-16)
-motion: border-color var(--duration-180) var(--ease-standard)
-```
-
-### 접근성
-
-- 카드 자체가 링크/버튼이면 <a>/<button> 래퍼 사용
-- 장식적 카드는 단순 <article> 또는 <div>
-
-### 브랜드 적용
-
-- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
-- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
-
-### Visual Adaptation Hints
-
-- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
-
-### 구현 노트
-
-- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
-- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
-- 빈 상태(empty-state)와 에러 상태를 반드시 처리
-- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
-
----
-
-## data-display / insight-card
-
-**역할**: 인사이트나 트렌드를 요약하는 카드
-
-**탐지 출처**: dashboard cards
-
-**Slot archetype**: `surface-card`
-
-### 구조 (Anatomy)
-
-- container
-- inner-content
-
-### 상태 (States)
-
-| 상태 | 설명 |
-|------|------|
-| `default` | 기본 상태 |
-| `hover` | 마우스 오버 시 |
-| `focus-visible` | focus-visible |
-
-### 토큰 바인딩
-
-```
-surface: var(--color-surface)
-border: var(--color-border)
-border-hover: var(--color-border-strong)
-radius: var(--radius-lg)
-padding: var(--space-32)
-gap: var(--space-16)
-motion: border-color var(--duration-180) var(--ease-standard)
-```
-
-### 접근성
-
-- 카드 자체가 링크/버튼이면 <a>/<button> 래퍼 사용
-- 장식적 카드는 단순 <article> 또는 <div>
-
-### 브랜드 적용
-
-- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
-- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
-
-### Visual Adaptation Hints
-
-- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
-
-### 구현 노트
-
-- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
-- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
-- 빈 상태(empty-state)와 에러 상태를 반드시 처리
-- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
-
----
-
-## data-display / activity-card
-
-**역할**: 최근 활동 피드 카드
-
-**탐지 출처**: dashboard cards
-
-**Slot archetype**: `surface-card`
-
-### 구조 (Anatomy)
-
-- container
-- inner-content
-
-### 상태 (States)
-
-| 상태 | 설명 |
-|------|------|
-| `default` | 기본 상태 |
-| `hover` | 마우스 오버 시 |
-| `focus-visible` | focus-visible |
-
-### 토큰 바인딩
-
-```
-surface: var(--color-surface)
-border: var(--color-border)
-border-hover: var(--color-border-strong)
-radius: var(--radius-lg)
-padding: var(--space-32)
-gap: var(--space-16)
-motion: border-color var(--duration-180) var(--ease-standard)
-```
-
-### 접근성
-
-- 카드 자체가 링크/버튼이면 <a>/<button> 래퍼 사용
-- 장식적 카드는 단순 <article> 또는 <div>
-
-### 브랜드 적용
-
-- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
-- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
-
-### Visual Adaptation Hints
-
-- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
-
-### 구현 노트
-
-- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
-- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
-- 빈 상태(empty-state)와 에러 상태를 반드시 처리
-- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
-
----
-
-## data-display / section-header
-
-**역할**: 대시보드 섹션 구분 헤더
-
-**탐지 출처**: dashboard cards
-
-### 구조 (Anatomy)
-
-- container
-- header
-- content-area
-- footer(optional)
-- action(optional)
-
-### 상태 (States)
-
-| 상태 | 설명 |
-|------|------|
-| `default` | 기본 상태 |
-| `loading` | 로딩 중 (스피너 표시) |
-| `empty` | 데이터 없음 |
-| `error` | 유효성 검증 실패 |
-
-### 토큰 바인딩
-
-```
-surface: var(--color-surface)
-border: var(--color-border)
-radius: var(--radius-md)
-padding: var(--space-16) var(--space-20)
-heading-font: var(--font-heading) / var(--text-md) / semibold
-body-font: var(--font-body) / var(--text-sm) / regular
-text: var(--color-text)
-text-muted: var(--color-text-muted)
-```
-
-### 접근성
-
-- 적절한 heading level 사용
-- 데이터 테이블은 scope와 caption 필수
-- 빈 상태에서 안내 텍스트 제공
-
-### 브랜드 적용
-
-- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
-- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
-
-### Visual Adaptation Hints
-
-- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
-
-### 구현 노트
-
-- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
-- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
-- 빈 상태(empty-state)와 에러 상태를 반드시 처리
-- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
 
 ---
 
@@ -4061,8 +4047,7 @@ text-muted: var(--color-text-muted)
 
 ### Visual Adaptation Hints
 
-- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
 - **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
 
 ### 구현 노트
@@ -4232,8 +4217,7 @@ text-muted: var(--color-text-muted)
 
 ### Visual Adaptation Hints
 
-- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
 - **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
 
 ### 구현 노트
@@ -4599,8 +4583,7 @@ text-muted: var(--color-text-muted)
 
 ### Visual Adaptation Hints
 
-- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
 - **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
 
 ### 구현 노트
@@ -4739,460 +4722,80 @@ motion: opacity var(--duration-180) var(--ease-standard)
 
 ---
 
-## button / cta-button
+## input / switch
 
-**역할**: —
+**역할**: Immediate on/off preference control.
+
+**탐지 출처**: astryx-geist-reference-baseline
 
 ### 구조 (Anatomy)
 
 - container
 - label
+- input-area
+- helper-text(optional)
 - leading-icon(optional)
-- trailing-icon(optional)
+- clear-button(optional)
 
 ### 상태 (States)
 
 | 상태 | 설명 |
 |------|------|
 | `default` | 기본 상태 |
-| `hover` | 마우스 오버 시 |
-| `active` | 클릭/탭 중 |
+| `focus` | 키보드 포커스 시 |
+| `filled` | 값이 입력된 상태 |
+| `error` | 유효성 검증 실패 |
 | `disabled` | 비활성 (상호작용 불가) |
-| `loading` | 로딩 중 (스피너 표시) |
+| `readonly` | 읽기 전용 |
 
 ### 토큰 바인딩
 
 ```
-surface: var(--color-brand-primary)
-text: var(--color-text-inverse)
-border: var(--color-brand-primary)
-radius: var(--radius-md)
-padding: var(--space-12) var(--space-24)
-max-inline-size: 100%
-min-inline-size: 0
-label-wrap: white-space: normal
-font: var(--font-body) / var(--text-md) / semibold
-hover-surface: var(--color-link-hover)
-focus-ring: box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-brand-primary)
-motion: background var(--duration-180) var(--ease-standard)
+surface: var(--color-surface)
+text: var(--color-text)
+placeholder: var(--color-text-subtle)
+border: var(--color-border)
+border-focus: var(--color-brand-primary)
+border-error: var(--color-danger)
+radius: var(--radius-sm)
+padding: var(--space-8) var(--space-12)
+font: var(--font-body) / var(--text-md) / regular
 ```
 
 ### 접근성
 
-- role="button"
-- aria-disabled="true" when disabled
-- aria-busy="true" when loading
-- 최소 44x44 터치 영역
-- 텍스트 대비 4.5:1 이상
-- 320px viewport에서도 버튼 전체와 focus ring이 화면 밖으로 나가지 않아야 함
+- label과 input을 for/id로 연결
+- aria-describedby로 helper/error text 연결
+- aria-invalid="true" when error
+- aria-required="true" when required
 
 ### 브랜드 적용
 
 - [trustworthy] hover: 예측 가능하고 일관된 hover 패턴
-- [trustworthy] motion: 모든 전환에 동일한 easing/duration
-- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
-
-### Visual Adaptation Hints
-
-- **cta_prominence**: CTA prominence는 strong이다. 섹션당 primary CTA 1개만 fill/accent로 강하게 띄우고 secondary는 조용하게 후퇴시킨다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium, layout=data-review-surface)
+- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+- [trustworthy] feedback: 결과를 반드시 확인, 실패 시 복구 방법 안내
 
 ### 레퍼런스 근거
 
 - **Carbon Design System**: These components can toggle between the AI variant and the default variant depending on the user’s interaction. If the user manually overrides the ...
-- **Primer**: I get so much joy from writing HTML and CSS, and design systems are one level up - systematically making UIs accessible and consistent. I love conc...
+- **Primer**: Note: legacy variables in Primer React from the theme object all resolve to CSS variables under the hood. While the new naming convention is not av...
 
 ### 구현 노트
 
 - 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
 - variant prop으로 시각적 변형을 관리 (하드코딩 금지)
-- size prop: sm / md / lg (터치 영역은 항상 최소 44px 보장)
-- 모든 버튼은 `max-inline-size: 100%`와 `min-inline-size: 0`을 기본 보호값으로 갖고, 긴 라벨은 모바일에서 wrap 또는 action-group stack으로 처리
-- fixed `width`/`min-width` px 값으로 CTA 폭을 고정하지 않음 — 필요하면 container query 또는 <=480px stack fallback을 함께 정의
+- error 상태에서 helper text → error message로 자동 전환
+- label은 항상 visible (placeholder만으로 대체 금지)
 - 반응형 검증: 320px, 360px, 390px, 430px에서 control overflow와 viewport horizontal scroll이 없어야 함
 - action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음
-
----
-
-## navigation / mobile-topbar
-
-**역할**: —
-
-### 구조 (Anatomy)
-
-- container
-- nav-item
-- icon(optional)
-- label
-- indicator(active)
-- badge(optional)
-
-### 상태 (States)
-
-| 상태 | 설명 |
-|------|------|
-| `default` | 기본 상태 |
-| `hover` | 마우스 오버 시 |
-| `active` | 클릭/탭 중 |
-| `collapsed` | 접힌 상태 |
-
-### 토큰 바인딩
-
-```
-surface: var(--color-surface)
-text: var(--color-text-muted)
-text-active: var(--color-text)
-indicator: var(--color-brand-accent)
-padding: var(--space-8) var(--space-16)
-font: var(--font-body) / var(--text-sm) / medium
-```
-
-### 접근성
-
-- nav landmark (role="navigation")
-- aria-current="page" for active item
-- 키보드 화살표 탐색 지원
-
-### 브랜드 적용
-
-- [trustworthy] hover: 예측 가능하고 일관된 hover 패턴
-- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
-- [trustworthy] motion: 모든 전환에 동일한 easing/duration
-
-### Visual Adaptation Hints
-
-- **filter_nav_density**: filter/nav density는 compact하다. chip, scope, pagination을 촘촘하게 묶되 의미 단위별 group은 분리한다. (source=navigation; confidence=0.15; provenance=inferred; direction=navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.; evidence=Data review surface, layout=data-review-surface, density=dense)
-
-### 레퍼런스 근거
-
-- **Carbon Design System**: Library menu navigation There are two kinds of symbols — library symbols and document symbols. Library symbols are available in any Sketch document...
-- **Primer**: Octicon nav items navigation 12 px
-
-### 구현 노트
-
-- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
-- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
-- active 상태는 URL/라우터와 자동 동기화
-- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
-- 반응형 검증: 320px, 360px, 390px, 430px에서 control overflow와 viewport horizontal scroll이 없어야 함
-- action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음
-
----
-
-## navigation / mobile-tab-bar
-
-**역할**: —
-
-### 구조 (Anatomy)
-
-- container
-- nav-item
-- icon(optional)
-- label
-- indicator(active)
-- badge(optional)
-
-### 상태 (States)
-
-| 상태 | 설명 |
-|------|------|
-| `default` | 기본 상태 |
-| `hover` | 마우스 오버 시 |
-| `active` | 클릭/탭 중 |
-| `collapsed` | 접힌 상태 |
-
-### 토큰 바인딩
-
-```
-surface: var(--color-surface)
-text: var(--color-text-muted)
-text-active: var(--color-text)
-indicator: var(--color-brand-accent)
-padding: var(--space-8) var(--space-16)
-font: var(--font-body) / var(--text-sm) / medium
-```
-
-### 접근성
-
-- nav landmark (role="navigation")
-- aria-current="page" for active item
-- 키보드 화살표 탐색 지원
-
-### 브랜드 적용
-
-- [trustworthy] hover: 예측 가능하고 일관된 hover 패턴
-- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
-- [trustworthy] motion: 모든 전환에 동일한 easing/duration
-
-### Visual Adaptation Hints
-
-- **filter_nav_density**: filter/nav density는 compact하다. chip, scope, pagination을 촘촘하게 묶되 의미 단위별 group은 분리한다. (source=navigation; confidence=0.15; provenance=inferred; direction=navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.; evidence=Data review surface, layout=data-review-surface, density=dense)
-
-### 레퍼런스 근거
-
-- **Carbon Design System**: Library menu navigation There are two kinds of symbols — library symbols and document symbols. Library symbols are available in any Sketch document...
-- **Primer**: Octicon nav items navigation 12 px
-
-### 구현 노트
-
-- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
-- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
-- active 상태는 URL/라우터와 자동 동기화
-- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
-- 반응형 검증: 320px, 360px, 390px, 430px에서 control overflow와 viewport horizontal scroll이 없어야 함
-- action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음
-
----
-
-## navigation / back-button
-
-**역할**: —
-
-### 구조 (Anatomy)
-
-- container
-- nav-item
-- icon(optional)
-- label
-- indicator(active)
-- badge(optional)
-
-### 상태 (States)
-
-| 상태 | 설명 |
-|------|------|
-| `default` | 기본 상태 |
-| `hover` | 마우스 오버 시 |
-| `active` | 클릭/탭 중 |
-| `collapsed` | 접힌 상태 |
-
-### 토큰 바인딩
-
-```
-surface: var(--color-surface)
-text: var(--color-text-muted)
-text-active: var(--color-text)
-indicator: var(--color-brand-accent)
-padding: var(--space-8) var(--space-16)
-font: var(--font-body) / var(--text-sm) / medium
-```
-
-### 접근성
-
-- nav landmark (role="navigation")
-- aria-current="page" for active item
-- 키보드 화살표 탐색 지원
-
-### 브랜드 적용
-
-- [trustworthy] hover: 예측 가능하고 일관된 hover 패턴
-- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
-- [trustworthy] motion: 모든 전환에 동일한 easing/duration
-
-### Visual Adaptation Hints
-
-- **cta_prominence**: CTA prominence는 restrained이다. 데이터 작업 흐름을 가리지 않도록 primary만 선명하게 두고 나머지는 text/ghost로 낮춘다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium, layout=data-review-surface)
-- **filter_nav_density**: filter/nav density는 compact하다. chip, scope, pagination을 촘촘하게 묶되 의미 단위별 group은 분리한다. (source=navigation; confidence=0.15; provenance=inferred; direction=navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.; evidence=Data review surface, layout=data-review-surface, density=dense)
-
-### 레퍼런스 근거
-
-- **Carbon Design System**: Library menu navigation There are two kinds of symbols — library symbols and document symbols. Library symbols are available in any Sketch document...
-- **Primer**: Octicon nav items navigation 12 px
-
-### 구현 노트
-
-- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
-- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
-- active 상태는 URL/라우터와 자동 동기화
-- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
-- 반응형 검증: 320px, 360px, 390px, 430px에서 control overflow와 viewport horizontal scroll이 없어야 함
-- action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음
-
----
-
-## navigation / section-tabs
-
-**역할**: —
-
-### 구조 (Anatomy)
-
-- container
-- nav-item
-- icon(optional)
-- label
-- indicator(active)
-- badge(optional)
-
-### 상태 (States)
-
-| 상태 | 설명 |
-|------|------|
-| `default` | 기본 상태 |
-| `hover` | 마우스 오버 시 |
-| `active` | 클릭/탭 중 |
-| `collapsed` | 접힌 상태 |
-
-### 토큰 바인딩
-
-```
-surface: var(--color-surface)
-text: var(--color-text-muted)
-text-active: var(--color-text)
-indicator: var(--color-brand-accent)
-padding: var(--space-8) var(--space-16)
-font: var(--font-body) / var(--text-sm) / medium
-```
-
-### 접근성
-
-- nav landmark (role="navigation")
-- aria-current="page" for active item
-- 키보드 화살표 탐색 지원
-
-### 브랜드 적용
-
-- [trustworthy] hover: 예측 가능하고 일관된 hover 패턴
-- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
-- [trustworthy] motion: 모든 전환에 동일한 easing/duration
-
-### Visual Adaptation Hints
-
-- **filter_nav_density**: filter/nav density는 compact하다. chip, scope, pagination을 촘촘하게 묶되 의미 단위별 group은 분리한다. (source=navigation; confidence=0.15; provenance=inferred; direction=navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.; evidence=Data review surface, layout=data-review-surface, density=dense)
-
-### 레퍼런스 근거
-
-- **Carbon Design System**: Library menu navigation There are two kinds of symbols — library symbols and document symbols. Library symbols are available in any Sketch document...
-- **Primer**: Octicon nav items navigation 12 px
-
-### 구현 노트
-
-- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
-- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
-- active 상태는 URL/라우터와 자동 동기화
-- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
-- 반응형 검증: 320px, 360px, 390px, 430px에서 control overflow와 viewport horizontal scroll이 없어야 함
-- action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음
-
----
-
-## overlay / bottom-sheet
-
-**역할**: —
-
-### 구조 (Anatomy)
-
-- backdrop
-- container
-- header
-- content
-- footer(optional)
-- close-button
-
-### 상태 (States)
-
-| 상태 | 설명 |
-|------|------|
-| `closed` | 닫힌 상태 |
-| `opening` | 열리는 중 (전환 애니메이션) |
-| `open` | 열린 상태 |
-| `closing` | 닫히는 중 |
-
-### 토큰 바인딩
-
-```
-surface: var(--color-surface-elevated)
-backdrop: rgb(0 0 0 / 0.5)
-radius: var(--radius-lg)
-padding: var(--space-24)
-border: var(--color-border)
-motion: opacity var(--duration-180) var(--ease-standard)
-```
-
-### 접근성
-
-- role="dialog" with aria-modal="true"
-- focus trap (Tab 순환)
-- Escape로 닫기
-- aria-labelledby로 제목 연결
-- 닫은 후 trigger 요소로 포커스 복귀
-
-### 브랜드 적용
-
-- [trustworthy] motion: 모든 전환에 동일한 easing/duration
-- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
-
-### 레퍼런스 근거
-
-- **Primer**: ActionMenu is composed of ActionList and Overlay patterns used for quick actions and selections. AnchoredOverlay
-
-### 구현 노트
-
-- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
-- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
-- Escape / backdrop click으로 닫기, 열 때 첫 focusable 요소로 이동
-
----
-
-## overlay / modal-dialog
-
-**역할**: —
-
-### 구조 (Anatomy)
-
-- backdrop
-- container
-- header
-- content
-- footer(optional)
-- close-button
-
-### 상태 (States)
-
-| 상태 | 설명 |
-|------|------|
-| `closed` | 닫힌 상태 |
-| `opening` | 열리는 중 (전환 애니메이션) |
-| `open` | 열린 상태 |
-| `closing` | 닫히는 중 |
-
-### 토큰 바인딩
-
-```
-surface: var(--color-surface-elevated)
-backdrop: rgb(0 0 0 / 0.5)
-radius: var(--radius-lg)
-padding: var(--space-24)
-border: var(--color-border)
-motion: opacity var(--duration-180) var(--ease-standard)
-```
-
-### 접근성
-
-- role="dialog" with aria-modal="true"
-- focus trap (Tab 순환)
-- Escape로 닫기
-- aria-labelledby로 제목 연결
-- 닫은 후 trigger 요소로 포커스 복귀
-
-### 브랜드 적용
-
-- [trustworthy] motion: 모든 전환에 동일한 easing/duration
-- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
-
-### 레퍼런스 근거
-
-- **Primer**: ActionMenu is composed of ActionList and Overlay patterns used for quick actions and selections. AnchoredOverlay
-
-### 구현 노트
-
-- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
-- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
-- Escape / backdrop click으로 닫기, 열 때 첫 focusable 요소로 이동
 
 ---
 
 ## input / segmented-control
 
-**역할**: —
+**역할**: Small mutually exclusive mode switcher.
+
+**탐지 출처**: astryx-geist-reference-baseline
 
 ### 구조 (Anatomy)
 
@@ -5257,6 +4860,460 @@ font: var(--font-body) / var(--text-md) / regular
 
 ---
 
+## navigation / breadcrumbs
+
+**역할**: Hierarchy trail for deep product areas.
+
+**탐지 출처**: astryx-geist-reference-baseline
+
+### 구조 (Anatomy)
+
+- container
+- nav-item
+- icon(optional)
+- label
+- indicator(active)
+- badge(optional)
+
+### 상태 (States)
+
+| 상태 | 설명 |
+|------|------|
+| `default` | 기본 상태 |
+| `hover` | 마우스 오버 시 |
+| `active` | 클릭/탭 중 |
+| `collapsed` | 접힌 상태 |
+
+### 토큰 바인딩
+
+```
+surface: var(--color-surface)
+text: var(--color-text-muted)
+text-active: var(--color-text)
+indicator: var(--color-brand-accent)
+padding: var(--space-8) var(--space-16)
+font: var(--font-body) / var(--text-sm) / medium
+```
+
+### 접근성
+
+- nav landmark (role="navigation")
+- aria-current="page" for active item
+- 키보드 화살표 탐색 지원
+
+### 브랜드 적용
+
+- [trustworthy] hover: 예측 가능하고 일관된 hover 패턴
+- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+- [trustworthy] motion: 모든 전환에 동일한 easing/duration
+
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 compact하다. chip, scope, pagination을 촘촘하게 묶되 의미 단위별 group은 분리한다. (source=navigation; confidence=0.15; provenance=inferred; direction=navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.; evidence=Data review surface, layout=data-review-surface, density=dense)
+
+### 레퍼런스 근거
+
+- **Carbon Design System**: Library menu navigation There are two kinds of symbols — library symbols and document symbols. Library symbols are available in any Sketch document...
+- **Primer**: Octicon nav items navigation 12 px
+
+### 구현 노트
+
+- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
+- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
+- active 상태는 URL/라우터와 자동 동기화
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
+- 반응형 검증: 320px, 360px, 390px, 430px에서 control overflow와 viewport horizontal scroll이 없어야 함
+- action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음
+
+---
+
+## navigation / tabs
+
+**역할**: Peer view switcher for related panels.
+
+**탐지 출처**: astryx-geist-reference-baseline
+
+### 구조 (Anatomy)
+
+- container
+- nav-item
+- icon(optional)
+- label
+- indicator(active)
+- badge(optional)
+
+### 상태 (States)
+
+| 상태 | 설명 |
+|------|------|
+| `default` | 기본 상태 |
+| `hover` | 마우스 오버 시 |
+| `active` | 클릭/탭 중 |
+| `collapsed` | 접힌 상태 |
+
+### 토큰 바인딩
+
+```
+surface: var(--color-surface)
+text: var(--color-text-muted)
+text-active: var(--color-text)
+indicator: var(--color-brand-accent)
+padding: var(--space-8) var(--space-16)
+font: var(--font-body) / var(--text-sm) / medium
+```
+
+### 접근성
+
+- nav landmark (role="navigation")
+- aria-current="page" for active item
+- 키보드 화살표 탐색 지원
+
+### 브랜드 적용
+
+- [trustworthy] hover: 예측 가능하고 일관된 hover 패턴
+- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+- [trustworthy] motion: 모든 전환에 동일한 easing/duration
+
+### Visual Adaptation Hints
+
+- **filter_nav_density**: filter/nav density는 compact하다. chip, scope, pagination을 촘촘하게 묶되 의미 단위별 group은 분리한다. (source=navigation; confidence=0.15; provenance=inferred; direction=navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.; evidence=Data review surface, layout=data-review-surface, density=dense)
+
+### 레퍼런스 근거
+
+- **Carbon Design System**: Library menu navigation There are two kinds of symbols — library symbols and document symbols. Library symbols are available in any Sketch document...
+- **Primer**: Octicon nav items navigation 12 px
+
+### 구현 노트
+
+- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
+- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
+- active 상태는 URL/라우터와 자동 동기화
+- 좁은 UI 텍스트는 Pretendard 기준 label line-height 1.4-1.5를 참고해 뭉침을 방지
+- 반응형 검증: 320px, 360px, 390px, 430px에서 control overflow와 viewport horizontal scroll이 없어야 함
+- action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음
+
+---
+
+## feedback / badge
+
+**역할**: Compact status, category, or count label.
+
+**탐지 출처**: astryx-geist-reference-baseline
+
+### 구조 (Anatomy)
+
+- container
+- icon
+- message
+- action(optional)
+- close-button(optional)
+
+### 상태 (States)
+
+| 상태 | 설명 |
+|------|------|
+| `info` | 정보 알림 |
+| `success` | 성공 알림 |
+| `warning` | 경고 알림 |
+| `danger` | 에러/위험 알림 |
+
+### 토큰 바인딩
+
+```
+surface: var(--color-surface-muted)
+text: var(--color-text)
+icon: var(--color-info)
+border: var(--color-border)
+radius: var(--radius-sm)
+padding: var(--space-12) var(--space-16)
+severity-info: var(--color-info)
+severity-success: var(--color-success)
+severity-warning: var(--color-warning)
+severity-danger: var(--color-danger)
+```
+
+### 접근성
+
+- role="alert" for urgent messages
+- role="status" for non-urgent
+- aria-live="polite" or "assertive"
+- 닫기 버튼에 aria-label 필수
+
+### 브랜드 적용
+
+- [trustworthy] feedback: 결과를 반드시 확인, 실패 시 복구 방법 안내
+- [trustworthy] motion: 모든 전환에 동일한 easing/duration
+- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### 레퍼런스 근거
+
+- **Carbon Design System**: We welcome all feedback, designs, or ideas in order to produce the best possible experience for our users. If you're interested in contributing, ch...
+- **Primer**: CircleBadge CircleBadge visually connects logos of third-party services, eg. in the marketplace.
+
+### 구현 노트
+
+- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
+- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
+- auto-dismiss 시간은 내용 길이에 비례 (기본 5초)
+- 반응형 검증: 320px, 360px, 390px, 430px에서 control overflow와 viewport horizontal scroll이 없어야 함
+- action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음
+
+---
+
+## feedback / status-dot
+
+**역할**: Small operational status indicator paired with visible text.
+
+**탐지 출처**: astryx-geist-reference-baseline
+
+### 구조 (Anatomy)
+
+- container
+- icon
+- message
+- action(optional)
+- close-button(optional)
+
+### 상태 (States)
+
+| 상태 | 설명 |
+|------|------|
+| `info` | 정보 알림 |
+| `success` | 성공 알림 |
+| `warning` | 경고 알림 |
+| `danger` | 에러/위험 알림 |
+
+### 토큰 바인딩
+
+```
+surface: var(--color-surface-muted)
+text: var(--color-text)
+icon: var(--color-info)
+border: var(--color-border)
+radius: var(--radius-sm)
+padding: var(--space-12) var(--space-16)
+severity-info: var(--color-info)
+severity-success: var(--color-success)
+severity-warning: var(--color-warning)
+severity-danger: var(--color-danger)
+```
+
+### 접근성
+
+- role="alert" for urgent messages
+- role="status" for non-urgent
+- aria-live="polite" or "assertive"
+- 닫기 버튼에 aria-label 필수
+
+### 브랜드 적용
+
+- [trustworthy] feedback: 결과를 반드시 확인, 실패 시 복구 방법 안내
+- [trustworthy] motion: 모든 전환에 동일한 easing/duration
+- [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
+
+### 레퍼런스 근거
+
+- **Carbon Design System**: We welcome all feedback, designs, or ideas in order to produce the best possible experience for our users. If you're interested in contributing, ch...
+- **Primer**: Messaging components are used to provide important and relevant information to the user, including feedback, contextual information, product update...
+
+### 구현 노트
+
+- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
+- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
+- auto-dismiss 시간은 내용 길이에 비례 (기본 5초)
+- 반응형 검증: 320px, 360px, 390px, 430px에서 control overflow와 viewport horizontal scroll이 없어야 함
+- action row는 narrow viewport에서 `flex-wrap: wrap` 또는 세로 stack으로 전환하고, overflow-x 숨김으로 문제를 덮지 않음
+
+---
+
+## overlay / dialog
+
+**역할**: Modal decision or focused task surface.
+
+**탐지 출처**: astryx-geist-reference-baseline
+
+### 구조 (Anatomy)
+
+- backdrop
+- container
+- header
+- content
+- footer(optional)
+- close-button
+
+### 상태 (States)
+
+| 상태 | 설명 |
+|------|------|
+| `closed` | 닫힌 상태 |
+| `opening` | 열리는 중 (전환 애니메이션) |
+| `open` | 열린 상태 |
+| `closing` | 닫히는 중 |
+
+### 토큰 바인딩
+
+```
+surface: var(--color-surface-elevated)
+backdrop: rgb(0 0 0 / 0.5)
+radius: var(--radius-lg)
+padding: var(--space-24)
+border: var(--color-border)
+motion: opacity var(--duration-180) var(--ease-standard)
+```
+
+### 접근성
+
+- role="dialog" with aria-modal="true"
+- focus trap (Tab 순환)
+- Escape로 닫기
+- aria-labelledby로 제목 연결
+- 닫은 후 trigger 요소로 포커스 복귀
+
+### 브랜드 적용
+
+- [trustworthy] motion: 모든 전환에 동일한 easing/duration
+- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+
+### 레퍼런스 근거
+
+- **Primer**: ConfirmationDialog ConfirmationDialog is a specialized dialog component used to confirm user actions. It provides a simple way to ask users to conf...
+
+### 구현 노트
+
+- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
+- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
+- Escape / backdrop click으로 닫기, 열 때 첫 focusable 요소로 이동
+
+---
+
+## overlay / popover
+
+**역할**: Anchored transient surface for short forms or contextual controls.
+
+**탐지 출처**: astryx-geist-reference-baseline
+
+### 구조 (Anatomy)
+
+- backdrop
+- container
+- header
+- content
+- footer(optional)
+- close-button
+
+### 상태 (States)
+
+| 상태 | 설명 |
+|------|------|
+| `closed` | 닫힌 상태 |
+| `opening` | 열리는 중 (전환 애니메이션) |
+| `open` | 열린 상태 |
+| `closing` | 닫히는 중 |
+
+### 토큰 바인딩
+
+```
+surface: var(--color-surface-elevated)
+backdrop: rgb(0 0 0 / 0.5)
+radius: var(--radius-lg)
+padding: var(--space-24)
+border: var(--color-border)
+motion: opacity var(--duration-180) var(--ease-standard)
+```
+
+### 접근성
+
+- role="dialog" with aria-modal="true"
+- focus trap (Tab 순환)
+- Escape로 닫기
+- aria-labelledby로 제목 연결
+- 닫은 후 trigger 요소로 포커스 복귀
+
+### 브랜드 적용
+
+- [trustworthy] motion: 모든 전환에 동일한 easing/duration
+- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+
+### 레퍼런스 근거
+
+- **Carbon Design System**: The AI label is also the trigger for the explainability popover which serves as the first layer of explainability. It provides a consistent, up-fro...
+- **Primer**: Popover Popover is used to bring attention to specific user interface elements.
+
+### 구현 노트
+
+- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
+- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
+- Escape / backdrop click으로 닫기, 열 때 첫 focusable 요소로 이동
+
+---
+
+## overlay / tooltip
+
+**역할**: Short accessible explanation for icon-only or compact controls.
+
+**탐지 출처**: astryx-geist-reference-baseline
+
+### 구조 (Anatomy)
+
+- backdrop
+- container
+- header
+- content
+- footer(optional)
+- close-button
+
+### 상태 (States)
+
+| 상태 | 설명 |
+|------|------|
+| `closed` | 닫힌 상태 |
+| `opening` | 열리는 중 (전환 애니메이션) |
+| `open` | 열린 상태 |
+| `closing` | 닫히는 중 |
+
+### 토큰 바인딩
+
+```
+surface: var(--color-surface-elevated)
+backdrop: rgb(0 0 0 / 0.5)
+radius: var(--radius-lg)
+padding: var(--space-24)
+border: var(--color-border)
+motion: opacity var(--duration-180) var(--ease-standard)
+```
+
+### 접근성
+
+- role="dialog" with aria-modal="true"
+- focus trap (Tab 순환)
+- Escape로 닫기
+- aria-labelledby로 제목 연결
+- 닫은 후 trigger 요소로 포커스 복귀
+
+### 브랜드 적용
+
+- [trustworthy] motion: 모든 전환에 동일한 easing/duration
+- [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+
+### 레퍼런스 근거
+
+- **Carbon Design System**: We’re also using this release to address some of the outstanding accessibility issues for components like Notification and Tooltip along with consi...
+- **Primer**: Tooltip Tooltips add additional context to interactive UI elements and appear on mouse hover or keyboard focus.
+
+### 구현 노트
+
+- 기존에 같은 역할의 컴포넌트가 있으면 토큰 교체부터 시작
+- variant prop으로 시각적 변형을 관리 (하드코딩 금지)
+- Escape / backdrop click으로 닫기, 열 때 첫 focusable 요소로 이동
+
+---
+
 ## overlay / inspector-drawer
 
 **역할**: Contextual detail drawer for properties, policy facts, or record metadata
@@ -5310,6 +5367,10 @@ padding: var(--space-24)
 
 - [trustworthy] motion: 모든 전환에 동일한 easing/duration
 - [trustworthy] density: 기존 레이아웃 유지, 갑작스런 위치 변경 없음
+
+### Visual Adaptation Hints
+
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
 
 ### 레퍼런스 근거
 
@@ -5377,6 +5438,10 @@ gap: var(--space-16)
 - [trustworthy] hover: 예측 가능하고 일관된 hover 패턴
 - [trustworthy] motion: 모든 전환에 동일한 easing/duration
 - [trustworthy] color: 안정적인 neutral 기반, 과한 accent 변화 없음
+
+### Visual Adaptation Hints
+
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
 
 ### 레퍼런스 근거
 
@@ -5804,8 +5869,7 @@ font: var(--font-body)
 
 ### Visual Adaptation Hints
 
-- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
 - **filter_nav_density**: filter/nav density는 compact하다. chip, scope, pagination을 촘촘하게 묶되 의미 단위별 group은 분리한다. (source=navigation; confidence=0.15; provenance=inferred; direction=navigation은 compact하게 유지하되 filter/scope controls와 혼합하지 않는다.; evidence=Data review surface, layout=data-review-surface, density=dense)
 - **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
 
@@ -5940,8 +6004,7 @@ radius: var(--radius-md)
 
 ### Visual Adaptation Hints
 
-- **card_elevation_tendency**: 카드는 낮은 elevation만 허용하고 색면 차이로 그룹을 구분한다. 압축된 spacing에서도 header/body/footer 구획은 divider나 tint로 유지한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
-- **border_vs_fill_emphasis**: fill 중심이다. tint surface로 성격을 만들고 border는 아주 얇게 보조한다. (source=cards; confidence=0.15; provenance=inferred; direction=low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.; evidence=surface=tinted, density=dense, corner=medium)
+- **operational_surface_role**: 주 작업 표면은 card wall이 아니라 table/list/rail/canvas 계열로 설계한다. 압축된 표면에서는 row height, column rhythm, sticky toolbar, source/update label을 우선한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface)
 - **chart_panel_framing**: 차트 패널은 soft tint frame과 restrained divider로 프레이밍한다. 헤더의 metric, controls, plot 영역을 분리하고 내부 여백은 촘촘하게 관리한다. (source=data_display; confidence=0.17; provenance=inferred; direction=정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.; evidence=layout=dashboard-grid, density=dense, layout=data-review-surface, surface=tinted)
 
 ### 구현 노트

@@ -1391,7 +1391,9 @@
         "mono는 데이터와 shortcut hint에 제한",
         "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
         "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
-        "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다."
+        "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
+        "Pretendard 같은 한글 display 헤딩은 line-height를 1.02 미만으로 낮추지 않는다.",
+        "한글 display 헤딩 tracking은 -0.02em ~ 0.01em 범위를 벗어나지 않는다."
       ],
       "recommended_fonts": {
         "heading": "Pretendard",
@@ -1485,11 +1487,27 @@
           "headline_start": "default-scale",
           "guidance": "기본 스케일을 사용할 수 있지만 한글 문장 기준으로 실제 wrap을 먼저 검증한다."
         },
+        "implementation_constraints": {
+          "headline_display": {
+            "line_height_min": "1.02",
+            "letter_spacing_min": "-0.02em",
+            "letter_spacing_max": "0.01em",
+            "recommended_line_height": "1.25-1.35",
+            "recommended_letter_spacing": "0em",
+            "forced_breaks_policy": "disallow-before-breakpoint-qa"
+          },
+          "ui_label": {
+            "serif_usage": "allow-with-review",
+            "body_line_height": "1.4-1.5"
+          }
+        },
         "warnings": [],
         "rules": [
           "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
           "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
-          "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다."
+          "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
+          "Pretendard 같은 한글 display 헤딩은 line-height를 1.02 미만으로 낮추지 않는다.",
+          "한글 display 헤딩 tracking은 -0.02em ~ 0.01em 범위를 벗어나지 않는다."
         ]
       },
       "type_scale": {

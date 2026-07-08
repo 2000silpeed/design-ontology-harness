@@ -62,6 +62,11 @@ AI_SYNTHESIS_PRINCIPLES = [
         "detail": "AI는 사이트, 앱, 랜딩, 제품 소개, 콘텐츠 카드, 스포츠/장소/상품/포트폴리오 목업을 이미지 없는 카드와 그라디언트 블록만으로 끝내지 않는다. 도메인 실체를 드러내는 생성 이미지, 라이선스 검증 이미지, 사용자 제공 이미지, 브랜드 identity asset을 적극적으로 배치하고 manifest/alt/crop/반응형 검증까지 완료한다. 단 대시보드·운영 UI에서는 이미지가 표, 필터, 상태, 출처 같은 핵심 작업 표면을 밀어내지 않게 한다.",
     },
     {
+        "id": "html_mockups_are_product_prototypes",
+        "rule": "HTML 목업은 제품 표면 계약이다",
+        "detail": "AI는 HTML 목업을 그림판처럼 쓰지 않는다. 차트, 그래프, 지도, 캘린더, 칸반, 간트, 스프레드시트, 에디터 캔버스 같은 복합 표면은 data-runtime-surface/data-product-surface, 데이터 모델, 출처, 항목 ID, 상태 세트를 드러내야 한다. 관계나 수치 기준을 설명하지 못하면 장식 그래프 대신 table, ledger, timeline처럼 검증 가능한 표면을 사용한다.",
+    },
+    {
         "id": "no_homogeneous_card_wall",
         "rule": "카드벽을 기본 레이아웃으로 쓰지 않는다",
         "detail": "AI는 페이지 섹션 전체를 카드 안에 다시 넣거나, 동일한 radius/shadow/padding을 가진 카드 묶음으로 화면을 채우지 않는다. 반복되는 객체에는 카드가 가능하지만, 1차 작업 표면은 canvas, map, table, row list, rail, inspector, sheet 같은 도메인 구조로 먼저 만든다.",
@@ -324,6 +329,7 @@ MOCKUP_VISUAL_SUBSTANCE_POLICY = {
         "Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.",
         "Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.",
         "Do not represent evidence maps, relation maps, or product data graphs as hand-positioned HTML nodes connected by rotated CSS lines. Use a real graph/chart library, SVG/canvas visualization with semantic labels and runtime data, or a ledger/table when the relationship is simple.",
+        "Do not fake workflow graphs by overlaying freehand SVG curves on separately positioned HTML nodes. Graph nodes and edges must share one coordinate system and expose node/edge ids, direction, labels, and runtime state.",
         "A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.",
         "Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.",
         "Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.",
@@ -373,6 +379,13 @@ MOCKUP_VISUAL_SUBSTANCE_POLICY = {
             "technical_controls": ["lint-implementation DS082", "component_specs.md data visualization notes", "visual QA screenshots"],
         },
         {
+            "id": "freehand-svg-connector-graph",
+            "trigger": "A workflow, relation, or evidence graph uses an SVG connector layer such as wires/connector-layer plus separately positioned HTML nodes, with no node/edge ids, direction labels, or shared graph coordinate system.",
+            "rule": "A graph surface must encode the relationship model, not just draw curves between boxes.",
+            "prevention": "Use a graph library, or author the graph as one semantic SVG/canvas surface with data-node-id, data-edge-id, data-from/data-to, arrowheads, edge labels, and runtime state. If the relationship is simple, use a table, timeline, or ledger.",
+            "technical_controls": ["lint-implementation DS083", "component_specs.md graph validity notes", "visual QA screenshots"],
+        },
+        {
             "id": "media-runtime-surface-without-asset",
             "trigger": "A place, product, article, or content detail declares a media/photo runtime surface but renders only CSS patterns, gradients, or generic blocks.",
             "rule": "Runtime media surfaces need actual media assets or explicit empty/loading states.",
@@ -395,6 +408,89 @@ MOCKUP_VISUAL_SUBSTANCE_POLICY = {
         },
     ],
     "outputs": ["design_system_blueprint.governance", "system_spec.md", "system_ontology.json", "IMPLEMENTATION_CONTRACT.md", "agent_packs", "visual QA", "compare-visuals"],
+}
+
+HTML_PROTOTYPE_CONTRACT_POLICY = {
+    "id": "html-prototype-contract",
+    "rule": "HTML mockups must behave as thin executable product prototypes, not static screenshots made from divs.",
+    "applies_to": [
+        "static HTML mockups",
+        "Vite/Next demo screens",
+        "product workflow prototypes",
+        "data dashboards",
+        "maps/charts/calendars/boards",
+        "editor or canvas surfaces",
+    ],
+    "required_contracts": [
+        "Mark the primary surface with data-product-prototype or an equivalent prototype marker when it is a reviewable mockup.",
+        "Each major product surface declares data-runtime-surface or data-product-surface so reviewers know whether it represents a map SDK, chart layer, table view, calendar, board, media slot, editor canvas, or empty/loading state.",
+        "Data-heavy surfaces expose model/source/id metadata such as data-model, data-source, data-row-id, data-item-id, data-event-id, data-node-id, and data-edge-id.",
+        "Prototype reviews include a state set: default, selected, loading, empty, error, disabled, pending, approved/blocked, or domain-specific equivalents.",
+        "Contract metadata is not enough: prototypes must include token-bound layout, surface, typography, state, and affordance styling so they do not render as browser-default HTML.",
+        "Charts, graphs, maps, calendars, kanban boards, gantt views, spreadsheets, and editor canvases use a proven library or one semantic SVG/canvas/table coordinate system with labels, axes, direction, state, and provenance.",
+        "Playwright QA captures desktop and mobile viewports and verifies no horizontal overflow, clipped labels, or incoherent overlaps before the mockup is called complete.",
+    ],
+    "implementation_rules": [
+        "Do not use mock/placeholder/fake/static chart, map, calendar, board, graph, or canvas classes without a runtime/data contract.",
+        "Do not satisfy the contract with aria labels alone; labels help accessibility, but product structure needs model/source/id/state metadata.",
+        "Do not stop at metadata-only fixtures. If the page still looks like default browser HTML, add product-surface styling or mark the artifact as a non-visual test fixture.",
+        "Prefer table, ledger, timeline, or row list when the relationship is simple enough that a graph would be decorative.",
+        "If a complex surface cannot be backed by data or a real interaction model yet, render an explicit empty/loading/pending state instead of a fake finished surface.",
+        "Sample numbers must be visibly labeled as sample/demo and paired with a source or update context.",
+    ],
+    "improvement_loop": [
+        {
+            "step": "observe",
+            "rule": "Collect the reviewer complaint, current screenshot or DOM evidence, and the exact artifact path before making changes.",
+        },
+        {
+            "step": "classify",
+            "rule": "Decide whether the issue is implementation-only, missing product contract, missing visual styling, wrong visualization model, responsive failure, or a repeatable ontology gap.",
+        },
+        {
+            "step": "promote",
+            "rule": "If the failure can recur, promote it into governance, IMPLEMENTATION_CONTRACT, lint-implementation, and a regression test before calling the screen fixed.",
+        },
+        {
+            "step": "repair",
+            "rule": "Repair the artifact using product-surface structures, token-bound styling, runtime metadata, and state scenarios rather than cosmetic color changes.",
+        },
+        {
+            "step": "verify",
+            "rule": "Run lint-implementation, targeted tests, and desktop/mobile visual QA or screenshot comparison. If a new failure appears, loop back to classify.",
+        },
+    ],
+    "failure_patterns": [
+        {
+            "id": "complex-mock-surface-without-contract",
+            "trigger": "A chart, graph, map, calendar, kanban, gantt, spreadsheet, timeline, board, inspector, or canvas surface is labeled mock/placeholder/fake/static/sample but has no runtime, model, source, id, or state metadata.",
+            "rule": "A complex HTML mock surface needs a product contract before it can be visually judged.",
+            "prevention": "Add data-runtime-surface or data-product-surface plus model/source/id/state metadata, or replace the surface with a simpler table, ledger, or explicit empty/loading state.",
+            "technical_controls": ["lint-implementation DS084", "IMPLEMENTATION_CONTRACT.md", "Playwright screenshot QA"],
+        },
+        {
+            "id": "single-state-html-prototype",
+            "trigger": "A screen is marked as an HTML/product prototype but exposes only one happy-path state.",
+            "rule": "Prototype fidelity includes state coverage, not only a polished default screenshot.",
+            "prevention": "Add data-prototype-state-set or visible data-state scenarios for default, selected, loading, empty, error, and domain-specific states.",
+            "technical_controls": ["lint-implementation DS085", "component_specs.md states", "Playwright desktop/mobile screenshots"],
+        },
+        {
+            "id": "metadata-only-html-prototype",
+            "trigger": "A screen has data-product-prototype, runtime metadata, and state values, but renders as browser-default HTML because it lacks layout, surface, typography, state, and affordance styling.",
+            "rule": "A prototype contract is not visually complete until the product surface is styled and reviewable.",
+            "prevention": "Add token-bound product-surface CSS, icon/visual affordances, stable layout, and desktop/mobile visual QA; otherwise mark it as a non-visual fixture.",
+            "technical_controls": ["lint-implementation DS086", "HTML Prototype Improvement Loop", "visual QA review"],
+        },
+        {
+            "id": "decorative-data-visualization",
+            "trigger": "A chart, graph, or map shows bars, curves, pins, or cells without axes, labels, source, update context, or data values.",
+            "rule": "Data visualization must explain its criteria and relationship model.",
+            "prevention": "Use a chart/graph/map library, semantic SVG/canvas with data values and labels, or a table/ledger when the data model is small.",
+            "technical_controls": ["lint-implementation DS084", "lint-implementation DS082/DS083", "visual QA review"],
+        },
+    ],
+    "outputs": ["design_system_blueprint.governance", "system_spec.md", "IMPLEMENTATION_CONTRACT.md", "lint-implementation", "visual QA"],
 }
 
 VISUAL_ASSET_MEDIUM_SELECTION_POLICY = {
@@ -825,11 +921,21 @@ def build_blueprint(
         _principle_from_keyword(keyword)
         for keyword in principle_keywords
     ]
+    application_concept = _build_application_concept(brand_profile)
+    layout_skeleton = _build_layout_skeleton(brand_profile, application_concept)
+    differentiation_strategy = _build_differentiation_strategy(
+        brand_profile,
+        application_concept,
+        layout_skeleton,
+    )
 
     blueprint = {
         "brand_name": brand_profile.get("brand_name", "Unnamed Brand"),
         "system_name": brand_profile.get("system_name", "Unnamed System"),
         "product_summary": brand_profile.get("product_summary", ""),
+        "application_concept": application_concept,
+        "layout_skeleton": layout_skeleton,
+        "differentiation_strategy": differentiation_strategy,
         "positioning": {
             "audiences": brand_profile.get("audiences", []),
             "brand_keywords": brand_profile.get("brand_keywords", []),
@@ -850,8 +956,18 @@ def build_blueprint(
             ],
             "rule": "레퍼런스는 그대로 복제하지 않고, 원칙과 구조만 가져와 브랜드 아이덴티티에 맞게 재구성합니다.",
         },
-        "token_strategy": _build_token_strategy(brand_profile, prioritized_concepts),
-        "component_strategy": _build_component_strategy(brand_profile, prioritized_concepts),
+        "token_strategy": _build_token_strategy(
+            brand_profile,
+            prioritized_concepts,
+            layout_skeleton=layout_skeleton,
+            differentiation_strategy=differentiation_strategy,
+        ),
+        "component_strategy": _build_component_strategy(
+            brand_profile,
+            prioritized_concepts,
+            layout_skeleton=layout_skeleton,
+            differentiation_strategy=differentiation_strategy,
+        ),
         "color_reference": brand_profile.get("_resolved_color_reference"),
         "visual_reference": brand_profile.get("_resolved_visual_reference"),
         "visual_reference_issues": brand_profile.get("_visual_reference_issues", []),
@@ -868,6 +984,8 @@ def build_blueprint(
         "governance": {
             "source_of_truth": [
                 "brand profile",
+                "application concept",
+                "layout skeleton",
                 "design tokens",
                 "component specs",
                 "usage rules",
@@ -888,6 +1006,9 @@ def build_blueprint(
                 "padded container 안에서 width: 100vw를 쓰지 않음 — width: 100%, max-width: 100%, documented full-bleed 패턴을 우선",
                 "기존 데이터 밀도와 업무 완료 경로를 유지한 상태에서 시각 품질을 높이는 방향을 우선",
                 "기능 위치 변경, 정보 구조 변경, 패널 제거는 별도의 migration plan이 있을 때만 수행",
+                "application_concept.primary_job와 layout_skeleton.first_screen_contract를 토큰·컴포넌트보다 먼저 만족시킴",
+                "layout_skeleton.composition을 무시하고 모든 앱을 같은 hero/card/dashboard 셸로 회귀시키면 생성 실패로 본다",
+                "design_differentiation.signature_moves는 장식이 아니라 화면 구조·상호작용·정보 우선순위에 반영한다",
                 "레퍼런스는 형태·밀도·컴포넌트 비례만 흡수하고, 색 조합·폰트 스케일·도메인 IA는 토큰과 제품 온톨로지를 따른다",
                 "토큰을 사용하더라도 status/tint/info 역할을 섞어 레퍼런스처럼 보이는 새 팔레트를 만들지 않는다",
                 "구현 중 사용자·리뷰어가 반복 가능한 실패 패턴을 지적하면 현재 화면 수정에 그치지 않고 governance/contract/linter로 승격한다",
@@ -895,6 +1016,7 @@ def build_blueprint(
                 "상용 제품형 화면은 피치덱식 히어로/균일 카드벽보다 실제 작업 표면, 데이터 밀도, 상태, 필터, 출처를 첫 화면에 우선 배치한다",
                 "데이터·스포츠·운영 UI에서 정확한 수치, 예측, 순위, 투표수는 출처/업데이트 시각/샘플 라벨 없이 확정값처럼 보이게 하지 않는다",
                 "사이트·앱·랜딩·제품·장소·콘텐츠·게임 목업은 도메인 실체를 보여주는 이미지/미디어/identity asset을 적극적으로 사용하고, 이미지 없는 카드·그라디언트만으로 완성 처리하지 않는다",
+                "HTML 목업은 정적 그림이 아니라 제품 표면 계약으로 취급한다. 차트/그래프/지도/캘린더/보드/캔버스는 data-runtime-surface, data-model, data-source, item/node/event id, 상태 세트를 드러낸다",
                 "만화·웹툰·잡지 표지, 컷 미리보기, 서사 콘텐츠 미디어 슬롯은 image_gen/사용자 제공/라이선스 소스/승인된 고품질 아트워크를 기본값으로 삼고, 즉석 SVG 스케치나 기하학 플레이스홀더를 최종 자산으로 쓰지 않는다",
                 "사용자·리뷰어가 'SVG 만들지 말고', '실제 그림파일', 'PNG/WebP/JPEG', '검색해서 넣어'처럼 매체를 지정하면 해당 범위는 raster-only medium override로 기록하고 SVG/inline vector/아이콘 스프라이트로 대체하지 않는다",
                 "생성 이미지와 장식 비주얼은 도메인 맥락을 보조해야 하며 일정, 결과, 표, 필터, 상태 같은 핵심 작업 표면을 압도하지 않는다",
@@ -913,6 +1035,7 @@ def build_blueprint(
             "icon_refactor_policy": ICON_REFACTOR_POLICY,
             "app_icon_identity_policy": APP_ICON_IDENTITY_POLICY,
             "mockup_visual_substance_policy": MOCKUP_VISUAL_SUBSTANCE_POLICY,
+            "html_prototype_contract_policy": HTML_PROTOTYPE_CONTRACT_POLICY,
             "visual_asset_medium_selection_policy": VISUAL_ASSET_MEDIUM_SELECTION_POLICY,
             "commercial_product_realism_policy": COMMERCIAL_PRODUCT_REALISM_POLICY,
             "feedback_promotion_policy": REFERENCE_ABSORPTION_SCOPE["promotion_policy"],
@@ -976,10 +1099,149 @@ def _principle_from_keyword(keyword: str) -> dict:
     }
 
 
-def _build_token_strategy(brand_profile: dict, prioritized_concepts: list[dict]) -> dict:
+def _as_list(value: object) -> list:
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return value
+    return [value]
+
+
+def _compact_region(region: object) -> dict:
+    if isinstance(region, dict):
+        return {
+            "name": region.get("name") or region.get("id") or "Unnamed region",
+            "role": region.get("role") or region.get("description") or "",
+            "priority": region.get("priority") or "secondary",
+        }
+    return {"name": str(region), "role": "", "priority": "secondary"}
+
+
+def _profile_choice(value: object, default: str) -> str:
+    if not value:
+        return default
+    text = str(value).strip()
+    if not text or "|" in text:
+        return default
+    return text
+
+
+def _build_application_concept(brand_profile: dict) -> dict:
+    raw = brand_profile.get("application_concept")
+    raw = raw if isinstance(raw, dict) else {}
+    domain_objects = [
+        str(item)
+        for item in _as_list(raw.get("domain_objects"))
+        if str(item).strip()
+    ]
+    differentiation = [
+        str(item)
+        for item in _as_list(raw.get("differentiation"))
+        if str(item).strip()
+    ]
+    return {
+        "primary_job": raw.get("primary_job") or brand_profile.get("product_summary", ""),
+        "domain_objects": domain_objects,
+        "operating_mode": raw.get("operating_mode") or "product-workflow",
+        "success_moment": raw.get("success_moment") or "The primary workflow state is visible and actionable.",
+        "differentiation": differentiation,
+    }
+
+
+def _build_layout_skeleton(brand_profile: dict, application_concept: dict) -> dict:
+    raw = brand_profile.get("layout_skeleton")
+    raw = raw if isinstance(raw, dict) else {}
+    primary_regions = [
+        _compact_region(region)
+        for region in _as_list(raw.get("primary_regions"))
+        if region
+    ]
+    if not primary_regions:
+        primary_regions = [
+            {
+                "name": "Primary task surface",
+                "role": application_concept.get("primary_job", ""),
+                "priority": "primary",
+            }
+        ]
+    first_screen_contract = [
+        str(item)
+        for item in _as_list(raw.get("first_screen_contract"))
+        if str(item).strip()
+    ]
+    if not first_screen_contract:
+        first_screen_contract = [
+            "Show the primary task surface before decorative overview content.",
+            "Expose the first meaningful control, status, or decision state above the fold.",
+        ]
+    avoid_layouts = [
+        str(item)
+        for item in _as_list(raw.get("avoid_layouts"))
+        if str(item).strip()
+    ] or ["generic hero plus card grid", "uniform card wall"]
+    return {
+        "composition": _profile_choice(raw.get("composition"), "task-led-product-surface"),
+        "navigation_model": _profile_choice(raw.get("navigation_model"), "contextual"),
+        "density": _profile_choice(raw.get("density"), "balanced"),
+        "primary_regions": primary_regions,
+        "first_screen_contract": first_screen_contract,
+        "avoid_layouts": avoid_layouts,
+    }
+
+
+def _build_differentiation_strategy(
+    brand_profile: dict,
+    application_concept: dict,
+    layout_skeleton: dict,
+) -> dict:
+    raw = brand_profile.get("design_differentiation")
+    raw = raw if isinstance(raw, dict) else {}
+    signature_moves = [
+        str(item)
+        for item in _as_list(raw.get("signature_moves"))
+        if str(item).strip()
+    ]
+    signature_moves.extend(
+        str(item)
+        for item in application_concept.get("differentiation", [])
+        if str(item).strip() and str(item) not in signature_moves
+    )
+    if not signature_moves:
+        signature_moves = [
+            f"Make the {layout_skeleton.get('composition', 'task-led')} composition visible in the first viewport."
+        ]
+    repetition_risks = [
+        str(item)
+        for item in _as_list(raw.get("repetition_risks"))
+        if str(item).strip()
+    ] or ["generic dashboard cards", "decorative panels before workflow state"]
+    return {
+        "must_feel_different_from": [
+            str(item)
+            for item in _as_list(raw.get("must_feel_different_from"))
+            if str(item).strip()
+        ],
+        "signature_moves": signature_moves,
+        "repetition_risks": repetition_risks,
+        "anti_convergence_rule": (
+            "If two generated products share the same first-screen composition, "
+            "navigation model, component hierarchy, and density, the skeleton is under-specified."
+        ),
+    }
+
+
+def _build_token_strategy(
+    brand_profile: dict,
+    prioritized_concepts: list[dict],
+    *,
+    layout_skeleton: dict,
+    differentiation_strategy: dict,
+) -> dict:
     visual_keywords = brand_profile.get("visual_keywords", [])
     interaction_keywords = brand_profile.get("interaction_keywords", [])
     concept_ids = {item["concept_id"] for item in prioritized_concepts}
+    density = layout_skeleton.get("density") or "balanced"
+    signature_moves = differentiation_strategy.get("signature_moves", [])
 
     return {
         "color": {
@@ -1006,7 +1268,18 @@ def _build_token_strategy(brand_profile: dict, prioritized_concepts: list[dict])
             "rules": [
                 "4pt 또는 8pt 기반 scale을 정하고 예외 사용을 제한",
                 "컴포넌트 내부 spacing과 레이아웃 spacing을 분리",
+                f"layout_skeleton.density={density}를 기본 밀도 모델로 삼기",
             ],
+        },
+        "layout": {
+            "goal": "앱의 작업 구조가 토큰과 컴포넌트보다 먼저 드러나는 레이아웃 문법",
+            "composition": layout_skeleton.get("composition"),
+            "navigation_model": layout_skeleton.get("navigation_model"),
+            "density": density,
+            "primary_regions": layout_skeleton.get("primary_regions", []),
+            "first_screen_contract": layout_skeleton.get("first_screen_contract", []),
+            "avoid_layouts": layout_skeleton.get("avoid_layouts", []),
+            "signature_moves": signature_moves,
         },
         "motion": {
             "goal": "상태 변화를 설명하는 수준의 모션만 허용",
@@ -1020,22 +1293,41 @@ def _build_token_strategy(brand_profile: dict, prioritized_concepts: list[dict])
     }
 
 
-def _build_component_strategy(brand_profile: dict, prioritized_concepts: list[dict]) -> dict:
+def _build_component_strategy(
+    brand_profile: dict,
+    prioritized_concepts: list[dict],
+    *,
+    layout_skeleton: dict,
+    differentiation_strategy: dict,
+) -> dict:
     primitives = brand_profile.get("product_primitives", [])
     concept_ids = {item["concept_id"] for item in prioritized_concepts}
     required_families = ["button", "input", "navigation", "feedback", "overlay"]
-    if "data tables" in [primitive.lower() for primitive in primitives]:
+    primitive_keys = [primitive.lower() for primitive in primitives]
+    if any(primitive in primitive_keys for primitive in ["data tables", "operational overview", "dashboard cards"]):
         required_families.append("data-display")
-    if "rich text editor" in [primitive.lower() for primitive in primitives]:
+    if "rich text editor" in primitive_keys:
         required_families.append("editorial")
 
     return {
         "product_primitives": primitives,
         "required_component_families": required_families,
+        "layout_skeleton": layout_skeleton,
+        "differentiation_strategy": differentiation_strategy,
+        "reference_component_base": {
+            "primary": ["Astryx", "Vercel Geist"],
+            "rule": "Use the shared Astryx/Geist baseline as taxonomy evidence, then add product-specific components only when primitives require them.",
+            "prune_policy": "Mobile-only chrome, CTA-only variants, and duplicate names stay contextual instead of baseline.",
+        },
         "rules": [
             "primitive 단위로 책임을 먼저 정의하고 컴포넌트는 그 위에 매핑",
             "variant proliferation을 막기 위해 상태와 강조 레벨을 먼저 표준화",
             "브랜드 표현은 surface, emphasis, typography에서 주고 구조는 안정적으로 유지",
+            "기본 코어는 Astryx/Geist 교집합에서 시작하고, 제품 primitive가 없으면 변형 컴포넌트를 자동 추가하지 않음",
+            "mobile-topbar, mobile-tab-bar, back-button, bottom-sheet 같은 플랫폼/플로우 전용 컴포넌트는 명시적 요구가 있을 때만 추가",
+            "컴포넌트 선택은 layout_skeleton.primary_regions를 채우는 순서로 결정하고, 빈 카드/패널을 먼저 만들지 않음",
+            "signature_moves를 지원하지 않는 컴포넌트 묶음은 기본값처럼 보여도 우선순위를 낮춤",
+            "avoid_layouts에 적힌 패턴으로 돌아가는 컴포넌트 조합은 생성 실패로 취급",
             "기존 기능 진입점은 유지한 채 내부 구현과 시각 언어부터 교체",
             "전체 셸을 한 번에 다시 그리기보다 feature surface 단위로 순차 적용"
         ],

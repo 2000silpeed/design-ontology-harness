@@ -2,7 +2,7 @@
   "id": "dashboard--bold-confident",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "lattice-dash",
-  "content_hash": "sha256:f75cdb8976d7323672ef26dff5730eb50dea16d639d0c923b33e95923a86a1ad",
+  "content_hash": "sha256:8f02e0c6bf4444fce2b97d4420e931254218be252ce81566270f5f2d48a18c29",
   "app_mode": "dashboard",
   "brand_tone": "bold-confident",
   "color_modes": [
@@ -33,6 +33,6 @@
   },
   "owner": "@maintainer-dogfood",
   "tier": "P3",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "B2C 스타트업 운영 대시보드 — bold-confident 톤 vivid 팔레트, 한국어 1급"
 }

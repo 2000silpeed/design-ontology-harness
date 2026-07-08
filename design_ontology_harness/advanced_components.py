@@ -715,11 +715,18 @@ def recommend_advanced_components(
     existing = {item.lower() for item in (existing_components or [])}
     signals = _context_signals(brand_profile, blueprint)
     app_modes = _app_mode_signals(signals)
+    explicit_card_request = _explicit_card_requested(brand_profile, blueprint)
+    suppress_card_named_components = (
+        _operational_surface_requested(signals) or _card_wall_avoidance_requested(brand_profile)
+    ) and not explicit_card_request
     rows: list[dict[str, Any]] = []
 
     for name, spec in ADVANCED_COMPONENTS.items():
         if name.lower() in existing:
             continue
+        if suppress_card_named_components and _is_card_named_component(name, spec):
+            continue
+
         score = 0
         matched: list[str] = []
 
@@ -800,6 +807,37 @@ def _context_signals(brand_profile: dict[str, Any], blueprint: dict[str, Any]) -
     return values
 
 
+def _positive_context_signals(brand_profile: dict[str, Any], blueprint: dict[str, Any]) -> list[str]:
+    values: list[str] = []
+
+    def collect(value: Any) -> None:
+        if isinstance(value, str):
+            values.append(value.lower())
+        elif isinstance(value, list):
+            for item in value:
+                collect(item)
+        elif isinstance(value, dict):
+            for item in value.values():
+                collect(item)
+
+    for key in (
+        "product_summary",
+        "brand_keywords",
+        "tone_of_voice",
+        "visual_keywords",
+        "interaction_keywords",
+        "product_primitives",
+    ):
+        collect(brand_profile.get(key))
+
+    component_strategy = blueprint.get("component_strategy") or {}
+    collect(component_strategy.get("product_primitives"))
+    collect(component_strategy.get("concept_alignment"))
+    collect(blueprint.get("app_mode"))
+    collect(blueprint.get("product_archetype"))
+    return values
+
+
 def _app_mode_signals(signals: list[str]) -> set[str]:
     modes = set()
     known = {
@@ -839,3 +877,76 @@ def _contains_signal(signals: list[str], needle: str) -> bool:
     dashed = normalized.replace(" ", "-")
     spaced = normalized.replace("-", " ")
     return any(normalized in signal or dashed in signal or spaced in signal for signal in signals)
+
+
+def _has_any_signal(signals: list[str], needles: tuple[str, ...]) -> bool:
+    return any(_contains_signal(signals, needle) for needle in needles)
+
+
+def _explicit_card_requested(brand_profile: dict[str, Any], blueprint: dict[str, Any]) -> bool:
+    signals = _positive_context_signals(brand_profile, blueprint)
+    return _has_any_signal(
+        signals,
+        (
+            "dashboard cards",
+            "card grid",
+            "card layout",
+            "kpi card",
+            "stat card",
+            "metric card",
+            "summary card",
+            "insight card",
+            "source reference card",
+            "product card",
+            "asset card",
+            "pricing card",
+        ),
+    )
+
+
+def _operational_surface_requested(signals: list[str]) -> bool:
+    return _has_any_signal(
+        signals,
+        (
+            "operational overview",
+            "operational surface",
+            "data tables",
+            "data table",
+            "source ledger",
+            "status summary row",
+            "metric strip",
+            "status rail",
+            "operational rail",
+            "policy matrix",
+            "audit timeline",
+            "diff viewer",
+            "task queue",
+            "account roster",
+            "workspace",
+        ),
+    )
+
+
+def _card_wall_avoidance_requested(brand_profile: dict[str, Any]) -> bool:
+    anti_signals: list[str] = []
+    for item in brand_profile.get("anti_keywords", []) or []:
+        if isinstance(item, str):
+            anti_signals.append(item.lower())
+    return _has_any_signal(
+        anti_signals,
+        (
+            "card wall",
+            "generic card wall",
+            "generic-card-wall",
+            "homogeneous card",
+            "dashboard cards",
+        ),
+    )
+
+
+def _is_card_named_component(name: str, spec: dict[str, Any]) -> bool:
+    low_name = name.lower()
+    if low_name.endswith("-card") or low_name.endswith("_card") or low_name == "card":
+        return True
+    role = str(spec.get("role") or "").lower()
+    return " card " in f" {role} "

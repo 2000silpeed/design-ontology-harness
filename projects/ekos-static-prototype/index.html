@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EKOS 업무 판단 검토</title>
+    <link rel="stylesheet" href="./design-system/tokens.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body
+    data-product-prototype="ekos-static-prototype"
+    data-prototype-state-set="업무 선택,케이스 입력,필요 데이터 부족,부족한 데이터 보강,필요 데이터 확인 완료,판단 결과,근거 및 정책 확인,검토 요청"
+  >
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="EKOS 화면 이동">
+        <div class="brand">
+          <div>
+            <p class="eyebrow">EKOS</p>
+            <h1>업무 판단 검토</h1>
+          </div>
+        </div>
+
+        <nav class="nav-list">
+          <button class="nav-item active" type="button" data-go="workflow-selection">
+            <i data-lucide="briefcase-business" aria-hidden="true"></i>
+            <span>업무 선택</span>
+          </button>
+          <button class="nav-item" type="button" data-go="case-input">
+            <i data-lucide="scan-search" aria-hidden="true"></i>
+            <span>케이스 입력</span>
+          </button>
+          <button class="nav-item" type="button" data-go="source-package-failed">
+            <i data-lucide="package-check" aria-hidden="true"></i>
+            <span>필요 데이터 확인</span>
+          </button>
+          <button class="nav-item" type="button" data-go="decision-report">
+            <i data-lucide="shield-alert" aria-hidden="true"></i>
+            <span>판단 결과</span>
+          </button>
+          <button class="nav-item" type="button" data-go="evidence-trace">
+            <i data-lucide="git-branch" aria-hidden="true"></i>
+            <span>근거 보기</span>
+          </button>
+          <button class="nav-item" type="button" data-go="review-request">
+            <i data-lucide="clipboard-check" aria-hidden="true"></i>
+            <span>검토 요청</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-note">
+          <p>EKOS는 필요한 데이터가 부족하면 판단 결과를 만들지 않습니다.</p>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">현재 케이스</p>
+            <strong id="topbar-case">Delivery 80001241</strong>
+          </div>
+          <div class="topbar-status">
+            <span class="status-badge review">검토 필요</span>
+            <span class="status-badge blocked">승인 아님</span>
+          </div>
+        </header>
+
+        <ol class="progress-rail" aria-label="EKOS 업무 흐름">
+          <li class="active" data-progress-screens="workflow-selection">업무 선택</li>
+          <li data-progress-screens="case-input">케이스 입력</li>
+          <li data-progress-screens="source-package-failed missing-data-resolution source-package-passed">필요 데이터 확인</li>
+          <li data-progress-screens="decision-report evidence-trace">판단 결과</li>
+          <li data-progress-screens="review-request">검토 요청</li>
+        </ol>
+
+        <section
+          class="screen active"
+          id="screen-workflow-selection"
+          data-screen="workflow-selection"
+          data-product-surface="workflow-selection"
+          data-state="korean-task-first"
+        >
+          <div class="task-intro">
+            <div>
+              <p class="eyebrow">업무 선택</p>
+              <h2>EKOS 업무 판단 검토</h2>
+              <p class="lead">
+                업무 케이스를 선택하면 EKOS가 필요한 데이터가 충분한지 먼저 확인하고,
+                지금 해도 되는 일과 하면 안 되는 일을 알려줍니다.
+              </p>
+            </div>
+            <button class="primary-button" type="button" data-go="case-input">
+              <i data-lucide="arrow-right" aria-hidden="true"></i>
+              검토 시작
+            </button>
+          </div>
+
+          <figure
+            class="workflow-visual"
+            data-runtime-surface="workflow-state-map"
+            data-model="ekos-value-chain"
+            aria-label="업무 선택부터 검토 요청까지 이어지는 EKOS 화면 흐름"
+          >
+            <figcaption>
+              <strong>화면 흐름</strong>
+              <span>먼저 데이터가 충분한지 확인하고, 충분할 때만 판단 결과를 만듭니다.</span>
+            </figcaption>
+            <div class="visual-flow" aria-hidden="true">
+              <span>업무 선택</span>
+              <span>필요 데이터 확인</span>
+              <span>부족한 데이터 보강</span>
+              <span>판단 결과</span>
+              <span>검토 요청</span>
+            </div>
+          </figure>
+
+          <div class="workflow-grid" id="workflow-grid" data-model="workflow-list"></div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-case-input"
+          data-screen="case-input"
+          data-product-surface="case-input"
+          data-state="delivery-delay-selected"
+        >
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">케이스 입력</p>
+              <h2>검토할 케이스 입력</h2>
+              <p class="lead">
+                EKOS는 먼저 이 케이스를 판단할 수 있는 데이터가 충분한지 확인합니다.
+                필수 데이터가 부족하면 판단 결과를 만들지 않습니다.
+              </p>
+            </div>
+          </div>
+
+          <div class="split-layout">
+            <form class="panel form-panel" id="case-form" data-model="case-input-form">
+              <label>
+                <span>Delivery 번호</span>
+                <input type="text" value="80001241" aria-label="Delivery 번호" />
+              </label>
+              <label>
+                <span>Plant</span>
+                <input type="text" placeholder="선택 입력" aria-label="Plant" />
+              </label>
+              <label>
+                <span>운송사</span>
+                <input type="text" placeholder="선택 입력" aria-label="운송사" />
+              </label>
+              <label>
+                <span>기준일</span>
+                <input type="text" placeholder="선택 입력" aria-label="기준일" />
+              </label>
+              <div class="action-row">
+                <button class="primary-button" type="button" data-go="source-package-failed">
+                  <i data-lucide="search-check" aria-hidden="true"></i>
+                  필요 데이터 확인
+                </button>
+              </div>
+            </form>
+
+            <aside class="panel guidance-panel" id="workflow-guidance">
+              <p class="eyebrow">선택한 업무</p>
+              <h3 id="workflow-guidance-title">납품 지연 / 운송사 확인</h3>
+              <p id="workflow-guidance-copy">
+                납품 지연 건에서 운송사 확인이 충분한지 검토합니다. EKOS는 SAP 변경이나
+                고객 영향 작업을 직접 승인하지 않습니다.
+              </p>
+              <ul class="check-list" id="workflow-guidance-bullets">
+                <li>필요 데이터가 먼저 확인됩니다.</li>
+                <li>부족한 데이터가 있으면 판단 결과가 생성되지 않습니다.</li>
+                <li>결과는 “해도 되는 일”과 “하면 안 되는 일”로 표시됩니다.</li>
+              </ul>
+            </aside>
+          </div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-source-package-failed"
+          data-screen="source-package-failed"
+          data-product-surface="required-data-status"
+          data-state="failed"
+        >
+          <div class="decision-hero danger">
+            <div>
+              <p class="eyebrow">필요 데이터 검토</p>
+              <h2 id="failed-title">판단 불가</h2>
+              <p id="failed-subtitle">필수 데이터가 부족합니다.</p>
+            </div>
+            <span class="status-badge blocked">판단 결과 생성 안 됨</span>
+          </div>
+
+          <div class="plain-explanation danger-note">
+            <strong id="failed-missing-title">부족한 정보</strong>
+            <p id="failed-missing-summary">운송사 최신 확인 정보와 승인 기준표가 없습니다.</p>
+            <p id="failed-missing-reason">
+              이 두 정보가 없으면 EKOS는 운송사 확인이 최신인지, 승인 준비를 누구에게
+              넘겨야 하는지 판단할 수 없습니다.
+            </p>
+          </div>
+
+          <div class="status-summary-grid" data-model="required-data-summary">
+            <article class="status-summary-card">
+              <span>결론</span>
+              <strong id="failed-summary-conclusion">판단 불가</strong>
+            </article>
+            <article class="status-summary-card">
+              <span>이유</span>
+              <strong id="failed-summary-reason">필수 데이터 2개 부족</strong>
+            </article>
+            <article class="status-summary-card wide">
+              <span>업무 영향</span>
+              <strong id="failed-business-impact">
+                승인 준비용 Correction Workflow를 만들 수 없습니다.
+              </strong>
+            </article>
+          </div>
+
+          <div class="panel source-panel" data-runtime-surface="table-view" data-model="required-data-failed">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">필요 항목</p>
+                <h3 id="failed-source-heading">Delivery 80001241 데이터 상태</h3>
+              </div>
+              <button class="primary-button" type="button" data-go="missing-data-resolution">
+                <i data-lucide="plus-circle" aria-hidden="true"></i>
+                부족한 데이터 보강
+              </button>
+            </div>
+            <div class="source-table" id="failed-source-table"></div>
+            <div class="action-row">
+              <button class="secondary-button" type="button" data-go="missing-data-resolution">
+                <i data-lucide="file-search" aria-hidden="true"></i>
+                필수 항목 보기
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-missing-data-resolution"
+          data-screen="missing-data-resolution"
+          data-product-surface="missing-data-resolution"
+          data-state="carrier-and-approval-missing"
+        >
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">부족한 데이터 보강</p>
+              <h2 id="missing-title">판단에 필요한 정보를 보강하세요</h2>
+              <p class="lead" id="missing-lead">
+                아래 두 항목이 들어와야 EKOS가 승인 준비 가능 여부를 검토할 수 있습니다.
+              </p>
+            </div>
+            <button class="primary-button" type="button" data-go="source-package-passed">
+              <i data-lucide="upload" aria-hidden="true"></i>
+              보강 데이터 적용
+            </button>
+          </div>
+
+          <div class="missing-grid" id="missing-source-grid" data-model="missing-sources"></div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-source-package-passed"
+          data-screen="source-package-passed"
+          data-product-surface="required-data-status"
+          data-state="passed"
+        >
+          <div class="decision-hero success">
+            <div>
+              <p class="eyebrow">필요 데이터 확인 완료</p>
+              <h2 id="passed-title">판단 가능</h2>
+              <p id="passed-subtitle">필수 항목이 확인되었습니다. 이제 판단 결과를 만들 수 있습니다.</p>
+            </div>
+            <span class="status-badge ready">데이터 확인 완료</span>
+          </div>
+
+          <div class="plain-explanation review-note-panel">
+            <strong>주의</strong>
+            <p id="passed-warning">
+              데이터가 충분하다는 뜻이지, 업무가 승인되었다는 뜻은 아닙니다.
+            </p>
+          </div>
+
+          <div class="status-summary-grid" id="passed-summary-grid" data-model="passed-data-summary"></div>
+
+          <div class="panel source-panel" data-runtime-surface="table-view" data-model="required-data-passed">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">필요 항목</p>
+                <h3 id="passed-source-heading">보강 후 데이터 상태</h3>
+              </div>
+              <button class="primary-button" type="button" data-go="decision-report">
+                <i data-lucide="file-check-2" aria-hidden="true"></i>
+                판단 결과 생성
+              </button>
+            </div>
+            <div class="source-table" id="passed-source-table"></div>
+          </div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-decision-report"
+          data-screen="decision-report"
+          data-product-surface="decision-report"
+          data-state="review-required"
+        >
+          <div class="decision-report-layout">
+            <article class="manager-card" data-model="decision-report">
+              <p class="eyebrow">판단 결과</p>
+              <h2 id="decision-primary-object">Delivery 80001241</h2>
+              <div class="conclusion-strip">
+                <span>결론</span>
+                <strong id="decision-conclusion">조치 권고만 가능</strong>
+              </div>
+              <div class="decision-summary-grid">
+                <div class="metric allowed">
+                  <span>현재 해도 되는 일</span>
+                  <strong id="allowed-action">조치 권고만 가능</strong>
+                </div>
+                <div class="metric blocked">
+                  <span>현재 막힌 일</span>
+                  <strong id="blocked-action">승인 준비용 Correction Workflow 작성</strong>
+                </div>
+                <div class="metric review">
+                  <span>상태</span>
+                  <strong>검토 필요 · 승인 아님</strong>
+                </div>
+              </div>
+              <div class="why-blocked">
+                <h3>왜 막혔나</h3>
+                <p id="why-blocked-copy">
+                  운송사 확인 정보가 오래되었고, 현재 확인이 필요합니다. 또한 최종 검토가 완료되지 않았습니다.
+                </p>
+                <ol id="decision-reasons-list" class="numbered-list"></ol>
+              </div>
+              <div class="action-row">
+                <button class="secondary-button" type="button" data-go="evidence-trace">
+                  <i data-lucide="git-branch" aria-hidden="true"></i>
+                  근거 보기
+                </button>
+                <button class="primary-button" type="button" data-go="review-request">
+                  <i data-lucide="send" aria-hidden="true"></i>
+                  검토 요청
+                </button>
+              </div>
+            </article>
+
+            <aside class="decision-rail">
+              <section class="panel compact">
+                <h3>다음 조치</h3>
+                <p id="next-action-copy">운송사 최신 확인을 요청하고 담당자 검토를 진행하세요.</p>
+              </section>
+              <section class="panel compact">
+                <h3>승인 상태</h3>
+                <span class="status-badge review">검토 필요</span>
+                <span class="status-badge blocked">승인 아님</span>
+                <p>명시적인 담당자 검토 기록이 아직 없습니다.</p>
+              </section>
+            </aside>
+          </div>
+
+          <div class="decision-card-grid" id="decision-card-grid" data-model="decision-operational-cards"></div>
+
+          <section class="panel timeline-panel" data-runtime-surface="audit-timeline">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">상태 이력</p>
+                <h3>케이스 타임라인</h3>
+              </div>
+            </div>
+            <ol class="timeline-list" id="decision-timeline"></ol>
+          </section>
+
+          <div class="report-sections" id="report-sections"></div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-evidence-trace"
+          data-screen="evidence-trace"
+          data-product-surface="evidence-policy-trace"
+          data-runtime-surface="audit-timeline"
+          data-state="trace-open"
+        >
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">근거 및 정책 상세</p>
+              <h2>감사/검토 담당자를 위한 상세 화면</h2>
+              <p class="lead">
+                이 화면은 감사/검토 담당자를 위한 상세 근거입니다. 운영 담당자는 먼저
+                판단 결과 화면을 보면 됩니다.
+              </p>
+            </div>
+            <button class="secondary-button" type="button" data-go="decision-report">
+              <i data-lucide="arrow-left" aria-hidden="true"></i>
+              판단 결과로 돌아가기
+            </button>
+          </div>
+
+          <div class="trace-layout">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">사용한 근거</p>
+                  <h3>생성된 근거</h3>
+                </div>
+              </div>
+              <div id="evidence-list" class="evidence-list" data-model="evidence-objects"></div>
+            </div>
+
+            <aside class="panel trace-panel" data-model="packet-provenance">
+              <p class="eyebrow">상세 정보</p>
+              <h3>감사용 세부 정보</h3>
+              <dl id="packet-provenance"></dl>
+            </aside>
+          </div>
+
+          <figure
+            class="lineage-visual"
+            data-runtime-surface="lineage-map"
+            data-model="source-to-evidence-lineage"
+            aria-label="데이터 출처에서 판단 결과까지 이어지는 근거 흐름"
+          >
+            <figcaption>
+              <strong>판단 경로</strong>
+              <span>데이터 출처, 최신성, 정책 기준, 승인 기준이 함께 검토됩니다.</span>
+            </figcaption>
+            <div class="visual-flow compact-flow" id="trace-visual-flow" aria-hidden="true">
+              <span>운송사 확인</span>
+              <span>최신성 확인</span>
+              <span>정책 기준</span>
+              <span>차단 사유</span>
+              <span>검토 필요</span>
+            </div>
+          </figure>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">정책 및 승인 기준</p>
+                <h3>누가 무엇을 할 수 있는지</h3>
+              </div>
+            </div>
+            <div id="policy-authority" class="policy-grid"></div>
+          </div>
+
+          <div class="trace-table-grid">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">사용한 데이터</p>
+                  <h3>데이터 출처와 최신성</h3>
+                </div>
+              </div>
+              <div id="used-data-table" class="ops-table" data-model="used-data"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">이력</p>
+                  <h3>상태 변경 기록</h3>
+                </div>
+              </div>
+              <div id="trace-history-table" class="ops-table" data-model="status-history"></div>
+            </section>
+          </div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-review-request"
+          data-screen="review-request"
+          data-product-surface="review-request"
+          data-state="review-required"
+        >
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">검토 요청</p>
+              <h2>담당자 검토 요청</h2>
+              <p class="lead">
+                이 화면은 실행 승인이 아닙니다. 실제 SAP 변경이나 고객 영향 작업은 별도 승인 절차가 필요합니다.
+              </p>
+            </div>
+          </div>
+
+          <div class="review-layout">
+            <section class="panel review-card" data-model="review-request">
+              <div class="panel-header">
+                <div>
+                <p class="eyebrow">검토 대상</p>
+                  <h3 id="review-primary-object">Delivery 80001241</h3>
+                </div>
+                <span class="status-badge review">검토 필요</span>
+              </div>
+              <dl class="review-meta" id="review-meta"></dl>
+              <section>
+                <h4>검토 전 확인할 항목</h4>
+                <ul class="check-list" id="review-checklist"></ul>
+              </section>
+              <label class="review-note">
+                <span>담당자 메모</span>
+                <textarea id="review-note" rows="5"></textarea>
+              </label>
+            </section>
+
+            <aside class="panel approval-rail" data-runtime-surface="approval-rail">
+              <p class="eyebrow">요청 가능한 조치</p>
+              <h3>검토 담당자 조치</h3>
+              <div id="review-actions" class="review-actions"></div>
+              <section class="review-history">
+                <h4>상태 이력</h4>
+                <ol class="timeline-list compact" id="review-history-list"></ol>
+              </section>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

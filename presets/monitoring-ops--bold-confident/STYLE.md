@@ -66,34 +66,34 @@ Color rule: Token binding is necessary but not sufficient. Do not recombine `--d
 ## Component Priorities
 | Family | Priority | States | Components |
 | --- | --- | --- | --- |
-| button | high | `default`, `hover`, `active`, `disabled`, `loading` | `primary-button`, `secondary-button`, `ghost-button`, `icon-button`, `cta-button`, `link-button`, +2 more |
-| copilot-artifact | high | `default`, `loading`, `verified`, `error` | `source-card`, `citation-drawer` |
-| data-display | high | `default`, `sorted`, `filtered`, `empty` | `data-table`, `column-header`, `row-actions`, `tag`, `stat-card`, `insight-card`, +13 more |
-| feedback | high | `info`, `success`, `warning`, `danger` | `inline-alert`, `empty-state`, `toast`, `status-badge`, `step-progress`, `banner` |
-| input | high | `default`, `focus`, `error`, `disabled` | `text-field`, `search-field`, `segmented-control`, `filter-chip`, `chip`, `textarea`, +6 more |
-| marketing | high | `default`, `hover`, `in-view` | `logo-cloud`, `customer-logo`, `metric-highlight`, `press-quote`, `hero-container`, `hero-eyebrow`, +4 more |
+| button | high | `default`, `hover`, `active`, `disabled`, `loading` | `primary-button`, `secondary-button`, `icon-button`, `form-actions`, `hero-cta-group` |
+| copilot-artifact | high | `default`, `loading`, `verified`, `error` | `citation-drawer` |
+| data-display | high | `default`, `sorted`, `filtered`, `empty`, `loading` | `data-table`, `column-header`, `row-actions`, `tag`, `metric-strip`, `status-summary-row`, +13 more |
+| document | high | `default`, `selected`, `commenting`, `resolved` | `redline-viewer` |
+| feedback | high | `info`, `success`, `warning`, `danger`, `loading` | `badge`, `inline-alert`, `empty-state`, `toast`, `status-dot`, `status-badge`, +3 more |
+| input | high | `default`, `focus`, `error`, `disabled`, `selected` | `text-field`, `select`, `checkbox`, `switch`, `segmented-control`, `filter-chip`, +6 more |
 
 ## Signature Components
 | Component | Family | Anatomy | Token Binding |
 | --- | --- | --- | --- |
 | `data-table` | data-display | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
 | `status-badge` | feedback | parts: container, icon, message, action(optional), close-button(optional); states: info, success, warning, danger | slots: surface, text, border, radius, padding |
+| `metric-strip` | data-display | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
+| `status-summary-row` | data-display | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
 | `chart-container` | data-display | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
 | `chart-tooltip` | overlay | parts: backdrop, container, header, content, footer(optional), +1 more; states: closed, opening, open, closing | slots: surface, border, radius, padding |
-| `chart-legend` | data-display | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
-| `metric-highlight` | marketing | parts: container, value, label(optional); states: default | slots: surface, text, radius, padding |
 
 ## Advanced Component Menu
 | Component | Use When | Pairs With |
 | --- | --- | --- |
-| `source-card` | AI output depends on external or internal source records; users need a repeatable citation preview component | `citation-drawer`, `evidence-graph`, `inline-citation` |
 | `approval-rail` | work requires review, approval, rejection, or handoff; users need to know who owns the next decision | `policy-matrix`, `risk-summary-card`, `diff-viewer` |
 | `audit-timeline` | regulated workflows require traceable user and AI actions; reviewers need to reconstruct what happened before approval | `decision-record-card`, `approval-rail`, `tool-call-trace` |
 | `citation-drawer` | answers must show supporting policy, document, or source records; users need to inspect evidence without losing conversation context | `inline-citation`, `source-card`, `evidence-graph` |
 | `evidence-graph` | trust depends on seeing relationships between claims and sources; auditors need to trace why an answer or decision was made | `citation-drawer`, `decision-record-card`, `policy-matrix` |
 | `policy-matrix` | multiple policy rules must be checked against multiple claims or fields; reviewers need dense scan-and-drill compliance status | `risk-summary-card`, `exception-queue`, `approval-rail` |
-| `risk-summary-card` | users need a fast read of risk before drilling into policy details; AI confidence or compliance severity must be visible | `policy-matrix`, `confidence-meter`, `exception-queue` |
 | `saved-view-bar` | teams revisit the same filtered views often; dense tools need stable scope memory | `filter-builder`, `bulk-action-table`, `exception-queue` |
+| `bulk-action-table` | users handle many records at once; selection count and destructive actions must stay visible | `saved-view-bar`, `filter-builder`, `exception-queue` |
+| `command-palette` | the product has many actions or navigation targets; expert users benefit from quick action search | `shortcut-hint`, `saved-view-bar`, `filter-builder` |
 
 Use these as ontology-approved building blocks when the workflow calls for richer professional UI. They still inherit token, typography, accessibility, and reference-governance rules.
 

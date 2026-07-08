@@ -2,7 +2,7 @@
   "id": "marketing-landing--bold-confident",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "premier-league",
-  "content_hash": "sha256:d514b5f0effb43fe9c2a62b44594d311b9cd4e9c1dade92603f34eadbb18e057",
+  "content_hash": "sha256:c6c915c195145d22d45776ca7fa57c58bab277f44bf1f7d450b598d806913c33",
   "app_mode": "marketing-landing",
   "brand_tone": "bold-confident",
   "color_modes": [
@@ -24,6 +24,6 @@
   "locale_pairings": {},
   "owner": "maintainer",
   "tier": "P0",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "프리미어리그 팬 허브 — 대담한 고대비 랜딩/마케팅, 팀·경기 시각 임팩트"
 }

@@ -1,0 +1,1031 @@
+{
+  "schema_version": "aesthetic-evaluation-ontology/v1",
+  "dimensions": [
+    {
+      "id": "visual_harmony",
+      "label": "Visual harmony",
+      "weight": 0.24,
+      "description": "How coherently color, type, spacing, and composition work together.",
+      "metrics": [
+        "color_harmony",
+        "spacing_consistency",
+        "typography_balance",
+        "composition_order"
+      ]
+    },
+    {
+      "id": "clarity",
+      "label": "Clarity",
+      "weight": 0.2,
+      "description": "How quickly the intended hierarchy, action, and information structure can be read.",
+      "metrics": [
+        "hierarchy_clarity",
+        "contrast_legibility",
+        "content_density_control",
+        "task_focus"
+      ]
+    },
+    {
+      "id": "brand_fit",
+      "label": "Brand fit",
+      "weight": 0.18,
+      "description": "How well the candidate expresses the intended brand posture and avoids anti-keywords.",
+      "metrics": [
+        "keyword_alignment",
+        "tone_alignment",
+        "domain_fit",
+        "anti_keyword_avoidance"
+      ]
+    },
+    {
+      "id": "emotional_appeal",
+      "label": "Emotional appeal",
+      "weight": 0.14,
+      "description": "How desirable, confident, and affectively appropriate the surface feels.",
+      "metrics": [
+        "desirability",
+        "confidence_signal",
+        "warmth_or_energy"
+      ]
+    },
+    {
+      "id": "craft_quality",
+      "label": "Craft quality",
+      "weight": 0.14,
+      "description": "How polished and implementation-ready the candidate is across fit, tokens, and affordances.",
+      "metrics": [
+        "responsive_fit",
+        "token_binding",
+        "accessibility_baseline",
+        "interaction_affordance",
+        "asset_completeness"
+      ]
+    },
+    {
+      "id": "novelty",
+      "label": "Novelty",
+      "weight": 0.1,
+      "description": "How distinctive the design is without breaking its product and brand constraints.",
+      "metrics": [
+        "distinctiveness",
+        "reference_transformation",
+        "memorability"
+      ]
+    },
+    {
+      "id": "brand_semantic_fit",
+      "label": "Brand semantic fit",
+      "weight": 0.22,
+      "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+      "metrics": [
+        "brand_keyword:sre-1ea78bda",
+        "brand_keyword:devops-c2c369c9",
+        "brand_keyword:observability-34a10215",
+        "brand_keyword:monitoring-c1ab9924",
+        "brand_keyword:realtime-91c462ed",
+        "brand_keyword:operations-e8c39c4d",
+        "brand_keyword:alerting-0fe71c48",
+        "brand_keyword:metric-c5a39a3a",
+        "brand_tone:precise-d53a4c62",
+        "brand_tone:operational-7a65affc",
+        "brand_tone:matter-of-fact-c419d19b",
+        "brand_tone:calm-under-pressure-ebf6e8be"
+      ],
+      "research_basis": [
+        "kansei",
+        "aesthemos"
+      ]
+    },
+    {
+      "id": "brand_boundary_fit",
+      "label": "Brand boundary fit",
+      "weight": 0.16,
+      "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+      "metrics": [
+        "anti_keyword:playful-5a5e4a49",
+        "anti_keyword:decorative-ddfe48cb",
+        "anti_keyword:marketing-heavy-401f18a1",
+        "anti_keyword:skeuomorphic-26daf909",
+        "anti_keyword:ornamental-4eab2773",
+        "avoid_pattern:glassmorphism-d83b9e03",
+        "avoid_pattern:gradient-heavy-surfaces-eb390c87",
+        "avoid_pattern:playful-illustrations-46615ed4"
+      ],
+      "research_basis": [
+        "kansei"
+      ]
+    },
+    {
+      "id": "product_ontology_fit",
+      "label": "Product ontology fit",
+      "weight": 0.22,
+      "description": "How clearly product primitives and ontology-required signals appear in the design.",
+      "metrics": [
+        "product_primitive:chart-grid-e763e71c",
+        "product_primitive:sparkline-d00339f5",
+        "product_primitive:kpi-card-2ec31cd3",
+        "product_primitive:alert-list-fa5c2dc7",
+        "product_primitive:severity-badge-eb37ffb8",
+        "product_primitive:metric-table-fa39cb6b",
+        "product_primitive:time-range-picker-4507c652",
+        "product_primitive:status-board-d86b1021",
+        "product_primitive:incident-timeline-e51b6e61",
+        "product_primitive:sidebar-navigation-9ccd2ea3",
+        "must_include:dense-chart-grid-575a35c6",
+        "must_include:alert-list-with-severity-badges-e2582e4d",
+        "must_include:metric-table-fa39cb6b",
+        "must_include:status-board-d86b1021",
+        "must_include:time-range-picker-4507c652"
+      ],
+      "research_basis": [
+        "beauvis",
+        "kansei"
+      ]
+    },
+    {
+      "id": "audience_context_fit",
+      "label": "Audience context fit",
+      "weight": 0.12,
+      "description": "How well the design serves declared users, platforms, and accessibility floors.",
+      "metrics": [
+        "audience_need:sre-인프라-엔지니어-c1bc1737",
+        "audience_need:devops-플랫폼-엔지니어-bb9a990c",
+        "audience_need:온콜-엔지니어-인시던트-커맨더-5ddc938e",
+        "accessibility_target:wcag-2-2-aa-41a998cd"
+      ],
+      "research_basis": [
+        "visawi",
+        "aesthemos"
+      ]
+    }
+  ],
+  "metrics": {
+    "color_harmony": {
+      "label": "Color harmony",
+      "improvement": "Tighten the palette around one primary accent, one neutral surface ladder, and explicit semantic roles.",
+      "expected_lift": 0.08
+    },
+    "spacing_consistency": {
+      "label": "Spacing consistency",
+      "improvement": "Normalize page rhythm with shared spacing steps for section, cluster, and control gaps.",
+      "expected_lift": 0.07
+    },
+    "typography_balance": {
+      "label": "Typography balance",
+      "improvement": "Rebalance type hierarchy so headings, body, captions, and controls use distinct but restrained roles.",
+      "expected_lift": 0.07
+    },
+    "composition_order": {
+      "label": "Composition order",
+      "improvement": "Strengthen alignment, focal sequence, and proportional grouping before adding more decoration.",
+      "expected_lift": 0.08
+    },
+    "hierarchy_clarity": {
+      "label": "Hierarchy clarity",
+      "improvement": "Make the primary state, primary action, and next-best secondary action visible in the first scan.",
+      "expected_lift": 0.09
+    },
+    "contrast_legibility": {
+      "label": "Contrast and legibility",
+      "improvement": "Raise text/background and control/border contrast while preserving the selected token roles.",
+      "expected_lift": 0.08
+    },
+    "content_density_control": {
+      "label": "Content density control",
+      "improvement": "Reduce competing modules or group dense content into scannable rows, tables, rails, or panels.",
+      "expected_lift": 0.07
+    },
+    "task_focus": {
+      "label": "Task focus",
+      "improvement": "Move decorative or pitch-like content below the operational surface that supports the user's main task.",
+      "expected_lift": 0.08
+    },
+    "keyword_alignment": {
+      "label": "Keyword alignment",
+      "improvement": "Map the strongest brand keywords to visible choices in layout, tone, density, and component emphasis.",
+      "expected_lift": 0.08
+    },
+    "tone_alignment": {
+      "label": "Tone alignment",
+      "improvement": "Adjust copy weight, control styling, and visual temperature to match the intended voice.",
+      "expected_lift": 0.06
+    },
+    "domain_fit": {
+      "label": "Domain fit",
+      "improvement": "Add domain-native structures such as tables, maps, media, timelines, inspectors, or product objects where relevant.",
+      "expected_lift": 0.08
+    },
+    "anti_keyword_avoidance": {
+      "label": "Anti-keyword avoidance",
+      "improvement": "Remove visual tropes that match the brand profile's anti-keywords before polishing details.",
+      "expected_lift": 0.06
+    },
+    "desirability": {
+      "label": "Desirability",
+      "improvement": "Give the primary surface a more intentional visual reward: stronger imagery, tactile controls, or clearer payoff.",
+      "expected_lift": 0.07
+    },
+    "confidence_signal": {
+      "label": "Confidence signal",
+      "improvement": "Add evidence, provenance, precision, or stable UI states that make the surface feel trustworthy.",
+      "expected_lift": 0.07
+    },
+    "warmth_or_energy": {
+      "label": "Warmth or energy",
+      "improvement": "Tune motion, image choice, accent placement, or microcopy energy to the target audience.",
+      "expected_lift": 0.06
+    },
+    "responsive_fit": {
+      "label": "Responsive fit",
+      "improvement": "Verify mobile and desktop fit, then fix overflow, clipped labels, and unstable control sizing.",
+      "expected_lift": 0.08
+    },
+    "token_binding": {
+      "label": "Token binding",
+      "improvement": "Replace local visual constants with design-system tokens and keep semantic roles consistent.",
+      "expected_lift": 0.06
+    },
+    "accessibility_baseline": {
+      "label": "Accessibility baseline",
+      "improvement": "Check contrast, focus states, labels, and target sizes as part of visual polish, not after it.",
+      "expected_lift": 0.07
+    },
+    "interaction_affordance": {
+      "label": "Interaction affordance",
+      "improvement": "Make controls, filters, state chips, and navigation visually legible with icons, state, and hit-area clarity.",
+      "expected_lift": 0.07
+    },
+    "asset_completeness": {
+      "label": "Asset completeness",
+      "improvement": "Use concrete product, place, object, identity, or content assets where the domain expects visual substance.",
+      "expected_lift": 0.08
+    },
+    "distinctiveness": {
+      "label": "Distinctiveness",
+      "improvement": "Introduce one memorable composition or interaction pattern while keeping the rest of the system restrained.",
+      "expected_lift": 0.06
+    },
+    "reference_transformation": {
+      "label": "Reference transformation",
+      "improvement": "Absorb reference morphology without copying palette, copy, IA, or protected asset choices.",
+      "expected_lift": 0.06
+    },
+    "memorability": {
+      "label": "Memorability",
+      "improvement": "Create a recognizable signature in the first viewport through layout, identity asset, or product-native visual.",
+      "expected_lift": 0.06
+    },
+    "brand_keyword:sre-1ea78bda": {
+      "label": "Expresses brand keyword: sre",
+      "improvement": "Make 'sre' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "sre"
+    },
+    "brand_keyword:devops-c2c369c9": {
+      "label": "Expresses brand keyword: devops",
+      "improvement": "Make 'devops' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "devops"
+    },
+    "brand_keyword:observability-34a10215": {
+      "label": "Expresses brand keyword: observability",
+      "improvement": "Make 'observability' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "observability"
+    },
+    "brand_keyword:monitoring-c1ab9924": {
+      "label": "Expresses brand keyword: monitoring",
+      "improvement": "Make 'monitoring' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "monitoring"
+    },
+    "brand_keyword:realtime-91c462ed": {
+      "label": "Expresses brand keyword: realtime",
+      "improvement": "Make 'realtime' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "realtime"
+    },
+    "brand_keyword:operations-e8c39c4d": {
+      "label": "Expresses brand keyword: operations",
+      "improvement": "Make 'operations' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "operations"
+    },
+    "brand_keyword:alerting-0fe71c48": {
+      "label": "Expresses brand keyword: alerting",
+      "improvement": "Make 'alerting' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "alerting"
+    },
+    "brand_keyword:metric-c5a39a3a": {
+      "label": "Expresses brand keyword: metric",
+      "improvement": "Make 'metric' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "metric"
+    },
+    "brand_tone:precise-d53a4c62": {
+      "label": "Expresses tone of voice: precise",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'precise'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "precise"
+    },
+    "brand_tone:operational-7a65affc": {
+      "label": "Expresses tone of voice: operational",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'operational'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "operational"
+    },
+    "brand_tone:matter-of-fact-c419d19b": {
+      "label": "Expresses tone of voice: matter-of-fact",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'matter-of-fact'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "matter-of-fact"
+    },
+    "brand_tone:calm-under-pressure-ebf6e8be": {
+      "label": "Expresses tone of voice: calm-under-pressure",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'calm-under-pressure'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "calm-under-pressure"
+    },
+    "anti_keyword:playful-5a5e4a49": {
+      "label": "Avoids anti-keyword: playful",
+      "improvement": "Remove cues that make the product read as 'playful'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "playful"
+    },
+    "anti_keyword:decorative-ddfe48cb": {
+      "label": "Avoids anti-keyword: decorative",
+      "improvement": "Remove cues that make the product read as 'decorative'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "decorative"
+    },
+    "anti_keyword:marketing-heavy-401f18a1": {
+      "label": "Avoids anti-keyword: marketing-heavy",
+      "improvement": "Remove cues that make the product read as 'marketing-heavy'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "marketing-heavy"
+    },
+    "anti_keyword:skeuomorphic-26daf909": {
+      "label": "Avoids anti-keyword: skeuomorphic",
+      "improvement": "Remove cues that make the product read as 'skeuomorphic'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "skeuomorphic"
+    },
+    "anti_keyword:ornamental-4eab2773": {
+      "label": "Avoids anti-keyword: ornamental",
+      "improvement": "Remove cues that make the product read as 'ornamental'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "ornamental"
+    },
+    "avoid_pattern:glassmorphism-d83b9e03": {
+      "label": "Avoids visual pattern: glassmorphism",
+      "improvement": "Replace 'glassmorphism' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "glassmorphism"
+    },
+    "avoid_pattern:gradient-heavy-surfaces-eb390c87": {
+      "label": "Avoids visual pattern: gradient-heavy surfaces",
+      "improvement": "Replace 'gradient-heavy surfaces' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "gradient-heavy surfaces"
+    },
+    "avoid_pattern:playful-illustrations-46615ed4": {
+      "label": "Avoids visual pattern: playful illustrations",
+      "improvement": "Replace 'playful illustrations' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "playful illustrations"
+    },
+    "product_primitive:chart-grid-e763e71c": {
+      "label": "Embodies product primitive: chart grid",
+      "improvement": "Represent 'chart grid' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "chart grid"
+    },
+    "product_primitive:sparkline-d00339f5": {
+      "label": "Embodies product primitive: sparkline",
+      "improvement": "Represent 'sparkline' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "sparkline"
+    },
+    "product_primitive:kpi-card-2ec31cd3": {
+      "label": "Embodies product primitive: kpi card",
+      "improvement": "Represent 'kpi card' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "kpi card"
+    },
+    "product_primitive:alert-list-fa5c2dc7": {
+      "label": "Embodies product primitive: alert list",
+      "improvement": "Represent 'alert list' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "alert list"
+    },
+    "product_primitive:severity-badge-eb37ffb8": {
+      "label": "Embodies product primitive: severity badge",
+      "improvement": "Represent 'severity badge' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "severity badge"
+    },
+    "product_primitive:metric-table-fa39cb6b": {
+      "label": "Embodies product primitive: metric table",
+      "improvement": "Represent 'metric table' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "metric table"
+    },
+    "product_primitive:time-range-picker-4507c652": {
+      "label": "Embodies product primitive: time range picker",
+      "improvement": "Represent 'time range picker' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "time range picker"
+    },
+    "product_primitive:status-board-d86b1021": {
+      "label": "Embodies product primitive: status board",
+      "improvement": "Represent 'status board' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "status board"
+    },
+    "product_primitive:incident-timeline-e51b6e61": {
+      "label": "Embodies product primitive: incident timeline",
+      "improvement": "Represent 'incident timeline' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "incident timeline"
+    },
+    "product_primitive:sidebar-navigation-9ccd2ea3": {
+      "label": "Embodies product primitive: sidebar navigation",
+      "improvement": "Represent 'sidebar navigation' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "sidebar navigation"
+    },
+    "must_include:dense-chart-grid-575a35c6": {
+      "label": "Includes required visual/system signal: dense chart grid",
+      "improvement": "Make 'dense chart grid' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "dense chart grid"
+    },
+    "must_include:alert-list-with-severity-badges-e2582e4d": {
+      "label": "Includes required visual/system signal: alert list with severity badges",
+      "improvement": "Make 'alert list with severity badges' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "alert list with severity badges"
+    },
+    "must_include:metric-table-fa39cb6b": {
+      "label": "Includes required visual/system signal: metric table",
+      "improvement": "Make 'metric table' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "metric table"
+    },
+    "must_include:status-board-d86b1021": {
+      "label": "Includes required visual/system signal: status board",
+      "improvement": "Make 'status board' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "status board"
+    },
+    "must_include:time-range-picker-4507c652": {
+      "label": "Includes required visual/system signal: time range picker",
+      "improvement": "Make 'time range picker' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "time range picker"
+    },
+    "audience_need:sre-인프라-엔지니어-c1bc1737": {
+      "label": "Fits audience context: SRE / 인프라 엔지니어",
+      "improvement": "Adjust density, language, workflow order, and controls for 'SRE / 인프라 엔지니어'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "SRE / 인프라 엔지니어"
+    },
+    "audience_need:devops-플랫폼-엔지니어-bb9a990c": {
+      "label": "Fits audience context: DevOps / 플랫폼 엔지니어",
+      "improvement": "Adjust density, language, workflow order, and controls for 'DevOps / 플랫폼 엔지니어'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "DevOps / 플랫폼 엔지니어"
+    },
+    "audience_need:온콜-엔지니어-인시던트-커맨더-5ddc938e": {
+      "label": "Fits audience context: 온콜 엔지니어 / 인시던트 커맨더",
+      "improvement": "Adjust density, language, workflow order, and controls for '온콜 엔지니어 / 인시던트 커맨더'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "온콜 엔지니어 / 인시던트 커맨더"
+    },
+    "accessibility_target:wcag-2-2-aa-41a998cd": {
+      "label": "Supports accessibility target: WCAG 2.2 AA",
+      "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "WCAG 2.2 AA"
+    }
+  },
+  "relations": [
+    {
+      "source": "DesignCandidate",
+      "relation": "evaluated_by",
+      "target": "AestheticDimension"
+    },
+    {
+      "source": "AestheticDimension",
+      "relation": "measured_by",
+      "target": "AestheticMetric"
+    },
+    {
+      "source": "AestheticMetric",
+      "relation": "improved_by",
+      "target": "ImprovementAction"
+    },
+    {
+      "source": "AestheticEvaluation",
+      "relation": "gates",
+      "target": "Execution"
+    }
+  ],
+  "context": {
+    "brand_name": "Pulse",
+    "system_name": "Pulse System",
+    "product_summary": "실시간 observability 콘솔 — metric/log/trace/alert 를 한 화면에서 운영하는 SRE/DevOps 운영 도구",
+    "audiences": [
+      "SRE / 인프라 엔지니어",
+      "DevOps / 플랫폼 엔지니어",
+      "온콜 엔지니어 / 인시던트 커맨더"
+    ],
+    "brand_keywords": [
+      "sre",
+      "devops",
+      "observability",
+      "monitoring",
+      "realtime",
+      "operations",
+      "alerting",
+      "metric",
+      "incident"
+    ],
+    "anti_keywords": [
+      "playful",
+      "decorative",
+      "marketing-heavy",
+      "skeuomorphic",
+      "ornamental"
+    ],
+    "tone_of_voice": [
+      "precise",
+      "operational",
+      "matter-of-fact",
+      "calm-under-pressure"
+    ],
+    "product_primitives": [
+      "chart grid",
+      "sparkline",
+      "kpi card",
+      "alert list",
+      "severity badge",
+      "metric table",
+      "time range picker",
+      "status board",
+      "incident timeline",
+      "sidebar navigation",
+      "search filter chrome",
+      "log viewer",
+      "trace flamegraph",
+      "threshold editor"
+    ]
+  },
+  "brand_aesthetic_contract": {
+    "schema_version": "brand-aesthetic-contract/v1",
+    "brand_name": "Pulse",
+    "system_name": "Pulse System",
+    "research_basis": [
+      {
+        "id": "visawi",
+        "label": "VisAWI",
+        "construct": "perceived website visual aesthetics",
+        "operational_use": "Map simplicity, diversity, colorfulness, and craftsmanship into visual system coherence metrics.",
+        "source_url": "https://www.sciencedirect.com/science/article/pii/S1071581910000777"
+      },
+      {
+        "id": "apid",
+        "label": "APiD",
+        "construct": "aesthetic pleasure in designed artifacts",
+        "operational_use": "Keep a direct pleasure/desirability layer instead of only formal pixel metrics.",
+        "source_url": "https://opus.lib.uts.edu.au/handle/10453/81276"
+      },
+      {
+        "id": "beauvis",
+        "label": "BeauVis",
+        "construct": "aesthetic pleasure of visual representations",
+        "operational_use": "Treat scores as comparative, context-bound judgments rather than universal beauty values.",
+        "source_url": "https://arxiv.org/abs/2207.14147"
+      },
+      {
+        "id": "aesthemos",
+        "label": "AESTHEMOS",
+        "construct": "aesthetic emotions",
+        "operational_use": "Translate brand tone and target affect into measurable emotional-response proxies.",
+        "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0178899"
+      },
+      {
+        "id": "kansei",
+        "label": "Kansei / semantic differential",
+        "construct": "design element to impression mapping",
+        "operational_use": "Use brand keywords and anti-keywords as semantic impression targets and boundaries.",
+        "source_url": "https://www.mdpi.com/2073-8994/12/8/1340"
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "brand_semantic_fit",
+        "label": "Brand semantic fit",
+        "weight": 0.22,
+        "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+        "metrics": [
+          "brand_keyword:sre-1ea78bda",
+          "brand_keyword:devops-c2c369c9",
+          "brand_keyword:observability-34a10215",
+          "brand_keyword:monitoring-c1ab9924",
+          "brand_keyword:realtime-91c462ed",
+          "brand_keyword:operations-e8c39c4d",
+          "brand_keyword:alerting-0fe71c48",
+          "brand_keyword:metric-c5a39a3a",
+          "brand_tone:precise-d53a4c62",
+          "brand_tone:operational-7a65affc",
+          "brand_tone:matter-of-fact-c419d19b",
+          "brand_tone:calm-under-pressure-ebf6e8be"
+        ],
+        "research_basis": [
+          "kansei",
+          "aesthemos"
+        ]
+      },
+      {
+        "id": "brand_boundary_fit",
+        "label": "Brand boundary fit",
+        "weight": 0.16,
+        "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+        "metrics": [
+          "anti_keyword:playful-5a5e4a49",
+          "anti_keyword:decorative-ddfe48cb",
+          "anti_keyword:marketing-heavy-401f18a1",
+          "anti_keyword:skeuomorphic-26daf909",
+          "anti_keyword:ornamental-4eab2773",
+          "avoid_pattern:glassmorphism-d83b9e03",
+          "avoid_pattern:gradient-heavy-surfaces-eb390c87",
+          "avoid_pattern:playful-illustrations-46615ed4"
+        ],
+        "research_basis": [
+          "kansei"
+        ]
+      },
+      {
+        "id": "product_ontology_fit",
+        "label": "Product ontology fit",
+        "weight": 0.22,
+        "description": "How clearly product primitives and ontology-required signals appear in the design.",
+        "metrics": [
+          "product_primitive:chart-grid-e763e71c",
+          "product_primitive:sparkline-d00339f5",
+          "product_primitive:kpi-card-2ec31cd3",
+          "product_primitive:alert-list-fa5c2dc7",
+          "product_primitive:severity-badge-eb37ffb8",
+          "product_primitive:metric-table-fa39cb6b",
+          "product_primitive:time-range-picker-4507c652",
+          "product_primitive:status-board-d86b1021",
+          "product_primitive:incident-timeline-e51b6e61",
+          "product_primitive:sidebar-navigation-9ccd2ea3",
+          "must_include:dense-chart-grid-575a35c6",
+          "must_include:alert-list-with-severity-badges-e2582e4d",
+          "must_include:metric-table-fa39cb6b",
+          "must_include:status-board-d86b1021",
+          "must_include:time-range-picker-4507c652"
+        ],
+        "research_basis": [
+          "beauvis",
+          "kansei"
+        ]
+      },
+      {
+        "id": "audience_context_fit",
+        "label": "Audience context fit",
+        "weight": 0.12,
+        "description": "How well the design serves declared users, platforms, and accessibility floors.",
+        "metrics": [
+          "audience_need:sre-인프라-엔지니어-c1bc1737",
+          "audience_need:devops-플랫폼-엔지니어-bb9a990c",
+          "audience_need:온콜-엔지니어-인시던트-커맨더-5ddc938e",
+          "accessibility_target:wcag-2-2-aa-41a998cd"
+        ],
+        "research_basis": [
+          "visawi",
+          "aesthemos"
+        ]
+      }
+    ],
+    "metrics": {
+      "brand_keyword:sre-1ea78bda": {
+        "label": "Expresses brand keyword: sre",
+        "improvement": "Make 'sre' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "sre"
+      },
+      "brand_keyword:devops-c2c369c9": {
+        "label": "Expresses brand keyword: devops",
+        "improvement": "Make 'devops' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "devops"
+      },
+      "brand_keyword:observability-34a10215": {
+        "label": "Expresses brand keyword: observability",
+        "improvement": "Make 'observability' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "observability"
+      },
+      "brand_keyword:monitoring-c1ab9924": {
+        "label": "Expresses brand keyword: monitoring",
+        "improvement": "Make 'monitoring' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "monitoring"
+      },
+      "brand_keyword:realtime-91c462ed": {
+        "label": "Expresses brand keyword: realtime",
+        "improvement": "Make 'realtime' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "realtime"
+      },
+      "brand_keyword:operations-e8c39c4d": {
+        "label": "Expresses brand keyword: operations",
+        "improvement": "Make 'operations' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "operations"
+      },
+      "brand_keyword:alerting-0fe71c48": {
+        "label": "Expresses brand keyword: alerting",
+        "improvement": "Make 'alerting' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "alerting"
+      },
+      "brand_keyword:metric-c5a39a3a": {
+        "label": "Expresses brand keyword: metric",
+        "improvement": "Make 'metric' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "metric"
+      },
+      "brand_tone:precise-d53a4c62": {
+        "label": "Expresses tone of voice: precise",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'precise'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "precise"
+      },
+      "brand_tone:operational-7a65affc": {
+        "label": "Expresses tone of voice: operational",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'operational'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "operational"
+      },
+      "brand_tone:matter-of-fact-c419d19b": {
+        "label": "Expresses tone of voice: matter-of-fact",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'matter-of-fact'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "matter-of-fact"
+      },
+      "brand_tone:calm-under-pressure-ebf6e8be": {
+        "label": "Expresses tone of voice: calm-under-pressure",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'calm-under-pressure'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "calm-under-pressure"
+      },
+      "anti_keyword:playful-5a5e4a49": {
+        "label": "Avoids anti-keyword: playful",
+        "improvement": "Remove cues that make the product read as 'playful'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "playful"
+      },
+      "anti_keyword:decorative-ddfe48cb": {
+        "label": "Avoids anti-keyword: decorative",
+        "improvement": "Remove cues that make the product read as 'decorative'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "decorative"
+      },
+      "anti_keyword:marketing-heavy-401f18a1": {
+        "label": "Avoids anti-keyword: marketing-heavy",
+        "improvement": "Remove cues that make the product read as 'marketing-heavy'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "marketing-heavy"
+      },
+      "anti_keyword:skeuomorphic-26daf909": {
+        "label": "Avoids anti-keyword: skeuomorphic",
+        "improvement": "Remove cues that make the product read as 'skeuomorphic'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "skeuomorphic"
+      },
+      "anti_keyword:ornamental-4eab2773": {
+        "label": "Avoids anti-keyword: ornamental",
+        "improvement": "Remove cues that make the product read as 'ornamental'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "ornamental"
+      },
+      "avoid_pattern:glassmorphism-d83b9e03": {
+        "label": "Avoids visual pattern: glassmorphism",
+        "improvement": "Replace 'glassmorphism' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "glassmorphism"
+      },
+      "avoid_pattern:gradient-heavy-surfaces-eb390c87": {
+        "label": "Avoids visual pattern: gradient-heavy surfaces",
+        "improvement": "Replace 'gradient-heavy surfaces' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "gradient-heavy surfaces"
+      },
+      "avoid_pattern:playful-illustrations-46615ed4": {
+        "label": "Avoids visual pattern: playful illustrations",
+        "improvement": "Replace 'playful illustrations' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "playful illustrations"
+      },
+      "product_primitive:chart-grid-e763e71c": {
+        "label": "Embodies product primitive: chart grid",
+        "improvement": "Represent 'chart grid' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "chart grid"
+      },
+      "product_primitive:sparkline-d00339f5": {
+        "label": "Embodies product primitive: sparkline",
+        "improvement": "Represent 'sparkline' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "sparkline"
+      },
+      "product_primitive:kpi-card-2ec31cd3": {
+        "label": "Embodies product primitive: kpi card",
+        "improvement": "Represent 'kpi card' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "kpi card"
+      },
+      "product_primitive:alert-list-fa5c2dc7": {
+        "label": "Embodies product primitive: alert list",
+        "improvement": "Represent 'alert list' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "alert list"
+      },
+      "product_primitive:severity-badge-eb37ffb8": {
+        "label": "Embodies product primitive: severity badge",
+        "improvement": "Represent 'severity badge' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "severity badge"
+      },
+      "product_primitive:metric-table-fa39cb6b": {
+        "label": "Embodies product primitive: metric table",
+        "improvement": "Represent 'metric table' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "metric table"
+      },
+      "product_primitive:time-range-picker-4507c652": {
+        "label": "Embodies product primitive: time range picker",
+        "improvement": "Represent 'time range picker' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "time range picker"
+      },
+      "product_primitive:status-board-d86b1021": {
+        "label": "Embodies product primitive: status board",
+        "improvement": "Represent 'status board' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "status board"
+      },
+      "product_primitive:incident-timeline-e51b6e61": {
+        "label": "Embodies product primitive: incident timeline",
+        "improvement": "Represent 'incident timeline' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "incident timeline"
+      },
+      "product_primitive:sidebar-navigation-9ccd2ea3": {
+        "label": "Embodies product primitive: sidebar navigation",
+        "improvement": "Represent 'sidebar navigation' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "sidebar navigation"
+      },
+      "must_include:dense-chart-grid-575a35c6": {
+        "label": "Includes required visual/system signal: dense chart grid",
+        "improvement": "Make 'dense chart grid' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "dense chart grid"
+      },
+      "must_include:alert-list-with-severity-badges-e2582e4d": {
+        "label": "Includes required visual/system signal: alert list with severity badges",
+        "improvement": "Make 'alert list with severity badges' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "alert list with severity badges"
+      },
+      "must_include:metric-table-fa39cb6b": {
+        "label": "Includes required visual/system signal: metric table",
+        "improvement": "Make 'metric table' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "metric table"
+      },
+      "must_include:status-board-d86b1021": {
+        "label": "Includes required visual/system signal: status board",
+        "improvement": "Make 'status board' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "status board"
+      },
+      "must_include:time-range-picker-4507c652": {
+        "label": "Includes required visual/system signal: time range picker",
+        "improvement": "Make 'time range picker' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "time range picker"
+      },
+      "audience_need:sre-인프라-엔지니어-c1bc1737": {
+        "label": "Fits audience context: SRE / 인프라 엔지니어",
+        "improvement": "Adjust density, language, workflow order, and controls for 'SRE / 인프라 엔지니어'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "SRE / 인프라 엔지니어"
+      },
+      "audience_need:devops-플랫폼-엔지니어-bb9a990c": {
+        "label": "Fits audience context: DevOps / 플랫폼 엔지니어",
+        "improvement": "Adjust density, language, workflow order, and controls for 'DevOps / 플랫폼 엔지니어'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "DevOps / 플랫폼 엔지니어"
+      },
+      "audience_need:온콜-엔지니어-인시던트-커맨더-5ddc938e": {
+        "label": "Fits audience context: 온콜 엔지니어 / 인시던트 커맨더",
+        "improvement": "Adjust density, language, workflow order, and controls for '온콜 엔지니어 / 인시던트 커맨더'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "온콜 엔지니어 / 인시던트 커맨더"
+      },
+      "accessibility_target:wcag-2-2-aa-41a998cd": {
+        "label": "Supports accessibility target: WCAG 2.2 AA",
+        "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "WCAG 2.2 AA"
+      }
+    },
+    "rule": "Brand-owned aesthetic quality is evaluated as fit to declared semantic targets, explicit boundaries, product ontology, audience context, and visual craft."
+  },
+  "interpretation_rule": "Scores represent observed or reviewed response proxies in a declared context; they are not universal beauty claims."
+}
