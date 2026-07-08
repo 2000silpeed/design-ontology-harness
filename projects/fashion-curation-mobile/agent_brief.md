@@ -1,17 +1,7 @@
-# Foldline Harness Agent Brief
+# Agent Brief: Tinge
 
-This project uses `design-ontology-harness` as a reusable system-authoring harness.
+Build Tinge as a mobile-first fashion curation tool, not a shopping feed.
 
-## What The Agent Should Do
+The first screen must expose the user's style calibration surface: occasion pulse, style compass, closet tape, silhouette preview, accent tray, and a restrained decision dock. Do not replace these with product cards, hero sections, dashboards, or generic filter chips.
 
-1. Read `brand_profile.json`
-2. Read `seeds/seed_urls.txt`
-3. Load the configured knowledge base
-4. Produce custom system outputs into `build/`
-5. Avoid copying any single reference system directly
-
-## Success Criteria
-
-- The outputs reflect this project's own identity
-- The system spec is useful for a real product team
-- Tokens and components are grounded in the product primitives
+The actual implementation component list comes from `brand_profile.component_decision.core_components`. Astryx and Geist are coverage references only.

@@ -1,46 +1,47 @@
 {
-  "brand_name": "Foldline",
-  "system_name": "Foldline Mobile Wardrobe System",
-  "product_summary": "A Korean-first mobile fashion curation app that turns a daily style brief and closet memory into one decisive outfit before shopping.",
+  "brand_name": "Tinge",
+  "system_name": "Tinge Style Compass System",
+  "product_summary": "A Korean-first mobile fashion curation app that calibrates a user's style direction through an occasion pulse, closet memory, and one bounded accent decision before shopping.",
   "audiences": [
-    "도시 출퇴근자와 주말 약속이 잦은 20-30대 모바일 쇼핑 사용자",
-    "새 상품을 계속 둘러보기보다 보유 옷과 오늘의 상황에 맞는 한 벌을 빠르게 정하고 싶은 사용자",
-    "소재, 색감, 실루엣 근거를 보고 구매 후보를 신중하게 고르는 사용자"
+    "출근 후 약속이나 전시, 모임처럼 상황이 자주 바뀌는 20-30대 모바일 패션 사용자",
+    "상품 피드를 오래 훑기보다 오늘 옷차림의 무드와 포인트를 먼저 정하고 싶은 사용자",
+    "보유 옷을 최대한 살리면서 하나의 부족한 색감, 소재, 실루엣만 후보로 보고 싶은 사용자"
   ],
   "brand_keywords": [
-    "editorial",
-    "quiet",
+    "calibrated",
     "tactile",
-    "decisive",
-    "personal"
+    "restrained",
+    "directional",
+    "closet-aware"
   ],
   "anti_keywords": [
     "generic",
-    "dashboard-like",
     "marketplace-grid",
-    "infinite-card-wall",
-    "luxury-cliche",
-    "preset-looking"
+    "hero-card",
+    "dashboard-like",
+    "infinite-feed",
+    "preset-looking",
+    "Foldline-like"
   ],
   "tone_of_voice": [
-    "차분한",
-    "구체적인",
+    "짧고 판단적인",
+    "취향을 설명하는",
     "과장 없는",
-    "스타일리스트처럼 단정한"
+    "스타일 에디터처럼 구체적인"
   ],
   "visual_keywords": [
-    "folded-paper",
-    "fabric-texture",
-    "compact-mobile",
-    "soft-contrast",
-    "editorial-utility"
+    "style-compass",
+    "closet-tape",
+    "fabric-signal",
+    "mobile-instrument",
+    "bounded-accent"
   ],
   "interaction_keywords": [
-    "tap-to-refine",
-    "swipe-brief",
-    "drawer-shopping",
-    "save-look",
-    "closet-aware"
+    "calibrate",
+    "tune-axis",
+    "compare-accent",
+    "save-direction",
+    "shortlist-one"
   ],
   "platforms": [
     "mobile web",
@@ -49,72 +50,80 @@
   "accessibility_targets": [
     "WCAG 2.2 AA",
     "320px mobile without horizontal overflow",
-    "Korean copy with stable wrapping"
+    "Korean copy with stable wrapping",
+    "44px minimum touch targets"
   ],
   "application_concept": {
-    "primary_job": "사용자가 오늘의 상황, 취향, 보유 옷 신호를 바탕으로 하나의 착장 보드를 확정하고 저장하거나 필요한 아이템만 구매 후보로 넘긴다.",
+    "primary_job": "사용자가 오늘의 상황과 보유 옷 기억을 기준으로 취향 좌표를 조정하고, 하나의 실루엣 방향과 부족한 포인트 아이템을 확정한다.",
     "domain_objects": [
-      "daily style brief",
-      "taste signal",
-      "outfit edit",
-      "garment item",
-      "closet memory",
-      "fit note",
-      "price and size option",
-      "save look"
+      "occasion pulse",
+      "style axis",
+      "compass handle",
+      "closet memory token",
+      "silhouette direction",
+      "accent candidate",
+      "fit passport",
+      "calibration save"
     ],
-    "operating_mode": "taste-led mobile outfit assembly",
-    "success_moment": "사용자가 오늘의 look board를 저장하고, 부족한 한 가지 아이템의 사이즈/가격/대체 후보를 확인한 상태.",
+    "operating_mode": "mobile style calibration before shopping",
+    "success_moment": "사용자가 현재 취향 좌표와 실루엣 방향을 저장하고, 부족한 포인트 하나만 후보로 넘긴 상태.",
     "differentiation": [
-      "첫 화면은 상품 피드가 아니라 오늘의 brief와 look board가 함께 보이는 착장 조립 표면이다.",
-      "추천 근거는 감성 문장이 아니라 소재, 실루엣, 날씨, 보유 옷과의 연결로 설명된다.",
-      "쇼핑은 별도 카탈로그가 아니라 look board의 특정 아이템에서 열리는 하단 시트로 제한된다."
+      "첫 화면은 착장 완성 보드가 아니라 취향 좌표를 조정하는 style compass다.",
+      "쇼핑 후보는 무한 피드가 아니라 현재 좌표에 맞는 accent tray 안에서만 등장한다.",
+      "보유 옷은 상품 카드가 아니라 closet tape의 기억 토큰으로 표시된다.",
+      "구매보다 먼저 오늘의 스타일 강도, 대비, 소재 균형을 확정한다."
     ]
   },
   "layout_skeleton": {
-    "composition": "signal spine plus look board with contextual shop sheet",
-    "navigation_model": "bottom tab with local brief controls",
+    "composition": "style compass with closet tape and accent tray",
+    "navigation_model": "bottom mode tabs with fixed decision dock",
     "density": "balanced",
     "primary_regions": [
       {
-        "name": "Daily brief bar",
-        "role": "날씨, 일정, 피하고 싶은 요소를 한 줄로 요약하고 빠르게 조정",
+        "name": "Occasion pulse",
+        "role": "오늘의 장소, 시간, 날씨, 드레스 기대치를 한 줄 신호로 압축",
         "priority": "primary"
       },
       {
-        "name": "Signal spine",
-        "role": "오늘의 취향 신호를 세로 리듬으로 보여 주며 현재 추천의 근거를 고정",
+        "name": "Style compass",
+        "role": "quiet-bold, soft-sharp 축을 조정해 현재 착장 방향을 결정",
         "priority": "primary"
       },
       {
-        "name": "Look board",
-        "role": "완성된 착장과 핵심 아이템의 레이어 관계를 시각적으로 제시",
+        "name": "Closet tape",
+        "role": "보유 옷을 작은 기억 토큰으로 보여 주며 추천의 출발점을 고정",
         "priority": "primary"
       },
       {
-        "name": "Why it works",
-        "role": "소재, 실루엣, 보유 옷 연결 근거를 짧게 설명",
+        "name": "Silhouette preview",
+        "role": "현재 좌표가 만드는 실루엣과 소재 인상을 시각적으로 확인",
         "priority": "secondary"
       },
       {
-        "name": "Contextual shop sheet",
-        "role": "선택 아이템의 사이즈, 가격, 대체 후보, 저장 액션을 착장 문맥 안에서 처리",
+        "name": "Accent tray",
+        "role": "부족한 색감, 소재, 포인트 후보를 작게 비교",
         "priority": "secondary"
+      },
+      {
+        "name": "Decision dock",
+        "role": "좌표 저장 또는 포인트 하나를 후보로 넘기는 thumb-zone 액션",
+        "priority": "primary"
       }
     ],
     "first_screen_contract": [
-      "첫 viewport 안에 daily brief, signal spine, look board가 함께 보여야 함",
-      "상품 목록보다 완성된 착장과 추천 근거가 먼저 보여야 함",
-      "저장, 대체 후보, shop sheet 액션이 thumb zone에 있어야 함",
-      "이미지는 장식 배경이 아니라 실제 의류/소재/레이어 맥락을 보여야 함"
+      "첫 viewport 안에 occasion pulse, style compass, closet tape, silhouette preview의 일부가 함께 보여야 함",
+      "상품 피드나 product grid가 style compass보다 먼저 나오면 실패",
+      "accent tray는 세 개 이하의 후보만 보여야 함",
+      "decision dock은 thumb zone에 고정되어 저장과 후보 액션을 제공해야 함",
+      "이미지는 장식 배경이 아니라 의류, 소재, 실루엣 판단에 쓰여야 함"
     ],
     "avoid_layouts": [
       "generic hero plus card grid",
+      "Foldline-style look board with contextual shop sheet",
       "uniform product card wall",
       "dashboard metric cards",
-      "luxury black-gold cliche",
-      "endless feed before curation decision",
-      "marketing landing page before task surface"
+      "horizontal filter chip row as primary control",
+      "endless shopping feed before calibration"
     ]
   },
   "design_differentiation": {
@@ -123,38 +132,40 @@
       "template shopping app home",
       "magazine landing page",
       "SaaS dashboard",
-      "previous ThreadSense test mock"
+      "previous Foldline look-board mock"
     ],
     "signature_moves": [
-      "Taste signals sit as a vertical signal spine instead of a generic filter row.",
-      "The main look board shows one assembled outfit decision, not multiple product cards.",
-      "Commerce stays inside a contextual shop sheet attached to one missing garment.",
-      "Closet memory appears as a compatibility signal before price."
+      "The first interactive object is a two-axis style compass, not a garment board.",
+      "Closet memory appears as a continuous tape of owned garment tokens.",
+      "Commerce appears only as a bounded accent tray with one shortlist action.",
+      "The bottom decision dock saves the calibration itself, not a product card.",
+      "Fit information is shown as a compact passport attached to the calibrated silhouette."
     ],
     "repetition_risks": [
-      "same top chip rail plus large hero card",
-      "two-column ecommerce product cards",
-      "oversized editorial photo without decision controls",
-      "dashboard-like badges and stats",
-      "too many floating rounded cards"
+      "falling back to daily brief plus large outfit image",
+      "using product cards for every garment",
+      "recreating Foldline's shop sheet",
+      "turning compass values into dashboard metrics",
+      "making the accent tray look like a marketplace carousel"
     ]
   },
   "product_primitives": [
-    "daily style brief",
-    "vertical signal spine",
-    "single look board",
-    "look board item pins",
-    "outfit rationale strip",
-    "garment layer stack",
-    "fabric swatch memory",
-    "closet compatibility cue",
-    "alternative line rail",
-    "contextual shop sheet",
-    "save look action"
+    "occasion pulse",
+    "two-axis style compass",
+    "compass handle",
+    "closet tape",
+    "closet memory token",
+    "silhouette preview",
+    "calibration meter",
+    "contrast slider",
+    "accent tray",
+    "fit passport",
+    "decision dock",
+    "save calibration action"
   ],
   "component_decision": {
     "mode": "llm-authored",
-    "rationale": "Foldline should implement the mobile outfit-decision surface directly: brief, signal spine, one look board, rationale, garment layers, and contextual shop sheet. Generic ecommerce grids, hero sections, dashboards, and raw baseline controls stay out of the actual component set.",
+    "rationale": "Tinge needs a calibration instrument: occasion pulse, style compass, closet tape, silhouette preview, accent tray, and a fixed decision dock. Generic product grids, look boards, dashboards, and modal commerce are excluded so the app stays about deciding style direction before shopping.",
     "coverage_families": [
       "button",
       "input",
@@ -166,237 +177,248 @@
       {
         "name": "app-shell",
         "family": "foundation",
-        "role": "Constrains the phone-scale task surface and thumb-zone layering.",
-        "supports_primitive": "mobile outfit decision surface",
-        "decision_reason": "The app needs a bounded mobile shell, not a responsive desktop dashboard frame.",
+        "role": "Constrains the mobile calibration instrument and fixed thumb-zone controls.",
+        "supports_primitive": "mobile style calibration surface",
+        "decision_reason": "The experience needs a phone-scale tool frame, not a desktop dashboard shell.",
         "states": ["default"]
       },
       {
-        "name": "topbar",
+        "name": "status-topline",
         "family": "navigation",
-        "role": "Shows place, weather, brand, and compact brief/profile actions.",
-        "supports_primitive": "daily style brief",
-        "decision_reason": "The top area must carry today's context before any shopping action.",
+        "role": "Shows brand, date, place, and compact entry actions.",
+        "supports_primitive": "occasion pulse",
+        "decision_reason": "The top line orients the calibration without becoming a marketing header.",
         "states": ["default"]
       },
       {
-        "name": "daily-brief",
+        "name": "occasion-pulse",
         "family": "content",
-        "role": "Summarizes occasion, avoid signal, and closet usage above the board.",
-        "supports_primitive": "daily style brief",
-        "decision_reason": "This replaces generic filter chips with a task-specific daily styling brief.",
-        "states": ["default", "adjusting"]
+        "role": "Compresses situation constraints into a readable pulse.",
+        "supports_primitive": "occasion pulse",
+        "decision_reason": "This replaces generic filters with context signals the compass can respond to.",
+        "states": ["default", "editing"]
       },
       {
-        "name": "signal-spine",
-        "family": "input",
-        "role": "Pins the active recommendation signals as a vertical selection rhythm.",
-        "supports_primitive": "vertical signal spine",
-        "decision_reason": "Foldline needs a visible reasoning spine, not a horizontal category filter row.",
+        "name": "pulse-token",
+        "family": "feedback",
+        "role": "Displays one live context signal such as weather, venue, or dress expectation.",
+        "supports_primitive": "occasion pulse",
+        "decision_reason": "Signals should feel like live calibration inputs, not filter chips.",
         "states": ["default", "active"]
       },
       {
-        "name": "signal-node",
-        "family": "input",
-        "role": "Represents one active or inactive styling signal.",
-        "supports_primitive": "vertical signal spine",
-        "decision_reason": "Each signal must be inspectable and tappable without becoming a generic chip.",
-        "states": ["default", "active", "pressed"]
+        "name": "compass-stage",
+        "family": "content",
+        "role": "Holds the axis grid, handle, and current style direction.",
+        "supports_primitive": "two-axis style compass",
+        "decision_reason": "The compass is the primary product object and must be its own component.",
+        "states": ["default", "calibrating"]
       },
       {
-        "name": "today-board",
+        "name": "compass-axis",
         "family": "content",
-        "role": "Pairs the signal spine and assembled look in the first viewport.",
-        "supports_primitive": "single look board",
-        "decision_reason": "The primary screen grammar is a decision board, not a feed or catalog.",
+        "role": "Labels the quiet-bold and soft-sharp style axes.",
+        "supports_primitive": "two-axis style compass",
+        "decision_reason": "Axis language explains the decision better than categories or tabs.",
         "states": ["default"]
       },
       {
-        "name": "look-board",
+        "name": "compass-handle",
+        "family": "input",
+        "role": "Lets the user move the current style direction across the compass.",
+        "supports_primitive": "compass handle",
+        "decision_reason": "The user's main action is calibration, so the handle must be a real control.",
+        "states": ["default", "dragging", "snapped"]
+      },
+      {
+        "name": "temperature-band",
+        "family": "feedback",
+        "role": "Shows the warm-cool and rain-ready material bias for the current direction.",
+        "supports_primitive": "calibration meter",
+        "decision_reason": "This is product feedback, not a dashboard metric.",
+        "states": ["default", "shifted"]
+      },
+      {
+        "name": "closet-tape",
         "family": "content",
-        "role": "Shows the one selected outfit composition with garment imagery and caption.",
-        "supports_primitive": "single look board",
-        "decision_reason": "The core object is one styled outfit decision, not multiple product cards.",
+        "role": "Displays owned garments as a continuous memory strip.",
+        "supports_primitive": "closet tape",
+        "decision_reason": "Owned items should feel like memory evidence, not commerce cards.",
+        "states": ["default", "scrolled"]
+      },
+      {
+        "name": "closet-token",
+        "family": "content",
+        "role": "Represents one owned garment with color, material, and recency.",
+        "supports_primitive": "closet memory token",
+        "decision_reason": "A token keeps the closet compact and tactile.",
+        "states": ["default", "matched", "muted"]
+      },
+      {
+        "name": "silhouette-preview",
+        "family": "content",
+        "role": "Shows the calibrated silhouette direction through garment imagery.",
+        "supports_primitive": "silhouette preview",
+        "decision_reason": "The app needs a visual read of shape, not a product tile.",
+        "states": ["default", "updated"]
+      },
+      {
+        "name": "silhouette-layer",
+        "family": "content",
+        "role": "Names the base, texture, and accent layers inside the preview.",
+        "supports_primitive": "silhouette preview",
+        "decision_reason": "Layer labels connect the image to closet and accent decisions.",
         "states": ["default", "selected"]
       },
       {
-        "name": "board-confidence-mark",
+        "name": "calibration-meter",
         "family": "feedback",
-        "role": "Shows confidence for the current outfit board.",
-        "supports_primitive": "single look board",
-        "decision_reason": "The recommendation confidence belongs on the board itself, not as a dashboard metric.",
-        "states": ["default", "high", "low"]
+        "role": "Shows restraint, contrast, and walkability as calibrated bars.",
+        "supports_primitive": "calibration meter",
+        "decision_reason": "These values explain the direction but must not become dashboard stats.",
+        "states": ["default", "warning", "balanced"]
       },
       {
-        "name": "look-board-pin",
+        "name": "contrast-slider",
         "family": "input",
-        "role": "Targets a garment on the look board and opens its item context.",
-        "supports_primitive": "look board item pins",
-        "decision_reason": "Item actions should start from the outfit image, not from a detached product grid.",
+        "role": "Adjusts visual contrast without leaving the first screen.",
+        "supports_primitive": "contrast slider",
+        "decision_reason": "Contrast is a fashion decision control, not a generic settings input.",
+        "states": ["default", "focused", "changed"]
+      },
+      {
+        "name": "accent-tray",
+        "family": "content",
+        "role": "Shows a small bounded set of missing accent candidates.",
+        "supports_primitive": "accent tray",
+        "decision_reason": "Commerce enters only as a bounded tray after calibration.",
+        "states": ["default"]
+      },
+      {
+        "name": "accent-swatch",
+        "family": "input",
+        "role": "Lets the user choose one accent by color, material, and role.",
+        "supports_primitive": "accent tray",
+        "decision_reason": "The candidate should feel like an accent decision, not a product card.",
         "states": ["default", "selected", "pressed"]
       },
       {
-        "name": "reason-strip",
+        "name": "fit-passport",
         "family": "content",
-        "role": "Groups the short rationale notes tied to today's active signals.",
-        "supports_primitive": "outfit rationale strip",
-        "decision_reason": "Recommendation explanation is a first-class surface, not helper copy under a card.",
+        "role": "Summarizes fit risk, movement, hem length, and outerwear compatibility.",
+        "supports_primitive": "fit passport",
+        "decision_reason": "Fit details need a compact passport tied to the silhouette.",
+        "states": ["default", "risk"]
+      },
+      {
+        "name": "fit-measure-row",
+        "family": "content",
+        "role": "Shows one fit measure and its status.",
+        "supports_primitive": "fit passport",
+        "decision_reason": "Fit should be scan-friendly without becoming a table.",
+        "states": ["default", "ok", "check"]
+      },
+      {
+        "name": "restraint-note",
+        "family": "content",
+        "role": "Explains why the current direction stops at one accent.",
+        "supports_primitive": "save calibration action",
+        "decision_reason": "The product promise is restraint before shopping.",
         "states": ["default"]
       },
       {
-        "name": "reason-note",
-        "family": "content",
-        "role": "Explains material, silhouette, weather, or closet fit in one compact note.",
-        "supports_primitive": "outfit rationale strip",
-        "decision_reason": "This keeps fashion reasoning concrete and inspectable.",
-        "states": ["default"]
+        "name": "decision-dock",
+        "family": "navigation",
+        "role": "Keeps save and shortlist actions fixed in the thumb zone.",
+        "supports_primitive": "decision dock",
+        "decision_reason": "The user should commit the style direction without hunting for a CTA.",
+        "states": ["default", "pending"]
       },
       {
-        "name": "garment-stack",
-        "family": "content",
-        "role": "Lists the selected outfit layers as a small wardrobe stack.",
-        "supports_primitive": "garment layer stack",
-        "decision_reason": "Layers are the product object; they should not be flattened into commerce cards.",
-        "states": ["default"]
-      },
-      {
-        "name": "garment-row",
-        "family": "content",
-        "role": "Shows one owned or candidate garment with fit and context.",
-        "supports_primitive": "garment layer stack",
-        "decision_reason": "The row encodes ownership, fit, and weather context instead of pure price display.",
-        "states": ["default", "selected"]
-      },
-      {
-        "name": "fabric-swatch",
-        "family": "content",
-        "role": "Represents owned garment color or material when an image is unnecessary.",
-        "supports_primitive": "fabric swatch memory",
-        "decision_reason": "Closet memory needs tactile cues without fake product thumbnails.",
-        "states": ["default"]
-      },
-      {
-        "name": "closet-compatibility-mark",
-        "family": "feedback",
-        "role": "Signals whether a candidate works with already-owned pieces.",
-        "supports_primitive": "closet compatibility cue",
-        "decision_reason": "Compatibility appears before price so the app stays curation-led.",
-        "states": ["default", "compatible", "warning"]
-      },
-      {
-        "name": "alternative-rail",
-        "family": "content",
-        "role": "Shows a small set of alternate styling lines for the same outfit intent.",
-        "supports_primitive": "alternative line rail",
-        "decision_reason": "Alternatives remain bounded to the current look instead of becoming an infinite feed.",
-        "states": ["default"]
-      },
-      {
-        "name": "alternative-item",
-        "family": "input",
-        "role": "Lets the user switch one alternative color or garment line.",
-        "supports_primitive": "alternative line rail",
-        "decision_reason": "This is a look refinement control, not a generic product tile.",
-        "states": ["default", "active", "pressed"]
-      },
-      {
-        "name": "shop-sheet",
-        "family": "overlay",
-        "role": "Handles size, price, save, and shopping actions for the selected garment.",
-        "supports_primitive": "contextual shop sheet",
-        "decision_reason": "Commerce must stay attached to one outfit item instead of taking over the home screen.",
-        "states": ["collapsed", "expanded"]
-      },
-      {
-        "name": "shop-sheet-item",
-        "family": "content",
-        "role": "Summarizes the currently selected garment inside the sheet.",
-        "supports_primitive": "contextual shop sheet",
-        "decision_reason": "The sheet needs garment memory and fit data before purchase actions.",
-        "states": ["default"]
-      },
-      {
-        "name": "size-chip-group",
-        "family": "input",
-        "role": "Allows compact size choice inside the contextual sheet.",
-        "supports_primitive": "contextual shop sheet",
-        "decision_reason": "Size is necessary transaction input but must remain scoped to the sheet.",
-        "states": ["default", "selected", "disabled"]
-      },
-      {
-        "name": "save-look-action",
+        "name": "save-calibration-action",
         "family": "button",
-        "role": "Saves today's board or selected garment decision.",
-        "supports_primitive": "save look action",
-        "decision_reason": "Saving the outfit is the success action, not a generic CTA.",
+        "role": "Saves the current compass direction and closet match.",
+        "supports_primitive": "save calibration action",
+        "decision_reason": "Saving calibration is the primary success action.",
         "states": ["default", "pressed", "saved"]
       },
       {
-        "name": "bottom-tab-bar",
+        "name": "bottom-mode-tabs",
         "family": "navigation",
-        "role": "Keeps board, closet, saved looks, and candidates reachable in the thumb zone.",
-        "supports_primitive": "mobile outfit decision surface",
-        "decision_reason": "Primary navigation belongs at the bottom for this one-handed mobile task.",
+        "role": "Switches between tune, closet, saved, and candidates modes.",
+        "supports_primitive": "mobile style calibration surface",
+        "decision_reason": "Mode navigation belongs at the bottom for one-handed mobile use.",
         "states": ["default", "active"]
       },
       {
-        "name": "saved-state-toast",
+        "name": "confirmation-pill",
         "family": "feedback",
-        "role": "Confirms that the current outfit board has been saved.",
-        "supports_primitive": "save look action",
-        "decision_reason": "A small confirmation is enough; the success state should not become a modal.",
+        "role": "Confirms that calibration or accent shortlist has been saved.",
+        "supports_primitive": "save calibration action",
+        "decision_reason": "Confirmation should be small and reversible, not a modal.",
         "states": ["hidden", "visible"]
       }
     ],
     "rejected_components": [
       {
+        "name": "look-board",
+        "family": "content",
+        "reason": "Would recreate the previous Foldline direction instead of the new compass skeleton."
+      },
+      {
+        "name": "shop-sheet",
+        "family": "overlay",
+        "reason": "Commerce should stay as a bounded accent tray, not a bottom sheet."
+      },
+      {
         "name": "product-grid",
         "family": "commerce",
-        "reason": "Would turn the first screen into a shopping catalog instead of an outfit decision."
+        "reason": "A grid would turn calibration into generic shopping."
       },
       {
         "name": "product-card",
         "family": "commerce",
-        "reason": "Too generic for a closet-aware garment layer."
+        "reason": "Accent decisions should not look like marketplace cards."
       },
       {
         "name": "hero-cta-group",
         "family": "marketing",
-        "reason": "The app opens on a task surface, not a marketing hero."
+        "reason": "The app opens on a working calibration surface."
       },
       {
         "name": "dashboard-card",
         "family": "data-display",
-        "reason": "Fashion rationale should not look like operational metrics."
+        "reason": "Calibration feedback is not an operations dashboard."
       },
       {
         "name": "filter-chip",
         "family": "input",
-        "reason": "Generic filters are replaced by signal-node decisions."
+        "reason": "Pulse tokens and compass controls replace generic filters."
       },
       {
         "name": "modal-dialog",
         "family": "overlay",
-        "reason": "Item shopping belongs in a contextual bottom sheet."
+        "reason": "The first flow should avoid interruptive modal commerce."
       },
       {
-        "name": "command-palette",
-        "family": "overlay",
-        "reason": "The mobile fashion flow is visual and thumb-led, not keyboard-command-led."
+        "name": "infinite-feed",
+        "family": "content",
+        "reason": "The product is about narrowing to one accent, not browsing endlessly."
       }
     ]
   },
   "reference_preferences": {
     "prioritize_sources_containing": [
       "mobile fashion curation",
+      "style compass",
       "wardrobe styling",
-      "components",
+      "design system components",
       "accessibility"
     ],
     "avoid_sources_containing": [
-      "brand-only",
       "dashboard",
-      "marketing landing"
+      "marketing landing",
+      "generic ecommerce"
     ]
   },
   "seeds": [],
@@ -404,10 +426,10 @@
     "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
     "preferred_families": [
       "Prussian Blue",
-      "Rose Quartz",
+      "Deep Reds",
       "Green Ash",
-      "Blanched Almond",
-      "Deep Reds"
+      "Citrus",
+      "Warm Gray"
     ],
     "palette_strategy": {
       "mode": "brand-guided",
@@ -415,19 +437,19 @@
       "active_candidate": 1,
       "temperature": "mixed",
       "contrast": "balanced",
-      "diversity": "balanced",
-      "surface_style": "tinted",
+      "diversity": "high",
+      "surface_style": "layered",
       "prefer_moods": [
         "세련",
-        "차분함",
-        "부드러움",
-        "자연스러움"
+        "명확함",
+        "촉각적",
+        "절제"
       ],
       "avoid_moods": [
-        "과시적",
-        "강렬함",
+        "명품 클리셰",
         "테크 대시보드",
-        "명품 클리셰"
+        "과한 파스텔",
+        "단색 팔레트"
       ]
     },
     "palette_expansion": {
@@ -435,60 +457,46 @@
       "supporting_color_count": 8,
       "combination_count": 3,
       "prefer_pairings": true,
-      "prefer_related_families": true
+      "prefer_related_families": false
     },
     "notes": [
       "Use color reference as semantic evidence only.",
       "Do not ship a fixed preset palette.",
-      "Prefer soft surfaces with one decisive ink/accent pair."
+      "Keep the palette mixed across ink, red, teal, green, citrus, and warm surface tones."
     ]
   },
   "visual_reference": {
     "mode": "local-images",
     "query": [
-      "mobile wardrobe styling app look board",
-      "fashion curation mobile outfit rationale",
-      "closet memory outfit recommendation"
+      "mobile style compass fashion app",
+      "wardrobe calibration interface",
+      "fashion curation mobile outfit axis"
     ],
     "sources": [],
     "preferred_count": 8,
     "weights": {
-      "layout": 0.38,
-      "component_shape": 0.22,
-      "color_balance": 0.16,
-      "typography_mood": 0.14,
+      "layout": 0.4,
+      "component_shape": 0.24,
+      "color_balance": 0.14,
+      "typography_mood": 0.12,
       "surface_style": 0.1
     },
     "extraction_policy": "advisory-only",
     "must_include": [
       "mobile task surface",
-      "garment imagery",
-      "decision controls"
+      "garment or textile imagery",
+      "calibration controls",
+      "bounded candidate comparison"
     ],
     "avoid_patterns": [
       "product grid",
       "marketing hero",
-      "dashboard cards"
+      "dashboard cards",
+      "look board with shop sheet"
     ],
     "notes": [
       "References are morphology inputs only.",
-      "Product IA and component pruning are governed by application_concept and layout_skeleton."
-    ],
-    "pinterest_assist": {
-      "enabled": false,
-      "capture_mode": "manual-save",
-      "capture_dir": "references/visual/pinterest-assisted",
-      "max_candidates_per_query": 6,
-      "max_selected_per_query": 2,
-      "preferred_sources": [
-        "pins",
-        "boards",
-        "adjacent-search"
-      ],
-      "notes": [
-        "Pinterest is not used directly in this prototype.",
-        "Final analysis input must be local files if enabled later."
-      ]
-    }
+      "Product IA and component selection are governed by component_decision."
+    ]
   }
 }

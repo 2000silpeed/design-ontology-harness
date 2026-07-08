@@ -1,34 +1,18 @@
-# Foldline
+# Tinge
 
-This folder is a self-contained harness project built on top of `design-ontology-harness`.
+This folder is a fresh fashion curation mobile app project built with `design-ontology-harness`.
 
 ## Files
 
-- `brand_profile.json`: your system identity and product context
-- `seeds/seed_urls.txt`: curated reference entry points
-- `project_manifest.json`: project metadata
-- `agent_brief.md`: instructions for human or agent collaborators
-- `spec.md`: product concept, skeleton, and mock UI requirements
-- `design-system.md`: persistent brand, token, component, and LLM invocation contract
+- `brand_profile.json`: authored concept, skeleton, and LLM-authored component decision
+- `spec.md`: product concept and mock UI requirements
+- `design-system.md`: persistent design system contract
 - `index.html`, `styles.css`, `app.js`: static mobile mock UI
-- `build/`: generated outputs
+- `build/`: generated harness outputs
 
-## How To Run
-
-```bash
-uv run design-ontology run-project --project-dir projects/fashion-curation-mobile
-```
-
-Open the mock directly:
+## Run
 
 ```bash
+uv run design-ontology run-project --project-dir projects/fashion-curation-mobile --kb-dir kb/default
 open projects/fashion-curation-mobile/index.html
 ```
-
-## Recommended Flow
-
-1. Fill in `brand_profile.json`
-2. Set or override the KB path if needed
-3. Run the project
-4. Review `build/system/blueprint/system_spec.md`
-5. Use `design-system.md` and the static mock as the implementation baseline
