@@ -9,12 +9,15 @@
 - (color_reference 미설정 — brand_profile.color_reference를 채우면 자동 추출)
 
 ## Typography
-- (font_system 미해석 — brand_profile 확인 필요)
+- heading: Noto Serif KR
+- body: Pretendard
+- mono: n/a
+- korean: Pretendard
 
 ## 대표 컴포넌트
+- **breadcrumbs** — parts: container, nav-item, icon(optional), label, indicator(active) | states: default, hover, active, collapsed
+- **inspector-drawer** — parts: drawer, header, section-list, property-row, action-row | states: closed, open, loading, dirty
 - **primary-button** — parts: container, label, leading-icon(optional), trailing-icon(optional) | states: default, hover, active, disabled
-- **secondary-button** — parts: container, label, leading-icon(optional), trailing-icon(optional) | states: default, hover, active, disabled
-- **ghost-button** — parts: container, label, leading-icon(optional), trailing-icon(optional) | states: default, hover, active, disabled
 
 ## Locale Pairings
 - ko: heading=Pretendard / body=Pretendard

@@ -226,24 +226,9 @@
       "label": "secondary-button"
     },
     {
-      "id": "component:ghost-button",
-      "type": "Component",
-      "label": "ghost-button"
-    },
-    {
       "id": "component:icon-button",
       "type": "Component",
       "label": "icon-button"
-    },
-    {
-      "id": "component:cta-button",
-      "type": "Component",
-      "label": "cta-button"
-    },
-    {
-      "id": "component:link-button",
-      "type": "Component",
-      "label": "link-button"
     },
     {
       "id": "component:form-actions",
@@ -407,9 +392,24 @@
       "label": "data-display/empty"
     },
     {
+      "id": "state:data-display-loading",
+      "type": "ComponentState",
+      "label": "data-display/loading"
+    },
+    {
       "id": "component:data-table",
       "type": "Component",
       "label": "data-table"
+    },
+    {
+      "id": "component:list",
+      "type": "Component",
+      "label": "list"
+    },
+    {
+      "id": "component:metadata-list",
+      "type": "Component",
+      "label": "metadata-list"
     },
     {
       "id": "component:tag",
@@ -457,19 +457,24 @@
       "label": "profile-card"
     },
     {
-      "id": "component:stat-card",
+      "id": "component:metric-strip",
       "type": "Component",
-      "label": "stat-card"
+      "label": "metric-strip"
     },
     {
-      "id": "component:insight-card",
+      "id": "component:status-summary-row",
       "type": "Component",
-      "label": "insight-card"
+      "label": "status-summary-row"
     },
     {
-      "id": "component:activity-card",
+      "id": "component:task-surface-header",
       "type": "Component",
-      "label": "activity-card"
+      "label": "task-surface-header"
+    },
+    {
+      "id": "component:source-ledger",
+      "type": "Component",
+      "label": "source-ledger"
     },
     {
       "id": "component:section-header",
@@ -804,6 +809,11 @@
       "label": "feedback/danger"
     },
     {
+      "id": "state:feedback-loading",
+      "type": "ComponentState",
+      "label": "feedback/loading"
+    },
+    {
       "id": "component:filter-chip",
       "type": "Component",
       "label": "filter-chip"
@@ -827,6 +837,16 @@
       "id": "component:banner",
       "type": "Component",
       "label": "banner"
+    },
+    {
+      "id": "component:badge",
+      "type": "Component",
+      "label": "badge"
+    },
+    {
+      "id": "component:status-dot",
+      "type": "Component",
+      "label": "status-dot"
     },
     {
       "id": "component:status-badge",
@@ -867,6 +887,11 @@
       "label": "input/disabled"
     },
     {
+      "id": "state:input-selected",
+      "type": "ComponentState",
+      "label": "input/selected"
+    },
+    {
       "id": "component:text-field",
       "type": "Component",
       "label": "text-field"
@@ -892,9 +917,9 @@
       "label": "textarea"
     },
     {
-      "id": "component:search-field",
+      "id": "component:switch",
       "type": "Component",
-      "label": "search-field"
+      "label": "switch"
     },
     {
       "id": "component:segmented-control",
@@ -940,14 +965,9 @@
       "label": "layout/default"
     },
     {
-      "id": "state:layout-resizing",
+      "id": "state:layout-responsive",
       "type": "ComponentState",
-      "label": "layout/resizing"
-    },
-    {
-      "id": "state:layout-collapsed",
-      "type": "ComponentState",
-      "label": "layout/collapsed"
+      "label": "layout/responsive"
     },
     {
       "id": "component:resizable-split-pane",
@@ -1003,6 +1023,11 @@
       "label": "navigation/collapsed"
     },
     {
+      "id": "component:pagination",
+      "type": "Component",
+      "label": "pagination"
+    },
+    {
       "id": "component:sidebar-nav",
       "type": "Component",
       "label": "sidebar-nav"
@@ -1023,29 +1048,19 @@
       "label": "workspace-switcher"
     },
     {
-      "id": "component:mobile-topbar",
+      "id": "component:breadcrumbs",
       "type": "Component",
-      "label": "mobile-topbar"
+      "label": "breadcrumbs"
     },
     {
-      "id": "component:mobile-tab-bar",
+      "id": "component:tabs",
       "type": "Component",
-      "label": "mobile-tab-bar"
+      "label": "tabs"
     },
     {
-      "id": "component:back-button",
+      "id": "component:operational-rail",
       "type": "Component",
-      "label": "back-button"
-    },
-    {
-      "id": "component:section-tabs",
-      "type": "Component",
-      "label": "section-tabs"
-    },
-    {
-      "id": "component:pagination",
-      "type": "Component",
-      "label": "pagination"
+      "label": "operational-rail"
     },
     {
       "id": "component:prev-next-pager",
@@ -1123,14 +1138,19 @@
       "label": "overlay/open"
     },
     {
-      "id": "component:bottom-sheet",
+      "id": "component:dialog",
       "type": "Component",
-      "label": "bottom-sheet"
+      "label": "dialog"
     },
     {
-      "id": "component:modal-dialog",
+      "id": "component:popover",
       "type": "Component",
-      "label": "modal-dialog"
+      "label": "popover"
+    },
+    {
+      "id": "component:tooltip",
+      "type": "Component",
+      "label": "tooltip"
     },
     {
       "id": "component:chart-tooltip",
@@ -1173,9 +1193,9 @@
       "label": "forms"
     },
     {
-      "id": "primitive:baseline",
+      "id": "primitive:reference-baseline",
       "type": "ProductPrimitive",
-      "label": "baseline"
+      "label": "reference baseline"
     },
     {
       "id": "primitive:tags-and-labels",
@@ -1203,9 +1223,9 @@
       "label": "user profile and avatar"
     },
     {
-      "id": "primitive:dashboard-cards",
+      "id": "primitive:operational-overview",
       "type": "ProductPrimitive",
-      "label": "dashboard cards"
+      "label": "operational overview"
     },
     {
       "id": "primitive:kanban-and-board",
@@ -1884,9 +1904,9 @@
       "label": "onboarding and stepper"
     },
     {
-      "id": "pattern:layout-dashboard-cards",
+      "id": "pattern:layout-operational-overview",
       "type": "LayoutPattern",
-      "label": "dashboard cards"
+      "label": "operational overview"
     },
     {
       "id": "pattern:interaction-search-and-filter",
@@ -1966,6 +1986,16 @@
         "url": "https://vercel.com/geist",
         "category": "devtool",
         "color_strategy": "monochrome with blue accent"
+      }
+    },
+    {
+      "id": "benchmark:astryx",
+      "type": "BenchmarkSystem",
+      "label": "Astryx",
+      "meta": {
+        "url": "https://astryx.atmeta.com",
+        "category": "devtool",
+        "color_strategy": "themeable neutral base with ready-made brand theme packages"
       }
     },
     {
@@ -2982,6 +3012,7 @@
           "Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.",
           "Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.",
           "Do not represent evidence maps, relation maps, or product data graphs as hand-positioned HTML nodes connected by rotated CSS lines. Use a real graph/chart library, SVG/canvas visualization with semantic labels and runtime data, or a ledger/table when the relationship is simple.",
+          "Do not fake workflow graphs by overlaying freehand SVG curves on separately positioned HTML nodes. Graph nodes and edges must share one coordinate system and expose node/edge ids, direction, labels, and runtime state.",
           "A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.",
           "Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.",
           "Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.",
@@ -3086,6 +3117,21 @@
         "technical_controls": [
           "lint-implementation DS082",
           "component_specs.md data visualization notes",
+          "visual QA screenshots"
+        ]
+      }
+    },
+    {
+      "id": "failure-pattern:freehand-svg-connector-graph",
+      "type": "ImplementationFailurePattern",
+      "label": "freehand-svg-connector-graph",
+      "meta": {
+        "trigger": "A workflow, relation, or evidence graph uses an SVG connector layer such as wires/connector-layer plus separately positioned HTML nodes, with no node/edge ids, direction labels, or shared graph coordinate system.",
+        "rule": "A graph surface must encode the relationship model, not just draw curves between boxes.",
+        "prevention": "Use a graph library, or author the graph as one semantic SVG/canvas surface with data-node-id, data-edge-id, data-from/data-to, arrowheads, edge labels, and runtime state. If the relationship is simple, use a table, timeline, or ledger.",
+        "technical_controls": [
+          "lint-implementation DS083",
+          "component_specs.md graph validity notes",
           "visual QA screenshots"
         ]
       }
@@ -4790,6 +4836,173 @@
       }
     },
     {
+      "id": "visual-asset:comic-panel-preview",
+      "type": "GeneratedVisualAsset",
+      "label": "Comic panel preview",
+      "meta": {
+        "slot": "comic-panel-preview",
+        "model": "Codex image_gen skill",
+        "api_fallback": "disabled",
+        "fallback_policy": "no API fallback",
+        "failure_behavior": "Do not call external image APIs if Codex image_gen fails.",
+        "candidate_count": "2-4",
+        "manifest_path": "public/generated/design-system/manifest.json",
+        "compatible_manifest_paths": [
+          "public/generated/design-system/manifest.json",
+          "design-system/generated_visual_assets.json"
+        ],
+        "manifest_schema": "visual-asset-manifest/v1",
+        "manifest_required_fields": [
+          "schema_version",
+          "project",
+          "brand",
+          "generator",
+          "source_session",
+          "assets"
+        ],
+        "asset_record_required_fields": [
+          "id",
+          "label",
+          "slot",
+          "status",
+          "asset_path",
+          "original_png_path",
+          "format",
+          "dimensions",
+          "size_kb",
+          "sha256",
+          "intended_for",
+          "alt_text",
+          "prompt_summary"
+        ],
+        "prompt_pack_path": "public/generated/design-system/imagegen-prompts.md",
+        "prompt_basis": [
+          "system_spec.md",
+          "token_schema.json",
+          "component_inventory.json",
+          "components/component_specs.md",
+          "visual_reference_report.json"
+        ],
+        "aspect_ratios": [
+          "2:1",
+          "16:9",
+          "4:3"
+        ],
+        "usage": "Finished panel or strip preview artwork for story-led comic content.",
+        "activation": "comic reader, webtoon episode, manga chapter, or panel-preview rail",
+        "medium_role": "high-fidelity-narrative-media",
+        "default_acquisition_modes": [
+          "image_gen",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": "denied unless approved production vector panel art exists",
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
+        "alt_text_required": true,
+        "prompt_summary_required": true,
+        "sha256_required": true,
+        "original_preservation_required": true,
+        "workspace_copy_required": true,
+        "source_session_tracking": true,
+        "contract_id": "governance:generated-visual-asset-contract",
+        "status": "promptable"
+      }
+    },
+    {
+      "id": "sourced-visual-asset:comic-panel-preview-fallback",
+      "type": "SourcedVisualAsset",
+      "label": "Comic panel preview sourced fallback",
+      "meta": {
+        "slot": "comic-panel-preview",
+        "acquisition_mode": "sourced",
+        "fallback_for": "visual-asset:comic-panel-preview",
+        "fallback_policy": "license-verified sourced visual fallback",
+        "candidate_manifest_path": "public/generated/design-system/sourced-visual-candidates.json",
+        "manifest_path": "public/generated/design-system/manifest.json",
+        "compatible_manifest_paths": [
+          "public/generated/design-system/manifest.json",
+          "design-system/generated_visual_assets.json"
+        ],
+        "manifest_schema": "visual-asset-manifest/v1",
+        "asset_record_required_fields": [
+          "id",
+          "label",
+          "slot",
+          "status",
+          "acquisition_mode",
+          "asset_path",
+          "source_url",
+          "download_url",
+          "provider",
+          "author",
+          "license",
+          "attribution_required",
+          "sha256",
+          "intended_for",
+          "alt_text",
+          "selection_reason"
+        ],
+        "provider_allowlist": [
+          "openverse",
+          "wikimedia-commons",
+          "unsplash",
+          "pexels",
+          "adobe-stock",
+          "shutterstock",
+          "getty-images",
+          "istock",
+          "envato-elements",
+          "local-licensed-file"
+        ],
+        "free_provider_allowlist": [
+          "openverse",
+          "wikimedia-commons",
+          "unsplash",
+          "pexels"
+        ],
+        "licensed_provider_allowlist": [
+          "adobe-stock",
+          "shutterstock",
+          "getty-images",
+          "istock",
+          "envato-elements",
+          "local-licensed-file"
+        ],
+        "reference_only_excluded": [
+          "lazyweb",
+          "mobbin",
+          "dribbble",
+          "behance",
+          "awwwards"
+        ],
+        "license_policy_id": "license-policy:verified-free-visual-asset",
+        "paid_license_policy_id": "license-policy:paid-visual-provider-proof",
+        "aspect_ratios": [
+          "2:1",
+          "16:9",
+          "4:3"
+        ],
+        "usage": "Finished panel or strip preview artwork for story-led comic content.",
+        "activation": "comic reader, webtoon episode, manga chapter, or panel-preview rail",
+        "medium_role": "high-fidelity-narrative-media",
+        "default_acquisition_modes": [
+          "image_gen",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": "denied unless approved production vector panel art exists",
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
+        "hotlinking_allowed": false,
+        "workspace_copy_required": true,
+        "license_metadata_required": true,
+        "alt_text_required": true,
+        "sha256_required": true,
+        "selection_reason_required": true,
+        "status": "searchable-fallback",
+        "contract_id": "governance:sourced-visual-asset-fallback-contract"
+      }
+    },
+    {
       "id": "visual-asset:empty-state-illustration",
       "type": "GeneratedVisualAsset",
       "label": "Empty-state illustration",
@@ -5015,22 +5228,7 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:ghost-button",
-      "target": "family:button"
-    },
-    {
-      "type": "member_of_family",
       "source": "component:icon-button",
-      "target": "family:button"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:cta-button",
-      "target": "family:button"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:link-button",
       "target": "family:button"
     },
     {
@@ -5114,8 +5312,23 @@
       "target": "state:data-display-empty"
     },
     {
+      "type": "has_state",
+      "source": "family:data-display",
+      "target": "state:data-display-loading"
+    },
+    {
       "type": "member_of_family",
       "source": "component:data-table",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:list",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:metadata-list",
       "target": "family:data-display"
     },
     {
@@ -5165,17 +5378,22 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:stat-card",
+      "source": "component:metric-strip",
       "target": "family:data-display"
     },
     {
       "type": "member_of_family",
-      "source": "component:insight-card",
+      "source": "component:status-summary-row",
       "target": "family:data-display"
     },
     {
       "type": "member_of_family",
-      "source": "component:activity-card",
+      "source": "component:task-surface-header",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:source-ledger",
       "target": "family:data-display"
     },
     {
@@ -5354,6 +5572,11 @@
       "target": "state:feedback-danger"
     },
     {
+      "type": "has_state",
+      "source": "family:feedback",
+      "target": "state:feedback-loading"
+    },
+    {
       "type": "member_of_family",
       "source": "component:filter-chip",
       "target": "family:feedback"
@@ -5376,6 +5599,16 @@
     {
       "type": "member_of_family",
       "source": "component:banner",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:badge",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:status-dot",
       "target": "family:feedback"
     },
     {
@@ -5409,6 +5642,11 @@
       "target": "state:input-disabled"
     },
     {
+      "type": "has_state",
+      "source": "family:input",
+      "target": "state:input-selected"
+    },
+    {
       "type": "member_of_family",
       "source": "component:text-field",
       "target": "family:input"
@@ -5435,7 +5673,7 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:search-field",
+      "source": "component:switch",
       "target": "family:input"
     },
     {
@@ -5481,12 +5719,7 @@
     {
       "type": "has_state",
       "source": "family:layout",
-      "target": "state:layout-resizing"
-    },
-    {
-      "type": "has_state",
-      "source": "family:layout",
-      "target": "state:layout-collapsed"
+      "target": "state:layout-responsive"
     },
     {
       "type": "member_of_family",
@@ -5515,6 +5748,11 @@
     },
     {
       "type": "member_of_family",
+      "source": "component:pagination",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
       "source": "component:sidebar-nav",
       "target": "family:navigation"
     },
@@ -5535,27 +5773,17 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:mobile-topbar",
+      "source": "component:breadcrumbs",
       "target": "family:navigation"
     },
     {
       "type": "member_of_family",
-      "source": "component:mobile-tab-bar",
+      "source": "component:tabs",
       "target": "family:navigation"
     },
     {
       "type": "member_of_family",
-      "source": "component:back-button",
-      "target": "family:navigation"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:section-tabs",
-      "target": "family:navigation"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:pagination",
+      "source": "component:operational-rail",
       "target": "family:navigation"
     },
     {
@@ -5590,11 +5818,6 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:pagination",
-      "target": "family:foundation"
-    },
-    {
-      "type": "member_of_family",
       "source": "component:app-shell",
       "target": "family:foundation"
     },
@@ -5620,12 +5843,17 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:bottom-sheet",
+      "source": "component:dialog",
       "target": "family:overlay"
     },
     {
       "type": "member_of_family",
-      "source": "component:modal-dialog",
+      "source": "component:popover",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:tooltip",
       "target": "family:overlay"
     },
     {
@@ -5750,8 +5978,73 @@
     },
     {
       "type": "supports",
-      "source": "component:link-button",
-      "target": "primitive:baseline"
+      "source": "component:primary-button",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:secondary-button",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:icon-button",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:switch",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:segmented-control",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:breadcrumbs",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:tabs",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:badge",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:status-dot",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:dialog",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:popover",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:tooltip",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:list",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:metadata-list",
+      "target": "primitive:reference-baseline"
     },
     {
       "type": "supports",
@@ -5801,11 +6094,6 @@
     {
       "type": "supports",
       "source": "component:row-actions",
-      "target": "primitive:data-tables"
-    },
-    {
-      "type": "supports",
-      "source": "component:pagination",
       "target": "primitive:data-tables"
     },
     {
@@ -5860,6 +6148,36 @@
     },
     {
       "type": "supports",
+      "source": "component:metric-strip",
+      "target": "primitive:operational-overview"
+    },
+    {
+      "type": "supports",
+      "source": "component:status-summary-row",
+      "target": "primitive:operational-overview"
+    },
+    {
+      "type": "supports",
+      "source": "component:task-surface-header",
+      "target": "primitive:operational-overview"
+    },
+    {
+      "type": "supports",
+      "source": "component:source-ledger",
+      "target": "primitive:operational-overview"
+    },
+    {
+      "type": "supports",
+      "source": "component:operational-rail",
+      "target": "primitive:operational-overview"
+    },
+    {
+      "type": "supports",
+      "source": "component:section-header",
+      "target": "primitive:operational-overview"
+    },
+    {
+      "type": "supports",
       "source": "component:radio-group",
       "target": "primitive:forms"
     },
@@ -5872,26 +6190,6 @@
       "type": "supports",
       "source": "component:form-actions",
       "target": "primitive:forms"
-    },
-    {
-      "type": "supports",
-      "source": "component:stat-card",
-      "target": "primitive:dashboard-cards"
-    },
-    {
-      "type": "supports",
-      "source": "component:insight-card",
-      "target": "primitive:dashboard-cards"
-    },
-    {
-      "type": "supports",
-      "source": "component:activity-card",
-      "target": "primitive:dashboard-cards"
-    },
-    {
-      "type": "supports",
-      "source": "component:section-header",
-      "target": "primitive:dashboard-cards"
     },
     {
       "type": "supports",
@@ -6410,43 +6708,63 @@
     },
     {
       "type": "composed_of",
-      "source": "pattern:layout-dashboard-cards",
-      "target": "component:stat-card"
+      "source": "pattern:layout-operational-overview",
+      "target": "component:metric-strip"
     },
     {
       "type": "implements",
-      "source": "component:stat-card",
-      "target": "pattern:layout-dashboard-cards"
+      "source": "component:metric-strip",
+      "target": "pattern:layout-operational-overview"
     },
     {
       "type": "composed_of",
-      "source": "pattern:layout-dashboard-cards",
-      "target": "component:insight-card"
+      "source": "pattern:layout-operational-overview",
+      "target": "component:status-summary-row"
     },
     {
       "type": "implements",
-      "source": "component:insight-card",
-      "target": "pattern:layout-dashboard-cards"
+      "source": "component:status-summary-row",
+      "target": "pattern:layout-operational-overview"
     },
     {
       "type": "composed_of",
-      "source": "pattern:layout-dashboard-cards",
-      "target": "component:activity-card"
+      "source": "pattern:layout-operational-overview",
+      "target": "component:task-surface-header"
     },
     {
       "type": "implements",
-      "source": "component:activity-card",
-      "target": "pattern:layout-dashboard-cards"
+      "source": "component:task-surface-header",
+      "target": "pattern:layout-operational-overview"
     },
     {
       "type": "composed_of",
-      "source": "pattern:layout-dashboard-cards",
+      "source": "pattern:layout-operational-overview",
+      "target": "component:source-ledger"
+    },
+    {
+      "type": "implements",
+      "source": "component:source-ledger",
+      "target": "pattern:layout-operational-overview"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-operational-overview",
+      "target": "component:operational-rail"
+    },
+    {
+      "type": "implements",
+      "source": "component:operational-rail",
+      "target": "pattern:layout-operational-overview"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-operational-overview",
       "target": "component:section-header"
     },
     {
       "type": "implements",
       "source": "component:section-header",
-      "target": "pattern:layout-dashboard-cards"
+      "target": "pattern:layout-operational-overview"
     },
     {
       "type": "composed_of",
@@ -6571,7 +6889,7 @@
     {
       "type": "uses_token",
       "source": "component:data-table",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -6579,7 +6897,7 @@
     {
       "type": "uses_token",
       "source": "component:data-table",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -6592,7 +6910,7 @@
     {
       "type": "uses_token",
       "source": "component:column-header",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -6600,7 +6918,7 @@
     {
       "type": "uses_token",
       "source": "component:column-header",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -6634,7 +6952,7 @@
     {
       "type": "uses_token",
       "source": "component:row-actions",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -6642,7 +6960,7 @@
     {
       "type": "uses_token",
       "source": "component:row-actions",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -6684,7 +7002,7 @@
     {
       "type": "uses_token",
       "source": "component:app-shell",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -6978,7 +7296,7 @@
     {
       "type": "uses_token",
       "source": "component:form-section",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7032,27 +7350,6 @@
     },
     {
       "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:ghost-button",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
       "source": "component:icon-button",
       "target": "spacing:12",
       "meta": {
@@ -7074,7 +7371,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:cta-button",
+      "source": "component:switch",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7082,7 +7379,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:cta-button",
+      "source": "component:switch",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -7090,154 +7387,7 @@
     },
     {
       "type": "uses_font",
-      "source": "component:cta-button",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-topbar",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-topbar",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:mobile-topbar",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-tab-bar",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-tab-bar",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:mobile-tab-bar",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:back-button",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:back-button",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:back-button",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-tabs",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-tabs",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:section-tabs",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:bottom-sheet",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:bottom-sheet",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:bottom-sheet",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:modal-dialog",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:modal-dialog",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:modal-dialog",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:search-field",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:search-field",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:search-field",
+      "source": "component:switch",
       "target": "font:pretendard"
     },
     {
@@ -7263,7 +7413,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:link-button",
+      "source": "component:breadcrumbs",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7271,7 +7421,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:link-button",
+      "source": "component:breadcrumbs",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -7279,7 +7429,175 @@
     },
     {
       "type": "uses_font",
-      "source": "component:link-button",
+      "source": "component:breadcrumbs",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tabs",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tabs",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:tabs",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:badge",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:badge",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:badge",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-dot",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-dot",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:status-dot",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:dialog",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:dialog",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:dialog",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:popover",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:popover",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:popover",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:tooltip",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:list",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:list",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:list",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:metadata-list",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:metadata-list",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:metadata-list",
       "target": "font:pretendard"
     },
     {
@@ -7293,7 +7611,7 @@
     {
       "type": "uses_token",
       "source": "component:tag",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7348,7 +7666,7 @@
     {
       "type": "uses_token",
       "source": "component:editor-canvas",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -7356,7 +7674,7 @@
     {
       "type": "uses_token",
       "source": "component:editor-canvas",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7377,7 +7695,7 @@
     {
       "type": "uses_token",
       "source": "component:editor-toolbar",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7398,7 +7716,7 @@
     {
       "type": "uses_token",
       "source": "component:inline-format-menu",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7419,7 +7737,7 @@
     {
       "type": "uses_token",
       "source": "component:slash-command-menu",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7440,7 +7758,7 @@
     {
       "type": "uses_token",
       "source": "component:block-controls",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7453,7 +7771,7 @@
     {
       "type": "uses_token",
       "source": "component:column-header",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -7461,7 +7779,7 @@
     {
       "type": "uses_token",
       "source": "component:column-header",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7474,7 +7792,7 @@
     {
       "type": "uses_token",
       "source": "component:row-actions",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -7482,7 +7800,7 @@
     {
       "type": "uses_token",
       "source": "component:row-actions",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7490,27 +7808,6 @@
     {
       "type": "uses_font",
       "source": "component:row-actions",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pagination",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pagination",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:pagination",
       "target": "font:pretendard"
     },
     {
@@ -7545,7 +7842,7 @@
     {
       "type": "uses_token",
       "source": "component:chat-message",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7587,7 +7884,7 @@
     {
       "type": "uses_token",
       "source": "component:chat-thread",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7671,7 +7968,7 @@
     {
       "type": "uses_token",
       "source": "component:avatar",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7725,6 +8022,132 @@
     },
     {
       "type": "uses_token",
+      "source": "component:metric-strip",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:metric-strip",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:metric-strip",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-summary-row",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-summary-row",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:status-summary-row",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:task-surface-header",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:task-surface-header",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:task-surface-header",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:source-ledger",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:source-ledger",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:source-ledger",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:operational-rail",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:operational-rail",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:operational-rail",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-header",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-header",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:section-header",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
       "source": "component:radio-group",
       "target": "spacing:12",
       "meta": {
@@ -7784,90 +8207,6 @@
     {
       "type": "uses_font",
       "source": "component:form-actions",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:stat-card",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:stat-card",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:stat-card",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:insight-card",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:insight-card",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:insight-card",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:activity-card",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:activity-card",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:activity-card",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-header",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-header",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:section-header",
       "target": "font:pretendard"
     },
     {
@@ -7881,7 +8220,7 @@
     {
       "type": "uses_token",
       "source": "component:kanban-board",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7902,7 +8241,7 @@
     {
       "type": "uses_token",
       "source": "component:kanban-column",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7944,7 +8283,7 @@
     {
       "type": "uses_token",
       "source": "component:article-body",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7957,7 +8296,7 @@
     {
       "type": "uses_token",
       "source": "component:table-of-contents",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -7965,7 +8304,7 @@
     {
       "type": "uses_token",
       "source": "component:table-of-contents",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7986,7 +8325,7 @@
     {
       "type": "uses_token",
       "source": "component:heading-anchor",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8007,7 +8346,7 @@
     {
       "type": "uses_token",
       "source": "component:prose-block",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8020,7 +8359,7 @@
     {
       "type": "uses_token",
       "source": "component:reading-pane",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8028,7 +8367,7 @@
     {
       "type": "uses_token",
       "source": "component:reading-pane",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8049,7 +8388,7 @@
     {
       "type": "uses_token",
       "source": "component:footnote",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8112,7 +8451,7 @@
     {
       "type": "uses_token",
       "source": "component:comment-thread",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8230,7 +8569,7 @@
     {
       "type": "uses_token",
       "source": "component:diff-viewer",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8238,7 +8577,7 @@
     {
       "type": "uses_token",
       "source": "component:diff-viewer",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8251,7 +8590,7 @@
     {
       "type": "uses_token",
       "source": "component:exception-queue",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8259,7 +8598,7 @@
     {
       "type": "uses_token",
       "source": "component:exception-queue",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8272,7 +8611,7 @@
     {
       "type": "uses_token",
       "source": "component:resizable-split-pane",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8280,7 +8619,7 @@
     {
       "type": "uses_token",
       "source": "component:resizable-split-pane",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8314,7 +8653,7 @@
     {
       "type": "uses_token",
       "source": "component:audit-timeline",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8322,7 +8661,7 @@
     {
       "type": "uses_token",
       "source": "component:audit-timeline",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8343,7 +8682,7 @@
     {
       "type": "uses_token",
       "source": "component:evidence-graph",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8385,7 +8724,7 @@
     {
       "type": "uses_token",
       "source": "component:tool-call-trace",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8398,7 +8737,7 @@
     {
       "type": "uses_token",
       "source": "component:redline-viewer",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8406,7 +8745,7 @@
     {
       "type": "uses_token",
       "source": "component:redline-viewer",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8419,7 +8758,7 @@
     {
       "type": "uses_token",
       "source": "component:bulk-action-table",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8427,7 +8766,7 @@
     {
       "type": "uses_token",
       "source": "component:bulk-action-table",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10733,11 +11072,6 @@
     {
       "type": "enforces",
       "source": "governance:commercial-product-realism",
-      "target": "pattern:layout-dashboard-cards"
-    },
-    {
-      "type": "enforces",
-      "source": "governance:commercial-product-realism",
       "target": "pattern:layout-data-tables"
     },
     {
@@ -10754,6 +11088,11 @@
       "type": "enforces",
       "source": "governance:commercial-product-realism",
       "target": "component:status-badge"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:commercial-product-realism",
+      "target": "component:tabs"
     },
     {
       "type": "enforces",
@@ -10839,6 +11178,11 @@
       "type": "prevents",
       "source": "governance:mockup-visual-substance",
       "target": "failure-pattern:ad-hoc-node-link-placeholder-graph"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:mockup-visual-substance",
+      "target": "failure-pattern:freehand-svg-connector-graph"
     },
     {
       "type": "prevents",
@@ -11263,17 +11607,12 @@
     {
       "type": "intended_for",
       "source": "visual-asset:card-thumbnail",
-      "target": "component:activity-card"
+      "target": "component:breadcrumbs"
     },
     {
       "type": "intended_for",
       "source": "visual-asset:card-thumbnail",
       "target": "component:decision-record-card"
-    },
-    {
-      "type": "intended_for",
-      "source": "visual-asset:card-thumbnail",
-      "target": "component:insight-card"
     },
     {
       "type": "intended_for",
@@ -11293,17 +11632,12 @@
     {
       "type": "intended_for",
       "source": "visual-asset:card-thumbnail",
-      "target": "component:section-header"
-    },
-    {
-      "type": "intended_for",
-      "source": "visual-asset:card-thumbnail",
       "target": "component:source-card"
     },
     {
       "type": "intended_for",
       "source": "visual-asset:card-thumbnail",
-      "target": "component:stat-card"
+      "target": "component:switch"
     },
     {
       "type": "intended_for",
@@ -11383,17 +11717,12 @@
     {
       "type": "intended_for",
       "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:activity-card"
+      "target": "component:breadcrumbs"
     },
     {
       "type": "intended_for",
       "source": "sourced-visual-asset:card-thumbnail-fallback",
       "target": "component:decision-record-card"
-    },
-    {
-      "type": "intended_for",
-      "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:insight-card"
     },
     {
       "type": "intended_for",
@@ -11413,17 +11742,12 @@
     {
       "type": "intended_for",
       "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:section-header"
-    },
-    {
-      "type": "intended_for",
-      "source": "sourced-visual-asset:card-thumbnail-fallback",
       "target": "component:source-card"
     },
     {
       "type": "intended_for",
       "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:stat-card"
+      "target": "component:switch"
     },
     {
       "type": "intended_for",
@@ -11604,6 +11928,126 @@
       "type": "intended_for",
       "source": "sourced-visual-asset:editorial-cover-fallback",
       "target": "family:editorial"
+    },
+    {
+      "type": "generated_with",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "image-model:codex-imagegen"
+    },
+    {
+      "type": "governs",
+      "source": "governance:generated-visual-asset-contract",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "brand:agent-org-network"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:agentic",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:operational",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:networked",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:observable",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "component:metric-strip"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "component:tabs"
+    },
+    {
+      "type": "governs",
+      "source": "governance:sourced-visual-asset-fallback-contract",
+      "target": "sourced-visual-asset:comic-panel-preview-fallback"
+    },
+    {
+      "type": "licensed_under",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "license-policy:verified-free-visual-asset"
+    },
+    {
+      "type": "grounded_in",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "brand:agent-org-network"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:openverse"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:wikimedia-commons"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:unsplash"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:pexels"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:adobe-stock"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:shutterstock"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:getty-images"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:istock"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:envato-elements"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:local-licensed-file"
+    },
+    {
+      "type": "intended_for",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "component:metric-strip"
+    },
+    {
+      "type": "intended_for",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "component:tabs"
     },
     {
       "type": "generated_with",
@@ -11793,6 +12237,11 @@
     {
       "type": "enforces",
       "source": "governance:mockup-visual-substance",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:mockup-visual-substance",
       "target": "visual-asset:empty-state-illustration"
     },
     {
@@ -11809,6 +12258,11 @@
       "type": "enforces",
       "source": "governance:mockup-visual-substance",
       "target": "sourced-visual-asset:editorial-cover-fallback"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:mockup-visual-substance",
+      "target": "sourced-visual-asset:comic-panel-preview-fallback"
     },
     {
       "type": "enforces",
@@ -11848,6 +12302,11 @@
     {
       "type": "enforces",
       "source": "governance:visual-asset-medium-selection",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
       "target": "visual-asset:empty-state-illustration"
     },
     {
@@ -11864,6 +12323,11 @@
       "type": "enforces",
       "source": "governance:visual-asset-medium-selection",
       "target": "sourced-visual-asset:editorial-cover-fallback"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "sourced-visual-asset:comic-panel-preview-fallback"
     },
     {
       "type": "enforces",
@@ -11877,16 +12341,16 @@
     }
   ],
   "stats": {
-    "node_count": 393,
-    "edge_count": 1113,
+    "node_count": 401,
+    "edge_count": 1162,
     "nodes_by_type": {
       "Brand": 1,
       "Principle": 4,
       "SpacingToken": 11,
       "RadiusToken": 6,
       "ComponentFamily": 12,
-      "ComponentState": 43,
-      "Component": 86,
+      "ComponentState": 45,
+      "Component": 88,
       "ProductPrimitive": 16,
       "ColorPalette": 11,
       "ColorToken": 26,
@@ -11896,8 +12360,8 @@
       "LayoutPattern": 28,
       "InteractionPattern": 4,
       "AccessibilityRule": 8,
-      "BenchmarkSystem": 41,
-      "ImplementationFailurePattern": 41,
+      "BenchmarkSystem": 42,
+      "ImplementationFailurePattern": 42,
       "ColorMode": 2,
       "BrandIdentityAsset": 1,
       "DesignContextPack": 1,
@@ -11908,8 +12372,8 @@
       "LicensedVisualProvider": 6,
       "ReferenceOnlyProvider": 5,
       "ImageGenerationModel": 1,
-      "GeneratedVisualAsset": 4,
-      "SourcedVisualAsset": 4
+      "GeneratedVisualAsset": 5,
+      "SourcedVisualAsset": 5
     }
   }
 }

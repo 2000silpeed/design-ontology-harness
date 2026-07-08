@@ -78,7 +78,7 @@
           "Deep Reds",
           "Deep Neutrals"
         ],
-        "selection_mode": "brand-guided",
+        "selection_mode": "semantic-ontology",
         "strategy": {
           "mode": "brand-guided",
           "candidate_count": 3,
@@ -106,95 +106,111 @@
         },
         "selected_colors": [
           {
-            "name": "Matchday Red",
-            "family": "Deep Reds",
-            "hex": "#E90052",
-            "mood": "강렬함, 열정, 주목성",
-            "pairings": [
-              "#38003C",
-              "#FFFFFF",
-              "#1A1A2E"
-            ]
+            "name": "Navy Blue",
+            "family": "blue.deep",
+            "hex": "#000080",
+            "mood": "신뢰, 권위, 집중, 전문성, 절제된 우아함",
+            "pairings": []
           },
           {
-            "name": "Electric Green",
-            "family": "Accent Brights",
-            "hex": "#00FF85",
-            "mood": "활기, 생동감, 주목성",
-            "pairings": [
-              "#1A1A2E",
-              "#38003C",
-              "#FFFFFF"
-            ]
+            "name": "Prussian Blue",
+            "family": "blue.deep",
+            "hex": "#003153",
+            "mood": "고전, 예술, 집중, 권위, 깊이감",
+            "pairings": []
           },
           {
-            "name": "Golden Score",
-            "family": "Accent Brights",
-            "hex": "#FFD700",
-            "mood": "열정, 주목성, 상징적",
-            "pairings": [
-              "#1A1A2E",
-              "#38003C",
-              "#E90052"
-            ]
+            "name": "Classic Blue",
+            "family": "blue.pantone_trend",
+            "hex": "#0F4C81",
+            "mood": "신뢰, 평온함, 지성, 안정감",
+            "pairings": []
+          },
+          {
+            "name": "Pure Red",
+            "family": "red.standard",
+            "hex": "#FF0000",
+            "mood": "열정, 에너지, 주목성, 상징적, 강렬함",
+            "pairings": []
+          },
+          {
+            "name": "Ice Blue",
+            "family": "blue.pastel",
+            "hex": "#D6EAF8",
+            "mood": "정제됨, 청결함, 섬세함, 평온, 투명",
+            "pairings": []
           }
         ],
         "palette_roles": {
-          "primary": {
-            "name": "Matchday Red",
-            "family": "Deep Reds",
-            "hex": "#E90052",
-            "mood": "강렬함, 열정, 주목성",
-            "pairings": [
-              "#38003C",
-              "#FFFFFF",
-              "#1A1A2E"
-            ]
+          "anchor_background": {
+            "name": "Navy Blue",
+            "family": "blue.deep",
+            "hex": "#000080",
+            "mood": "신뢰, 권위, 집중, 전문성, 절제된 우아함",
+            "pairings": []
           },
-          "accent": {
-            "name": "Electric Green",
-            "family": "Accent Brights",
-            "hex": "#00FF85",
-            "mood": "활기, 생동감, 주목성",
-            "pairings": [
-              "#1A1A2E",
-              "#38003C",
-              "#FFFFFF"
-            ]
+          "depth_support": {
+            "name": "Prussian Blue",
+            "family": "blue.deep",
+            "hex": "#003153",
+            "mood": "고전, 예술, 집중, 권위, 깊이감",
+            "pairings": []
           },
-          "surface_tint": {
-            "name": "Golden Score",
-            "family": "Accent Brights",
-            "hex": "#FFD700",
-            "mood": "열정, 주목성, 상징적",
-            "pairings": [
-              "#1A1A2E",
-              "#38003C",
-              "#E90052"
-            ]
+          "interface_surface": {
+            "name": "Classic Blue",
+            "family": "blue.pantone_trend",
+            "hex": "#0F4C81",
+            "mood": "신뢰, 평온함, 지성, 안정감",
+            "pairings": []
+          },
+          "highlight_air": {
+            "name": "Ice Blue",
+            "family": "blue.pastel",
+            "hex": "#D6EAF8",
+            "mood": "정제됨, 청결함, 섬세함, 평온, 투명",
+            "pairings": []
+          },
+          "proof_accent": {
+            "name": "Pure Red",
+            "family": "red.standard",
+            "hex": "#FF0000",
+            "mood": "열정, 에너지, 주목성, 상징적, 강렬함",
+            "pairings": []
           }
         },
         "active_palette": {
-          "candidate_id": "signature-1",
-          "selection_mode": "brand-guided",
+          "candidate_id": "ontology-best-fit-1",
+          "selection_mode": "semantic-ontology",
           "roles": {
-            "primary": {
-              "name": "Matchday Red",
-              "family": "Deep Reds",
-              "hex": "#E90052",
-              "mood": "강렬함, 열정, 주목성"
+            "anchor_background": {
+              "name": "Navy Blue",
+              "family": "blue.deep",
+              "hex": "#000080",
+              "mood": "신뢰, 권위, 집중, 전문성, 절제된 우아함"
             },
-            "accent": {
-              "name": "Electric Green",
-              "family": "Accent Brights",
-              "hex": "#00FF85",
-              "mood": "활기, 생동감, 주목성"
+            "depth_support": {
+              "name": "Prussian Blue",
+              "family": "blue.deep",
+              "hex": "#003153",
+              "mood": "고전, 예술, 집중, 권위, 깊이감"
             },
-            "surface_tint": {
-              "name": "Golden Score",
-              "family": "Accent Brights",
-              "hex": "#FFD700",
-              "mood": "열정, 주목성, 상징적"
+            "interface_surface": {
+              "name": "Classic Blue",
+              "family": "blue.pantone_trend",
+              "hex": "#0F4C81",
+              "mood": "신뢰, 평온함, 지성, 안정감"
+            },
+            "highlight_air": {
+              "name": "Ice Blue",
+              "family": "blue.pastel",
+              "hex": "#D6EAF8",
+              "mood": "정제됨, 청결함, 섬세함, 평온, 투명"
+            },
+            "proof_accent": {
+              "name": "Pure Red",
+              "family": "red.standard",
+              "hex": "#FF0000",
+              "mood": "열정, 에너지, 주목성, 상징적, 강렬함"
             }
           }
         },
@@ -248,20 +264,30 @@
             "supporting_color_count": 10,
             "combination_count": 3,
             "seed_roles": {
-              "primary": {
-                "name": "Matchday Red",
-                "hex": "#E90052",
-                "family": "Deep Reds"
+              "anchor_background": {
+                "name": "Navy Blue",
+                "hex": "#000080",
+                "family": "blue.deep"
               },
-              "accent": {
-                "name": "Electric Green",
-                "hex": "#00FF85",
-                "family": "Accent Brights"
+              "depth_support": {
+                "name": "Prussian Blue",
+                "hex": "#003153",
+                "family": "blue.deep"
               },
-              "surface_tint": {
-                "name": "Golden Score",
-                "hex": "#FFD700",
-                "family": "Accent Brights"
+              "interface_surface": {
+                "name": "Classic Blue",
+                "hex": "#0F4C81",
+                "family": "blue.pantone_trend"
+              },
+              "highlight_air": {
+                "name": "Ice Blue",
+                "hex": "#D6EAF8",
+                "family": "blue.pastel"
+              },
+              "proof_accent": {
+                "name": "Pure Red",
+                "hex": "#FF0000",
+                "family": "red.standard"
               }
             },
             "preferred_families": [
@@ -271,75 +297,40 @@
           },
           "supporting_colors": [
             {
+              "name": "Electric Green",
+              "family": "Accent Brights",
+              "hex": "#00FF85",
+              "mood": "활기, 생동감, 주목성",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 18.3,
+              "search_reasons": [
+                "Electric Green reinforces the brand mood signals."
+              ]
+            },
+            {
               "name": "Matchday Red",
               "family": "Deep Reds",
               "hex": "#E90052",
               "mood": "강렬함, 열정, 주목성",
-              "source_type": "pairing-reference",
-              "source_seed_names": [
-                "Golden Score"
-              ],
-              "search_score": 18.85,
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 12.8,
               "search_reasons": [
                 "Matchday Red stays inside the preferred families.",
-                "Matchday Red reinforces the brand mood signals.",
-                "Matchday Red comes from the seed pairing references.",
-                "Matchday Red is explicitly paired with Golden Score."
+                "Matchday Red reinforces the brand mood signals."
               ]
             },
             {
-              "name": "Midnight Navy",
-              "family": "Deep Neutrals",
-              "hex": "#1A1A2E",
-              "mood": "신뢰감, 안정감, 집중",
-              "source_type": "pairing-reference",
-              "source_seed_names": [
-                "Electric Green",
-                "Golden Score",
-                "Matchday Red"
-              ],
-              "search_score": 16.45,
+              "name": "Golden Score",
+              "family": "Accent Brights",
+              "hex": "#FFD700",
+              "mood": "열정, 주목성, 상징적",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 12.3,
               "search_reasons": [
-                "Midnight Navy stays inside the preferred families.",
-                "Midnight Navy reinforces the brand mood signals.",
-                "Midnight Navy comes from the seed pairing references.",
-                "Midnight Navy is explicitly paired with Matchday Red, Electric Green, Golden Score."
-              ]
-            },
-            {
-              "name": "Premier Purple",
-              "family": "Deep Reds",
-              "hex": "#38003C",
-              "mood": "강렬함, 상징적, 품격",
-              "source_type": "pairing-reference",
-              "source_seed_names": [
-                "Electric Green",
-                "Golden Score",
-                "Matchday Red"
-              ],
-              "search_score": 16.25,
-              "search_reasons": [
-                "Premier Purple stays inside the preferred families.",
-                "Premier Purple reinforces the brand mood signals.",
-                "Premier Purple comes from the seed pairing references.",
-                "Premier Purple is explicitly paired with Matchday Red, Electric Green, Golden Score."
-              ]
-            },
-            {
-              "name": "Pairing #FFFFFF",
-              "family": "Derived Pairing",
-              "hex": "#FFFFFF",
-              "mood": "Seed pairing support",
-              "source_type": "pairing-swatch",
-              "source_seed_names": [
-                "Electric Green",
-                "Matchday Red"
-              ],
-              "search_score": 10.4,
-              "search_reasons": [
-                "Pairing #FFFFFF reinforces the brand mood signals.",
-                "Pairing #FFFFFF comes from the seed pairing references.",
-                "Pairing #FFFFFF is explicitly paired with Matchday Red, Electric Green."
+                "Golden Score reinforces the brand mood signals."
               ]
             },
             {
@@ -349,7 +340,7 @@
               "mood": "주목성, 경고",
               "source_type": "reference-color",
               "source_seed_names": [],
-              "search_score": 10.25,
+              "search_score": 8.3,
               "search_reasons": [
                 "Caution Amber reinforces the brand mood signals."
               ]
@@ -361,9 +352,35 @@
               "mood": "활기, 성공",
               "source_type": "reference-color",
               "source_seed_names": [],
-              "search_score": 7.65,
+              "search_score": 7.3,
               "search_reasons": [
                 "Victory Green reinforces the brand mood signals."
+              ]
+            },
+            {
+              "name": "Midnight Navy",
+              "family": "Deep Neutrals",
+              "hex": "#1A1A2E",
+              "mood": "신뢰감, 안정감, 집중",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 6.7,
+              "search_reasons": [
+                "Midnight Navy stays inside the preferred families.",
+                "Midnight Navy reinforces the brand mood signals."
+              ]
+            },
+            {
+              "name": "Premier Purple",
+              "family": "Deep Reds",
+              "hex": "#38003C",
+              "mood": "강렬함, 상징적, 품격",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 5.7,
+              "search_reasons": [
+                "Premier Purple stays inside the preferred families.",
+                "Premier Purple reinforces the brand mood signals."
               ]
             },
             {
@@ -373,7 +390,7 @@
               "mood": "강렬함, 경고",
               "source_type": "reference-color",
               "source_seed_names": [],
-              "search_score": 6.45,
+              "search_score": 5.3,
               "search_reasons": [
                 "Defeat Red reinforces the brand mood signals."
               ]
@@ -404,51 +421,20 @@
                 "Steel Gray reinforces the brand mood signals.",
                 "Steel Gray can act as a neutral support color."
               ]
-            },
-            {
-              "name": "Deep Slate",
-              "family": "Deep Neutrals",
-              "hex": "#2D2D44",
-              "mood": "안정감, 집중, 전문성",
-              "source_type": "reference-color",
-              "source_seed_names": [],
-              "search_score": 3.5,
-              "search_reasons": [
-                "Deep Slate stays inside the preferred families.",
-                "Deep Slate reinforces the brand mood signals."
-              ]
             }
           ],
           "semantic_roles": {
-            "brand_primary": {
-              "name": "Matchday Red",
-              "family": "Deep Reds",
-              "hex": "#E90052",
-              "source_type": null
-            },
-            "brand_accent": {
-              "name": "Electric Green",
-              "family": "Accent Brights",
-              "hex": "#00FF85",
-              "source_type": null
-            },
-            "surface_tint": {
-              "name": "Golden Score",
-              "family": "Accent Brights",
-              "hex": "#FFD700",
-              "source_type": null
-            },
             "canvas": {
-              "name": "Pairing #FFFFFF",
-              "family": "Derived Pairing",
-              "hex": "#FFFFFF",
-              "source_type": "pairing-swatch"
+              "name": "Canvas White",
+              "family": "Generated Fallback",
+              "hex": "#F7F8FA",
+              "source_type": "generated-fallback"
             },
             "surface": {
-              "name": "Pairing #FFFFFF",
-              "family": "Derived Pairing",
+              "name": "Paper",
+              "family": "Generated Fallback",
               "hex": "#FFFFFF",
-              "source_type": "pairing-swatch"
+              "source_type": "generated-fallback"
             },
             "surface_muted": {
               "name": "Surface Muted",
@@ -457,10 +443,10 @@
               "source_type": "generated-fallback"
             },
             "surface_elevated": {
-              "name": "Pairing #FFFFFF",
-              "family": "Derived Pairing",
+              "name": "Paper",
+              "family": "Generated Fallback",
               "hex": "#FFFFFF",
-              "source_type": "pairing-swatch"
+              "source_type": "generated-fallback"
             },
             "border": {
               "name": "Border Neutral",
@@ -478,7 +464,7 @@
               "name": "Midnight Navy",
               "family": "Deep Neutrals",
               "hex": "#1A1A2E",
-              "source_type": "pairing-reference"
+              "source_type": "reference-color"
             },
             "ink_muted": {
               "name": "Steel Gray",
@@ -498,53 +484,29 @@
               "hex": "#FFFFFF",
               "source_type": "generated-fallback"
             },
-            "primary_support": {
-              "name": "Defeat Red",
-              "family": "Semantic States",
-              "hex": "#FF1744",
-              "source_type": "reference-color"
-            },
-            "accent_support": {
-              "name": "Victory Green",
-              "family": "Semantic States",
-              "hex": "#00C853",
-              "source_type": "reference-color"
-            },
             "info": {
               "name": "Midnight Navy",
               "family": "Deep Neutrals",
               "hex": "#1A1A2E",
-              "source_type": "pairing-reference"
+              "source_type": "reference-color"
             },
             "success": {
-              "name": "Victory Green",
-              "family": "Semantic States",
-              "hex": "#00C853",
+              "name": "Electric Green",
+              "family": "Accent Brights",
+              "hex": "#00FF85",
               "source_type": "reference-color"
             },
             "warning": {
-              "name": "Caution Amber",
+              "name": "Golden Score",
               "family": "Accent Brights",
-              "hex": "#FF8C00",
+              "hex": "#FFD700",
               "source_type": "reference-color"
             },
             "danger": {
               "name": "Matchday Red",
               "family": "Deep Reds",
               "hex": "#E90052",
-              "source_type": null
-            },
-            "link": {
-              "name": "Matchday Red",
-              "family": "Deep Reds",
-              "hex": "#E90052",
-              "source_type": null
-            },
-            "link_hover": {
-              "name": "Link Hover",
-              "family": "Generated Fallback",
-              "hex": "#C00044",
-              "source_type": "generated-fallback"
+              "source_type": "reference-color"
             }
           },
           "combination_lists": [
@@ -554,25 +516,39 @@
               "purpose": "기본 테마를 이루는 핵심 색",
               "colors": [
                 {
-                  "role": "primary",
-                  "name": "Matchday Red",
-                  "hex": "#E90052",
-                  "family": "Deep Reds",
-                  "source_type": null
+                  "role": "anchor_background",
+                  "name": "Navy Blue",
+                  "hex": "#000080",
+                  "family": "blue.deep",
+                  "source_type": "semantic-color-ontology"
                 },
                 {
-                  "role": "accent",
-                  "name": "Electric Green",
-                  "hex": "#00FF85",
-                  "family": "Accent Brights",
-                  "source_type": null
+                  "role": "depth_support",
+                  "name": "Prussian Blue",
+                  "hex": "#003153",
+                  "family": "blue.deep",
+                  "source_type": "semantic-color-ontology"
                 },
                 {
-                  "role": "surface_tint",
-                  "name": "Golden Score",
-                  "hex": "#FFD700",
-                  "family": "Accent Brights",
-                  "source_type": null
+                  "role": "interface_surface",
+                  "name": "Classic Blue",
+                  "hex": "#0F4C81",
+                  "family": "blue.pantone_trend",
+                  "source_type": "semantic-color-ontology"
+                },
+                {
+                  "role": "highlight_air",
+                  "name": "Ice Blue",
+                  "hex": "#D6EAF8",
+                  "family": "blue.pastel",
+                  "source_type": "semantic-color-ontology"
+                },
+                {
+                  "role": "proof_accent",
+                  "name": "Pure Red",
+                  "hex": "#FF0000",
+                  "family": "red.standard",
+                  "source_type": "semantic-color-ontology"
                 }
               ]
             },
@@ -583,24 +559,17 @@
               "colors": [
                 {
                   "role": "canvas",
-                  "name": "Pairing #FFFFFF",
-                  "hex": "#FFFFFF",
-                  "family": "Derived Pairing",
-                  "source_type": "pairing-swatch"
+                  "name": "Canvas White",
+                  "hex": "#F7F8FA",
+                  "family": "Generated Fallback",
+                  "source_type": "generated-fallback"
                 },
                 {
                   "role": "surface",
-                  "name": "Pairing #FFFFFF",
+                  "name": "Paper",
                   "hex": "#FFFFFF",
-                  "family": "Derived Pairing",
-                  "source_type": "pairing-swatch"
-                },
-                {
-                  "role": "surface_tint",
-                  "name": "Golden Score",
-                  "hex": "#FFD700",
-                  "family": "Accent Brights",
-                  "source_type": null
+                  "family": "Generated Fallback",
+                  "source_type": "generated-fallback"
                 },
                 {
                   "role": "border",
@@ -614,7 +583,7 @@
                   "name": "Midnight Navy",
                   "hex": "#1A1A2E",
                   "family": "Deep Neutrals",
-                  "source_type": "pairing-reference"
+                  "source_type": "reference-color"
                 },
                 {
                   "role": "ink_muted",
@@ -632,31 +601,24 @@
               "colors": [
                 {
                   "role": "support",
+                  "name": "Electric Green",
+                  "hex": "#00FF85",
+                  "family": "Accent Brights",
+                  "source_type": "reference-color"
+                },
+                {
+                  "role": "support",
                   "name": "Matchday Red",
                   "hex": "#E90052",
                   "family": "Deep Reds",
-                  "source_type": "pairing-reference"
+                  "source_type": "reference-color"
                 },
                 {
                   "role": "support",
-                  "name": "Midnight Navy",
-                  "hex": "#1A1A2E",
-                  "family": "Deep Neutrals",
-                  "source_type": "pairing-reference"
-                },
-                {
-                  "role": "support",
-                  "name": "Premier Purple",
-                  "hex": "#38003C",
-                  "family": "Deep Reds",
-                  "source_type": "pairing-reference"
-                },
-                {
-                  "role": "support",
-                  "name": "Pairing #FFFFFF",
-                  "hex": "#FFFFFF",
-                  "family": "Derived Pairing",
-                  "source_type": "pairing-swatch"
+                  "name": "Golden Score",
+                  "hex": "#FFD700",
+                  "family": "Accent Brights",
+                  "source_type": "reference-color"
                 },
                 {
                   "role": "support",
@@ -671,14 +633,687 @@
                   "hex": "#00C853",
                   "family": "Semantic States",
                   "source_type": "reference-color"
+                },
+                {
+                  "role": "support",
+                  "name": "Midnight Navy",
+                  "hex": "#1A1A2E",
+                  "family": "Deep Neutrals",
+                  "source_type": "reference-color"
                 }
               ]
             }
           ]
         },
+        "semantic_ontology": {
+          "schema_version": "design-ontology-harness/semantic-color-context-v1",
+          "source": {
+            "repo": "semantic-os",
+            "path": "domains/color/ontology/build/graph.json",
+            "built_at": "2026-05-23T13:56:25.001610+00:00",
+            "source_schema_version": "default-video-production-ontology-v1",
+            "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included."
+          },
+          "node_count": 137,
+          "edge_count": 487,
+          "matched_keywords": [
+            {
+              "id": "color-keyword-navy-blue",
+              "role": "anchor_background",
+              "name": "Navy Blue",
+              "hex": "#000080",
+              "spectrum": "blue",
+              "family": "deep",
+              "mood_tags": [
+                "신뢰",
+                "권위",
+                "집중",
+                "전문성",
+                "절제된 우아함"
+              ],
+              "tone_axes": [
+                "low_value",
+                "mid_chroma",
+                "cool_bias"
+              ]
+            },
+            {
+              "id": "color-keyword-prussian-blue",
+              "role": "depth_support",
+              "name": "Prussian Blue",
+              "hex": "#003153",
+              "spectrum": "blue",
+              "family": "deep",
+              "mood_tags": [
+                "고전",
+                "예술",
+                "집중",
+                "권위",
+                "깊이감"
+              ],
+              "tone_axes": [
+                "low_value",
+                "low_chroma",
+                "cool_bias"
+              ]
+            },
+            {
+              "id": "color-keyword-classic-blue",
+              "role": "interface_surface",
+              "name": "Classic Blue",
+              "hex": "#0F4C81",
+              "spectrum": "blue",
+              "family": "pantone_trend",
+              "mood_tags": [
+                "신뢰",
+                "평온함",
+                "지성",
+                "안정감"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "low_value",
+                "mid_chroma",
+                "cool_bias"
+              ]
+            },
+            {
+              "id": "color-keyword-ice-blue",
+              "role": "highlight_air",
+              "name": "Ice Blue",
+              "hex": "#D6EAF8",
+              "spectrum": "blue",
+              "family": "pastel",
+              "mood_tags": [
+                "정제됨",
+                "청결함",
+                "섬세함",
+                "평온",
+                "투명"
+              ],
+              "tone_axes": [
+                "high_value",
+                "low_chroma",
+                "cool_bias",
+                "pastel"
+              ]
+            },
+            {
+              "id": "color-keyword-pure-red",
+              "role": "proof_accent",
+              "name": "Pure Red",
+              "hex": "#FF0000",
+              "spectrum": "red",
+              "family": "standard",
+              "mood_tags": [
+                "열정",
+                "에너지",
+                "주목성",
+                "상징적",
+                "강렬함"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "high_chroma"
+              ]
+            }
+          ],
+          "recommended_keywords": [
+            {
+              "id": "color-keyword-crimson",
+              "name": "Crimson",
+              "hex": "#BD2E4A",
+              "spectrum": "red",
+              "family": "standard",
+              "score": 12.0,
+              "reasons": [
+                "matches 'standard'",
+                "matches '고급스러움'",
+                "matches 'tags'"
+              ]
+            },
+            {
+              "id": "color-keyword-oxblood",
+              "name": "Oxblood",
+              "hex": "#4A0404",
+              "spectrum": "red",
+              "family": "deep",
+              "score": 12.0,
+              "reasons": [
+                "matches '고급스러움'",
+                "matches 'deep'",
+                "matches 'tags'"
+              ]
+            },
+            {
+              "id": "color-keyword-kelly-green",
+              "name": "Kelly Green",
+              "hex": "#4CBB17",
+              "spectrum": "green",
+              "family": "standard",
+              "score": 10.5,
+              "reasons": [
+                "matches 'standard'",
+                "matches 'tags'",
+                "matches '에너지'"
+              ]
+            },
+            {
+              "id": "color-keyword-ruby",
+              "name": "Ruby",
+              "hex": "#E11F51",
+              "spectrum": "red",
+              "family": "standard",
+              "score": 10.5,
+              "reasons": [
+                "matches 'standard'",
+                "matches 'tags'",
+                "matches '에너지'"
+              ]
+            },
+            {
+              "id": "color-keyword-scarlet",
+              "name": "Scarlet",
+              "hex": "#FF2400",
+              "spectrum": "red",
+              "family": "standard",
+              "score": 10.5,
+              "reasons": [
+                "matches 'standard'",
+                "matches 'tags'",
+                "matches '생동감'"
+              ]
+            },
+            {
+              "id": "color-keyword-amber",
+              "name": "Amber",
+              "hex": "#FFBF00",
+              "spectrum": "yellow",
+              "family": "standard",
+              "score": 9.0,
+              "reasons": [
+                "matches 'standard'",
+                "matches '고급스러움'",
+                "matches 'tags'"
+              ]
+            },
+            {
+              "id": "color-keyword-emerald-green",
+              "name": "Emerald Green",
+              "hex": "#50C878",
+              "spectrum": "green",
+              "family": "standard",
+              "score": 9.0,
+              "reasons": [
+                "matches 'standard'",
+                "matches '고급스러움'",
+                "matches 'tags'"
+              ]
+            },
+            {
+              "id": "color-keyword-ochre",
+              "name": "Ochre",
+              "hex": "#CC7722",
+              "spectrum": "orange",
+              "family": "standard",
+              "score": 9.0,
+              "reasons": [
+                "matches 'standard'",
+                "matches 'tags'",
+                "matches '신뢰감'"
+              ]
+            }
+          ],
+          "guidelines": [
+            {
+              "id": "guideline-rgb-cmyk-split-by-output-medium",
+              "label": "RGB와 CMYK는 산출 매체 기준으로 분리한다",
+              "summary": "디지털 산출물은 RGB/sRGB 기준, 인쇄 산출물은 CMYK/프로파일 기준으로 판단한다. 화면색을 인쇄색으로 그대로 기대하지 않는다."
+            },
+            {
+              "id": "guideline-color-values-are-reference-not-absolute",
+              "label": "색상 수치는 절댓값이 아니라 기준값이다",
+              "summary": "디스플레이와 출력 환경에 따라 색 차이가 생기므로 HEX/CMYK는 재현 기준점으로 쓰고, 최종 판단은 매체별 proof에서 확인한다."
+            },
+            {
+              "id": "guideline-mood-tags-before-palette-expansion",
+              "label": "팔레트 확장 전 mood tag를 먼저 잠근다",
+              "summary": "무드보드나 브랜드 컬러를 늘리기 전에 에너지, 안정, 깊이, 회복 같은 감정 태그를 먼저 고정하면 색상 후보가 흔들리지 않는다."
+            },
+            {
+              "id": "guideline-no-palette-table-reconstruction",
+              "label": "배색표를 재구성할 수 있는 수준의 pair 목록은 만들지 않는다",
+              "summary": "paid source의 조합표, 페이지 배열, 순서, 행/열 구조를 그대로 되살릴 수 있는 palette_pair edge 묶음은 온톨로지에 넣지 않는다."
+            },
+            {
+              "id": "guideline-palette-pair-edges-require-transformative-brief",
+              "label": "palette_pair edge는 변형된 brief와 함께만 추가한다",
+              "summary": "두 색의 직접 pair edge는 브랜드/화면/인쇄/제품 같은 새로운 산출 맥락에서 역할, 대비, 위험, proof 조건이 함께 설명될 때만 추가한다."
+            }
+          ],
+          "rules": [
+            "Treat RGB/HEX as digital reference values, not absolute reproduction guarantees.",
+            "Split RGB/sRGB and CMYK/print-profile decisions by output medium.",
+            "Choose mood tags and semantic roles before expanding support colors.",
+            "Do not reconstruct paid-source palette tables, page order, or row/column structures.",
+            "Publish palette candidates as role, contrast, caveat, and proof conditions."
+          ],
+          "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included."
+        },
+        "semantic_color_selection": {
+          "schema_version": "design-ontology-harness/semantic-color-selection-v1",
+          "selection_method": "ontology-search-per-run",
+          "matched_pattern": {
+            "id": "pattern-brief-palette-deep-blue-cold-luxury-web",
+            "label": "딥 블루 cold luxury 웹 팔레트 후보",
+            "summary": "딥 블루 계열 브랜드 웹사이트 brief를 위해 Navy Blue, Prussian Blue, Classic Blue, Ice Blue를 source row가 아니라 화면 역할과 대비 이유로 재배치한 테스트 팔레트다.",
+            "brief_question": "딥 블루 계열로 차갑고 고급스러운 브랜드 웹사이트를 만들되, 바다나 물로 고정하지 않고 색 사용 방식만 살린다.",
+            "output_medium": "digital_brand_website",
+            "role_model": "brief_specific_candidate_not_source_row"
+          },
+          "role_model": [
+            {
+              "role": "anchor_background",
+              "behavior": "low-value base, trust, authority, restrained elegance",
+              "keyword_evidence": "Navy Blue",
+              "source_pattern_role": "anchor_background: Navy Blue #000080 — low-value base, trust, authority, restrained elegance"
+            },
+            {
+              "role": "depth_support",
+              "behavior": "lowered-chroma depth for editorial panels and shadowed sections",
+              "keyword_evidence": "Prussian Blue",
+              "source_pattern_role": "depth_support: Prussian Blue #003153 — lowered-chroma depth for editorial panels and shadowed sections"
+            },
+            {
+              "role": "interface_surface",
+              "behavior": "active surface, nav affordance, and calm intelligent signal",
+              "keyword_evidence": "Classic Blue",
+              "source_pattern_role": "interface_surface: Classic Blue #0F4C81 — active surface, nav affordance, and calm intelligent signal"
+            },
+            {
+              "role": "highlight_air",
+              "behavior": "thin edge highlights, glass lines, and spacing breath",
+              "keyword_evidence": "Ice Blue",
+              "source_pattern_role": "highlight_air: Ice Blue #D6EAF8 — thin edge highlights, glass lines, and spacing breath"
+            },
+            {
+              "role": "proof_accent",
+              "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+            }
+          ],
+          "active_palette": {
+            "id": "ontology-best-fit-1",
+            "label": "Best Fit",
+            "score": 145.28,
+            "rationale": [
+              "Navy Blue supports anchor_background behavior.",
+              "Navy Blue is direct ontology role evidence.",
+              "Prussian Blue supports depth_support behavior.",
+              "Prussian Blue is direct ontology role evidence.",
+              "Classic Blue supports interface_surface behavior.",
+              "Classic Blue is direct ontology role evidence."
+            ],
+            "roles": {
+              "anchor_background": {
+                "name": "Navy Blue",
+                "hex": "#000080",
+                "spectrum": "blue",
+                "family": "deep",
+                "score": 32.0,
+                "reason": "Navy Blue supports anchor_background behavior.",
+                "behavior": "low-value base, trust, authority, restrained elegance"
+              },
+              "depth_support": {
+                "name": "Prussian Blue",
+                "hex": "#003153",
+                "spectrum": "blue",
+                "family": "deep",
+                "score": 31.65,
+                "reason": "Prussian Blue supports depth_support behavior.",
+                "behavior": "lowered-chroma depth for editorial panels and shadowed sections"
+              },
+              "interface_surface": {
+                "name": "Classic Blue",
+                "hex": "#0F4C81",
+                "spectrum": "blue",
+                "family": "pantone_trend",
+                "score": 30.8,
+                "reason": "Classic Blue supports interface_surface behavior.",
+                "behavior": "active surface, nav affordance, and calm intelligent signal"
+              },
+              "highlight_air": {
+                "name": "Ice Blue",
+                "hex": "#D6EAF8",
+                "spectrum": "blue",
+                "family": "pastel",
+                "score": 30.95,
+                "reason": "Ice Blue supports highlight_air behavior.",
+                "behavior": "thin edge highlights, glass lines, and spacing breath"
+              },
+              "proof_accent": {
+                "name": "Pure Red",
+                "hex": "#FF0000",
+                "spectrum": "red",
+                "family": "standard",
+                "score": 19.88,
+                "reason": "Pure Red supports proof_accent behavior.",
+                "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+              }
+            }
+          },
+          "candidate_palettes": [
+            {
+              "id": "ontology-best-fit-1",
+              "label": "Best Fit",
+              "score": 145.28,
+              "rationale": [
+                "Navy Blue supports anchor_background behavior.",
+                "Navy Blue is direct ontology role evidence.",
+                "Prussian Blue supports depth_support behavior.",
+                "Prussian Blue is direct ontology role evidence.",
+                "Classic Blue supports interface_surface behavior.",
+                "Classic Blue is direct ontology role evidence."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Navy Blue",
+                  "hex": "#000080",
+                  "spectrum": "blue",
+                  "family": "deep",
+                  "score": 32.0,
+                  "reason": "Navy Blue supports anchor_background behavior.",
+                  "behavior": "low-value base, trust, authority, restrained elegance"
+                },
+                "depth_support": {
+                  "name": "Prussian Blue",
+                  "hex": "#003153",
+                  "spectrum": "blue",
+                  "family": "deep",
+                  "score": 31.65,
+                  "reason": "Prussian Blue supports depth_support behavior.",
+                  "behavior": "lowered-chroma depth for editorial panels and shadowed sections"
+                },
+                "interface_surface": {
+                  "name": "Classic Blue",
+                  "hex": "#0F4C81",
+                  "spectrum": "blue",
+                  "family": "pantone_trend",
+                  "score": 30.8,
+                  "reason": "Classic Blue supports interface_surface behavior.",
+                  "behavior": "active surface, nav affordance, and calm intelligent signal"
+                },
+                "highlight_air": {
+                  "name": "Ice Blue",
+                  "hex": "#D6EAF8",
+                  "spectrum": "blue",
+                  "family": "pastel",
+                  "score": 30.95,
+                  "reason": "Ice Blue supports highlight_air behavior.",
+                  "behavior": "thin edge highlights, glass lines, and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Pure Red",
+                  "hex": "#FF0000",
+                  "spectrum": "red",
+                  "family": "standard",
+                  "score": 19.88,
+                  "reason": "Pure Red supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            },
+            {
+              "id": "ontology-quiet-surface-2",
+              "label": "Quiet Surface",
+              "score": 95.22,
+              "rationale": [
+                "Classic Blue supports anchor_background behavior.",
+                "Classic Blue has depth for structural roles.",
+                "Navy Blue supports depth_support behavior.",
+                "Navy Blue has depth for structural roles.",
+                "Kelly Green supports interface_surface behavior.",
+                "Kelly Green can hold repeated surfaces."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Classic Blue",
+                  "hex": "#0F4C81",
+                  "spectrum": "blue",
+                  "family": "pantone_trend",
+                  "score": 20.5,
+                  "reason": "Classic Blue supports anchor_background behavior.",
+                  "behavior": "low-value base, trust, authority, restrained elegance"
+                },
+                "depth_support": {
+                  "name": "Navy Blue",
+                  "hex": "#000080",
+                  "spectrum": "blue",
+                  "family": "deep",
+                  "score": 19.0,
+                  "reason": "Navy Blue supports depth_support behavior.",
+                  "behavior": "lowered-chroma depth for editorial panels and shadowed sections"
+                },
+                "interface_surface": {
+                  "name": "Kelly Green",
+                  "hex": "#4CBB17",
+                  "spectrum": "green",
+                  "family": "standard",
+                  "score": 19.9,
+                  "reason": "Kelly Green supports interface_surface behavior.",
+                  "behavior": "active surface, nav affordance, and calm intelligent signal"
+                },
+                "highlight_air": {
+                  "name": "Ocean Blue",
+                  "hex": "#4F97A3",
+                  "spectrum": "blue",
+                  "family": "natural",
+                  "score": 20.2,
+                  "reason": "Ocean Blue supports highlight_air behavior.",
+                  "behavior": "thin edge highlights, glass lines, and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Royal Purple",
+                  "hex": "#6C3BAA",
+                  "spectrum": "violet",
+                  "family": "standard",
+                  "score": 15.62,
+                  "reason": "Royal Purple supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            },
+            {
+              "id": "ontology-clear-structure-3",
+              "label": "Clear Structure",
+              "score": 95.92,
+              "rationale": [
+                "Prussian Blue supports anchor_background behavior.",
+                "Prussian Blue has depth for structural roles.",
+                "Forest Green supports depth_support behavior.",
+                "Forest Green has depth for structural roles.",
+                "Kelly Green supports interface_surface behavior.",
+                "Kelly Green can hold repeated surfaces."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Prussian Blue",
+                  "hex": "#003153",
+                  "spectrum": "blue",
+                  "family": "deep",
+                  "score": 19.9,
+                  "reason": "Prussian Blue supports anchor_background behavior.",
+                  "behavior": "low-value base, trust, authority, restrained elegance"
+                },
+                "depth_support": {
+                  "name": "Forest Green",
+                  "hex": "#27503D",
+                  "spectrum": "green",
+                  "family": "deep",
+                  "score": 18.9,
+                  "reason": "Forest Green supports depth_support behavior.",
+                  "behavior": "lowered-chroma depth for editorial panels and shadowed sections"
+                },
+                "interface_surface": {
+                  "name": "Kelly Green",
+                  "hex": "#4CBB17",
+                  "spectrum": "green",
+                  "family": "standard",
+                  "score": 19.0,
+                  "reason": "Kelly Green supports interface_surface behavior.",
+                  "behavior": "active surface, nav affordance, and calm intelligent signal"
+                },
+                "highlight_air": {
+                  "name": "Teal Blue",
+                  "hex": "#01889F",
+                  "spectrum": "blue",
+                  "family": "natural",
+                  "score": 19.0,
+                  "reason": "Teal Blue supports highlight_air behavior.",
+                  "behavior": "thin edge highlights, glass lines, and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Pure Red",
+                  "hex": "#FF0000",
+                  "spectrum": "red",
+                  "family": "standard",
+                  "score": 19.12,
+                  "reason": "Pure Red supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            },
+            {
+              "id": "ontology-strong-signal-4",
+              "label": "Strong Signal",
+              "score": 107.53,
+              "rationale": [
+                "Crimson supports anchor_background behavior.",
+                "Crimson has depth for structural roles.",
+                "Navy Blue supports depth_support behavior.",
+                "Navy Blue has depth for structural roles.",
+                "Lemon Yellow supports interface_surface behavior.",
+                "Lemon Yellow can hold repeated surfaces."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Crimson",
+                  "hex": "#BD2E4A",
+                  "spectrum": "red",
+                  "family": "standard",
+                  "score": 18.2,
+                  "reason": "Crimson supports anchor_background behavior.",
+                  "behavior": "low-value base, trust, authority, restrained elegance"
+                },
+                "depth_support": {
+                  "name": "Navy Blue",
+                  "hex": "#000080",
+                  "spectrum": "blue",
+                  "family": "deep",
+                  "score": 19.25,
+                  "reason": "Navy Blue supports depth_support behavior.",
+                  "behavior": "lowered-chroma depth for editorial panels and shadowed sections"
+                },
+                "interface_surface": {
+                  "name": "Lemon Yellow",
+                  "hex": "#FFF44F",
+                  "spectrum": "yellow",
+                  "family": "standard",
+                  "score": 20.45,
+                  "reason": "Lemon Yellow supports interface_surface behavior.",
+                  "behavior": "active surface, nav affordance, and calm intelligent signal"
+                },
+                "highlight_air": {
+                  "name": "Ice Blue",
+                  "hex": "#D6EAF8",
+                  "spectrum": "blue",
+                  "family": "pastel",
+                  "score": 31.65,
+                  "reason": "Ice Blue supports highlight_air behavior.",
+                  "behavior": "thin edge highlights, glass lines, and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Ruby",
+                  "hex": "#E11F51",
+                  "spectrum": "red",
+                  "family": "standard",
+                  "score": 17.97,
+                  "reason": "Ruby supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            },
+            {
+              "id": "ontology-cross-family-5",
+              "label": "Cross Family",
+              "score": 106.93,
+              "rationale": [
+                "Crimson supports anchor_background behavior.",
+                "Crimson has depth for structural roles.",
+                "Forest Green supports depth_support behavior.",
+                "Forest Green has depth for structural roles.",
+                "Classic Blue supports interface_surface behavior.",
+                "Classic Blue is direct ontology role evidence."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Crimson",
+                  "hex": "#BD2E4A",
+                  "spectrum": "red",
+                  "family": "standard",
+                  "score": 17.0,
+                  "reason": "Crimson supports anchor_background behavior.",
+                  "behavior": "low-value base, trust, authority, restrained elegance"
+                },
+                "depth_support": {
+                  "name": "Forest Green",
+                  "hex": "#27503D",
+                  "spectrum": "green",
+                  "family": "deep",
+                  "score": 19.0,
+                  "reason": "Forest Green supports depth_support behavior.",
+                  "behavior": "lowered-chroma depth for editorial panels and shadowed sections"
+                },
+                "interface_surface": {
+                  "name": "Classic Blue",
+                  "hex": "#0F4C81",
+                  "spectrum": "blue",
+                  "family": "pantone_trend",
+                  "score": 33.0,
+                  "reason": "Classic Blue supports interface_surface behavior.",
+                  "behavior": "active surface, nav affordance, and calm intelligent signal"
+                },
+                "highlight_air": {
+                  "name": "Azure Blue",
+                  "hex": "#007FFF",
+                  "spectrum": "blue",
+                  "family": "standard",
+                  "score": 20.4,
+                  "reason": "Azure Blue supports highlight_air behavior.",
+                  "behavior": "thin edge highlights, glass lines, and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Scarlet",
+                  "hex": "#FF2400",
+                  "spectrum": "red",
+                  "family": "standard",
+                  "score": 17.52,
+                  "reason": "Scarlet supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            }
+          ],
+          "rules": [
+            "Search Semantic OS ColorPattern and ColorKeyword nodes for every app brief.",
+            "Do not ship pre-authored palette sets as fixed presets.",
+            "Use ColorPattern role language as a role model, not as a copied palette table.",
+            "Publish colors as role, reason, caveat, and proof conditions."
+          ]
+        },
         "rules": [
           "컬러 레퍼런스의 mood와 pairings를 semantic token 설계의 출발점으로 사용",
           "chosen palette는 semantic roles로 번역하고 raw reference color를 그대로 남용하지 않기",
+          "앱 내용 기반 색상 선택은 미리 만든 팔레트 세트가 아니라 Semantic OS ontology 검색으로 매번 수행하기",
           "seed color만 쓰지 말고 expanded palette에서 surface/text/border/support 역할까지 확장하기",
           "surface/text/border 대비는 레퍼런스보다 접근성 기준을 우선"
         ]
@@ -707,7 +1342,9 @@
         "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
         "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
         "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
-        "폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다."
+        "폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다.",
+        "Spoqa Han Sans Neo 같은 한글 display 헤딩은 line-height를 1.02 미만으로 낮추지 않는다.",
+        "한글 display 헤딩 tracking은 -0.03em ~ 0em 범위를 벗어나지 않는다."
       ],
       "recommended_fonts": {
         "heading": "Spoqa Han Sans Neo",
@@ -805,6 +1442,20 @@
           "headline_start": "one-step-smaller",
           "guidance": "한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다."
         },
+        "implementation_constraints": {
+          "headline_display": {
+            "line_height_min": "1.02",
+            "letter_spacing_min": "-0.03em",
+            "letter_spacing_max": "0em",
+            "recommended_line_height": "1.2-1.3",
+            "recommended_letter_spacing": "-0.02em",
+            "forced_breaks_policy": "disallow-before-breakpoint-qa"
+          },
+          "ui_label": {
+            "serif_usage": "allow-with-review",
+            "body_line_height": "1.4-1.5"
+          }
+        },
         "warnings": [
           "장문 본문 — line-height 여유 부족",
           "감성적 브랜딩",
@@ -815,7 +1466,9 @@
           "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
           "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
           "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
-          "폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다."
+          "폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다.",
+          "Spoqa Han Sans Neo 같은 한글 display 헤딩은 line-height를 1.02 미만으로 낮추지 않는다.",
+          "한글 display 헤딩 tracking은 -0.03em ~ 0em 범위를 벗어나지 않는다."
         ]
       },
       "type_scale": {
@@ -856,6 +1509,33 @@
         "default",
         "dense"
       ]
+    },
+    "layout": {
+      "breakpoints_px": [
+        320,
+        360,
+        390,
+        430,
+        768,
+        1024,
+        1440
+      ],
+      "container_rules": [
+        "모든 section/container는 box-sizing: border-box 기준으로 320px viewport에서 overflow-x 없이 맞아야 함",
+        "grid/flex children에는 필요한 경우 min-width: 0 또는 min-inline-size: 0을 명시",
+        "repeat(N, 1fr) 고정 grid는 모바일에서 1열 또는 minmax(0, 1fr) fallback을 제공",
+        "padded container 내부에서 width: 100vw 사용 금지"
+      ],
+      "control_rules": [
+        "Buttons, CTA groups, tabs, filter chips, and toolbar actions must not rely on fixed px widths or mobile-hostile min-width values.",
+        "Every button-like control needs max-inline-size: 100%; controls inside flex/grid parents need min-inline-size: 0 so labels can shrink or wrap.",
+        "Action rows must wrap or stack at narrow widths; two-button rows need a <=480px fallback before implementation is complete.",
+        "Long Korean CTA labels must be tested with real copy. Prefer wrapping/stacking over clipping, overflow hidden, or forcing white-space: nowrap.",
+        "Horizontal rails, tickers, score strips, and carousels must not reveal partially clipped text. Either size cards so visible items are complete, or use compact labels such as icon+code in the rail and move full names to the detailed surface.",
+        "Do not use width: 100vw inside padded containers; it commonly creates horizontal scroll. Use width: 100%, max-width: 100%, or a documented full-bleed pattern.",
+        "Never hide body overflow-x as the fix for a layout bug; remove the overflowing width/min-width instead."
+      ],
+      "viewport_pass_condition": "document.documentElement.scrollWidth <= window.innerWidth and all primary controls remain reachable without horizontal scrolling."
     },
     "radius": {
       "scale": [

@@ -54,97 +54,97 @@
   "visual_motifs": {
     "density": {
       "value": "dense",
-      "confidence": 0.94,
+      "confidence": 0.52,
       "evidence": [
-        "dashboard x11",
-        "table x5",
-        "analytics x6"
+        "dashboard x5.15",
+        "table x3.6999999999999997",
+        "analytics x3.6"
       ],
       "candidates": [
         {
           "value": "dense",
-          "score": 60.0
+          "score": 33.75
         },
         {
           "value": "airy",
-          "score": 40.0
+          "score": 21.5
         },
         {
           "value": "balanced",
-          "score": 1.0
+          "score": 0.9
         }
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Derived from selected image signals plus query and brand context."
+        "detail": "Derived from query and brand context only because no local image selection was available."
       }
     },
     "surface_style": {
       "value": "tinted",
-      "confidence": 0.94,
+      "confidence": 0.5,
       "evidence": [
-        "warm x7",
-        "editorial x17",
-        "cream x2",
-        "soft x3"
+        "warm x3.9000000000000004",
+        "editorial x9.5",
+        "cream x1.0",
+        "soft x1.45"
       ],
       "candidates": [
         {
           "value": "tinted",
-          "score": 31.0
-        },
-        {
-          "value": "flat",
-          "score": 4.0
+          "score": 16.85
         },
         {
           "value": "elevated",
-          "score": 1.0
+          "score": 0.9
+        },
+        {
+          "value": "flat",
+          "score": 0.5
         }
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Derived from selected image signals plus query and brand context."
+        "detail": "Derived from query and brand context only because no local image selection was available."
       }
     },
     "typography_mood": {
       "value": "editorial",
-      "confidence": 0.94,
+      "confidence": 0.5,
       "evidence": [
-        "editorial x17",
-        "article x3",
-        "magazine x2",
-        "content x1",
-        "serif x3"
+        "editorial x9.5",
+        "article x1.9",
+        "magazine x0.9",
+        "content x0.75",
+        "serif x1.75"
       ],
       "candidates": [
         {
           "value": "editorial",
-          "score": 69.0
+          "score": 39.1
         },
         {
           "value": "utilitarian",
-          "score": 42.0
+          "score": 22.15
         },
         {
           "value": "playful",
-          "score": 6.0
+          "score": 0.75
         }
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Derived from selected image signals plus query and brand context."
+        "detail": "Derived from query and brand context only because no local image selection was available."
       }
     },
     "corner_style": {
       "value": "medium",
-      "confidence": 0.79,
+      "confidence": 0.36,
       "evidence": [
-        "card x11"
+        "card x8.200000000000001"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Derived from selected image geometry and supporting signal terms."
+        "detail": "Derived from query and brand context only because no local image geometry was available."
       }
     },
     "color_balance": {
@@ -172,70 +172,71 @@
     {
       "id": "dashboard-grid",
       "label": "Dashboard grid",
-      "confidence": 0.94,
+      "confidence": 0.52,
       "evidence": [
-        "dashboard x11",
-        "analytics x6",
-        "kpi x7",
-        "stat x1",
-        "table x5"
+        "dashboard x5.15",
+        "analytics x3.6",
+        "kpi x5.5",
+        "stat x0.9",
+        "table x3.6999999999999997"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Layout cue inferred from selected image signals and reference context."
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
       "id": "data-review-surface",
       "label": "Data review surface",
-      "confidence": 0.94,
+      "confidence": 0.52,
       "evidence": [
-        "table x5",
-        "grid x1",
-        "data x5",
-        "filter x5"
+        "table x3.6999999999999997",
+        "grid x0.9",
+        "data x3.6999999999999997",
+        "filter x4.05"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Layout cue inferred from selected image signals and reference context."
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
       "id": "editorial-feed",
       "label": "Editorial feed",
-      "confidence": 0.94,
+      "confidence": 0.52,
       "evidence": [
-        "editorial x17",
-        "article x3",
-        "content x1",
-        "feed x1",
-        "magazine x2"
+        "editorial x9.5",
+        "article x1.9",
+        "content x0.75",
+        "feed x0.15",
+        "magazine x0.9"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Layout cue inferred from selected image signals and reference context."
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
       "id": "split-pane-workspace",
       "label": "Split-pane workspace",
-      "confidence": 0.94,
+      "confidence": 0.52,
       "evidence": [
-        "workspace x1",
-        "sidebar x6",
-        "editor x1",
-        "dashboard x11"
+        "workspace x0.9",
+        "sidebar x4.6",
+        "editor x0.75",
+        "topbar x1.8",
+        "breadcrumb x0.9"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Layout cue inferred from selected image signals and reference context."
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
       }
     }
   ],
   "component_style_hints": {
     "cards": {
       "direction": "low-elevation tinted cards를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.",
-      "confidence": 0.94,
+      "confidence": 0.29,
       "evidence": [
         "surface=tinted",
         "density=dense",
@@ -243,41 +244,41 @@
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
       }
     },
     "navigation": {
       "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
-      "confidence": 0.94,
+      "confidence": 0.29,
       "evidence": [
         "Split-pane workspace"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
       }
     },
     "typography": {
       "direction": "headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다.",
-      "confidence": 0.94,
+      "confidence": 0.28,
       "evidence": [
         "typography_mood=editorial"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
       }
     },
     "data_display": {
       "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
-      "confidence": 0.94,
+      "confidence": 0.29,
       "evidence": [
         "layout=dashboard-grid",
         "density=dense"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
       }
     }
   },
@@ -286,35 +287,36 @@
       "id": "dashboard-insight-module",
       "label": "Dashboard insight module",
       "family": "data-display",
-      "confidence": 0.94,
+      "confidence": 0.48,
       "suggested_components": [
-        "stat-card",
-        "insight-card",
+        "metric-strip",
+        "status-summary-row",
         "chart-panel",
         "section-header",
         "filter-chip"
       ],
       "supports_primitives": [
+        "operational overview",
         "dashboard cards",
         "charts and visualization"
       ],
       "evidence": [
-        "layout=dashboard-grid (0.94)",
-        "dashboard x11",
-        "analytics x6",
-        "kpi x7",
-        "insight x1"
+        "layout=dashboard-grid (0.52)",
+        "dashboard x5.15",
+        "analytics x3.6",
+        "kpi x5.5",
+        "insight x0.9"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
       "id": "data-review-table",
       "label": "Data review table",
       "family": "data-display",
-      "confidence": 0.94,
+      "confidence": 0.48,
       "suggested_components": [
         "data-table",
         "column-header",
@@ -327,23 +329,23 @@
         "search and filter"
       ],
       "evidence": [
-        "layout=data-review-surface (0.94)",
-        "layout=dashboard-grid (0.94)",
-        "table x5",
-        "data x5",
-        "grid x1",
-        "filter x5"
+        "layout=data-review-surface (0.52)",
+        "layout=dashboard-grid (0.52)",
+        "table x3.6999999999999997",
+        "data x3.6999999999999997",
+        "grid x0.9",
+        "filter x4.05"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
       "id": "editorial-content-block",
       "label": "Editorial content block",
       "family": "editorial",
-      "confidence": 0.94,
+      "confidence": 0.48,
       "suggested_components": [
         "content-card",
         "featured-story-card",
@@ -355,22 +357,22 @@
         "rich text editor"
       ],
       "evidence": [
-        "layout=editorial-feed (0.94)",
-        "editorial x17",
-        "article x3",
-        "content x1",
-        "magazine x2"
+        "layout=editorial-feed (0.52)",
+        "editorial x9.5",
+        "article x1.9",
+        "content x0.75",
+        "magazine x0.9"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
       "id": "workspace-shell",
       "label": "Workspace shell",
       "family": "navigation",
-      "confidence": 0.94,
+      "confidence": 0.48,
       "suggested_components": [
         "app-shell",
         "sidebar-nav",
@@ -382,35 +384,39 @@
         "workspace navigation"
       ],
       "evidence": [
-        "layout=split-pane-workspace (0.94)",
-        "workspace x1",
-        "sidebar x6"
+        "layout=split-pane-workspace (0.52)",
+        "workspace x0.9",
+        "sidebar x4.6"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
-      "id": "conversation-sidecar",
-      "label": "Conversation sidecar",
-      "family": "overlay",
-      "confidence": 0.52,
+      "id": "review-coverage-system",
+      "label": "Review coverage system",
+      "family": "editorial",
+      "confidence": 0.3,
       "suggested_components": [
-        "chat-panel",
-        "message-thread",
-        "message-composer",
-        "context-drawer"
+        "review-card",
+        "score-badge",
+        "comparison-table",
+        "ranking-list",
+        "filter-chip"
       ],
       "supports_primitives": [
-        "chat and messaging"
+        "comparison and ranking",
+        "search and filter",
+        "tags and labels"
       ],
       "evidence": [
-        "layout=split-pane-workspace (0.94)"
+        "layout=data-review-surface (0.52)",
+        "layout=editorial-feed (0.52)"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
       }
     }
   ],

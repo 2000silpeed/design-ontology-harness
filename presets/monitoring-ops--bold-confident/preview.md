@@ -5,7 +5,7 @@
 
 - app_mode: `monitoring-ops` / brand_tone: `bold-confident`
 
-## Color Tokens (light)
+## Color Tokens (light + dark)
 
 ### Semantic
 - success: `#50C878`
@@ -22,9 +22,9 @@
 - korean: Pretendard
 
 ## 대표 컴포넌트
+- **icon-button** — parts: container, label, leading-icon(optional), trailing-icon(optional) | states: default, hover, active, disabled
 - **data-table** — parts: container, header, content-area, footer(optional), action(optional) | states: default, loading, empty, error
 - **status-badge** — parts: container, icon, message, action(optional), close-button(optional) | states: info, success, warning, danger
-- **chart-container** — parts: container, header, content-area, footer(optional), action(optional) | states: default, loading, empty, error
 
 ## 주의사항
 - image-derived hints는 advisory (truth source: system_spec.md, token_schema.json)

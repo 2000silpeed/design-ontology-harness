@@ -2,7 +2,7 @@
   "id": "document-content--minimal-tech",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "lattice",
-  "content_hash": "sha256:51eca5931b60ea9db55b0550118fd3d4a13904c12fd6e33b90aeb7287feaeeb0",
+  "content_hash": "sha256:d61632660b413c08d7113dec1d22e72528da826d9f81762bf95f63e1dec24443",
   "app_mode": "document-content",
   "brand_tone": "minimal-tech",
   "color_modes": [
@@ -33,6 +33,6 @@
   },
   "owner": "maintainer",
   "tier": "P1",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "개발자용 API 레퍼런스 · 기술 문서 — TOC + article + code block + callout, 한국어 1급"
 }

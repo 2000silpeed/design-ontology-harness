@@ -69,12 +69,12 @@ Color rule: Token binding is necessary but not sufficient. Do not recombine `--d
 ## Component Priorities
 | Family | Priority | States | Components |
 | --- | --- | --- | --- |
-| button | high | `default`, `hover`, `active`, `disabled`, `loading` | `primary-button`, `secondary-button`, `ghost-button`, `icon-button`, `cta-button`, `link-button`, +2 more |
-| copilot-artifact | high | `default`, `loading`, `verified`, `error` | `source-card`, `citation-drawer` |
-| data-display | high | `default`, `sorted`, `filtered`, `empty` | `data-table`, `tag`, `column-header`, `row-actions`, `search-results`, `comment-thread`, +7 more |
+| button | high | `default`, `hover`, `active`, `disabled`, `loading` | `primary-button`, `secondary-button`, `icon-button`, `hero-cta-group`, `form-actions` |
+| copilot-artifact | high | `default`, `loading`, `verified`, `error` | `citation-drawer` |
+| data-display | high | `default`, `sorted`, `filtered`, `empty`, `loading` | `data-table`, `list`, `metadata-list`, `tag`, `column-header`, `row-actions`, +10 more |
 | document | high | `default`, `selected`, `commenting`, `resolved` | `article-body`, `table-of-contents`, `heading-anchor`, `prose-block`, `reading-pane`, `footnote`, +3 more |
-| feedback | high | `info`, `success`, `warning`, `danger` | `filter-chip`, `toast`, `inline-alert`, `empty-state`, `banner`, `status-badge`, +1 more |
-| input | high | `default`, `focus`, `error`, `disabled` | `text-field`, `select`, `checkbox`, `radio`, `textarea`, `search-field`, +9 more |
+| feedback | high | `info`, `success`, `warning`, `danger`, `loading` | `filter-chip`, `toast`, `inline-alert`, `empty-state`, `banner`, `badge`, +3 more |
+| input | high | `default`, `focus`, `error`, `disabled`, `selected` | `text-field`, `select`, `checkbox`, `radio`, `textarea`, `switch`, +10 more |
 
 ## Signature Components
 | Component | Family | Anatomy | Token Binding |
@@ -84,19 +84,19 @@ Color rule: Token binding is necessary but not sufficient. Do not recombine `--d
 | `prose-block` | document | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
 | `table-of-contents` | document | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
 | `footnote` | document | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
-| `prev-next-pager` | navigation | parts: container, nav-item, icon(optional), label, indicator(active), +1 more; states: default, hover, active, collapsed | slots: surface, text, padding, font |
+| `reading-pane` | document | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
 
 ## Advanced Component Menu
 | Component | Use When | Pairs With |
 | --- | --- | --- |
 | `redline-viewer` | legal, compliance, or editorial text needs reviewer markup; comments must stay anchored to exact text ranges | `diff-viewer`, `comment-thread`, `approval-rail` |
-| `source-card` | AI output depends on external or internal source records; users need a repeatable citation preview component | `citation-drawer`, `evidence-graph`, `inline-citation` |
 | `reviewer-assignment-picker` | workflows require human approval or reassignment; reviewer choice depends on policy ownership or availability | `approval-rail`, `exception-queue`, `presence-indicator` |
 | `approval-rail` | work requires review, approval, rejection, or handoff; users need to know who owns the next decision | `policy-matrix`, `risk-summary-card`, `diff-viewer` |
 | `citation-drawer` | answers must show supporting policy, document, or source records; users need to inspect evidence without losing conversation context | `inline-citation`, `source-card`, `evidence-graph` |
 | `diff-viewer` | AI rewrites, policy edits, or reviewer changes need auditability; users must approve what changed before publishing | `redline-viewer`, `revision-timeline`, `approval-rail` |
 | `resizable-split-pane` | primary work happens between list, canvas/chat, and detail panels; users need to compare or inspect adjacent information without navigation | `thread-list`, `artifact-preview-panel`, `inspector-drawer` |
 | `bulk-action-table` | users handle many records at once; selection count and destructive actions must stay visible | `saved-view-bar`, `filter-builder`, `exception-queue` |
+| `saved-view-bar` | teams revisit the same filtered views often; dense tools need stable scope memory | `filter-builder`, `bulk-action-table`, `exception-queue` |
 
 Use these as ontology-approved building blocks when the workflow calls for richer professional UI. They still inherit token, typography, accessibility, and reference-governance rules.
 
@@ -124,9 +124,10 @@ Use these as ontology-approved building blocks when the workflow calls for riche
   - 모바일 320/360/390/430px에서 horizontal scroll 또는 버튼/CTA 잘림이 있으면 완료로 보지 않음.
   - 버튼·CTA·탭·필터칩·툴바 액션은 fixed width/min-width에 의존하지 않고 wrap 또는 stack fallback을 가져야 함.
 - visual asset medium selection: Visual asset slots must choose the medium that matches the subject and runtime role; narrative/content media needs high-fidelity raster or approved production artwork, not ad-hoc SVG sketches.
+  - medium override `user-raster-asset-directive`: project-local raster image asset.; denied `svg`, `inline svg`, `deterministic svg placeholder`; triggers `SVG 만들지 말고`, `SVG 금지`, `실제 그림파일`, `실제 이미지 파일`, +6 more
+  - A user/reviewer sentence such as 'SVG 만들지 말고 실제 그림파일로 만들거나 검색해서 넣어' is a binding medium override, not a preference. Store it in governance/system_ontology/IMPLEMENTATION_CONTRACT and satisfy it before visual QA.
+  - When a raster-only/no-SVG directive is active, do not create SVG avatars, inline SVG sprites, SVG favicons, SVG placeholder art, or SVG UI icons for the affected scope; create or source project-local PNG/WebP/JPEG assets instead.
   - Comic, manga, and webtoon cover or panel-preview slots default to image_gen-generated raster, user-supplied artwork, or licensed/sourced artwork.
-  - A geometric SVG, rough path drawing, or low-information vector placeholder is not an acceptable final comic cover, manga panel, article cover, product photo, or story media asset.
-  - Do not substitute inline SVG scene art solely because it is faster to author; use the imagegen skill when synthetic art is appropriate and available.
 - failure pattern `token-bound-reference-palette-mixing`: Token binding is necessary but not sufficient; color role composition must still follow the ontology palette roles.
 - prevention: Derived colors may alias a semantic token or mix one semantic role with a neutral surface/transparent value. Do not mix multiple chromatic roles to create a local palette.
 

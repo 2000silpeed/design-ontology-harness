@@ -48,65 +48,66 @@
   "visual_motifs": {
     "density": {
       "value": "dense",
-      "confidence": 0.94,
+      "confidence": 0.5,
       "evidence": [
-        "dashboard x1",
-        "table x3",
-        "monitoring x2"
+        "dashboard x0.45",
+        "table x2.6",
+        "monitoring x1.2"
       ],
       "candidates": [
         {
           "value": "dense",
-          "score": 16.0
+          "score": 11.55
         }
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Derived from selected image signals plus query and brand context."
+        "detail": "Derived from query and brand context only because no local image selection was available."
       }
     },
     "surface_style": {
       "value": "flat",
-      "confidence": 0.24,
+      "confidence": 0.13,
       "evidence": [
         "fallback=flat"
       ],
       "candidates": [],
       "provenance": {
         "level": "inferred",
-        "detail": "Derived from selected image signals plus query and brand context."
+        "detail": "Derived from query and brand context only because no local image selection was available."
       }
     },
     "typography_mood": {
-      "value": "playful",
-      "confidence": 0.49,
+      "value": "utilitarian",
+      "confidence": 0.23,
       "evidence": [
-        "playful x2"
+        "dashboard x0.45",
+        "table x2.6"
       ],
       "candidates": [
         {
-          "value": "playful",
-          "score": 6.0
+          "value": "utilitarian",
+          "score": 3.95
         },
         {
-          "value": "utilitarian",
-          "score": 6.0
+          "value": "playful",
+          "score": 0.75
         }
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Derived from selected image signals plus query and brand context."
+        "detail": "Derived from query and brand context only because no local image selection was available."
       }
     },
     "corner_style": {
       "value": "medium",
-      "confidence": 0.29,
+      "confidence": 0.15,
       "evidence": [
-        "card x1"
+        "card x0.9"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Derived from selected image geometry and supporting signal terms."
+        "detail": "Derived from query and brand context only because no local image geometry was available."
       }
     },
     "color_balance": {
@@ -134,68 +135,55 @@
     {
       "id": "dashboard-grid",
       "label": "Dashboard grid",
-      "confidence": 0.94,
+      "confidence": 0.52,
       "evidence": [
-        "dashboard x1",
-        "metric x3",
-        "kpi x1",
-        "chart x3",
-        "table x3",
-        "monitoring x2"
+        "dashboard x0.45",
+        "metric x2.55",
+        "kpi x0.9",
+        "chart x2.6",
+        "table x2.6",
+        "monitoring x1.2"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Layout cue inferred from selected image signals and reference context."
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
       "id": "data-review-surface",
       "label": "Data review surface",
-      "confidence": 0.94,
+      "confidence": 0.52,
       "evidence": [
-        "table x3",
-        "grid x3",
-        "log x1",
-        "filter x1",
-        "timeline x1"
+        "table x2.6",
+        "grid x2.6",
+        "log x0.9",
+        "filter x0.9",
+        "timeline x0.9"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Layout cue inferred from selected image signals and reference context."
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
       "id": "split-pane-workspace",
       "label": "Split-pane workspace",
-      "confidence": 0.7,
+      "confidence": 0.3,
       "evidence": [
-        "sidebar x1",
-        "editor x1",
-        "navigation x1",
-        "dashboard x1"
+        "sidebar x0.9",
+        "editor x0.9",
+        "navigation x0.9"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Layout cue inferred from selected image signals and reference context."
-      }
-    },
-    {
-      "id": "landing-narrative",
-      "label": "Narrative landing flow",
-      "confidence": 0.35,
-      "evidence": [
-        "marketing x1"
-      ],
-      "provenance": {
-        "level": "inferred",
-        "detail": "Layout cue inferred from selected image signals and reference context."
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
       }
     }
   ],
   "component_style_hints": {
     "cards": {
       "direction": "flat card planes를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. 중간 반경으로 제품 UI 절제 유지.",
-      "confidence": 0.94,
+      "confidence": 0.28,
       "evidence": [
         "surface=flat",
         "density=dense",
@@ -203,41 +191,41 @@
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
       }
     },
     "navigation": {
       "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
-      "confidence": 0.7,
+      "confidence": 0.17,
       "evidence": [
         "Split-pane workspace"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
       }
     },
     "typography": {
-      "direction": "표현력은 허용하되 제품 UI에서는 heading 수와 accent를 엄격히 제한한다.",
-      "confidence": 0.49,
+      "direction": "정보 밀도에 맞춰 type scale 차이를 줄이고 table/list label의 정렬 정확도를 우선한다.",
+      "confidence": 0.13,
       "evidence": [
-        "typography_mood=playful"
+        "typography_mood=utilitarian"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
       }
     },
     "data_display": {
       "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
-      "confidence": 0.94,
+      "confidence": 0.28,
       "evidence": [
         "layout=dashboard-grid",
         "density=dense"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Component styling hint synthesized from visual motifs and layout cues."
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
       }
     }
   },
@@ -246,35 +234,36 @@
       "id": "dashboard-insight-module",
       "label": "Dashboard insight module",
       "family": "data-display",
-      "confidence": 0.94,
+      "confidence": 0.48,
       "suggested_components": [
-        "stat-card",
-        "insight-card",
+        "metric-strip",
+        "status-summary-row",
         "chart-panel",
         "section-header",
         "filter-chip"
       ],
       "supports_primitives": [
+        "operational overview",
         "dashboard cards",
         "charts and visualization"
       ],
       "evidence": [
-        "layout=dashboard-grid (0.94)",
-        "dashboard x1",
-        "metric x3",
-        "kpi x1",
-        "chart x3"
+        "layout=dashboard-grid (0.52)",
+        "dashboard x0.45",
+        "metric x2.55",
+        "kpi x0.9",
+        "chart x2.6"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
       "id": "data-review-table",
       "label": "Data review table",
       "family": "data-display",
-      "confidence": 0.94,
+      "confidence": 0.48,
       "suggested_components": [
         "data-table",
         "column-header",
@@ -287,23 +276,23 @@
         "search and filter"
       ],
       "evidence": [
-        "layout=data-review-surface (0.94)",
-        "layout=dashboard-grid (0.94)",
-        "table x3",
-        "grid x3",
-        "log x1",
-        "filter x1"
+        "layout=data-review-surface (0.52)",
+        "layout=dashboard-grid (0.52)",
+        "table x2.6",
+        "grid x2.6",
+        "log x0.9",
+        "filter x0.9"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
       "id": "workspace-shell",
       "label": "Workspace shell",
       "family": "navigation",
-      "confidence": 0.75,
+      "confidence": 0.33,
       "suggested_components": [
         "app-shell",
         "sidebar-nav",
@@ -315,13 +304,13 @@
         "workspace navigation"
       ],
       "evidence": [
-        "layout=split-pane-workspace (0.7)",
-        "sidebar x1",
-        "navigation x1"
+        "layout=split-pane-workspace (0.3)",
+        "sidebar x0.9",
+        "navigation x0.9"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
       }
     }
   ],
@@ -330,7 +319,7 @@
     "recommended_direction": [
       "layout는 Dashboard grid 기준으로 정리",
       "surface language는 flat 성향 우선",
-      "typography mood는 playful 축 유지",
+      "typography mood는 utilitarian 축 유지",
       "density는 dense 기준으로 primitive spacing 조정",
       "palette temperature는 unknown 쪽을 우선"
     ],

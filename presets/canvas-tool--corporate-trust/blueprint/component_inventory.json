@@ -13,10 +13,7 @@
       "components": [
         "primary-button",
         "secondary-button",
-        "ghost-button",
         "icon-button",
-        "cta-button",
-        "link-button",
         "form-actions",
         "hero-cta-group",
         "add-to-cart-button",
@@ -46,22 +43,24 @@
         "default",
         "sorted",
         "filtered",
-        "empty"
+        "empty",
+        "loading"
       ],
       "components": [
         "tag",
         "data-table",
         "column-header",
         "row-actions",
+        "metric-strip",
+        "status-summary-row",
+        "task-surface-header",
+        "source-ledger",
+        "section-header",
         "pricing-card",
         "feature-comparison",
         "kanban-board",
         "kanban-column",
         "kanban-card",
-        "stat-card",
-        "insight-card",
-        "activity-card",
-        "section-header",
         "chart-container",
         "chart-legend",
         "comment-thread",
@@ -120,12 +119,15 @@
         "info",
         "success",
         "warning",
-        "danger"
+        "danger",
+        "loading"
       ],
       "components": [
+        "badge",
         "inline-alert",
         "empty-state",
         "toast",
+        "status-dot",
         "status-badge",
         "step-progress",
         "banner",
@@ -142,15 +144,16 @@
         "default",
         "focus",
         "error",
-        "disabled"
+        "disabled",
+        "selected"
       ],
       "components": [
         "text-field",
-        "search-field",
-        "segmented-control",
-        "textarea",
         "select",
         "checkbox",
+        "switch",
+        "segmented-control",
+        "textarea",
         "radio-group",
         "form-section",
         "chip",
@@ -209,10 +212,8 @@
         "collapsed"
       ],
       "components": [
-        "mobile-topbar",
-        "mobile-tab-bar",
-        "back-button",
-        "section-tabs",
+        "breadcrumbs",
+        "tabs",
         "pagination",
         "app-shell",
         "sidebar-nav",
@@ -220,6 +221,7 @@
         "breadcrumb",
         "tab-bar",
         "wizard-layout",
+        "operational-rail",
         "category-pill",
         "saved-view-bar"
       ],
@@ -253,8 +255,9 @@
         "open"
       ],
       "components": [
-        "bottom-sheet",
-        "modal-dialog",
+        "dialog",
+        "popover",
+        "tooltip",
         "tooltip-guide",
         "quick-view-modal",
         "command-palette",
@@ -270,7 +273,13 @@
     {
       "name": "primary-button",
       "family": "button",
-      "supports_primitive": "system baseline",
+      "role": "Primary action button for the most important local action.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Button",
+        "Geist Button"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -283,20 +292,13 @@
     {
       "name": "secondary-button",
       "family": "button",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "ghost-button",
-      "family": "button",
-      "supports_primitive": "system baseline",
+      "role": "Secondary action button with lower emphasis than the primary action.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Button",
+        "Geist Button"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -309,137 +311,14 @@
     {
       "name": "icon-button",
       "family": "button",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "cta-button",
-      "family": "button",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "mobile-topbar",
-      "family": "navigation",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "mobile-tab-bar",
-      "family": "navigation",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "back-button",
-      "family": "navigation",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "section-tabs",
-      "family": "navigation",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "inline-alert",
-      "family": "feedback",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "empty-state",
-      "family": "feedback",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "toast",
-      "family": "feedback",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "bottom-sheet",
-      "family": "overlay",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "modal-dialog",
-      "family": "overlay",
-      "supports_primitive": "system baseline",
+      "role": "Icon-only action with explicit accessible name and stable hit target.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Icon Button",
+        "Geist Copy Button",
+        "Geist Dots Menu"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -452,59 +331,13 @@
     {
       "name": "text-field",
       "family": "input",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "search-field",
-      "family": "input",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "segmented-control",
-      "family": "input",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "link-button",
-      "family": "button",
-      "supports_primitive": "baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "textarea",
-      "family": "input",
-      "supports_primitive": "forms",
+      "role": "Single-line text input with label, helper, error, disabled, and readonly states.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Text Input",
+        "Geist Input"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -517,7 +350,13 @@
     {
       "name": "select",
       "family": "input",
-      "supports_primitive": "forms",
+      "role": "Single-value option selector for bounded choices.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Selector",
+        "Geist Select"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -529,6 +368,273 @@
     },
     {
       "name": "checkbox",
+      "family": "input",
+      "role": "Boolean or multi-select input with checked, unchecked, mixed, and disabled states.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Checkbox Input",
+        "Geist Checkbox"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "switch",
+      "family": "input",
+      "role": "Immediate on/off preference control.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Switch",
+        "Geist Switch"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "segmented-control",
+      "family": "input",
+      "role": "Small mutually exclusive mode switcher.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Segmented Control",
+        "Geist Toggle"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "breadcrumbs",
+      "family": "navigation",
+      "role": "Hierarchy trail for deep product areas.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Breadcrumbs",
+        "Geist Breadcrumbs"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tabs",
+      "family": "navigation",
+      "role": "Peer view switcher for related panels.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Tabs",
+        "Geist Tabs"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "pagination",
+      "family": "navigation",
+      "role": "Paged data navigation for tables and long lists.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Pagination",
+        "Geist Pagination"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "badge",
+      "family": "feedback",
+      "role": "Compact status, category, or count label.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Badge",
+        "Geist Badge"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "inline-alert",
+      "family": "feedback",
+      "role": "Inline message for contextual info, success, warning, and error states.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Banner",
+        "Geist Banner",
+        "Geist Note"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "empty-state",
+      "family": "feedback",
+      "role": "Actionable empty or zero-result state.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Empty State",
+        "Geist Empty State"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "toast",
+      "family": "feedback",
+      "role": "Temporary non-blocking feedback after a completed action.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Toast",
+        "Geist Toast"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "status-dot",
+      "family": "feedback",
+      "role": "Small operational status indicator paired with visible text.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Status Dot",
+        "Geist Status Dot"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "dialog",
+      "family": "overlay",
+      "role": "Modal decision or focused task surface.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Dialog",
+        "Geist Modal"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "popover",
+      "family": "overlay",
+      "role": "Anchored transient surface for short forms or contextual controls.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Popover",
+        "Geist Context Menu"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tooltip",
+      "family": "overlay",
+      "role": "Short accessible explanation for icon-only or compact controls.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Tooltip",
+        "Geist Tooltip"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "textarea",
       "family": "input",
       "supports_primitive": "forms",
       "status": "planned",
@@ -647,19 +753,6 @@
     {
       "name": "row-actions",
       "family": "data-display",
-      "supports_primitive": "data tables",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "pagination",
-      "family": "navigation",
       "supports_primitive": "data tables",
       "status": "planned",
       "must_document": [
@@ -882,6 +975,84 @@
       "name": "hero-trust-strip",
       "family": "marketing",
       "supports_primitive": "hero section",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "metric-strip",
+      "family": "data-display",
+      "supports_primitive": "operational overview",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "status-summary-row",
+      "family": "data-display",
+      "supports_primitive": "operational overview",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "task-surface-header",
+      "family": "data-display",
+      "supports_primitive": "operational overview",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "source-ledger",
+      "family": "data-display",
+      "supports_primitive": "operational overview",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "operational-rail",
+      "family": "navigation",
+      "supports_primitive": "operational overview",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "section-header",
+      "family": "data-display",
+      "supports_primitive": "operational overview",
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -1246,58 +1417,6 @@
       "name": "shortcut-hint",
       "family": "feedback",
       "supports_primitive": "command palette",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "stat-card",
-      "family": "data-display",
-      "supports_primitive": "dashboard cards",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "insight-card",
-      "family": "data-display",
-      "supports_primitive": "dashboard cards",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "activity-card",
-      "family": "data-display",
-      "supports_primitive": "dashboard cards",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "section-header",
-      "family": "data-display",
-      "supports_primitive": "dashboard cards",
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -1789,6 +1908,88 @@
       }
     }
   ],
+  "reference_baseline": {
+    "schema_version": "component-reference-baseline/v1",
+    "systems": [
+      {
+        "id": "astryx",
+        "name": "Astryx",
+        "url": "https://astryx.atmeta.com/components",
+        "role": "broad React component taxonomy, templates, themes, and agent-ready docs",
+        "use_for": [
+          "component family breadth",
+          "state and anatomy coverage hints",
+          "agent documentation and CLI workflow patterns"
+        ]
+      },
+      {
+        "id": "geist",
+        "name": "Vercel Geist",
+        "url": "https://vercel.com/geist/introduction",
+        "role": "compact developer-tool UI baseline with precise, minimal interaction patterns",
+        "use_for": [
+          "developer-console primitives",
+          "compact monochrome surface behavior",
+          "accessibility and async state coverage labels"
+        ]
+      }
+    ],
+    "absorption_policy": {
+      "allowed": [
+        "component names and taxonomy",
+        "family grouping",
+        "state coverage hints",
+        "interaction and accessibility labels",
+        "token category ideas"
+      ],
+      "denied": [
+        "verbatim docs beyond short labels",
+        "brand logos or protected imagery",
+        "site-specific IA or product copy",
+        "implementation source code unless the project license and target use allow it"
+      ],
+      "rule": "Use Astryx and Geist as taxonomy and behavior evidence; implement with local primitives and local tokens."
+    },
+    "core_components": [
+      "primary-button",
+      "secondary-button",
+      "icon-button"
+    ],
+    "contextual_not_baseline": {
+      "ghost-button": {
+        "replacement": "secondary-button",
+        "reason": "variant, not a baseline component"
+      },
+      "link-button": {
+        "replacement": "link",
+        "reason": "content/link primitive, not an action baseline"
+      },
+      "cta-button": {
+        "replacement": "primary-button",
+        "reason": "marketing emphasis variant"
+      },
+      "mobile-topbar": {
+        "replacement": "app-shell or top-nav",
+        "reason": "platform-specific navigation"
+      },
+      "mobile-tab-bar": {
+        "replacement": "tabs",
+        "reason": "mobile-specific navigation variant"
+      },
+      "back-button": {
+        "replacement": "breadcrumbs",
+        "reason": "flow-specific control"
+      },
+      "bottom-sheet": {
+        "replacement": "dialog or drawer",
+        "reason": "mobile-specific overlay variant"
+      },
+      "modal-dialog": {
+        "replacement": "dialog",
+        "reason": "duplicate naming"
+      }
+    }
+  },
   "advanced_component_catalog": [
     {
       "name": "resizable-split-pane",

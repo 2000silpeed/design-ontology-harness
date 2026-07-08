@@ -6,16 +6,12 @@
 - app_mode: `document-content` / brand_tone: `editorial-warm`
 
 ## Color Tokens (light + dark)
-### Core
-- primary: `#CC7722`
-- accent: `#FFB27F`
-- surface_tint: `#F5DEB3`
 
 ### Semantic
 - success: `#27503D`
-- warning: `#FFB27F`
+- warning: `#F5DEB3`
 - danger: `#E2725B`
-- info: `#0F4C81`
+- info: `#967BB6`
 
 > light/dark 변형은 어댑터(`nextjs-tailwind-shadcn` 등)가 파생. 원본 팔레트는 위 HEX 1세트.
 

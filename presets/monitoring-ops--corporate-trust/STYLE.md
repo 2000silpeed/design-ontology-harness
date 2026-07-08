@@ -69,22 +69,22 @@ Color rule: Token binding is necessary but not sufficient. Do not recombine `--d
 ## Component Priorities
 | Family | Priority | States | Components |
 | --- | --- | --- | --- |
-| button | high | `default`, `hover`, `active`, `disabled`, `loading` | `primary-button`, `secondary-button`, `ghost-button`, `icon-button`, `cta-button`, `link-button`, +1 more |
+| button | high | `default`, `hover`, `active`, `disabled`, `loading` | `primary-button`, `secondary-button`, `icon-button`, `form-actions` |
 | copilot-artifact | high | `default`, `loading`, `verified`, `error` | `citation-drawer`, `source-card` |
-| data-display | high | `default`, `sorted`, `filtered`, `empty` | `tag`, `data-table`, `column-header`, `row-actions`, `search-results`, `avatar`, +19 more |
+| data-display | high | `default`, `sorted`, `filtered`, `empty`, `loading` | `tag`, `data-table`, `column-header`, `row-actions`, `search-results`, `metric-strip`, +20 more |
 | editorial | high | `default`, `selected`, `editing` | `editor-canvas`, `editor-toolbar`, `inline-format-menu`, `slash-command-menu`, `block-controls` |
-| feedback | high | `info`, `success`, `warning`, `danger` | `inline-alert`, `empty-state`, `toast`, `status-badge`, `banner`, `upgrade-banner`, +1 more |
-| input | high | `default`, `focus`, `error`, `disabled` | `text-field`, `search-field`, `segmented-control`, `textarea`, `select`, `checkbox`, +10 more |
+| feedback | high | `info`, `success`, `warning`, `danger`, `loading` | `badge`, `inline-alert`, `empty-state`, `toast`, `status-dot`, `status-badge`, +3 more |
+| input | high | `default`, `focus`, `error`, `disabled`, `selected` | `text-field`, `select`, `checkbox`, `switch`, `segmented-control`, `textarea`, +11 more |
 
 ## Signature Components
 | Component | Family | Anatomy | Token Binding |
 | --- | --- | --- | --- |
 | `status-badge` | feedback | parts: container, icon, message, action(optional), close-button(optional); states: info, success, warning, danger | slots: surface, text, border, radius, padding |
 | `data-table` | data-display | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
+| `metric-strip` | data-display | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
+| `status-summary-row` | data-display | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
 | `chart-container` | data-display | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
 | `chart-tooltip` | overlay | parts: backdrop, container, header, content, footer(optional), +1 more; states: closed, opening, open, closing | slots: surface, border, radius, padding |
-| `chart-legend` | data-display | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
-| `bulk-action-table` | data-display | parts: table, selection-cell, column-header, row, bulk-action-bar, +1 more; states: default, selected, filtered, sort... | slots: surface, border, font |
 
 ## Advanced Component Menu
 | Component | Use When | Pairs With |
@@ -123,6 +123,11 @@ Use these as ontology-approved building blocks when the workflow calls for riche
   - 일반(light) 모드와 dark 모드를 함께 제공하고, light를 기본 :root 또는 앱 기본값으로 둠.
   - 모바일 320/360/390/430px에서 horizontal scroll 또는 버튼/CTA 잘림이 있으면 완료로 보지 않음.
   - 버튼·CTA·탭·필터칩·툴바 액션은 fixed width/min-width에 의존하지 않고 wrap 또는 stack fallback을 가져야 함.
+- visual asset medium selection: Visual asset slots must choose the medium that matches the subject and runtime role; narrative/content media needs high-fidelity raster or approved production artwork, not ad-hoc SVG sketches.
+  - medium override `user-raster-asset-directive`: project-local raster image asset.; denied `svg`, `inline svg`, `deterministic svg placeholder`; triggers `SVG 만들지 말고`, `SVG 금지`, `실제 그림파일`, `실제 이미지 파일`, +6 more
+  - A user/reviewer sentence such as 'SVG 만들지 말고 실제 그림파일로 만들거나 검색해서 넣어' is a binding medium override, not a preference. Store it in governance/system_ontology/IMPLEMENTATION_CONTRACT and satisfy it before visual QA.
+  - When a raster-only/no-SVG directive is active, do not create SVG avatars, inline SVG sprites, SVG favicons, SVG placeholder art, or SVG UI icons for the affected scope; create or source project-local PNG/WebP/JPEG assets instead.
+  - Comic, manga, and webtoon cover or panel-preview slots default to image_gen-generated raster, user-supplied artwork, or licensed/sourced artwork.
 - failure pattern `token-bound-reference-palette-mixing`: Token binding is necessary but not sufficient; color role composition must still follow the ontology palette roles.
 - prevention: Derived colors may alias a semantic token or mix one semantic role with a neutral surface/transparent value. Do not mix multiple chromatic roles to create a local palette.
 

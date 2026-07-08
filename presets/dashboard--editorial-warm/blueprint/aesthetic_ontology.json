@@ -1,0 +1,1183 @@
+{
+  "schema_version": "aesthetic-evaluation-ontology/v1",
+  "dimensions": [
+    {
+      "id": "visual_harmony",
+      "label": "Visual harmony",
+      "weight": 0.24,
+      "description": "How coherently color, type, spacing, and composition work together.",
+      "metrics": [
+        "color_harmony",
+        "spacing_consistency",
+        "typography_balance",
+        "composition_order"
+      ]
+    },
+    {
+      "id": "clarity",
+      "label": "Clarity",
+      "weight": 0.2,
+      "description": "How quickly the intended hierarchy, action, and information structure can be read.",
+      "metrics": [
+        "hierarchy_clarity",
+        "contrast_legibility",
+        "content_density_control",
+        "task_focus"
+      ]
+    },
+    {
+      "id": "brand_fit",
+      "label": "Brand fit",
+      "weight": 0.18,
+      "description": "How well the candidate expresses the intended brand posture and avoids anti-keywords.",
+      "metrics": [
+        "keyword_alignment",
+        "tone_alignment",
+        "domain_fit",
+        "anti_keyword_avoidance"
+      ]
+    },
+    {
+      "id": "emotional_appeal",
+      "label": "Emotional appeal",
+      "weight": 0.14,
+      "description": "How desirable, confident, and affectively appropriate the surface feels.",
+      "metrics": [
+        "desirability",
+        "confidence_signal",
+        "warmth_or_energy"
+      ]
+    },
+    {
+      "id": "craft_quality",
+      "label": "Craft quality",
+      "weight": 0.14,
+      "description": "How polished and implementation-ready the candidate is across fit, tokens, and affordances.",
+      "metrics": [
+        "responsive_fit",
+        "token_binding",
+        "accessibility_baseline",
+        "interaction_affordance",
+        "asset_completeness"
+      ]
+    },
+    {
+      "id": "novelty",
+      "label": "Novelty",
+      "weight": 0.1,
+      "description": "How distinctive the design is without breaking its product and brand constraints.",
+      "metrics": [
+        "distinctiveness",
+        "reference_transformation",
+        "memorability"
+      ]
+    },
+    {
+      "id": "brand_semantic_fit",
+      "label": "Brand semantic fit",
+      "weight": 0.22,
+      "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+      "metrics": [
+        "brand_keyword:dashboard-f90453ec",
+        "brand_keyword:admin-d033e22a",
+        "brand_keyword:console-e2346381",
+        "brand_keyword:editorial-980a8caf",
+        "brand_keyword:publishing-3fea93d2",
+        "brand_keyword:curation-72432a1e",
+        "brand_keyword:newsroom-69ff420b",
+        "brand_keyword:magazine-admin-42244661",
+        "brand_tone:calm-2ec3d0c7",
+        "brand_tone:thoughtful-b492d144",
+        "brand_tone:editorial-980a8caf",
+        "brand_tone:warm-d83fc386",
+        "brand_tone:measured-38130e34"
+      ],
+      "research_basis": [
+        "kansei",
+        "aesthemos"
+      ]
+    },
+    {
+      "id": "brand_boundary_fit",
+      "label": "Brand boundary fit",
+      "weight": 0.16,
+      "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+      "metrics": [
+        "anti_keyword:minimal-tech-54872a07",
+        "anti_keyword:bold-confident-cf0df8db",
+        "anti_keyword:saturated-08598c70",
+        "anti_keyword:playful-pastel-2f4f8e24",
+        "anti_keyword:corporate-conservative-a1f48f23",
+        "anti_keyword:streetwear-96c27fa7",
+        "anti_keyword:high-contrast-1c4cbbf3",
+        "anti_keyword:neon-09407639",
+        "avoid_pattern:saturated-commerce-hero-f0728f90",
+        "avoid_pattern:bold-magazine-cover-41e1d806",
+        "avoid_pattern:fintech-navy-dashboard-corporate-tru-38cc3327",
+        "avoid_pattern:neon-dark-developer-dashboard-minima-1258dd0b",
+        "avoid_pattern:playful-pastel-feed-c19480cc",
+        "avoid_pattern:streetwear-drop-banner-9ff38ad5"
+      ],
+      "research_basis": [
+        "kansei"
+      ]
+    },
+    {
+      "id": "product_ontology_fit",
+      "label": "Product ontology fit",
+      "weight": 0.22,
+      "description": "How clearly product primitives and ontology-required signals appear in the design.",
+      "metrics": [
+        "product_primitive:sidebar-nav-99f09c08",
+        "product_primitive:topbar-3c92cc16",
+        "product_primitive:workspace-header-3bf4f830",
+        "product_primitive:breadcrumb-6e5ce570",
+        "product_primitive:data-table-6f1578f2",
+        "product_primitive:column-header-34c81b0b",
+        "product_primitive:row-actions-417d6c5d",
+        "product_primitive:pagination-31fbb9d2",
+        "product_primitive:filter-sidebar-2365f31b",
+        "product_primitive:filter-chip-6d1aa657",
+        "must_include:editorial-dashboard-home-warm-neutra-c41c2c9e",
+        "must_include:curation-queue-with-filter-sidebar-s-aa80afc4",
+        "must_include:editorial-calendar-grid-with-schedul-96d78227",
+        "must_include:contributor-roster-data-table-profil-36387555",
+        "must_include:editorial-analytics-kpi-card-reading-1f1c934b"
+      ],
+      "research_basis": [
+        "beauvis",
+        "kansei"
+      ]
+    },
+    {
+      "id": "audience_context_fit",
+      "label": "Audience context fit",
+      "weight": 0.12,
+      "description": "How well the design serves declared users, platforms, and accessibility floors.",
+      "metrics": [
+        "audience_need:매거진-뉴스룸-에디터-이슈-피처-오피니언-큐레이션-피어-리뷰-발행-6e7f5e4c",
+        "audience_need:출판사-편집장-편집자-연간-분기-호-플래닝-기고자-로스터-편집-파-8e45622a",
+        "audience_need:content-studio-운영자-메일-매거진-블로그-큐레이션-리-1f2bfb13",
+        "accessibility_target:wcag-2-2-aa-41a998cd"
+      ],
+      "research_basis": [
+        "visawi",
+        "aesthemos"
+      ]
+    }
+  ],
+  "metrics": {
+    "color_harmony": {
+      "label": "Color harmony",
+      "improvement": "Tighten the palette around one primary accent, one neutral surface ladder, and explicit semantic roles.",
+      "expected_lift": 0.08
+    },
+    "spacing_consistency": {
+      "label": "Spacing consistency",
+      "improvement": "Normalize page rhythm with shared spacing steps for section, cluster, and control gaps.",
+      "expected_lift": 0.07
+    },
+    "typography_balance": {
+      "label": "Typography balance",
+      "improvement": "Rebalance type hierarchy so headings, body, captions, and controls use distinct but restrained roles.",
+      "expected_lift": 0.07
+    },
+    "composition_order": {
+      "label": "Composition order",
+      "improvement": "Strengthen alignment, focal sequence, and proportional grouping before adding more decoration.",
+      "expected_lift": 0.08
+    },
+    "hierarchy_clarity": {
+      "label": "Hierarchy clarity",
+      "improvement": "Make the primary state, primary action, and next-best secondary action visible in the first scan.",
+      "expected_lift": 0.09
+    },
+    "contrast_legibility": {
+      "label": "Contrast and legibility",
+      "improvement": "Raise text/background and control/border contrast while preserving the selected token roles.",
+      "expected_lift": 0.08
+    },
+    "content_density_control": {
+      "label": "Content density control",
+      "improvement": "Reduce competing modules or group dense content into scannable rows, tables, rails, or panels.",
+      "expected_lift": 0.07
+    },
+    "task_focus": {
+      "label": "Task focus",
+      "improvement": "Move decorative or pitch-like content below the operational surface that supports the user's main task.",
+      "expected_lift": 0.08
+    },
+    "keyword_alignment": {
+      "label": "Keyword alignment",
+      "improvement": "Map the strongest brand keywords to visible choices in layout, tone, density, and component emphasis.",
+      "expected_lift": 0.08
+    },
+    "tone_alignment": {
+      "label": "Tone alignment",
+      "improvement": "Adjust copy weight, control styling, and visual temperature to match the intended voice.",
+      "expected_lift": 0.06
+    },
+    "domain_fit": {
+      "label": "Domain fit",
+      "improvement": "Add domain-native structures such as tables, maps, media, timelines, inspectors, or product objects where relevant.",
+      "expected_lift": 0.08
+    },
+    "anti_keyword_avoidance": {
+      "label": "Anti-keyword avoidance",
+      "improvement": "Remove visual tropes that match the brand profile's anti-keywords before polishing details.",
+      "expected_lift": 0.06
+    },
+    "desirability": {
+      "label": "Desirability",
+      "improvement": "Give the primary surface a more intentional visual reward: stronger imagery, tactile controls, or clearer payoff.",
+      "expected_lift": 0.07
+    },
+    "confidence_signal": {
+      "label": "Confidence signal",
+      "improvement": "Add evidence, provenance, precision, or stable UI states that make the surface feel trustworthy.",
+      "expected_lift": 0.07
+    },
+    "warmth_or_energy": {
+      "label": "Warmth or energy",
+      "improvement": "Tune motion, image choice, accent placement, or microcopy energy to the target audience.",
+      "expected_lift": 0.06
+    },
+    "responsive_fit": {
+      "label": "Responsive fit",
+      "improvement": "Verify mobile and desktop fit, then fix overflow, clipped labels, and unstable control sizing.",
+      "expected_lift": 0.08
+    },
+    "token_binding": {
+      "label": "Token binding",
+      "improvement": "Replace local visual constants with design-system tokens and keep semantic roles consistent.",
+      "expected_lift": 0.06
+    },
+    "accessibility_baseline": {
+      "label": "Accessibility baseline",
+      "improvement": "Check contrast, focus states, labels, and target sizes as part of visual polish, not after it.",
+      "expected_lift": 0.07
+    },
+    "interaction_affordance": {
+      "label": "Interaction affordance",
+      "improvement": "Make controls, filters, state chips, and navigation visually legible with icons, state, and hit-area clarity.",
+      "expected_lift": 0.07
+    },
+    "asset_completeness": {
+      "label": "Asset completeness",
+      "improvement": "Use concrete product, place, object, identity, or content assets where the domain expects visual substance.",
+      "expected_lift": 0.08
+    },
+    "distinctiveness": {
+      "label": "Distinctiveness",
+      "improvement": "Introduce one memorable composition or interaction pattern while keeping the rest of the system restrained.",
+      "expected_lift": 0.06
+    },
+    "reference_transformation": {
+      "label": "Reference transformation",
+      "improvement": "Absorb reference morphology without copying palette, copy, IA, or protected asset choices.",
+      "expected_lift": 0.06
+    },
+    "memorability": {
+      "label": "Memorability",
+      "improvement": "Create a recognizable signature in the first viewport through layout, identity asset, or product-native visual.",
+      "expected_lift": 0.06
+    },
+    "brand_keyword:dashboard-f90453ec": {
+      "label": "Expresses brand keyword: dashboard",
+      "improvement": "Make 'dashboard' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "dashboard"
+    },
+    "brand_keyword:admin-d033e22a": {
+      "label": "Expresses brand keyword: admin",
+      "improvement": "Make 'admin' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "admin"
+    },
+    "brand_keyword:console-e2346381": {
+      "label": "Expresses brand keyword: console",
+      "improvement": "Make 'console' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "console"
+    },
+    "brand_keyword:editorial-980a8caf": {
+      "label": "Expresses brand keyword: editorial",
+      "improvement": "Make 'editorial' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "editorial"
+    },
+    "brand_keyword:publishing-3fea93d2": {
+      "label": "Expresses brand keyword: publishing",
+      "improvement": "Make 'publishing' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "publishing"
+    },
+    "brand_keyword:curation-72432a1e": {
+      "label": "Expresses brand keyword: curation",
+      "improvement": "Make 'curation' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "curation"
+    },
+    "brand_keyword:newsroom-69ff420b": {
+      "label": "Expresses brand keyword: newsroom",
+      "improvement": "Make 'newsroom' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "newsroom"
+    },
+    "brand_keyword:magazine-admin-42244661": {
+      "label": "Expresses brand keyword: magazine-admin",
+      "improvement": "Make 'magazine-admin' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "magazine-admin"
+    },
+    "brand_tone:calm-2ec3d0c7": {
+      "label": "Expresses tone of voice: calm",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'calm'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "calm"
+    },
+    "brand_tone:thoughtful-b492d144": {
+      "label": "Expresses tone of voice: thoughtful",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'thoughtful'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "thoughtful"
+    },
+    "brand_tone:editorial-980a8caf": {
+      "label": "Expresses tone of voice: editorial",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'editorial'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "editorial"
+    },
+    "brand_tone:warm-d83fc386": {
+      "label": "Expresses tone of voice: warm",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'warm'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "warm"
+    },
+    "brand_tone:measured-38130e34": {
+      "label": "Expresses tone of voice: measured",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'measured'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "measured"
+    },
+    "anti_keyword:minimal-tech-54872a07": {
+      "label": "Avoids anti-keyword: minimal-tech",
+      "improvement": "Remove cues that make the product read as 'minimal-tech'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "minimal-tech"
+    },
+    "anti_keyword:bold-confident-cf0df8db": {
+      "label": "Avoids anti-keyword: bold-confident",
+      "improvement": "Remove cues that make the product read as 'bold-confident'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "bold-confident"
+    },
+    "anti_keyword:saturated-08598c70": {
+      "label": "Avoids anti-keyword: saturated",
+      "improvement": "Remove cues that make the product read as 'saturated'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "saturated"
+    },
+    "anti_keyword:playful-pastel-2f4f8e24": {
+      "label": "Avoids anti-keyword: playful-pastel",
+      "improvement": "Remove cues that make the product read as 'playful-pastel'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "playful-pastel"
+    },
+    "anti_keyword:corporate-conservative-a1f48f23": {
+      "label": "Avoids anti-keyword: corporate-conservative",
+      "improvement": "Remove cues that make the product read as 'corporate-conservative'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "corporate-conservative"
+    },
+    "anti_keyword:streetwear-96c27fa7": {
+      "label": "Avoids anti-keyword: streetwear",
+      "improvement": "Remove cues that make the product read as 'streetwear'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "streetwear"
+    },
+    "anti_keyword:high-contrast-1c4cbbf3": {
+      "label": "Avoids anti-keyword: high-contrast",
+      "improvement": "Remove cues that make the product read as 'high-contrast'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "high-contrast"
+    },
+    "anti_keyword:neon-09407639": {
+      "label": "Avoids anti-keyword: neon",
+      "improvement": "Remove cues that make the product read as 'neon'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "neon"
+    },
+    "avoid_pattern:saturated-commerce-hero-f0728f90": {
+      "label": "Avoids visual pattern: saturated commerce hero",
+      "improvement": "Replace 'saturated commerce hero' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "saturated commerce hero"
+    },
+    "avoid_pattern:bold-magazine-cover-41e1d806": {
+      "label": "Avoids visual pattern: bold magazine cover",
+      "improvement": "Replace 'bold magazine cover' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "bold magazine cover"
+    },
+    "avoid_pattern:fintech-navy-dashboard-corporate-tru-38cc3327": {
+      "label": "Avoids visual pattern: fintech navy dashboard (corporate-trust dense)",
+      "improvement": "Replace 'fintech navy dashboard (corporate-trust dense)' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "fintech navy dashboard (corporate-trust dense)"
+    },
+    "avoid_pattern:neon-dark-developer-dashboard-minima-1258dd0b": {
+      "label": "Avoids visual pattern: neon dark developer dashboard (minimal-tech)",
+      "improvement": "Replace 'neon dark developer dashboard (minimal-tech)' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "neon dark developer dashboard (minimal-tech)"
+    },
+    "avoid_pattern:playful-pastel-feed-c19480cc": {
+      "label": "Avoids visual pattern: playful pastel feed",
+      "improvement": "Replace 'playful pastel feed' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "playful pastel feed"
+    },
+    "avoid_pattern:streetwear-drop-banner-9ff38ad5": {
+      "label": "Avoids visual pattern: streetwear drop banner",
+      "improvement": "Replace 'streetwear drop banner' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "streetwear drop banner"
+    },
+    "product_primitive:sidebar-nav-99f09c08": {
+      "label": "Embodies product primitive: sidebar-nav",
+      "improvement": "Represent 'sidebar-nav' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "sidebar-nav"
+    },
+    "product_primitive:topbar-3c92cc16": {
+      "label": "Embodies product primitive: topbar",
+      "improvement": "Represent 'topbar' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "topbar"
+    },
+    "product_primitive:workspace-header-3bf4f830": {
+      "label": "Embodies product primitive: workspace-header",
+      "improvement": "Represent 'workspace-header' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "workspace-header"
+    },
+    "product_primitive:breadcrumb-6e5ce570": {
+      "label": "Embodies product primitive: breadcrumb",
+      "improvement": "Represent 'breadcrumb' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "breadcrumb"
+    },
+    "product_primitive:data-table-6f1578f2": {
+      "label": "Embodies product primitive: data-table",
+      "improvement": "Represent 'data-table' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "data-table"
+    },
+    "product_primitive:column-header-34c81b0b": {
+      "label": "Embodies product primitive: column-header",
+      "improvement": "Represent 'column-header' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "column-header"
+    },
+    "product_primitive:row-actions-417d6c5d": {
+      "label": "Embodies product primitive: row-actions",
+      "improvement": "Represent 'row-actions' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "row-actions"
+    },
+    "product_primitive:pagination-31fbb9d2": {
+      "label": "Embodies product primitive: pagination",
+      "improvement": "Represent 'pagination' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "pagination"
+    },
+    "product_primitive:filter-sidebar-2365f31b": {
+      "label": "Embodies product primitive: filter-sidebar",
+      "improvement": "Represent 'filter-sidebar' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "filter-sidebar"
+    },
+    "product_primitive:filter-chip-6d1aa657": {
+      "label": "Embodies product primitive: filter-chip",
+      "improvement": "Represent 'filter-chip' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "filter-chip"
+    },
+    "must_include:editorial-dashboard-home-warm-neutra-c41c2c9e": {
+      "label": "Includes required visual/system signal: editorial dashboard home — warm neutral sidebar-nav + topbar + kpi-card row + activity-card + curation-queue preview",
+      "improvement": "Make 'editorial dashboard home — warm neutral sidebar-nav + topbar + kpi-card row + activity-card + curation-queue preview' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "editorial dashboard home — warm neutral sidebar-nav + topbar + kpi-card row + activity-card + curation-queue preview"
+    },
+    "must_include:curation-queue-with-filter-sidebar-s-aa80afc4": {
+      "label": "Includes required visual/system signal: curation queue with filter-sidebar + sort-dropdown + data-table + draft-status-pill + contributor avatar",
+      "improvement": "Make 'curation queue with filter-sidebar + sort-dropdown + data-table + draft-status-pill + contributor avatar' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "curation queue with filter-sidebar + sort-dropdown + data-table + draft-status-pill + contributor avatar"
+    },
+    "must_include:editorial-calendar-grid-with-schedul-96d78227": {
+      "label": "Includes required visual/system signal: editorial calendar grid with schedule cells + issue-planner preview + publishing-pipeline stage entry",
+      "improvement": "Make 'editorial calendar grid with schedule cells + issue-planner preview + publishing-pipeline stage entry' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "editorial calendar grid with schedule cells + issue-planner preview + publishing-pipeline stage entry"
+    },
+    "must_include:contributor-roster-data-table-profil-36387555": {
+      "label": "Includes required visual/system signal: contributor roster data-table + profile-card drawer + tag-taxonomy-manager",
+      "improvement": "Make 'contributor roster data-table + profile-card drawer + tag-taxonomy-manager' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "contributor roster data-table + profile-card drawer + tag-taxonomy-manager"
+    },
+    "must_include:editorial-analytics-kpi-card-reading-1f1c934b": {
+      "label": "Includes required visual/system signal: editorial analytics kpi-card + reading-analytics trend + archive-shelf filter",
+      "improvement": "Make 'editorial analytics kpi-card + reading-analytics trend + archive-shelf filter' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "editorial analytics kpi-card + reading-analytics trend + archive-shelf filter"
+    },
+    "audience_need:매거진-뉴스룸-에디터-이슈-피처-오피니언-큐레이션-피어-리뷰-발행-6e7f5e4c": {
+      "label": "Fits audience context: 매거진/뉴스룸 에디터 (이슈/피처/오피니언 큐레이션, 피어 리뷰, 발행 스케줄)",
+      "improvement": "Adjust density, language, workflow order, and controls for '매거진/뉴스룸 에디터 (이슈/피처/오피니언 큐레이션, 피어 리뷰, 발행 스케줄)'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "매거진/뉴스룸 에디터 (이슈/피처/오피니언 큐레이션, 피어 리뷰, 발행 스케줄)"
+    },
+    "audience_need:출판사-편집장-편집자-연간-분기-호-플래닝-기고자-로스터-편집-파-8e45622a": {
+      "label": "Fits audience context: 출판사 편집장/편집자 (연간/분기 호 플래닝, 기고자 로스터, 편집 파이프라인)",
+      "improvement": "Adjust density, language, workflow order, and controls for '출판사 편집장/편집자 (연간/분기 호 플래닝, 기고자 로스터, 편집 파이프라인)'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "출판사 편집장/편집자 (연간/분기 호 플래닝, 기고자 로스터, 편집 파이프라인)"
+    },
+    "audience_need:content-studio-운영자-메일-매거진-블로그-큐레이션-리-1f2bfb13": {
+      "label": "Fits audience context: Content Studio 운영자 (메일 매거진·블로그 큐레이션, 리딩 애널리틱스)",
+      "improvement": "Adjust density, language, workflow order, and controls for 'Content Studio 운영자 (메일 매거진·블로그 큐레이션, 리딩 애널리틱스)'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "Content Studio 운영자 (메일 매거진·블로그 큐레이션, 리딩 애널리틱스)"
+    },
+    "accessibility_target:wcag-2-2-aa-41a998cd": {
+      "label": "Supports accessibility target: WCAG 2.2 AA",
+      "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "WCAG 2.2 AA"
+    }
+  },
+  "relations": [
+    {
+      "source": "DesignCandidate",
+      "relation": "evaluated_by",
+      "target": "AestheticDimension"
+    },
+    {
+      "source": "AestheticDimension",
+      "relation": "measured_by",
+      "target": "AestheticMetric"
+    },
+    {
+      "source": "AestheticMetric",
+      "relation": "improved_by",
+      "target": "ImprovementAction"
+    },
+    {
+      "source": "AestheticEvaluation",
+      "relation": "gates",
+      "target": "Execution"
+    }
+  ],
+  "context": {
+    "brand_name": "Curator",
+    "system_name": "Curator System",
+    "product_summary": "editorial-warm 톤 editorial/publishing 운영 대시보드 — sidebar-nav · topbar · data-table · kpi-card · filter-chip · curation-queue · editorial-calendar · publishing-pipeline · contributor-roster, warm neutral surface + serif heading + muted accent + reading-first calm chrome, 한국어 1급",
+    "audiences": [
+      "매거진/뉴스룸 에디터 (이슈/피처/오피니언 큐레이션, 피어 리뷰, 발행 스케줄)",
+      "출판사 편집장/편집자 (연간/분기 호 플래닝, 기고자 로스터, 편집 파이프라인)",
+      "Content Studio 운영자 (메일 매거진·블로그 큐레이션, 리딩 애널리틱스)"
+    ],
+    "brand_keywords": [
+      "dashboard",
+      "admin",
+      "console",
+      "editorial",
+      "publishing",
+      "curation",
+      "newsroom",
+      "magazine-admin",
+      "content-studio",
+      "editor-dashboard",
+      "warm",
+      "serif",
+      "calm",
+      "reading-first",
+      "muted"
+    ],
+    "anti_keywords": [
+      "minimal-tech",
+      "bold-confident",
+      "saturated",
+      "playful-pastel",
+      "corporate-conservative",
+      "streetwear",
+      "high-contrast",
+      "neon",
+      "fintech-heavy"
+    ],
+    "tone_of_voice": [
+      "calm",
+      "thoughtful",
+      "editorial",
+      "warm",
+      "measured"
+    ],
+    "product_primitives": [
+      "sidebar-nav",
+      "topbar",
+      "workspace-header",
+      "breadcrumb",
+      "data-table",
+      "column-header",
+      "row-actions",
+      "pagination",
+      "filter-sidebar",
+      "filter-chip",
+      "sort-dropdown",
+      "search-field",
+      "kpi-card",
+      "stat-card",
+      "insight-card",
+      "activity-card",
+      "section-header",
+      "tag",
+      "status-badge",
+      "chip",
+      "comment-thread",
+      "avatar",
+      "user-menu",
+      "profile-card",
+      "date-picker",
+      "modal-dialog",
+      "toast",
+      "empty-state",
+      "primary-button",
+      "secondary-button",
+      "ghost-button",
+      "icon-button",
+      "curation-queue",
+      "editorial-calendar",
+      "draft-status-pill",
+      "publishing-pipeline",
+      "issue-planner",
+      "contributor-roster",
+      "article-preview-pane",
+      "editorial-analytics-kpi",
+      "reading-analytics-kpi",
+      "archive-shelf",
+      "tag-taxonomy-manager"
+    ]
+  },
+  "brand_aesthetic_contract": {
+    "schema_version": "brand-aesthetic-contract/v1",
+    "brand_name": "Curator",
+    "system_name": "Curator System",
+    "research_basis": [
+      {
+        "id": "visawi",
+        "label": "VisAWI",
+        "construct": "perceived website visual aesthetics",
+        "operational_use": "Map simplicity, diversity, colorfulness, and craftsmanship into visual system coherence metrics.",
+        "source_url": "https://www.sciencedirect.com/science/article/pii/S1071581910000777"
+      },
+      {
+        "id": "apid",
+        "label": "APiD",
+        "construct": "aesthetic pleasure in designed artifacts",
+        "operational_use": "Keep a direct pleasure/desirability layer instead of only formal pixel metrics.",
+        "source_url": "https://opus.lib.uts.edu.au/handle/10453/81276"
+      },
+      {
+        "id": "beauvis",
+        "label": "BeauVis",
+        "construct": "aesthetic pleasure of visual representations",
+        "operational_use": "Treat scores as comparative, context-bound judgments rather than universal beauty values.",
+        "source_url": "https://arxiv.org/abs/2207.14147"
+      },
+      {
+        "id": "aesthemos",
+        "label": "AESTHEMOS",
+        "construct": "aesthetic emotions",
+        "operational_use": "Translate brand tone and target affect into measurable emotional-response proxies.",
+        "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0178899"
+      },
+      {
+        "id": "kansei",
+        "label": "Kansei / semantic differential",
+        "construct": "design element to impression mapping",
+        "operational_use": "Use brand keywords and anti-keywords as semantic impression targets and boundaries.",
+        "source_url": "https://www.mdpi.com/2073-8994/12/8/1340"
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "brand_semantic_fit",
+        "label": "Brand semantic fit",
+        "weight": 0.22,
+        "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+        "metrics": [
+          "brand_keyword:dashboard-f90453ec",
+          "brand_keyword:admin-d033e22a",
+          "brand_keyword:console-e2346381",
+          "brand_keyword:editorial-980a8caf",
+          "brand_keyword:publishing-3fea93d2",
+          "brand_keyword:curation-72432a1e",
+          "brand_keyword:newsroom-69ff420b",
+          "brand_keyword:magazine-admin-42244661",
+          "brand_tone:calm-2ec3d0c7",
+          "brand_tone:thoughtful-b492d144",
+          "brand_tone:editorial-980a8caf",
+          "brand_tone:warm-d83fc386",
+          "brand_tone:measured-38130e34"
+        ],
+        "research_basis": [
+          "kansei",
+          "aesthemos"
+        ]
+      },
+      {
+        "id": "brand_boundary_fit",
+        "label": "Brand boundary fit",
+        "weight": 0.16,
+        "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+        "metrics": [
+          "anti_keyword:minimal-tech-54872a07",
+          "anti_keyword:bold-confident-cf0df8db",
+          "anti_keyword:saturated-08598c70",
+          "anti_keyword:playful-pastel-2f4f8e24",
+          "anti_keyword:corporate-conservative-a1f48f23",
+          "anti_keyword:streetwear-96c27fa7",
+          "anti_keyword:high-contrast-1c4cbbf3",
+          "anti_keyword:neon-09407639",
+          "avoid_pattern:saturated-commerce-hero-f0728f90",
+          "avoid_pattern:bold-magazine-cover-41e1d806",
+          "avoid_pattern:fintech-navy-dashboard-corporate-tru-38cc3327",
+          "avoid_pattern:neon-dark-developer-dashboard-minima-1258dd0b",
+          "avoid_pattern:playful-pastel-feed-c19480cc",
+          "avoid_pattern:streetwear-drop-banner-9ff38ad5"
+        ],
+        "research_basis": [
+          "kansei"
+        ]
+      },
+      {
+        "id": "product_ontology_fit",
+        "label": "Product ontology fit",
+        "weight": 0.22,
+        "description": "How clearly product primitives and ontology-required signals appear in the design.",
+        "metrics": [
+          "product_primitive:sidebar-nav-99f09c08",
+          "product_primitive:topbar-3c92cc16",
+          "product_primitive:workspace-header-3bf4f830",
+          "product_primitive:breadcrumb-6e5ce570",
+          "product_primitive:data-table-6f1578f2",
+          "product_primitive:column-header-34c81b0b",
+          "product_primitive:row-actions-417d6c5d",
+          "product_primitive:pagination-31fbb9d2",
+          "product_primitive:filter-sidebar-2365f31b",
+          "product_primitive:filter-chip-6d1aa657",
+          "must_include:editorial-dashboard-home-warm-neutra-c41c2c9e",
+          "must_include:curation-queue-with-filter-sidebar-s-aa80afc4",
+          "must_include:editorial-calendar-grid-with-schedul-96d78227",
+          "must_include:contributor-roster-data-table-profil-36387555",
+          "must_include:editorial-analytics-kpi-card-reading-1f1c934b"
+        ],
+        "research_basis": [
+          "beauvis",
+          "kansei"
+        ]
+      },
+      {
+        "id": "audience_context_fit",
+        "label": "Audience context fit",
+        "weight": 0.12,
+        "description": "How well the design serves declared users, platforms, and accessibility floors.",
+        "metrics": [
+          "audience_need:매거진-뉴스룸-에디터-이슈-피처-오피니언-큐레이션-피어-리뷰-발행-6e7f5e4c",
+          "audience_need:출판사-편집장-편집자-연간-분기-호-플래닝-기고자-로스터-편집-파-8e45622a",
+          "audience_need:content-studio-운영자-메일-매거진-블로그-큐레이션-리-1f2bfb13",
+          "accessibility_target:wcag-2-2-aa-41a998cd"
+        ],
+        "research_basis": [
+          "visawi",
+          "aesthemos"
+        ]
+      }
+    ],
+    "metrics": {
+      "brand_keyword:dashboard-f90453ec": {
+        "label": "Expresses brand keyword: dashboard",
+        "improvement": "Make 'dashboard' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "dashboard"
+      },
+      "brand_keyword:admin-d033e22a": {
+        "label": "Expresses brand keyword: admin",
+        "improvement": "Make 'admin' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "admin"
+      },
+      "brand_keyword:console-e2346381": {
+        "label": "Expresses brand keyword: console",
+        "improvement": "Make 'console' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "console"
+      },
+      "brand_keyword:editorial-980a8caf": {
+        "label": "Expresses brand keyword: editorial",
+        "improvement": "Make 'editorial' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "editorial"
+      },
+      "brand_keyword:publishing-3fea93d2": {
+        "label": "Expresses brand keyword: publishing",
+        "improvement": "Make 'publishing' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "publishing"
+      },
+      "brand_keyword:curation-72432a1e": {
+        "label": "Expresses brand keyword: curation",
+        "improvement": "Make 'curation' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "curation"
+      },
+      "brand_keyword:newsroom-69ff420b": {
+        "label": "Expresses brand keyword: newsroom",
+        "improvement": "Make 'newsroom' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "newsroom"
+      },
+      "brand_keyword:magazine-admin-42244661": {
+        "label": "Expresses brand keyword: magazine-admin",
+        "improvement": "Make 'magazine-admin' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "magazine-admin"
+      },
+      "brand_tone:calm-2ec3d0c7": {
+        "label": "Expresses tone of voice: calm",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'calm'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "calm"
+      },
+      "brand_tone:thoughtful-b492d144": {
+        "label": "Expresses tone of voice: thoughtful",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'thoughtful'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "thoughtful"
+      },
+      "brand_tone:editorial-980a8caf": {
+        "label": "Expresses tone of voice: editorial",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'editorial'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "editorial"
+      },
+      "brand_tone:warm-d83fc386": {
+        "label": "Expresses tone of voice: warm",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'warm'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "warm"
+      },
+      "brand_tone:measured-38130e34": {
+        "label": "Expresses tone of voice: measured",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'measured'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "measured"
+      },
+      "anti_keyword:minimal-tech-54872a07": {
+        "label": "Avoids anti-keyword: minimal-tech",
+        "improvement": "Remove cues that make the product read as 'minimal-tech'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "minimal-tech"
+      },
+      "anti_keyword:bold-confident-cf0df8db": {
+        "label": "Avoids anti-keyword: bold-confident",
+        "improvement": "Remove cues that make the product read as 'bold-confident'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "bold-confident"
+      },
+      "anti_keyword:saturated-08598c70": {
+        "label": "Avoids anti-keyword: saturated",
+        "improvement": "Remove cues that make the product read as 'saturated'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "saturated"
+      },
+      "anti_keyword:playful-pastel-2f4f8e24": {
+        "label": "Avoids anti-keyword: playful-pastel",
+        "improvement": "Remove cues that make the product read as 'playful-pastel'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "playful-pastel"
+      },
+      "anti_keyword:corporate-conservative-a1f48f23": {
+        "label": "Avoids anti-keyword: corporate-conservative",
+        "improvement": "Remove cues that make the product read as 'corporate-conservative'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "corporate-conservative"
+      },
+      "anti_keyword:streetwear-96c27fa7": {
+        "label": "Avoids anti-keyword: streetwear",
+        "improvement": "Remove cues that make the product read as 'streetwear'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "streetwear"
+      },
+      "anti_keyword:high-contrast-1c4cbbf3": {
+        "label": "Avoids anti-keyword: high-contrast",
+        "improvement": "Remove cues that make the product read as 'high-contrast'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "high-contrast"
+      },
+      "anti_keyword:neon-09407639": {
+        "label": "Avoids anti-keyword: neon",
+        "improvement": "Remove cues that make the product read as 'neon'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "neon"
+      },
+      "avoid_pattern:saturated-commerce-hero-f0728f90": {
+        "label": "Avoids visual pattern: saturated commerce hero",
+        "improvement": "Replace 'saturated commerce hero' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "saturated commerce hero"
+      },
+      "avoid_pattern:bold-magazine-cover-41e1d806": {
+        "label": "Avoids visual pattern: bold magazine cover",
+        "improvement": "Replace 'bold magazine cover' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "bold magazine cover"
+      },
+      "avoid_pattern:fintech-navy-dashboard-corporate-tru-38cc3327": {
+        "label": "Avoids visual pattern: fintech navy dashboard (corporate-trust dense)",
+        "improvement": "Replace 'fintech navy dashboard (corporate-trust dense)' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "fintech navy dashboard (corporate-trust dense)"
+      },
+      "avoid_pattern:neon-dark-developer-dashboard-minima-1258dd0b": {
+        "label": "Avoids visual pattern: neon dark developer dashboard (minimal-tech)",
+        "improvement": "Replace 'neon dark developer dashboard (minimal-tech)' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "neon dark developer dashboard (minimal-tech)"
+      },
+      "avoid_pattern:playful-pastel-feed-c19480cc": {
+        "label": "Avoids visual pattern: playful pastel feed",
+        "improvement": "Replace 'playful pastel feed' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "playful pastel feed"
+      },
+      "avoid_pattern:streetwear-drop-banner-9ff38ad5": {
+        "label": "Avoids visual pattern: streetwear drop banner",
+        "improvement": "Replace 'streetwear drop banner' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "streetwear drop banner"
+      },
+      "product_primitive:sidebar-nav-99f09c08": {
+        "label": "Embodies product primitive: sidebar-nav",
+        "improvement": "Represent 'sidebar-nav' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "sidebar-nav"
+      },
+      "product_primitive:topbar-3c92cc16": {
+        "label": "Embodies product primitive: topbar",
+        "improvement": "Represent 'topbar' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "topbar"
+      },
+      "product_primitive:workspace-header-3bf4f830": {
+        "label": "Embodies product primitive: workspace-header",
+        "improvement": "Represent 'workspace-header' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "workspace-header"
+      },
+      "product_primitive:breadcrumb-6e5ce570": {
+        "label": "Embodies product primitive: breadcrumb",
+        "improvement": "Represent 'breadcrumb' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "breadcrumb"
+      },
+      "product_primitive:data-table-6f1578f2": {
+        "label": "Embodies product primitive: data-table",
+        "improvement": "Represent 'data-table' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "data-table"
+      },
+      "product_primitive:column-header-34c81b0b": {
+        "label": "Embodies product primitive: column-header",
+        "improvement": "Represent 'column-header' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "column-header"
+      },
+      "product_primitive:row-actions-417d6c5d": {
+        "label": "Embodies product primitive: row-actions",
+        "improvement": "Represent 'row-actions' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "row-actions"
+      },
+      "product_primitive:pagination-31fbb9d2": {
+        "label": "Embodies product primitive: pagination",
+        "improvement": "Represent 'pagination' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "pagination"
+      },
+      "product_primitive:filter-sidebar-2365f31b": {
+        "label": "Embodies product primitive: filter-sidebar",
+        "improvement": "Represent 'filter-sidebar' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "filter-sidebar"
+      },
+      "product_primitive:filter-chip-6d1aa657": {
+        "label": "Embodies product primitive: filter-chip",
+        "improvement": "Represent 'filter-chip' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "filter-chip"
+      },
+      "must_include:editorial-dashboard-home-warm-neutra-c41c2c9e": {
+        "label": "Includes required visual/system signal: editorial dashboard home — warm neutral sidebar-nav + topbar + kpi-card row + activity-card + curation-queue preview",
+        "improvement": "Make 'editorial dashboard home — warm neutral sidebar-nav + topbar + kpi-card row + activity-card + curation-queue preview' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "editorial dashboard home — warm neutral sidebar-nav + topbar + kpi-card row + activity-card + curation-queue preview"
+      },
+      "must_include:curation-queue-with-filter-sidebar-s-aa80afc4": {
+        "label": "Includes required visual/system signal: curation queue with filter-sidebar + sort-dropdown + data-table + draft-status-pill + contributor avatar",
+        "improvement": "Make 'curation queue with filter-sidebar + sort-dropdown + data-table + draft-status-pill + contributor avatar' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "curation queue with filter-sidebar + sort-dropdown + data-table + draft-status-pill + contributor avatar"
+      },
+      "must_include:editorial-calendar-grid-with-schedul-96d78227": {
+        "label": "Includes required visual/system signal: editorial calendar grid with schedule cells + issue-planner preview + publishing-pipeline stage entry",
+        "improvement": "Make 'editorial calendar grid with schedule cells + issue-planner preview + publishing-pipeline stage entry' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "editorial calendar grid with schedule cells + issue-planner preview + publishing-pipeline stage entry"
+      },
+      "must_include:contributor-roster-data-table-profil-36387555": {
+        "label": "Includes required visual/system signal: contributor roster data-table + profile-card drawer + tag-taxonomy-manager",
+        "improvement": "Make 'contributor roster data-table + profile-card drawer + tag-taxonomy-manager' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "contributor roster data-table + profile-card drawer + tag-taxonomy-manager"
+      },
+      "must_include:editorial-analytics-kpi-card-reading-1f1c934b": {
+        "label": "Includes required visual/system signal: editorial analytics kpi-card + reading-analytics trend + archive-shelf filter",
+        "improvement": "Make 'editorial analytics kpi-card + reading-analytics trend + archive-shelf filter' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "editorial analytics kpi-card + reading-analytics trend + archive-shelf filter"
+      },
+      "audience_need:매거진-뉴스룸-에디터-이슈-피처-오피니언-큐레이션-피어-리뷰-발행-6e7f5e4c": {
+        "label": "Fits audience context: 매거진/뉴스룸 에디터 (이슈/피처/오피니언 큐레이션, 피어 리뷰, 발행 스케줄)",
+        "improvement": "Adjust density, language, workflow order, and controls for '매거진/뉴스룸 에디터 (이슈/피처/오피니언 큐레이션, 피어 리뷰, 발행 스케줄)'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "매거진/뉴스룸 에디터 (이슈/피처/오피니언 큐레이션, 피어 리뷰, 발행 스케줄)"
+      },
+      "audience_need:출판사-편집장-편집자-연간-분기-호-플래닝-기고자-로스터-편집-파-8e45622a": {
+        "label": "Fits audience context: 출판사 편집장/편집자 (연간/분기 호 플래닝, 기고자 로스터, 편집 파이프라인)",
+        "improvement": "Adjust density, language, workflow order, and controls for '출판사 편집장/편집자 (연간/분기 호 플래닝, 기고자 로스터, 편집 파이프라인)'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "출판사 편집장/편집자 (연간/분기 호 플래닝, 기고자 로스터, 편집 파이프라인)"
+      },
+      "audience_need:content-studio-운영자-메일-매거진-블로그-큐레이션-리-1f2bfb13": {
+        "label": "Fits audience context: Content Studio 운영자 (메일 매거진·블로그 큐레이션, 리딩 애널리틱스)",
+        "improvement": "Adjust density, language, workflow order, and controls for 'Content Studio 운영자 (메일 매거진·블로그 큐레이션, 리딩 애널리틱스)'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "Content Studio 운영자 (메일 매거진·블로그 큐레이션, 리딩 애널리틱스)"
+      },
+      "accessibility_target:wcag-2-2-aa-41a998cd": {
+        "label": "Supports accessibility target: WCAG 2.2 AA",
+        "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "WCAG 2.2 AA"
+      }
+    },
+    "rule": "Brand-owned aesthetic quality is evaluated as fit to declared semantic targets, explicit boundaries, product ontology, audience context, and visual craft."
+  },
+  "interpretation_rule": "Scores represent observed or reviewed response proxies in a declared context; they are not universal beauty claims."
+}

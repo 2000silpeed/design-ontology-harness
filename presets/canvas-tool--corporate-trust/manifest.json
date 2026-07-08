@@ -2,7 +2,7 @@
   "id": "canvas-tool--corporate-trust",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "lookme-toss-inapp",
-  "content_hash": "sha256:b8c7e4233de32b57c42887f9af0e279efdea9eba5b9d4292ceac649961bcde24",
+  "content_hash": "sha256:14cdee946aff70164a44fb114994974fcfb4a3d098c306b0737781574f158a95",
   "app_mode": "canvas-tool",
   "brand_tone": "corporate-trust",
   "color_modes": [
@@ -27,6 +27,6 @@
   "locale_pairings": {},
   "owner": "2000silpeed",
   "tier": "P3",
-  "generated_at": "2026-05-04T14:04:26Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "LookMe Toss In-App custom mobile try-on system: trusted face try-on utility with real Colorfit item image sets and paid wardrobe generation"
 }

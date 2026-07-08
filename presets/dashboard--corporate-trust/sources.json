@@ -1,0 +1,26 @@
+{
+  "preset_id": "dashboard--corporate-trust",
+  "source_project": "agent-org-network",
+  "seeds": [
+    {
+      "url": "https://primer.style",
+      "kind": "design-system",
+      "title": "Primer",
+      "notes": "Practical component contracts and dense developer-tool surfaces"
+    },
+    {
+      "url": "https://carbondesignsystem.com",
+      "kind": "design-system",
+      "title": "Carbon",
+      "notes": "Enterprise data UI, status patterns, and accessibility guidance"
+    },
+    {
+      "url": "https://atlassian.design",
+      "kind": "design-system",
+      "title": "Atlassian Design System",
+      "notes": "Workspace navigation, permissions, and operational SaaS patterns"
+    }
+  ],
+  "pretendard_font_license": "SIL OFL 1.1",
+  "created_at": "2026-07-08T07:25:26Z"
+}

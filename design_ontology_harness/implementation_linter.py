@@ -892,7 +892,6 @@ def _find_freehand_svg_connector_graph(text: str) -> list[str]:
 
     snippets: list[str] = []
     for match in FREEHAND_SVG_CONNECTOR_RE.finditer(text):
-        block = match.group(0)
         body = match.group("body")
         if len(re.findall(r"<path\b", body, flags=re.IGNORECASE)) < 2:
             continue

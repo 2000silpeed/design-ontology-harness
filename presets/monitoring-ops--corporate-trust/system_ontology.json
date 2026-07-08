@@ -226,24 +226,9 @@
       "label": "secondary-button"
     },
     {
-      "id": "component:ghost-button",
-      "type": "Component",
-      "label": "ghost-button"
-    },
-    {
       "id": "component:icon-button",
       "type": "Component",
       "label": "icon-button"
-    },
-    {
-      "id": "component:cta-button",
-      "type": "Component",
-      "label": "cta-button"
-    },
-    {
-      "id": "component:link-button",
-      "type": "Component",
-      "label": "link-button"
     },
     {
       "id": "component:form-actions",
@@ -347,6 +332,11 @@
       "label": "data-display/empty"
     },
     {
+      "id": "state:data-display-loading",
+      "type": "ComponentState",
+      "label": "data-display/loading"
+    },
+    {
       "id": "component:tag",
       "type": "Component",
       "label": "tag"
@@ -372,6 +362,31 @@
       "label": "search-results"
     },
     {
+      "id": "component:metric-strip",
+      "type": "Component",
+      "label": "metric-strip"
+    },
+    {
+      "id": "component:status-summary-row",
+      "type": "Component",
+      "label": "status-summary-row"
+    },
+    {
+      "id": "component:task-surface-header",
+      "type": "Component",
+      "label": "task-surface-header"
+    },
+    {
+      "id": "component:source-ledger",
+      "type": "Component",
+      "label": "source-ledger"
+    },
+    {
+      "id": "component:section-header",
+      "type": "Component",
+      "label": "section-header"
+    },
+    {
       "id": "component:avatar",
       "type": "Component",
       "label": "avatar"
@@ -380,26 +395,6 @@
       "id": "component:profile-card",
       "type": "Component",
       "label": "profile-card"
-    },
-    {
-      "id": "component:stat-card",
-      "type": "Component",
-      "label": "stat-card"
-    },
-    {
-      "id": "component:insight-card",
-      "type": "Component",
-      "label": "insight-card"
-    },
-    {
-      "id": "component:activity-card",
-      "type": "Component",
-      "label": "activity-card"
-    },
-    {
-      "id": "component:section-header",
-      "type": "Component",
-      "label": "section-header"
     },
     {
       "id": "component:chart-container",
@@ -609,6 +604,16 @@
       "label": "feedback/danger"
     },
     {
+      "id": "state:feedback-loading",
+      "type": "ComponentState",
+      "label": "feedback/loading"
+    },
+    {
+      "id": "component:badge",
+      "type": "Component",
+      "label": "badge"
+    },
+    {
       "id": "component:inline-alert",
       "type": "Component",
       "label": "inline-alert"
@@ -622,6 +627,11 @@
       "id": "component:toast",
       "type": "Component",
       "label": "toast"
+    },
+    {
+      "id": "component:status-dot",
+      "type": "Component",
+      "label": "status-dot"
     },
     {
       "id": "component:status-badge",
@@ -688,24 +698,14 @@
       "label": "input/disabled"
     },
     {
+      "id": "state:input-selected",
+      "type": "ComponentState",
+      "label": "input/selected"
+    },
+    {
       "id": "component:text-field",
       "type": "Component",
       "label": "text-field"
-    },
-    {
-      "id": "component:search-field",
-      "type": "Component",
-      "label": "search-field"
-    },
-    {
-      "id": "component:segmented-control",
-      "type": "Component",
-      "label": "segmented-control"
-    },
-    {
-      "id": "component:textarea",
-      "type": "Component",
-      "label": "textarea"
     },
     {
       "id": "component:select",
@@ -716,6 +716,21 @@
       "id": "component:checkbox",
       "type": "Component",
       "label": "checkbox"
+    },
+    {
+      "id": "component:switch",
+      "type": "Component",
+      "label": "switch"
+    },
+    {
+      "id": "component:segmented-control",
+      "type": "Component",
+      "label": "segmented-control"
+    },
+    {
+      "id": "component:textarea",
+      "type": "Component",
+      "label": "textarea"
     },
     {
       "id": "component:radio-group",
@@ -736,6 +751,11 @@
       "id": "component:filter-chip",
       "type": "Component",
       "label": "filter-chip"
+    },
+    {
+      "id": "component:search-field",
+      "type": "Component",
+      "label": "search-field"
     },
     {
       "id": "component:filter-panel",
@@ -797,14 +817,9 @@
       "label": "layout/default"
     },
     {
-      "id": "state:layout-resizing",
+      "id": "state:layout-responsive",
       "type": "ComponentState",
-      "label": "layout/resizing"
-    },
-    {
-      "id": "state:layout-collapsed",
-      "type": "ComponentState",
-      "label": "layout/collapsed"
+      "label": "layout/responsive"
     },
     {
       "id": "component:resizable-split-pane",
@@ -858,29 +873,24 @@
       "label": "navigation/collapsed"
     },
     {
-      "id": "component:mobile-topbar",
+      "id": "component:breadcrumbs",
       "type": "Component",
-      "label": "mobile-topbar"
+      "label": "breadcrumbs"
     },
     {
-      "id": "component:mobile-tab-bar",
+      "id": "component:tabs",
       "type": "Component",
-      "label": "mobile-tab-bar"
-    },
-    {
-      "id": "component:back-button",
-      "type": "Component",
-      "label": "back-button"
-    },
-    {
-      "id": "component:section-tabs",
-      "type": "Component",
-      "label": "section-tabs"
+      "label": "tabs"
     },
     {
       "id": "component:pagination",
       "type": "Component",
       "label": "pagination"
+    },
+    {
+      "id": "component:operational-rail",
+      "type": "Component",
+      "label": "operational-rail"
     },
     {
       "id": "component:app-shell",
@@ -952,14 +962,19 @@
       "label": "overlay/open"
     },
     {
-      "id": "component:bottom-sheet",
+      "id": "component:dialog",
       "type": "Component",
-      "label": "bottom-sheet"
+      "label": "dialog"
     },
     {
-      "id": "component:modal-dialog",
+      "id": "component:popover",
       "type": "Component",
-      "label": "modal-dialog"
+      "label": "popover"
+    },
+    {
+      "id": "component:tooltip",
+      "type": "Component",
+      "label": "tooltip"
     },
     {
       "id": "component:autocomplete",
@@ -1090,9 +1105,9 @@
       "label": "export-panel"
     },
     {
-      "id": "primitive:baseline",
+      "id": "primitive:reference-baseline",
       "type": "ProductPrimitive",
-      "label": "baseline"
+      "label": "reference baseline"
     },
     {
       "id": "primitive:forms",
@@ -1115,6 +1130,11 @@
       "label": "search and filter"
     },
     {
+      "id": "primitive:operational-overview",
+      "type": "ProductPrimitive",
+      "label": "operational overview"
+    },
+    {
       "id": "primitive:user-profile-and-avatar",
       "type": "ProductPrimitive",
       "label": "user profile and avatar"
@@ -1123,11 +1143,6 @@
       "id": "primitive:workspace-navigation",
       "type": "ProductPrimitive",
       "label": "workspace navigation"
-    },
-    {
-      "id": "primitive:dashboard-cards",
-      "type": "ProductPrimitive",
-      "label": "dashboard cards"
     },
     {
       "id": "primitive:rich-text-editor",
@@ -1416,6 +1431,176 @@
       }
     },
     {
+      "id": "source:semantic-color-ontology",
+      "type": "SourceReference",
+      "label": "Semantic OS color ontology",
+      "meta": {
+        "repo": "semantic-os",
+        "path": "domains/color/ontology/build/graph.json",
+        "schema_version": "design-ontology-harness/semantic-color-context-v1",
+        "node_count": 137,
+        "edge_count": 487,
+        "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included."
+      }
+    },
+    {
+      "id": "semantic-color:ocean-blue",
+      "type": "ColorToken",
+      "label": "Ocean Blue",
+      "meta": {
+        "hex": "#4F97A3",
+        "tier": "semantic-color-ontology",
+        "role": "primary",
+        "semantic_node_id": "color-keyword-ocean-blue",
+        "spectrum": "blue",
+        "family": "natural",
+        "mood_tags": [
+          "신뢰",
+          "정화",
+          "깊이감",
+          "유연함",
+          "안정감"
+        ],
+        "tone_axes": [
+          "mid_value",
+          "mid_chroma"
+        ],
+        "source_pages": {
+          "swatch": 227,
+          "reading": 228,
+          "metrics": 229
+        }
+      }
+    },
+    {
+      "id": "semantic-color:fern-green",
+      "type": "ColorToken",
+      "label": "Fern Green",
+      "meta": {
+        "hex": "#4F7942",
+        "tier": "semantic-color-ontology",
+        "role": "accent",
+        "semantic_node_id": "color-keyword-fern-green",
+        "spectrum": "green",
+        "family": "natural",
+        "mood_tags": [
+          "차분함",
+          "안정감",
+          "유연함"
+        ],
+        "tone_axes": [
+          "mid_value",
+          "mid_chroma"
+        ],
+        "source_pages": {
+          "swatch": 181,
+          "reading": 182,
+          "metrics": 183
+        }
+      }
+    },
+    {
+      "id": "semantic-color:naples-yellow",
+      "type": "ColorToken",
+      "label": "Naples Yellow",
+      "meta": {
+        "hex": "#FADA5E",
+        "tier": "semantic-color-ontology",
+        "role": "surface_tint",
+        "semantic_node_id": "color-keyword-naples-yellow",
+        "spectrum": "yellow",
+        "family": "pastel",
+        "mood_tags": [
+          "부드러움",
+          "따뜻함",
+          "온화함",
+          "예술적 감성"
+        ],
+        "tone_axes": [
+          "high_value",
+          "low_chroma",
+          "warm_bias",
+          "pastel"
+        ],
+        "source_pages": {
+          "swatch": 143,
+          "reading": 144,
+          "metrics": 145
+        }
+      }
+    },
+    {
+      "id": "governance:semantic-color-guideline-rgb-cmyk-split-by-output-medium",
+      "type": "GovernanceRule",
+      "label": "RGB와 CMYK는 산출 매체 기준으로 분리한다",
+      "meta": {
+        "semantic_node_id": "guideline-rgb-cmyk-split-by-output-medium",
+        "summary": "디지털 산출물은 RGB/sRGB 기준, 인쇄 산출물은 CMYK/프로파일 기준으로 판단한다. 화면색을 인쇄색으로 그대로 기대하지 않는다.",
+        "prompt_do": [],
+        "prompt_avoid": []
+      }
+    },
+    {
+      "id": "governance:semantic-color-guideline-color-values-are-reference-not-absolute",
+      "type": "GovernanceRule",
+      "label": "색상 수치는 절댓값이 아니라 기준값이다",
+      "meta": {
+        "semantic_node_id": "guideline-color-values-are-reference-not-absolute",
+        "summary": "디스플레이와 출력 환경에 따라 색 차이가 생기므로 HEX/CMYK는 재현 기준점으로 쓰고, 최종 판단은 매체별 proof에서 확인한다.",
+        "prompt_do": [],
+        "prompt_avoid": []
+      }
+    },
+    {
+      "id": "governance:semantic-color-guideline-mood-tags-before-palette-expansion",
+      "type": "GovernanceRule",
+      "label": "팔레트 확장 전 mood tag를 먼저 잠근다",
+      "meta": {
+        "semantic_node_id": "guideline-mood-tags-before-palette-expansion",
+        "summary": "무드보드나 브랜드 컬러를 늘리기 전에 에너지, 안정, 깊이, 회복 같은 감정 태그를 먼저 고정하면 색상 후보가 흔들리지 않는다.",
+        "prompt_do": [],
+        "prompt_avoid": []
+      }
+    },
+    {
+      "id": "governance:semantic-color-guideline-no-palette-table-reconstruction",
+      "type": "GovernanceRule",
+      "label": "배색표를 재구성할 수 있는 수준의 pair 목록은 만들지 않는다",
+      "meta": {
+        "semantic_node_id": "guideline-no-palette-table-reconstruction",
+        "summary": "paid source의 조합표, 페이지 배열, 순서, 행/열 구조를 그대로 되살릴 수 있는 palette_pair edge 묶음은 온톨로지에 넣지 않는다.",
+        "prompt_do": [
+          "조합을 개별 source row가 아니라 역할, 대비, 무드, 매체 조건으로 요약한다",
+          "source page provenance는 유지하되 원본 순서와 테이블 구조는 재현하지 않는다",
+          "공개 산출물에는 후보 조합의 이유와 caveat를 자체 문장으로 설명한다"
+        ],
+        "prompt_avoid": [
+          "paid source의 조합표 전체를 edge 목록으로 옮기기",
+          "특정 page의 palette row를 같은 순서/구조로 재생성하기",
+          "사용자가 원문 없이도 조합표를 복원할 수 있는 덤프 만들기"
+        ]
+      }
+    },
+    {
+      "id": "governance:semantic-color-guideline-palette-pair-edges-require-transformative-brief",
+      "type": "GovernanceRule",
+      "label": "palette_pair edge는 변형된 brief와 함께만 추가한다",
+      "meta": {
+        "semantic_node_id": "guideline-palette-pair-edges-require-transformative-brief",
+        "summary": "두 색의 직접 pair edge는 브랜드/화면/인쇄/제품 같은 새로운 산출 맥락에서 역할, 대비, 위험, proof 조건이 함께 설명될 때만 추가한다.",
+        "prompt_do": [
+          "pair edge마다 output medium, color roles, contrast reason, caveat를 함께 기록한다",
+          "색상 조합을 \"추천\"보다 \"brief-specific candidate\"로 표시한다",
+          "같은 pair가 다른 맥락에서 다르게 작동할 수 있음을 남긴다"
+        ],
+        "prompt_avoid": [
+          "출처 조합을 이유 없이 adopted pair로 승격하기",
+          "모든 keyword에 대해 기계적으로 pair edge 만들기",
+          "CMYK/RGB proof 없이 인쇄 재현까지 보증하기"
+        ]
+      }
+    },
+    {
       "id": "font:pretendard",
       "type": "FontFamily",
       "label": "Pretendard",
@@ -1503,9 +1688,9 @@
       "label": "workspace navigation"
     },
     {
-      "id": "pattern:layout-dashboard-cards",
+      "id": "pattern:layout-operational-overview",
       "type": "LayoutPattern",
-      "label": "dashboard cards"
+      "label": "operational overview"
     },
     {
       "id": "pattern:layout-data-tables",
@@ -1593,6 +1778,16 @@
       }
     },
     {
+      "id": "benchmark:astryx",
+      "type": "BenchmarkSystem",
+      "label": "Astryx",
+      "meta": {
+        "url": "https://astryx.atmeta.com",
+        "category": "devtool",
+        "color_strategy": "themeable neutral base with ready-made brand theme packages"
+      }
+    },
+    {
       "id": "benchmark:linear",
       "type": "BenchmarkSystem",
       "label": "Linear",
@@ -1617,7 +1812,7 @@
       "type": "BenchmarkSystem",
       "label": "Shopify Polaris",
       "meta": {
-        "url": "https://polaris.shopify.com",
+        "url": "https://shopify.dev/docs/api/app-home/web-components",
         "category": "commerce",
         "color_strategy": "green accent with warm neutrals"
       }
@@ -1803,6 +1998,16 @@
       }
     },
     {
+      "id": "benchmark:aws-cloudscape",
+      "type": "BenchmarkSystem",
+      "label": "AWS Cloudscape",
+      "meta": {
+        "url": "https://cloudscape.design",
+        "category": "cloud-ops",
+        "color_strategy": "white and grayscale operational base with focused action/status color"
+      }
+    },
+    {
       "id": "benchmark:hashicorp-helios",
       "type": "BenchmarkSystem",
       "label": "HashiCorp Helios",
@@ -1810,6 +2015,56 @@
         "url": "https://helios.hashicorp.design",
         "category": "devtool",
         "color_strategy": "multi-product brand colors with shared semantic layer"
+      }
+    },
+    {
+      "id": "benchmark:zendesk-garden",
+      "type": "BenchmarkSystem",
+      "label": "Zendesk Garden",
+      "meta": {
+        "url": "https://garden.zendesk.com",
+        "category": "support",
+        "color_strategy": "support-product neutrals with explicit semantic feedback roles"
+      }
+    },
+    {
+      "id": "benchmark:contentful-forma-36",
+      "type": "BenchmarkSystem",
+      "label": "Contentful Forma 36",
+      "meta": {
+        "url": "https://f36.contentful.com",
+        "category": "content-platform",
+        "color_strategy": "clean content-platform neutrals with product status accents"
+      }
+    },
+    {
+      "id": "benchmark:nord-health",
+      "type": "BenchmarkSystem",
+      "label": "Nord Design System",
+      "meta": {
+        "url": "https://nordhealth.design",
+        "category": "healthcare",
+        "color_strategy": "clinical neutrals with restrained blue/green action and status colors"
+      }
+    },
+    {
+      "id": "benchmark:trimble-modus",
+      "type": "BenchmarkSystem",
+      "label": "Trimble Modus 2.0",
+      "meta": {
+        "url": "https://modus.trimble.com",
+        "category": "industrial-enterprise",
+        "color_strategy": "enterprise blue core with structured surfaces and semantic states"
+      }
+    },
+    {
+      "id": "benchmark:salesforce-slds2",
+      "type": "BenchmarkSystem",
+      "label": "Salesforce Lightning Design System 2",
+      "meta": {
+        "url": "https://www.salesforce.com/blog/experience-design-with-slds-2/",
+        "category": "enterprise",
+        "color_strategy": "composable enterprise theme layer with Cosmos visual refresh"
       }
     },
     {
@@ -2161,16 +2416,39 @@
           "banner"
         ],
         "replacement_order": [
+          "If the user/reviewer has declared a raster-only or no-SVG medium override, use approved PNG/WebP/JPEG icon/image assets and document the override.",
           "Use the project's existing icon library when one is already installed and stylistically compatible.",
           "Reuse existing local SVG/icon components when available.",
           "Create a simple local SVG file or SVG component when no suitable icon exists."
         ],
+        "quality_floor": {
+          "rule": "UI icons must come from an approved icon system or document a consistent icon grammar; arbitrary hand-drawn path sets are not acceptable just because they are SVG.",
+          "approved_sources": [
+            "existing project icon library",
+            "Lucide",
+            "Heroicons",
+            "Phosphor",
+            "Tabler",
+            "Material Symbols",
+            "approved custom icon set"
+          ],
+          "required_grammar": [
+            "consistent 24px grid or documented asset grid",
+            "consistent stroke weight, caps, joins, and optical size",
+            "currentColor or token-bound stroke/fill",
+            "visible text or aria-label for semantic controls",
+            "no mixed filled/outlined styles unless the state model requires it"
+          ]
+        },
         "implementation_rules": [
           "Keep SVG stroke/fill bound to currentColor or design tokens, not hard-coded palette values.",
           "Decorative SVG icons use aria-hidden=\"true\"; semantic icons get an accessible label or adjacent text.",
           "Store new SVG assets in the nearest existing icons/assets directory; create a minimal icons directory only when none exists.",
           "Do not replace user-generated emoji content, chat text, blog body, or emoji-picker data.",
-          "Do not use emoji as a placeholder while searching for a proper icon."
+          "Do not use emoji as a placeholder while searching for a proper icon.",
+          "Do not use SVG icons when a project-specific medium override says no SVG or requires real raster image files; use project-local PNG/WebP/JPEG icon assets instead.",
+          "Do not hand-roll a UI icon sprite when a suitable icon library exists; if a local sprite is used, declare its source or approved custom grammar.",
+          "Navigation, toolbar, status, and action icons must share one visual grammar across stroke width, corner style, optical size, and active/inactive treatment."
         ],
         "outputs": [
           "system_spec.md",
@@ -2208,6 +2486,22 @@
           "IMPLEMENTATION_CONTRACT.md",
           "component_specs.md icon notes",
           "lint-implementation DS071"
+        ]
+      }
+    },
+    {
+      "id": "failure-pattern:amateur-custom-svg-icon-set",
+      "type": "ImplementationFailurePattern",
+      "label": "amateur-custom-svg-icon-set",
+      "meta": {
+        "trigger": "A UI ships a custom inline icon sprite or handmade icon set without an approved library/source marker or consistent icon grammar.",
+        "rule": "SVG is a file format, not a quality guarantee; UI icons must use an approved icon system or a documented custom grammar.",
+        "prevention": "Replace the handmade sprite with Lucide/Heroicons/Phosphor/Tabler/Material or mark and document an approved custom icon set with consistent stroke, caps, joins, sizing, and accessibility.",
+        "technical_controls": [
+          "IMPLEMENTATION_CONTRACT.md Icon Quality",
+          "system_spec.md Emoji-to-SVG Refactor",
+          "lint-implementation DS080",
+          "visual QA screenshots"
         ]
       }
     },
@@ -2506,6 +2800,8 @@
           "Path-only inline SVGs with generic map/sketch/illustration classes do not count as visual substance unless the visual is semantically anchored with labels, legend, title/desc, or data-subject landmarks.",
           "Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.",
           "Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.",
+          "Do not represent evidence maps, relation maps, or product data graphs as hand-positioned HTML nodes connected by rotated CSS lines. Use a real graph/chart library, SVG/canvas visualization with semantic labels and runtime data, or a ledger/table when the relationship is simple.",
+          "Do not fake workflow graphs by overlaying freehand SVG curves on separately positioned HTML nodes. Graph nodes and edges must share one coordinate system and expose node/edge ids, direction, labels, and runtime state.",
           "A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.",
           "Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.",
           "Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.",
@@ -2600,6 +2896,36 @@
       }
     },
     {
+      "id": "failure-pattern:ad-hoc-node-link-placeholder-graph",
+      "type": "ImplementationFailurePattern",
+      "label": "ad-hoc-node-link-placeholder-graph",
+      "meta": {
+        "trigger": "A mockup draws an evidence map, relation map, or graph using absolutely positioned nodes and rotated CSS lines such as graph-node/graph-edge or trace-node/trace-line.",
+        "rule": "A hand-drawn node-link sketch is not a product-grade data visualization.",
+        "prevention": "Use a proven graph/chart library, a semantically labeled SVG/canvas visualization backed by real runtime data, or replace simple relationships with an evidence ledger/table.",
+        "technical_controls": [
+          "lint-implementation DS082",
+          "component_specs.md data visualization notes",
+          "visual QA screenshots"
+        ]
+      }
+    },
+    {
+      "id": "failure-pattern:freehand-svg-connector-graph",
+      "type": "ImplementationFailurePattern",
+      "label": "freehand-svg-connector-graph",
+      "meta": {
+        "trigger": "A workflow, relation, or evidence graph uses an SVG connector layer such as wires/connector-layer plus separately positioned HTML nodes, with no node/edge ids, direction labels, or shared graph coordinate system.",
+        "rule": "A graph surface must encode the relationship model, not just draw curves between boxes.",
+        "prevention": "Use a graph library, or author the graph as one semantic SVG/canvas surface with data-node-id, data-edge-id, data-from/data-to, arrowheads, edge labels, and runtime state. If the relationship is simple, use a table, timeline, or ledger.",
+        "technical_controls": [
+          "lint-implementation DS083",
+          "component_specs.md graph validity notes",
+          "visual QA screenshots"
+        ]
+      }
+    },
+    {
       "id": "failure-pattern:media-runtime-surface-without-asset",
       "type": "ImplementationFailurePattern",
       "label": "media-runtime-surface-without-asset",
@@ -2645,6 +2971,221 @@
       }
     },
     {
+      "id": "governance:visual-asset-medium-selection",
+      "type": "GovernanceRule",
+      "label": "visual-asset-medium-selection",
+      "meta": {
+        "rule": "Visual asset slots must choose the medium that matches the subject and runtime role; narrative/content media needs high-fidelity raster or approved production artwork, not ad-hoc SVG sketches.",
+        "directive_overrides": [
+          {
+            "id": "user-raster-asset-directive",
+            "trigger_phrases": [
+              "SVG 만들지 말고",
+              "SVG 금지",
+              "실제 그림파일",
+              "실제 이미지 파일",
+              "검색해서 넣어",
+              "PNG",
+              "WebP",
+              "JPEG",
+              "래스터",
+              "비트맵"
+            ],
+            "priority": "highest",
+            "required_medium": "project-local raster image asset",
+            "allowed_formats": [
+              "png",
+              "webp",
+              "jpg",
+              "jpeg",
+              "avif"
+            ],
+            "denied_formats": [
+              "svg",
+              "inline svg",
+              "deterministic svg placeholder"
+            ],
+            "applies_to": [
+              "avatars",
+              "character portraits",
+              "content images",
+              "mockup visual assets",
+              "app icons",
+              "UI icons unless explicitly exempted"
+            ],
+            "documentation_required": [
+              "medium_decision",
+              "asset_path",
+              "acquisition_mode",
+              "source_or_prompt",
+              "verification that no .svg or inline <svg> remains"
+            ]
+          }
+        ],
+        "decision_sequence": [
+          "First honor explicit user/reviewer medium directives. A no-SVG or raster-only directive overrides default identity/icon/vector preferences for the affected project or slot.",
+          "Classify the slot before drawing: identity/icon, control glyph, diagram/data, factual real-world media, narrative/content media, or decorative support.",
+          "If the slot's user expectation is rendered content art, product/place photography, story atmosphere, or inspectable media, use image_gen, user-supplied licensed imagery, sourced licensed imagery, or an already approved high-fidelity asset.",
+          "Use deterministic SVG for app icons, logos, flags, UI glyphs, charts, diagrams, maps, schematics, and semantic product illustrations where vector geometry is the correct runtime representation.",
+          "When a faster-to-author SVG would reduce the slot to a placeholder, treat that as a wrong-medium failure rather than a stylistic option."
+        ],
+        "slot_families": [
+          {
+            "id": "high-fidelity-narrative-media",
+            "examples": [
+              "comic/manga/webtoon cover",
+              "panel or strip preview",
+              "story or character scene",
+              "editorial/article cover",
+              "gameplay or sprite-like scene",
+              "portfolio/content artwork"
+            ],
+            "default_acquisition_modes": [
+              "image_gen",
+              "user_supplied",
+              "sourced"
+            ],
+            "deterministic_svg": "denied unless the project already has approved production-grade vector artwork for that exact content slot"
+          },
+          {
+            "id": "factual-real-world-media",
+            "examples": [
+              "real venue",
+              "real product",
+              "food/travel/place photo",
+              "person or event photo"
+            ],
+            "default_acquisition_modes": [
+              "user_supplied",
+              "sourced"
+            ],
+            "deterministic_svg": "allowed only for maps, diagrams, or clearly labeled schematics, not as a photo substitute"
+          },
+          {
+            "id": "identity-control-technical-vector",
+            "examples": [
+              "app icon",
+              "logo",
+              "favicon",
+              "flag",
+              "UI icon",
+              "chart",
+              "diagram",
+              "map schematic"
+            ],
+            "default_acquisition_modes": [
+              "deterministic_svg",
+              "icon_library",
+              "semantic_html_css"
+            ],
+            "deterministic_svg": "preferred when token-bound, accessible, and semantically anchored"
+          },
+          {
+            "id": "user-specified-raster-assets",
+            "examples": [
+              "AI avatar",
+              "chat character portrait",
+              "generated app visual",
+              "search/sourced image slot",
+              "raster-only UI icon set"
+            ],
+            "default_acquisition_modes": [
+              "image_gen",
+              "user_supplied",
+              "sourced",
+              "project_local_raster"
+            ],
+            "deterministic_svg": "denied whenever the user/reviewer says no SVG, real image file, raster-only, or asks to search/generate actual imagery"
+          }
+        ],
+        "implementation_rules": [
+          "A user/reviewer sentence such as 'SVG 만들지 말고 실제 그림파일로 만들거나 검색해서 넣어' is a binding medium override, not a preference. Store it in governance/system_ontology/IMPLEMENTATION_CONTRACT and satisfy it before visual QA.",
+          "When a raster-only/no-SVG directive is active, do not create SVG avatars, inline SVG sprites, SVG favicons, SVG placeholder art, or SVG UI icons for the affected scope; create or source project-local PNG/WebP/JPEG assets instead.",
+          "Comic, manga, and webtoon cover or panel-preview slots default to image_gen-generated raster, user-supplied artwork, or licensed/sourced artwork.",
+          "A geometric SVG, rough path drawing, or low-information vector placeholder is not an acceptable final comic cover, manga panel, article cover, product photo, or story media asset.",
+          "Do not substitute inline SVG scene art solely because it is faster to author; use the imagegen skill when synthetic art is appropriate and available.",
+          "Deterministic SVG remains appropriate for app icons, logos, flags, UI icons, charts, diagrams, maps, and product schematics when those are the actual runtime medium.",
+          "If a narrative/content media slot intentionally uses vector artwork, document why it is production-grade artwork rather than a placeholder and record it in the manifest or implementation notes.",
+          "Manifest or implementation records should include acquisition_mode and medium_decision for non-obvious visual slots."
+        ],
+        "outputs": [
+          "design_system_blueprint.governance",
+          "system_spec.md",
+          "system_ontology.json",
+          "IMPLEMENTATION_CONTRACT.md",
+          "agent_packs",
+          "lint-implementation",
+          "visual QA"
+        ]
+      }
+    },
+    {
+      "id": "failure-pattern:wrong-medium-svg-for-narrative-media",
+      "type": "ImplementationFailurePattern",
+      "label": "wrong-medium-svg-for-narrative-media",
+      "meta": {
+        "trigger": "A comic/webtoon/manga cover, panel preview, story scene, character image, editorial cover, or content-media slot references an SVG placeholder instead of high-fidelity raster or approved artwork.",
+        "rule": "Narrative/content media slots require the medium users expect to inspect: generated, sourced, user-supplied, or approved polished artwork.",
+        "prevention": "Use image_gen or licensed/user-supplied raster artwork for the slot; reserve deterministic SVG for identity, controls, diagrams, maps, charts, or schematics.",
+        "technical_controls": [
+          "system_spec.md Visual Asset Medium Selection",
+          "system_ontology.json GovernanceRule",
+          "IMPLEMENTATION_CONTRACT.md",
+          "lint-implementation DS079",
+          "visual QA screenshots"
+        ]
+      }
+    },
+    {
+      "id": "failure-pattern:user-raster-directive-svg-violation",
+      "type": "ImplementationFailurePattern",
+      "label": "user-raster-directive-svg-violation",
+      "meta": {
+        "trigger": "A project or slot declares no-SVG/raster-only/real-image-file requirements but implementation still contains .svg assets, inline <svg>, image/svg+xml favicons, or SVG icon sprites in the affected scope.",
+        "rule": "Explicit user/reviewer raster directives override default SVG icon and identity guidance.",
+        "prevention": "Replace SVG assets with project-local PNG/WebP/JPEG files generated, user-supplied, or license-verified from search; record medium_decision and verify the implementation has no .svg or inline <svg> references.",
+        "technical_controls": [
+          "system_spec.md Visual Asset Medium Selection",
+          "system_ontology.json GovernanceRule",
+          "IMPLEMENTATION_CONTRACT.md",
+          "lint-implementation DS081",
+          "visual QA screenshots"
+        ]
+      }
+    },
+    {
+      "id": "failure-pattern:comic-cover-as-geometric-placeholder",
+      "type": "ImplementationFailurePattern",
+      "label": "comic-cover-as-geometric-placeholder",
+      "meta": {
+        "trigger": "A comic/manga/webtoon magazine mockup ships geometric blocks, rough paths, or diagram-like vector art where the reader expects polished cover or panel art.",
+        "rule": "Comic media quality is a product signal; placeholder geometry does not satisfy a comic/content asset slot.",
+        "prevention": "Generate or source finished cover and panel artwork, then verify crop, alt text, manifest metadata, and mobile legibility.",
+        "technical_controls": [
+          "imagegen skill",
+          "visual asset manifest",
+          "lint-implementation DS079",
+          "viewport screenshot QA"
+        ]
+      }
+    },
+    {
+      "id": "failure-pattern:unreviewed-visual-medium-substitution",
+      "type": "ImplementationFailurePattern",
+      "label": "unreviewed-visual-medium-substitution",
+      "meta": {
+        "trigger": "An implementation changes a planned acquisition mode from generated/sourced/user-supplied media to deterministic SVG without documenting the slot judgment.",
+        "rule": "Medium substitution is a design-system decision and must be traceable.",
+        "prevention": "Record the medium_decision, intended_for slot, and reason for deterministic vector use, or restore the appropriate media pipeline.",
+        "technical_controls": [
+          "design_system_blueprint.governance",
+          "system_ontology.json",
+          "IMPLEMENTATION_CONTRACT.md",
+          "visual QA review"
+        ]
+      }
+    },
+    {
       "id": "governance:brand-app-icon-identity",
       "type": "GovernanceRule",
       "label": "brand-app-icon-identity",
@@ -2654,8 +3195,10 @@
           "Do not ship a plain initials tile such as WC, AI, DS, or App as the final app icon unless the brand system explicitly defines that lettermark.",
           "The app icon must use the brand palette, visual keywords, and product primitives as evidence for shape language.",
           "Use a deterministic SVG source for the primary app icon; generated raster imagery may support marketing visuals but must not replace the identity icon source.",
+          "If the user/reviewer explicitly forbids SVG or requires actual raster image files, the app icon identity source may be PNG/WebP/JPEG instead; record that medium override in the ontology and do not create an SVG fallback silently.",
           "Wire the app icon into favicon/link metadata and the visible app-shell brand mark when the implementation has one.",
-          "Keep small-size legibility: the icon must remain recognizable at 32px and in a 44px navigation mark."
+          "Keep small-size legibility: the icon must remain recognizable at 32px and in a 44px navigation mark.",
+          "The app icon must read as a finished identity mark, not a rough illustration, generic tile, emoji-like sticker, or low-confidence geometric placeholder."
         ],
         "outputs": [
           "brand_profile",
@@ -2680,8 +3223,8 @@
         "favicon_path": null,
         "formats": [
           "favicon",
+          "source asset (SVG by default; PNG/WebP/JPEG when a no-SVG medium override is active)",
           "svg",
-          "svg source",
           "web app manifest icon when applicable"
         ],
         "targets": [
@@ -2708,6 +3251,22 @@
           "system_ontology.json BrandIdentityAsset",
           "IMPLEMENTATION_CONTRACT.md",
           "lint-implementation DS077",
+          "viewport screenshot QA"
+        ]
+      }
+    },
+    {
+      "id": "failure-pattern:low-quality-app-icon-identity",
+      "type": "ImplementationFailurePattern",
+      "label": "low-quality-app-icon-identity",
+      "meta": {
+        "trigger": "A favicon, web manifest icon, or app-shell mark is present but looks like a rough doodle, generic geometric placeholder, or amateur illustration.",
+        "rule": "App icons are identity assets and must meet a finished visual quality floor.",
+        "prevention": "Redesign the app icon as a compact, legible, brand-specific SVG mark with coherent geometry, palette, and small-size testing.",
+        "technical_controls": [
+          "system_spec.md Brand Identity Assets",
+          "system_ontology.json BrandIdentityAsset",
+          "IMPLEMENTATION_CONTRACT.md",
           "viewport screenshot QA"
         ]
       }
@@ -2979,6 +3538,7 @@
           "Record alt_text, prompt_summary, intended_for, dimensions, size_kb, and sha256 for each integrated raster asset.",
           "Generated images are not valid replacements for icons, logos, button glyphs, status markers, or deterministic diagrams."
         ],
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
         "source_project_pattern": "sprout-community-mock/design-system/generated_visual_assets.json"
       }
     },
@@ -3114,6 +3674,7 @@
         "license_policy_id": "license-policy:verified-free-visual-asset",
         "paid_license_policy_id": "license-policy:paid-visual-provider-proof",
         "reference_only_policy_id": "license-policy:reference-only-provider-no-runtime-assets",
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
         "rules": [
           "Use sourced visuals only as a fallback when Codex image_gen is unavailable, fails, or the product needs real-world photographic evidence more than generated imagery.",
           "Search only allowlisted free sourced providers, licensed providers with user-supplied proof, local licensed files, or user-supplied assets with explicit permission.",
@@ -3652,6 +4213,14 @@
         ],
         "usage": "Optional Codex imagery when a screen needs professional raster substance.",
         "activation": "only when the implementation surface would benefit from generated imagery",
+        "medium_role": "high-fidelity-raster-support",
+        "default_acquisition_modes": [
+          "image_gen",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": false,
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
         "alt_text_required": true,
         "prompt_summary_required": true,
         "sha256_required": true,
@@ -3738,6 +4307,14 @@
         ],
         "usage": "Optional Codex imagery when a screen needs professional raster substance.",
         "activation": "only when the implementation surface would benefit from generated imagery",
+        "medium_role": "high-fidelity-raster-support",
+        "default_acquisition_modes": [
+          "image_gen",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": false,
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
         "hotlinking_allowed": false,
         "workspace_copy_required": true,
         "license_metadata_required": true,
@@ -3802,6 +4379,14 @@
         ],
         "usage": "First-viewport visual signal for landing, product, or editorial hero sections.",
         "activation": "hero, landing, product, or editorial first screen",
+        "medium_role": "high-fidelity-raster-support",
+        "default_acquisition_modes": [
+          "image_gen",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": false,
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
         "alt_text_required": true,
         "prompt_summary_required": true,
         "sha256_required": true,
@@ -3887,6 +4472,14 @@
         ],
         "usage": "First-viewport visual signal for landing, product, or editorial hero sections.",
         "activation": "hero, landing, product, or editorial first screen",
+        "medium_role": "high-fidelity-raster-support",
+        "default_acquisition_modes": [
+          "image_gen",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": false,
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
         "hotlinking_allowed": false,
         "workspace_copy_required": true,
         "license_metadata_required": true,
@@ -3951,6 +4544,14 @@
         ],
         "usage": "Content image for product, venue, object, media, or feature cards.",
         "activation": "card grids or repeated content surfaces need real visual content",
+        "medium_role": "content-media",
+        "default_acquisition_modes": [
+          "image_gen",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": "only for approved product schematics or semantic vector thumbnails",
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
         "alt_text_required": true,
         "prompt_summary_required": true,
         "sha256_required": true,
@@ -4036,6 +4637,14 @@
         ],
         "usage": "Content image for product, venue, object, media, or feature cards.",
         "activation": "card grids or repeated content surfaces need real visual content",
+        "medium_role": "content-media",
+        "default_acquisition_modes": [
+          "image_gen",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": "only for approved product schematics or semantic vector thumbnails",
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
         "hotlinking_allowed": false,
         "workspace_copy_required": true,
         "license_metadata_required": true,
@@ -4100,6 +4709,14 @@
         ],
         "usage": "Cover image for articles, case studies, press stories, or narrative modules.",
         "activation": "editorial or story-led content module",
+        "medium_role": "high-fidelity-narrative-media",
+        "default_acquisition_modes": [
+          "image_gen",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": "denied unless approved production vector artwork exists",
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
         "alt_text_required": true,
         "prompt_summary_required": true,
         "sha256_required": true,
@@ -4185,6 +4802,181 @@
         ],
         "usage": "Cover image for articles, case studies, press stories, or narrative modules.",
         "activation": "editorial or story-led content module",
+        "medium_role": "high-fidelity-narrative-media",
+        "default_acquisition_modes": [
+          "image_gen",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": "denied unless approved production vector artwork exists",
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
+        "hotlinking_allowed": false,
+        "workspace_copy_required": true,
+        "license_metadata_required": true,
+        "alt_text_required": true,
+        "sha256_required": true,
+        "selection_reason_required": true,
+        "status": "searchable-fallback",
+        "contract_id": "governance:sourced-visual-asset-fallback-contract"
+      }
+    },
+    {
+      "id": "visual-asset:comic-panel-preview",
+      "type": "GeneratedVisualAsset",
+      "label": "Comic panel preview",
+      "meta": {
+        "slot": "comic-panel-preview",
+        "model": "Codex image_gen skill",
+        "api_fallback": "disabled",
+        "fallback_policy": "no API fallback",
+        "failure_behavior": "Do not call external image APIs if Codex image_gen fails.",
+        "candidate_count": "2-4",
+        "manifest_path": "public/generated/design-system/manifest.json",
+        "compatible_manifest_paths": [
+          "public/generated/design-system/manifest.json",
+          "design-system/generated_visual_assets.json"
+        ],
+        "manifest_schema": "visual-asset-manifest/v1",
+        "manifest_required_fields": [
+          "schema_version",
+          "project",
+          "brand",
+          "generator",
+          "source_session",
+          "assets"
+        ],
+        "asset_record_required_fields": [
+          "id",
+          "label",
+          "slot",
+          "status",
+          "asset_path",
+          "original_png_path",
+          "format",
+          "dimensions",
+          "size_kb",
+          "sha256",
+          "intended_for",
+          "alt_text",
+          "prompt_summary"
+        ],
+        "prompt_pack_path": "public/generated/design-system/imagegen-prompts.md",
+        "prompt_basis": [
+          "system_spec.md",
+          "token_schema.json",
+          "component_inventory.json",
+          "components/component_specs.md",
+          "visual_reference_report.json"
+        ],
+        "aspect_ratios": [
+          "2:1",
+          "16:9",
+          "4:3"
+        ],
+        "usage": "Finished panel or strip preview artwork for story-led comic content.",
+        "activation": "comic reader, webtoon episode, manga chapter, or panel-preview rail",
+        "medium_role": "high-fidelity-narrative-media",
+        "default_acquisition_modes": [
+          "image_gen",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": "denied unless approved production vector panel art exists",
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
+        "alt_text_required": true,
+        "prompt_summary_required": true,
+        "sha256_required": true,
+        "original_preservation_required": true,
+        "workspace_copy_required": true,
+        "source_session_tracking": true,
+        "contract_id": "governance:generated-visual-asset-contract",
+        "status": "promptable"
+      }
+    },
+    {
+      "id": "sourced-visual-asset:comic-panel-preview-fallback",
+      "type": "SourcedVisualAsset",
+      "label": "Comic panel preview sourced fallback",
+      "meta": {
+        "slot": "comic-panel-preview",
+        "acquisition_mode": "sourced",
+        "fallback_for": "visual-asset:comic-panel-preview",
+        "fallback_policy": "license-verified sourced visual fallback",
+        "candidate_manifest_path": "public/generated/design-system/sourced-visual-candidates.json",
+        "manifest_path": "public/generated/design-system/manifest.json",
+        "compatible_manifest_paths": [
+          "public/generated/design-system/manifest.json",
+          "design-system/generated_visual_assets.json"
+        ],
+        "manifest_schema": "visual-asset-manifest/v1",
+        "asset_record_required_fields": [
+          "id",
+          "label",
+          "slot",
+          "status",
+          "acquisition_mode",
+          "asset_path",
+          "source_url",
+          "download_url",
+          "provider",
+          "author",
+          "license",
+          "attribution_required",
+          "sha256",
+          "intended_for",
+          "alt_text",
+          "selection_reason"
+        ],
+        "provider_allowlist": [
+          "openverse",
+          "wikimedia-commons",
+          "unsplash",
+          "pexels",
+          "adobe-stock",
+          "shutterstock",
+          "getty-images",
+          "istock",
+          "envato-elements",
+          "local-licensed-file"
+        ],
+        "free_provider_allowlist": [
+          "openverse",
+          "wikimedia-commons",
+          "unsplash",
+          "pexels"
+        ],
+        "licensed_provider_allowlist": [
+          "adobe-stock",
+          "shutterstock",
+          "getty-images",
+          "istock",
+          "envato-elements",
+          "local-licensed-file"
+        ],
+        "reference_only_excluded": [
+          "lazyweb",
+          "mobbin",
+          "dribbble",
+          "behance",
+          "awwwards"
+        ],
+        "license_policy_id": "license-policy:verified-free-visual-asset",
+        "paid_license_policy_id": "license-policy:paid-visual-provider-proof",
+        "aspect_ratios": [
+          "2:1",
+          "16:9",
+          "4:3"
+        ],
+        "usage": "Finished panel or strip preview artwork for story-led comic content.",
+        "activation": "comic reader, webtoon episode, manga chapter, or panel-preview rail",
+        "medium_role": "high-fidelity-narrative-media",
+        "default_acquisition_modes": [
+          "image_gen",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": "denied unless approved production vector panel art exists",
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
         "hotlinking_allowed": false,
         "workspace_copy_required": true,
         "license_metadata_required": true,
@@ -4249,6 +5041,15 @@
         ],
         "usage": "Supportive illustration for empty states, onboarding, or no-result panels.",
         "activation": "empty state benefits from clarification without replacing text",
+        "medium_role": "supportive-illustration",
+        "default_acquisition_modes": [
+          "image_gen",
+          "deterministic_svg",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": "allowed when polished, semantic, and not substituting for content media",
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
         "alt_text_required": true,
         "prompt_summary_required": true,
         "sha256_required": true,
@@ -4334,6 +5135,15 @@
         ],
         "usage": "Supportive illustration for empty states, onboarding, or no-result panels.",
         "activation": "empty state benefits from clarification without replacing text",
+        "medium_role": "supportive-illustration",
+        "default_acquisition_modes": [
+          "image_gen",
+          "deterministic_svg",
+          "user_supplied",
+          "sourced"
+        ],
+        "deterministic_svg_allowed": "allowed when polished, semantic, and not substituting for content media",
+        "medium_selection_policy_id": "governance:visual-asset-medium-selection",
         "hotlinking_allowed": false,
         "workspace_copy_required": true,
         "license_metadata_required": true,
@@ -4403,22 +5213,7 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:ghost-button",
-      "target": "family:button"
-    },
-    {
-      "type": "member_of_family",
       "source": "component:icon-button",
-      "target": "family:button"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:cta-button",
-      "target": "family:button"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:link-button",
       "target": "family:button"
     },
     {
@@ -4477,6 +5272,11 @@
       "target": "state:data-display-empty"
     },
     {
+      "type": "has_state",
+      "source": "family:data-display",
+      "target": "state:data-display-loading"
+    },
+    {
       "type": "member_of_family",
       "source": "component:tag",
       "target": "family:data-display"
@@ -4503,32 +5303,37 @@
     },
     {
       "type": "member_of_family",
+      "source": "component:metric-strip",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:status-summary-row",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:task-surface-header",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:source-ledger",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:section-header",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
       "source": "component:avatar",
       "target": "family:data-display"
     },
     {
       "type": "member_of_family",
       "source": "component:profile-card",
-      "target": "family:data-display"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:stat-card",
-      "target": "family:data-display"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:insight-card",
-      "target": "family:data-display"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:activity-card",
-      "target": "family:data-display"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:section-header",
       "target": "family:data-display"
     },
     {
@@ -4662,6 +5467,16 @@
       "target": "state:feedback-danger"
     },
     {
+      "type": "has_state",
+      "source": "family:feedback",
+      "target": "state:feedback-loading"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:badge",
+      "target": "family:feedback"
+    },
+    {
       "type": "member_of_family",
       "source": "component:inline-alert",
       "target": "family:feedback"
@@ -4674,6 +5489,11 @@
     {
       "type": "member_of_family",
       "source": "component:toast",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:status-dot",
       "target": "family:feedback"
     },
     {
@@ -4717,23 +5537,13 @@
       "target": "state:input-disabled"
     },
     {
+      "type": "has_state",
+      "source": "family:input",
+      "target": "state:input-selected"
+    },
+    {
       "type": "member_of_family",
       "source": "component:text-field",
-      "target": "family:input"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:search-field",
-      "target": "family:input"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:segmented-control",
-      "target": "family:input"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:textarea",
       "target": "family:input"
     },
     {
@@ -4744,6 +5554,21 @@
     {
       "type": "member_of_family",
       "source": "component:checkbox",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:switch",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:segmented-control",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:textarea",
       "target": "family:input"
     },
     {
@@ -4764,6 +5589,11 @@
     {
       "type": "member_of_family",
       "source": "component:filter-chip",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:search-field",
       "target": "family:input"
     },
     {
@@ -4804,12 +5634,7 @@
     {
       "type": "has_state",
       "source": "family:layout",
-      "target": "state:layout-resizing"
-    },
-    {
-      "type": "has_state",
-      "source": "family:layout",
-      "target": "state:layout-collapsed"
+      "target": "state:layout-responsive"
     },
     {
       "type": "member_of_family",
@@ -4838,27 +5663,22 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:mobile-topbar",
+      "source": "component:breadcrumbs",
       "target": "family:navigation"
     },
     {
       "type": "member_of_family",
-      "source": "component:mobile-tab-bar",
-      "target": "family:navigation"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:back-button",
-      "target": "family:navigation"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:section-tabs",
+      "source": "component:tabs",
       "target": "family:navigation"
     },
     {
       "type": "member_of_family",
       "source": "component:pagination",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:operational-rail",
       "target": "family:navigation"
     },
     {
@@ -4908,12 +5728,17 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:bottom-sheet",
+      "source": "component:dialog",
       "target": "family:overlay"
     },
     {
       "type": "member_of_family",
-      "source": "component:modal-dialog",
+      "source": "component:popover",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:tooltip",
       "target": "family:overlay"
     },
     {
@@ -5003,22 +5828,102 @@
     },
     {
       "type": "supports",
-      "source": "component:link-button",
-      "target": "primitive:baseline"
+      "source": "component:primary-button",
+      "target": "primitive:reference-baseline"
     },
     {
       "type": "supports",
-      "source": "component:textarea",
-      "target": "primitive:forms"
+      "source": "component:secondary-button",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:icon-button",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:text-field",
+      "target": "primitive:reference-baseline"
     },
     {
       "type": "supports",
       "source": "component:select",
-      "target": "primitive:forms"
+      "target": "primitive:reference-baseline"
     },
     {
       "type": "supports",
       "source": "component:checkbox",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:switch",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:segmented-control",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:breadcrumbs",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:tabs",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:pagination",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:badge",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:inline-alert",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:empty-state",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:toast",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:status-dot",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:dialog",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:popover",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:tooltip",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:textarea",
       "target": "primitive:forms"
     },
     {
@@ -5068,13 +5973,13 @@
     },
     {
       "type": "supports",
-      "source": "component:pagination",
+      "source": "component:filter-chip",
       "target": "primitive:data-tables"
     },
     {
       "type": "supports",
-      "source": "component:filter-chip",
-      "target": "primitive:data-tables"
+      "source": "component:search-field",
+      "target": "primitive:search-and-filter"
     },
     {
       "type": "supports",
@@ -5090,6 +5995,36 @@
       "type": "supports",
       "source": "component:autocomplete",
       "target": "primitive:search-and-filter"
+    },
+    {
+      "type": "supports",
+      "source": "component:metric-strip",
+      "target": "primitive:operational-overview"
+    },
+    {
+      "type": "supports",
+      "source": "component:status-summary-row",
+      "target": "primitive:operational-overview"
+    },
+    {
+      "type": "supports",
+      "source": "component:task-surface-header",
+      "target": "primitive:operational-overview"
+    },
+    {
+      "type": "supports",
+      "source": "component:source-ledger",
+      "target": "primitive:operational-overview"
+    },
+    {
+      "type": "supports",
+      "source": "component:operational-rail",
+      "target": "primitive:operational-overview"
+    },
+    {
+      "type": "supports",
+      "source": "component:section-header",
+      "target": "primitive:operational-overview"
     },
     {
       "type": "supports",
@@ -5130,26 +6065,6 @@
       "type": "supports",
       "source": "component:tab-bar",
       "target": "primitive:workspace-navigation"
-    },
-    {
-      "type": "supports",
-      "source": "component:stat-card",
-      "target": "primitive:dashboard-cards"
-    },
-    {
-      "type": "supports",
-      "source": "component:insight-card",
-      "target": "primitive:dashboard-cards"
-    },
-    {
-      "type": "supports",
-      "source": "component:activity-card",
-      "target": "primitive:dashboard-cards"
-    },
-    {
-      "type": "supports",
-      "source": "component:section-header",
-      "target": "primitive:dashboard-cards"
     },
     {
       "type": "supports",
@@ -5432,6 +6347,121 @@
       "target": "palette:natural-oranges"
     },
     {
+      "type": "inspired_by",
+      "source": "semantic-color:ocean-blue",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "inspired_by",
+      "source": "semantic-color:fern-green",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "inspired_by",
+      "source": "semantic-color:naples-yellow",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "inspired_by",
+      "source": "governance:semantic-color-guideline-rgb-cmyk-split-by-output-medium",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-rgb-cmyk-split-by-output-medium",
+      "target": "semantic-color:ocean-blue"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-rgb-cmyk-split-by-output-medium",
+      "target": "semantic-color:fern-green"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-rgb-cmyk-split-by-output-medium",
+      "target": "semantic-color:naples-yellow"
+    },
+    {
+      "type": "inspired_by",
+      "source": "governance:semantic-color-guideline-color-values-are-reference-not-absolute",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-color-values-are-reference-not-absolute",
+      "target": "semantic-color:ocean-blue"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-color-values-are-reference-not-absolute",
+      "target": "semantic-color:fern-green"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-color-values-are-reference-not-absolute",
+      "target": "semantic-color:naples-yellow"
+    },
+    {
+      "type": "inspired_by",
+      "source": "governance:semantic-color-guideline-mood-tags-before-palette-expansion",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-mood-tags-before-palette-expansion",
+      "target": "semantic-color:ocean-blue"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-mood-tags-before-palette-expansion",
+      "target": "semantic-color:fern-green"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-mood-tags-before-palette-expansion",
+      "target": "semantic-color:naples-yellow"
+    },
+    {
+      "type": "inspired_by",
+      "source": "governance:semantic-color-guideline-no-palette-table-reconstruction",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-no-palette-table-reconstruction",
+      "target": "semantic-color:ocean-blue"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-no-palette-table-reconstruction",
+      "target": "semantic-color:fern-green"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-no-palette-table-reconstruction",
+      "target": "semantic-color:naples-yellow"
+    },
+    {
+      "type": "inspired_by",
+      "source": "governance:semantic-color-guideline-palette-pair-edges-require-transformative-brief",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-palette-pair-edges-require-transformative-brief",
+      "target": "semantic-color:ocean-blue"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-palette-pair-edges-require-transformative-brief",
+      "target": "semantic-color:fern-green"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-palette-pair-edges-require-transformative-brief",
+      "target": "semantic-color:naples-yellow"
+    },
+    {
       "type": "composed_of",
       "source": "pattern:layout-workspace-navigation",
       "target": "component:app-shell"
@@ -5483,43 +6513,63 @@
     },
     {
       "type": "composed_of",
-      "source": "pattern:layout-dashboard-cards",
-      "target": "component:stat-card"
+      "source": "pattern:layout-operational-overview",
+      "target": "component:metric-strip"
     },
     {
       "type": "implements",
-      "source": "component:stat-card",
-      "target": "pattern:layout-dashboard-cards"
+      "source": "component:metric-strip",
+      "target": "pattern:layout-operational-overview"
     },
     {
       "type": "composed_of",
-      "source": "pattern:layout-dashboard-cards",
-      "target": "component:insight-card"
+      "source": "pattern:layout-operational-overview",
+      "target": "component:status-summary-row"
     },
     {
       "type": "implements",
-      "source": "component:insight-card",
-      "target": "pattern:layout-dashboard-cards"
+      "source": "component:status-summary-row",
+      "target": "pattern:layout-operational-overview"
     },
     {
       "type": "composed_of",
-      "source": "pattern:layout-dashboard-cards",
-      "target": "component:activity-card"
+      "source": "pattern:layout-operational-overview",
+      "target": "component:task-surface-header"
     },
     {
       "type": "implements",
-      "source": "component:activity-card",
-      "target": "pattern:layout-dashboard-cards"
+      "source": "component:task-surface-header",
+      "target": "pattern:layout-operational-overview"
     },
     {
       "type": "composed_of",
-      "source": "pattern:layout-dashboard-cards",
+      "source": "pattern:layout-operational-overview",
+      "target": "component:source-ledger"
+    },
+    {
+      "type": "implements",
+      "source": "component:source-ledger",
+      "target": "pattern:layout-operational-overview"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-operational-overview",
+      "target": "component:operational-rail"
+    },
+    {
+      "type": "implements",
+      "source": "component:operational-rail",
+      "target": "pattern:layout-operational-overview"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:layout-operational-overview",
       "target": "component:section-header"
     },
     {
       "type": "implements",
       "source": "component:section-header",
-      "target": "pattern:layout-dashboard-cards"
+      "target": "pattern:layout-operational-overview"
     },
     {
       "type": "composed_of",
@@ -5710,14 +6760,6 @@
     {
       "type": "uses_token",
       "source": "component:primary-button",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:primary-button",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -5755,14 +6797,6 @@
     {
       "type": "uses_token",
       "source": "component:secondary-button",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:secondary-button",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -5783,51 +6817,6 @@
     },
     {
       "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "color:ocean-blue",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "color:fern-green",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:ghost-button",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
       "source": "component:icon-button",
       "target": "color:ocean-blue",
       "meta": {
@@ -5840,14 +6829,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:icon-button",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -5873,7 +6854,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:cta-button",
+      "source": "component:text-field",
       "target": "color:ocean-blue",
       "meta": {
         "slot": "surface"
@@ -5881,7 +6862,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:cta-button",
+      "source": "component:text-field",
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
@@ -5889,15 +6870,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:cta-button",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:cta-button",
+      "source": "component:text-field",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -5905,7 +6878,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:cta-button",
+      "source": "component:text-field",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -5913,12 +6886,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:cta-button",
+      "source": "component:text-field",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:mobile-topbar",
+      "source": "component:select",
       "target": "color:ocean-blue",
       "meta": {
         "slot": "surface"
@@ -5926,7 +6899,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:mobile-topbar",
+      "source": "component:select",
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
@@ -5934,15 +6907,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:mobile-topbar",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-topbar",
+      "source": "component:select",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -5950,7 +6915,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:mobile-topbar",
+      "source": "component:select",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -5958,12 +6923,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:mobile-topbar",
+      "source": "component:select",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:mobile-tab-bar",
+      "source": "component:checkbox",
       "target": "color:ocean-blue",
       "meta": {
         "slot": "surface"
@@ -5971,7 +6936,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:mobile-tab-bar",
+      "source": "component:checkbox",
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
@@ -5979,15 +6944,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:mobile-tab-bar",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-tab-bar",
+      "source": "component:checkbox",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -5995,7 +6952,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:mobile-tab-bar",
+      "source": "component:checkbox",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6003,12 +6960,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:mobile-tab-bar",
+      "source": "component:checkbox",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:back-button",
+      "source": "component:switch",
       "target": "color:ocean-blue",
       "meta": {
         "slot": "surface"
@@ -6016,7 +6973,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:back-button",
+      "source": "component:switch",
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
@@ -6024,15 +6981,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:back-button",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:back-button",
+      "source": "component:switch",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6040,7 +6989,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:back-button",
+      "source": "component:switch",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6048,12 +6997,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:back-button",
+      "source": "component:switch",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:section-tabs",
+      "source": "component:segmented-control",
       "target": "color:ocean-blue",
       "meta": {
         "slot": "surface"
@@ -6061,7 +7010,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:section-tabs",
+      "source": "component:segmented-control",
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
@@ -6069,15 +7018,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:section-tabs",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-tabs",
+      "source": "component:segmented-control",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6085,7 +7026,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:section-tabs",
+      "source": "component:segmented-control",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6093,7 +7034,147 @@
     },
     {
       "type": "uses_font",
-      "source": "component:section-tabs",
+      "source": "component:segmented-control",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumbs",
+      "target": "color:ocean-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumbs",
+      "target": "color:fern-green",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumbs",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:breadcrumbs",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:breadcrumbs",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tabs",
+      "target": "color:ocean-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tabs",
+      "target": "color:fern-green",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tabs",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tabs",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:tabs",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "color:ocean-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "color:fern-green",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:pagination",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:badge",
+      "target": "color:naples-yellow",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:badge",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:badge",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:badge",
       "target": "font:pretendard"
     },
     {
@@ -6185,23 +7266,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:bottom-sheet",
-      "target": "color:ocean-blue",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:bottom-sheet",
-      "target": "color:fern-green",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:bottom-sheet",
+      "source": "component:status-dot",
       "target": "color:naples-yellow",
       "meta": {
         "slot": "background"
@@ -6209,7 +7274,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:bottom-sheet",
+      "source": "component:status-dot",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6217,7 +7282,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:bottom-sheet",
+      "source": "component:status-dot",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6225,12 +7290,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:bottom-sheet",
+      "source": "component:status-dot",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:modal-dialog",
+      "source": "component:dialog",
       "target": "color:ocean-blue",
       "meta": {
         "slot": "surface"
@@ -6238,7 +7303,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:modal-dialog",
+      "source": "component:dialog",
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
@@ -6246,15 +7311,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:modal-dialog",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:modal-dialog",
+      "source": "component:dialog",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6262,7 +7319,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:modal-dialog",
+      "source": "component:dialog",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6270,12 +7327,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:modal-dialog",
+      "source": "component:dialog",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:text-field",
+      "source": "component:popover",
       "target": "color:ocean-blue",
       "meta": {
         "slot": "surface"
@@ -6283,7 +7340,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:text-field",
+      "source": "component:popover",
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
@@ -6291,15 +7348,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:text-field",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:text-field",
+      "source": "component:popover",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6307,7 +7356,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:text-field",
+      "source": "component:popover",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6315,12 +7364,12 @@
     },
     {
       "type": "uses_font",
-      "source": "component:text-field",
+      "source": "component:popover",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:search-field",
+      "source": "component:tooltip",
       "target": "color:ocean-blue",
       "meta": {
         "slot": "surface"
@@ -6328,7 +7377,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:search-field",
+      "source": "component:tooltip",
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
@@ -6336,15 +7385,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:search-field",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:search-field",
+      "source": "component:tooltip",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6352,7 +7393,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:search-field",
+      "source": "component:tooltip",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -6360,97 +7401,7 @@
     },
     {
       "type": "uses_font",
-      "source": "component:search-field",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:segmented-control",
-      "target": "color:ocean-blue",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:segmented-control",
-      "target": "color:fern-green",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:segmented-control",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:segmented-control",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:segmented-control",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:segmented-control",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:link-button",
-      "target": "color:ocean-blue",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:link-button",
-      "target": "color:fern-green",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:link-button",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:link-button",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:link-button",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:link-button",
+      "source": "component:tooltip",
       "target": "font:pretendard"
     },
     {
@@ -6472,14 +7423,6 @@
     {
       "type": "uses_token",
       "source": "component:textarea",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:textarea",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6496,96 +7439,6 @@
     {
       "type": "uses_font",
       "source": "component:textarea",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:select",
-      "target": "color:ocean-blue",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:select",
-      "target": "color:fern-green",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:select",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:select",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:select",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:select",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:checkbox",
-      "target": "color:ocean-blue",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:checkbox",
-      "target": "color:fern-green",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:checkbox",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:checkbox",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:checkbox",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:checkbox",
       "target": "font:pretendard"
     },
     {
@@ -6602,14 +7455,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:radio-group",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -6647,14 +7492,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:form-section",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -6692,14 +7529,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:form-actions",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -6726,14 +7555,6 @@
     {
       "type": "uses_token",
       "source": "component:tag",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:tag",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6742,7 +7563,7 @@
     {
       "type": "uses_token",
       "source": "component:tag",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -6800,14 +7621,6 @@
     {
       "type": "uses_token",
       "source": "component:chip",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:chip",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -6829,15 +7642,7 @@
     {
       "type": "uses_token",
       "source": "component:data-table",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:data-table",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -6845,7 +7650,7 @@
     {
       "type": "uses_token",
       "source": "component:data-table",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -6858,15 +7663,7 @@
     {
       "type": "uses_token",
       "source": "component:column-header",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:column-header",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -6874,7 +7671,7 @@
     {
       "type": "uses_token",
       "source": "component:column-header",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -6887,15 +7684,7 @@
     {
       "type": "uses_token",
       "source": "component:row-actions",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:row-actions",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -6903,7 +7692,7 @@
     {
       "type": "uses_token",
       "source": "component:row-actions",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -6915,51 +7704,6 @@
     },
     {
       "type": "uses_token",
-      "source": "component:pagination",
-      "target": "color:ocean-blue",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pagination",
-      "target": "color:fern-green",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pagination",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pagination",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pagination",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:pagination",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
       "source": "component:filter-chip",
       "target": "color:ocean-blue",
       "meta": {
@@ -6972,14 +7716,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:filter-chip",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -7005,11 +7741,40 @@
     },
     {
       "type": "uses_token",
-      "source": "component:search-results",
-      "target": "color:naples-yellow",
+      "source": "component:search-field",
+      "target": "color:ocean-blue",
       "meta": {
-        "slot": "background"
+        "slot": "surface"
       }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "color:fern-green",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:search-field",
+      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7022,7 +7787,7 @@
     {
       "type": "uses_token",
       "source": "component:search-results",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7046,14 +7811,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:filter-panel",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -7096,14 +7853,6 @@
     {
       "type": "uses_token",
       "source": "component:autocomplete",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:autocomplete",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7124,11 +7873,145 @@
     },
     {
       "type": "uses_token",
-      "source": "component:avatar",
-      "target": "color:naples-yellow",
+      "source": "component:metric-strip",
+      "target": "spacing:8",
       "meta": {
-        "slot": "background"
+        "slot": "padding"
       }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:metric-strip",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:metric-strip",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-summary-row",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-summary-row",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:status-summary-row",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:task-surface-header",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:task-surface-header",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:task-surface-header",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:source-ledger",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:source-ledger",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:source-ledger",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:operational-rail",
+      "target": "color:ocean-blue",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:operational-rail",
+      "target": "color:fern-green",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:operational-rail",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:operational-rail",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:operational-rail",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-header",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:section-header",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:section-header",
+      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -7141,7 +8024,7 @@
     {
       "type": "uses_token",
       "source": "component:avatar",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7165,14 +8048,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:user-menu",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -7244,14 +8119,6 @@
     {
       "type": "uses_token",
       "source": "component:app-shell",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:app-shell",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7289,14 +8156,6 @@
     {
       "type": "uses_token",
       "source": "component:sidebar-nav",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:sidebar-nav",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7329,14 +8188,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:topbar",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -7379,14 +8230,6 @@
     {
       "type": "uses_token",
       "source": "component:breadcrumb",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:breadcrumb",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7424,14 +8267,6 @@
     {
       "type": "uses_token",
       "source": "component:tab-bar",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:tab-bar",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7448,136 +8283,12 @@
     {
       "type": "uses_font",
       "source": "component:tab-bar",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:stat-card",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:stat-card",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:stat-card",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:stat-card",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:insight-card",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:insight-card",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:insight-card",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:insight-card",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:activity-card",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:activity-card",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:activity-card",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:activity-card",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-header",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-header",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-header",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:section-header",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
       "source": "component:editor-canvas",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:editor-canvas",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -7585,7 +8296,7 @@
     {
       "type": "uses_token",
       "source": "component:editor-canvas",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7598,14 +8309,6 @@
     {
       "type": "uses_token",
       "source": "component:editor-toolbar",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:editor-toolbar",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7614,7 +8317,7 @@
     {
       "type": "uses_token",
       "source": "component:editor-toolbar",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7627,14 +8330,6 @@
     {
       "type": "uses_token",
       "source": "component:inline-format-menu",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:inline-format-menu",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7643,7 +8338,7 @@
     {
       "type": "uses_token",
       "source": "component:inline-format-menu",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7656,14 +8351,6 @@
     {
       "type": "uses_token",
       "source": "component:slash-command-menu",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:slash-command-menu",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7672,7 +8359,7 @@
     {
       "type": "uses_token",
       "source": "component:slash-command-menu",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7685,14 +8372,6 @@
     {
       "type": "uses_token",
       "source": "component:block-controls",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:block-controls",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7701,7 +8380,7 @@
     {
       "type": "uses_token",
       "source": "component:block-controls",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7788,14 +8467,6 @@
     {
       "type": "uses_token",
       "source": "component:chart-tooltip",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:chart-tooltip",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7846,14 +8517,6 @@
     {
       "type": "uses_token",
       "source": "component:comment-thread",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:comment-thread",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7862,7 +8525,7 @@
     {
       "type": "uses_token",
       "source": "component:comment-thread",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7891,14 +8554,6 @@
     {
       "type": "uses_token",
       "source": "component:comment-input",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:comment-input",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7936,14 +8591,6 @@
     {
       "type": "uses_token",
       "source": "component:mention-popup",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mention-popup",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7965,14 +8612,6 @@
     {
       "type": "uses_token",
       "source": "component:feature-comparison",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:feature-comparison",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7981,7 +8620,7 @@
     {
       "type": "uses_token",
       "source": "component:feature-comparison",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8052,14 +8691,6 @@
     {
       "type": "uses_token",
       "source": "component:kanban-board",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:kanban-board",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8068,7 +8699,7 @@
     {
       "type": "uses_token",
       "source": "component:kanban-board",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8081,14 +8712,6 @@
     {
       "type": "uses_token",
       "source": "component:kanban-column",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:kanban-column",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8097,7 +8720,7 @@
     {
       "type": "uses_token",
       "source": "component:kanban-column",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8139,14 +8762,6 @@
     {
       "type": "uses_token",
       "source": "component:chat-message",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:chat-message",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8155,7 +8770,7 @@
     {
       "type": "uses_token",
       "source": "component:chat-message",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8184,14 +8799,6 @@
     {
       "type": "uses_token",
       "source": "component:chat-input",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:chat-input",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8213,14 +8820,6 @@
     {
       "type": "uses_token",
       "source": "component:chat-thread",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:chat-thread",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8229,7 +8828,7 @@
     {
       "type": "uses_token",
       "source": "component:chat-thread",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8271,14 +8870,6 @@
     {
       "type": "uses_token",
       "source": "component:layer-item",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:layer-item",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8287,7 +8878,7 @@
     {
       "type": "uses_token",
       "source": "component:layer-item",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8300,14 +8891,6 @@
     {
       "type": "uses_token",
       "source": "component:layer-thumbnail",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:layer-thumbnail",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8316,7 +8899,7 @@
     {
       "type": "uses_token",
       "source": "component:layer-thumbnail",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8374,15 +8957,7 @@
     {
       "type": "uses_token",
       "source": "component:property-row",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:property-row",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8390,7 +8965,7 @@
     {
       "type": "uses_token",
       "source": "component:property-row",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8403,14 +8978,6 @@
     {
       "type": "uses_token",
       "source": "component:toolbar-group",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:toolbar-group",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8419,7 +8986,7 @@
     {
       "type": "uses_token",
       "source": "component:toolbar-group",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8432,14 +8999,6 @@
     {
       "type": "uses_token",
       "source": "component:contextual-toolbar",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:contextual-toolbar",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8448,7 +9007,7 @@
     {
       "type": "uses_token",
       "source": "component:contextual-toolbar",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8461,14 +9020,6 @@
     {
       "type": "uses_token",
       "source": "component:asset-library",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:asset-library",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8477,7 +9028,7 @@
     {
       "type": "uses_token",
       "source": "component:asset-library",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8559,14 +9110,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:format-selector",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -8604,14 +9147,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:keyboard-shortcut-cheatsheet",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -8649,14 +9184,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:inspector-drawer",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -8683,15 +9210,7 @@
     {
       "type": "uses_token",
       "source": "component:resizable-split-pane",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:resizable-split-pane",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8699,7 +9218,7 @@
     {
       "type": "uses_token",
       "source": "component:resizable-split-pane",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8723,14 +9242,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:command-palette",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -8786,14 +9297,6 @@
     {
       "type": "uses_token",
       "source": "component:evidence-graph",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:evidence-graph",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8802,7 +9305,7 @@
     {
       "type": "uses_token",
       "source": "component:evidence-graph",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8826,14 +9329,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:filter-builder",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -8871,14 +9366,6 @@
       "target": "color:fern-green",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:saved-view-bar",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -8905,15 +9392,7 @@
     {
       "type": "uses_token",
       "source": "component:bulk-action-table",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:bulk-action-table",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8921,7 +9400,7 @@
     {
       "type": "uses_token",
       "source": "component:bulk-action-table",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8963,15 +9442,7 @@
     {
       "type": "uses_token",
       "source": "component:exception-queue",
-      "target": "color:naples-yellow",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:exception-queue",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8979,7 +9450,7 @@
     {
       "type": "uses_token",
       "source": "component:exception-queue",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -9376,7 +9847,47 @@
     {
       "type": "inspired_by",
       "source": "brand:seoul-alley-mood-map",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "shared_keywords": [
+          "trustworthy"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:seoul-alley-mood-map",
       "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "shared_keywords": [
+          "trustworthy"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:seoul-alley-mood-map",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "shared_keywords": [
+          "trustworthy"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:seoul-alley-mood-map",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "shared_keywords": [
+          "trustworthy"
+        ]
+      }
+    },
+    {
+      "type": "inspired_by",
+      "source": "brand:seoul-alley-mood-map",
+      "target": "benchmark:salesforce-slds2",
       "meta": {
         "shared_keywords": [
           "trustworthy"
@@ -9466,7 +9977,23 @@
     {
       "type": "similar_to",
       "source": "benchmark:stripe",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
       "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:nord-health",
       "meta": {
         "jaccard": 0.5
       }
@@ -9642,9 +10169,57 @@
     {
       "type": "similar_to",
       "source": "benchmark:github-primer",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
       "target": "benchmark:hashicorp-helios",
       "meta": {
         "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:contentful-forma-36",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 1.0
       }
     },
     {
@@ -9714,6 +10289,30 @@
     {
       "type": "similar_to",
       "source": "benchmark:atlassian",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
       "target": "benchmark:gitlab-pajamas",
       "meta": {
         "jaccard": 0.5
@@ -9761,6 +10360,14 @@
     },
     {
       "type": "similar_to",
+      "source": "benchmark:figma",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
       "source": "benchmark:slack",
       "target": "benchmark:twilio-paste",
       "meta": {
@@ -9779,6 +10386,30 @@
       "type": "similar_to",
       "source": "benchmark:slack",
       "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:salesforce-slds2",
       "meta": {
         "jaccard": 0.5
       }
@@ -9818,6 +10449,38 @@
     {
       "type": "similar_to",
       "source": "benchmark:material-design",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
+      "target": "benchmark:contentful-forma-36",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
       "target": "benchmark:gitlab-pajamas",
       "meta": {
         "jaccard": 0.5
@@ -9850,6 +10513,14 @@
     {
       "type": "similar_to",
       "source": "benchmark:apple-hig",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:apple-hig",
       "target": "benchmark:hashicorp-helios",
       "meta": {
         "jaccard": 0.5
@@ -9875,6 +10546,14 @@
       "type": "similar_to",
       "source": "benchmark:uber",
       "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:uber",
+      "target": "benchmark:trimble-modus",
       "meta": {
         "jaccard": 0.5
       }
@@ -9938,9 +10617,57 @@
     {
       "type": "similar_to",
       "source": "benchmark:twilio-paste",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
       "target": "benchmark:hashicorp-helios",
       "meta": {
         "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:contentful-forma-36",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 1.0
       }
     },
     {
@@ -9986,9 +10713,41 @@
     {
       "type": "similar_to",
       "source": "benchmark:ibm-carbon",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
       "target": "benchmark:hashicorp-helios",
       "meta": {
         "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
       }
     },
     {
@@ -10026,9 +10785,41 @@
     {
       "type": "similar_to",
       "source": "benchmark:ant-design",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
       "target": "benchmark:hashicorp-helios",
       "meta": {
         "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
       }
     },
     {
@@ -10122,7 +10913,47 @@
     {
       "type": "similar_to",
       "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
       "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:salesforce-slds2",
       "meta": {
         "jaccard": 0.5
       }
@@ -10154,9 +10985,57 @@
     {
       "type": "similar_to",
       "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
       "target": "benchmark:hashicorp-helios",
       "meta": {
         "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:contentful-forma-36",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 1.0
       }
     },
     {
@@ -10177,6 +11056,78 @@
     },
     {
       "type": "similar_to",
+      "source": "benchmark:aws-cloudscape",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:aws-cloudscape",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:aws-cloudscape",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:aws-cloudscape",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:aws-cloudscape",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:aws-cloudscape",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:hashicorp-helios",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:hashicorp-helios",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:hashicorp-helios",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
       "source": "benchmark:hashicorp-helios",
       "target": "benchmark:gitlab-pajamas",
       "meta": {
@@ -10187,6 +11138,166 @@
       "type": "similar_to",
       "source": "benchmark:hashicorp-helios",
       "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:zendesk-garden",
+      "target": "benchmark:contentful-forma-36",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:zendesk-garden",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:zendesk-garden",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:zendesk-garden",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:zendesk-garden",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:zendesk-garden",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:contentful-forma-36",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:contentful-forma-36",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:contentful-forma-36",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:contentful-forma-36",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:contentful-forma-36",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:nord-health",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:nord-health",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:nord-health",
+      "target": "benchmark:wise",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:nord-health",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:nord-health",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:trimble-modus",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:trimble-modus",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:salesforce-slds2",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:salesforce-slds2",
+      "target": "benchmark:cal-com",
       "meta": {
         "jaccard": 0.5
       }
@@ -10386,14 +11497,14 @@
       "target": "failure-pattern:icon-starved-control-surface"
     },
     {
+      "type": "prevents",
+      "source": "governance:emoji-to-svg-refactor",
+      "target": "failure-pattern:amateur-custom-svg-icon-set"
+    },
+    {
       "type": "grounded_in",
       "source": "governance:commercial-product-realism",
       "target": "brand:seoul-alley-mood-map"
-    },
-    {
-      "type": "enforces",
-      "source": "governance:commercial-product-realism",
-      "target": "pattern:layout-dashboard-cards"
     },
     {
       "type": "enforces",
@@ -10414,6 +11525,11 @@
       "type": "enforces",
       "source": "governance:commercial-product-realism",
       "target": "component:status-badge"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:commercial-product-realism",
+      "target": "component:tabs"
     },
     {
       "type": "enforces",
@@ -10498,6 +11614,16 @@
     {
       "type": "prevents",
       "source": "governance:mockup-visual-substance",
+      "target": "failure-pattern:ad-hoc-node-link-placeholder-graph"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:mockup-visual-substance",
+      "target": "failure-pattern:freehand-svg-connector-graph"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:mockup-visual-substance",
       "target": "failure-pattern:media-runtime-surface-without-asset"
     },
     {
@@ -10509,6 +11635,31 @@
       "type": "prevents",
       "source": "governance:mockup-visual-substance",
       "target": "failure-pattern:unmanifested-mockup-image"
+    },
+    {
+      "type": "grounded_in",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "brand:seoul-alley-mood-map"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "failure-pattern:wrong-medium-svg-for-narrative-media"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "failure-pattern:user-raster-directive-svg-violation"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "failure-pattern:comic-cover-as-geometric-placeholder"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "failure-pattern:unreviewed-visual-medium-substitution"
     },
     {
       "type": "grounded_in",
@@ -10539,6 +11690,11 @@
       "type": "prevents",
       "source": "governance:brand-app-icon-identity",
       "target": "failure-pattern:generic-initials-app-icon"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:brand-app-icon-identity",
+      "target": "failure-pattern:low-quality-app-icon-identity"
     },
     {
       "type": "grounded_in",
@@ -10634,6 +11790,11 @@
       "type": "prevents",
       "source": "governance:generated-visual-asset-contract",
       "target": "failure-pattern:generated-image-missing-accessibility-record"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:generated-visual-asset-contract",
+      "target": "failure-pattern:wrong-medium-svg-for-narrative-media"
     },
     {
       "type": "grounded_in",
@@ -11008,17 +12169,12 @@
     {
       "type": "intended_for",
       "source": "visual-asset:card-thumbnail",
-      "target": "component:activity-card"
-    },
-    {
-      "type": "intended_for",
-      "source": "visual-asset:card-thumbnail",
       "target": "component:asset-card"
     },
     {
       "type": "intended_for",
       "source": "visual-asset:card-thumbnail",
-      "target": "component:insight-card"
+      "target": "component:breadcrumbs"
     },
     {
       "type": "intended_for",
@@ -11048,17 +12204,12 @@
     {
       "type": "intended_for",
       "source": "visual-asset:card-thumbnail",
-      "target": "component:section-header"
-    },
-    {
-      "type": "intended_for",
-      "source": "visual-asset:card-thumbnail",
       "target": "component:source-card"
     },
     {
       "type": "intended_for",
       "source": "visual-asset:card-thumbnail",
-      "target": "component:stat-card"
+      "target": "component:switch"
     },
     {
       "type": "intended_for",
@@ -11138,17 +12289,12 @@
     {
       "type": "intended_for",
       "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:activity-card"
-    },
-    {
-      "type": "intended_for",
-      "source": "sourced-visual-asset:card-thumbnail-fallback",
       "target": "component:asset-card"
     },
     {
       "type": "intended_for",
       "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:insight-card"
+      "target": "component:breadcrumbs"
     },
     {
       "type": "intended_for",
@@ -11178,17 +12324,12 @@
     {
       "type": "intended_for",
       "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:section-header"
-    },
-    {
-      "type": "intended_for",
-      "source": "sourced-visual-asset:card-thumbnail-fallback",
       "target": "component:source-card"
     },
     {
       "type": "intended_for",
       "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:stat-card"
+      "target": "component:switch"
     },
     {
       "type": "intended_for",
@@ -11359,6 +12500,166 @@
       "type": "intended_for",
       "source": "sourced-visual-asset:editorial-cover-fallback",
       "target": "family:editorial"
+    },
+    {
+      "type": "generated_with",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "image-model:codex-imagegen"
+    },
+    {
+      "type": "governs",
+      "source": "governance:generated-visual-asset-contract",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "grounded_in",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "brand:seoul-alley-mood-map"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:situated",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:quiet",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:sensory",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "constrains",
+      "source": "principle:curated",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "component:export-panel"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "component:filter-panel"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "component:inspector-panel"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "component:layer-panel"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "component:metric-strip"
+    },
+    {
+      "type": "intended_for",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "component:tabs"
+    },
+    {
+      "type": "governs",
+      "source": "governance:sourced-visual-asset-fallback-contract",
+      "target": "sourced-visual-asset:comic-panel-preview-fallback"
+    },
+    {
+      "type": "licensed_under",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "license-policy:verified-free-visual-asset"
+    },
+    {
+      "type": "grounded_in",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "brand:seoul-alley-mood-map"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:openverse"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:wikimedia-commons"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:unsplash"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:pexels"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:adobe-stock"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:shutterstock"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:getty-images"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:istock"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:envato-elements"
+    },
+    {
+      "type": "sourced_from",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "visual-asset-provider:local-licensed-file"
+    },
+    {
+      "type": "intended_for",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "component:export-panel"
+    },
+    {
+      "type": "intended_for",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "component:filter-panel"
+    },
+    {
+      "type": "intended_for",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "component:inspector-panel"
+    },
+    {
+      "type": "intended_for",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "component:layer-panel"
+    },
+    {
+      "type": "intended_for",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "component:metric-strip"
+    },
+    {
+      "type": "intended_for",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "component:tabs"
     },
     {
       "type": "generated_with",
@@ -11523,6 +12824,11 @@
     {
       "type": "enforces",
       "source": "governance:mockup-visual-substance",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:mockup-visual-substance",
       "target": "visual-asset:empty-state-illustration"
     },
     {
@@ -11548,30 +12854,116 @@
     {
       "type": "enforces",
       "source": "governance:mockup-visual-substance",
+      "target": "sourced-visual-asset:comic-panel-preview-fallback"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:mockup-visual-substance",
       "target": "sourced-visual-asset:empty-state-illustration-fallback"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "governance:generated-visual-asset-contract"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "governance:sourced-visual-asset-fallback-contract"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "image-model:codex-imagegen"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "visual-asset:brand-aligned-raster"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "visual-asset:hero-image"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "visual-asset:card-thumbnail"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "visual-asset:editorial-cover"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "visual-asset:comic-panel-preview"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "visual-asset:empty-state-illustration"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "sourced-visual-asset:brand-aligned-raster-fallback"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "sourced-visual-asset:hero-image-fallback"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "sourced-visual-asset:card-thumbnail-fallback"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "sourced-visual-asset:editorial-cover-fallback"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "sourced-visual-asset:comic-panel-preview-fallback"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "sourced-visual-asset:empty-state-illustration-fallback"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "identity-asset:app-icon"
     }
   ],
   "stats": {
-    "node_count": 352,
-    "edge_count": 1134,
+    "node_count": 382,
+    "edge_count": 1245,
     "nodes_by_type": {
       "Brand": 1,
       "Principle": 4,
       "SpacingToken": 11,
       "RadiusToken": 6,
       "ComponentFamily": 10,
-      "ComponentState": 35,
-      "Component": 92,
+      "ComponentState": 37,
+      "Component": 93,
       "ProductPrimitive": 18,
       "ColorPalette": 6,
-      "ColorToken": 21,
+      "ColorToken": 24,
+      "SourceReference": 1,
+      "GovernanceRule": 16,
       "FontFamily": 1,
       "LayoutPattern": 17,
       "InteractionPattern": 4,
       "AccessibilityRule": 8,
-      "BenchmarkSystem": 35,
-      "GovernanceRule": 10,
-      "ImplementationFailurePattern": 34,
+      "BenchmarkSystem": 42,
+      "ImplementationFailurePattern": 42,
       "ColorMode": 2,
       "BrandIdentityAsset": 1,
       "DesignContextPack": 1,
@@ -11582,8 +12974,8 @@
       "LicensedVisualProvider": 6,
       "ReferenceOnlyProvider": 5,
       "ImageGenerationModel": 1,
-      "GeneratedVisualAsset": 5,
-      "SourcedVisualAsset": 5
+      "GeneratedVisualAsset": 6,
+      "SourcedVisualAsset": 6
     }
   }
 }

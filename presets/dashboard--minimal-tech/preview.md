@@ -6,16 +6,12 @@
 - app_mode: `dashboard` / brand_tone: `minimal-tech`
 
 ## Color Tokens (light + dark)
-### Core
-- primary: `#000080`
-- accent: `#CC7722`
-- surface_tint: `#87CEEB`
 
 ### Semantic
-- success: `#4A7C59`
+- success: `#4F7942`
 - warning: `#CC7722`
 - danger: `#8B2252`
-- info: `#708090`
+- info: `#000080`
 
 > light/dark 변형은 어댑터(`nextjs-tailwind-shadcn` 등)가 파생. 원본 팔레트는 위 HEX 1세트.
 
@@ -27,8 +23,8 @@
 
 ## 대표 컴포넌트
 - **sidebar-nav** — parts: container, nav-item, icon(optional), label, indicator(active) | states: default, hover, active, collapsed
-- **stat-card** — parts: container, inner-content | states: default, hover, focus-visible
-- **insight-card** — parts: container, inner-content | states: default, hover, focus-visible
+- **icon-button** — parts: container, label, leading-icon(optional), trailing-icon(optional) | states: default, hover, active, disabled
+- **data-table** — parts: container, header, content-area, footer(optional), action(optional) | states: default, loading, empty, error
 
 ## Locale Pairings
 - ko: heading=Pretendard / body=Pretendard

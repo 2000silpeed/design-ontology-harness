@@ -526,18 +526,18 @@
       "value": "dense",
       "confidence": 0.94,
       "evidence": [
-        "dashboard x4",
-        "table x3",
-        "ops x1"
+        "dashboard x4.3500000000000005",
+        "table x3.45",
+        "ops x1.5"
       ],
       "candidates": [
         {
           "value": "dense",
-          "score": 23.5
+          "score": 26.9
         },
         {
           "value": "airy",
-          "score": 6.0
+          "score": 4.5
         }
       ],
       "provenance": {
@@ -547,18 +547,18 @@
     },
     "surface_style": {
       "value": "flat",
-      "confidence": 0.6,
+      "confidence": 0.62,
       "evidence": [
-        "minimal x4"
+        "minimal x4.2"
       ],
       "candidates": [
         {
           "value": "flat",
-          "score": 8.0
+          "score": 8.4
         },
         {
           "value": "tinted",
-          "score": 3.0
+          "score": 0.4
         }
       ],
       "provenance": {
@@ -570,19 +570,19 @@
       "value": "utilitarian",
       "confidence": 0.94,
       "evidence": [
-        "dashboard x4",
-        "enterprise x2",
-        "ops x1",
-        "table x3"
+        "dashboard x4.3500000000000005",
+        "enterprise x0.65",
+        "ops x1.5",
+        "table x3.45"
       ],
       "candidates": [
         {
           "value": "utilitarian",
-          "score": 21.0
+          "score": 20.8
         },
         {
           "value": "playful",
-          "score": 6.0
+          "score": 0.75
         }
       ],
       "provenance": {
@@ -591,10 +591,9 @@
       }
     },
     "corner_style": {
-      "value": "round",
-      "confidence": 0.43,
+      "value": "pill",
+      "confidence": 0.39,
       "evidence": [
-        "soft x1",
         "svg corner ratio 0.50"
       ],
       "provenance": {
@@ -695,9 +694,9 @@
       "label": "Dashboard grid",
       "confidence": 0.94,
       "evidence": [
-        "dashboard x4",
-        "table x3",
-        "ops x1",
+        "dashboard x4.3500000000000005",
+        "table x3.45",
+        "ops x1.5",
         "3:2-ish x2"
       ],
       "provenance": {
@@ -710,12 +709,12 @@
       "label": "Data review surface",
       "confidence": 0.94,
       "evidence": [
-        "table x3",
-        "grid x2",
-        "audit x5",
-        "log x3",
-        "data x3",
-        "timeline x1"
+        "table x3.45",
+        "grid x2.4",
+        "audit x5.250000000000001",
+        "log x2.85",
+        "data x2.6",
+        "timeline x0.9"
       ],
       "provenance": {
         "level": "inferred",
@@ -727,12 +726,12 @@
       "label": "Narrative landing flow",
       "confidence": 0.94,
       "evidence": [
-        "landing x2",
-        "hero x1",
-        "pricing x1",
-        "testimonial x1",
-        "cta x1",
-        "faq x1"
+        "landing x1.35",
+        "hero x0.9",
+        "pricing x0.9",
+        "testimonial x0.9",
+        "cta x0.9",
+        "faq x0.9"
       ],
       "provenance": {
         "level": "inferred",
@@ -742,10 +741,9 @@
     {
       "id": "split-pane-workspace",
       "label": "Split-pane workspace",
-      "confidence": 0.62,
+      "confidence": 0.4,
       "evidence": [
-        "command x1",
-        "dashboard x4",
+        "command x0.9",
         "3:2-ish x2"
       ],
       "provenance": {
@@ -756,12 +754,12 @@
   ],
   "component_style_hints": {
     "cards": {
-      "direction": "flat card planes를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. soft round corner를 기본값으로 유지.",
+      "direction": "flat card planes를 기본으로 하고, 압축된 spacing과 얇은 divider 중심의 hierarchy. pill-like actions만 제한적으로 허용.",
       "confidence": 0.94,
       "evidence": [
         "surface=flat",
         "density=dense",
-        "corner=round"
+        "corner=pill"
       ],
       "provenance": {
         "level": "inferred",
@@ -770,7 +768,7 @@
     },
     "navigation": {
       "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
-      "confidence": 0.62,
+      "confidence": 0.45,
       "evidence": [
         "Split-pane workspace"
       ],
@@ -810,19 +808,20 @@
       "family": "data-display",
       "confidence": 0.94,
       "suggested_components": [
-        "stat-card",
-        "insight-card",
+        "metric-strip",
+        "status-summary-row",
         "chart-panel",
         "section-header",
         "filter-chip"
       ],
       "supports_primitives": [
+        "operational overview",
         "dashboard cards",
         "charts and visualization"
       ],
       "evidence": [
         "layout=dashboard-grid (0.94)",
-        "dashboard x4",
+        "dashboard x4.3500000000000005",
         "primitive=dashboard cards"
       ],
       "provenance": {
@@ -849,10 +848,10 @@
       "evidence": [
         "layout=data-review-surface (0.94)",
         "layout=dashboard-grid (0.94)",
-        "table x3",
-        "data x3",
-        "grid x2",
-        "audit x5"
+        "table x3.45",
+        "data x2.6",
+        "grid x2.4",
+        "audit x5.250000000000001"
       ],
       "provenance": {
         "level": "inferred",
@@ -878,11 +877,11 @@
       ],
       "evidence": [
         "layout=landing-narrative (0.94)",
-        "hero x1",
-        "landing x2",
-        "pricing x1",
-        "testimonial x1",
-        "cta x1"
+        "hero x0.9",
+        "landing x1.35",
+        "pricing x0.9",
+        "testimonial x0.9",
+        "cta x0.9"
       ],
       "provenance": {
         "level": "inferred",
@@ -890,22 +889,25 @@
       }
     },
     {
-      "id": "workspace-shell",
-      "label": "Workspace shell",
-      "family": "navigation",
-      "confidence": 0.48,
+      "id": "review-coverage-system",
+      "label": "Review coverage system",
+      "family": "editorial",
+      "confidence": 0.8,
       "suggested_components": [
-        "app-shell",
-        "sidebar-nav",
-        "workspace-switcher",
-        "breadcrumb",
-        "context-panel"
+        "review-card",
+        "score-badge",
+        "comparison-table",
+        "ranking-list",
+        "filter-chip"
       ],
       "supports_primitives": [
-        "workspace navigation"
+        "comparison and ranking",
+        "search and filter",
+        "tags and labels"
       ],
       "evidence": [
-        "layout=split-pane-workspace (0.62)"
+        "layout=data-review-surface (0.94)",
+        "layout=landing-narrative (0.94)"
       ],
       "provenance": {
         "level": "inferred",

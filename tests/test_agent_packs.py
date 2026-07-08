@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from design_ontology_harness.agent_packs import (
+    _codex_concept_author_skill,
     _codex_implementer_skill,
     _codex_reference_inspect_skill,
     _codex_visual_asset_skill,
@@ -69,7 +70,19 @@ class AgentPackTests(unittest.TestCase):
         self.assertIn("logos", skill_text)
         self.assertIn("raw CSS values", skill_text)
 
-    def test_codex_scaffold_includes_visual_asset_skill(self) -> None:
+    def test_codex_concept_author_skill_makes_llm_author_layout_skeleton(self) -> None:
+        skill_text = _codex_concept_author_skill("design-system")
+
+        self.assertIn("application_concept", skill_text)
+        self.assertIn("layout_skeleton", skill_text)
+        self.assertIn("design_differentiation", skill_text)
+        self.assertIn("LLM-authored step", skill_text)
+        self.assertIn("Do not choose a preset", skill_text)
+        self.assertIn("first_screen_contract", skill_text)
+        self.assertIn("signature_moves", skill_text)
+        self.assertIn("Astryx and Geist only as component taxonomy", skill_text)
+
+    def test_codex_scaffold_includes_visual_asset_and_concept_author_skills(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             result = scaffold_agent_pack(
                 Path(tmp),
@@ -77,6 +90,14 @@ class AgentPackTests(unittest.TestCase):
                 targets=["codex"],
             )
 
+            concept_skill_path = (
+                Path(tmp)
+                / "plugins"
+                / "design-system-harness"
+                / "skills"
+                / "design-system-concept-author"
+                / "SKILL.md"
+            )
             skill_path = (
                 Path(tmp)
                 / "plugins"
@@ -101,10 +122,14 @@ class AgentPackTests(unittest.TestCase):
                 / "plugin.json"
             )
 
+            self.assertTrue(concept_skill_path.exists())
             self.assertTrue(skill_path.exists())
             self.assertTrue(reference_skill_path.exists())
+            self.assertIn(str(concept_skill_path), result["created"])
             self.assertIn(str(skill_path), result["created"])
             self.assertIn(str(reference_skill_path), result["created"])
+            self.assertIn("application_concept", concept_skill_path.read_text(encoding="utf-8"))
+            self.assertIn("layout_skeleton", concept_skill_path.read_text(encoding="utf-8"))
             self.assertIn("image_gen", skill_path.read_text(encoding="utf-8"))
             self.assertIn("do not call an API fallback", skill_path.read_text(encoding="utf-8"))
             self.assertIn("sourced visual fallback", skill_path.read_text(encoding="utf-8"))
@@ -112,11 +137,15 @@ class AgentPackTests(unittest.TestCase):
             self.assertIn("Never copy", reference_skill_path.read_text(encoding="utf-8"))
 
             plugin_manifest = json.loads(plugin_manifest_path.read_text(encoding="utf-8"))
+            self.assertIn("concept-authoring", plugin_manifest["keywords"])
+            self.assertIn("layout-skeleton", plugin_manifest["keywords"])
             self.assertIn("imagery", plugin_manifest["keywords"])
             self.assertIn("reference-inspection", plugin_manifest["keywords"])
+            self.assertIn("product concept", plugin_manifest["interface"]["longDescription"])
             self.assertIn("image_gen", plugin_manifest["interface"]["longDescription"])
             self.assertIn("website reference inspections", plugin_manifest["interface"]["longDescription"])
             self.assertIn("license-verified sourced visual fallback", plugin_manifest["interface"]["longDescription"])
+            self.assertIn("application_concept", " ".join(plugin_manifest["interface"]["defaultPrompt"]))
             self.assertIn("light mode", " ".join(plugin_manifest["interface"]["defaultPrompt"]))
             self.assertIn("advisory morphology", " ".join(plugin_manifest["interface"]["defaultPrompt"]))
             self.assertIn("operational product surfaces", " ".join(plugin_manifest["interface"]["defaultPrompt"]))

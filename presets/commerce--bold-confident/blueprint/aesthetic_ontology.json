@@ -1,0 +1,1139 @@
+{
+  "schema_version": "aesthetic-evaluation-ontology/v1",
+  "dimensions": [
+    {
+      "id": "visual_harmony",
+      "label": "Visual harmony",
+      "weight": 0.24,
+      "description": "How coherently color, type, spacing, and composition work together.",
+      "metrics": [
+        "color_harmony",
+        "spacing_consistency",
+        "typography_balance",
+        "composition_order"
+      ]
+    },
+    {
+      "id": "clarity",
+      "label": "Clarity",
+      "weight": 0.2,
+      "description": "How quickly the intended hierarchy, action, and information structure can be read.",
+      "metrics": [
+        "hierarchy_clarity",
+        "contrast_legibility",
+        "content_density_control",
+        "task_focus"
+      ]
+    },
+    {
+      "id": "brand_fit",
+      "label": "Brand fit",
+      "weight": 0.18,
+      "description": "How well the candidate expresses the intended brand posture and avoids anti-keywords.",
+      "metrics": [
+        "keyword_alignment",
+        "tone_alignment",
+        "domain_fit",
+        "anti_keyword_avoidance"
+      ]
+    },
+    {
+      "id": "emotional_appeal",
+      "label": "Emotional appeal",
+      "weight": 0.14,
+      "description": "How desirable, confident, and affectively appropriate the surface feels.",
+      "metrics": [
+        "desirability",
+        "confidence_signal",
+        "warmth_or_energy"
+      ]
+    },
+    {
+      "id": "craft_quality",
+      "label": "Craft quality",
+      "weight": 0.14,
+      "description": "How polished and implementation-ready the candidate is across fit, tokens, and affordances.",
+      "metrics": [
+        "responsive_fit",
+        "token_binding",
+        "accessibility_baseline",
+        "interaction_affordance",
+        "asset_completeness"
+      ]
+    },
+    {
+      "id": "novelty",
+      "label": "Novelty",
+      "weight": 0.1,
+      "description": "How distinctive the design is without breaking its product and brand constraints.",
+      "metrics": [
+        "distinctiveness",
+        "reference_transformation",
+        "memorability"
+      ]
+    },
+    {
+      "id": "brand_semantic_fit",
+      "label": "Brand semantic fit",
+      "weight": 0.22,
+      "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+      "metrics": [
+        "brand_keyword:commerce-1b207ba3",
+        "brand_keyword:ecommerce-444c1efe",
+        "brand_keyword:shop-5042d146",
+        "brand_keyword:store-3a21295d",
+        "brand_keyword:product-grid-ced21440",
+        "brand_keyword:product-detail-664aa2fa",
+        "brand_keyword:cart-8bfb4e1a",
+        "brand_keyword:checkout-d5491e7e",
+        "brand_tone:confident-39a449bf",
+        "brand_tone:energetic-10392295",
+        "brand_tone:direct-24a1733c",
+        "brand_tone:hype-8acd66d7",
+        "brand_tone:street-d3a9fb07"
+      ],
+      "research_basis": [
+        "kansei",
+        "aesthemos"
+      ]
+    },
+    {
+      "id": "brand_boundary_fit",
+      "label": "Brand boundary fit",
+      "weight": 0.16,
+      "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+      "metrics": [
+        "anti_keyword:editorial-warm-88c4bd1f",
+        "anti_keyword:magazine-serif-cccc885a",
+        "anti_keyword:minimal-5c482174",
+        "anti_keyword:playful-pastel-2f4f8e24",
+        "anti_keyword:corporate-conservative-a1f48f23",
+        "anti_keyword:dashboard-heavy-98cd5dbc",
+        "anti_keyword:document-heavy-791bd5c6",
+        "avoid_pattern:warm-editorial-magazine-hero-f15b0d9a",
+        "avoid_pattern:minimal-saas-landing-4f3f2105",
+        "avoid_pattern:pastel-playful-feed-5f670a2b",
+        "avoid_pattern:dense-dashboard-chrome-077c123c",
+        "avoid_pattern:long-form-reading-article-918ad92a"
+      ],
+      "research_basis": [
+        "kansei"
+      ]
+    },
+    {
+      "id": "product_ontology_fit",
+      "label": "Product ontology fit",
+      "weight": 0.22,
+      "description": "How clearly product primitives and ontology-required signals appear in the design.",
+      "metrics": [
+        "product_primitive:product-card-d645a455",
+        "product_primitive:product-grid-e2009f0c",
+        "product_primitive:product-detail-473360e8",
+        "product_primitive:product-gallery-1da7cb05",
+        "product_primitive:image-thumbnail-1efa7c8c",
+        "product_primitive:variant-selector-5c5dff7f",
+        "product_primitive:size-selector-5e0f031e",
+        "product_primitive:color-swatch-selector-bd547f4c",
+        "product_primitive:add-to-cart-button-3eb89794",
+        "product_primitive:quick-view-modal-4b213c5a",
+        "must_include:full-bleed-drop-hero-banner-with-cou-cd278636",
+        "must_include:dense-product-grid-2x3-or-3x4-a21b9c08",
+        "must_include:product-detail-with-gallery-variant-b38840e5",
+        "must_include:cart-drawer-slide-in-with-cart-items-f5566159",
+        "must_include:checkout-step-progress-with-address-efb933d0"
+      ],
+      "research_basis": [
+        "beauvis",
+        "kansei"
+      ]
+    },
+    {
+      "id": "audience_context_fit",
+      "label": "Audience context fit",
+      "weight": 0.12,
+      "description": "How well the design serves declared users, platforms, and accessibility floors.",
+      "metrics": [
+        "audience_need:스트리트웨어-스니커-드롭을-기다리는-젊은-소비자-gen-z-밀레니-8f08e4b3",
+        "audience_need:게이밍-e스포츠-머천다이즈를-구매하는-팬-67f58d6a",
+        "audience_need:bold-beauty-스포츠-굿즈-한정판-컬렉션을-탐색하는-모바일-2b4f7896",
+        "accessibility_target:wcag-2-2-aa-41a998cd"
+      ],
+      "research_basis": [
+        "visawi",
+        "aesthemos"
+      ]
+    }
+  ],
+  "metrics": {
+    "color_harmony": {
+      "label": "Color harmony",
+      "improvement": "Tighten the palette around one primary accent, one neutral surface ladder, and explicit semantic roles.",
+      "expected_lift": 0.08
+    },
+    "spacing_consistency": {
+      "label": "Spacing consistency",
+      "improvement": "Normalize page rhythm with shared spacing steps for section, cluster, and control gaps.",
+      "expected_lift": 0.07
+    },
+    "typography_balance": {
+      "label": "Typography balance",
+      "improvement": "Rebalance type hierarchy so headings, body, captions, and controls use distinct but restrained roles.",
+      "expected_lift": 0.07
+    },
+    "composition_order": {
+      "label": "Composition order",
+      "improvement": "Strengthen alignment, focal sequence, and proportional grouping before adding more decoration.",
+      "expected_lift": 0.08
+    },
+    "hierarchy_clarity": {
+      "label": "Hierarchy clarity",
+      "improvement": "Make the primary state, primary action, and next-best secondary action visible in the first scan.",
+      "expected_lift": 0.09
+    },
+    "contrast_legibility": {
+      "label": "Contrast and legibility",
+      "improvement": "Raise text/background and control/border contrast while preserving the selected token roles.",
+      "expected_lift": 0.08
+    },
+    "content_density_control": {
+      "label": "Content density control",
+      "improvement": "Reduce competing modules or group dense content into scannable rows, tables, rails, or panels.",
+      "expected_lift": 0.07
+    },
+    "task_focus": {
+      "label": "Task focus",
+      "improvement": "Move decorative or pitch-like content below the operational surface that supports the user's main task.",
+      "expected_lift": 0.08
+    },
+    "keyword_alignment": {
+      "label": "Keyword alignment",
+      "improvement": "Map the strongest brand keywords to visible choices in layout, tone, density, and component emphasis.",
+      "expected_lift": 0.08
+    },
+    "tone_alignment": {
+      "label": "Tone alignment",
+      "improvement": "Adjust copy weight, control styling, and visual temperature to match the intended voice.",
+      "expected_lift": 0.06
+    },
+    "domain_fit": {
+      "label": "Domain fit",
+      "improvement": "Add domain-native structures such as tables, maps, media, timelines, inspectors, or product objects where relevant.",
+      "expected_lift": 0.08
+    },
+    "anti_keyword_avoidance": {
+      "label": "Anti-keyword avoidance",
+      "improvement": "Remove visual tropes that match the brand profile's anti-keywords before polishing details.",
+      "expected_lift": 0.06
+    },
+    "desirability": {
+      "label": "Desirability",
+      "improvement": "Give the primary surface a more intentional visual reward: stronger imagery, tactile controls, or clearer payoff.",
+      "expected_lift": 0.07
+    },
+    "confidence_signal": {
+      "label": "Confidence signal",
+      "improvement": "Add evidence, provenance, precision, or stable UI states that make the surface feel trustworthy.",
+      "expected_lift": 0.07
+    },
+    "warmth_or_energy": {
+      "label": "Warmth or energy",
+      "improvement": "Tune motion, image choice, accent placement, or microcopy energy to the target audience.",
+      "expected_lift": 0.06
+    },
+    "responsive_fit": {
+      "label": "Responsive fit",
+      "improvement": "Verify mobile and desktop fit, then fix overflow, clipped labels, and unstable control sizing.",
+      "expected_lift": 0.08
+    },
+    "token_binding": {
+      "label": "Token binding",
+      "improvement": "Replace local visual constants with design-system tokens and keep semantic roles consistent.",
+      "expected_lift": 0.06
+    },
+    "accessibility_baseline": {
+      "label": "Accessibility baseline",
+      "improvement": "Check contrast, focus states, labels, and target sizes as part of visual polish, not after it.",
+      "expected_lift": 0.07
+    },
+    "interaction_affordance": {
+      "label": "Interaction affordance",
+      "improvement": "Make controls, filters, state chips, and navigation visually legible with icons, state, and hit-area clarity.",
+      "expected_lift": 0.07
+    },
+    "asset_completeness": {
+      "label": "Asset completeness",
+      "improvement": "Use concrete product, place, object, identity, or content assets where the domain expects visual substance.",
+      "expected_lift": 0.08
+    },
+    "distinctiveness": {
+      "label": "Distinctiveness",
+      "improvement": "Introduce one memorable composition or interaction pattern while keeping the rest of the system restrained.",
+      "expected_lift": 0.06
+    },
+    "reference_transformation": {
+      "label": "Reference transformation",
+      "improvement": "Absorb reference morphology without copying palette, copy, IA, or protected asset choices.",
+      "expected_lift": 0.06
+    },
+    "memorability": {
+      "label": "Memorability",
+      "improvement": "Create a recognizable signature in the first viewport through layout, identity asset, or product-native visual.",
+      "expected_lift": 0.06
+    },
+    "brand_keyword:commerce-1b207ba3": {
+      "label": "Expresses brand keyword: commerce",
+      "improvement": "Make 'commerce' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "commerce"
+    },
+    "brand_keyword:ecommerce-444c1efe": {
+      "label": "Expresses brand keyword: ecommerce",
+      "improvement": "Make 'ecommerce' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "ecommerce"
+    },
+    "brand_keyword:shop-5042d146": {
+      "label": "Expresses brand keyword: shop",
+      "improvement": "Make 'shop' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "shop"
+    },
+    "brand_keyword:store-3a21295d": {
+      "label": "Expresses brand keyword: store",
+      "improvement": "Make 'store' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "store"
+    },
+    "brand_keyword:product-grid-ced21440": {
+      "label": "Expresses brand keyword: product-grid",
+      "improvement": "Make 'product-grid' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "product-grid"
+    },
+    "brand_keyword:product-detail-664aa2fa": {
+      "label": "Expresses brand keyword: product-detail",
+      "improvement": "Make 'product-detail' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "product-detail"
+    },
+    "brand_keyword:cart-8bfb4e1a": {
+      "label": "Expresses brand keyword: cart",
+      "improvement": "Make 'cart' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "cart"
+    },
+    "brand_keyword:checkout-d5491e7e": {
+      "label": "Expresses brand keyword: checkout",
+      "improvement": "Make 'checkout' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "checkout"
+    },
+    "brand_tone:confident-39a449bf": {
+      "label": "Expresses tone of voice: confident",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'confident'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "confident"
+    },
+    "brand_tone:energetic-10392295": {
+      "label": "Expresses tone of voice: energetic",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'energetic'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "energetic"
+    },
+    "brand_tone:direct-24a1733c": {
+      "label": "Expresses tone of voice: direct",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'direct'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "direct"
+    },
+    "brand_tone:hype-8acd66d7": {
+      "label": "Expresses tone of voice: hype",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'hype'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "hype"
+    },
+    "brand_tone:street-d3a9fb07": {
+      "label": "Expresses tone of voice: street",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'street'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "street"
+    },
+    "anti_keyword:editorial-warm-88c4bd1f": {
+      "label": "Avoids anti-keyword: editorial-warm",
+      "improvement": "Remove cues that make the product read as 'editorial-warm'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "editorial-warm"
+    },
+    "anti_keyword:magazine-serif-cccc885a": {
+      "label": "Avoids anti-keyword: magazine-serif",
+      "improvement": "Remove cues that make the product read as 'magazine-serif'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "magazine-serif"
+    },
+    "anti_keyword:minimal-5c482174": {
+      "label": "Avoids anti-keyword: minimal",
+      "improvement": "Remove cues that make the product read as 'minimal'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "minimal"
+    },
+    "anti_keyword:playful-pastel-2f4f8e24": {
+      "label": "Avoids anti-keyword: playful-pastel",
+      "improvement": "Remove cues that make the product read as 'playful-pastel'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "playful-pastel"
+    },
+    "anti_keyword:corporate-conservative-a1f48f23": {
+      "label": "Avoids anti-keyword: corporate-conservative",
+      "improvement": "Remove cues that make the product read as 'corporate-conservative'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "corporate-conservative"
+    },
+    "anti_keyword:dashboard-heavy-98cd5dbc": {
+      "label": "Avoids anti-keyword: dashboard-heavy",
+      "improvement": "Remove cues that make the product read as 'dashboard-heavy'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "dashboard-heavy"
+    },
+    "anti_keyword:document-heavy-791bd5c6": {
+      "label": "Avoids anti-keyword: document-heavy",
+      "improvement": "Remove cues that make the product read as 'document-heavy'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "document-heavy"
+    },
+    "avoid_pattern:warm-editorial-magazine-hero-f15b0d9a": {
+      "label": "Avoids visual pattern: warm editorial magazine hero",
+      "improvement": "Replace 'warm editorial magazine hero' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "warm editorial magazine hero"
+    },
+    "avoid_pattern:minimal-saas-landing-4f3f2105": {
+      "label": "Avoids visual pattern: minimal saas landing",
+      "improvement": "Replace 'minimal saas landing' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "minimal saas landing"
+    },
+    "avoid_pattern:pastel-playful-feed-5f670a2b": {
+      "label": "Avoids visual pattern: pastel playful feed",
+      "improvement": "Replace 'pastel playful feed' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "pastel playful feed"
+    },
+    "avoid_pattern:dense-dashboard-chrome-077c123c": {
+      "label": "Avoids visual pattern: dense dashboard chrome",
+      "improvement": "Replace 'dense dashboard chrome' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "dense dashboard chrome"
+    },
+    "avoid_pattern:long-form-reading-article-918ad92a": {
+      "label": "Avoids visual pattern: long-form reading article",
+      "improvement": "Replace 'long-form reading article' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "long-form reading article"
+    },
+    "product_primitive:product-card-d645a455": {
+      "label": "Embodies product primitive: product card",
+      "improvement": "Represent 'product card' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "product card"
+    },
+    "product_primitive:product-grid-e2009f0c": {
+      "label": "Embodies product primitive: product grid",
+      "improvement": "Represent 'product grid' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "product grid"
+    },
+    "product_primitive:product-detail-473360e8": {
+      "label": "Embodies product primitive: product detail",
+      "improvement": "Represent 'product detail' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "product detail"
+    },
+    "product_primitive:product-gallery-1da7cb05": {
+      "label": "Embodies product primitive: product gallery",
+      "improvement": "Represent 'product gallery' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "product gallery"
+    },
+    "product_primitive:image-thumbnail-1efa7c8c": {
+      "label": "Embodies product primitive: image thumbnail",
+      "improvement": "Represent 'image thumbnail' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "image thumbnail"
+    },
+    "product_primitive:variant-selector-5c5dff7f": {
+      "label": "Embodies product primitive: variant selector",
+      "improvement": "Represent 'variant selector' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "variant selector"
+    },
+    "product_primitive:size-selector-5e0f031e": {
+      "label": "Embodies product primitive: size selector",
+      "improvement": "Represent 'size selector' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "size selector"
+    },
+    "product_primitive:color-swatch-selector-bd547f4c": {
+      "label": "Embodies product primitive: color swatch selector",
+      "improvement": "Represent 'color swatch selector' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "color swatch selector"
+    },
+    "product_primitive:add-to-cart-button-3eb89794": {
+      "label": "Embodies product primitive: add-to-cart button",
+      "improvement": "Represent 'add-to-cart button' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "add-to-cart button"
+    },
+    "product_primitive:quick-view-modal-4b213c5a": {
+      "label": "Embodies product primitive: quick-view modal",
+      "improvement": "Represent 'quick-view modal' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "quick-view modal"
+    },
+    "must_include:full-bleed-drop-hero-banner-with-cou-cd278636": {
+      "label": "Includes required visual/system signal: full-bleed drop hero banner with countdown",
+      "improvement": "Make 'full-bleed drop hero banner with countdown' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "full-bleed drop hero banner with countdown"
+    },
+    "must_include:dense-product-grid-2x3-or-3x4-a21b9c08": {
+      "label": "Includes required visual/system signal: dense product grid 2x3 or 3x4",
+      "improvement": "Make 'dense product grid 2x3 or 3x4' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "dense product grid 2x3 or 3x4"
+    },
+    "must_include:product-detail-with-gallery-variant-b38840e5": {
+      "label": "Includes required visual/system signal: product detail with gallery + variant/size selector + price + add-to-cart",
+      "improvement": "Make 'product detail with gallery + variant/size selector + price + add-to-cart' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "product detail with gallery + variant/size selector + price + add-to-cart"
+    },
+    "must_include:cart-drawer-slide-in-with-cart-items-f5566159": {
+      "label": "Includes required visual/system signal: cart drawer slide-in with cart items and summary",
+      "improvement": "Make 'cart drawer slide-in with cart items and summary' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "cart drawer slide-in with cart items and summary"
+    },
+    "must_include:checkout-step-progress-with-address-efb933d0": {
+      "label": "Includes required visual/system signal: checkout step progress with address/payment forms",
+      "improvement": "Make 'checkout step progress with address/payment forms' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "checkout step progress with address/payment forms"
+    },
+    "audience_need:스트리트웨어-스니커-드롭을-기다리는-젊은-소비자-gen-z-밀레니-8f08e4b3": {
+      "label": "Fits audience context: 스트리트웨어/스니커 드롭을 기다리는 젊은 소비자 (Gen Z, 밀레니얼)",
+      "improvement": "Adjust density, language, workflow order, and controls for '스트리트웨어/스니커 드롭을 기다리는 젊은 소비자 (Gen Z, 밀레니얼)'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "스트리트웨어/스니커 드롭을 기다리는 젊은 소비자 (Gen Z, 밀레니얼)"
+    },
+    "audience_need:게이밍-e스포츠-머천다이즈를-구매하는-팬-67f58d6a": {
+      "label": "Fits audience context: 게이밍/e스포츠 머천다이즈를 구매하는 팬",
+      "improvement": "Adjust density, language, workflow order, and controls for '게이밍/e스포츠 머천다이즈를 구매하는 팬'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "게이밍/e스포츠 머천다이즈를 구매하는 팬"
+    },
+    "audience_need:bold-beauty-스포츠-굿즈-한정판-컬렉션을-탐색하는-모바일-2b4f7896": {
+      "label": "Fits audience context: bold beauty · 스포츠 굿즈 · 한정판 컬렉션을 탐색하는 모바일 쇼핑 사용자",
+      "improvement": "Adjust density, language, workflow order, and controls for 'bold beauty · 스포츠 굿즈 · 한정판 컬렉션을 탐색하는 모바일 쇼핑 사용자'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "bold beauty · 스포츠 굿즈 · 한정판 컬렉션을 탐색하는 모바일 쇼핑 사용자"
+    },
+    "accessibility_target:wcag-2-2-aa-41a998cd": {
+      "label": "Supports accessibility target: WCAG 2.2 AA",
+      "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "WCAG 2.2 AA"
+    }
+  },
+  "relations": [
+    {
+      "source": "DesignCandidate",
+      "relation": "evaluated_by",
+      "target": "AestheticDimension"
+    },
+    {
+      "source": "AestheticDimension",
+      "relation": "measured_by",
+      "target": "AestheticMetric"
+    },
+    {
+      "source": "AestheticMetric",
+      "relation": "improved_by",
+      "target": "ImprovementAction"
+    },
+    {
+      "source": "AestheticEvaluation",
+      "relation": "gates",
+      "target": "Execution"
+    }
+  ],
+  "context": {
+    "brand_name": "Drop",
+    "system_name": "Drop System",
+    "product_summary": "젊은 B2C commerce — bold-confident 톤 드롭 · 제품 그리드 · 제품 상세 · 장바구니 · 체크아웃, high-contrast saturated, impact typography, 한국어 1급",
+    "audiences": [
+      "스트리트웨어/스니커 드롭을 기다리는 젊은 소비자 (Gen Z, 밀레니얼)",
+      "게이밍/e스포츠 머천다이즈를 구매하는 팬",
+      "bold beauty · 스포츠 굿즈 · 한정판 컬렉션을 탐색하는 모바일 쇼핑 사용자"
+    ],
+    "brand_keywords": [
+      "commerce",
+      "ecommerce",
+      "shop",
+      "store",
+      "product-grid",
+      "product-detail",
+      "cart",
+      "checkout",
+      "drop",
+      "merchandise",
+      "streetwear",
+      "bold",
+      "energetic",
+      "high-contrast"
+    ],
+    "anti_keywords": [
+      "editorial-warm",
+      "magazine-serif",
+      "minimal",
+      "playful-pastel",
+      "corporate-conservative",
+      "dashboard-heavy",
+      "document-heavy"
+    ],
+    "tone_of_voice": [
+      "confident",
+      "energetic",
+      "direct",
+      "hype",
+      "street"
+    ],
+    "product_primitives": [
+      "product card",
+      "product grid",
+      "product detail",
+      "product gallery",
+      "image thumbnail",
+      "variant selector",
+      "size selector",
+      "color swatch selector",
+      "add-to-cart button",
+      "quick-view modal",
+      "wishlist toggle",
+      "drop banner",
+      "countdown timer",
+      "price tag",
+      "original price strikethrough",
+      "discount badge",
+      "cart drawer",
+      "cart item",
+      "cart summary",
+      "checkout step",
+      "address form",
+      "payment form",
+      "promo code input",
+      "order summary",
+      "empty cart state",
+      "search bar",
+      "filter sidebar",
+      "sort dropdown",
+      "pagination",
+      "breadcrumb",
+      "category pill",
+      "hero banner",
+      "site header",
+      "site footer"
+    ]
+  },
+  "brand_aesthetic_contract": {
+    "schema_version": "brand-aesthetic-contract/v1",
+    "brand_name": "Drop",
+    "system_name": "Drop System",
+    "research_basis": [
+      {
+        "id": "visawi",
+        "label": "VisAWI",
+        "construct": "perceived website visual aesthetics",
+        "operational_use": "Map simplicity, diversity, colorfulness, and craftsmanship into visual system coherence metrics.",
+        "source_url": "https://www.sciencedirect.com/science/article/pii/S1071581910000777"
+      },
+      {
+        "id": "apid",
+        "label": "APiD",
+        "construct": "aesthetic pleasure in designed artifacts",
+        "operational_use": "Keep a direct pleasure/desirability layer instead of only formal pixel metrics.",
+        "source_url": "https://opus.lib.uts.edu.au/handle/10453/81276"
+      },
+      {
+        "id": "beauvis",
+        "label": "BeauVis",
+        "construct": "aesthetic pleasure of visual representations",
+        "operational_use": "Treat scores as comparative, context-bound judgments rather than universal beauty values.",
+        "source_url": "https://arxiv.org/abs/2207.14147"
+      },
+      {
+        "id": "aesthemos",
+        "label": "AESTHEMOS",
+        "construct": "aesthetic emotions",
+        "operational_use": "Translate brand tone and target affect into measurable emotional-response proxies.",
+        "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0178899"
+      },
+      {
+        "id": "kansei",
+        "label": "Kansei / semantic differential",
+        "construct": "design element to impression mapping",
+        "operational_use": "Use brand keywords and anti-keywords as semantic impression targets and boundaries.",
+        "source_url": "https://www.mdpi.com/2073-8994/12/8/1340"
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "brand_semantic_fit",
+        "label": "Brand semantic fit",
+        "weight": 0.22,
+        "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+        "metrics": [
+          "brand_keyword:commerce-1b207ba3",
+          "brand_keyword:ecommerce-444c1efe",
+          "brand_keyword:shop-5042d146",
+          "brand_keyword:store-3a21295d",
+          "brand_keyword:product-grid-ced21440",
+          "brand_keyword:product-detail-664aa2fa",
+          "brand_keyword:cart-8bfb4e1a",
+          "brand_keyword:checkout-d5491e7e",
+          "brand_tone:confident-39a449bf",
+          "brand_tone:energetic-10392295",
+          "brand_tone:direct-24a1733c",
+          "brand_tone:hype-8acd66d7",
+          "brand_tone:street-d3a9fb07"
+        ],
+        "research_basis": [
+          "kansei",
+          "aesthemos"
+        ]
+      },
+      {
+        "id": "brand_boundary_fit",
+        "label": "Brand boundary fit",
+        "weight": 0.16,
+        "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+        "metrics": [
+          "anti_keyword:editorial-warm-88c4bd1f",
+          "anti_keyword:magazine-serif-cccc885a",
+          "anti_keyword:minimal-5c482174",
+          "anti_keyword:playful-pastel-2f4f8e24",
+          "anti_keyword:corporate-conservative-a1f48f23",
+          "anti_keyword:dashboard-heavy-98cd5dbc",
+          "anti_keyword:document-heavy-791bd5c6",
+          "avoid_pattern:warm-editorial-magazine-hero-f15b0d9a",
+          "avoid_pattern:minimal-saas-landing-4f3f2105",
+          "avoid_pattern:pastel-playful-feed-5f670a2b",
+          "avoid_pattern:dense-dashboard-chrome-077c123c",
+          "avoid_pattern:long-form-reading-article-918ad92a"
+        ],
+        "research_basis": [
+          "kansei"
+        ]
+      },
+      {
+        "id": "product_ontology_fit",
+        "label": "Product ontology fit",
+        "weight": 0.22,
+        "description": "How clearly product primitives and ontology-required signals appear in the design.",
+        "metrics": [
+          "product_primitive:product-card-d645a455",
+          "product_primitive:product-grid-e2009f0c",
+          "product_primitive:product-detail-473360e8",
+          "product_primitive:product-gallery-1da7cb05",
+          "product_primitive:image-thumbnail-1efa7c8c",
+          "product_primitive:variant-selector-5c5dff7f",
+          "product_primitive:size-selector-5e0f031e",
+          "product_primitive:color-swatch-selector-bd547f4c",
+          "product_primitive:add-to-cart-button-3eb89794",
+          "product_primitive:quick-view-modal-4b213c5a",
+          "must_include:full-bleed-drop-hero-banner-with-cou-cd278636",
+          "must_include:dense-product-grid-2x3-or-3x4-a21b9c08",
+          "must_include:product-detail-with-gallery-variant-b38840e5",
+          "must_include:cart-drawer-slide-in-with-cart-items-f5566159",
+          "must_include:checkout-step-progress-with-address-efb933d0"
+        ],
+        "research_basis": [
+          "beauvis",
+          "kansei"
+        ]
+      },
+      {
+        "id": "audience_context_fit",
+        "label": "Audience context fit",
+        "weight": 0.12,
+        "description": "How well the design serves declared users, platforms, and accessibility floors.",
+        "metrics": [
+          "audience_need:스트리트웨어-스니커-드롭을-기다리는-젊은-소비자-gen-z-밀레니-8f08e4b3",
+          "audience_need:게이밍-e스포츠-머천다이즈를-구매하는-팬-67f58d6a",
+          "audience_need:bold-beauty-스포츠-굿즈-한정판-컬렉션을-탐색하는-모바일-2b4f7896",
+          "accessibility_target:wcag-2-2-aa-41a998cd"
+        ],
+        "research_basis": [
+          "visawi",
+          "aesthemos"
+        ]
+      }
+    ],
+    "metrics": {
+      "brand_keyword:commerce-1b207ba3": {
+        "label": "Expresses brand keyword: commerce",
+        "improvement": "Make 'commerce' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "commerce"
+      },
+      "brand_keyword:ecommerce-444c1efe": {
+        "label": "Expresses brand keyword: ecommerce",
+        "improvement": "Make 'ecommerce' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "ecommerce"
+      },
+      "brand_keyword:shop-5042d146": {
+        "label": "Expresses brand keyword: shop",
+        "improvement": "Make 'shop' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "shop"
+      },
+      "brand_keyword:store-3a21295d": {
+        "label": "Expresses brand keyword: store",
+        "improvement": "Make 'store' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "store"
+      },
+      "brand_keyword:product-grid-ced21440": {
+        "label": "Expresses brand keyword: product-grid",
+        "improvement": "Make 'product-grid' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "product-grid"
+      },
+      "brand_keyword:product-detail-664aa2fa": {
+        "label": "Expresses brand keyword: product-detail",
+        "improvement": "Make 'product-detail' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "product-detail"
+      },
+      "brand_keyword:cart-8bfb4e1a": {
+        "label": "Expresses brand keyword: cart",
+        "improvement": "Make 'cart' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "cart"
+      },
+      "brand_keyword:checkout-d5491e7e": {
+        "label": "Expresses brand keyword: checkout",
+        "improvement": "Make 'checkout' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "checkout"
+      },
+      "brand_tone:confident-39a449bf": {
+        "label": "Expresses tone of voice: confident",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'confident'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "confident"
+      },
+      "brand_tone:energetic-10392295": {
+        "label": "Expresses tone of voice: energetic",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'energetic'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "energetic"
+      },
+      "brand_tone:direct-24a1733c": {
+        "label": "Expresses tone of voice: direct",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'direct'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "direct"
+      },
+      "brand_tone:hype-8acd66d7": {
+        "label": "Expresses tone of voice: hype",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'hype'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "hype"
+      },
+      "brand_tone:street-d3a9fb07": {
+        "label": "Expresses tone of voice: street",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'street'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "street"
+      },
+      "anti_keyword:editorial-warm-88c4bd1f": {
+        "label": "Avoids anti-keyword: editorial-warm",
+        "improvement": "Remove cues that make the product read as 'editorial-warm'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "editorial-warm"
+      },
+      "anti_keyword:magazine-serif-cccc885a": {
+        "label": "Avoids anti-keyword: magazine-serif",
+        "improvement": "Remove cues that make the product read as 'magazine-serif'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "magazine-serif"
+      },
+      "anti_keyword:minimal-5c482174": {
+        "label": "Avoids anti-keyword: minimal",
+        "improvement": "Remove cues that make the product read as 'minimal'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "minimal"
+      },
+      "anti_keyword:playful-pastel-2f4f8e24": {
+        "label": "Avoids anti-keyword: playful-pastel",
+        "improvement": "Remove cues that make the product read as 'playful-pastel'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "playful-pastel"
+      },
+      "anti_keyword:corporate-conservative-a1f48f23": {
+        "label": "Avoids anti-keyword: corporate-conservative",
+        "improvement": "Remove cues that make the product read as 'corporate-conservative'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "corporate-conservative"
+      },
+      "anti_keyword:dashboard-heavy-98cd5dbc": {
+        "label": "Avoids anti-keyword: dashboard-heavy",
+        "improvement": "Remove cues that make the product read as 'dashboard-heavy'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "dashboard-heavy"
+      },
+      "anti_keyword:document-heavy-791bd5c6": {
+        "label": "Avoids anti-keyword: document-heavy",
+        "improvement": "Remove cues that make the product read as 'document-heavy'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "document-heavy"
+      },
+      "avoid_pattern:warm-editorial-magazine-hero-f15b0d9a": {
+        "label": "Avoids visual pattern: warm editorial magazine hero",
+        "improvement": "Replace 'warm editorial magazine hero' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "warm editorial magazine hero"
+      },
+      "avoid_pattern:minimal-saas-landing-4f3f2105": {
+        "label": "Avoids visual pattern: minimal saas landing",
+        "improvement": "Replace 'minimal saas landing' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "minimal saas landing"
+      },
+      "avoid_pattern:pastel-playful-feed-5f670a2b": {
+        "label": "Avoids visual pattern: pastel playful feed",
+        "improvement": "Replace 'pastel playful feed' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "pastel playful feed"
+      },
+      "avoid_pattern:dense-dashboard-chrome-077c123c": {
+        "label": "Avoids visual pattern: dense dashboard chrome",
+        "improvement": "Replace 'dense dashboard chrome' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "dense dashboard chrome"
+      },
+      "avoid_pattern:long-form-reading-article-918ad92a": {
+        "label": "Avoids visual pattern: long-form reading article",
+        "improvement": "Replace 'long-form reading article' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "long-form reading article"
+      },
+      "product_primitive:product-card-d645a455": {
+        "label": "Embodies product primitive: product card",
+        "improvement": "Represent 'product card' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "product card"
+      },
+      "product_primitive:product-grid-e2009f0c": {
+        "label": "Embodies product primitive: product grid",
+        "improvement": "Represent 'product grid' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "product grid"
+      },
+      "product_primitive:product-detail-473360e8": {
+        "label": "Embodies product primitive: product detail",
+        "improvement": "Represent 'product detail' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "product detail"
+      },
+      "product_primitive:product-gallery-1da7cb05": {
+        "label": "Embodies product primitive: product gallery",
+        "improvement": "Represent 'product gallery' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "product gallery"
+      },
+      "product_primitive:image-thumbnail-1efa7c8c": {
+        "label": "Embodies product primitive: image thumbnail",
+        "improvement": "Represent 'image thumbnail' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "image thumbnail"
+      },
+      "product_primitive:variant-selector-5c5dff7f": {
+        "label": "Embodies product primitive: variant selector",
+        "improvement": "Represent 'variant selector' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "variant selector"
+      },
+      "product_primitive:size-selector-5e0f031e": {
+        "label": "Embodies product primitive: size selector",
+        "improvement": "Represent 'size selector' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "size selector"
+      },
+      "product_primitive:color-swatch-selector-bd547f4c": {
+        "label": "Embodies product primitive: color swatch selector",
+        "improvement": "Represent 'color swatch selector' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "color swatch selector"
+      },
+      "product_primitive:add-to-cart-button-3eb89794": {
+        "label": "Embodies product primitive: add-to-cart button",
+        "improvement": "Represent 'add-to-cart button' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "add-to-cart button"
+      },
+      "product_primitive:quick-view-modal-4b213c5a": {
+        "label": "Embodies product primitive: quick-view modal",
+        "improvement": "Represent 'quick-view modal' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "quick-view modal"
+      },
+      "must_include:full-bleed-drop-hero-banner-with-cou-cd278636": {
+        "label": "Includes required visual/system signal: full-bleed drop hero banner with countdown",
+        "improvement": "Make 'full-bleed drop hero banner with countdown' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "full-bleed drop hero banner with countdown"
+      },
+      "must_include:dense-product-grid-2x3-or-3x4-a21b9c08": {
+        "label": "Includes required visual/system signal: dense product grid 2x3 or 3x4",
+        "improvement": "Make 'dense product grid 2x3 or 3x4' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "dense product grid 2x3 or 3x4"
+      },
+      "must_include:product-detail-with-gallery-variant-b38840e5": {
+        "label": "Includes required visual/system signal: product detail with gallery + variant/size selector + price + add-to-cart",
+        "improvement": "Make 'product detail with gallery + variant/size selector + price + add-to-cart' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "product detail with gallery + variant/size selector + price + add-to-cart"
+      },
+      "must_include:cart-drawer-slide-in-with-cart-items-f5566159": {
+        "label": "Includes required visual/system signal: cart drawer slide-in with cart items and summary",
+        "improvement": "Make 'cart drawer slide-in with cart items and summary' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "cart drawer slide-in with cart items and summary"
+      },
+      "must_include:checkout-step-progress-with-address-efb933d0": {
+        "label": "Includes required visual/system signal: checkout step progress with address/payment forms",
+        "improvement": "Make 'checkout step progress with address/payment forms' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "checkout step progress with address/payment forms"
+      },
+      "audience_need:스트리트웨어-스니커-드롭을-기다리는-젊은-소비자-gen-z-밀레니-8f08e4b3": {
+        "label": "Fits audience context: 스트리트웨어/스니커 드롭을 기다리는 젊은 소비자 (Gen Z, 밀레니얼)",
+        "improvement": "Adjust density, language, workflow order, and controls for '스트리트웨어/스니커 드롭을 기다리는 젊은 소비자 (Gen Z, 밀레니얼)'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "스트리트웨어/스니커 드롭을 기다리는 젊은 소비자 (Gen Z, 밀레니얼)"
+      },
+      "audience_need:게이밍-e스포츠-머천다이즈를-구매하는-팬-67f58d6a": {
+        "label": "Fits audience context: 게이밍/e스포츠 머천다이즈를 구매하는 팬",
+        "improvement": "Adjust density, language, workflow order, and controls for '게이밍/e스포츠 머천다이즈를 구매하는 팬'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "게이밍/e스포츠 머천다이즈를 구매하는 팬"
+      },
+      "audience_need:bold-beauty-스포츠-굿즈-한정판-컬렉션을-탐색하는-모바일-2b4f7896": {
+        "label": "Fits audience context: bold beauty · 스포츠 굿즈 · 한정판 컬렉션을 탐색하는 모바일 쇼핑 사용자",
+        "improvement": "Adjust density, language, workflow order, and controls for 'bold beauty · 스포츠 굿즈 · 한정판 컬렉션을 탐색하는 모바일 쇼핑 사용자'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "bold beauty · 스포츠 굿즈 · 한정판 컬렉션을 탐색하는 모바일 쇼핑 사용자"
+      },
+      "accessibility_target:wcag-2-2-aa-41a998cd": {
+        "label": "Supports accessibility target: WCAG 2.2 AA",
+        "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "WCAG 2.2 AA"
+      }
+    },
+    "rule": "Brand-owned aesthetic quality is evaluated as fit to declared semantic targets, explicit boundaries, product ontology, audience context, and visual craft."
+  },
+  "interpretation_rule": "Scores represent observed or reviewed response proxies in a declared context; they are not universal beauty claims."
+}

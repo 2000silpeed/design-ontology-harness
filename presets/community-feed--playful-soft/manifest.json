@@ -2,7 +2,7 @@
   "id": "community-feed--playful-soft",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "bloom",
-  "content_hash": "sha256:50f47cfd3e8ba0615461f3a1fd784ea128fda92a7fbbf1051c6b5430b34a4e19",
+  "content_hash": "sha256:61c28edd6ec7fdf5b5eacca42efd1979b3d9a8754b3757ba3864cbdd199fe75e",
   "app_mode": "community-feed",
   "brand_tone": "playful-soft",
   "color_modes": [
@@ -33,6 +33,6 @@
   },
   "owner": "maintainer",
   "tier": "P1",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "친근한 소셜 피드 · 스레드 · 프레즌스 · 알림 — playful-soft 톤, 한국어 1급"
 }

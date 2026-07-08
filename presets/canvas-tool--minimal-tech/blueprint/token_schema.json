@@ -770,9 +770,636 @@
             }
           ]
         },
+        "semantic_ontology": {
+          "schema_version": "design-ontology-harness/semantic-color-context-v1",
+          "source": {
+            "repo": "semantic-os",
+            "path": "domains/color/ontology/build/graph.json",
+            "built_at": "2026-05-23T13:56:25.001610+00:00",
+            "source_schema_version": "default-video-production-ontology-v1",
+            "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included."
+          },
+          "node_count": 137,
+          "edge_count": 487,
+          "matched_keywords": [
+            {
+              "id": "color-keyword-cobalt-violet",
+              "role": "primary",
+              "name": "Cobalt Violet",
+              "hex": "#804AA8",
+              "spectrum": "violet",
+              "family": "standard",
+              "mood_tags": [
+                "안정감",
+                "차분함",
+                "예술적",
+                "신비감"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "mid_chroma",
+                "cool_bias"
+              ]
+            },
+            {
+              "id": "color-keyword-amber",
+              "role": "accent",
+              "name": "Amber",
+              "hex": "#FFBF00",
+              "spectrum": "yellow",
+              "family": "standard",
+              "mood_tags": [
+                "따뜻함",
+                "세련됨",
+                "고급스러움",
+                "안정감"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "mid_chroma",
+                "warm_bias"
+              ]
+            },
+            {
+              "id": "color-keyword-misty-blue",
+              "role": "surface_tint",
+              "name": "Misty Blue",
+              "hex": "#B5C7EB",
+              "spectrum": "blue",
+              "family": "pastel",
+              "mood_tags": [
+                "차분함",
+                "사색적",
+                "몽환적",
+                "잔잔함",
+                "감정의 여운"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "low_chroma",
+                "cool_bias",
+                "pastel"
+              ]
+            }
+          ],
+          "recommended_keywords": [
+            {
+              "id": "color-keyword-cascades",
+              "name": "Cascade",
+              "hex": "#76C1B1",
+              "spectrum": "green",
+              "family": "pantone_trend",
+              "score": 9.0,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches 'with'",
+                "matches 'and'"
+              ]
+            },
+            {
+              "id": "color-keyword-chili-oil",
+              "name": "Chili Oil",
+              "hex": "#944537",
+              "spectrum": "orange",
+              "family": "pantone_trend",
+              "score": 9.0,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches 'with'",
+                "matches 'and'"
+              ]
+            },
+            {
+              "id": "color-keyword-grape-compote",
+              "name": "Grape Compote",
+              "hex": "#6B5876",
+              "spectrum": "violet",
+              "family": "pantone_trend",
+              "score": 8.5,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches 'with'",
+                "matches 'and'"
+              ]
+            },
+            {
+              "id": "color-keyword-ice-blue",
+              "name": "Ice Blue",
+              "hex": "#D6EAF8",
+              "spectrum": "blue",
+              "family": "pastel",
+              "score": 8.0,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches 'with'",
+                "matches '정제됨'"
+              ]
+            },
+            {
+              "id": "color-keyword-naples-yellow",
+              "name": "Naples Yellow",
+              "hex": "#FADA5E",
+              "spectrum": "yellow",
+              "family": "pastel",
+              "score": 8.0,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches 'with'",
+                "matches '예술적'"
+              ]
+            },
+            {
+              "id": "color-keyword-cerulean",
+              "name": "Cerulean",
+              "hex": "#2A52BE",
+              "spectrum": "blue",
+              "family": "standard",
+              "score": 7.5,
+              "reasons": [
+                "matches 'with'",
+                "matches '명료함'",
+                "matches 'and'"
+              ]
+            },
+            {
+              "id": "color-keyword-classic-blue",
+              "name": "Classic Blue",
+              "hex": "#0F4C81",
+              "spectrum": "blue",
+              "family": "pantone_trend",
+              "score": 7.5,
+              "reasons": [
+                "matches 'with'",
+                "matches 'and'",
+                "matches 'pan'"
+              ]
+            },
+            {
+              "id": "color-keyword-navy-blue",
+              "name": "Navy Blue",
+              "hex": "#000080",
+              "spectrum": "blue",
+              "family": "deep",
+              "score": 7.5,
+              "reasons": [
+                "matches 'with'",
+                "matches 'and'",
+                "matches '전문성'"
+              ]
+            }
+          ],
+          "guidelines": [
+            {
+              "id": "guideline-rgb-cmyk-split-by-output-medium",
+              "label": "RGB와 CMYK는 산출 매체 기준으로 분리한다",
+              "summary": "디지털 산출물은 RGB/sRGB 기준, 인쇄 산출물은 CMYK/프로파일 기준으로 판단한다. 화면색을 인쇄색으로 그대로 기대하지 않는다."
+            },
+            {
+              "id": "guideline-color-values-are-reference-not-absolute",
+              "label": "색상 수치는 절댓값이 아니라 기준값이다",
+              "summary": "디스플레이와 출력 환경에 따라 색 차이가 생기므로 HEX/CMYK는 재현 기준점으로 쓰고, 최종 판단은 매체별 proof에서 확인한다."
+            },
+            {
+              "id": "guideline-mood-tags-before-palette-expansion",
+              "label": "팔레트 확장 전 mood tag를 먼저 잠근다",
+              "summary": "무드보드나 브랜드 컬러를 늘리기 전에 에너지, 안정, 깊이, 회복 같은 감정 태그를 먼저 고정하면 색상 후보가 흔들리지 않는다."
+            },
+            {
+              "id": "guideline-no-palette-table-reconstruction",
+              "label": "배색표를 재구성할 수 있는 수준의 pair 목록은 만들지 않는다",
+              "summary": "paid source의 조합표, 페이지 배열, 순서, 행/열 구조를 그대로 되살릴 수 있는 palette_pair edge 묶음은 온톨로지에 넣지 않는다."
+            },
+            {
+              "id": "guideline-palette-pair-edges-require-transformative-brief",
+              "label": "palette_pair edge는 변형된 brief와 함께만 추가한다",
+              "summary": "두 색의 직접 pair edge는 브랜드/화면/인쇄/제품 같은 새로운 산출 맥락에서 역할, 대비, 위험, proof 조건이 함께 설명될 때만 추가한다."
+            }
+          ],
+          "rules": [
+            "Treat RGB/HEX as digital reference values, not absolute reproduction guarantees.",
+            "Split RGB/sRGB and CMYK/print-profile decisions by output medium.",
+            "Choose mood tags and semantic roles before expanding support colors.",
+            "Do not reconstruct paid-source palette tables, page order, or row/column structures.",
+            "Publish palette candidates as role, contrast, caveat, and proof conditions."
+          ],
+          "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included."
+        },
+        "semantic_color_selection": {
+          "schema_version": "design-ontology-harness/semantic-color-selection-v1",
+          "selection_method": "ontology-search-per-run",
+          "matched_pattern": {
+            "id": "pattern-brief-palette-manga-magazine-pop-editorial",
+            "label": "만화 매거진 팝 에디토리얼 팔레트 후보",
+            "summary": "만화 매거진 사이트 brief를 위해 Pure Red, Scarlet, Buttercream, Ultra Violet, Illuminating을 원본 조합표가 아니라 masthead, cover, page field, feature frame, attention flash 역할로 재배치한 테스트 팔레트다.",
+            "brief_question": "만화 매거진 사이트를 만들되 색상 샘플의 피사체나 원본 조합표를 따라 하지 않고, 에디토리얼 리듬과 연재 탐색 UX로 번역한다.",
+            "output_medium": "digital_manga_magazine",
+            "role_model": "brief_specific_candidate_not_source_row"
+          },
+          "role_model": [
+            {
+              "role": "masthead_energy",
+              "behavior": "high-impact masthead stripe and issue urgency",
+              "keyword_evidence": "Pure Red",
+              "source_pattern_role": "masthead_energy: Pure Red #FF0000 — high-impact masthead stripe and issue urgency"
+            },
+            {
+              "role": "cover_signal",
+              "behavior": "kinetic tabs, issue stamps, and hover states",
+              "keyword_evidence": "Scarlet",
+              "source_pattern_role": "cover_signal: Scarlet #FF2400 — kinetic tabs, issue stamps, and hover states"
+            },
+            {
+              "role": "paper_field",
+              "behavior": "warm page field that keeps dense panels readable",
+              "keyword_evidence": "Buttercream",
+              "source_pattern_role": "paper_field: Buttercream #F3E5AB — warm page field that keeps dense panels readable"
+            },
+            {
+              "role": "feature_frame",
+              "behavior": "editorial depth for feature blocks and serialized title panels",
+              "keyword_evidence": "Ultra Violet",
+              "source_pattern_role": "feature_frame: Ultra Violet #5F4B8B — editorial depth for feature blocks and serialized title panels"
+            },
+            {
+              "role": "attention_flash",
+              "behavior": "small callout bursts, rank labels, and release flags",
+              "keyword_evidence": "Illuminating",
+              "source_pattern_role": "attention_flash: Illuminating #F5DF4D — small callout bursts, rank labels, and release flags"
+            }
+          ],
+          "active_palette": {
+            "id": "ontology-best-fit-1",
+            "label": "Best Fit",
+            "score": 125.3,
+            "rationale": [
+              "Pure Red supports masthead_energy behavior.",
+              "Pure Red is direct ontology role evidence.",
+              "Scarlet supports cover_signal behavior.",
+              "Scarlet is direct ontology role evidence.",
+              "Buttercream supports paper_field behavior.",
+              "Buttercream is direct ontology role evidence."
+            ],
+            "roles": {
+              "masthead_energy": {
+                "name": "Pure Red",
+                "hex": "#FF0000",
+                "spectrum": "red",
+                "family": "standard",
+                "score": 32.0,
+                "reason": "Pure Red supports masthead_energy behavior.",
+                "behavior": "high-impact masthead stripe and issue urgency"
+              },
+              "cover_signal": {
+                "name": "Scarlet",
+                "hex": "#FF2400",
+                "spectrum": "red",
+                "family": "standard",
+                "score": 22.65,
+                "reason": "Scarlet supports cover_signal behavior.",
+                "behavior": "kinetic tabs, issue stamps, and hover states"
+              },
+              "paper_field": {
+                "name": "Buttercream",
+                "hex": "#F3E5AB",
+                "spectrum": "yellow",
+                "family": "pastel",
+                "score": 16.75,
+                "reason": "Buttercream supports paper_field behavior.",
+                "behavior": "warm page field that keeps dense panels readable"
+              },
+              "feature_frame": {
+                "name": "Ultra Violet",
+                "hex": "#5F4B8B",
+                "spectrum": "violet",
+                "family": "pantone_trend",
+                "score": 28.75,
+                "reason": "Ultra Violet supports feature_frame behavior.",
+                "behavior": "editorial depth for feature blocks and serialized title panels"
+              },
+              "attention_flash": {
+                "name": "Illuminating",
+                "hex": "#F5DF4D",
+                "spectrum": "yellow",
+                "family": "pantone_trend",
+                "score": 25.15,
+                "reason": "Illuminating supports attention_flash behavior.",
+                "behavior": "small callout bursts, rank labels, and release flags"
+              }
+            }
+          },
+          "candidate_palettes": [
+            {
+              "id": "ontology-best-fit-1",
+              "label": "Best Fit",
+              "score": 125.3,
+              "rationale": [
+                "Pure Red supports masthead_energy behavior.",
+                "Pure Red is direct ontology role evidence.",
+                "Scarlet supports cover_signal behavior.",
+                "Scarlet is direct ontology role evidence.",
+                "Buttercream supports paper_field behavior.",
+                "Buttercream is direct ontology role evidence."
+              ],
+              "roles": {
+                "masthead_energy": {
+                  "name": "Pure Red",
+                  "hex": "#FF0000",
+                  "spectrum": "red",
+                  "family": "standard",
+                  "score": 32.0,
+                  "reason": "Pure Red supports masthead_energy behavior.",
+                  "behavior": "high-impact masthead stripe and issue urgency"
+                },
+                "cover_signal": {
+                  "name": "Scarlet",
+                  "hex": "#FF2400",
+                  "spectrum": "red",
+                  "family": "standard",
+                  "score": 22.65,
+                  "reason": "Scarlet supports cover_signal behavior.",
+                  "behavior": "kinetic tabs, issue stamps, and hover states"
+                },
+                "paper_field": {
+                  "name": "Buttercream",
+                  "hex": "#F3E5AB",
+                  "spectrum": "yellow",
+                  "family": "pastel",
+                  "score": 16.75,
+                  "reason": "Buttercream supports paper_field behavior.",
+                  "behavior": "warm page field that keeps dense panels readable"
+                },
+                "feature_frame": {
+                  "name": "Ultra Violet",
+                  "hex": "#5F4B8B",
+                  "spectrum": "violet",
+                  "family": "pantone_trend",
+                  "score": 28.75,
+                  "reason": "Ultra Violet supports feature_frame behavior.",
+                  "behavior": "editorial depth for feature blocks and serialized title panels"
+                },
+                "attention_flash": {
+                  "name": "Illuminating",
+                  "hex": "#F5DF4D",
+                  "spectrum": "yellow",
+                  "family": "pantone_trend",
+                  "score": 25.15,
+                  "reason": "Illuminating supports attention_flash behavior.",
+                  "behavior": "small callout bursts, rank labels, and release flags"
+                }
+              }
+            },
+            {
+              "id": "ontology-quiet-surface-2",
+              "label": "Quiet Surface",
+              "score": 78.6,
+              "rationale": [
+                "Grenadine supports masthead_energy behavior.",
+                "Grenadine can carry limited signal.",
+                "Super Sonic supports cover_signal behavior.",
+                "Super Sonic can carry limited signal.",
+                "Azure Blue supports paper_field behavior.",
+                "Azure Blue can hold repeated surfaces."
+              ],
+              "roles": {
+                "masthead_energy": {
+                  "name": "Grenadine",
+                  "hex": "#DC4C46",
+                  "spectrum": "red",
+                  "family": "pantone_trend",
+                  "score": 21.4,
+                  "reason": "Grenadine supports masthead_energy behavior.",
+                  "behavior": "high-impact masthead stripe and issue urgency"
+                },
+                "cover_signal": {
+                  "name": "Super Sonic",
+                  "hex": "#0071A8",
+                  "spectrum": "blue",
+                  "family": "pantone_trend",
+                  "score": 14.4,
+                  "reason": "Super Sonic supports cover_signal behavior.",
+                  "behavior": "kinetic tabs, issue stamps, and hover states"
+                },
+                "paper_field": {
+                  "name": "Azure Blue",
+                  "hex": "#007FFF",
+                  "spectrum": "blue",
+                  "family": "standard",
+                  "score": 11.9,
+                  "reason": "Azure Blue supports paper_field behavior.",
+                  "behavior": "warm page field that keeps dense panels readable"
+                },
+                "feature_frame": {
+                  "name": "Byzantium",
+                  "hex": "#702963",
+                  "spectrum": "violet",
+                  "family": "deep",
+                  "score": 17.0,
+                  "reason": "Byzantium supports feature_frame behavior.",
+                  "behavior": "editorial depth for feature blocks and serialized title panels"
+                },
+                "attention_flash": {
+                  "name": "Kelly Green",
+                  "hex": "#4CBB17",
+                  "spectrum": "green",
+                  "family": "standard",
+                  "score": 13.9,
+                  "reason": "Kelly Green supports attention_flash behavior.",
+                  "behavior": "small callout bursts, rank labels, and release flags"
+                }
+              }
+            },
+            {
+              "id": "ontology-clear-structure-3",
+              "label": "Clear Structure",
+              "score": 84.4,
+              "rationale": [
+                "Goji Berry supports masthead_energy behavior.",
+                "Goji Berry can carry limited signal.",
+                "Marsala supports cover_signal behavior.",
+                "Marsala can carry limited signal.",
+                "Cascade supports paper_field behavior.",
+                "Cascade can hold repeated surfaces."
+              ],
+              "roles": {
+                "masthead_energy": {
+                  "name": "Goji Berry",
+                  "hex": "#CC142F",
+                  "spectrum": "red",
+                  "family": "pantone_trend",
+                  "score": 18.5,
+                  "reason": "Goji Berry supports masthead_energy behavior.",
+                  "behavior": "high-impact masthead stripe and issue urgency"
+                },
+                "cover_signal": {
+                  "name": "Marsala",
+                  "hex": "#964F4C",
+                  "spectrum": "red",
+                  "family": "pantone_trend",
+                  "score": 13.5,
+                  "reason": "Marsala supports cover_signal behavior.",
+                  "behavior": "kinetic tabs, issue stamps, and hover states"
+                },
+                "paper_field": {
+                  "name": "Cascade",
+                  "hex": "#76C1B1",
+                  "spectrum": "green",
+                  "family": "pantone_trend",
+                  "score": 10.5,
+                  "reason": "Cascade supports paper_field behavior.",
+                  "behavior": "warm page field that keeps dense panels readable"
+                },
+                "feature_frame": {
+                  "name": "Classic Blue",
+                  "hex": "#0F4C81",
+                  "spectrum": "blue",
+                  "family": "pantone_trend",
+                  "score": 16.4,
+                  "reason": "Classic Blue supports feature_frame behavior.",
+                  "behavior": "editorial depth for feature blocks and serialized title panels"
+                },
+                "attention_flash": {
+                  "name": "Illuminating",
+                  "hex": "#F5DF4D",
+                  "spectrum": "yellow",
+                  "family": "pantone_trend",
+                  "score": 25.5,
+                  "reason": "Illuminating supports attention_flash behavior.",
+                  "behavior": "small callout bursts, rank labels, and release flags"
+                }
+              }
+            },
+            {
+              "id": "ontology-strong-signal-4",
+              "label": "Strong Signal",
+              "score": 92.4,
+              "rationale": [
+                "Marsala supports masthead_energy behavior.",
+                "Marsala can carry limited signal.",
+                "Cascade supports cover_signal behavior.",
+                "Cascade can carry limited signal.",
+                "Azure Blue supports paper_field behavior.",
+                "Azure Blue can hold repeated surfaces."
+              ],
+              "roles": {
+                "masthead_energy": {
+                  "name": "Marsala",
+                  "hex": "#964F4C",
+                  "spectrum": "red",
+                  "family": "pantone_trend",
+                  "score": 19.7,
+                  "reason": "Marsala supports masthead_energy behavior.",
+                  "behavior": "high-impact masthead stripe and issue urgency"
+                },
+                "cover_signal": {
+                  "name": "Cascade",
+                  "hex": "#76C1B1",
+                  "spectrum": "green",
+                  "family": "pantone_trend",
+                  "score": 14.95,
+                  "reason": "Cascade supports cover_signal behavior.",
+                  "behavior": "kinetic tabs, issue stamps, and hover states"
+                },
+                "paper_field": {
+                  "name": "Azure Blue",
+                  "hex": "#007FFF",
+                  "spectrum": "blue",
+                  "family": "standard",
+                  "score": 11.95,
+                  "reason": "Azure Blue supports paper_field behavior.",
+                  "behavior": "warm page field that keeps dense panels readable"
+                },
+                "feature_frame": {
+                  "name": "Ultra Violet",
+                  "hex": "#5F4B8B",
+                  "spectrum": "violet",
+                  "family": "pantone_trend",
+                  "score": 29.95,
+                  "reason": "Ultra Violet supports feature_frame behavior.",
+                  "behavior": "editorial depth for feature blocks and serialized title panels"
+                },
+                "attention_flash": {
+                  "name": "Classic Blue",
+                  "hex": "#0F4C81",
+                  "spectrum": "blue",
+                  "family": "pantone_trend",
+                  "score": 15.85,
+                  "reason": "Classic Blue supports attention_flash behavior.",
+                  "behavior": "small callout bursts, rank labels, and release flags"
+                }
+              }
+            },
+            {
+              "id": "ontology-cross-family-5",
+              "label": "Cross Family",
+              "score": 85.2,
+              "rationale": [
+                "Marsala supports masthead_energy behavior.",
+                "Marsala can carry limited signal.",
+                "Illuminating supports cover_signal behavior.",
+                "Illuminating can carry limited signal.",
+                "Buttercream supports paper_field behavior.",
+                "Buttercream is direct ontology role evidence."
+              ],
+              "roles": {
+                "masthead_energy": {
+                  "name": "Marsala",
+                  "hex": "#964F4C",
+                  "spectrum": "red",
+                  "family": "pantone_trend",
+                  "score": 18.5,
+                  "reason": "Marsala supports masthead_energy behavior.",
+                  "behavior": "high-impact masthead stripe and issue urgency"
+                },
+                "cover_signal": {
+                  "name": "Illuminating",
+                  "hex": "#F5DF4D",
+                  "spectrum": "yellow",
+                  "family": "pantone_trend",
+                  "score": 14.9,
+                  "reason": "Illuminating supports cover_signal behavior.",
+                  "behavior": "kinetic tabs, issue stamps, and hover states"
+                },
+                "paper_field": {
+                  "name": "Buttercream",
+                  "hex": "#F3E5AB",
+                  "spectrum": "yellow",
+                  "family": "pastel",
+                  "score": 16.4,
+                  "reason": "Buttercream supports paper_field behavior.",
+                  "behavior": "warm page field that keeps dense panels readable"
+                },
+                "feature_frame": {
+                  "name": "Grape Compote",
+                  "hex": "#6B5876",
+                  "spectrum": "violet",
+                  "family": "pantone_trend",
+                  "score": 20.0,
+                  "reason": "Grape Compote supports feature_frame behavior.",
+                  "behavior": "editorial depth for feature blocks and serialized title panels"
+                },
+                "attention_flash": {
+                  "name": "Azure Blue",
+                  "hex": "#007FFF",
+                  "spectrum": "blue",
+                  "family": "standard",
+                  "score": 15.4,
+                  "reason": "Azure Blue supports attention_flash behavior.",
+                  "behavior": "small callout bursts, rank labels, and release flags"
+                }
+              }
+            }
+          ],
+          "rules": [
+            "Search Semantic OS ColorPattern and ColorKeyword nodes for every app brief.",
+            "Do not ship pre-authored palette sets as fixed presets.",
+            "Use ColorPattern role language as a role model, not as a copied palette table.",
+            "Publish colors as role, reason, caveat, and proof conditions."
+          ]
+        },
         "rules": [
           "컬러 레퍼런스의 mood와 pairings를 semantic token 설계의 출발점으로 사용",
           "chosen palette는 semantic roles로 번역하고 raw reference color를 그대로 남용하지 않기",
+          "앱 내용 기반 색상 선택은 미리 만든 팔레트 세트가 아니라 Semantic OS ontology 검색으로 매번 수행하기",
           "seed color만 쓰지 말고 expanded palette에서 surface/text/border/support 역할까지 확장하기",
           "surface/text/border 대비는 레퍼런스보다 접근성 기준을 우선"
         ]
@@ -806,29 +1433,36 @@
         "mono는 데이터와 shortcut hint에 제한",
         "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
         "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
-        "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다."
+        "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
+        "Pretendard 같은 한글 display 헤딩은 line-height를 1.02 미만으로 낮추지 않는다.",
+        "한글 display 헤딩 tracking은 -0.02em ~ 0.01em 범위를 벗어나지 않는다."
       ],
       "recommended_fonts": {
-        "heading": "Spoqa Han Sans Neo",
-        "body": "Spoqa Han Sans Neo",
+        "heading": "Inter",
+        "body": "Inter",
         "mono": "JetBrains Mono",
-        "korean": "Spoqa Han Sans Neo"
+        "korean": "Pretendard"
       },
-      "heading_note": "스포카에서 만든 한글 산세리프. Source Sans Pro 기반. 깔끔한 데이터 UI에 적합.",
-      "body_note": "스포카에서 만든 한글 산세리프. Source Sans Pro 기반. 깔끔한 데이터 UI에 적합.",
+      "heading_note": "geometric sans, 캔버스 도구 chrome 의 정밀한 라벨 — serif 금지",
+      "body_note": "inspector / layer panel 라벨, property row 본문 공용",
       "product_type": "saas",
-      "pairing_source": "auto-scored",
+      "pairing_source": "manual font_system",
       "line_height_preset": "normal",
       "strategy": [
-        "단일 서체(Spoqa Han Sans Neo)로 weight 대비 위계 — 일관성 우선",
-        "한글 서체: Spoqa Han Sans Neo — 라틴과 x-height/weight 조화",
+        "단일 서체(Inter)로 weight 대비 위계 — 일관성 우선",
+        "한글 서체: Pretendard — 라틴과 x-height/weight 조화",
         "모노스페이스: JetBrains Mono — 코드/데이터 영역 전용",
         "precise 키워드 → tight letter-spacing, tabular figures 권장"
       ],
       "loading": {
         "fonts": [
           {
-            "font": "Spoqa Han Sans Neo",
+            "font": "Inter",
+            "weights": "400;500;600",
+            "priority": "preload"
+          },
+          {
+            "font": "Pretendard",
             "weights": "400;500;600",
             "priority": "preload"
           },
@@ -844,21 +1478,10 @@
         "note": "본문 서체를 preload, 모노스페이스는 lazy load. font-display: swap으로 FOUT 최소화."
       },
       "korean_rationale": {
-        "primary_is_korean": true,
-        "font": "Spoqa Han Sans Neo",
-        "reason": "Pretendard 이전 시대의 한글 UI 표준. 요기요, 여기어때 등에서 사용. 깔끔하지만 weight 범위와 Variable 미지원이 아쉬움. 신규 프로젝트에서는 Pretendard 추천.",
-        "glyph_width": "중간-좁음",
-        "small_size_limit": "13px까지 가독성 유지",
-        "best_for_kr": [
-          "SaaS",
-          "데이터 대시보드",
-          "깔끔한 UI"
-        ],
-        "avoid_for_kr": [
-          "장문 본문 — line-height 여유 부족",
-          "감성적 브랜딩"
-        ],
-        "latin_pair": "Source Sans 3 (같은 Source 계열)"
+        "primary_is_korean": false,
+        "font": "Pretendard",
+        "reason": "한글 UI 서체의 사실상 표준. 토스, 당근, 리디 등 국내 주요 서비스에서 사용. 자간이 자연스럽고 weight 전 구간에서 안정적.",
+        "latin_pair": "Inter"
       },
       "pitfall_warnings": [],
       "letter_spacing": {
@@ -872,17 +1495,17 @@
       "script_guardrails": {
         "primary_script": "korean",
         "headline_font": {
-          "name": "Spoqa Han Sans Neo",
-          "line_height": "1.2-1.3",
-          "letter_spacing": "-0.02em",
-          "note": "조밀한 UI에서는 tracking 보정이 유효하지만 장문 본문용으로는 여유가 적다."
+          "name": "Pretendard",
+          "line_height": "1.25-1.35",
+          "letter_spacing": "0em",
+          "note": "기본 자간/행간이 안정적이라 추가 보정 없이 바로 쓰기 좋다."
         },
         "body_font": {
-          "name": "Spoqa Han Sans Neo",
-          "line_height": "1.5-1.6",
+          "name": "Pretendard",
+          "line_height": "1.6-1.7",
           "ui_label_line_height": "1.4-1.5",
           "letter_spacing": "0em",
-          "note": "조밀한 UI에서는 tracking 보정이 유효하지만 장문 본문용으로는 여유가 적다."
+          "note": "기본 자간/행간이 안정적이라 추가 보정 없이 바로 쓰기 좋다."
         },
         "wrap": {
           "headline": {
@@ -903,16 +1526,27 @@
           "headline_start": "default-scale",
           "guidance": "기본 스케일을 사용할 수 있지만 한글 문장 기준으로 실제 wrap을 먼저 검증한다."
         },
-        "warnings": [
-          "장문 본문 — line-height 여유 부족",
-          "감성적 브랜딩",
-          "장문 본문 — line-height 여유 부족",
-          "감성적 브랜딩"
-        ],
+        "implementation_constraints": {
+          "headline_display": {
+            "line_height_min": "1.02",
+            "letter_spacing_min": "-0.02em",
+            "letter_spacing_max": "0.01em",
+            "recommended_line_height": "1.25-1.35",
+            "recommended_letter_spacing": "0em",
+            "forced_breaks_policy": "disallow-before-breakpoint-qa"
+          },
+          "ui_label": {
+            "serif_usage": "allow-with-review",
+            "body_line_height": "1.4-1.5"
+          }
+        },
+        "warnings": [],
         "rules": [
           "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
           "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
-          "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다."
+          "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
+          "Pretendard 같은 한글 display 헤딩은 line-height를 1.02 미만으로 낮추지 않는다.",
+          "한글 display 헤딩 tracking은 -0.02em ~ 0.01em 범위를 벗어나지 않는다."
         ]
       },
       "type_scale": {
@@ -954,6 +1588,33 @@
         "dense"
       ],
       "visual_density_bias": "dense"
+    },
+    "layout": {
+      "breakpoints_px": [
+        320,
+        360,
+        390,
+        430,
+        768,
+        1024,
+        1440
+      ],
+      "container_rules": [
+        "모든 section/container는 box-sizing: border-box 기준으로 320px viewport에서 overflow-x 없이 맞아야 함",
+        "grid/flex children에는 필요한 경우 min-width: 0 또는 min-inline-size: 0을 명시",
+        "repeat(N, 1fr) 고정 grid는 모바일에서 1열 또는 minmax(0, 1fr) fallback을 제공",
+        "padded container 내부에서 width: 100vw 사용 금지"
+      ],
+      "control_rules": [
+        "Buttons, CTA groups, tabs, filter chips, and toolbar actions must not rely on fixed px widths or mobile-hostile min-width values.",
+        "Every button-like control needs max-inline-size: 100%; controls inside flex/grid parents need min-inline-size: 0 so labels can shrink or wrap.",
+        "Action rows must wrap or stack at narrow widths; two-button rows need a <=480px fallback before implementation is complete.",
+        "Long Korean CTA labels must be tested with real copy. Prefer wrapping/stacking over clipping, overflow hidden, or forcing white-space: nowrap.",
+        "Horizontal rails, tickers, score strips, and carousels must not reveal partially clipped text. Either size cards so visible items are complete, or use compact labels such as icon+code in the rail and move full names to the detailed surface.",
+        "Do not use width: 100vw inside padded containers; it commonly creates horizontal scroll. Use width: 100%, max-width: 100%, or a documented full-bleed pattern.",
+        "Never hide body overflow-x as the fix for a layout bug; remove the overflowing width/min-width instead."
+      ],
+      "viewport_pass_condition": "document.documentElement.scrollWidth <= window.innerWidth and all primary controls remain reachable without horizontal scrolling."
     },
     "radius": {
       "scale": [
@@ -1026,7 +1687,7 @@
       "density_bias": "dense",
       "surface_style": "flat",
       "corner_style": "medium",
-      "typography_mood": "editorial",
+      "typography_mood": "utilitarian",
       "top_layout_cue": "split-pane-workspace"
     }
   }

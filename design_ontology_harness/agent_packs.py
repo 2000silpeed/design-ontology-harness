@@ -65,7 +65,14 @@ def _scaffold_claude_pack(target_repo: Path, artifact_dir: str, force: bool, cre
 
     implement_skill_dir = ensure_dir(skills_dir / "design-system-implement")
     architect_skill_dir = ensure_dir(skills_dir / "design-system-architect")
+    concept_skill_dir = ensure_dir(skills_dir / "design-system-concept-author")
 
+    _write_if_allowed(
+        concept_skill_dir / "SKILL.md",
+        _claude_concept_author_skill(artifact_dir),
+        force=force,
+        created=created,
+    )
     _write_if_allowed(
         implement_skill_dir / "SKILL.md",
         _claude_implement_skill(artifact_dir),
@@ -81,6 +88,12 @@ def _scaffold_claude_pack(target_repo: Path, artifact_dir: str, force: bool, cre
     _write_if_allowed(
         agents_dir / "design-system-architect.md",
         _claude_architect_agent(artifact_dir),
+        force=force,
+        created=created,
+    )
+    _write_if_allowed(
+        agents_dir / "design-system-concept-author.md",
+        _claude_concept_author_agent(artifact_dir),
         force=force,
         created=created,
     )
@@ -138,6 +151,7 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
     plugin_root = ensure_dir(target_repo / "plugins" / "design-system-harness")
     ensure_dir(plugin_root / ".codex-plugin")
     skills_root = ensure_dir(plugin_root / "skills")
+    concept_author_dir = ensure_dir(skills_root / "design-system-concept-author")
     architect_dir = ensure_dir(skills_root / "design-system-architect")
     implementer_dir = ensure_dir(skills_root / "design-system-implementer")
     visual_assets_dir = ensure_dir(skills_root / "design-system-visual-assets")
@@ -157,6 +171,8 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
             "design-system",
             "tokens",
             "ui",
+            "concept-authoring",
+            "layout-skeleton",
             "imagery",
             "reference-inspection",
             "codex",
@@ -165,12 +181,13 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
         "skills": "./skills/",
         "interface": {
             "displayName": "Design System Harness",
-            "shortDescription": "Apply design-system artifacts inside a real implementation repo",
-            "longDescription": "Provides Codex skills for reading design-system artifacts, implementing tokens/components, using advisory website reference inspections without cloning protected site assets, creating brand-aligned generated imagery with the built-in Codex image_gen skill, and using license-verified sourced visual fallback when generation is unavailable or real-world photography is more appropriate. API and CLI image fallbacks are disabled.",
+            "shortDescription": "Author and apply design-system artifacts inside real product repos",
+            "longDescription": "Provides Codex skills for actively authoring product concept and layout skeleton fields before synthesis, reading design-system artifacts, implementing tokens/components, using advisory website reference inspections without cloning protected site assets, creating brand-aligned generated imagery with the built-in Codex image_gen skill, and using license-verified sourced visual fallback when generation is unavailable or real-world photography is more appropriate. API and CLI image fallbacks are disabled.",
             "developerName": "Design Ontology Harness",
             "category": "Coding",
             "capabilities": ["Interactive", "Write"],
             "defaultPrompt": [
+                "Before running synthesis, use the concept-author skill to write application_concept, layout_skeleton, and design_differentiation from the actual app brief",
                 "Implement UI changes using the local design-system artifacts and component inventory",
                 "Ship normal light mode and dark mode together unless a single mode is explicitly requested",
                 "When a screen needs professional imagery, use Codex image_gen first; if unavailable, use license-verified sourced visual fallback without API fallback",
@@ -205,6 +222,12 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
     _write_if_allowed(
         plugin_root / ".codex-plugin" / "plugin.json",
         json.dumps(plugin_manifest, ensure_ascii=False, indent=2) + "\n",
+        force=force,
+        created=created,
+    )
+    _write_if_allowed(
+        concept_author_dir / "SKILL.md",
+        _codex_concept_author_skill(artifact_dir),
         force=force,
         created=created,
     )
@@ -362,6 +385,94 @@ When refactoring existing UI, do not merely report emoji UI affordances. Replace
 """
 
 
+def _claude_concept_author_skill(artifact_dir: str) -> str:
+    return f"""---
+name: design-system-concept-author
+description: 하네스 합성 전에 앱 컨셉, 레이아웃 스켈레톤, 차별화 전략을 LLM이 직접 작성합니다. generated apps가 비슷하게 나올 때, preset 선택이 아니라 제품 컨셉과 화면 뼈대 기준으로 디자인 시스템을 다시 쓰고 싶을 때 사용하세요.
+allowed-tools: Read Glob Grep Bash Edit Write
+paths:
+  - "projects/**"
+  - "{artifact_dir}/**"
+  - "brand_profile.json"
+  - "spec.md"
+  - "README.md"
+---
+
+# Design System Concept Author
+
+Use this skill before `design-ontology run-project`.
+
+Your job is not to choose a preset. Your job is to author the product-specific decisions that the harness will synthesize:
+
+1. `application_concept`
+2. `layout_skeleton`
+3. `design_differentiation`
+4. supporting `product_primitives`, `visual_keywords`, and `interaction_keywords`
+
+## Required inputs
+
+Read the user's brief, then read these files when present:
+
+- `projects/<name>/spec.md`
+- `projects/<name>/brand_profile.json`
+- `{artifact_dir}/brand_profile.json`
+- local screenshots, mockups, or visual reference notes supplied by the user
+
+## Workflow
+
+1. Identify the real first job of the product.
+2. Name the domain objects users inspect, create, compare, approve, move, buy, publish, or monitor.
+3. Define the success moment as a visible workflow state.
+4. Author a custom layout skeleton. Do not limit `composition` to a fixed enum.
+5. Write a concrete first-screen contract that an implementation can pass or fail.
+6. Add structural signature moves that make this app different from a generic dashboard or card wall.
+7. Patch `brand_profile.json`.
+8. Run or recommend:
+
+```bash
+uv run design-ontology run-project --project-dir projects/<name> --kb-dir kb/default
+```
+
+## Field contract
+
+```json
+{{
+  "application_concept": {{
+    "primary_job": "",
+    "domain_objects": [],
+    "operating_mode": "",
+    "success_moment": "",
+    "differentiation": []
+  }},
+  "layout_skeleton": {{
+    "composition": "",
+    "navigation_model": "",
+    "density": "",
+    "primary_regions": [
+      {{"name": "", "role": "", "priority": "primary"}}
+    ],
+    "first_screen_contract": [],
+    "avoid_layouts": []
+  }},
+  "design_differentiation": {{
+    "must_feel_different_from": [],
+    "signature_moves": [],
+    "repetition_risks": []
+  }}
+}}
+```
+
+## Judgment rules
+
+- Do not solve sameness with colors, gradients, shadows, or more component variants.
+- Do not make every product a dashboard. Dashboard is valid only when monitoring metrics is the first job.
+- Do not open with a marketing hero unless the product is a landing page.
+- Use Astryx and Geist only as component taxonomy and state-coverage references, not as identity or layout sources.
+- Prefer concrete screen grammar over adjectives.
+- If two unrelated products could share the same first viewport, the skeleton is too generic.
+"""
+
+
 def _claude_architect_skill(artifact_dir: str) -> str:
     return f"""---
 name: design-system-architect
@@ -495,6 +606,31 @@ Always:
 12. For dashboard/tool/data/community products, make the first viewport task-led and provenance-aware, not a marketing hero plus card wall.
 
 You are primarily a planning and alignment agent, not an implementation agent.
+"""
+
+
+def _claude_concept_author_agent(artifact_dir: str) -> str:
+    return f"""---
+name: design-system-concept-author
+description: Product concept and layout-skeleton author. Use before running the harness when the design system should be generated from the application's concept rather than a preset.
+tools: Read, Glob, Grep, Bash, Edit, Write
+model: sonnet
+color: violet
+---
+
+You are a product concept and design-system author for `design-ontology-harness`.
+
+Before synthesis, actively write the profile decisions that prevent generic outputs:
+
+1. Read the user brief, `spec.md`, and `brand_profile.json`.
+2. Patch `application_concept`, `layout_skeleton`, and `design_differentiation`.
+3. Update generic `product_primitives`, `visual_keywords`, and `interaction_keywords`.
+4. Reject generic SaaS patterns when they are not the real workflow.
+5. Run or recommend `uv run design-ontology run-project --project-dir <project> --kb-dir kb/default`.
+
+Do not choose a preset. Do not let the harness infer the screen structure from rules alone.
+
+Use `{artifact_dir}/system_spec.md` and `{artifact_dir}/token_schema.json` only after synthesis, to verify that the skeleton survived into artifacts.
 """
 
 
@@ -1220,6 +1356,100 @@ You do not implement code by default; hand off to the implementer or rebuild ski
 """
 
 
+def _codex_concept_author_skill(artifact_dir: str) -> str:
+    return f"""---
+name: design-system-concept-author
+description: Author product-specific application concept, layout skeleton, and differentiation fields before running design-ontology synthesis. Use when generated apps feel too similar, when the task is to create a new design system from the application concept rather than use a preset, or before run-project if brand_profile lacks application_concept, layout_skeleton, or design_differentiation.
+---
+
+# Design System Concept Author
+
+Use this skill before running `design-ontology run-project`.
+
+This is an LLM-authored step. Do not let deterministic defaults or a fixed rule table decide the product shape.
+
+## Required Inputs
+
+Read the user's brief, then read available project files:
+
+- `projects/<name>/spec.md`
+- `projects/<name>/brand_profile.json`
+- `brand_profile.json`
+- `spec.md`
+- `{artifact_dir}/brand_profile.json`
+- screenshots, mockups, or local visual references when provided
+
+## Authoring Workflow
+
+1. Extract the product's real first job.
+2. Name the domain objects users inspect, create, compare, approve, move, buy, publish, or monitor.
+3. Define the visible success moment.
+4. Write `application_concept`.
+5. Write `layout_skeleton` as a custom screen grammar, not a preset label.
+6. Write `design_differentiation` with structural signature moves.
+7. Update supporting fields when generic: `product_primitives`, `visual_keywords`, `interaction_keywords`.
+8. Patch `brand_profile.json`.
+9. Run or recommend:
+
+```bash
+uv run design-ontology run-project --project-dir projects/<name> --kb-dir kb/default
+```
+
+10. Verify the generated artifacts contain the authored decisions:
+    - `build/system/blueprint/design_system_blueprint.json`
+    - `build/system/blueprint/system_spec.md`
+    - `build/system/blueprint/token_schema.json`
+
+## Field Contract
+
+```json
+{{
+  "application_concept": {{
+    "primary_job": "",
+    "domain_objects": [],
+    "operating_mode": "",
+    "success_moment": "",
+    "differentiation": []
+  }},
+  "layout_skeleton": {{
+    "composition": "",
+    "navigation_model": "",
+    "density": "",
+    "primary_regions": [
+      {{"name": "", "role": "", "priority": "primary"}}
+    ],
+    "first_screen_contract": [],
+    "avoid_layouts": []
+  }},
+  "design_differentiation": {{
+    "must_feel_different_from": [],
+    "signature_moves": [],
+    "repetition_risks": []
+  }}
+}}
+```
+
+## Anti-Convergence Gate
+
+Before finishing, check:
+
+- Would another unrelated app with similar brand keywords produce the same first viewport?
+- Does `first_screen_contract` name actual above-the-fold regions, controls, state, or domain objects?
+- Are `signature_moves` structural, not decorative?
+- Did `product_primitives` follow from domain objects rather than generic components?
+- Did you explicitly reject generic hero/card/dashboard layouts when they are not the user's real workflow?
+
+## Rules
+
+- Do not choose a preset.
+- Do not solve sameness with more color, gradients, shadows, or component variants.
+- Do not make every product a dashboard; dashboard is valid only when monitoring metrics is the first job.
+- Do not open with a marketing hero unless the product is a landing page.
+- Use Astryx and Geist only as component taxonomy and state-coverage references.
+- Prefer concrete screen grammar over adjectives.
+"""
+
+
 def _codex_architect_skill(artifact_dir: str) -> str:
     return f"""---
 name: design-system-architect
@@ -1594,8 +1824,8 @@ For Korean-first products, include Hangul-safe composition constraints:
 
 def _codex_plugin_openai_yaml() -> str:
     return """display_name: Design System Harness
-short_description: Apply local design-system artifacts and brand imagery inside implementation repos
-default_prompt: Implement UI changes using the design-system artifacts in this repository; use website reference inspections only as advisory morphology/density/interaction evidence; lead dashboard/tool/data products with operational surfaces; use Codex image_gen first for professional imagery, then license-verified sourced visual fallback when needed, without API fallback
+short_description: Author app concepts and apply local design-system artifacts
+default_prompt: Use $design-system-concept-author to author application_concept, layout_skeleton, and design_differentiation before synthesis; then implement UI changes using the generated design-system artifacts; use website reference inspections only as advisory morphology/density/interaction evidence
 """
 
 

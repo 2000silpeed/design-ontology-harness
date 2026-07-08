@@ -1,0 +1,1150 @@
+{
+  "schema_version": "aesthetic-evaluation-ontology/v1",
+  "dimensions": [
+    {
+      "id": "visual_harmony",
+      "label": "Visual harmony",
+      "weight": 0.24,
+      "description": "How coherently color, type, spacing, and composition work together.",
+      "metrics": [
+        "color_harmony",
+        "spacing_consistency",
+        "typography_balance",
+        "composition_order"
+      ]
+    },
+    {
+      "id": "clarity",
+      "label": "Clarity",
+      "weight": 0.2,
+      "description": "How quickly the intended hierarchy, action, and information structure can be read.",
+      "metrics": [
+        "hierarchy_clarity",
+        "contrast_legibility",
+        "content_density_control",
+        "task_focus"
+      ]
+    },
+    {
+      "id": "brand_fit",
+      "label": "Brand fit",
+      "weight": 0.18,
+      "description": "How well the candidate expresses the intended brand posture and avoids anti-keywords.",
+      "metrics": [
+        "keyword_alignment",
+        "tone_alignment",
+        "domain_fit",
+        "anti_keyword_avoidance"
+      ]
+    },
+    {
+      "id": "emotional_appeal",
+      "label": "Emotional appeal",
+      "weight": 0.14,
+      "description": "How desirable, confident, and affectively appropriate the surface feels.",
+      "metrics": [
+        "desirability",
+        "confidence_signal",
+        "warmth_or_energy"
+      ]
+    },
+    {
+      "id": "craft_quality",
+      "label": "Craft quality",
+      "weight": 0.14,
+      "description": "How polished and implementation-ready the candidate is across fit, tokens, and affordances.",
+      "metrics": [
+        "responsive_fit",
+        "token_binding",
+        "accessibility_baseline",
+        "interaction_affordance",
+        "asset_completeness"
+      ]
+    },
+    {
+      "id": "novelty",
+      "label": "Novelty",
+      "weight": 0.1,
+      "description": "How distinctive the design is without breaking its product and brand constraints.",
+      "metrics": [
+        "distinctiveness",
+        "reference_transformation",
+        "memorability"
+      ]
+    },
+    {
+      "id": "brand_semantic_fit",
+      "label": "Brand semantic fit",
+      "weight": 0.22,
+      "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+      "metrics": [
+        "brand_keyword:conversation-copilot-baed2e68",
+        "brand_keyword:copilot-9b794bcc",
+        "brand_keyword:assistant-27a9612b",
+        "brand_keyword:chat-7ecde348",
+        "brand_keyword:prompt-9c7e05e5",
+        "brand_keyword:thread-c283e375",
+        "brand_keyword:artifact-1e5dcbb5",
+        "brand_keyword:writing-assistant-70ac9a9b",
+        "brand_tone:calm-2ec3d0c7",
+        "brand_tone:thoughtful-b492d144",
+        "brand_tone:editorial-980a8caf",
+        "brand_tone:warm-d83fc386",
+        "brand_tone:measured-38130e34"
+      ],
+      "research_basis": [
+        "kansei",
+        "aesthemos"
+      ]
+    },
+    {
+      "id": "brand_boundary_fit",
+      "label": "Brand boundary fit",
+      "weight": 0.16,
+      "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+      "metrics": [
+        "anti_keyword:minimal-tech-54872a07",
+        "anti_keyword:bold-confident-cf0df8db",
+        "anti_keyword:saturated-08598c70",
+        "anti_keyword:playful-pastel-2f4f8e24",
+        "anti_keyword:dashboard-heavy-98cd5dbc",
+        "anti_keyword:commerce-heavy-5b857b54",
+        "anti_keyword:streetwear-96c27fa7",
+        "anti_keyword:high-contrast-1c4cbbf3",
+        "avoid_pattern:saturated-commerce-hero-f0728f90",
+        "avoid_pattern:neon-bold-dashboard-d578b493",
+        "avoid_pattern:playful-pastel-feed-c19480cc",
+        "avoid_pattern:dense-chart-monitoring-canvas-ef638163",
+        "avoid_pattern:streetwear-drop-banner-9ff38ad5"
+      ],
+      "research_basis": [
+        "kansei"
+      ]
+    },
+    {
+      "id": "product_ontology_fit",
+      "label": "Product ontology fit",
+      "weight": 0.22,
+      "description": "How clearly product primitives and ontology-required signals appear in the design.",
+      "metrics": [
+        "product_primitive:chat-message-dca64e54",
+        "product_primitive:chat-thread-cf4e3815",
+        "product_primitive:assistant-message-6e9886f9",
+        "product_primitive:user-message-ca54f8f4",
+        "product_primitive:prompt-composer-4781a6ae",
+        "product_primitive:streaming-cursor-73639833",
+        "product_primitive:typing-indicator-addd4cda",
+        "product_primitive:inline-citation-81bf1d17",
+        "product_primitive:message-artifact-f11b4fc4",
+        "product_primitive:artifact-preview-panel-eb28a556",
+        "must_include:three-pane-writing-copilot-thread-li-78bf05d0",
+        "must_include:prompt-composer-with-streaming-curso-1cfb972e",
+        "must_include:writing-artifact-preview-panel-with-fb151eb3",
+        "must_include:citation-footnote-hover-state-inline-f4506596",
+        "must_include:tone-slider-reading-mode-toggle-on-a-2d920297"
+      ],
+      "research_basis": [
+        "beauvis",
+        "kansei"
+      ]
+    },
+    {
+      "id": "audience_context_fit",
+      "label": "Audience context fit",
+      "weight": 0.12,
+      "description": "How well the design serves declared users, platforms, and accessibility floors.",
+      "metrics": [
+        "audience_need:에세이-뉴스레터-블로그-글쓰기-작가-차분한-writing-part-293c51ec",
+        "audience_need:저널-독서-노트-북-리뷰를-기록하는-reading-first-사용-e178f5fd",
+        "audience_need:매거진-에디토리얼-에디터-ai-드래프트-편집-아티팩트-리뷰-33c102d0",
+        "accessibility_target:wcag-2-2-aa-41a998cd"
+      ],
+      "research_basis": [
+        "visawi",
+        "aesthemos"
+      ]
+    }
+  ],
+  "metrics": {
+    "color_harmony": {
+      "label": "Color harmony",
+      "improvement": "Tighten the palette around one primary accent, one neutral surface ladder, and explicit semantic roles.",
+      "expected_lift": 0.08
+    },
+    "spacing_consistency": {
+      "label": "Spacing consistency",
+      "improvement": "Normalize page rhythm with shared spacing steps for section, cluster, and control gaps.",
+      "expected_lift": 0.07
+    },
+    "typography_balance": {
+      "label": "Typography balance",
+      "improvement": "Rebalance type hierarchy so headings, body, captions, and controls use distinct but restrained roles.",
+      "expected_lift": 0.07
+    },
+    "composition_order": {
+      "label": "Composition order",
+      "improvement": "Strengthen alignment, focal sequence, and proportional grouping before adding more decoration.",
+      "expected_lift": 0.08
+    },
+    "hierarchy_clarity": {
+      "label": "Hierarchy clarity",
+      "improvement": "Make the primary state, primary action, and next-best secondary action visible in the first scan.",
+      "expected_lift": 0.09
+    },
+    "contrast_legibility": {
+      "label": "Contrast and legibility",
+      "improvement": "Raise text/background and control/border contrast while preserving the selected token roles.",
+      "expected_lift": 0.08
+    },
+    "content_density_control": {
+      "label": "Content density control",
+      "improvement": "Reduce competing modules or group dense content into scannable rows, tables, rails, or panels.",
+      "expected_lift": 0.07
+    },
+    "task_focus": {
+      "label": "Task focus",
+      "improvement": "Move decorative or pitch-like content below the operational surface that supports the user's main task.",
+      "expected_lift": 0.08
+    },
+    "keyword_alignment": {
+      "label": "Keyword alignment",
+      "improvement": "Map the strongest brand keywords to visible choices in layout, tone, density, and component emphasis.",
+      "expected_lift": 0.08
+    },
+    "tone_alignment": {
+      "label": "Tone alignment",
+      "improvement": "Adjust copy weight, control styling, and visual temperature to match the intended voice.",
+      "expected_lift": 0.06
+    },
+    "domain_fit": {
+      "label": "Domain fit",
+      "improvement": "Add domain-native structures such as tables, maps, media, timelines, inspectors, or product objects where relevant.",
+      "expected_lift": 0.08
+    },
+    "anti_keyword_avoidance": {
+      "label": "Anti-keyword avoidance",
+      "improvement": "Remove visual tropes that match the brand profile's anti-keywords before polishing details.",
+      "expected_lift": 0.06
+    },
+    "desirability": {
+      "label": "Desirability",
+      "improvement": "Give the primary surface a more intentional visual reward: stronger imagery, tactile controls, or clearer payoff.",
+      "expected_lift": 0.07
+    },
+    "confidence_signal": {
+      "label": "Confidence signal",
+      "improvement": "Add evidence, provenance, precision, or stable UI states that make the surface feel trustworthy.",
+      "expected_lift": 0.07
+    },
+    "warmth_or_energy": {
+      "label": "Warmth or energy",
+      "improvement": "Tune motion, image choice, accent placement, or microcopy energy to the target audience.",
+      "expected_lift": 0.06
+    },
+    "responsive_fit": {
+      "label": "Responsive fit",
+      "improvement": "Verify mobile and desktop fit, then fix overflow, clipped labels, and unstable control sizing.",
+      "expected_lift": 0.08
+    },
+    "token_binding": {
+      "label": "Token binding",
+      "improvement": "Replace local visual constants with design-system tokens and keep semantic roles consistent.",
+      "expected_lift": 0.06
+    },
+    "accessibility_baseline": {
+      "label": "Accessibility baseline",
+      "improvement": "Check contrast, focus states, labels, and target sizes as part of visual polish, not after it.",
+      "expected_lift": 0.07
+    },
+    "interaction_affordance": {
+      "label": "Interaction affordance",
+      "improvement": "Make controls, filters, state chips, and navigation visually legible with icons, state, and hit-area clarity.",
+      "expected_lift": 0.07
+    },
+    "asset_completeness": {
+      "label": "Asset completeness",
+      "improvement": "Use concrete product, place, object, identity, or content assets where the domain expects visual substance.",
+      "expected_lift": 0.08
+    },
+    "distinctiveness": {
+      "label": "Distinctiveness",
+      "improvement": "Introduce one memorable composition or interaction pattern while keeping the rest of the system restrained.",
+      "expected_lift": 0.06
+    },
+    "reference_transformation": {
+      "label": "Reference transformation",
+      "improvement": "Absorb reference morphology without copying palette, copy, IA, or protected asset choices.",
+      "expected_lift": 0.06
+    },
+    "memorability": {
+      "label": "Memorability",
+      "improvement": "Create a recognizable signature in the first viewport through layout, identity asset, or product-native visual.",
+      "expected_lift": 0.06
+    },
+    "brand_keyword:conversation-copilot-baed2e68": {
+      "label": "Expresses brand keyword: conversation-copilot",
+      "improvement": "Make 'conversation-copilot' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "conversation-copilot"
+    },
+    "brand_keyword:copilot-9b794bcc": {
+      "label": "Expresses brand keyword: copilot",
+      "improvement": "Make 'copilot' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "copilot"
+    },
+    "brand_keyword:assistant-27a9612b": {
+      "label": "Expresses brand keyword: assistant",
+      "improvement": "Make 'assistant' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "assistant"
+    },
+    "brand_keyword:chat-7ecde348": {
+      "label": "Expresses brand keyword: chat",
+      "improvement": "Make 'chat' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "chat"
+    },
+    "brand_keyword:prompt-9c7e05e5": {
+      "label": "Expresses brand keyword: prompt",
+      "improvement": "Make 'prompt' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "prompt"
+    },
+    "brand_keyword:thread-c283e375": {
+      "label": "Expresses brand keyword: thread",
+      "improvement": "Make 'thread' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "thread"
+    },
+    "brand_keyword:artifact-1e5dcbb5": {
+      "label": "Expresses brand keyword: artifact",
+      "improvement": "Make 'artifact' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "artifact"
+    },
+    "brand_keyword:writing-assistant-70ac9a9b": {
+      "label": "Expresses brand keyword: writing-assistant",
+      "improvement": "Make 'writing-assistant' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "writing-assistant"
+    },
+    "brand_tone:calm-2ec3d0c7": {
+      "label": "Expresses tone of voice: calm",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'calm'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "calm"
+    },
+    "brand_tone:thoughtful-b492d144": {
+      "label": "Expresses tone of voice: thoughtful",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'thoughtful'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "thoughtful"
+    },
+    "brand_tone:editorial-980a8caf": {
+      "label": "Expresses tone of voice: editorial",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'editorial'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "editorial"
+    },
+    "brand_tone:warm-d83fc386": {
+      "label": "Expresses tone of voice: warm",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'warm'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "warm"
+    },
+    "brand_tone:measured-38130e34": {
+      "label": "Expresses tone of voice: measured",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'measured'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "measured"
+    },
+    "anti_keyword:minimal-tech-54872a07": {
+      "label": "Avoids anti-keyword: minimal-tech",
+      "improvement": "Remove cues that make the product read as 'minimal-tech'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "minimal-tech"
+    },
+    "anti_keyword:bold-confident-cf0df8db": {
+      "label": "Avoids anti-keyword: bold-confident",
+      "improvement": "Remove cues that make the product read as 'bold-confident'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "bold-confident"
+    },
+    "anti_keyword:saturated-08598c70": {
+      "label": "Avoids anti-keyword: saturated",
+      "improvement": "Remove cues that make the product read as 'saturated'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "saturated"
+    },
+    "anti_keyword:playful-pastel-2f4f8e24": {
+      "label": "Avoids anti-keyword: playful-pastel",
+      "improvement": "Remove cues that make the product read as 'playful-pastel'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "playful-pastel"
+    },
+    "anti_keyword:dashboard-heavy-98cd5dbc": {
+      "label": "Avoids anti-keyword: dashboard-heavy",
+      "improvement": "Remove cues that make the product read as 'dashboard-heavy'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "dashboard-heavy"
+    },
+    "anti_keyword:commerce-heavy-5b857b54": {
+      "label": "Avoids anti-keyword: commerce-heavy",
+      "improvement": "Remove cues that make the product read as 'commerce-heavy'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "commerce-heavy"
+    },
+    "anti_keyword:streetwear-96c27fa7": {
+      "label": "Avoids anti-keyword: streetwear",
+      "improvement": "Remove cues that make the product read as 'streetwear'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "streetwear"
+    },
+    "anti_keyword:high-contrast-1c4cbbf3": {
+      "label": "Avoids anti-keyword: high-contrast",
+      "improvement": "Remove cues that make the product read as 'high-contrast'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "high-contrast"
+    },
+    "avoid_pattern:saturated-commerce-hero-f0728f90": {
+      "label": "Avoids visual pattern: saturated commerce hero",
+      "improvement": "Replace 'saturated commerce hero' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "saturated commerce hero"
+    },
+    "avoid_pattern:neon-bold-dashboard-d578b493": {
+      "label": "Avoids visual pattern: neon bold dashboard",
+      "improvement": "Replace 'neon bold dashboard' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "neon bold dashboard"
+    },
+    "avoid_pattern:playful-pastel-feed-c19480cc": {
+      "label": "Avoids visual pattern: playful pastel feed",
+      "improvement": "Replace 'playful pastel feed' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "playful pastel feed"
+    },
+    "avoid_pattern:dense-chart-monitoring-canvas-ef638163": {
+      "label": "Avoids visual pattern: dense chart monitoring canvas",
+      "improvement": "Replace 'dense chart monitoring canvas' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "dense chart monitoring canvas"
+    },
+    "avoid_pattern:streetwear-drop-banner-9ff38ad5": {
+      "label": "Avoids visual pattern: streetwear drop banner",
+      "improvement": "Replace 'streetwear drop banner' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "streetwear drop banner"
+    },
+    "product_primitive:chat-message-dca64e54": {
+      "label": "Embodies product primitive: chat message",
+      "improvement": "Represent 'chat message' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "chat message"
+    },
+    "product_primitive:chat-thread-cf4e3815": {
+      "label": "Embodies product primitive: chat thread",
+      "improvement": "Represent 'chat thread' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "chat thread"
+    },
+    "product_primitive:assistant-message-6e9886f9": {
+      "label": "Embodies product primitive: assistant message",
+      "improvement": "Represent 'assistant message' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "assistant message"
+    },
+    "product_primitive:user-message-ca54f8f4": {
+      "label": "Embodies product primitive: user message",
+      "improvement": "Represent 'user message' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "user message"
+    },
+    "product_primitive:prompt-composer-4781a6ae": {
+      "label": "Embodies product primitive: prompt composer",
+      "improvement": "Represent 'prompt composer' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "prompt composer"
+    },
+    "product_primitive:streaming-cursor-73639833": {
+      "label": "Embodies product primitive: streaming cursor",
+      "improvement": "Represent 'streaming cursor' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "streaming cursor"
+    },
+    "product_primitive:typing-indicator-addd4cda": {
+      "label": "Embodies product primitive: typing indicator",
+      "improvement": "Represent 'typing indicator' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "typing indicator"
+    },
+    "product_primitive:inline-citation-81bf1d17": {
+      "label": "Embodies product primitive: inline citation",
+      "improvement": "Represent 'inline citation' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "inline citation"
+    },
+    "product_primitive:message-artifact-f11b4fc4": {
+      "label": "Embodies product primitive: message artifact",
+      "improvement": "Represent 'message artifact' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "message artifact"
+    },
+    "product_primitive:artifact-preview-panel-eb28a556": {
+      "label": "Embodies product primitive: artifact preview panel",
+      "improvement": "Represent 'artifact preview panel' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "artifact preview panel"
+    },
+    "must_include:three-pane-writing-copilot-thread-li-78bf05d0": {
+      "label": "Includes required visual/system signal: three-pane writing copilot (thread list + conversation + artifact preview panel)",
+      "improvement": "Make 'three-pane writing copilot (thread list + conversation + artifact preview panel)' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "three-pane writing copilot (thread list + conversation + artifact preview panel)"
+    },
+    "must_include:prompt-composer-with-streaming-curso-1cfb972e": {
+      "label": "Includes required visual/system signal: prompt composer with streaming cursor + suggestion card",
+      "improvement": "Make 'prompt composer with streaming cursor + suggestion card' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "prompt composer with streaming cursor + suggestion card"
+    },
+    "must_include:writing-artifact-preview-panel-with-fb151eb3": {
+      "label": "Includes required visual/system signal: writing artifact preview panel with outline sidebar + heading anchor + revision timeline",
+      "improvement": "Make 'writing artifact preview panel with outline sidebar + heading anchor + revision timeline' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "writing artifact preview panel with outline sidebar + heading anchor + revision timeline"
+    },
+    "must_include:citation-footnote-hover-state-inline-f4506596": {
+      "label": "Includes required visual/system signal: citation footnote hover state + inline citation chip",
+      "improvement": "Make 'citation footnote hover state + inline citation chip' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "citation footnote hover state + inline citation chip"
+    },
+    "must_include:tone-slider-reading-mode-toggle-on-a-2d920297": {
+      "label": "Includes required visual/system signal: tone slider + reading-mode toggle on artifact header",
+      "improvement": "Make 'tone slider + reading-mode toggle on artifact header' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "tone slider + reading-mode toggle on artifact header"
+    },
+    "audience_need:에세이-뉴스레터-블로그-글쓰기-작가-차분한-writing-part-293c51ec": {
+      "label": "Fits audience context: 에세이 / 뉴스레터 / 블로그 글쓰기 작가 (차분한 writing partner 필요)",
+      "improvement": "Adjust density, language, workflow order, and controls for '에세이 / 뉴스레터 / 블로그 글쓰기 작가 (차분한 writing partner 필요)'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "에세이 / 뉴스레터 / 블로그 글쓰기 작가 (차분한 writing partner 필요)"
+    },
+    "audience_need:저널-독서-노트-북-리뷰를-기록하는-reading-first-사용-e178f5fd": {
+      "label": "Fits audience context: 저널 / 독서 노트 / 북 리뷰를 기록하는 reading-first 사용자",
+      "improvement": "Adjust density, language, workflow order, and controls for '저널 / 독서 노트 / 북 리뷰를 기록하는 reading-first 사용자'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "저널 / 독서 노트 / 북 리뷰를 기록하는 reading-first 사용자"
+    },
+    "audience_need:매거진-에디토리얼-에디터-ai-드래프트-편집-아티팩트-리뷰-33c102d0": {
+      "label": "Fits audience context: 매거진 / 에디토리얼 에디터 (AI 드래프트 편집 + 아티팩트 리뷰)",
+      "improvement": "Adjust density, language, workflow order, and controls for '매거진 / 에디토리얼 에디터 (AI 드래프트 편집 + 아티팩트 리뷰)'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "매거진 / 에디토리얼 에디터 (AI 드래프트 편집 + 아티팩트 리뷰)"
+    },
+    "accessibility_target:wcag-2-2-aa-41a998cd": {
+      "label": "Supports accessibility target: WCAG 2.2 AA",
+      "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "WCAG 2.2 AA"
+    }
+  },
+  "relations": [
+    {
+      "source": "DesignCandidate",
+      "relation": "evaluated_by",
+      "target": "AestheticDimension"
+    },
+    {
+      "source": "AestheticDimension",
+      "relation": "measured_by",
+      "target": "AestheticMetric"
+    },
+    {
+      "source": "AestheticMetric",
+      "relation": "improved_by",
+      "target": "ImprovementAction"
+    },
+    {
+      "source": "AestheticEvaluation",
+      "relation": "gates",
+      "target": "Execution"
+    }
+  ],
+  "context": {
+    "brand_name": "Quill",
+    "system_name": "Quill System",
+    "product_summary": "editorial-warm 톤 writing/reading AI copilot — chat · prompt · artifact(draft) · thread · composer, 차분한 warm neutral + serif-ish pairing, reading-first editorial canvas, 한국어 1급",
+    "audiences": [
+      "에세이 / 뉴스레터 / 블로그 글쓰기 작가 (차분한 writing partner 필요)",
+      "저널 / 독서 노트 / 북 리뷰를 기록하는 reading-first 사용자",
+      "매거진 / 에디토리얼 에디터 (AI 드래프트 편집 + 아티팩트 리뷰)"
+    ],
+    "brand_keywords": [
+      "conversation-copilot",
+      "copilot",
+      "assistant",
+      "chat",
+      "prompt",
+      "thread",
+      "artifact",
+      "writing-assistant",
+      "editorial-copilot",
+      "essay-draft",
+      "newsletter-draft",
+      "calm",
+      "warm",
+      "editorial",
+      "serif"
+    ],
+    "anti_keywords": [
+      "minimal-tech",
+      "bold-confident",
+      "saturated",
+      "playful-pastel",
+      "dashboard-heavy",
+      "commerce-heavy",
+      "streetwear",
+      "high-contrast",
+      "neon"
+    ],
+    "tone_of_voice": [
+      "calm",
+      "thoughtful",
+      "editorial",
+      "warm",
+      "measured"
+    ],
+    "product_primitives": [
+      "chat message",
+      "chat thread",
+      "assistant message",
+      "user message",
+      "prompt composer",
+      "streaming cursor",
+      "typing indicator",
+      "inline citation",
+      "message artifact",
+      "artifact preview panel",
+      "draft document",
+      "outline sidebar",
+      "heading anchor",
+      "revision timeline",
+      "tone slider",
+      "reading-mode toggle",
+      "citation footnote",
+      "quote block",
+      "paragraph block",
+      "mention chip",
+      "suggestion card",
+      "thread header",
+      "new thread button",
+      "regenerate button",
+      "stop-generation button",
+      "empty conversation state"
+    ]
+  },
+  "brand_aesthetic_contract": {
+    "schema_version": "brand-aesthetic-contract/v1",
+    "brand_name": "Quill",
+    "system_name": "Quill System",
+    "research_basis": [
+      {
+        "id": "visawi",
+        "label": "VisAWI",
+        "construct": "perceived website visual aesthetics",
+        "operational_use": "Map simplicity, diversity, colorfulness, and craftsmanship into visual system coherence metrics.",
+        "source_url": "https://www.sciencedirect.com/science/article/pii/S1071581910000777"
+      },
+      {
+        "id": "apid",
+        "label": "APiD",
+        "construct": "aesthetic pleasure in designed artifacts",
+        "operational_use": "Keep a direct pleasure/desirability layer instead of only formal pixel metrics.",
+        "source_url": "https://opus.lib.uts.edu.au/handle/10453/81276"
+      },
+      {
+        "id": "beauvis",
+        "label": "BeauVis",
+        "construct": "aesthetic pleasure of visual representations",
+        "operational_use": "Treat scores as comparative, context-bound judgments rather than universal beauty values.",
+        "source_url": "https://arxiv.org/abs/2207.14147"
+      },
+      {
+        "id": "aesthemos",
+        "label": "AESTHEMOS",
+        "construct": "aesthetic emotions",
+        "operational_use": "Translate brand tone and target affect into measurable emotional-response proxies.",
+        "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0178899"
+      },
+      {
+        "id": "kansei",
+        "label": "Kansei / semantic differential",
+        "construct": "design element to impression mapping",
+        "operational_use": "Use brand keywords and anti-keywords as semantic impression targets and boundaries.",
+        "source_url": "https://www.mdpi.com/2073-8994/12/8/1340"
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "brand_semantic_fit",
+        "label": "Brand semantic fit",
+        "weight": 0.22,
+        "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+        "metrics": [
+          "brand_keyword:conversation-copilot-baed2e68",
+          "brand_keyword:copilot-9b794bcc",
+          "brand_keyword:assistant-27a9612b",
+          "brand_keyword:chat-7ecde348",
+          "brand_keyword:prompt-9c7e05e5",
+          "brand_keyword:thread-c283e375",
+          "brand_keyword:artifact-1e5dcbb5",
+          "brand_keyword:writing-assistant-70ac9a9b",
+          "brand_tone:calm-2ec3d0c7",
+          "brand_tone:thoughtful-b492d144",
+          "brand_tone:editorial-980a8caf",
+          "brand_tone:warm-d83fc386",
+          "brand_tone:measured-38130e34"
+        ],
+        "research_basis": [
+          "kansei",
+          "aesthemos"
+        ]
+      },
+      {
+        "id": "brand_boundary_fit",
+        "label": "Brand boundary fit",
+        "weight": 0.16,
+        "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+        "metrics": [
+          "anti_keyword:minimal-tech-54872a07",
+          "anti_keyword:bold-confident-cf0df8db",
+          "anti_keyword:saturated-08598c70",
+          "anti_keyword:playful-pastel-2f4f8e24",
+          "anti_keyword:dashboard-heavy-98cd5dbc",
+          "anti_keyword:commerce-heavy-5b857b54",
+          "anti_keyword:streetwear-96c27fa7",
+          "anti_keyword:high-contrast-1c4cbbf3",
+          "avoid_pattern:saturated-commerce-hero-f0728f90",
+          "avoid_pattern:neon-bold-dashboard-d578b493",
+          "avoid_pattern:playful-pastel-feed-c19480cc",
+          "avoid_pattern:dense-chart-monitoring-canvas-ef638163",
+          "avoid_pattern:streetwear-drop-banner-9ff38ad5"
+        ],
+        "research_basis": [
+          "kansei"
+        ]
+      },
+      {
+        "id": "product_ontology_fit",
+        "label": "Product ontology fit",
+        "weight": 0.22,
+        "description": "How clearly product primitives and ontology-required signals appear in the design.",
+        "metrics": [
+          "product_primitive:chat-message-dca64e54",
+          "product_primitive:chat-thread-cf4e3815",
+          "product_primitive:assistant-message-6e9886f9",
+          "product_primitive:user-message-ca54f8f4",
+          "product_primitive:prompt-composer-4781a6ae",
+          "product_primitive:streaming-cursor-73639833",
+          "product_primitive:typing-indicator-addd4cda",
+          "product_primitive:inline-citation-81bf1d17",
+          "product_primitive:message-artifact-f11b4fc4",
+          "product_primitive:artifact-preview-panel-eb28a556",
+          "must_include:three-pane-writing-copilot-thread-li-78bf05d0",
+          "must_include:prompt-composer-with-streaming-curso-1cfb972e",
+          "must_include:writing-artifact-preview-panel-with-fb151eb3",
+          "must_include:citation-footnote-hover-state-inline-f4506596",
+          "must_include:tone-slider-reading-mode-toggle-on-a-2d920297"
+        ],
+        "research_basis": [
+          "beauvis",
+          "kansei"
+        ]
+      },
+      {
+        "id": "audience_context_fit",
+        "label": "Audience context fit",
+        "weight": 0.12,
+        "description": "How well the design serves declared users, platforms, and accessibility floors.",
+        "metrics": [
+          "audience_need:에세이-뉴스레터-블로그-글쓰기-작가-차분한-writing-part-293c51ec",
+          "audience_need:저널-독서-노트-북-리뷰를-기록하는-reading-first-사용-e178f5fd",
+          "audience_need:매거진-에디토리얼-에디터-ai-드래프트-편집-아티팩트-리뷰-33c102d0",
+          "accessibility_target:wcag-2-2-aa-41a998cd"
+        ],
+        "research_basis": [
+          "visawi",
+          "aesthemos"
+        ]
+      }
+    ],
+    "metrics": {
+      "brand_keyword:conversation-copilot-baed2e68": {
+        "label": "Expresses brand keyword: conversation-copilot",
+        "improvement": "Make 'conversation-copilot' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "conversation-copilot"
+      },
+      "brand_keyword:copilot-9b794bcc": {
+        "label": "Expresses brand keyword: copilot",
+        "improvement": "Make 'copilot' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "copilot"
+      },
+      "brand_keyword:assistant-27a9612b": {
+        "label": "Expresses brand keyword: assistant",
+        "improvement": "Make 'assistant' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "assistant"
+      },
+      "brand_keyword:chat-7ecde348": {
+        "label": "Expresses brand keyword: chat",
+        "improvement": "Make 'chat' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "chat"
+      },
+      "brand_keyword:prompt-9c7e05e5": {
+        "label": "Expresses brand keyword: prompt",
+        "improvement": "Make 'prompt' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "prompt"
+      },
+      "brand_keyword:thread-c283e375": {
+        "label": "Expresses brand keyword: thread",
+        "improvement": "Make 'thread' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "thread"
+      },
+      "brand_keyword:artifact-1e5dcbb5": {
+        "label": "Expresses brand keyword: artifact",
+        "improvement": "Make 'artifact' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "artifact"
+      },
+      "brand_keyword:writing-assistant-70ac9a9b": {
+        "label": "Expresses brand keyword: writing-assistant",
+        "improvement": "Make 'writing-assistant' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "writing-assistant"
+      },
+      "brand_tone:calm-2ec3d0c7": {
+        "label": "Expresses tone of voice: calm",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'calm'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "calm"
+      },
+      "brand_tone:thoughtful-b492d144": {
+        "label": "Expresses tone of voice: thoughtful",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'thoughtful'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "thoughtful"
+      },
+      "brand_tone:editorial-980a8caf": {
+        "label": "Expresses tone of voice: editorial",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'editorial'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "editorial"
+      },
+      "brand_tone:warm-d83fc386": {
+        "label": "Expresses tone of voice: warm",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'warm'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "warm"
+      },
+      "brand_tone:measured-38130e34": {
+        "label": "Expresses tone of voice: measured",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'measured'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "measured"
+      },
+      "anti_keyword:minimal-tech-54872a07": {
+        "label": "Avoids anti-keyword: minimal-tech",
+        "improvement": "Remove cues that make the product read as 'minimal-tech'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "minimal-tech"
+      },
+      "anti_keyword:bold-confident-cf0df8db": {
+        "label": "Avoids anti-keyword: bold-confident",
+        "improvement": "Remove cues that make the product read as 'bold-confident'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "bold-confident"
+      },
+      "anti_keyword:saturated-08598c70": {
+        "label": "Avoids anti-keyword: saturated",
+        "improvement": "Remove cues that make the product read as 'saturated'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "saturated"
+      },
+      "anti_keyword:playful-pastel-2f4f8e24": {
+        "label": "Avoids anti-keyword: playful-pastel",
+        "improvement": "Remove cues that make the product read as 'playful-pastel'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "playful-pastel"
+      },
+      "anti_keyword:dashboard-heavy-98cd5dbc": {
+        "label": "Avoids anti-keyword: dashboard-heavy",
+        "improvement": "Remove cues that make the product read as 'dashboard-heavy'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "dashboard-heavy"
+      },
+      "anti_keyword:commerce-heavy-5b857b54": {
+        "label": "Avoids anti-keyword: commerce-heavy",
+        "improvement": "Remove cues that make the product read as 'commerce-heavy'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "commerce-heavy"
+      },
+      "anti_keyword:streetwear-96c27fa7": {
+        "label": "Avoids anti-keyword: streetwear",
+        "improvement": "Remove cues that make the product read as 'streetwear'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "streetwear"
+      },
+      "anti_keyword:high-contrast-1c4cbbf3": {
+        "label": "Avoids anti-keyword: high-contrast",
+        "improvement": "Remove cues that make the product read as 'high-contrast'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "high-contrast"
+      },
+      "avoid_pattern:saturated-commerce-hero-f0728f90": {
+        "label": "Avoids visual pattern: saturated commerce hero",
+        "improvement": "Replace 'saturated commerce hero' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "saturated commerce hero"
+      },
+      "avoid_pattern:neon-bold-dashboard-d578b493": {
+        "label": "Avoids visual pattern: neon bold dashboard",
+        "improvement": "Replace 'neon bold dashboard' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "neon bold dashboard"
+      },
+      "avoid_pattern:playful-pastel-feed-c19480cc": {
+        "label": "Avoids visual pattern: playful pastel feed",
+        "improvement": "Replace 'playful pastel feed' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "playful pastel feed"
+      },
+      "avoid_pattern:dense-chart-monitoring-canvas-ef638163": {
+        "label": "Avoids visual pattern: dense chart monitoring canvas",
+        "improvement": "Replace 'dense chart monitoring canvas' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "dense chart monitoring canvas"
+      },
+      "avoid_pattern:streetwear-drop-banner-9ff38ad5": {
+        "label": "Avoids visual pattern: streetwear drop banner",
+        "improvement": "Replace 'streetwear drop banner' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "streetwear drop banner"
+      },
+      "product_primitive:chat-message-dca64e54": {
+        "label": "Embodies product primitive: chat message",
+        "improvement": "Represent 'chat message' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "chat message"
+      },
+      "product_primitive:chat-thread-cf4e3815": {
+        "label": "Embodies product primitive: chat thread",
+        "improvement": "Represent 'chat thread' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "chat thread"
+      },
+      "product_primitive:assistant-message-6e9886f9": {
+        "label": "Embodies product primitive: assistant message",
+        "improvement": "Represent 'assistant message' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "assistant message"
+      },
+      "product_primitive:user-message-ca54f8f4": {
+        "label": "Embodies product primitive: user message",
+        "improvement": "Represent 'user message' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "user message"
+      },
+      "product_primitive:prompt-composer-4781a6ae": {
+        "label": "Embodies product primitive: prompt composer",
+        "improvement": "Represent 'prompt composer' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "prompt composer"
+      },
+      "product_primitive:streaming-cursor-73639833": {
+        "label": "Embodies product primitive: streaming cursor",
+        "improvement": "Represent 'streaming cursor' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "streaming cursor"
+      },
+      "product_primitive:typing-indicator-addd4cda": {
+        "label": "Embodies product primitive: typing indicator",
+        "improvement": "Represent 'typing indicator' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "typing indicator"
+      },
+      "product_primitive:inline-citation-81bf1d17": {
+        "label": "Embodies product primitive: inline citation",
+        "improvement": "Represent 'inline citation' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "inline citation"
+      },
+      "product_primitive:message-artifact-f11b4fc4": {
+        "label": "Embodies product primitive: message artifact",
+        "improvement": "Represent 'message artifact' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "message artifact"
+      },
+      "product_primitive:artifact-preview-panel-eb28a556": {
+        "label": "Embodies product primitive: artifact preview panel",
+        "improvement": "Represent 'artifact preview panel' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "artifact preview panel"
+      },
+      "must_include:three-pane-writing-copilot-thread-li-78bf05d0": {
+        "label": "Includes required visual/system signal: three-pane writing copilot (thread list + conversation + artifact preview panel)",
+        "improvement": "Make 'three-pane writing copilot (thread list + conversation + artifact preview panel)' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "three-pane writing copilot (thread list + conversation + artifact preview panel)"
+      },
+      "must_include:prompt-composer-with-streaming-curso-1cfb972e": {
+        "label": "Includes required visual/system signal: prompt composer with streaming cursor + suggestion card",
+        "improvement": "Make 'prompt composer with streaming cursor + suggestion card' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "prompt composer with streaming cursor + suggestion card"
+      },
+      "must_include:writing-artifact-preview-panel-with-fb151eb3": {
+        "label": "Includes required visual/system signal: writing artifact preview panel with outline sidebar + heading anchor + revision timeline",
+        "improvement": "Make 'writing artifact preview panel with outline sidebar + heading anchor + revision timeline' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "writing artifact preview panel with outline sidebar + heading anchor + revision timeline"
+      },
+      "must_include:citation-footnote-hover-state-inline-f4506596": {
+        "label": "Includes required visual/system signal: citation footnote hover state + inline citation chip",
+        "improvement": "Make 'citation footnote hover state + inline citation chip' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "citation footnote hover state + inline citation chip"
+      },
+      "must_include:tone-slider-reading-mode-toggle-on-a-2d920297": {
+        "label": "Includes required visual/system signal: tone slider + reading-mode toggle on artifact header",
+        "improvement": "Make 'tone slider + reading-mode toggle on artifact header' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "tone slider + reading-mode toggle on artifact header"
+      },
+      "audience_need:에세이-뉴스레터-블로그-글쓰기-작가-차분한-writing-part-293c51ec": {
+        "label": "Fits audience context: 에세이 / 뉴스레터 / 블로그 글쓰기 작가 (차분한 writing partner 필요)",
+        "improvement": "Adjust density, language, workflow order, and controls for '에세이 / 뉴스레터 / 블로그 글쓰기 작가 (차분한 writing partner 필요)'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "에세이 / 뉴스레터 / 블로그 글쓰기 작가 (차분한 writing partner 필요)"
+      },
+      "audience_need:저널-독서-노트-북-리뷰를-기록하는-reading-first-사용-e178f5fd": {
+        "label": "Fits audience context: 저널 / 독서 노트 / 북 리뷰를 기록하는 reading-first 사용자",
+        "improvement": "Adjust density, language, workflow order, and controls for '저널 / 독서 노트 / 북 리뷰를 기록하는 reading-first 사용자'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "저널 / 독서 노트 / 북 리뷰를 기록하는 reading-first 사용자"
+      },
+      "audience_need:매거진-에디토리얼-에디터-ai-드래프트-편집-아티팩트-리뷰-33c102d0": {
+        "label": "Fits audience context: 매거진 / 에디토리얼 에디터 (AI 드래프트 편집 + 아티팩트 리뷰)",
+        "improvement": "Adjust density, language, workflow order, and controls for '매거진 / 에디토리얼 에디터 (AI 드래프트 편집 + 아티팩트 리뷰)'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "매거진 / 에디토리얼 에디터 (AI 드래프트 편집 + 아티팩트 리뷰)"
+      },
+      "accessibility_target:wcag-2-2-aa-41a998cd": {
+        "label": "Supports accessibility target: WCAG 2.2 AA",
+        "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "WCAG 2.2 AA"
+      }
+    },
+    "rule": "Brand-owned aesthetic quality is evaluated as fit to declared semantic targets, explicit boundaries, product ontology, audience context, and visual craft."
+  },
+  "interpretation_rule": "Scores represent observed or reviewed response proxies in a declared context; they are not universal beauty claims."
+}

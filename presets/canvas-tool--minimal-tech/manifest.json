@@ -2,7 +2,7 @@
   "id": "canvas-tool--minimal-tech",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "atelier",
-  "content_hash": "sha256:3521c6f271e368de9aff692150c54697d6585884364ee8ccc16fed15bc58d9b2",
+  "content_hash": "sha256:762fb5ccda9318712b6bf8d605880c2e25d966a6e4121cb78d39a6ce1a735d25",
   "app_mode": "canvas-tool",
   "brand_tone": "minimal-tech",
   "color_modes": [
@@ -32,6 +32,6 @@
   },
   "owner": "maintainer",
   "tier": "P1",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "크리에이티브 팀을 위한 minimal-tech 톤 캔버스 · 레이어 · 인스펙터 도구 — keyboard-first, 한국어 1급"
 }

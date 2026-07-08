@@ -36,6 +36,18 @@ BENCHMARK_SYSTEMS: list[dict] = [
         "notable": ["developer-facing", "high contrast dark mode", "minimal decoration"],
     },
     {
+        "id": "astryx",
+        "name": "Astryx",
+        "url": "https://astryx.atmeta.com",
+        "category": "devtool",
+        "keywords": ["systematic", "customizable", "agent-ready", "accessible"],
+        "token_traits": ["CSS variables", "theme packages", "React components", "CLI docs"],
+        "typography": {"heading": "system-ui", "body": "system-ui", "mono": "monospace"},
+        "color_strategy": "themeable neutral base with ready-made brand theme packages",
+        "component_count_range": "150-170",
+        "notable": ["agent-ready CLI", "broad component taxonomy", "templates", "theme system"],
+    },
+    {
         "id": "linear",
         "name": "Linear",
         "url": "https://linear.app",

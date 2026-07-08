@@ -229,10 +229,20 @@
       "overlay",
       "data-display"
     ],
+    "reference_component_base": {
+      "primary": [
+        "Astryx",
+        "Vercel Geist"
+      ],
+      "rule": "Use the shared Astryx/Geist baseline as taxonomy evidence, then add product-specific components only when primitives require them.",
+      "prune_policy": "Mobile-only chrome, CTA-only variants, and duplicate names stay contextual instead of baseline."
+    },
     "rules": [
       "primitive 단위로 책임을 먼저 정의하고 컴포넌트는 그 위에 매핑",
       "variant proliferation을 막기 위해 상태와 강조 레벨을 먼저 표준화",
       "브랜드 표현은 surface, emphasis, typography에서 주고 구조는 안정적으로 유지",
+      "기본 코어는 Astryx/Geist 교집합에서 시작하고, 제품 primitive가 없으면 변형 컴포넌트를 자동 추가하지 않음",
+      "mobile-topbar, mobile-tab-bar, back-button, bottom-sheet 같은 플랫폼/플로우 전용 컴포넌트는 명시적 요구가 있을 때만 추가",
       "기존 기능 진입점은 유지한 채 내부 구현과 시각 언어부터 교체",
       "전체 셸을 한 번에 다시 그리기보다 feature surface 단위로 순차 적용"
     ],
@@ -660,6 +670,1132 @@
         }
       }
     ],
+    "semantic_color_selection": {
+      "schema_version": "design-ontology-harness/semantic-color-selection-v1",
+      "selection_method": "ontology-search-per-run",
+      "source": {
+        "repo": "semantic-os",
+        "path": "domains/color/ontology/build/graph.json",
+        "built_at": "2026-05-23T13:56:25.001610+00:00",
+        "source_schema_version": "default-video-production-ontology-v1",
+        "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included."
+      },
+      "node_count": 137,
+      "edge_count": 487,
+      "query": {
+        "terms": [
+          "and",
+          "android",
+          "art",
+          "badges",
+          "balanced",
+          "bold",
+          "bookmark",
+          "bottom",
+          "bright",
+          "bubble",
+          "card",
+          "cards",
+          "carousel",
+          "chat",
+          "checkout",
+          "chip",
+          "classic",
+          "comic",
+          "comments",
+          "commerce",
+          "content",
+          "continue",
+          "corporate",
+          "cover",
+          "creator",
+          "curious",
+          "dashboard",
+          "data",
+          "dense",
+          "design",
+          "dialog",
+          "discussion",
+          "document",
+          "documentation",
+          "editorial",
+          "energy",
+          "enterprise",
+          "episode",
+          "expand",
+          "experience",
+          "expressive",
+          "feature",
+          "filter",
+          "first",
+          "footer",
+          "forms",
+          "friendly",
+          "generic",
+          "genre",
+          "heavy",
+          "hero",
+          "hierarchy",
+          "high_chroma",
+          "ink",
+          "ios",
+          "issue",
+          "labels",
+          "legal",
+          "library",
+          "like",
+          "magazine",
+          "manga",
+          "masthead",
+          "messaging",
+          "minimal",
+          "mixed",
+          "mobile",
+          "modal",
+          "monochrome",
+          "nav",
+          "navigation",
+          "newspaper",
+          "note",
+          "notifications",
+          "onboarding",
+          "operations",
+          "panel",
+          "paper",
+          "pastel",
+          "playful"
+        ],
+        "source_fields": {
+          "brand_name": [
+            "Panel Pop"
+          ],
+          "system_name": [
+            "Panel Pop Design System"
+          ],
+          "product_summary": [
+            "모바일 중심 만화 잡지 앱: 주간 이슈, 표지 기사, 연재 회차, 컷 미리보기, 작가 코멘터리와 독자 보관함을 묶는 playful-soft editorial reading experience"
+          ],
+          "brand_keywords": [
+            "document-content",
+            "comic-magazine",
+            "manga",
+            "webtoon",
+            "mobile-first",
+            "issue",
+            "cover-story",
+            "serial-reader",
+            "episode-card",
+            "panel-preview",
+            "creator-note",
+            "reading-queue"
+          ],
+          "anti_keywords": [
+            "enterprise",
+            "corporate",
+            "minimal-tech",
+            "legal",
+            "dashboard-heavy",
+            "commerce-checkout",
+            "monochrome",
+            "serious-newspaper",
+            "dense-table",
+            "generic-card-wall"
+          ],
+          "tone_of_voice": [
+            "bright",
+            "curious",
+            "friendly",
+            "editorial",
+            "snappy",
+            "warm"
+          ],
+          "visual_keywords": [
+            "mobile magazine rack",
+            "soft comic cover art",
+            "rounded issue cards",
+            "panel-strip preview",
+            "speech-bubble labels",
+            "sticker-like badges",
+            "pastel ink surfaces",
+            "bold cover title",
+            "creator note sheet",
+            "bottom navigation",
+            "whole-card carousel",
+            "reading progress chip"
+          ],
+          "interaction_keywords": [
+            "cover swipe",
+            "issue tab switch",
+            "save episode",
+            "continue reading",
+            "panel preview tap",
+            "reader progress",
+            "creator note expand",
+            "genre chip filter",
+            "bottom nav route",
+            "soft toast",
+            "theme toggle"
+          ],
+          "platforms": [
+            "mobile-web",
+            "ios",
+            "android",
+            "web"
+          ],
+          "audiences": [
+            "퇴근길과 등하굣길에 짧은 연재 만화를 훑어보는 모바일 독자",
+            "신작 단편, 작가 인터뷰, 테마 기획을 잡지처럼 탐색하는 만화 팬",
+            "관심 작품을 보관하고 새 회차 알림을 받는 라이트 구독자"
+          ],
+          "product_primitives": [
+            "tags and labels",
+            "onboarding and stepper",
+            "data tables",
+            "search and filter",
+            "workspace navigation",
+            "hero section",
+            "notifications",
+            "bold editorial magazine",
+            "site footer",
+            "forms",
+            "comments and discussion",
+            "modal and dialog"
+          ]
+        }
+      },
+      "matched_pattern": {
+        "id": "pattern-brief-palette-manga-magazine-pop-editorial",
+        "label": "만화 매거진 팝 에디토리얼 팔레트 후보",
+        "summary": "만화 매거진 사이트 brief를 위해 Pure Red, Scarlet, Buttercream, Ultra Violet, Illuminating을 원본 조합표가 아니라 masthead, cover, page field, feature frame, attention flash 역할로 재배치한 테스트 팔레트다.",
+        "brief_question": "만화 매거진 사이트를 만들되 색상 샘플의 피사체나 원본 조합표를 따라 하지 않고, 에디토리얼 리듬과 연재 탐색 UX로 번역한다.",
+        "output_medium": "digital_manga_magazine",
+        "role_model": "brief_specific_candidate_not_source_row"
+      },
+      "role_model": [
+        {
+          "role": "masthead_energy",
+          "behavior": "high-impact masthead stripe and issue urgency",
+          "keyword_evidence": "Pure Red",
+          "source_pattern_role": "masthead_energy: Pure Red #FF0000 — high-impact masthead stripe and issue urgency"
+        },
+        {
+          "role": "cover_signal",
+          "behavior": "kinetic tabs, issue stamps, and hover states",
+          "keyword_evidence": "Scarlet",
+          "source_pattern_role": "cover_signal: Scarlet #FF2400 — kinetic tabs, issue stamps, and hover states"
+        },
+        {
+          "role": "paper_field",
+          "behavior": "warm page field that keeps dense panels readable",
+          "keyword_evidence": "Buttercream",
+          "source_pattern_role": "paper_field: Buttercream #F3E5AB — warm page field that keeps dense panels readable"
+        },
+        {
+          "role": "feature_frame",
+          "behavior": "editorial depth for feature blocks and serialized title panels",
+          "keyword_evidence": "Ultra Violet",
+          "source_pattern_role": "feature_frame: Ultra Violet #5F4B8B — editorial depth for feature blocks and serialized title panels"
+        },
+        {
+          "role": "attention_flash",
+          "behavior": "small callout bursts, rank labels, and release flags",
+          "keyword_evidence": "Illuminating",
+          "source_pattern_role": "attention_flash: Illuminating #F5DF4D — small callout bursts, rank labels, and release flags"
+        }
+      ],
+      "candidate_palettes": [
+        {
+          "id": "ontology-best-fit-1",
+          "label": "Best Fit",
+          "score": 174.3,
+          "roles": {
+            "masthead_energy": {
+              "id": "color-keyword-pure-red",
+              "name": "Pure Red",
+              "hex": "#FF0000",
+              "spectrum": "red",
+              "family": "standard",
+              "category": "Standard Reds",
+              "mood_tags": [
+                "열정",
+                "에너지",
+                "주목성",
+                "상징적",
+                "강렬함"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "high_chroma"
+              ],
+              "summary": "Pure Red is a Standard Reds keyword in the red spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 40.0,
+              "reason": "Pure Red supports masthead_energy behavior.",
+              "behavior": "high-impact masthead stripe and issue urgency"
+            },
+            "cover_signal": {
+              "id": "color-keyword-scarlet",
+              "name": "Scarlet",
+              "hex": "#FF2400",
+              "spectrum": "red",
+              "family": "standard",
+              "category": "Standard Reds",
+              "mood_tags": [
+                "활기",
+                "생동감",
+                "열정",
+                "역동성",
+                "주목성"
+              ],
+              "tone_axes": [
+                "high_value",
+                "high_chroma",
+                "warm_bias"
+              ],
+              "summary": "Scarlet is a Standard Reds keyword in the red spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 33.65,
+              "reason": "Scarlet supports cover_signal behavior.",
+              "behavior": "kinetic tabs, issue stamps, and hover states"
+            },
+            "paper_field": {
+              "id": "color-keyword-buttercream",
+              "name": "Buttercream",
+              "hex": "#F3E5AB",
+              "spectrum": "yellow",
+              "family": "pastel",
+              "category": "Pastel Yellows",
+              "mood_tags": [
+                "부드러움",
+                "따뜻함",
+                "포근함",
+                "달콤함"
+              ],
+              "tone_axes": [
+                "high_value",
+                "low_chroma",
+                "warm_bias",
+                "pastel"
+              ],
+              "summary": "Buttercream is a Pastel Yellows keyword in the yellow spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 34.75,
+              "reason": "Buttercream supports paper_field behavior.",
+              "behavior": "warm page field that keeps dense panels readable"
+            },
+            "feature_frame": {
+              "id": "color-keyword-ultra-violet",
+              "name": "Ultra Violet",
+              "hex": "#5F4B8B",
+              "spectrum": "violet",
+              "family": "pantone_trend",
+              "category": "Pantone Trend Violets",
+              "mood_tags": [
+                "창의적",
+                "신비감",
+                "미래적",
+                "실험적"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "high_chroma",
+                "mid_chroma"
+              ],
+              "summary": "Ultra Violet is a Pantone Trend Violets keyword in the violet spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 34.25,
+              "reason": "Ultra Violet supports feature_frame behavior.",
+              "behavior": "editorial depth for feature blocks and serialized title panels"
+            },
+            "attention_flash": {
+              "id": "color-keyword-illuminating",
+              "name": "Illuminating",
+              "hex": "#F5DF4D",
+              "spectrum": "yellow",
+              "family": "pantone_trend",
+              "category": "Pantone Trend Yellows",
+              "mood_tags": [
+                "긍정적",
+                "활기찬",
+                "낙관적",
+                "희망적인",
+                "감각적인"
+              ],
+              "tone_axes": [
+                "high_value",
+                "mid_chroma",
+                "warm_bias"
+              ],
+              "summary": "Illuminating is a Pantone Trend Yellows keyword in the yellow spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 31.65,
+              "reason": "Illuminating supports attention_flash behavior.",
+              "behavior": "small callout bursts, rank labels, and release flags"
+            }
+          },
+          "rationale": [
+            "Pure Red supports masthead_energy behavior.",
+            "Pure Red is direct ontology role evidence.",
+            "Scarlet supports cover_signal behavior.",
+            "Scarlet is direct ontology role evidence.",
+            "Buttercream supports paper_field behavior.",
+            "Buttercream is direct ontology role evidence.",
+            "Ultra Violet supports feature_frame behavior.",
+            "Ultra Violet is direct ontology role evidence."
+          ],
+          "caveats": [
+            "Validate contrast per component before implementation.",
+            "Do not reconstruct source palette tables or page order.",
+            "Treat HEX values as sRGB digital references unless a print profile is separately provided."
+          ],
+          "variant": {
+            "id": "best-fit",
+            "label": "Best Fit",
+            "surface_bias": "balanced",
+            "contrast_bias": "balanced",
+            "diversity_bias": "balanced"
+          }
+        },
+        {
+          "id": "ontology-quiet-surface-2",
+          "label": "Quiet Surface",
+          "score": 114.8,
+          "roles": {
+            "masthead_energy": {
+              "id": "color-keyword-scarlet",
+              "name": "Scarlet",
+              "hex": "#FF2400",
+              "spectrum": "red",
+              "family": "standard",
+              "category": "Standard Reds",
+              "mood_tags": [
+                "활기",
+                "생동감",
+                "열정",
+                "역동성",
+                "주목성"
+              ],
+              "tone_axes": [
+                "high_value",
+                "high_chroma",
+                "warm_bias"
+              ],
+              "summary": "Scarlet is a Standard Reds keyword in the red spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 29.9,
+              "reason": "Scarlet supports masthead_energy behavior.",
+              "behavior": "high-impact masthead stripe and issue urgency"
+            },
+            "cover_signal": {
+              "id": "color-keyword-royal-purple",
+              "name": "Royal Purple",
+              "hex": "#6C3BAA",
+              "spectrum": "violet",
+              "family": "standard",
+              "category": "Standard Violets",
+              "mood_tags": [
+                "장엄함",
+                "품격",
+                "권위",
+                "카리스마"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "high_chroma",
+                "warm_bias"
+              ],
+              "summary": "Royal Purple is a Standard Violets keyword in the violet spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 20.5,
+              "reason": "Royal Purple supports cover_signal behavior.",
+              "behavior": "kinetic tabs, issue stamps, and hover states"
+            },
+            "paper_field": {
+              "id": "color-keyword-cornsilk",
+              "name": "Cornsilk",
+              "hex": "#FFF8DC",
+              "spectrum": "yellow",
+              "family": "pastel",
+              "category": "Pastel Yellows",
+              "mood_tags": [
+                "따뜻함",
+                "부드러움",
+                "내추럴함",
+                "포근함"
+              ],
+              "tone_axes": [
+                "high_value",
+                "low_chroma",
+                "warm_bias",
+                "pastel"
+              ],
+              "summary": "Cornsilk is a Pastel Yellows keyword in the yellow spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 23.1,
+              "reason": "Cornsilk supports paper_field behavior.",
+              "behavior": "warm page field that keeps dense panels readable"
+            },
+            "feature_frame": {
+              "id": "color-keyword-midnight-violet",
+              "name": "Midnight Violet",
+              "hex": "#2E1A47",
+              "spectrum": "violet",
+              "family": "deep",
+              "category": "Deep Violets",
+              "mood_tags": [
+                "고요함",
+                "신비",
+                "절제된 감정",
+                "내면적 깊이"
+              ],
+              "tone_axes": [
+                "low_value",
+                "low_chroma",
+                "cool_bias"
+              ],
+              "summary": "Midnight Violet is a Deep Violets keyword in the violet spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 21.7,
+              "reason": "Midnight Violet supports feature_frame behavior.",
+              "behavior": "editorial depth for feature blocks and serialized title panels"
+            },
+            "attention_flash": {
+              "id": "color-keyword-naples-yellow",
+              "name": "Naples Yellow",
+              "hex": "#FADA5E",
+              "spectrum": "yellow",
+              "family": "pastel",
+              "category": "Pastel Yellows",
+              "mood_tags": [
+                "부드러움",
+                "따뜻함",
+                "온화함",
+                "예술적 감성"
+              ],
+              "tone_axes": [
+                "high_value",
+                "low_chroma",
+                "warm_bias",
+                "pastel"
+              ],
+              "summary": "Naples Yellow is a Pastel Yellows keyword in the yellow spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 19.6,
+              "reason": "Naples Yellow supports attention_flash behavior.",
+              "behavior": "small callout bursts, rank labels, and release flags"
+            }
+          },
+          "rationale": [
+            "Scarlet supports masthead_energy behavior.",
+            "Scarlet can carry limited signal.",
+            "Royal Purple supports cover_signal behavior.",
+            "Royal Purple can carry limited signal.",
+            "Cornsilk supports paper_field behavior.",
+            "Cornsilk can hold repeated surfaces.",
+            "Midnight Violet supports feature_frame behavior.",
+            "Midnight Violet has depth for structural roles."
+          ],
+          "caveats": [
+            "Validate contrast per component before implementation.",
+            "Do not reconstruct source palette tables or page order.",
+            "Treat HEX values as sRGB digital references unless a print profile is separately provided."
+          ],
+          "variant": {
+            "id": "quiet-surface",
+            "label": "Quiet Surface",
+            "surface_bias": "airy",
+            "contrast_bias": "soft",
+            "diversity_bias": "cohesive"
+          }
+        },
+        {
+          "id": "ontology-clear-structure-3",
+          "label": "Clear Structure",
+          "score": 121.3,
+          "roles": {
+            "masthead_energy": {
+              "id": "color-keyword-pure-orange",
+              "name": "Pure Orange",
+              "hex": "#FFA500",
+              "spectrum": "orange",
+              "family": "standard",
+              "category": "Standard Oranges",
+              "mood_tags": [
+                "활력",
+                "낙관",
+                "따뜻함",
+                "개방감"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "high_chroma",
+                "warm_bias"
+              ],
+              "summary": "Pure Orange is a Standard Oranges keyword in the orange spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 26.5,
+              "reason": "Pure Orange supports masthead_energy behavior.",
+              "behavior": "high-impact masthead stripe and issue urgency"
+            },
+            "cover_signal": {
+              "id": "color-keyword-burnt-orange",
+              "name": "Burnt Orange",
+              "hex": "#CC5500",
+              "spectrum": "orange",
+              "family": "deep",
+              "category": "Deep Oranges",
+              "mood_tags": [
+                "따뜻함",
+                "향수",
+                "빈티지",
+                "성숙함"
+              ],
+              "tone_axes": [
+                "low_value",
+                "high_chroma",
+                "mid_chroma",
+                "warm_bias",
+                "earth_or_wine_bias"
+              ],
+              "summary": "Burnt Orange is a Deep Oranges keyword in the orange spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 20.4,
+              "reason": "Burnt Orange supports cover_signal behavior.",
+              "behavior": "kinetic tabs, issue stamps, and hover states"
+            },
+            "paper_field": {
+              "id": "color-keyword-lemon-yellow",
+              "name": "Lemon Yellow",
+              "hex": "#FFF44F",
+              "spectrum": "yellow",
+              "family": "standard",
+              "category": "Standard Yellows",
+              "mood_tags": [
+                "경쾌함",
+                "낙관",
+                "청량감",
+                "에너지"
+              ],
+              "tone_axes": [
+                "high_value",
+                "high_chroma",
+                "warm_bias"
+              ],
+              "summary": "Lemon Yellow is a Standard Yellows keyword in the yellow spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 20.5,
+              "reason": "Lemon Yellow supports paper_field behavior.",
+              "behavior": "warm page field that keeps dense panels readable"
+            },
+            "feature_frame": {
+              "id": "color-keyword-grape-compote",
+              "name": "Grape Compote",
+              "hex": "#6B5876",
+              "spectrum": "violet",
+              "family": "pantone_trend",
+              "category": "Pantone Trend Violets",
+              "mood_tags": [
+                "차분",
+                "세련",
+                "내면적",
+                "성숙함"
+              ],
+              "tone_axes": [
+                "low_value",
+                "mid_chroma",
+                "low_chroma"
+              ],
+              "summary": "Grape Compote is a Pantone Trend Violets keyword in the violet spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 21.4,
+              "reason": "Grape Compote supports feature_frame behavior.",
+              "behavior": "editorial depth for feature blocks and serialized title panels"
+            },
+            "attention_flash": {
+              "id": "color-keyword-illuminating",
+              "name": "Illuminating",
+              "hex": "#F5DF4D",
+              "spectrum": "yellow",
+              "family": "pantone_trend",
+              "category": "Pantone Trend Yellows",
+              "mood_tags": [
+                "긍정적",
+                "활기찬",
+                "낙관적",
+                "희망적인",
+                "감각적인"
+              ],
+              "tone_axes": [
+                "high_value",
+                "mid_chroma",
+                "warm_bias"
+              ],
+              "summary": "Illuminating is a Pantone Trend Yellows keyword in the yellow spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 32.5,
+              "reason": "Illuminating supports attention_flash behavior.",
+              "behavior": "small callout bursts, rank labels, and release flags"
+            }
+          },
+          "rationale": [
+            "Pure Orange supports masthead_energy behavior.",
+            "Pure Orange can carry limited signal.",
+            "Burnt Orange supports cover_signal behavior.",
+            "Burnt Orange can carry limited signal.",
+            "Lemon Yellow supports paper_field behavior.",
+            "Lemon Yellow can hold repeated surfaces.",
+            "Grape Compote supports feature_frame behavior.",
+            "Grape Compote has depth for structural roles."
+          ],
+          "caveats": [
+            "Validate contrast per component before implementation.",
+            "Do not reconstruct source palette tables or page order.",
+            "Treat HEX values as sRGB digital references unless a print profile is separately provided."
+          ],
+          "variant": {
+            "id": "clear-structure",
+            "label": "Clear Structure",
+            "surface_bias": "grounded",
+            "contrast_bias": "balanced",
+            "diversity_bias": "cohesive"
+          }
+        },
+        {
+          "id": "ontology-strong-signal-4",
+          "label": "Strong Signal",
+          "score": 125.1,
+          "roles": {
+            "masthead_energy": {
+              "id": "color-keyword-ruby",
+              "name": "Ruby",
+              "hex": "#E11F51",
+              "spectrum": "red",
+              "family": "standard",
+              "category": "Standard Reds",
+              "mood_tags": [
+                "화려함",
+                "관능",
+                "세련",
+                "에너지",
+                "주목성"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "high_chroma"
+              ],
+              "summary": "Ruby is a Standard Reds keyword in the red spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 27.7,
+              "reason": "Ruby supports masthead_energy behavior.",
+              "behavior": "high-impact masthead stripe and issue urgency"
+            },
+            "cover_signal": {
+              "id": "color-keyword-autumn-blaze",
+              "name": "Autumn Blaze",
+              "hex": "#D1933F",
+              "spectrum": "yellow",
+              "family": "pantone_trend",
+              "category": "Pantone Trend Yellows",
+              "mood_tags": [
+                "따뜻함",
+                "온기",
+                "성숙함",
+                "자연스러움",
+                "가을의 깊이"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "mid_chroma",
+                "warm_bias",
+                "earth_or_wine_bias"
+              ],
+              "summary": "Autumn Blaze is a Pantone Trend Yellows keyword in the yellow spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 20.45,
+              "reason": "Autumn Blaze supports cover_signal behavior.",
+              "behavior": "kinetic tabs, issue stamps, and hover states"
+            },
+            "paper_field": {
+              "id": "color-keyword-cornsilk",
+              "name": "Cornsilk",
+              "hex": "#FFF8DC",
+              "spectrum": "yellow",
+              "family": "pastel",
+              "category": "Pastel Yellows",
+              "mood_tags": [
+                "따뜻함",
+                "부드러움",
+                "내추럴함",
+                "포근함"
+              ],
+              "tone_axes": [
+                "high_value",
+                "low_chroma",
+                "warm_bias",
+                "pastel"
+              ],
+              "summary": "Cornsilk is a Pastel Yellows keyword in the yellow spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 20.15,
+              "reason": "Cornsilk supports paper_field behavior.",
+              "behavior": "warm page field that keeps dense panels readable"
+            },
+            "feature_frame": {
+              "id": "color-keyword-ultra-violet",
+              "name": "Ultra Violet",
+              "hex": "#5F4B8B",
+              "spectrum": "violet",
+              "family": "pantone_trend",
+              "category": "Pantone Trend Violets",
+              "mood_tags": [
+                "창의적",
+                "신비감",
+                "미래적",
+                "실험적"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "high_chroma",
+                "mid_chroma"
+              ],
+              "summary": "Ultra Violet is a Pantone Trend Violets keyword in the violet spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 35.45,
+              "reason": "Ultra Violet supports feature_frame behavior.",
+              "behavior": "editorial depth for feature blocks and serialized title panels"
+            },
+            "attention_flash": {
+              "id": "color-keyword-royal-purple",
+              "name": "Royal Purple",
+              "hex": "#6C3BAA",
+              "spectrum": "violet",
+              "family": "standard",
+              "category": "Standard Violets",
+              "mood_tags": [
+                "장엄함",
+                "품격",
+                "권위",
+                "카리스마"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "high_chroma",
+                "warm_bias"
+              ],
+              "summary": "Royal Purple is a Standard Violets keyword in the violet spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 21.35,
+              "reason": "Royal Purple supports attention_flash behavior.",
+              "behavior": "small callout bursts, rank labels, and release flags"
+            }
+          },
+          "rationale": [
+            "Ruby supports masthead_energy behavior.",
+            "Ruby can carry limited signal.",
+            "Autumn Blaze supports cover_signal behavior.",
+            "Autumn Blaze can carry limited signal.",
+            "Cornsilk supports paper_field behavior.",
+            "Cornsilk can hold repeated surfaces.",
+            "Ultra Violet supports feature_frame behavior.",
+            "Ultra Violet is direct ontology role evidence."
+          ],
+          "caveats": [
+            "Validate contrast per component before implementation.",
+            "Do not reconstruct source palette tables or page order.",
+            "Treat HEX values as sRGB digital references unless a print profile is separately provided."
+          ],
+          "variant": {
+            "id": "strong-signal",
+            "label": "Strong Signal",
+            "surface_bias": "balanced",
+            "contrast_bias": "vivid",
+            "diversity_bias": "balanced"
+          }
+        },
+        {
+          "id": "ontology-cross-family-5",
+          "label": "Cross Family",
+          "score": 128.2,
+          "roles": {
+            "masthead_energy": {
+              "id": "color-keyword-salmon",
+              "name": "Salmon",
+              "hex": "#FA8072",
+              "spectrum": "red",
+              "family": "pastel",
+              "category": "Pastel Reds",
+              "mood_tags": [
+                "따뜻함",
+                "부드러움",
+                "친근함",
+                "자연스러움"
+              ],
+              "tone_axes": [
+                "high_value",
+                "warm_bias",
+                "pastel"
+              ],
+              "summary": "Salmon is a Pastel Reds keyword in the red spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 26.4,
+              "reason": "Salmon supports masthead_energy behavior.",
+              "behavior": "high-impact masthead stripe and issue urgency"
+            },
+            "cover_signal": {
+              "id": "color-keyword-amber",
+              "name": "Amber",
+              "hex": "#FFBF00",
+              "spectrum": "yellow",
+              "family": "standard",
+              "category": "Standard Yellows",
+              "mood_tags": [
+                "따뜻함",
+                "세련됨",
+                "고급스러움",
+                "안정감"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "mid_chroma",
+                "warm_bias"
+              ],
+              "summary": "Amber is a Standard Yellows keyword in the yellow spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 20.0,
+              "reason": "Amber supports cover_signal behavior.",
+              "behavior": "kinetic tabs, issue stamps, and hover states"
+            },
+            "paper_field": {
+              "id": "color-keyword-buttercream",
+              "name": "Buttercream",
+              "hex": "#F3E5AB",
+              "spectrum": "yellow",
+              "family": "pastel",
+              "category": "Pastel Yellows",
+              "mood_tags": [
+                "부드러움",
+                "따뜻함",
+                "포근함",
+                "달콤함"
+              ],
+              "tone_axes": [
+                "high_value",
+                "low_chroma",
+                "warm_bias",
+                "pastel"
+              ],
+              "summary": "Buttercream is a Pastel Yellows keyword in the yellow spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 34.4,
+              "reason": "Buttercream supports paper_field behavior.",
+              "behavior": "warm page field that keeps dense panels readable"
+            },
+            "feature_frame": {
+              "id": "color-keyword-periwinkle",
+              "name": "Periwinkle",
+              "hex": "#8E9AF1",
+              "spectrum": "violet",
+              "family": "pastel",
+              "category": "Pastel Violets",
+              "mood_tags": [
+                "부드러움",
+                "몽환",
+                "순수함",
+                "세련된 차분함"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "low_chroma",
+                "warm_bias",
+                "cool_bias",
+                "pastel"
+              ],
+              "summary": "Periwinkle is a Pastel Violets keyword in the violet spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 27.4,
+              "reason": "Periwinkle supports feature_frame behavior.",
+              "behavior": "editorial depth for feature blocks and serialized title panels"
+            },
+            "attention_flash": {
+              "id": "color-keyword-burnt-orange",
+              "name": "Burnt Orange",
+              "hex": "#CC5500",
+              "spectrum": "orange",
+              "family": "deep",
+              "category": "Deep Oranges",
+              "mood_tags": [
+                "따뜻함",
+                "향수",
+                "빈티지",
+                "성숙함"
+              ],
+              "tone_axes": [
+                "low_value",
+                "high_chroma",
+                "mid_chroma",
+                "warm_bias",
+                "earth_or_wine_bias"
+              ],
+              "summary": "Burnt Orange is a Deep Oranges keyword in the orange spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+              "score": 20.0,
+              "reason": "Burnt Orange supports attention_flash behavior.",
+              "behavior": "small callout bursts, rank labels, and release flags"
+            }
+          },
+          "rationale": [
+            "Salmon supports masthead_energy behavior.",
+            "Amber supports cover_signal behavior.",
+            "Amber can carry limited signal.",
+            "Buttercream supports paper_field behavior.",
+            "Buttercream is direct ontology role evidence.",
+            "Periwinkle supports feature_frame behavior.",
+            "Burnt Orange supports attention_flash behavior.",
+            "Burnt Orange can carry limited signal."
+          ],
+          "caveats": [
+            "Validate contrast per component before implementation.",
+            "Do not reconstruct source palette tables or page order.",
+            "Treat HEX values as sRGB digital references unless a print profile is separately provided."
+          ],
+          "variant": {
+            "id": "cross-family",
+            "label": "Cross Family",
+            "surface_bias": "airy",
+            "contrast_bias": "balanced",
+            "diversity_bias": "exploratory"
+          }
+        }
+      ],
+      "active_palette": {
+        "id": "ontology-best-fit-1",
+        "label": "Best Fit",
+        "score": 174.3,
+        "roles": {
+          "masthead_energy": {
+            "id": "color-keyword-pure-red",
+            "name": "Pure Red",
+            "hex": "#FF0000",
+            "spectrum": "red",
+            "family": "standard",
+            "category": "Standard Reds",
+            "mood_tags": [
+              "열정",
+              "에너지",
+              "주목성",
+              "상징적",
+              "강렬함"
+            ],
+            "tone_axes": [
+              "mid_value",
+              "high_chroma"
+            ],
+            "summary": "Pure Red is a Standard Reds keyword in the red spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+            "score": 40.0,
+            "reason": "Pure Red supports masthead_energy behavior.",
+            "behavior": "high-impact masthead stripe and issue urgency"
+          },
+          "cover_signal": {
+            "id": "color-keyword-scarlet",
+            "name": "Scarlet",
+            "hex": "#FF2400",
+            "spectrum": "red",
+            "family": "standard",
+            "category": "Standard Reds",
+            "mood_tags": [
+              "활기",
+              "생동감",
+              "열정",
+              "역동성",
+              "주목성"
+            ],
+            "tone_axes": [
+              "high_value",
+              "high_chroma",
+              "warm_bias"
+            ],
+            "summary": "Scarlet is a Standard Reds keyword in the red spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+            "score": 33.65,
+            "reason": "Scarlet supports cover_signal behavior.",
+            "behavior": "kinetic tabs, issue stamps, and hover states"
+          },
+          "paper_field": {
+            "id": "color-keyword-buttercream",
+            "name": "Buttercream",
+            "hex": "#F3E5AB",
+            "spectrum": "yellow",
+            "family": "pastel",
+            "category": "Pastel Yellows",
+            "mood_tags": [
+              "부드러움",
+              "따뜻함",
+              "포근함",
+              "달콤함"
+            ],
+            "tone_axes": [
+              "high_value",
+              "low_chroma",
+              "warm_bias",
+              "pastel"
+            ],
+            "summary": "Buttercream is a Pastel Yellows keyword in the yellow spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+            "score": 34.75,
+            "reason": "Buttercream supports paper_field behavior.",
+            "behavior": "warm page field that keeps dense panels readable"
+          },
+          "feature_frame": {
+            "id": "color-keyword-ultra-violet",
+            "name": "Ultra Violet",
+            "hex": "#5F4B8B",
+            "spectrum": "violet",
+            "family": "pantone_trend",
+            "category": "Pantone Trend Violets",
+            "mood_tags": [
+              "창의적",
+              "신비감",
+              "미래적",
+              "실험적"
+            ],
+            "tone_axes": [
+              "mid_value",
+              "high_chroma",
+              "mid_chroma"
+            ],
+            "summary": "Ultra Violet is a Pantone Trend Violets keyword in the violet spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+            "score": 34.25,
+            "reason": "Ultra Violet supports feature_frame behavior.",
+            "behavior": "editorial depth for feature blocks and serialized title panels"
+          },
+          "attention_flash": {
+            "id": "color-keyword-illuminating",
+            "name": "Illuminating",
+            "hex": "#F5DF4D",
+            "spectrum": "yellow",
+            "family": "pantone_trend",
+            "category": "Pantone Trend Yellows",
+            "mood_tags": [
+              "긍정적",
+              "활기찬",
+              "낙관적",
+              "희망적인",
+              "감각적인"
+            ],
+            "tone_axes": [
+              "high_value",
+              "mid_chroma",
+              "warm_bias"
+            ],
+            "summary": "Illuminating is a Pantone Trend Yellows keyword in the yellow spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+            "score": 31.65,
+            "reason": "Illuminating supports attention_flash behavior.",
+            "behavior": "small callout bursts, rank labels, and release flags"
+          }
+        },
+        "rationale": [
+          "Pure Red supports masthead_energy behavior.",
+          "Pure Red is direct ontology role evidence.",
+          "Scarlet supports cover_signal behavior.",
+          "Scarlet is direct ontology role evidence.",
+          "Buttercream supports paper_field behavior.",
+          "Buttercream is direct ontology role evidence.",
+          "Ultra Violet supports feature_frame behavior.",
+          "Ultra Violet is direct ontology role evidence."
+        ],
+        "caveats": [
+          "Validate contrast per component before implementation.",
+          "Do not reconstruct source palette tables or page order.",
+          "Treat HEX values as sRGB digital references unless a print profile is separately provided."
+        ],
+        "variant": {
+          "id": "best-fit",
+          "label": "Best Fit",
+          "surface_bias": "balanced",
+          "contrast_bias": "balanced",
+          "diversity_bias": "balanced"
+        }
+      },
+      "rules": [
+        "Search Semantic OS ColorPattern and ColorKeyword nodes for every app brief.",
+        "Do not ship pre-authored palette sets as fixed presets.",
+        "Use ColorPattern role language as a role model, not as a copied palette table.",
+        "Publish colors as role, reason, caveat, and proof conditions."
+      ]
+    },
     "expanded_palette": {
       "search_strategy": {
         "sources": [
@@ -1363,6 +2499,578 @@
           ]
         }
       ]
+    },
+    "semantic_ontology": {
+      "schema_version": "design-ontology-harness/semantic-color-context-v1",
+      "source": {
+        "repo": "semantic-os",
+        "path": "domains/color/ontology/build/graph.json",
+        "built_at": "2026-05-23T13:56:25.001610+00:00",
+        "source_schema_version": "default-video-production-ontology-v1",
+        "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included."
+      },
+      "node_count": 137,
+      "edge_count": 487,
+      "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included.",
+      "matched_keywords": [
+        {
+          "id": "color-keyword-periwinkle",
+          "role": "primary",
+          "name": "Periwinkle",
+          "hex": "#8E9AF1",
+          "spectrum": "violet",
+          "family": "pastel",
+          "category": "Pastel Violets",
+          "mood_tags": [
+            "부드러움",
+            "몽환",
+            "순수함",
+            "세련된 차분함"
+          ],
+          "tone_axes": [
+            "mid_value",
+            "low_chroma",
+            "warm_bias",
+            "cool_bias",
+            "pastel"
+          ],
+          "summary": "Periwinkle is a Pastel Violets keyword in the violet spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+          "source_pages": {
+            "swatch": 285,
+            "reading": 286,
+            "metrics": 287
+          },
+          "reasons": [
+            "active palette role match"
+          ]
+        },
+        {
+          "id": "color-keyword-living-coral",
+          "role": "accent",
+          "name": "Living Coral",
+          "hex": "#FF6F61",
+          "spectrum": "orange",
+          "family": "pantone_trend",
+          "category": "Pantone Trend Oranges",
+          "mood_tags": [
+            "생동감",
+            "따뜻함",
+            "낙관적"
+          ],
+          "tone_axes": [
+            "mid_value",
+            "mid_chroma",
+            "warm_bias"
+          ],
+          "summary": "Living Coral is a Pantone Trend Oranges keyword in the orange spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+          "source_pages": {
+            "swatch": 103,
+            "reading": 104,
+            "metrics": 105
+          },
+          "reasons": [
+            "active palette role match"
+          ]
+        },
+        {
+          "id": "color-keyword-buttercream",
+          "role": "surface_tint",
+          "name": "Buttercream",
+          "hex": "#F3E5AB",
+          "spectrum": "yellow",
+          "family": "pastel",
+          "category": "Pastel Yellows",
+          "mood_tags": [
+            "부드러움",
+            "따뜻함",
+            "포근함",
+            "달콤함"
+          ],
+          "tone_axes": [
+            "high_value",
+            "low_chroma",
+            "warm_bias",
+            "pastel"
+          ],
+          "summary": "Buttercream is a Pastel Yellows keyword in the yellow spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+          "source_pages": {
+            "swatch": 149,
+            "reading": 150,
+            "metrics": 151
+          },
+          "reasons": [
+            "active palette role match"
+          ]
+        }
+      ],
+      "recommended_keywords": [
+        {
+          "id": "color-keyword-salmon",
+          "role": "recommendation",
+          "name": "Salmon",
+          "hex": "#FA8072",
+          "spectrum": "red",
+          "family": "pastel",
+          "category": "Pastel Reds",
+          "mood_tags": [
+            "따뜻함",
+            "부드러움",
+            "친근함",
+            "자연스러움"
+          ],
+          "tone_axes": [
+            "high_value",
+            "warm_bias",
+            "pastel"
+          ],
+          "summary": "Salmon is a Pastel Reds keyword in the red spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+          "source_pages": {
+            "swatch": 45,
+            "reading": 46,
+            "metrics": 47
+          },
+          "reasons": [
+            "matches 'reference'",
+            "matches 'pastel'",
+            "matches '자연스러움'"
+          ],
+          "score": 20.5
+        },
+        {
+          "id": "color-keyword-pure-red",
+          "role": "recommendation",
+          "name": "Pure Red",
+          "hex": "#FF0000",
+          "spectrum": "red",
+          "family": "standard",
+          "category": "Standard Reds",
+          "mood_tags": [
+            "열정",
+            "에너지",
+            "주목성",
+            "상징적",
+            "강렬함"
+          ],
+          "tone_axes": [
+            "mid_value",
+            "high_chroma"
+          ],
+          "summary": "Pure Red is a Standard Reds keyword in the red spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+          "source_pages": {
+            "swatch": 15,
+            "reading": 16,
+            "metrics": 17
+          },
+          "reasons": [
+            "matches 'reference'",
+            "matches 'standard'",
+            "matches 'pure'"
+          ],
+          "score": 20.0
+        },
+        {
+          "id": "color-keyword-peach-puff",
+          "role": "recommendation",
+          "name": "Peach Puff",
+          "hex": "#FFDAB9",
+          "spectrum": "orange",
+          "family": "pastel",
+          "category": "Pastel Oranges",
+          "mood_tags": [
+            "따뜻함",
+            "부드러움",
+            "순수함",
+            "친근함",
+            "생기"
+          ],
+          "tone_axes": [
+            "high_value",
+            "low_chroma",
+            "warm_bias",
+            "pastel"
+          ],
+          "summary": "Peach Puff is a Pastel Oranges keyword in the orange spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+          "source_pages": {
+            "swatch": 94,
+            "reading": 95,
+            "metrics": 96
+          },
+          "reasons": [
+            "matches 'reference'",
+            "matches 'orange'",
+            "matches 'pastel'"
+          ],
+          "score": 19.0
+        },
+        {
+          "id": "color-keyword-copper",
+          "role": "recommendation",
+          "name": "Copper",
+          "hex": "#B87333",
+          "spectrum": "orange",
+          "family": "deep",
+          "category": "Deep Oranges",
+          "mood_tags": [
+            "고급스러움",
+            "따뜻함",
+            "전통적 질감",
+            "세련된 무게감"
+          ],
+          "tone_axes": [
+            "low_value",
+            "mid_chroma",
+            "warm_bias",
+            "earth_or_wine_bias"
+          ],
+          "summary": "Copper is a Deep Oranges keyword in the orange spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+          "source_pages": {
+            "swatch": 88,
+            "reading": 89,
+            "metrics": 90
+          },
+          "reasons": [
+            "matches 'reference'",
+            "matches 'orange'",
+            "matches '고급스러움'"
+          ],
+          "score": 18.5
+        },
+        {
+          "id": "color-keyword-burnt-orange",
+          "role": "recommendation",
+          "name": "Burnt Orange",
+          "hex": "#CC5500",
+          "spectrum": "orange",
+          "family": "deep",
+          "category": "Deep Oranges",
+          "mood_tags": [
+            "따뜻함",
+            "향수",
+            "빈티지",
+            "성숙함"
+          ],
+          "tone_axes": [
+            "low_value",
+            "high_chroma",
+            "mid_chroma",
+            "warm_bias",
+            "earth_or_wine_bias"
+          ],
+          "summary": "Burnt Orange is a Deep Oranges keyword in the orange spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+          "source_pages": {
+            "swatch": 91,
+            "reading": 92,
+            "metrics": 93
+          },
+          "reasons": [
+            "matches 'reference'",
+            "matches 'orange'",
+            "matches 'warm'"
+          ],
+          "score": 18.0
+        },
+        {
+          "id": "color-keyword-creamsicle",
+          "role": "recommendation",
+          "name": "Creamsicle",
+          "hex": "#FFD7A0",
+          "spectrum": "orange",
+          "family": "pastel",
+          "category": "Pastel Oranges",
+          "mood_tags": [
+            "부드러움",
+            "경쾌함",
+            "청량함",
+            "달콤함"
+          ],
+          "tone_axes": [
+            "high_value",
+            "low_chroma",
+            "warm_bias",
+            "pastel"
+          ],
+          "summary": "Creamsicle is a Pastel Oranges keyword in the orange spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+          "source_pages": {
+            "swatch": 100,
+            "reading": 101,
+            "metrics": 102
+          },
+          "reasons": [
+            "matches 'reference'",
+            "matches 'orange'",
+            "matches 'pastel'"
+          ],
+          "score": 18.0
+        },
+        {
+          "id": "color-keyword-oxblood",
+          "role": "recommendation",
+          "name": "Oxblood",
+          "hex": "#4A0404",
+          "spectrum": "red",
+          "family": "deep",
+          "category": "Deep Reds",
+          "mood_tags": [
+            "고급스러움",
+            "성숙함",
+            "강렬함",
+            "깊은 감정"
+          ],
+          "tone_axes": [
+            "low_value",
+            "earth_or_wine_bias"
+          ],
+          "summary": "Oxblood is a Deep Reds keyword in the red spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+          "source_pages": {
+            "swatch": 36,
+            "reading": 37,
+            "metrics": 38
+          },
+          "reasons": [
+            "matches 'reference'",
+            "matches '고급스러움'",
+            "matches 'deep'"
+          ],
+          "score": 18.0
+        },
+        {
+          "id": "color-keyword-apricot",
+          "role": "recommendation",
+          "name": "Apricot",
+          "hex": "#FFB27F",
+          "spectrum": "orange",
+          "family": "natural",
+          "category": "Natural Oranges",
+          "mood_tags": [
+            "따뜻함",
+            "부드러움",
+            "친근감",
+            "여유",
+            "자연스러움"
+          ],
+          "tone_axes": [
+            "high_value",
+            "low_chroma",
+            "warm_bias"
+          ],
+          "summary": "Apricot is a Natural Oranges keyword in the orange spectrum, defined from REFERENCE X Vol.1 with RGB/CMYK reference values and mood tags.",
+          "source_pages": {
+            "swatch": 76,
+            "reading": 77,
+            "metrics": 78
+          },
+          "reasons": [
+            "matches 'reference'",
+            "matches 'orange'",
+            "matches '자연스러움'"
+          ],
+          "score": 16.5
+        }
+      ],
+      "guidelines": [
+        {
+          "id": "guideline-rgb-cmyk-split-by-output-medium",
+          "type": "ColorGuideline",
+          "label": "RGB와 CMYK는 산출 매체 기준으로 분리한다",
+          "summary": "디지털 산출물은 RGB/sRGB 기준, 인쇄 산출물은 CMYK/프로파일 기준으로 판단한다. 화면색을 인쇄색으로 그대로 기대하지 않는다.",
+          "prompt_do": [],
+          "prompt_avoid": []
+        },
+        {
+          "id": "guideline-color-values-are-reference-not-absolute",
+          "type": "ColorGuideline",
+          "label": "색상 수치는 절댓값이 아니라 기준값이다",
+          "summary": "디스플레이와 출력 환경에 따라 색 차이가 생기므로 HEX/CMYK는 재현 기준점으로 쓰고, 최종 판단은 매체별 proof에서 확인한다.",
+          "prompt_do": [],
+          "prompt_avoid": []
+        },
+        {
+          "id": "guideline-mood-tags-before-palette-expansion",
+          "type": "ColorGuideline",
+          "label": "팔레트 확장 전 mood tag를 먼저 잠근다",
+          "summary": "무드보드나 브랜드 컬러를 늘리기 전에 에너지, 안정, 깊이, 회복 같은 감정 태그를 먼저 고정하면 색상 후보가 흔들리지 않는다.",
+          "prompt_do": [],
+          "prompt_avoid": []
+        },
+        {
+          "id": "guideline-no-palette-table-reconstruction",
+          "type": "ColorGuideline",
+          "label": "배색표를 재구성할 수 있는 수준의 pair 목록은 만들지 않는다",
+          "summary": "paid source의 조합표, 페이지 배열, 순서, 행/열 구조를 그대로 되살릴 수 있는 palette_pair edge 묶음은 온톨로지에 넣지 않는다.",
+          "prompt_do": [
+            "조합을 개별 source row가 아니라 역할, 대비, 무드, 매체 조건으로 요약한다",
+            "source page provenance는 유지하되 원본 순서와 테이블 구조는 재현하지 않는다",
+            "공개 산출물에는 후보 조합의 이유와 caveat를 자체 문장으로 설명한다"
+          ],
+          "prompt_avoid": [
+            "paid source의 조합표 전체를 edge 목록으로 옮기기",
+            "특정 page의 palette row를 같은 순서/구조로 재생성하기",
+            "사용자가 원문 없이도 조합표를 복원할 수 있는 덤프 만들기"
+          ]
+        },
+        {
+          "id": "guideline-palette-pair-edges-require-transformative-brief",
+          "type": "ColorGuideline",
+          "label": "palette_pair edge는 변형된 brief와 함께만 추가한다",
+          "summary": "두 색의 직접 pair edge는 브랜드/화면/인쇄/제품 같은 새로운 산출 맥락에서 역할, 대비, 위험, proof 조건이 함께 설명될 때만 추가한다.",
+          "prompt_do": [
+            "pair edge마다 output medium, color roles, contrast reason, caveat를 함께 기록한다",
+            "색상 조합을 \"추천\"보다 \"brief-specific candidate\"로 표시한다",
+            "같은 pair가 다른 맥락에서 다르게 작동할 수 있음을 남긴다"
+          ],
+          "prompt_avoid": [
+            "출처 조합을 이유 없이 adopted pair로 승격하기",
+            "모든 keyword에 대해 기계적으로 pair edge 만들기",
+            "CMYK/RGB proof 없이 인쇄 재현까지 보증하기"
+          ]
+        }
+      ],
+      "heuristics": [
+        {
+          "id": "heuristic-reference-keyword-controls-design-direction",
+          "type": "ColorHeuristic",
+          "label": "레퍼런스 키워드가 디자인 방향을 결정한다",
+          "summary": "큰 색상명보다 세밀한 색상 키워드가 검색 결과, 무드, 적용 장면을 바꾼다. 색은 이름 붙이는 순간 디자인 관점이 된다.",
+          "prompt_do": [],
+          "prompt_avoid": []
+        },
+        {
+          "id": "heuristic-color-read-before-form",
+          "type": "ColorHeuristic",
+          "label": "색은 형태보다 먼저 감정 신호로 읽힌다",
+          "summary": "컬러 브리프에서는 형태/레이아웃 설명 전에 색상, 명도, 채도, 온도감이 주는 감정 반응을 먼저 정리한다.",
+          "prompt_do": [],
+          "prompt_avoid": []
+        },
+        {
+          "id": "heuristic-palette-abstraction-review-gate",
+          "type": "ColorHeuristic",
+          "label": "팔레트 edge 추가 전 복원 가능성 검사를 먼저 한다",
+          "summary": "새 palette/combination edge 묶음은 \"이 데이터를 모으면 원본 표나 페이지 배열을 상당 부분 재구성할 수 있는가\"를 먼저 확인한 뒤 추가한다.",
+          "prompt_do": [],
+          "prompt_avoid": [
+            "coverage 목표 때문에 조합표를 대량 edge화하기",
+            "source-protection review 없이 자동 추출을 돌리기"
+          ]
+        },
+        {
+          "id": "heuristic-samples-validate-usage-grammar-not-every-keyword",
+          "type": "ColorHeuristic",
+          "label": "샘플은 사용 문법을 검증하지만 모든 키워드의 최종 색 검증은 아니다",
+          "summary": "warm/cool/violet 샘플 묶음은 REFERENCE X의 사용 방식, 즉 swatch에서 tone archive로 확장하는 문법을 충분히 보여준다. 다만 각 ColorKeyword의 개별 톤 정확도는 필요 시 spectrum/family별 spot-check로 분리한다.",
+          "prompt_do": [
+            "구조 설계에는 현재 샘플을 충분한 근거로 사용한다",
+            "production-facing 색 검증에는 keyword별 page/sample spot-check를 별도 단계로 둔다"
+          ],
+          "prompt_avoid": [
+            "샘플 일부만 보고 모든 keyword의 이미지 톤을 proof 완료로 선언하기"
+          ]
+        },
+        {
+          "id": "heuristic-keyword-image-use-over-hex-fill",
+          "type": "ColorHeuristic",
+          "label": "색상 키워드는 HEX 채움보다 이미지 사용법을 먼저 지시한다",
+          "summary": "색상값은 기준 좌표이고, 실제 레퍼런스 이미지는 그 좌표가 만드는 톤 범위, 빛의 방향, 재질, 장면 맥락을 보여준다.",
+          "prompt_do": [
+            "anchor HEX를 작은 기준점으로 쓰고 이미지 대부분은 관련 톤 범위로 구성한다",
+            "highlights, shadows, haze, material texture, adjacent neutrals를 함께 지정한다",
+            "같은 spectrum/family 안에서 자연스럽게 이동하는 색 변주를 허용한다"
+          ],
+          "prompt_avoid": [
+            "화면 전체를 anchor HEX 한 색으로 채우기",
+            "원본 레퍼런스 페이지나 이미지 구도 복제",
+            "HEX와 CMYK를 재현 보증값처럼 쓰기"
+          ]
+        }
+      ],
+      "metrics": [
+        {
+          "id": "metric-concept-clarity",
+          "label": "Concept Clarity / 명료도",
+          "summary": "색이 전달하는 정체성과 메시지의 명확함."
+        },
+        {
+          "id": "metric-saturation",
+          "label": "Saturation / 채도",
+          "summary": "색의 선명함과 감각적 강도."
+        },
+        {
+          "id": "metric-symbolism",
+          "label": "Symbolism / 상징성",
+          "summary": "색이 지닌 문화적 또는 심리적 의미의 깊이."
+        },
+        {
+          "id": "metric-trendiness",
+          "label": "Trendiness / 트렌드성",
+          "summary": "시대적 흐름과 트렌드에 부합하는 감각적 최신성."
+        },
+        {
+          "id": "metric-imagery-depth",
+          "label": "Imagery Depth / 심상 깊이",
+          "summary": "색이 불러오는 시각적 또는 감정적 이미지의 층위."
+        },
+        {
+          "id": "metric-versatility",
+          "label": "Versatility / 접목성",
+          "summary": "다양한 용도나 매체에 적용 가능한 유연성."
+        },
+        {
+          "id": "metric-visibility",
+          "label": "Visibility / 가시성",
+          "summary": "시각적으로 얼마나 눈에 잘 띄는가."
+        },
+        {
+          "id": "metric-stability",
+          "label": "Stability / 안정감",
+          "summary": "색이 가져다주는 신뢰감과 일관성 유지 정도."
+        }
+      ],
+      "patterns": [
+        {
+          "id": "pattern-spectrum-family-keyword-stack",
+          "label": "스펙트럼 → 패밀리 → 키워드로 색을 좁힌다",
+          "summary": "Red 같은 상위 스펙트럼에서 Standard/Natural/Deep/Pastel/Pantone 계열로 좁힌 뒤, 최종 키워드와 수치값을 선택한다.",
+          "prompt_do": [],
+          "prompt_avoid": []
+        },
+        {
+          "id": "pattern-color-card-triad-swatch-reading-metrics",
+          "label": "색상 카드는 swatch, reading, metrics 세 겹으로 읽는다",
+          "summary": "큰 색면과 수치값으로 색을 확인하고, reference reading으로 무드/적용 맥락을 잡은 뒤, 분석 지표로 쓰임새를 비교한다.",
+          "prompt_do": [],
+          "prompt_avoid": []
+        },
+        {
+          "id": "pattern-color-keyword-to-design-brief",
+          "label": "컬러 키워드를 디자인 브리프의 검색어로 승격한다",
+          "summary": "색상 키워드를 단순 라벨이 아니라 레퍼런스 검색어, 무드 정의, 적용 매체 조건을 묶는 브리프 단위로 사용한다.",
+          "prompt_do": [],
+          "prompt_avoid": []
+        },
+        {
+          "id": "pattern-palette-by-role-and-contrast-not-table-row",
+          "label": "팔레트는 table row가 아니라 역할과 대비 관계로 추상화한다",
+          "summary": "안전한 팔레트 지식은 \"이 색과 저 색이 한 행에 있었다\"가 아니라 anchor/accent/background, warm/cool, high/low value, saturation contrast 같은 사용 역할로 표현한다.",
+          "prompt_do": [],
+          "prompt_avoid": []
+        },
+        {
+          "id": "pattern-safe-palette-output-contract",
+          "label": "안전한 팔레트 답변은 후보, 이유, caveat, proof 조건을 함께 낸다",
+          "summary": "팔레트 질문에는 원본 조합표를 열거하지 않고, 후보 색상 역할과 사용 이유, 매체별 caveat, 추가 proof 조건을 함께 제시한다.",
+          "prompt_do": [],
+          "prompt_avoid": []
+        }
+      ],
+      "rules": [
+        "Treat RGB/HEX as digital reference values, not absolute reproduction guarantees.",
+        "Split RGB/sRGB and CMYK/print-profile decisions by output medium.",
+        "Choose mood tags and semantic roles before expanding support colors.",
+        "Do not reconstruct paid-source palette tables, page order, or row/column structures.",
+        "Publish palette candidates as role, contrast, caveat, and proof conditions."
+      ],
+      "matched_color_count": 3,
+      "reference_color_count": 87
     },
     "notes": [
       "Periwinkle #8E9AF1 primary — 모바일 만화 표지와 탭 상태에 쓰는 부드러운 보라-블루 축",
@@ -2869,12 +4577,28 @@
         "headline_start": "one-step-smaller",
         "guidance": "한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다."
       },
+      "implementation_constraints": {
+        "headline_display": {
+          "line_height_min": "1.02",
+          "letter_spacing_min": "-0.02em",
+          "letter_spacing_max": "0.01em",
+          "recommended_line_height": "1.25-1.35",
+          "recommended_letter_spacing": "0em",
+          "forced_breaks_policy": "disallow-before-breakpoint-qa"
+        },
+        "ui_label": {
+          "serif_usage": "allow-with-review",
+          "body_line_height": "1.4-1.5"
+        }
+      },
       "warnings": [],
       "rules": [
         "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
         "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
         "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
-        "폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다."
+        "폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다.",
+        "Pretendard 같은 한글 display 헤딩은 line-height를 1.02 미만으로 낮추지 않는다.",
+        "한글 display 헤딩 tracking은 -0.02em ~ 0.01em 범위를 벗어나지 않는다."
       ]
     }
   },
@@ -2905,10 +4629,13 @@
       "레퍼런스는 형태·밀도·컴포넌트 비례만 흡수하고, 색 조합·폰트 스케일·도메인 IA는 토큰과 제품 온톨로지를 따른다",
       "토큰을 사용하더라도 status/tint/info 역할을 섞어 레퍼런스처럼 보이는 새 팔레트를 만들지 않는다",
       "구현 중 사용자·리뷰어가 반복 가능한 실패 패턴을 지적하면 현재 화면 수정에 그치지 않고 governance/contract/linter로 승격한다",
+      "script_guardrails가 있으면 한글 display 헤딩의 min/max line-height·tracking 안전값을 구현 기본값으로 강제",
       "상용 제품형 화면은 피치덱식 히어로/균일 카드벽보다 실제 작업 표면, 데이터 밀도, 상태, 필터, 출처를 첫 화면에 우선 배치한다",
       "데이터·스포츠·운영 UI에서 정확한 수치, 예측, 순위, 투표수는 출처/업데이트 시각/샘플 라벨 없이 확정값처럼 보이게 하지 않는다",
       "사이트·앱·랜딩·제품·장소·콘텐츠·게임 목업은 도메인 실체를 보여주는 이미지/미디어/identity asset을 적극적으로 사용하고, 이미지 없는 카드·그라디언트만으로 완성 처리하지 않는다",
+      "HTML 목업은 정적 그림이 아니라 제품 표면 계약으로 취급한다. 차트/그래프/지도/캘린더/보드/캔버스는 data-runtime-surface, data-model, data-source, item/node/event id, 상태 세트를 드러낸다",
       "만화·웹툰·잡지 표지, 컷 미리보기, 서사 콘텐츠 미디어 슬롯은 image_gen/사용자 제공/라이선스 소스/승인된 고품질 아트워크를 기본값으로 삼고, 즉석 SVG 스케치나 기하학 플레이스홀더를 최종 자산으로 쓰지 않는다",
+      "사용자·리뷰어가 'SVG 만들지 말고', '실제 그림파일', 'PNG/WebP/JPEG', '검색해서 넣어'처럼 매체를 지정하면 해당 범위는 raster-only medium override로 기록하고 SVG/inline vector/아이콘 스프라이트로 대체하지 않는다",
       "생성 이미지와 장식 비주얼은 도메인 맥락을 보조해야 하며 일정, 결과, 표, 필터, 상태 같은 핵심 작업 표면을 압도하지 않는다",
       "Codex image_gen이 실패하거나 실제 사진성이 더 중요해 sourced visual fallback을 사용할 때는 라이선스/저작자/출처/attribution/sha256을 manifest에 기록하고 프로젝트 에셋으로 복사한 뒤 사용한다",
       "유료 stock provider는 구매·구독·프로젝트 라이선스 증빙이 없으면 구현 에셋으로 승격하지 않고, reference-only provider는 형태·밀도·flow 참고로만 사용한다",
@@ -2937,7 +4664,7 @@
       {
         "id": "no_emoji_as_ui",
         "rule": "이모지를 UI 요소로 쓰지 않는다",
-        "detail": "AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 반드시 SVG 파일/아이콘 컴포넌트 또는 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)를 사용한다. 리팩토링 중 카드, 버튼, 배지, 탭, 상태 표시, empty state에서 이모지를 발견하면 그대로 두지 말고 적절한 SVG 아이콘으로 교체한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다."
+        "detail": "AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 기본값은 SVG 파일/아이콘 컴포넌트 또는 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)이지만, 사용자·리뷰어가 no-SVG/raster-only 매체를 지정한 프로젝트에서는 PNG/WebP/JPEG 아이콘 에셋을 사용한다. 리팩토링 중 카드, 버튼, 배지, 탭, 상태 표시, empty state에서 이모지를 발견하면 그대로 두지 말고 프로젝트의 활성 medium directive에 맞는 실제 아이콘 에셋으로 교체한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다."
       },
       {
         "id": "implement_components_directly",
@@ -2955,9 +4682,19 @@
         "detail": "AI는 image_gen을 사용할 수 없거나 실제 사진성이 더 중요한 경우에만 sourced visual fallback을 사용한다. 무료 provider는 per-asset license metadata가 필요하고, paid provider는 license_proof/usage_scope/licensed_to가 필요하다. Reference-only provider는 형태와 밀도 참고만 가능하며 이미지를 구현 에셋으로 복사하지 않는다. source_url, download_url, provider, author, license, attribution_required, sha256, alt_text를 manifest에 기록하지 못하는 이미지는 구현에 넣지 않는다. 런타임 hotlink와 stock/search 이미지를 앱 아이콘·로고·상태 아이콘으로 쓰는 것을 금지한다."
       },
       {
+        "id": "explicit_visual_medium_directives_are_binding",
+        "rule": "사용자가 지정한 이미지 매체는 기본 SVG 규칙보다 우선한다",
+        "detail": "사용자나 리뷰어가 'SVG 만들지 말고', '실제 그림파일', '검색해서 넣어', 'PNG/WebP/JPEG', '래스터', '비트맵'처럼 시각 에셋 매체를 명시하면 그 지시는 온톨로지의 medium override가 된다. 해당 범위의 아바타, 캐릭터, 콘텐츠 이미지, 앱 아이콘, UI 아이콘은 SVG/inline vector로 대체하지 않고 생성·사용자 제공·라이선스 소스 기반의 실제 래스터 파일을 프로젝트에 복사해 사용한다. 예외가 필요하면 사용자의 명시 승인과 medium_decision 기록이 먼저 있어야 한다."
+      },
+      {
         "id": "visual_substance_in_mockups",
         "rule": "목업은 관련 이미지를 적극적으로 사용한다",
         "detail": "AI는 사이트, 앱, 랜딩, 제품 소개, 콘텐츠 카드, 스포츠/장소/상품/포트폴리오 목업을 이미지 없는 카드와 그라디언트 블록만으로 끝내지 않는다. 도메인 실체를 드러내는 생성 이미지, 라이선스 검증 이미지, 사용자 제공 이미지, 브랜드 identity asset을 적극적으로 배치하고 manifest/alt/crop/반응형 검증까지 완료한다. 단 대시보드·운영 UI에서는 이미지가 표, 필터, 상태, 출처 같은 핵심 작업 표면을 밀어내지 않게 한다."
+      },
+      {
+        "id": "html_mockups_are_product_prototypes",
+        "rule": "HTML 목업은 제품 표면 계약이다",
+        "detail": "AI는 HTML 목업을 그림판처럼 쓰지 않는다. 차트, 그래프, 지도, 캘린더, 칸반, 간트, 스프레드시트, 에디터 캔버스 같은 복합 표면은 data-runtime-surface/data-product-surface, 데이터 모델, 출처, 항목 ID, 상태 세트를 드러내야 한다. 관계나 수치 기준을 설명하지 못하면 장식 그래프 대신 table, ledger, timeline처럼 검증 가능한 표면을 사용한다."
       },
       {
         "id": "no_homogeneous_card_wall",
@@ -2967,7 +4704,7 @@
       {
         "id": "active_svg_visual_affordances",
         "rule": "아이콘과 도메인 그림은 완성 조건이다",
-        "detail": "AI는 필터, 상태, 액션, 추천 근거, 도메인 객체에 SVG 아이콘이나 deterministic SVG/이미지 자산을 적극적으로 연결한다. 도메인이 장소·상품·콘텐츠·게임·스포츠처럼 시각 실체를 갖는 경우, 텍스트와 테두리만으로 완료 처리하지 않는다."
+        "detail": "AI는 필터, 상태, 액션, 추천 근거, 도메인 객체에 프로젝트의 활성 medium directive에 맞는 아이콘이나 이미지 자산을 적극적으로 연결한다. 기본값은 SVG 아이콘이나 deterministic SVG/이미지 자산이지만, no-SVG/raster-only directive가 있으면 PNG/WebP/JPEG 에셋을 사용한다. 도메인이 장소·상품·콘텐츠·게임·스포츠처럼 시각 실체를 갖는 경우, 텍스트와 테두리만으로 완료 처리하지 않는다."
       }
     ],
     "reference_absorption_scope": {
@@ -3151,6 +4888,7 @@
         "banner"
       ],
       "replacement_order": [
+        "If the user/reviewer has declared a raster-only or no-SVG medium override, use approved PNG/WebP/JPEG icon/image assets and document the override.",
         "Use the project's existing icon library when one is already installed and stylistically compatible.",
         "Reuse existing local SVG/icon components when available.",
         "Create a simple local SVG file or SVG component when no suitable icon exists."
@@ -3180,6 +4918,7 @@
         "Store new SVG assets in the nearest existing icons/assets directory; create a minimal icons directory only when none exists.",
         "Do not replace user-generated emoji content, chat text, blog body, or emoji-picker data.",
         "Do not use emoji as a placeholder while searching for a proper icon.",
+        "Do not use SVG icons when a project-specific medium override says no SVG or requires real raster image files; use project-local PNG/WebP/JPEG icon assets instead.",
         "Do not hand-roll a UI icon sprite when a suitable icon library exists; if a local sprite is used, declare its source or approved custom grammar.",
         "Navigation, toolbar, status, and action icons must share one visual grammar across stroke width, corner style, optical size, and active/inactive treatment."
       ],
@@ -3236,7 +4975,7 @@
           "label": "Brand app icon",
           "required": true,
           "formats": [
-            "svg source",
+            "source asset (SVG by default; PNG/WebP/JPEG when a no-SVG medium override is active)",
             "favicon",
             "web app manifest icon when applicable"
           ],
@@ -3253,6 +4992,7 @@
         "Do not ship a plain initials tile such as WC, AI, DS, or App as the final app icon unless the brand system explicitly defines that lettermark.",
         "The app icon must use the brand palette, visual keywords, and product primitives as evidence for shape language.",
         "Use a deterministic SVG source for the primary app icon; generated raster imagery may support marketing visuals but must not replace the identity icon source.",
+        "If the user/reviewer explicitly forbids SVG or requires actual raster image files, the app icon identity source may be PNG/WebP/JPEG instead; record that medium override in the ontology and do not create an SVG fallback silently.",
         "Wire the app icon into favicon/link metadata and the visible app-shell brand mark when the implementation has one.",
         "Keep small-size legibility: the icon must remain recognizable at 32px and in a 44px navigation mark.",
         "The app icon must read as a finished identity mark, not a rough illustration, generic tile, emoji-like sticker, or low-confidence geometric placeholder."
@@ -3336,6 +5076,8 @@
         "Path-only inline SVGs with generic map/sketch/illustration classes do not count as visual substance unless the visual is semantically anchored with labels, legend, title/desc, or data-subject landmarks.",
         "Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.",
         "Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.",
+        "Do not represent evidence maps, relation maps, or product data graphs as hand-positioned HTML nodes connected by rotated CSS lines. Use a real graph/chart library, SVG/canvas visualization with semantic labels and runtime data, or a ledger/table when the relationship is simple.",
+        "Do not fake workflow graphs by overlaying freehand SVG curves on separately positioned HTML nodes. Graph nodes and edges must share one coordinate system and expose node/edge ids, direction, labels, and runtime state.",
         "A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.",
         "Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.",
         "Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.",
@@ -3400,6 +5142,28 @@
           ]
         },
         {
+          "id": "ad-hoc-node-link-placeholder-graph",
+          "trigger": "A mockup draws an evidence map, relation map, or graph using absolutely positioned nodes and rotated CSS lines such as graph-node/graph-edge or trace-node/trace-line.",
+          "rule": "A hand-drawn node-link sketch is not a product-grade data visualization.",
+          "prevention": "Use a proven graph/chart library, a semantically labeled SVG/canvas visualization backed by real runtime data, or replace simple relationships with an evidence ledger/table.",
+          "technical_controls": [
+            "lint-implementation DS082",
+            "component_specs.md data visualization notes",
+            "visual QA screenshots"
+          ]
+        },
+        {
+          "id": "freehand-svg-connector-graph",
+          "trigger": "A workflow, relation, or evidence graph uses an SVG connector layer such as wires/connector-layer plus separately positioned HTML nodes, with no node/edge ids, direction labels, or shared graph coordinate system.",
+          "rule": "A graph surface must encode the relationship model, not just draw curves between boxes.",
+          "prevention": "Use a graph library, or author the graph as one semantic SVG/canvas surface with data-node-id, data-edge-id, data-from/data-to, arrowheads, edge labels, and runtime state. If the relationship is simple, use a table, timeline, or ledger.",
+          "technical_controls": [
+            "lint-implementation DS083",
+            "component_specs.md graph validity notes",
+            "visual QA screenshots"
+          ]
+        },
+        {
           "id": "media-runtime-surface-without-asset",
           "trigger": "A place, product, article, or content detail declares a media/photo runtime surface but renders only CSS patterns, gradients, or generic blocks.",
           "rule": "Runtime media surfaces need actual media assets or explicit empty/loading states.",
@@ -3443,10 +5207,161 @@
         "compare-visuals"
       ]
     },
+    "html_prototype_contract_policy": {
+      "id": "html-prototype-contract",
+      "rule": "HTML mockups must behave as thin executable product prototypes, not static screenshots made from divs.",
+      "applies_to": [
+        "static HTML mockups",
+        "Vite/Next demo screens",
+        "product workflow prototypes",
+        "data dashboards",
+        "maps/charts/calendars/boards",
+        "editor or canvas surfaces"
+      ],
+      "required_contracts": [
+        "Mark the primary surface with data-product-prototype or an equivalent prototype marker when it is a reviewable mockup.",
+        "Each major product surface declares data-runtime-surface or data-product-surface so reviewers know whether it represents a map SDK, chart layer, table view, calendar, board, media slot, editor canvas, or empty/loading state.",
+        "Data-heavy surfaces expose model/source/id metadata such as data-model, data-source, data-row-id, data-item-id, data-event-id, data-node-id, and data-edge-id.",
+        "Prototype reviews include a state set: default, selected, loading, empty, error, disabled, pending, approved/blocked, or domain-specific equivalents.",
+        "Contract metadata is not enough: prototypes must include token-bound layout, surface, typography, state, and affordance styling so they do not render as browser-default HTML.",
+        "Charts, graphs, maps, calendars, kanban boards, gantt views, spreadsheets, and editor canvases use a proven library or one semantic SVG/canvas/table coordinate system with labels, axes, direction, state, and provenance.",
+        "Playwright QA captures desktop and mobile viewports and verifies no horizontal overflow, clipped labels, or incoherent overlaps before the mockup is called complete."
+      ],
+      "implementation_rules": [
+        "Do not use mock/placeholder/fake/static chart, map, calendar, board, graph, or canvas classes without a runtime/data contract.",
+        "Do not satisfy the contract with aria labels alone; labels help accessibility, but product structure needs model/source/id/state metadata.",
+        "Do not stop at metadata-only fixtures. If the page still looks like default browser HTML, add product-surface styling or mark the artifact as a non-visual test fixture.",
+        "Prefer table, ledger, timeline, or row list when the relationship is simple enough that a graph would be decorative.",
+        "If a complex surface cannot be backed by data or a real interaction model yet, render an explicit empty/loading/pending state instead of a fake finished surface.",
+        "Sample numbers must be visibly labeled as sample/demo and paired with a source or update context."
+      ],
+      "improvement_loop": [
+        {
+          "step": "observe",
+          "rule": "Collect the reviewer complaint, current screenshot or DOM evidence, and the exact artifact path before making changes."
+        },
+        {
+          "step": "classify",
+          "rule": "Decide whether the issue is implementation-only, missing product contract, missing visual styling, wrong visualization model, responsive failure, or a repeatable ontology gap."
+        },
+        {
+          "step": "promote",
+          "rule": "If the failure can recur, promote it into governance, IMPLEMENTATION_CONTRACT, lint-implementation, and a regression test before calling the screen fixed."
+        },
+        {
+          "step": "repair",
+          "rule": "Repair the artifact using product-surface structures, token-bound styling, runtime metadata, and state scenarios rather than cosmetic color changes."
+        },
+        {
+          "step": "verify",
+          "rule": "Run lint-implementation, targeted tests, and desktop/mobile visual QA or screenshot comparison. If a new failure appears, loop back to classify."
+        }
+      ],
+      "failure_patterns": [
+        {
+          "id": "complex-mock-surface-without-contract",
+          "trigger": "A chart, graph, map, calendar, kanban, gantt, spreadsheet, timeline, board, inspector, or canvas surface is labeled mock/placeholder/fake/static/sample but has no runtime, model, source, id, or state metadata.",
+          "rule": "A complex HTML mock surface needs a product contract before it can be visually judged.",
+          "prevention": "Add data-runtime-surface or data-product-surface plus model/source/id/state metadata, or replace the surface with a simpler table, ledger, or explicit empty/loading state.",
+          "technical_controls": [
+            "lint-implementation DS084",
+            "IMPLEMENTATION_CONTRACT.md",
+            "Playwright screenshot QA"
+          ]
+        },
+        {
+          "id": "single-state-html-prototype",
+          "trigger": "A screen is marked as an HTML/product prototype but exposes only one happy-path state.",
+          "rule": "Prototype fidelity includes state coverage, not only a polished default screenshot.",
+          "prevention": "Add data-prototype-state-set or visible data-state scenarios for default, selected, loading, empty, error, and domain-specific states.",
+          "technical_controls": [
+            "lint-implementation DS085",
+            "component_specs.md states",
+            "Playwright desktop/mobile screenshots"
+          ]
+        },
+        {
+          "id": "metadata-only-html-prototype",
+          "trigger": "A screen has data-product-prototype, runtime metadata, and state values, but renders as browser-default HTML because it lacks layout, surface, typography, state, and affordance styling.",
+          "rule": "A prototype contract is not visually complete until the product surface is styled and reviewable.",
+          "prevention": "Add token-bound product-surface CSS, icon/visual affordances, stable layout, and desktop/mobile visual QA; otherwise mark it as a non-visual fixture.",
+          "technical_controls": [
+            "lint-implementation DS086",
+            "HTML Prototype Improvement Loop",
+            "visual QA review"
+          ]
+        },
+        {
+          "id": "decorative-data-visualization",
+          "trigger": "A chart, graph, or map shows bars, curves, pins, or cells without axes, labels, source, update context, or data values.",
+          "rule": "Data visualization must explain its criteria and relationship model.",
+          "prevention": "Use a chart/graph/map library, semantic SVG/canvas with data values and labels, or a table/ledger when the data model is small.",
+          "technical_controls": [
+            "lint-implementation DS084",
+            "lint-implementation DS082/DS083",
+            "visual QA review"
+          ]
+        }
+      ],
+      "outputs": [
+        "design_system_blueprint.governance",
+        "system_spec.md",
+        "IMPLEMENTATION_CONTRACT.md",
+        "lint-implementation",
+        "visual QA"
+      ]
+    },
     "visual_asset_medium_selection_policy": {
       "id": "visual-asset-medium-selection",
       "rule": "Visual asset slots must choose the medium that matches the subject and runtime role; narrative/content media needs high-fidelity raster or approved production artwork, not ad-hoc SVG sketches.",
+      "directive_overrides": [
+        {
+          "id": "user-raster-asset-directive",
+          "trigger_phrases": [
+            "SVG 만들지 말고",
+            "SVG 금지",
+            "실제 그림파일",
+            "실제 이미지 파일",
+            "검색해서 넣어",
+            "PNG",
+            "WebP",
+            "JPEG",
+            "래스터",
+            "비트맵"
+          ],
+          "priority": "highest",
+          "required_medium": "project-local raster image asset",
+          "allowed_formats": [
+            "png",
+            "webp",
+            "jpg",
+            "jpeg",
+            "avif"
+          ],
+          "denied_formats": [
+            "svg",
+            "inline svg",
+            "deterministic svg placeholder"
+          ],
+          "applies_to": [
+            "avatars",
+            "character portraits",
+            "content images",
+            "mockup visual assets",
+            "app icons",
+            "UI icons unless explicitly exempted"
+          ],
+          "documentation_required": [
+            "medium_decision",
+            "asset_path",
+            "acquisition_mode",
+            "source_or_prompt",
+            "verification that no .svg or inline <svg> remains"
+          ]
+        }
+      ],
       "decision_sequence": [
+        "First honor explicit user/reviewer medium directives. A no-SVG or raster-only directive overrides default identity/icon/vector preferences for the affected project or slot.",
         "Classify the slot before drawing: identity/icon, control glyph, diagram/data, factual real-world media, narrative/content media, or decorative support.",
         "If the slot's user expectation is rendered content art, product/place photography, story atmosphere, or inspectable media, use image_gen, user-supplied licensed imagery, sourced licensed imagery, or an already approved high-fidelity asset.",
         "Use deterministic SVG for app icons, logos, flags, UI glyphs, charts, diagrams, maps, schematics, and semantic product illustrations where vector geometry is the correct runtime representation.",
@@ -3502,9 +5417,28 @@
             "semantic_html_css"
           ],
           "deterministic_svg": "preferred when token-bound, accessible, and semantically anchored"
+        },
+        {
+          "id": "user-specified-raster-assets",
+          "examples": [
+            "AI avatar",
+            "chat character portrait",
+            "generated app visual",
+            "search/sourced image slot",
+            "raster-only UI icon set"
+          ],
+          "default_acquisition_modes": [
+            "image_gen",
+            "user_supplied",
+            "sourced",
+            "project_local_raster"
+          ],
+          "deterministic_svg": "denied whenever the user/reviewer says no SVG, real image file, raster-only, or asks to search/generate actual imagery"
         }
       ],
       "implementation_rules": [
+        "A user/reviewer sentence such as 'SVG 만들지 말고 실제 그림파일로 만들거나 검색해서 넣어' is a binding medium override, not a preference. Store it in governance/system_ontology/IMPLEMENTATION_CONTRACT and satisfy it before visual QA.",
+        "When a raster-only/no-SVG directive is active, do not create SVG avatars, inline SVG sprites, SVG favicons, SVG placeholder art, or SVG UI icons for the affected scope; create or source project-local PNG/WebP/JPEG assets instead.",
         "Comic, manga, and webtoon cover or panel-preview slots default to image_gen-generated raster, user-supplied artwork, or licensed/sourced artwork.",
         "A geometric SVG, rough path drawing, or low-information vector placeholder is not an acceptable final comic cover, manga panel, article cover, product photo, or story media asset.",
         "Do not substitute inline SVG scene art solely because it is faster to author; use the imagegen skill when synthetic art is appropriate and available.",
@@ -3523,6 +5457,19 @@
             "system_ontology.json GovernanceRule",
             "IMPLEMENTATION_CONTRACT.md",
             "lint-implementation DS079",
+            "visual QA screenshots"
+          ]
+        },
+        {
+          "id": "user-raster-directive-svg-violation",
+          "trigger": "A project or slot declares no-SVG/raster-only/real-image-file requirements but implementation still contains .svg assets, inline <svg>, image/svg+xml favicons, or SVG icon sprites in the affected scope.",
+          "rule": "Explicit user/reviewer raster directives override default SVG icon and identity guidance.",
+          "prevention": "Replace SVG assets with project-local PNG/WebP/JPEG files generated, user-supplied, or license-verified from search; record medium_decision and verify the implementation has no .svg or inline <svg> references.",
+          "technical_controls": [
+            "system_spec.md Visual Asset Medium Selection",
+            "system_ontology.json GovernanceRule",
+            "IMPLEMENTATION_CONTRACT.md",
+            "lint-implementation DS081",
             "visual QA screenshots"
           ]
         },
@@ -3899,7 +5846,7 @@
         ]
       }
     ],
-    "total_benchmark_count": 35,
+    "total_benchmark_count": 42,
     "common_typography_in_matches": {
       "SF Pro": 1,
       "Inter": 1,
@@ -3916,9 +5863,11 @@
     ],
     "industry_keywords": [
       "accessible",
+      "agent-ready",
       "bold",
       "calm",
       "composable",
+      "customizable",
       "editorial",
       "expressive",
       "fast",

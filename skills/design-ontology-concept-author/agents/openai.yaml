@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Concept Author"
+  short_description: "Author app concept and layout skeleton"
+  default_prompt: "Use $design-ontology-concept-author to turn this app idea into a brand_profile application_concept, layout_skeleton, and design_differentiation before running the harness."

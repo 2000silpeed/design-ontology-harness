@@ -64,10 +64,10 @@ Color rule: Token binding is necessary but not sufficient. Do not recombine `--d
 ## Component Priorities
 | Family | Priority | States | Components |
 | --- | --- | --- | --- |
-| button | high | `default`, `hover`, `active`, `disabled`, `loading` | `primary-button`, `secondary-button`, `ghost-button`, `icon-button`, `cta-button`, `link-button`, +1 more |
+| button | high | `default`, `hover`, `active`, `disabled`, `loading` | `primary-button`, `secondary-button`, `icon-button`, `form-actions` |
 | copilot-artifact | high | `default`, `loading`, `verified`, `error` | `source-card`, `citation-drawer` |
 | copilot-chat | high | `default`, `loading`, `complete`, `error` | `tool-call-trace` |
-| data-display | high | `default`, `sorted`, `filtered`, `empty` | `data-table`, `tag`, `column-header`, `row-actions`, `chat-message`, `chat-thread`, +17 more |
+| data-display | high | `default`, `sorted`, `filtered`, `empty`, `loading` | `data-table`, `list`, `metadata-list`, `tag`, `column-header`, `row-actions`, +20 more |
 | document | high | `default`, `selected`, `commenting`, `resolved` | `article-body`, `table-of-contents`, `heading-anchor`, `prose-block`, `reading-pane`, `footnote`, +3 more |
 | editorial | high | `default`, `selected`, `editing` | `editor-canvas`, `editor-toolbar`, `inline-format-menu`, `slash-command-menu`, `block-controls` |
 

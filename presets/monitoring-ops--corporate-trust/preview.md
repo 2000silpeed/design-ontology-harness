@@ -26,9 +26,9 @@
 - korean: Pretendard
 
 ## 대표 컴포넌트
+- **icon-button** — parts: container, label, leading-icon(optional), trailing-icon(optional) | states: default, hover, active, disabled
 - **status-badge** — parts: container, icon, message, action(optional), close-button(optional) | states: info, success, warning, danger
 - **data-table** — parts: container, header, content-area, footer(optional), action(optional) | states: default, loading, empty, error
-- **inline-alert** — parts: container, icon, message, action(optional), close-button(optional) | states: info, success, warning, danger
 
 ## 주의사항
 - image-derived hints는 advisory (truth source: system_spec.md, token_schema.json)

@@ -6,14 +6,10 @@
 - app_mode: `marketing-landing` / brand_tone: `bold-confident`
 
 ## Color Tokens (light + dark)
-### Core
-- primary: `#E90052`
-- accent: `#00FF85`
-- surface_tint: `#FFD700`
 
 ### Semantic
-- success: `#00C853`
-- warning: `#FF8C00`
+- success: `#00FF85`
+- warning: `#FFD700`
 - danger: `#E90052`
 - info: `#1A1A2E`
 
@@ -27,7 +23,7 @@
 
 ## 대표 컴포넌트
 - **hero-cta-group** — parts: container, label, leading-icon(optional), trailing-icon(optional) | states: default, hover, active, disabled
-- **primary-button** — parts: container, label, leading-icon(optional), trailing-icon(optional) | states: default, hover, active, disabled
+- **feature-comparison** — parts: container, header, content-area, footer(optional), action(optional) | states: default, loading, empty, error
 - **hero-container** — parts: section-container, inner-max-width, content | states: default, in-view, hover
 
 ## 주의사항

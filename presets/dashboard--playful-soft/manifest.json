@@ -2,7 +2,7 @@
   "id": "dashboard--playful-soft",
   "schema_version": "1.0.0",
   "preset_api_version": "1.0.0",
-  "generated_by_harness_version": "0.1.0",
+  "generated_by_harness_version": "0.2.0",
   "preview_version": "1.0.0",
   "adapter_compatibility": {
     "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
@@ -10,7 +10,7 @@
     "vite-tailwind": ">=0.1.0 <1.0.0"
   },
   "source_project": "meadow",
-  "content_hash": "sha256:8c1e331607095b507c4e6255edb18025c2e835ff89fb56df9c0b54a90241b27b",
+  "content_hash": "sha256:2b8a5bb3e23c8f1834bc164735017f3b1d5f9106a0e97040772698d6ca34da2f",
   "app_mode": "dashboard",
   "brand_tone": "playful-soft",
   "color_modes": [
@@ -33,6 +33,6 @@
   },
   "owner": "@maintainer-dogfood",
   "tier": "P3",
-  "generated_at": "2026-04-21T12:34:59Z",
+  "generated_at": "2026-07-08T07:25:20Z",
   "description": "consumer wellness/habit admin — playful-soft 톤 pastel 팔레트, 한국어 1급"
 }

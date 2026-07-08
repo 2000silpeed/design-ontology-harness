@@ -63,6 +63,7 @@
 - **Hangul body defaults**: Pretendard | line-height 1.6-1.7 | label line-height 1.4-1.5
 - **Wrap defaults**: headline word-break=keep-all, headline text-wrap=balance, body word-break=keep-all
 - **Scale guidance**: 한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다.
+- **Hangul display safety**: line-height >= 1.02 | tracking -0.02em to 0.01em | forced <br /> 금지 until breakpoint QA
 - **Loading**: Pretendard(preload), JetBrains Mono(lazy) | display: swap
 
 ## 6. Color Reference
@@ -107,6 +108,36 @@
   - Seed Core: primary=Periwinkle, accent=Living Coral, surface_tint=Buttercream
   - Surface System: canvas=Canvas White, surface=Paper, surface_tint=Buttercream, border=Border Neutral, ink=Ink, ink_muted=Muted Ink
   - Support Spectrum: support=Creamsicle, support=Pairing #F9F5EF, support=Pairing #FFF5D9, support=Pairing #D6C5B2, support=Pairing #E8D4C5, support=Pairing #EFD8C5
+- **Semantic color selection**: ontology-search-per-run
+  - matched pattern: `pattern-brief-palette-manga-magazine-pop-editorial` / 만화 매거진 팝 에디토리얼 팔레트 후보
+- **Ontology-searched candidate palettes**:
+  - ontology-best-fit-1 (Best Fit, score=174.3): masthead_energy=Pure Red, cover_signal=Scarlet, paper_field=Buttercream, feature_frame=Ultra Violet, attention_flash=Illuminating
+  - ontology-quiet-surface-2 (Quiet Surface, score=114.8): masthead_energy=Scarlet, cover_signal=Royal Purple, paper_field=Cornsilk, feature_frame=Midnight Violet, attention_flash=Naples Yellow
+  - ontology-clear-structure-3 (Clear Structure, score=121.3): masthead_energy=Pure Orange, cover_signal=Burnt Orange, paper_field=Lemon Yellow, feature_frame=Grape Compote, attention_flash=Illuminating
+  - ontology-strong-signal-4 (Strong Signal, score=125.1): masthead_energy=Ruby, cover_signal=Autumn Blaze, paper_field=Cornsilk, feature_frame=Ultra Violet, attention_flash=Royal Purple
+  - ontology-cross-family-5 (Cross Family, score=128.2): masthead_energy=Salmon, cover_signal=Amber, paper_field=Buttercream, feature_frame=Periwinkle, attention_flash=Burnt Orange
+- **Selection rules**:
+  - Search Semantic OS ColorPattern and ColorKeyword nodes for every app brief.
+  - Do not ship pre-authored palette sets as fixed presets.
+  - Use ColorPattern role language as a role model, not as a copied palette table.
+  - Publish colors as role, reason, caveat, and proof conditions.
+- **Semantic color ontology**: 137 nodes / 487 edges from semantic-os
+- **Matched color keywords**:
+  - `primary` -> Periwinkle #8E9AF1 / violet.pastel / mood=부드러움, 몽환, 순수함 / axes=mid_value, low_chroma, warm_bias
+  - `accent` -> Living Coral #FF6F61 / orange.pantone_trend / mood=생동감, 따뜻함, 낙관적 / axes=mid_value, mid_chroma, warm_bias
+  - `surface_tint` -> Buttercream #F3E5AB / yellow.pastel / mood=부드러움, 따뜻함, 포근함 / axes=high_value, low_chroma, warm_bias
+- **Ontology keyword recommendations**:
+  - Salmon #FA8072 / red.pastel / matches 'reference'; matches 'pastel'
+  - Pure Red #FF0000 / red.standard / matches 'reference'; matches 'standard'
+  - Peach Puff #FFDAB9 / orange.pastel / matches 'reference'; matches 'orange'
+  - Copper #B87333 / orange.deep / matches 'reference'; matches 'orange'
+  - Burnt Orange #CC5500 / orange.deep / matches 'reference'; matches 'orange'
+- **Semantic color guardrails**:
+  - RGB와 CMYK는 산출 매체 기준으로 분리한다: 디지털 산출물은 RGB/sRGB 기준, 인쇄 산출물은 CMYK/프로파일 기준으로 판단한다. 화면색을 인쇄색으로 그대로 기대하지 않는다.
+  - 색상 수치는 절댓값이 아니라 기준값이다: 디스플레이와 출력 환경에 따라 색 차이가 생기므로 HEX/CMYK는 재현 기준점으로 쓰고, 최종 판단은 매체별 proof에서 확인한다.
+  - 팔레트 확장 전 mood tag를 먼저 잠근다: 무드보드나 브랜드 컬러를 늘리기 전에 에너지, 안정, 깊이, 회복 같은 감정 태그를 먼저 고정하면 색상 후보가 흔들리지 않는다.
+  - 배색표를 재구성할 수 있는 수준의 pair 목록은 만들지 않는다: paid source의 조합표, 페이지 배열, 순서, 행/열 구조를 그대로 되살릴 수 있는 palette_pair edge 묶음은 온톨로지에 넣지 않는다.
+  - palette_pair edge는 변형된 brief와 함께만 추가한다: 두 색의 직접 pair edge는 브랜드/화면/인쇄/제품 같은 새로운 산출 맥락에서 역할, 대비, 위험, proof 조건이 함께 설명될 때만 추가한다.
 - **Notes**: Periwinkle #8E9AF1 primary — 모바일 만화 표지와 탭 상태에 쓰는 부드러운 보라-블루 축, Living Coral #FF6F61 accent — 신작 배지, 저장 액션, 연재 업데이트에 쓰는 생동감 있는 코랄, Buttercream #F3E5AB surface_tint — 장시간 탐색용 따뜻한 종이빛 배경, Blue Atoll 계열은 보조 정보/알림에만 사용해 팔레트가 보라 한 톤으로 뭉치지 않게 한다, light mode 기본, dark mode 옵션 — 밤 독서와 모바일 독서 맥락을 모두 지원한다
 - **Application rule**: 레퍼런스 컬러는 semantic token으로 번역해서 사용하고, 접근성과 theme 호환성을 우선합니다.
 
@@ -179,16 +210,19 @@
 
 - **Product primitives**: tags and labels, onboarding and stepper, data tables, search and filter, workspace navigation, hero section, notifications, bold editorial magazine, site footer, forms, comments and discussion, modal and dialog, chat and messaging, reference documentation, presence and notifications
 - **Required families**: button, copilot-artifact, data-display, document, feedback, input, layout, marketing, navigation, workflow, foundation, magazine, overlay, social
+- **Reference baseline**: Astryx (https://astryx.atmeta.com/components), Vercel Geist (https://vercel.com/geist/introduction)
+- **Reference absorption rule**: Use Astryx and Geist as taxonomy and behavior evidence; implement with local primitives and local tokens.
+- **Contextual, not baseline**: back-button, bottom-sheet, cta-button, ghost-button, link-button, mobile-tab-bar, mobile-topbar, modal-dialog
 - **Advanced component recommendations**:
 
 - **redline-viewer** (document, score 15): legal, compliance, or editorial text needs reviewer markup; comments must stay anchored to exact text ranges / pairs with: diff-viewer, comment-thread, approval-rail
-- **source-card** (copilot-artifact, score 14): AI output depends on external or internal source records; users need a repeatable citation preview component / pairs with: citation-drawer, evidence-graph, inline-citation
 - **reviewer-assignment-picker** (input, score 11): workflows require human approval or reassignment; reviewer choice depends on policy ownership or availability / pairs with: approval-rail, exception-queue, presence-indicator
 - **approval-rail** (workflow, score 10): work requires review, approval, rejection, or handoff; users need to know who owns the next decision / pairs with: policy-matrix, risk-summary-card, diff-viewer
 - **citation-drawer** (copilot-artifact, score 10): answers must show supporting policy, document, or source records; users need to inspect evidence without losing conversation context / pairs with: inline-citation, source-card, evidence-graph
 - **diff-viewer** (document, score 10): AI rewrites, policy edits, or reviewer changes need auditability; users must approve what changed before publishing / pairs with: redline-viewer, revision-timeline, approval-rail
 - **resizable-split-pane** (layout, score 10): primary work happens between list, canvas/chat, and detail panels; users need to compare or inspect adjacent information without navigation / pairs with: thread-list, artifact-preview-panel, inspector-drawer
 - **bulk-action-table** (data-display, score 8): users handle many records at once; selection count and destructive actions must stay visible / pairs with: saved-view-bar, filter-builder, exception-queue
+- **saved-view-bar** (navigation, score 8): teams revisit the same filtered views often; dense tools need stable scope memory / pairs with: filter-builder, bulk-action-table, exception-queue
 
 - **Visual-reference archetypes**:
 
@@ -199,19 +233,19 @@
 - **Data review table** (data-display / 0.43): data-table, column-header, row-actions, filter-toolbar, pagination
 - **Marketing hero stack** (marketing / 0.32): hero-section, hero-headline, hero-visual, cta-button-group, trust-strip
 
-- **button**: primary-button, secondary-button, ghost-button, icon-button, cta-button, link-button, hero-cta-group, form-actions
-- **copilot-artifact**: source-card, citation-drawer
-- **data-display**: data-table, tag, column-header, row-actions, search-results, comment-thread, chat-message, chat-thread
+- **button**: primary-button, secondary-button, icon-button, hero-cta-group, form-actions
+- **copilot-artifact**: citation-drawer
+- **data-display**: data-table, list, metadata-list, tag, column-header, row-actions, search-results, comment-thread
 - **document**: article-body, table-of-contents, heading-anchor, prose-block, reading-pane, footnote, link-card, redline-viewer
-- **feedback**: filter-chip, toast, inline-alert, empty-state, banner, status-badge, step-progress
-- **input**: text-field, select, checkbox, radio, textarea, search-field, segmented-control, chip
+- **feedback**: filter-chip, toast, inline-alert, empty-state, banner, badge, status-dot, status-badge
+- **input**: text-field, select, checkbox, radio, textarea, switch, segmented-control, chip
 - **layout**: resizable-split-pane
 - **marketing**: hero-container, hero-eyebrow, hero-headline, hero-subheadline, hero-visual, hero-trust-strip, site-footer, footer-column
-- **navigation**: sidebar-nav, topbar, breadcrumb, workspace-switcher, mobile-topbar, mobile-tab-bar, back-button, section-tabs
+- **navigation**: pagination, sidebar-nav, topbar, breadcrumb, workspace-switcher, breadcrumbs, tabs, wizard-layout
 - **workflow**: approval-rail
-- **foundation**: column-header, row-actions, pagination, app-shell, form-section
+- **foundation**: column-header, row-actions, app-shell, form-section
 - **magazine**: masthead, issue-header, issue-number, cover-story, opening-spread, feature-article, kicker-eyebrow, pull-quote
-- **overlay**: bottom-sheet, modal-dialog, tooltip-guide, autocomplete, mention-popup, confirm-dialog, notification-center, command-palette
+- **overlay**: dialog, popover, tooltip, tooltip-guide, autocomplete, mention-popup, confirm-dialog, notification-center
 - **social**: presence-indicator
 
 ## 9. Implementation Guardrails
@@ -228,10 +262,13 @@
 - 레퍼런스는 형태·밀도·컴포넌트 비례만 흡수하고, 색 조합·폰트 스케일·도메인 IA는 토큰과 제품 온톨로지를 따른다
 - 토큰을 사용하더라도 status/tint/info 역할을 섞어 레퍼런스처럼 보이는 새 팔레트를 만들지 않는다
 - 구현 중 사용자·리뷰어가 반복 가능한 실패 패턴을 지적하면 현재 화면 수정에 그치지 않고 governance/contract/linter로 승격한다
+- script_guardrails가 있으면 한글 display 헤딩의 min/max line-height·tracking 안전값을 구현 기본값으로 강제
 - 상용 제품형 화면은 피치덱식 히어로/균일 카드벽보다 실제 작업 표면, 데이터 밀도, 상태, 필터, 출처를 첫 화면에 우선 배치한다
 - 데이터·스포츠·운영 UI에서 정확한 수치, 예측, 순위, 투표수는 출처/업데이트 시각/샘플 라벨 없이 확정값처럼 보이게 하지 않는다
 - 사이트·앱·랜딩·제품·장소·콘텐츠·게임 목업은 도메인 실체를 보여주는 이미지/미디어/identity asset을 적극적으로 사용하고, 이미지 없는 카드·그라디언트만으로 완성 처리하지 않는다
+- HTML 목업은 정적 그림이 아니라 제품 표면 계약으로 취급한다. 차트/그래프/지도/캘린더/보드/캔버스는 data-runtime-surface, data-model, data-source, item/node/event id, 상태 세트를 드러낸다
 - 만화·웹툰·잡지 표지, 컷 미리보기, 서사 콘텐츠 미디어 슬롯은 image_gen/사용자 제공/라이선스 소스/승인된 고품질 아트워크를 기본값으로 삼고, 즉석 SVG 스케치나 기하학 플레이스홀더를 최종 자산으로 쓰지 않는다
+- 사용자·리뷰어가 'SVG 만들지 말고', '실제 그림파일', 'PNG/WebP/JPEG', '검색해서 넣어'처럼 매체를 지정하면 해당 범위는 raster-only medium override로 기록하고 SVG/inline vector/아이콘 스프라이트로 대체하지 않는다
 - 생성 이미지와 장식 비주얼은 도메인 맥락을 보조해야 하며 일정, 결과, 표, 필터, 상태 같은 핵심 작업 표면을 압도하지 않는다
 - Codex image_gen이 실패하거나 실제 사진성이 더 중요해 sourced visual fallback을 사용할 때는 라이선스/저작자/출처/attribution/sha256을 manifest에 기록하고 프로젝트 에셋으로 복사한 뒤 사용한다
 - 유료 stock provider는 구매·구독·프로젝트 라이선스 증빙이 없으면 구현 에셋으로 승격하지 않고, reference-only provider는 형태·밀도·flow 참고로만 사용한다
@@ -278,6 +315,7 @@
 - **Rule**: During UI refactors, emoji-looking UI affordances must be replaced with SVG-based icons instead of preserved as text glyphs.
 - **Targets**: button, card, badge, tab, navigation item, status indicator, empty state, toast, banner
 - **Replacement order**:
+- If the user/reviewer has declared a raster-only or no-SVG medium override, use approved PNG/WebP/JPEG icon/image assets and document the override.
 - Use the project's existing icon library when one is already installed and stylistically compatible.
 - Reuse existing local SVG/icon components when available.
 - Create a simple local SVG file or SVG component when no suitable icon exists.
@@ -293,6 +331,7 @@
 - Store new SVG assets in the nearest existing icons/assets directory; create a minimal icons directory only when none exists.
 - Do not replace user-generated emoji content, chat text, blog body, or emoji-picker data.
 - Do not use emoji as a placeholder while searching for a proper icon.
+- Do not use SVG icons when a project-specific medium override says no SVG or requires real raster image files; use project-local PNG/WebP/JPEG icon assets instead.
 - Do not hand-roll a UI icon sprite when a suitable icon library exists; if a local sprite is used, declare its source or approved custom grammar.
 - Navigation, toolbar, status, and action icons must share one visual grammar across stroke width, corner style, optical size, and active/inactive treatment.
 - **Promoted icon failure patterns**:
@@ -304,11 +343,12 @@
 
 - **Rule**: Every app or website implementation must include a brand-specific app icon identity asset; generic initial-letter tiles are not acceptable as final app icons.
 - **Required assets**:
-- **Brand app icon**: targets favicon, app shell brand mark, web app manifest, mobile home-screen icon; formats svg source, favicon, web app manifest icon when applicable
+- **Brand app icon**: targets favicon, app shell brand mark, web app manifest, mobile home-screen icon; formats source asset (SVG by default; PNG/WebP/JPEG when a no-SVG medium override is active), favicon, web app manifest icon when applicable
 - **Implementation rules**:
 - Do not ship a plain initials tile such as WC, AI, DS, or App as the final app icon unless the brand system explicitly defines that lettermark.
 - The app icon must use the brand palette, visual keywords, and product primitives as evidence for shape language.
 - Use a deterministic SVG source for the primary app icon; generated raster imagery may support marketing visuals but must not replace the identity icon source.
+- If the user/reviewer explicitly forbids SVG or requires actual raster image files, the app icon identity source may be PNG/WebP/JPEG instead; record that medium override in the ontology and do not create an SVG fallback silently.
 - Wire the app icon into favicon/link metadata and the visible app-shell brand mark when the implementation has one.
 - Keep small-size legibility: the icon must remain recognizable at 32px and in a 44px navigation mark.
 - The app icon must read as a finished identity mark, not a rough illustration, generic tile, emoji-like sticker, or low-confidence geometric placeholder.
@@ -344,6 +384,8 @@
 - Path-only inline SVGs with generic map/sketch/illustration classes do not count as visual substance unless the visual is semantically anchored with labels, legend, title/desc, or data-subject landmarks.
 - Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.
 - Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.
+- Do not represent evidence maps, relation maps, or product data graphs as hand-positioned HTML nodes connected by rotated CSS lines. Use a real graph/chart library, SVG/canvas visualization with semantic labels and runtime data, or a ledger/table when the relationship is simple.
+- Do not fake workflow graphs by overlaying freehand SVG curves on separately positioned HTML nodes. Graph nodes and edges must share one coordinate system and expose node/edge ids, direction, labels, and runtime state.
 - A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.
 - Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.
 - Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.
@@ -354,14 +396,50 @@
 - **low-information-inline-svg-visual**: Deterministic SVG visuals need semantic anchors; otherwise they are decorative placeholders, not visual substance. Prevention: Add visible labels, legend, title/desc, and data-subject landmarks, or replace the slot with a stronger generated, sourced, or user-supplied asset.
 - **amateur-ad-hoc-illustration**: A bad drawing does not become acceptable because it is labeled; low-confidence illustration should be removed or replaced. Prevention: Use image_gen, a sourced/user-supplied asset, a reference-backed illustration, or a clean product schematic/data visualization. Do not ship rough path art as visual substance.
 - **ambiguous-mock-runtime-surface**: Even a mockup must make the production representation legible. Prevention: Mark the surface as a map SDK layer, generated/sourced media, chart/table, product schematic, or explicit loading/empty state; avoid ambiguous decorative stand-ins.
+- **ad-hoc-node-link-placeholder-graph**: A hand-drawn node-link sketch is not a product-grade data visualization. Prevention: Use a proven graph/chart library, a semantically labeled SVG/canvas visualization backed by real runtime data, or replace simple relationships with an evidence ledger/table.
+- **freehand-svg-connector-graph**: A graph surface must encode the relationship model, not just draw curves between boxes. Prevention: Use a graph library, or author the graph as one semantic SVG/canvas surface with data-node-id, data-edge-id, data-from/data-to, arrowheads, edge labels, and runtime state. If the relationship is simple, use a table, timeline, or ledger.
 - **media-runtime-surface-without-asset**: Runtime media surfaces need actual media assets or explicit empty/loading states. Prevention: Bind a generated, sourced, or user-supplied image/video asset with alt text and manifest metadata, or render a clear empty/loading state instead of fake visual texture.
 - **media-tile-without-asset**: Every visible media/evidence tile needs its own asset or an explicit empty/loading/pending state. Prevention: Attach generated, sourced, or user-supplied media to each tile, or mark the tile as an intentional empty/loading/pending state with clear copy.
 - **unmanifested-mockup-image**: Integrated raster assets must be traceable. Prevention: Record acquisition_mode, asset_path, intended_for, alt_text, sha256, and source/prompt metadata before wiring the asset.
 
+### HTML Prototype Contract
+
+- **Rule**: HTML mockups must behave as thin executable product prototypes, not static screenshots made from divs.
+- **Applies to**: static HTML mockups, Vite/Next demo screens, product workflow prototypes, data dashboards, maps/charts/calendars/boards, editor or canvas surfaces
+- **Required contracts**:
+- Mark the primary surface with data-product-prototype or an equivalent prototype marker when it is a reviewable mockup.
+- Each major product surface declares data-runtime-surface or data-product-surface so reviewers know whether it represents a map SDK, chart layer, table view, calendar, board, media slot, editor canvas, or empty/loading state.
+- Data-heavy surfaces expose model/source/id metadata such as data-model, data-source, data-row-id, data-item-id, data-event-id, data-node-id, and data-edge-id.
+- Prototype reviews include a state set: default, selected, loading, empty, error, disabled, pending, approved/blocked, or domain-specific equivalents.
+- Contract metadata is not enough: prototypes must include token-bound layout, surface, typography, state, and affordance styling so they do not render as browser-default HTML.
+- Charts, graphs, maps, calendars, kanban boards, gantt views, spreadsheets, and editor canvases use a proven library or one semantic SVG/canvas/table coordinate system with labels, axes, direction, state, and provenance.
+- Playwright QA captures desktop and mobile viewports and verifies no horizontal overflow, clipped labels, or incoherent overlaps before the mockup is called complete.
+- **Implementation rules**:
+- Do not use mock/placeholder/fake/static chart, map, calendar, board, graph, or canvas classes without a runtime/data contract.
+- Do not satisfy the contract with aria labels alone; labels help accessibility, but product structure needs model/source/id/state metadata.
+- Do not stop at metadata-only fixtures. If the page still looks like default browser HTML, add product-surface styling or mark the artifact as a non-visual test fixture.
+- Prefer table, ledger, timeline, or row list when the relationship is simple enough that a graph would be decorative.
+- If a complex surface cannot be backed by data or a real interaction model yet, render an explicit empty/loading/pending state instead of a fake finished surface.
+- Sample numbers must be visibly labeled as sample/demo and paired with a source or update context.
+- **Improvement loop**:
+- **observe**: Collect the reviewer complaint, current screenshot or DOM evidence, and the exact artifact path before making changes.
+- **classify**: Decide whether the issue is implementation-only, missing product contract, missing visual styling, wrong visualization model, responsive failure, or a repeatable ontology gap.
+- **promote**: If the failure can recur, promote it into governance, IMPLEMENTATION_CONTRACT, lint-implementation, and a regression test before calling the screen fixed.
+- **repair**: Repair the artifact using product-surface structures, token-bound styling, runtime metadata, and state scenarios rather than cosmetic color changes.
+- **verify**: Run lint-implementation, targeted tests, and desktop/mobile visual QA or screenshot comparison. If a new failure appears, loop back to classify.
+- **Promoted prototype failure patterns**:
+- **complex-mock-surface-without-contract**: A complex HTML mock surface needs a product contract before it can be visually judged. Prevention: Add data-runtime-surface or data-product-surface plus model/source/id/state metadata, or replace the surface with a simpler table, ledger, or explicit empty/loading state.
+- **single-state-html-prototype**: Prototype fidelity includes state coverage, not only a polished default screenshot. Prevention: Add data-prototype-state-set or visible data-state scenarios for default, selected, loading, empty, error, and domain-specific states.
+- **metadata-only-html-prototype**: A prototype contract is not visually complete until the product surface is styled and reviewable. Prevention: Add token-bound product-surface CSS, icon/visual affordances, stable layout, and desktop/mobile visual QA; otherwise mark it as a non-visual fixture.
+- **decorative-data-visualization**: Data visualization must explain its criteria and relationship model. Prevention: Use a chart/graph/map library, semantic SVG/canvas with data values and labels, or a table/ledger when the data model is small.
+
 ### Visual Asset Medium Selection
 
 - **Rule**: Visual asset slots must choose the medium that matches the subject and runtime role; narrative/content media needs high-fidelity raster or approved production artwork, not ad-hoc SVG sketches.
+- **Directive overrides**:
+- **user-raster-asset-directive**: priority highest; required project-local raster image asset; denied svg, inline svg, deterministic svg placeholder; triggers SVG 만들지 말고, SVG 금지, 실제 그림파일, 실제 이미지 파일, 검색해서 넣어, PNG
 - **Decision sequence**:
+- First honor explicit user/reviewer medium directives. A no-SVG or raster-only directive overrides default identity/icon/vector preferences for the affected project or slot.
 - Classify the slot before drawing: identity/icon, control glyph, diagram/data, factual real-world media, narrative/content media, or decorative support.
 - If the slot's user expectation is rendered content art, product/place photography, story atmosphere, or inspectable media, use image_gen, user-supplied licensed imagery, sourced licensed imagery, or an already approved high-fidelity asset.
 - Use deterministic SVG for app icons, logos, flags, UI glyphs, charts, diagrams, maps, schematics, and semantic product illustrations where vector geometry is the correct runtime representation.
@@ -370,7 +448,10 @@
 - **high-fidelity-narrative-media**: modes image_gen, user_supplied, sourced; examples comic/manga/webtoon cover, panel or strip preview, story or character scene, editorial/article cover, gameplay or sprite-like scene, portfolio/content artwork; SVG: denied unless the project already has approved production-grade vector artwork for that exact content slot
 - **factual-real-world-media**: modes user_supplied, sourced; examples real venue, real product, food/travel/place photo, person or event photo; SVG: allowed only for maps, diagrams, or clearly labeled schematics, not as a photo substitute
 - **identity-control-technical-vector**: modes deterministic_svg, icon_library, semantic_html_css; examples app icon, logo, favicon, flag, UI icon, chart, diagram, map schematic; SVG: preferred when token-bound, accessible, and semantically anchored
+- **user-specified-raster-assets**: modes image_gen, user_supplied, sourced, project_local_raster; examples AI avatar, chat character portrait, generated app visual, search/sourced image slot, raster-only UI icon set; SVG: denied whenever the user/reviewer says no SVG, real image file, raster-only, or asks to search/generate actual imagery
 - **Implementation rules**:
+- A user/reviewer sentence such as 'SVG 만들지 말고 실제 그림파일로 만들거나 검색해서 넣어' is a binding medium override, not a preference. Store it in governance/system_ontology/IMPLEMENTATION_CONTRACT and satisfy it before visual QA.
+- When a raster-only/no-SVG directive is active, do not create SVG avatars, inline SVG sprites, SVG favicons, SVG placeholder art, or SVG UI icons for the affected scope; create or source project-local PNG/WebP/JPEG assets instead.
 - Comic, manga, and webtoon cover or panel-preview slots default to image_gen-generated raster, user-supplied artwork, or licensed/sourced artwork.
 - A geometric SVG, rough path drawing, or low-information vector placeholder is not an acceptable final comic cover, manga panel, article cover, product photo, or story media asset.
 - Do not substitute inline SVG scene art solely because it is faster to author; use the imagegen skill when synthetic art is appropriate and available.
@@ -379,6 +460,7 @@
 - Manifest or implementation records should include acquisition_mode and medium_decision for non-obvious visual slots.
 - **Promoted medium failure patterns**:
 - **wrong-medium-svg-for-narrative-media**: Narrative/content media slots require the medium users expect to inspect: generated, sourced, user-supplied, or approved polished artwork. Prevention: Use image_gen or licensed/user-supplied raster artwork for the slot; reserve deterministic SVG for identity, controls, diagrams, maps, charts, or schematics.
+- **user-raster-directive-svg-violation**: Explicit user/reviewer raster directives override default SVG icon and identity guidance. Prevention: Replace SVG assets with project-local PNG/WebP/JPEG files generated, user-supplied, or license-verified from search; record medium_decision and verify the implementation has no .svg or inline <svg> references.
 - **comic-cover-as-geometric-placeholder**: Comic media quality is a product signal; placeholder geometry does not satisfy a comic/content asset slot. Prevention: Generate or source finished cover and panel artwork, then verify crop, alt text, manifest metadata, and mobile legibility.
 - **unreviewed-visual-medium-substitution**: Medium substitution is a design-system decision and must be traceable. Prevention: Record the medium_decision, intended_for slot, and reason for deterministic vector use, or restore the appropriate media pipeline.
 
@@ -462,13 +544,15 @@
 - **hex를 만들지 않는다**: AI는 색상 hex 값을 임의로 생성하지 않는다. 반드시 color_reference, CSS 추출, 브랜드 가이드 등 실증 소스에서 가져온 값만 사용한다.
 - **토큰명을 만들지 않는다**: AI는 토큰 이름을 임의로 발명하지 않는다. 네이밍 패턴(core/semantic/component 레이어 규칙)은 정의하되, 구체적 토큰명은 실제 컴포넌트와 역할에서 도출한다.
 - **팩트 위에 해석만**: AI는 수집된 레퍼런스, 프로필, 온톨로지 증거 위에 해석과 구조화만 수행한다. 증거 없는 추론, 존재하지 않는 패턴 서술, 가상의 사용 사례 생성을 금지한다.
-- **이모지를 UI 요소로 쓰지 않는다**: AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 반드시 SVG 파일/아이콘 컴포넌트 또는 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)를 사용한다. 리팩토링 중 카드, 버튼, 배지, 탭, 상태 표시, empty state에서 이모지를 발견하면 그대로 두지 말고 적절한 SVG 아이콘으로 교체한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다.
+- **이모지를 UI 요소로 쓰지 않는다**: AI는 아이콘, 상태 표시, 버튼 장식, 네비게이션 지표 등 UI 컴포넌트 자리에 이모지(🎨 ✅ 🔥 ⚡ 🚀 ❌ ⭐ 📊 등)를 절대 넣지 않는다. 기본값은 SVG 파일/아이콘 컴포넌트 또는 아이콘 라이브러리(Lucide, Heroicons, Phosphor, Tabler 등)이지만, 사용자·리뷰어가 no-SVG/raster-only 매체를 지정한 프로젝트에서는 PNG/WebP/JPEG 아이콘 에셋을 사용한다. 리팩토링 중 카드, 버튼, 배지, 탭, 상태 표시, empty state에서 이모지를 발견하면 그대로 두지 말고 프로젝트의 활성 medium directive에 맞는 실제 아이콘 에셋으로 교체한다. 이모지는 본문 콘텐츠(예: 블로그 텍스트, 사용자 입력)에서만 허용되며, 시스템 UI 요소로는 금지한다.
 - **컴포넌트를 직접 구현한다**: AI는 '임시 버튼', '플레이스홀더 카드', 'TODO 컴포넌트' 같은 반쪽 구현을 남기지 않는다. system_spec.md의 Component Strategy와 component_specs.md에 정의된 구조(anatomy), 상태(states), 토큰 바인딩, 접근성 규칙을 그대로 따라 완전한 컴포넌트를 구현한다. 기존 라이브러리 컴포넌트를 그냥 import해서 쓰는 대신, 디자인 시스템 토큰으로 스타일을 명시적으로 바인딩한다.
 - **상용 제품 화면처럼 구성한다**: AI는 대시보드, 도구, 데이터 제품, 커뮤니티 제품을 피치덱식 히어로와 균일한 장식 카드 묶음으로 시작하지 않는다. 첫 화면은 사용자가 실제로 확인하거나 조작해야 하는 상태, 필터, 표/리스트, 출처, 업데이트 시각, 핵심 액션을 먼저 보여준다.
 - **검색 이미지는 라이선스가 검증될 때만 사용한다**: AI는 image_gen을 사용할 수 없거나 실제 사진성이 더 중요한 경우에만 sourced visual fallback을 사용한다. 무료 provider는 per-asset license metadata가 필요하고, paid provider는 license_proof/usage_scope/licensed_to가 필요하다. Reference-only provider는 형태와 밀도 참고만 가능하며 이미지를 구현 에셋으로 복사하지 않는다. source_url, download_url, provider, author, license, attribution_required, sha256, alt_text를 manifest에 기록하지 못하는 이미지는 구현에 넣지 않는다. 런타임 hotlink와 stock/search 이미지를 앱 아이콘·로고·상태 아이콘으로 쓰는 것을 금지한다.
+- **사용자가 지정한 이미지 매체는 기본 SVG 규칙보다 우선한다**: 사용자나 리뷰어가 'SVG 만들지 말고', '실제 그림파일', '검색해서 넣어', 'PNG/WebP/JPEG', '래스터', '비트맵'처럼 시각 에셋 매체를 명시하면 그 지시는 온톨로지의 medium override가 된다. 해당 범위의 아바타, 캐릭터, 콘텐츠 이미지, 앱 아이콘, UI 아이콘은 SVG/inline vector로 대체하지 않고 생성·사용자 제공·라이선스 소스 기반의 실제 래스터 파일을 프로젝트에 복사해 사용한다. 예외가 필요하면 사용자의 명시 승인과 medium_decision 기록이 먼저 있어야 한다.
 - **목업은 관련 이미지를 적극적으로 사용한다**: AI는 사이트, 앱, 랜딩, 제품 소개, 콘텐츠 카드, 스포츠/장소/상품/포트폴리오 목업을 이미지 없는 카드와 그라디언트 블록만으로 끝내지 않는다. 도메인 실체를 드러내는 생성 이미지, 라이선스 검증 이미지, 사용자 제공 이미지, 브랜드 identity asset을 적극적으로 배치하고 manifest/alt/crop/반응형 검증까지 완료한다. 단 대시보드·운영 UI에서는 이미지가 표, 필터, 상태, 출처 같은 핵심 작업 표면을 밀어내지 않게 한다.
+- **HTML 목업은 제품 표면 계약이다**: AI는 HTML 목업을 그림판처럼 쓰지 않는다. 차트, 그래프, 지도, 캘린더, 칸반, 간트, 스프레드시트, 에디터 캔버스 같은 복합 표면은 data-runtime-surface/data-product-surface, 데이터 모델, 출처, 항목 ID, 상태 세트를 드러내야 한다. 관계나 수치 기준을 설명하지 못하면 장식 그래프 대신 table, ledger, timeline처럼 검증 가능한 표면을 사용한다.
 - **카드벽을 기본 레이아웃으로 쓰지 않는다**: AI는 페이지 섹션 전체를 카드 안에 다시 넣거나, 동일한 radius/shadow/padding을 가진 카드 묶음으로 화면을 채우지 않는다. 반복되는 객체에는 카드가 가능하지만, 1차 작업 표면은 canvas, map, table, row list, rail, inspector, sheet 같은 도메인 구조로 먼저 만든다.
-- **아이콘과 도메인 그림은 완성 조건이다**: AI는 필터, 상태, 액션, 추천 근거, 도메인 객체에 SVG 아이콘이나 deterministic SVG/이미지 자산을 적극적으로 연결한다. 도메인이 장소·상품·콘텐츠·게임·스포츠처럼 시각 실체를 갖는 경우, 텍스트와 테두리만으로 완료 처리하지 않는다.
+- **아이콘과 도메인 그림은 완성 조건이다**: AI는 필터, 상태, 액션, 추천 근거, 도메인 객체에 프로젝트의 활성 medium directive에 맞는 아이콘이나 이미지 자산을 적극적으로 연결한다. 기본값은 SVG 아이콘이나 deterministic SVG/이미지 자산이지만, no-SVG/raster-only directive가 있으면 PNG/WebP/JPEG 에셋을 사용한다. 도메인이 장소·상품·콘텐츠·게임·스포츠처럼 시각 실체를 갖는 경우, 텍스트와 테두리만으로 완료 처리하지 않는다.
 
 ## 12. Ontology Targets
 
@@ -726,107 +810,108 @@
 
 | Component | Tokens Used |
 |-----------|-------------|
-| app-shell | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius` |
-| approval-rail | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| article-body | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| article-gallery | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| audit-timeline | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| autocomplete | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| back-button | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| app-shell | `spacing.12→padding`, `radius.none→radius`, `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard`, `font:Pretendard` |
+| approval-rail | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| article-body | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| article-gallery | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| audit-timeline | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| autocomplete | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| badge | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | banner | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| bottom-sheet | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| breadcrumb | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| bulk-action-table | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chat-input | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chat-message | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chat-thread | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| checkbox | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| chip | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| breadcrumb | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| breadcrumbs | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| bulk-action-table | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| chat-input | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| chat-message | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| chat-thread | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| checkbox | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| chip | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | citation-drawer | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| column-header | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard`, `font:Pretendard` |
-| command-palette | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| comment-input | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| comment-thread | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| confirm-dialog | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| cover-story | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| cta-button | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| data-table | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| decision-record-card | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| diff-viewer | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| drop-cap | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| column-header | `spacing.8→padding`, `radius.none→radius`, `spacing.8→padding`, `radius.none→radius`, `font:Pretendard`, `font:Pretendard` |
+| command-palette | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| comment-input | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| comment-thread | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| confirm-dialog | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| cover-story | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| data-table | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| dialog | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| diff-viewer | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| drop-cap | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
 | empty-state | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| feature-article | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| filter-chip | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius` |
-| filter-panel | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| evidence-graph | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| exception-queue | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| feature-article | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| filter-chip | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| filter-panel | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | footer-column | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | footer-legal | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | footer-link | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | footer-social | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| footnote | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| form-actions | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| form-section | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius` |
-| ghost-button | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| heading-anchor | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| footnote | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| form-actions | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| form-section | `spacing.12→padding`, `radius.none→radius`, `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard`, `font:Pretendard` |
+| heading-anchor | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
 | hero-container | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| hero-cta-group | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| hero-cta-group | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | hero-eyebrow | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | hero-headline | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | hero-subheadline | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | hero-trust-strip | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | hero-visual | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| icon-button | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| icon-button | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | inline-alert | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| issue-header | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| issue-number | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| kicker-eyebrow | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| link-button | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| issue-header | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| issue-number | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| kicker-eyebrow | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
 | link-card | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| masthead | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| mention-highlight | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| mention-popup | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| mobile-tab-bar | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| mobile-topbar | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| modal-dialog | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| notification-center | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| notification-item | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| opening-spread | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| pagination | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius` |
-| presence-indicator | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| prev-next-pager | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| primary-button | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| prose-block | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| pull-quote | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| radio | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| radio-group | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| reading-pane | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| redline-viewer | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| resizable-split-pane | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| reviewer-assignment-picker | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| row-actions | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard`, `font:Pretendard` |
-| saved-view-bar | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| search-field | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| search-results | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| secondary-button | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| section-break | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| section-tabs | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| segmented-control | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| select | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| sidebar-nav | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| list | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| masthead | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| mention-highlight | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| mention-popup | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| metadata-list | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| notification-center | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| notification-item | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| opening-spread | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| pagination | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| popover | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| presence-indicator | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| prev-next-pager | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| primary-button | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| prose-block | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| pull-quote | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| radio | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| radio-group | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| reading-pane | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| redline-viewer | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| resizable-split-pane | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| reviewer-assignment-picker | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| row-actions | `spacing.8→padding`, `radius.none→radius`, `spacing.8→padding`, `radius.none→radius`, `font:Pretendard`, `font:Pretendard` |
+| saved-view-bar | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| search-field | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| search-results | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| secondary-button | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| section-break | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| segmented-control | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| select | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| sidebar-nav | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | site-footer | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| source-card | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | status-badge | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| status-dot | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | step-progress | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | subscription-callout | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| tab-bar | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| table-of-contents | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| tag | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| text-field | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| textarea | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| switch | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| tab-bar | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| table-of-contents | `spacing.8→padding`, `radius.none→radius`, `font:Pretendard` |
+| tabs | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| tag | `spacing.12→padding`, `radius.none→radius`, `font:Pretendard` |
+| text-field | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| textarea | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 | toast | `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| tooltip-guide | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| topbar | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| wizard-layout | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
-| workspace-switcher | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `color.Buttercream→background`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| tooltip | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| tooltip-guide | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| topbar | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| wizard-layout | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
+| workspace-switcher | `color.Periwinkle→surface`, `color.Living Coral→emphasis`, `spacing.12→padding`, `radius.md→radius`, `font:Pretendard` |
 
 ## 19. Color Mode Parity
 
@@ -875,11 +960,11 @@
 - **modal and dialog**: confirm-dialog
 - **chat and messaging**: chat-message, chat-input, chat-thread
 - **reference documentation**: article-body, table-of-contents, heading-anchor, prose-block, reading-pane, footnote, prev-next-pager, link-card
-- **dashboard cards**: —
+- **operational overview**: —
 
 ### Interaction Patterns
 
-- **search and filter**: search-results, filter-panel, autocomplete
+- **search and filter**: search-field, search-results, filter-panel, autocomplete
 - **notifications**: toast, inline-alert, empty-state, banner
 - **bold editorial magazine**: masthead, issue-header, issue-number, cover-story, opening-spread, feature-article, kicker-eyebrow, pull-quote, drop-cap, section-break, article-gallery, subscription-callout
 - **forms**: text-field, select, checkbox, radio, textarea, form-section, radio-group, form-actions
@@ -893,16 +978,16 @@
   - Do not ship a plain initials tile such as WC, AI, DS, or App as the final app icon unless the brand system explicitly defines that lettermark.
   - The app icon must use the brand palette, visual keywords, and product primitives as evidence for shape language.
   - Use a deterministic SVG source for the primary app icon; generated raster imagery may support marketing visuals but must not replace the identity icon source.
+  - If the user/reviewer explicitly forbids SVG or requires actual raster image files, the app icon identity source may be PNG/WebP/JPEG instead; record that medium override in the ontology and do not create an SVG fallback silently.
   - Wire the app icon into favicon/link metadata and the visible app-shell brand mark when the implementation has one.
   - Keep small-size legibility: the icon must remain recognizable at 32px and in a 44px navigation mark.
-  - The app icon must read as a finished identity mark, not a rough illustration, generic tile, emoji-like sticker, or low-confidence geometric placeholder.
 - **Promoted failure patterns**:
   - generic-initials-app-icon: Create or reuse a brand-specific SVG app icon, wire it to favicon/manifest/app-shell surfaces, and document it in the ontology.
   - low-quality-app-icon-identity: Redesign the app icon as a compact, legible, brand-specific SVG mark with coherent geometry, palette, and small-size testing.
 
 | Asset | Required | Workspace Path | Targets | Formats |
 |-------|----------|----------------|---------|---------|
-| Brand app icon | yes | `—` | app shell brand mark, favicon, mobile home-screen icon, web app manifest | favicon, svg source, web app manifest icon when applicable |
+| Brand app icon | yes | `—` | app shell brand mark, favicon, mobile home-screen icon, web app manifest | favicon, source asset (SVG by default; PNG/WebP/JPEG when a no-SVG medium override is active), web app manifest icon when applicable |
 
 ## 23. Generated Visual Asset Plan
 
@@ -919,7 +1004,10 @@
 - **Required sourced record fields**: `id`, `label`, `slot`, `status`, `acquisition_mode`, `asset_path`, `source_url`, `download_url`, `provider`, `author`, `license`, `attribution_required`, `sha256`, `intended_for`, `alt_text`, `selection_reason`
 
 - **Visual Asset Medium Selection**: Visual asset slots must choose the medium that matches the subject and runtime role; narrative/content media needs high-fidelity raster or approved production artwork, not ad-hoc SVG sketches.
+- **Directive overrides**:
+  - user-raster-asset-directive: project-local raster image asset required; triggers: SVG 만들지 말고, SVG 금지, 실제 그림파일, 실제 이미지 파일, 검색해서 넣어; denied: svg, inline svg, deterministic svg placeholder
 - **Medium decision sequence**:
+  - First honor explicit user/reviewer medium directives. A no-SVG or raster-only directive overrides default identity/icon/vector preferences for the affected project or slot.
   - Classify the slot before drawing: identity/icon, control glyph, diagram/data, factual real-world media, narrative/content media, or decorative support.
   - If the slot's user expectation is rendered content art, product/place photography, story atmosphere, or inspectable media, use image_gen, user-supplied licensed imagery, sourced licensed imagery, or an already approved high-fidelity asset.
   - Use deterministic SVG for app icons, logos, flags, UI glyphs, charts, diagrams, maps, schematics, and semantic product illustrations where vector geometry is the correct runtime representation.
@@ -928,15 +1016,16 @@
   - high-fidelity-narrative-media: image_gen, user_supplied, sourced; examples: comic/manga/webtoon cover, panel or strip preview, story or character scene, editorial/article cover
   - factual-real-world-media: user_supplied, sourced; examples: real venue, real product, food/travel/place photo, person or event photo
   - identity-control-technical-vector: deterministic_svg, icon_library, semantic_html_css; examples: app icon, logo, favicon, flag
+  - user-specified-raster-assets: image_gen, user_supplied, sourced, project_local_raster; examples: AI avatar, chat character portrait, generated app visual, search/sourced image slot
 
 | Asset Slot | Mode | Required Medium | Source | Intended For | Manifest | Policy |
 |------------|------|-----------------|--------|--------------|----------|--------|
 | Brand-aligned raster image | generated | high-fidelity-raster-support; SVG: False | Codex image_gen skill | only when the implementation surface would benefit from generated imagery | `public/generated/design-system/manifest.json` | no API fallback |
 | Brand-aligned raster image sourced fallback | sourced | high-fidelity-raster-support; SVG: False | Openverse, Wikimedia Commons, Unsplash, Pexels | only when the implementation surface would benefit from generated imagery | `public/generated/design-system/manifest.json` | license-verified sourced visual fallback |
-| Card thumbnail | generated | content-media; SVG: only for approved product schematics or semantic vector thumbnails | Codex image_gen skill | article-gallery, decision-record-card, link-card, source-card, data-display, marketing | `public/generated/design-system/manifest.json` | no API fallback |
-| Card thumbnail sourced fallback | sourced | content-media; SVG: only for approved product schematics or semantic vector thumbnails | Openverse, Wikimedia Commons, Unsplash, Pexels | article-gallery, decision-record-card, link-card, source-card, data-display, marketing | `public/generated/design-system/manifest.json` | license-verified sourced visual fallback |
-| Comic panel preview | generated | high-fidelity-narrative-media; SVG: denied unless approved production vector panel art exists | Codex image_gen skill | filter-panel, hero-trust-strip | `public/generated/design-system/manifest.json` | no API fallback |
-| Comic panel preview sourced fallback | sourced | high-fidelity-narrative-media; SVG: denied unless approved production vector panel art exists | Openverse, Wikimedia Commons, Unsplash, Pexels | filter-panel, hero-trust-strip | `public/generated/design-system/manifest.json` | license-verified sourced visual fallback |
+| Card thumbnail | generated | content-media; SVG: only for approved product schematics or semantic vector thumbnails | Codex image_gen skill | article-gallery, breadcrumbs, link-card, switch, data-display, marketing | `public/generated/design-system/manifest.json` | no API fallback |
+| Card thumbnail sourced fallback | sourced | content-media; SVG: only for approved product schematics or semantic vector thumbnails | Openverse, Wikimedia Commons, Unsplash, Pexels | article-gallery, breadcrumbs, link-card, switch, data-display, marketing | `public/generated/design-system/manifest.json` | license-verified sourced visual fallback |
+| Comic panel preview | generated | high-fidelity-narrative-media; SVG: denied unless approved production vector panel art exists | Codex image_gen skill | filter-panel, hero-trust-strip, tabs | `public/generated/design-system/manifest.json` | no API fallback |
+| Comic panel preview sourced fallback | sourced | high-fidelity-narrative-media; SVG: denied unless approved production vector panel art exists | Openverse, Wikimedia Commons, Unsplash, Pexels | filter-panel, hero-trust-strip, tabs | `public/generated/design-system/manifest.json` | license-verified sourced visual fallback |
 | Comic/manga cover art | generated | high-fidelity-narrative-media; SVG: denied unless approved production vector cover art exists | Codex image_gen skill | article-gallery, cover-story, drop-cap, feature-article, issue-header, issue-number | `public/generated/design-system/manifest.json` | no API fallback |
 | Comic/manga cover art sourced fallback | sourced | high-fidelity-narrative-media; SVG: denied unless approved production vector cover art exists | Openverse, Wikimedia Commons, Unsplash, Pexels | article-gallery, cover-story, drop-cap, feature-article, issue-header, issue-number | `public/generated/design-system/manifest.json` | license-verified sourced visual fallback |
 | Editorial cover | generated | high-fidelity-narrative-media; SVG: denied unless approved production vector artwork exists | Codex image_gen skill | article-body, article-gallery, cover-story, drop-cap, feature-article, issue-header | `public/generated/design-system/manifest.json` | no API fallback |
@@ -956,14 +1045,15 @@
   - Professional sites usually reveal an actual product, place, person, object, state, gameplay, article subject, or brand identity asset early in the experience.
 - **Medium selection policy**: Visual asset slots must choose the medium that matches the subject and runtime role; narrative/content media needs high-fidelity raster or approved production artwork, not ad-hoc SVG sketches.
 - **Medium selection rules**:
+  - A user/reviewer sentence such as 'SVG 만들지 말고 실제 그림파일로 만들거나 검색해서 넣어' is a binding medium override, not a preference. Store it in governance/system_ontology/IMPLEMENTATION_CONTRACT and satisfy it before visual QA.
+  - When a raster-only/no-SVG directive is active, do not create SVG avatars, inline SVG sprites, SVG favicons, SVG placeholder art, or SVG UI icons for the affected scope; create or source project-local PNG/WebP/JPEG assets instead.
   - Comic, manga, and webtoon cover or panel-preview slots default to image_gen-generated raster, user-supplied artwork, or licensed/sourced artwork.
   - A geometric SVG, rough path drawing, or low-information vector placeholder is not an acceptable final comic cover, manga panel, article cover, product photo, or story media asset.
   - Do not substitute inline SVG scene art solely because it is faster to author; use the imagegen skill when synthetic art is appropriate and available.
   - Deterministic SVG remains appropriate for app icons, logos, flags, UI icons, charts, diagrams, maps, and product schematics when those are the actual runtime medium.
-  - If a narrative/content media slot intentionally uses vector artwork, document why it is production-grade artwork rather than a placeholder and record it in the manifest or implementation notes.
-  - Manifest or implementation records should include acquisition_mode and medium_decision for non-obvious visual slots.
 - **Promoted medium failure patterns**:
   - wrong-medium-svg-for-narrative-media: Use image_gen or licensed/user-supplied raster artwork for the slot; reserve deterministic SVG for identity, controls, diagrams, maps, charts, or schematics.
+  - user-raster-directive-svg-violation: Replace SVG assets with project-local PNG/WebP/JPEG files generated, user-supplied, or license-verified from search; record medium_decision and verify the implementation has no .svg or inline <svg> references.
   - comic-cover-as-geometric-placeholder: Generate or source finished cover and panel artwork, then verify crop, alt text, manifest metadata, and mobile legibility.
   - unreviewed-visual-medium-substitution: Record the medium_decision, intended_for slot, and reason for deterministic vector use, or restore the appropriate media pipeline.
 - **Required visual substance signals**:
@@ -986,18 +1076,18 @@
   - Path-only inline SVGs with generic map/sketch/illustration classes do not count as visual substance unless the visual is semantically anchored with labels, legend, title/desc, or data-subject landmarks.
   - Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.
   - Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.
+  - Do not represent evidence maps, relation maps, or product data graphs as hand-positioned HTML nodes connected by rotated CSS lines. Use a real graph/chart library, SVG/canvas visualization with semantic labels and runtime data, or a ledger/table when the relationship is simple.
+  - Do not fake workflow graphs by overlaying freehand SVG curves on separately positioned HTML nodes. Graph nodes and edges must share one coordinate system and expose node/edge ids, direction, labels, and runtime state.
   - A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.
-  - Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.
-  - Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.
 - **Promoted failure patterns**:
   - image-free-commercial-mockup: Add relevant generated, sourced, user-supplied, or deterministic visual assets and record them in the manifest before calling the mockup complete.
   - placeholder-gradient-as-image: Replace placeholder media with image_gen, sourced, user-supplied, or deterministic SVG assets that match the domain and slot.
   - low-information-inline-svg-visual: Add visible labels, legend, title/desc, and data-subject landmarks, or replace the slot with a stronger generated, sourced, or user-supplied asset.
   - amateur-ad-hoc-illustration: Use image_gen, a sourced/user-supplied asset, a reference-backed illustration, or a clean product schematic/data visualization. Do not ship rough path art as visual substance.
   - ambiguous-mock-runtime-surface: Mark the surface as a map SDK layer, generated/sourced media, chart/table, product schematic, or explicit loading/empty state; avoid ambiguous decorative stand-ins.
+  - ad-hoc-node-link-placeholder-graph: Use a proven graph/chart library, a semantically labeled SVG/canvas visualization backed by real runtime data, or replace simple relationships with an evidence ledger/table.
+  - freehand-svg-connector-graph: Use a graph library, or author the graph as one semantic SVG/canvas surface with data-node-id, data-edge-id, data-from/data-to, arrowheads, edge labels, and runtime state. If the relationship is simple, use a table, timeline, or ledger.
   - media-runtime-surface-without-asset: Bind a generated, sourced, or user-supplied image/video asset with alt text and manifest metadata, or render a clear empty/loading state instead of fake visual texture.
-  - media-tile-without-asset: Attach generated, sourced, or user-supplied media to each tile, or mark the tile as an intentional empty/loading/pending state with clear copy.
-  - unmanifested-mockup-image: Record acquisition_mode, asset_path, intended_for, alt_text, sha256, and source/prompt metadata before wiring the asset.
 
 ## 25. Reference Intelligence Pack
 

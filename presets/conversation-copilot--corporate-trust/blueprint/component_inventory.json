@@ -13,10 +13,7 @@
       "components": [
         "primary-button",
         "secondary-button",
-        "ghost-button",
         "icon-button",
-        "cta-button",
-        "link-button",
         "regenerate-button",
         "stop-generation-button",
         "new-thread-button",
@@ -25,255 +22,6 @@
         "follow-button",
         "add-to-cart-button",
         "wishlist-toggle"
-      ],
-      "visual_reference_signals": []
-    },
-    {
-      "family": "data-display",
-      "priority": "high",
-      "required_states": [
-        "default",
-        "sorted",
-        "filtered",
-        "empty"
-      ],
-      "components": [
-        "chat-message",
-        "chat-thread",
-        "comment-thread",
-        "tag",
-        "data-table",
-        "column-header",
-        "row-actions",
-        "stat-card",
-        "insight-card",
-        "activity-card",
-        "section-header",
-        "calendar-grid",
-        "avatar",
-        "profile-card",
-        "kanban-board",
-        "kanban-column",
-        "kanban-card",
-        "search-results",
-        "video-player",
-        "file-preview",
-        "chart-container",
-        "chart-legend",
-        "tag-pill",
-        "pricing-card",
-        "feature-comparison",
-        "filter-toolbar",
-        "decision-record-card",
-        "policy-matrix",
-        "audit-timeline",
-        "risk-summary-card"
-      ],
-      "visual_reference_signals": [
-        {
-          "id": "data-review-table",
-          "label": "Data review table",
-          "confidence": 0.94,
-          "evidence": [
-            "layout=data-review-surface (0.94)",
-            "data x1",
-            "grid x1",
-            "audit x6"
-          ]
-        }
-      ]
-    },
-    {
-      "family": "editorial",
-      "priority": "high",
-      "required_states": [
-        "default",
-        "selected",
-        "editing"
-      ],
-      "components": [
-        "editor-canvas",
-        "editor-toolbar",
-        "inline-format-menu",
-        "slash-command-menu",
-        "block-controls",
-        "content-card",
-        "featured-story-card",
-        "content-meta",
-        "byline-row"
-      ],
-      "visual_reference_signals": [
-        {
-          "id": "editorial-content-block",
-          "label": "Editorial content block",
-          "confidence": 0.94,
-          "evidence": [
-            "layout=editorial-feed (0.94)",
-            "editorial x2",
-            "magazine x2"
-          ]
-        }
-      ]
-    },
-    {
-      "family": "feedback",
-      "priority": "high",
-      "required_states": [
-        "info",
-        "success",
-        "warning",
-        "danger"
-      ],
-      "components": [
-        "inline-alert",
-        "empty-state",
-        "toast",
-        "status-badge",
-        "empty-conversation-state",
-        "banner",
-        "step-progress",
-        "shortcut-hint",
-        "upload-progress",
-        "empty-feed-illustration",
-        "gentle-toast",
-        "upgrade-banner",
-        "discount-badge"
-      ],
-      "visual_reference_signals": []
-    },
-    {
-      "family": "input",
-      "priority": "high",
-      "required_states": [
-        "default",
-        "focus",
-        "error",
-        "disabled"
-      ],
-      "components": [
-        "text-field",
-        "search-field",
-        "segmented-control",
-        "chat-input",
-        "comment-input",
-        "chip",
-        "prompt-composer",
-        "textarea",
-        "select",
-        "checkbox",
-        "radio-group",
-        "form-section",
-        "filter-chip",
-        "date-picker",
-        "time-picker",
-        "date-range-picker",
-        "tone-slider",
-        "filter-panel",
-        "volume-slider",
-        "upload-dropzone",
-        "reply-composer",
-        "variant-selector",
-        "size-selector",
-        "color-swatch-selector",
-        "filter-sidebar",
-        "sort-dropdown",
-        "reviewer-assignment-picker"
-      ],
-      "visual_reference_signals": []
-    },
-    {
-      "family": "marketing",
-      "priority": "high",
-      "required_states": [
-        "default",
-        "hover",
-        "in-view"
-      ],
-      "components": [
-        "logo-cloud",
-        "customer-logo",
-        "metric-highlight",
-        "press-quote",
-        "faq-section",
-        "faq-item",
-        "faq-question",
-        "faq-answer",
-        "hero-section",
-        "hero-headline",
-        "hero-visual",
-        "cta-button-group",
-        "trust-strip"
-      ],
-      "visual_reference_signals": [
-        {
-          "id": "marketing-hero-stack",
-          "label": "Marketing hero stack",
-          "confidence": 0.84,
-          "evidence": [
-            "hero x1",
-            "landing x1",
-            "pricing x1",
-            "marketing x2"
-          ]
-        }
-      ]
-    },
-    {
-      "family": "navigation",
-      "priority": "high",
-      "required_states": [
-        "default",
-        "active",
-        "hover",
-        "collapsed"
-      ],
-      "components": [
-        "mobile-topbar",
-        "mobile-tab-bar",
-        "back-button",
-        "section-tabs",
-        "app-shell",
-        "sidebar-nav",
-        "topbar",
-        "breadcrumb",
-        "tab-bar",
-        "pagination",
-        "prev-next-pager",
-        "wizard-layout",
-        "category-pill",
-        "workspace-switcher",
-        "context-panel"
-      ],
-      "visual_reference_signals": [
-        {
-          "id": "workspace-shell",
-          "label": "Workspace shell",
-          "confidence": 0.94,
-          "evidence": [
-            "layout=split-pane-workspace (0.94)",
-            "workspace x5",
-            "sidebar x3",
-            "panel x4"
-          ]
-        }
-      ]
-    },
-    {
-      "family": "commerce",
-      "priority": "medium",
-      "required_states": [
-        "default"
-      ],
-      "components": [
-        "product-grid",
-        "product-card",
-        "product-detail",
-        "product-gallery",
-        "product-hero-image",
-        "image-thumbnail",
-        "price-tag",
-        "original-price-strikethrough",
-        "cross-sell-grid"
       ],
       "visual_reference_signals": []
     },
@@ -321,6 +69,50 @@
       "visual_reference_signals": []
     },
     {
+      "family": "data-display",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "sorted",
+        "filtered",
+        "empty",
+        "loading"
+      ],
+      "components": [
+        "chat-message",
+        "chat-thread",
+        "comment-thread",
+        "tag",
+        "metric-strip",
+        "status-summary-row",
+        "task-surface-header",
+        "source-ledger",
+        "section-header",
+        "data-table",
+        "column-header",
+        "row-actions",
+        "calendar-grid",
+        "avatar",
+        "profile-card",
+        "kanban-board",
+        "kanban-column",
+        "kanban-card",
+        "search-results",
+        "video-player",
+        "file-preview",
+        "chart-container",
+        "chart-legend",
+        "tag-pill",
+        "pricing-card",
+        "feature-comparison",
+        "decision-record-card",
+        "policy-matrix",
+        "audit-timeline",
+        "risk-summary-card"
+      ],
+      "visual_reference_signals": []
+    },
+    {
       "family": "document",
       "priority": "high",
       "required_states": [
@@ -343,62 +135,90 @@
       "visual_reference_signals": []
     },
     {
-      "family": "overlay",
-      "priority": "medium",
+      "family": "editorial",
+      "priority": "high",
       "required_states": [
-        "closed",
-        "opening",
-        "open"
+        "default",
+        "selected",
+        "editing"
       ],
       "components": [
-        "bottom-sheet",
-        "modal-dialog",
-        "mention-popup",
-        "confirm-dialog",
-        "user-menu",
-        "autocomplete",
-        "tooltip-guide",
-        "command-palette",
-        "command-result-item",
-        "chart-tooltip",
-        "share-sheet",
-        "soft-dialog",
-        "quick-view-modal",
-        "chat-panel",
-        "message-thread",
-        "message-composer",
-        "context-drawer",
-        "inspector-drawer"
+        "editor-canvas",
+        "editor-toolbar",
+        "inline-format-menu",
+        "slash-command-menu",
+        "block-controls"
       ],
-      "visual_reference_signals": [
-        {
-          "id": "conversation-sidecar",
-          "label": "Conversation sidecar",
-          "confidence": 0.94,
-          "evidence": [
-            "layout=conversation-panel (0.94)",
-            "layout=split-pane-workspace (0.94)",
-            "chat x6",
-            "assistant x1",
-            "message x5",
-            "conversation x4"
-          ]
-        }
-      ]
+      "visual_reference_signals": []
     },
     {
-      "family": "social",
-      "priority": "medium",
+      "family": "feedback",
+      "priority": "high",
       "required_states": [
-        "default"
+        "info",
+        "success",
+        "warning",
+        "danger",
+        "loading"
       ],
       "components": [
-        "feed-item",
-        "post-card",
-        "thread-view",
-        "reaction-bar",
-        "timeline-stream",
-        "avatar-cluster"
+        "badge",
+        "inline-alert",
+        "empty-state",
+        "toast",
+        "status-dot",
+        "status-badge",
+        "empty-conversation-state",
+        "banner",
+        "step-progress",
+        "shortcut-hint",
+        "upload-progress",
+        "empty-feed-illustration",
+        "gentle-toast",
+        "upgrade-banner",
+        "discount-badge"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "input",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "focus",
+        "error",
+        "disabled",
+        "selected"
+      ],
+      "components": [
+        "text-field",
+        "select",
+        "checkbox",
+        "switch",
+        "segmented-control",
+        "chat-input",
+        "comment-input",
+        "chip",
+        "prompt-composer",
+        "textarea",
+        "radio-group",
+        "form-section",
+        "filter-chip",
+        "date-picker",
+        "time-picker",
+        "date-range-picker",
+        "tone-slider",
+        "search-field",
+        "filter-panel",
+        "volume-slider",
+        "upload-dropzone",
+        "reply-composer",
+        "variant-selector",
+        "size-selector",
+        "color-swatch-selector",
+        "filter-sidebar",
+        "sort-dropdown",
+        "reviewer-assignment-picker"
       ],
       "visual_reference_signals": []
     },
@@ -407,11 +227,55 @@
       "priority": "high",
       "required_states": [
         "default",
-        "resizing",
-        "collapsed"
+        "responsive"
       ],
       "components": [
         "resizable-split-pane"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "marketing",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "hover",
+        "in-view"
+      ],
+      "components": [
+        "logo-cloud",
+        "customer-logo",
+        "metric-highlight",
+        "press-quote",
+        "faq-section",
+        "faq-item",
+        "faq-question",
+        "faq-answer"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "navigation",
+      "priority": "high",
+      "required_states": [
+        "default",
+        "active",
+        "hover",
+        "collapsed"
+      ],
+      "components": [
+        "breadcrumbs",
+        "tabs",
+        "pagination",
+        "app-shell",
+        "sidebar-nav",
+        "topbar",
+        "breadcrumb",
+        "tab-bar",
+        "operational-rail",
+        "prev-next-pager",
+        "wizard-layout",
+        "category-pill"
       ],
       "visual_reference_signals": []
     },
@@ -428,13 +292,81 @@
         "approval-rail"
       ],
       "visual_reference_signals": []
+    },
+    {
+      "family": "commerce",
+      "priority": "medium",
+      "required_states": [
+        "default"
+      ],
+      "components": [
+        "product-grid",
+        "product-card",
+        "product-detail",
+        "product-gallery",
+        "product-hero-image",
+        "image-thumbnail",
+        "price-tag",
+        "original-price-strikethrough",
+        "cross-sell-grid"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "overlay",
+      "priority": "medium",
+      "required_states": [
+        "closed",
+        "opening",
+        "open"
+      ],
+      "components": [
+        "dialog",
+        "popover",
+        "tooltip",
+        "mention-popup",
+        "confirm-dialog",
+        "user-menu",
+        "autocomplete",
+        "tooltip-guide",
+        "command-palette",
+        "command-result-item",
+        "chart-tooltip",
+        "share-sheet",
+        "soft-dialog",
+        "quick-view-modal",
+        "inspector-drawer"
+      ],
+      "visual_reference_signals": []
+    },
+    {
+      "family": "social",
+      "priority": "medium",
+      "required_states": [
+        "default"
+      ],
+      "components": [
+        "feed-item",
+        "post-card",
+        "thread-view",
+        "reaction-bar",
+        "timeline-stream",
+        "avatar-cluster"
+      ],
+      "visual_reference_signals": []
     }
   ],
   "components": [
     {
       "name": "primary-button",
       "family": "button",
-      "supports_primitive": "system baseline",
+      "role": "Primary action button for the most important local action.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Button",
+        "Geist Button"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -447,20 +379,13 @@
     {
       "name": "secondary-button",
       "family": "button",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "ghost-button",
-      "family": "button",
-      "supports_primitive": "system baseline",
+      "role": "Secondary action button with lower emphasis than the primary action.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Button",
+        "Geist Button"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -473,137 +398,14 @@
     {
       "name": "icon-button",
       "family": "button",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "cta-button",
-      "family": "button",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "mobile-topbar",
-      "family": "navigation",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "mobile-tab-bar",
-      "family": "navigation",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "back-button",
-      "family": "navigation",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "section-tabs",
-      "family": "navigation",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "inline-alert",
-      "family": "feedback",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "empty-state",
-      "family": "feedback",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "toast",
-      "family": "feedback",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "bottom-sheet",
-      "family": "overlay",
-      "supports_primitive": "system baseline",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "modal-dialog",
-      "family": "overlay",
-      "supports_primitive": "system baseline",
+      "role": "Icon-only action with explicit accessible name and stable hit target.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Icon Button",
+        "Geist Copy Button",
+        "Geist Dots Menu"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -616,7 +418,13 @@
     {
       "name": "text-field",
       "family": "input",
-      "supports_primitive": "system baseline",
+      "role": "Single-line text input with label, helper, error, disabled, and readonly states.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Text Input",
+        "Geist Input"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -627,9 +435,53 @@
       ]
     },
     {
-      "name": "search-field",
+      "name": "select",
       "family": "input",
-      "supports_primitive": "system baseline",
+      "role": "Single-value option selector for bounded choices.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Selector",
+        "Geist Select"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "checkbox",
+      "family": "input",
+      "role": "Boolean or multi-select input with checked, unchecked, mixed, and disabled states.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Checkbox Input",
+        "Geist Checkbox"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "switch",
+      "family": "input",
+      "role": "Immediate on/off preference control.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Switch",
+        "Geist Switch"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -642,7 +494,13 @@
     {
       "name": "segmented-control",
       "family": "input",
-      "supports_primitive": "system baseline",
+      "role": "Small mutually exclusive mode switcher.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Segmented Control",
+        "Geist Toggle"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -653,9 +511,206 @@
       ]
     },
     {
-      "name": "link-button",
-      "family": "button",
-      "supports_primitive": "baseline",
+      "name": "breadcrumbs",
+      "family": "navigation",
+      "role": "Hierarchy trail for deep product areas.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Breadcrumbs",
+        "Geist Breadcrumbs"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tabs",
+      "family": "navigation",
+      "role": "Peer view switcher for related panels.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Tabs",
+        "Geist Tabs"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "pagination",
+      "family": "navigation",
+      "role": "Paged data navigation for tables and long lists.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Pagination",
+        "Geist Pagination"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "badge",
+      "family": "feedback",
+      "role": "Compact status, category, or count label.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Badge",
+        "Geist Badge"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "inline-alert",
+      "family": "feedback",
+      "role": "Inline message for contextual info, success, warning, and error states.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Banner",
+        "Geist Banner",
+        "Geist Note"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "empty-state",
+      "family": "feedback",
+      "role": "Actionable empty or zero-result state.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Empty State",
+        "Geist Empty State"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "toast",
+      "family": "feedback",
+      "role": "Temporary non-blocking feedback after a completed action.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Toast",
+        "Geist Toast"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "status-dot",
+      "family": "feedback",
+      "role": "Small operational status indicator paired with visible text.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Status Dot",
+        "Geist Status Dot"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "dialog",
+      "family": "overlay",
+      "role": "Modal decision or focused task surface.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Dialog",
+        "Geist Modal"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "popover",
+      "family": "overlay",
+      "role": "Anchored transient surface for short forms or contextual controls.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Popover",
+        "Geist Context Menu"
+      ],
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "tooltip",
+      "family": "overlay",
+      "role": "Short accessible explanation for icon-only or compact controls.",
+      "supports_primitive": "reference baseline",
+      "source": "astryx-geist-reference-baseline",
+      "reference_components": [
+        "Astryx Tooltip",
+        "Geist Tooltip"
+      ],
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -744,6 +799,45 @@
       ]
     },
     {
+      "name": "tag",
+      "family": "data-display",
+      "supports_primitive": "tags and labels",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "status-badge",
+      "family": "feedback",
+      "supports_primitive": "tags and labels",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "chip",
+      "family": "input",
+      "supports_primitive": "tags and labels",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
       "name": "app-shell",
       "family": "navigation",
       "supports_primitive": "workspace navigation",
@@ -799,45 +893,6 @@
       "name": "tab-bar",
       "family": "navigation",
       "supports_primitive": "workspace navigation",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "tag",
-      "family": "data-display",
-      "supports_primitive": "tags and labels",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "status-badge",
-      "family": "feedback",
-      "supports_primitive": "tags and labels",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "chip",
-      "family": "input",
-      "supports_primitive": "tags and labels",
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -1017,32 +1072,6 @@
       ]
     },
     {
-      "name": "select",
-      "family": "input",
-      "supports_primitive": "forms",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "checkbox",
-      "family": "input",
-      "supports_primitive": "forms",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
       "name": "radio-group",
       "family": "input",
       "supports_primitive": "forms",
@@ -1072,6 +1101,149 @@
       "name": "form-actions",
       "family": "button",
       "supports_primitive": "forms",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "metric-strip",
+      "family": "data-display",
+      "supports_primitive": "operational overview",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "status-summary-row",
+      "family": "data-display",
+      "supports_primitive": "operational overview",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "task-surface-header",
+      "family": "data-display",
+      "supports_primitive": "operational overview",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "source-ledger",
+      "family": "data-display",
+      "supports_primitive": "operational overview",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "operational-rail",
+      "family": "navigation",
+      "supports_primitive": "operational overview",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "section-header",
+      "family": "data-display",
+      "supports_primitive": "operational overview",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "banner",
+      "family": "feedback",
+      "supports_primitive": "notifications",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "data-table",
+      "family": "data-display",
+      "supports_primitive": "data tables",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "column-header",
+      "family": "data-display",
+      "supports_primitive": "data tables",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "row-actions",
+      "family": "data-display",
+      "supports_primitive": "data tables",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "filter-chip",
+      "family": "input",
+      "supports_primitive": "data tables",
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -1137,136 +1309,6 @@
       "name": "block-controls",
       "family": "editorial",
       "supports_primitive": "rich text editor",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "banner",
-      "family": "feedback",
-      "supports_primitive": "notifications",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "data-table",
-      "family": "data-display",
-      "supports_primitive": "data tables",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "column-header",
-      "family": "data-display",
-      "supports_primitive": "data tables",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "row-actions",
-      "family": "data-display",
-      "supports_primitive": "data tables",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "pagination",
-      "family": "navigation",
-      "supports_primitive": "data tables",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "filter-chip",
-      "family": "input",
-      "supports_primitive": "data tables",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "stat-card",
-      "family": "data-display",
-      "supports_primitive": "dashboard cards",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "insight-card",
-      "family": "data-display",
-      "supports_primitive": "dashboard cards",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "activity-card",
-      "family": "data-display",
-      "supports_primitive": "dashboard cards",
-      "status": "planned",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "section-header",
-      "family": "data-display",
-      "supports_primitive": "dashboard cards",
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -1631,6 +1673,19 @@
       "name": "kanban-card",
       "family": "data-display",
       "supports_primitive": "kanban and board",
+      "status": "planned",
+      "must_document": [
+        "anatomy",
+        "states",
+        "content rules",
+        "accessibility",
+        "dos and donts"
+      ]
+    },
+    {
+      "name": "search-field",
+      "family": "input",
+      "supports_primitive": "search and filter",
       "status": "planned",
       "must_document": [
         "anatomy",
@@ -2434,246 +2489,6 @@
       ]
     },
     {
-      "name": "chat-panel",
-      "family": "overlay",
-      "supports_primitive": "chat and messaging",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "conversation-sidecar",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "message-thread",
-      "family": "overlay",
-      "supports_primitive": "chat and messaging",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "conversation-sidecar",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "message-composer",
-      "family": "overlay",
-      "supports_primitive": "chat and messaging",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "conversation-sidecar",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "context-drawer",
-      "family": "overlay",
-      "supports_primitive": "chat and messaging",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "conversation-sidecar",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "filter-toolbar",
-      "family": "data-display",
-      "supports_primitive": "data tables",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "data-review-table",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "content-card",
-      "family": "editorial",
-      "supports_primitive": "rich text editor",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "editorial-content-block",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "featured-story-card",
-      "family": "editorial",
-      "supports_primitive": "rich text editor",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "editorial-content-block",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "content-meta",
-      "family": "editorial",
-      "supports_primitive": "rich text editor",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "editorial-content-block",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "byline-row",
-      "family": "editorial",
-      "supports_primitive": "rich text editor",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "editorial-content-block",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "workspace-switcher",
-      "family": "navigation",
-      "supports_primitive": "workspace navigation",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "workspace-shell",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "context-panel",
-      "family": "navigation",
-      "supports_primitive": "workspace navigation",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "workspace-shell",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "hero-section",
-      "family": "marketing",
-      "supports_primitive": "hero section",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "marketing-hero-stack",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "hero-headline",
-      "family": "marketing",
-      "supports_primitive": "hero section",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "marketing-hero-stack",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "hero-visual",
-      "family": "marketing",
-      "supports_primitive": "hero section",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "marketing-hero-stack",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "cta-button-group",
-      "family": "marketing",
-      "supports_primitive": "hero section",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "marketing-hero-stack",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
-      "name": "trust-strip",
-      "family": "marketing",
-      "supports_primitive": "hero section",
-      "status": "candidate-from-visual-reference",
-      "source": "visual-reference",
-      "archetype": "marketing-hero-stack",
-      "must_document": [
-        "anatomy",
-        "states",
-        "content rules",
-        "accessibility",
-        "dos and donts"
-      ]
-    },
-    {
       "name": "resizable-split-pane",
       "family": "layout",
       "role": "Resizable two/three-pane workspace shell for dense tools",
@@ -3136,7 +2951,7 @@
       "id": "conversation-sidecar",
       "label": "Conversation sidecar",
       "family": "overlay",
-      "confidence": 0.94,
+      "confidence": 0.48,
       "suggested_components": [
         "chat-panel",
         "message-thread",
@@ -3147,23 +2962,23 @@
         "chat and messaging"
       ],
       "evidence": [
-        "layout=conversation-panel (0.94)",
-        "layout=split-pane-workspace (0.94)",
-        "chat x6",
-        "assistant x1",
-        "message x5",
-        "conversation x4"
+        "layout=conversation-panel (0.52)",
+        "layout=split-pane-workspace (0.52)",
+        "chat x3.35",
+        "assistant x0.45",
+        "message x4.5",
+        "conversation x3.35"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
       "id": "data-review-table",
       "label": "Data review table",
       "family": "data-display",
-      "confidence": 0.94,
+      "confidence": 0.48,
       "suggested_components": [
         "data-table",
         "column-header",
@@ -3176,46 +2991,21 @@
         "search and filter"
       ],
       "evidence": [
-        "layout=data-review-surface (0.94)",
-        "data x1",
-        "grid x1",
-        "audit x6"
+        "layout=data-review-surface (0.5)",
+        "data x0.9",
+        "grid x0.15",
+        "audit x4.000000000000001"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
-      }
-    },
-    {
-      "id": "editorial-content-block",
-      "label": "Editorial content block",
-      "family": "editorial",
-      "confidence": 0.94,
-      "suggested_components": [
-        "content-card",
-        "featured-story-card",
-        "section-header",
-        "content-meta",
-        "byline-row"
-      ],
-      "supports_primitives": [
-        "rich text editor"
-      ],
-      "evidence": [
-        "layout=editorial-feed (0.94)",
-        "editorial x2",
-        "magazine x2"
-      ],
-      "provenance": {
-        "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
       }
     },
     {
       "id": "workspace-shell",
       "label": "Workspace shell",
       "family": "navigation",
-      "confidence": 0.94,
+      "confidence": 0.48,
       "suggested_components": [
         "app-shell",
         "sidebar-nav",
@@ -3227,45 +3017,99 @@
         "workspace navigation"
       ],
       "evidence": [
-        "layout=split-pane-workspace (0.94)",
-        "workspace x5",
-        "sidebar x3",
-        "panel x4"
+        "layout=split-pane-workspace (0.52)",
+        "workspace x3.9499999999999997",
+        "sidebar x2.6",
+        "panel x3.0500000000000003"
       ],
       "provenance": {
         "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
-      }
-    },
-    {
-      "id": "marketing-hero-stack",
-      "label": "Marketing hero stack",
-      "family": "marketing",
-      "confidence": 0.84,
-      "suggested_components": [
-        "hero-section",
-        "hero-headline",
-        "hero-visual",
-        "cta-button-group",
-        "trust-strip"
-      ],
-      "supports_primitives": [
-        "hero section",
-        "pricing and plans",
-        "social proof"
-      ],
-      "evidence": [
-        "hero x1",
-        "landing x1",
-        "pricing x1",
-        "marketing x2"
-      ],
-      "provenance": {
-        "level": "inferred",
-        "detail": "Archetype candidate inferred from layout cues, image signals, and product primitives."
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
       }
     }
   ],
+  "reference_baseline": {
+    "schema_version": "component-reference-baseline/v1",
+    "systems": [
+      {
+        "id": "astryx",
+        "name": "Astryx",
+        "url": "https://astryx.atmeta.com/components",
+        "role": "broad React component taxonomy, templates, themes, and agent-ready docs",
+        "use_for": [
+          "component family breadth",
+          "state and anatomy coverage hints",
+          "agent documentation and CLI workflow patterns"
+        ]
+      },
+      {
+        "id": "geist",
+        "name": "Vercel Geist",
+        "url": "https://vercel.com/geist/introduction",
+        "role": "compact developer-tool UI baseline with precise, minimal interaction patterns",
+        "use_for": [
+          "developer-console primitives",
+          "compact monochrome surface behavior",
+          "accessibility and async state coverage labels"
+        ]
+      }
+    ],
+    "absorption_policy": {
+      "allowed": [
+        "component names and taxonomy",
+        "family grouping",
+        "state coverage hints",
+        "interaction and accessibility labels",
+        "token category ideas"
+      ],
+      "denied": [
+        "verbatim docs beyond short labels",
+        "brand logos or protected imagery",
+        "site-specific IA or product copy",
+        "implementation source code unless the project license and target use allow it"
+      ],
+      "rule": "Use Astryx and Geist as taxonomy and behavior evidence; implement with local primitives and local tokens."
+    },
+    "core_components": [
+      "primary-button",
+      "secondary-button",
+      "icon-button"
+    ],
+    "contextual_not_baseline": {
+      "ghost-button": {
+        "replacement": "secondary-button",
+        "reason": "variant, not a baseline component"
+      },
+      "link-button": {
+        "replacement": "link",
+        "reason": "content/link primitive, not an action baseline"
+      },
+      "cta-button": {
+        "replacement": "primary-button",
+        "reason": "marketing emphasis variant"
+      },
+      "mobile-topbar": {
+        "replacement": "app-shell or top-nav",
+        "reason": "platform-specific navigation"
+      },
+      "mobile-tab-bar": {
+        "replacement": "tabs",
+        "reason": "mobile-specific navigation variant"
+      },
+      "back-button": {
+        "replacement": "breadcrumbs",
+        "reason": "flow-specific control"
+      },
+      "bottom-sheet": {
+        "replacement": "dialog or drawer",
+        "reason": "mobile-specific overlay variant"
+      },
+      "modal-dialog": {
+        "replacement": "dialog",
+        "reason": "duplicate naming"
+      }
+    }
+  },
   "advanced_component_catalog": [
     {
       "name": "resizable-split-pane",

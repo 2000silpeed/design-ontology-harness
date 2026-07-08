@@ -1,0 +1,1165 @@
+{
+  "schema_version": "aesthetic-evaluation-ontology/v1",
+  "dimensions": [
+    {
+      "id": "visual_harmony",
+      "label": "Visual harmony",
+      "weight": 0.24,
+      "description": "How coherently color, type, spacing, and composition work together.",
+      "metrics": [
+        "color_harmony",
+        "spacing_consistency",
+        "typography_balance",
+        "composition_order"
+      ]
+    },
+    {
+      "id": "clarity",
+      "label": "Clarity",
+      "weight": 0.2,
+      "description": "How quickly the intended hierarchy, action, and information structure can be read.",
+      "metrics": [
+        "hierarchy_clarity",
+        "contrast_legibility",
+        "content_density_control",
+        "task_focus"
+      ]
+    },
+    {
+      "id": "brand_fit",
+      "label": "Brand fit",
+      "weight": 0.18,
+      "description": "How well the candidate expresses the intended brand posture and avoids anti-keywords.",
+      "metrics": [
+        "keyword_alignment",
+        "tone_alignment",
+        "domain_fit",
+        "anti_keyword_avoidance"
+      ]
+    },
+    {
+      "id": "emotional_appeal",
+      "label": "Emotional appeal",
+      "weight": 0.14,
+      "description": "How desirable, confident, and affectively appropriate the surface feels.",
+      "metrics": [
+        "desirability",
+        "confidence_signal",
+        "warmth_or_energy"
+      ]
+    },
+    {
+      "id": "craft_quality",
+      "label": "Craft quality",
+      "weight": 0.14,
+      "description": "How polished and implementation-ready the candidate is across fit, tokens, and affordances.",
+      "metrics": [
+        "responsive_fit",
+        "token_binding",
+        "accessibility_baseline",
+        "interaction_affordance",
+        "asset_completeness"
+      ]
+    },
+    {
+      "id": "novelty",
+      "label": "Novelty",
+      "weight": 0.1,
+      "description": "How distinctive the design is without breaking its product and brand constraints.",
+      "metrics": [
+        "distinctiveness",
+        "reference_transformation",
+        "memorability"
+      ]
+    },
+    {
+      "id": "brand_semantic_fit",
+      "label": "Brand semantic fit",
+      "weight": 0.22,
+      "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+      "metrics": [
+        "brand_keyword:marketing-landing-c2558c9a",
+        "brand_keyword:landing-b9561877",
+        "brand_keyword:saas-landing-bade413d",
+        "brand_keyword:hero-0911aed6",
+        "brand_keyword:pricing-00317b5e",
+        "brand_keyword:feature-grid-a98a0b97",
+        "brand_keyword:social-proof-ee8ad720",
+        "brand_keyword:testimonial-b48bb556",
+        "brand_tone:clean-6a1cec45",
+        "brand_tone:neutral-e7fb41a6",
+        "brand_tone:precise-d53a4c62",
+        "brand_tone:trustworthy-a4bdbf4a",
+        "brand_tone:restrained-f8ecbed8"
+      ],
+      "research_basis": [
+        "kansei",
+        "aesthemos"
+      ]
+    },
+    {
+      "id": "brand_boundary_fit",
+      "label": "Brand boundary fit",
+      "weight": 0.16,
+      "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+      "metrics": [
+        "anti_keyword:bold-confident-cf0df8db",
+        "anti_keyword:saturated-08598c70",
+        "anti_keyword:magazine-serif-cccc885a",
+        "anti_keyword:playful-5a5e4a49",
+        "anti_keyword:decorative-ddfe48cb",
+        "anti_keyword:ornamental-4eab2773",
+        "anti_keyword:dashboard-heavy-98cd5dbc",
+        "anti_keyword:warm-editorial-87d57d87",
+        "avoid_pattern:magazine-serif-hero-21b7af4b",
+        "avoid_pattern:playful-pastel-illustration-c52c869c",
+        "avoid_pattern:saturated-sports-banner-f1e0b435",
+        "avoid_pattern:dense-dashboard-chrome-077c123c",
+        "avoid_pattern:social-feed-timeline-c7431491"
+      ],
+      "research_basis": [
+        "kansei"
+      ]
+    },
+    {
+      "id": "product_ontology_fit",
+      "label": "Product ontology fit",
+      "weight": 0.22,
+      "description": "How clearly product primitives and ontology-required signals appear in the design.",
+      "metrics": [
+        "product_primitive:hero-container-1db18764",
+        "product_primitive:hero-headline-bb967731",
+        "product_primitive:hero-subheadline-4fef6a38",
+        "product_primitive:hero-cta-group-20a4c254",
+        "product_primitive:hero-visual-12983a4f",
+        "product_primitive:hero-trust-strip-ef5a1fd2",
+        "product_primitive:feature-section-b8cadf51",
+        "product_primitive:feature-grid-df251d3d",
+        "product_primitive:feature-card-5bd85b28",
+        "product_primitive:feature-icon-1c1e46f4",
+        "must_include:hero-section-with-headline-subhead-c-8d64d5ec",
+        "must_include:feature-grid-with-icons-fcd65f6a",
+        "must_include:pricing-cards-with-monthly-yearly-to-8bab5a9a",
+        "must_include:logo-cloud-social-proof-strip-abde0511",
+        "must_include:testimonial-card-e745f0fb",
+        "must_include:faq-accordion-9bcae737"
+      ],
+      "research_basis": [
+        "beauvis",
+        "kansei"
+      ]
+    },
+    {
+      "id": "audience_context_fit",
+      "label": "Audience context fit",
+      "weight": 0.12,
+      "description": "How well the design serves declared users, platforms, and accessibility floors.",
+      "metrics": [
+        "audience_need:b2b-saas-프로덕트-팀-성장-마케팅-엔지니어-0ccca1df",
+        "audience_need:개발자-도구-회사-마케터-devtools-랜딩-제작-d6f48561",
+        "audience_need:스타트업-초기-마케팅-리드-투명하고-정직한-전환-페이지-0045344c",
+        "accessibility_target:wcag-2-2-aa-41a998cd"
+      ],
+      "research_basis": [
+        "visawi",
+        "aesthemos"
+      ]
+    }
+  ],
+  "metrics": {
+    "color_harmony": {
+      "label": "Color harmony",
+      "improvement": "Tighten the palette around one primary accent, one neutral surface ladder, and explicit semantic roles.",
+      "expected_lift": 0.08
+    },
+    "spacing_consistency": {
+      "label": "Spacing consistency",
+      "improvement": "Normalize page rhythm with shared spacing steps for section, cluster, and control gaps.",
+      "expected_lift": 0.07
+    },
+    "typography_balance": {
+      "label": "Typography balance",
+      "improvement": "Rebalance type hierarchy so headings, body, captions, and controls use distinct but restrained roles.",
+      "expected_lift": 0.07
+    },
+    "composition_order": {
+      "label": "Composition order",
+      "improvement": "Strengthen alignment, focal sequence, and proportional grouping before adding more decoration.",
+      "expected_lift": 0.08
+    },
+    "hierarchy_clarity": {
+      "label": "Hierarchy clarity",
+      "improvement": "Make the primary state, primary action, and next-best secondary action visible in the first scan.",
+      "expected_lift": 0.09
+    },
+    "contrast_legibility": {
+      "label": "Contrast and legibility",
+      "improvement": "Raise text/background and control/border contrast while preserving the selected token roles.",
+      "expected_lift": 0.08
+    },
+    "content_density_control": {
+      "label": "Content density control",
+      "improvement": "Reduce competing modules or group dense content into scannable rows, tables, rails, or panels.",
+      "expected_lift": 0.07
+    },
+    "task_focus": {
+      "label": "Task focus",
+      "improvement": "Move decorative or pitch-like content below the operational surface that supports the user's main task.",
+      "expected_lift": 0.08
+    },
+    "keyword_alignment": {
+      "label": "Keyword alignment",
+      "improvement": "Map the strongest brand keywords to visible choices in layout, tone, density, and component emphasis.",
+      "expected_lift": 0.08
+    },
+    "tone_alignment": {
+      "label": "Tone alignment",
+      "improvement": "Adjust copy weight, control styling, and visual temperature to match the intended voice.",
+      "expected_lift": 0.06
+    },
+    "domain_fit": {
+      "label": "Domain fit",
+      "improvement": "Add domain-native structures such as tables, maps, media, timelines, inspectors, or product objects where relevant.",
+      "expected_lift": 0.08
+    },
+    "anti_keyword_avoidance": {
+      "label": "Anti-keyword avoidance",
+      "improvement": "Remove visual tropes that match the brand profile's anti-keywords before polishing details.",
+      "expected_lift": 0.06
+    },
+    "desirability": {
+      "label": "Desirability",
+      "improvement": "Give the primary surface a more intentional visual reward: stronger imagery, tactile controls, or clearer payoff.",
+      "expected_lift": 0.07
+    },
+    "confidence_signal": {
+      "label": "Confidence signal",
+      "improvement": "Add evidence, provenance, precision, or stable UI states that make the surface feel trustworthy.",
+      "expected_lift": 0.07
+    },
+    "warmth_or_energy": {
+      "label": "Warmth or energy",
+      "improvement": "Tune motion, image choice, accent placement, or microcopy energy to the target audience.",
+      "expected_lift": 0.06
+    },
+    "responsive_fit": {
+      "label": "Responsive fit",
+      "improvement": "Verify mobile and desktop fit, then fix overflow, clipped labels, and unstable control sizing.",
+      "expected_lift": 0.08
+    },
+    "token_binding": {
+      "label": "Token binding",
+      "improvement": "Replace local visual constants with design-system tokens and keep semantic roles consistent.",
+      "expected_lift": 0.06
+    },
+    "accessibility_baseline": {
+      "label": "Accessibility baseline",
+      "improvement": "Check contrast, focus states, labels, and target sizes as part of visual polish, not after it.",
+      "expected_lift": 0.07
+    },
+    "interaction_affordance": {
+      "label": "Interaction affordance",
+      "improvement": "Make controls, filters, state chips, and navigation visually legible with icons, state, and hit-area clarity.",
+      "expected_lift": 0.07
+    },
+    "asset_completeness": {
+      "label": "Asset completeness",
+      "improvement": "Use concrete product, place, object, identity, or content assets where the domain expects visual substance.",
+      "expected_lift": 0.08
+    },
+    "distinctiveness": {
+      "label": "Distinctiveness",
+      "improvement": "Introduce one memorable composition or interaction pattern while keeping the rest of the system restrained.",
+      "expected_lift": 0.06
+    },
+    "reference_transformation": {
+      "label": "Reference transformation",
+      "improvement": "Absorb reference morphology without copying palette, copy, IA, or protected asset choices.",
+      "expected_lift": 0.06
+    },
+    "memorability": {
+      "label": "Memorability",
+      "improvement": "Create a recognizable signature in the first viewport through layout, identity asset, or product-native visual.",
+      "expected_lift": 0.06
+    },
+    "brand_keyword:marketing-landing-c2558c9a": {
+      "label": "Expresses brand keyword: marketing-landing",
+      "improvement": "Make 'marketing-landing' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "marketing-landing"
+    },
+    "brand_keyword:landing-b9561877": {
+      "label": "Expresses brand keyword: landing",
+      "improvement": "Make 'landing' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "landing"
+    },
+    "brand_keyword:saas-landing-bade413d": {
+      "label": "Expresses brand keyword: saas-landing",
+      "improvement": "Make 'saas-landing' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "saas-landing"
+    },
+    "brand_keyword:hero-0911aed6": {
+      "label": "Expresses brand keyword: hero",
+      "improvement": "Make 'hero' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "hero"
+    },
+    "brand_keyword:pricing-00317b5e": {
+      "label": "Expresses brand keyword: pricing",
+      "improvement": "Make 'pricing' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "pricing"
+    },
+    "brand_keyword:feature-grid-a98a0b97": {
+      "label": "Expresses brand keyword: feature-grid",
+      "improvement": "Make 'feature-grid' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "feature-grid"
+    },
+    "brand_keyword:social-proof-ee8ad720": {
+      "label": "Expresses brand keyword: social-proof",
+      "improvement": "Make 'social-proof' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "social-proof"
+    },
+    "brand_keyword:testimonial-b48bb556": {
+      "label": "Expresses brand keyword: testimonial",
+      "improvement": "Make 'testimonial' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.brand_keywords",
+      "target_value": "testimonial"
+    },
+    "brand_tone:clean-6a1cec45": {
+      "label": "Expresses tone of voice: clean",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'clean'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "clean"
+    },
+    "brand_tone:neutral-e7fb41a6": {
+      "label": "Expresses tone of voice: neutral",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'neutral'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "neutral"
+    },
+    "brand_tone:precise-d53a4c62": {
+      "label": "Expresses tone of voice: precise",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'precise'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "precise"
+    },
+    "brand_tone:trustworthy-a4bdbf4a": {
+      "label": "Expresses tone of voice: trustworthy",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'trustworthy'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "trustworthy"
+    },
+    "brand_tone:restrained-f8ecbed8": {
+      "label": "Expresses tone of voice: restrained",
+      "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'restrained'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.tone_of_voice",
+      "target_value": "restrained"
+    },
+    "anti_keyword:bold-confident-cf0df8db": {
+      "label": "Avoids anti-keyword: bold-confident",
+      "improvement": "Remove cues that make the product read as 'bold-confident'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "bold-confident"
+    },
+    "anti_keyword:saturated-08598c70": {
+      "label": "Avoids anti-keyword: saturated",
+      "improvement": "Remove cues that make the product read as 'saturated'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "saturated"
+    },
+    "anti_keyword:magazine-serif-cccc885a": {
+      "label": "Avoids anti-keyword: magazine-serif",
+      "improvement": "Remove cues that make the product read as 'magazine-serif'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "magazine-serif"
+    },
+    "anti_keyword:playful-5a5e4a49": {
+      "label": "Avoids anti-keyword: playful",
+      "improvement": "Remove cues that make the product read as 'playful'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "playful"
+    },
+    "anti_keyword:decorative-ddfe48cb": {
+      "label": "Avoids anti-keyword: decorative",
+      "improvement": "Remove cues that make the product read as 'decorative'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "decorative"
+    },
+    "anti_keyword:ornamental-4eab2773": {
+      "label": "Avoids anti-keyword: ornamental",
+      "improvement": "Remove cues that make the product read as 'ornamental'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "ornamental"
+    },
+    "anti_keyword:dashboard-heavy-98cd5dbc": {
+      "label": "Avoids anti-keyword: dashboard-heavy",
+      "improvement": "Remove cues that make the product read as 'dashboard-heavy'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "dashboard-heavy"
+    },
+    "anti_keyword:warm-editorial-87d57d87": {
+      "label": "Avoids anti-keyword: warm-editorial",
+      "improvement": "Remove cues that make the product read as 'warm-editorial'.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.anti_keywords",
+      "target_value": "warm-editorial"
+    },
+    "avoid_pattern:magazine-serif-hero-21b7af4b": {
+      "label": "Avoids visual pattern: magazine serif hero",
+      "improvement": "Replace 'magazine serif hero' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "magazine serif hero"
+    },
+    "avoid_pattern:playful-pastel-illustration-c52c869c": {
+      "label": "Avoids visual pattern: playful pastel illustration",
+      "improvement": "Replace 'playful pastel illustration' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "playful pastel illustration"
+    },
+    "avoid_pattern:saturated-sports-banner-f1e0b435": {
+      "label": "Avoids visual pattern: saturated sports banner",
+      "improvement": "Replace 'saturated sports banner' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "saturated sports banner"
+    },
+    "avoid_pattern:dense-dashboard-chrome-077c123c": {
+      "label": "Avoids visual pattern: dense dashboard chrome",
+      "improvement": "Replace 'dense dashboard chrome' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "dense dashboard chrome"
+    },
+    "avoid_pattern:social-feed-timeline-c7431491": {
+      "label": "Avoids visual pattern: social feed timeline",
+      "improvement": "Replace 'social feed timeline' with brand-owned morphology and token-governed visual choices.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.visual_reference.avoid_patterns",
+      "target_value": "social feed timeline"
+    },
+    "product_primitive:hero-container-1db18764": {
+      "label": "Embodies product primitive: hero container",
+      "improvement": "Represent 'hero container' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "hero container"
+    },
+    "product_primitive:hero-headline-bb967731": {
+      "label": "Embodies product primitive: hero headline",
+      "improvement": "Represent 'hero headline' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "hero headline"
+    },
+    "product_primitive:hero-subheadline-4fef6a38": {
+      "label": "Embodies product primitive: hero subheadline",
+      "improvement": "Represent 'hero subheadline' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "hero subheadline"
+    },
+    "product_primitive:hero-cta-group-20a4c254": {
+      "label": "Embodies product primitive: hero CTA group",
+      "improvement": "Represent 'hero CTA group' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "hero CTA group"
+    },
+    "product_primitive:hero-visual-12983a4f": {
+      "label": "Embodies product primitive: hero visual",
+      "improvement": "Represent 'hero visual' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "hero visual"
+    },
+    "product_primitive:hero-trust-strip-ef5a1fd2": {
+      "label": "Embodies product primitive: hero trust strip",
+      "improvement": "Represent 'hero trust strip' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "hero trust strip"
+    },
+    "product_primitive:feature-section-b8cadf51": {
+      "label": "Embodies product primitive: feature section",
+      "improvement": "Represent 'feature section' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "feature section"
+    },
+    "product_primitive:feature-grid-df251d3d": {
+      "label": "Embodies product primitive: feature grid",
+      "improvement": "Represent 'feature grid' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "feature grid"
+    },
+    "product_primitive:feature-card-5bd85b28": {
+      "label": "Embodies product primitive: feature card",
+      "improvement": "Represent 'feature card' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "feature card"
+    },
+    "product_primitive:feature-icon-1c1e46f4": {
+      "label": "Embodies product primitive: feature icon",
+      "improvement": "Represent 'feature icon' as a first-class product surface, not as generic decoration.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.product_primitives",
+      "target_value": "feature icon"
+    },
+    "must_include:hero-section-with-headline-subhead-c-8d64d5ec": {
+      "label": "Includes required visual/system signal: hero section with headline + subhead + CTA group",
+      "improvement": "Make 'hero section with headline + subhead + CTA group' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "hero section with headline + subhead + CTA group"
+    },
+    "must_include:feature-grid-with-icons-fcd65f6a": {
+      "label": "Includes required visual/system signal: feature grid with icons",
+      "improvement": "Make 'feature grid with icons' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "feature grid with icons"
+    },
+    "must_include:pricing-cards-with-monthly-yearly-to-8bab5a9a": {
+      "label": "Includes required visual/system signal: pricing cards with monthly/yearly toggle",
+      "improvement": "Make 'pricing cards with monthly/yearly toggle' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "pricing cards with monthly/yearly toggle"
+    },
+    "must_include:logo-cloud-social-proof-strip-abde0511": {
+      "label": "Includes required visual/system signal: logo cloud social proof strip",
+      "improvement": "Make 'logo cloud social proof strip' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "logo cloud social proof strip"
+    },
+    "must_include:testimonial-card-e745f0fb": {
+      "label": "Includes required visual/system signal: testimonial card",
+      "improvement": "Make 'testimonial card' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "testimonial card"
+    },
+    "must_include:faq-accordion-9bcae737": {
+      "label": "Includes required visual/system signal: faq accordion",
+      "improvement": "Make 'faq accordion' visible and scannable in the main workflow.",
+      "expected_lift": 0.08,
+      "source": "brand_profile.visual_reference.must_include",
+      "target_value": "faq accordion"
+    },
+    "audience_need:b2b-saas-프로덕트-팀-성장-마케팅-엔지니어-0ccca1df": {
+      "label": "Fits audience context: B2B/SaaS 프로덕트 팀 — 성장/마케팅 엔지니어",
+      "improvement": "Adjust density, language, workflow order, and controls for 'B2B/SaaS 프로덕트 팀 — 성장/마케팅 엔지니어'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "B2B/SaaS 프로덕트 팀 — 성장/마케팅 엔지니어"
+    },
+    "audience_need:개발자-도구-회사-마케터-devtools-랜딩-제작-d6f48561": {
+      "label": "Fits audience context: 개발자 도구 회사 마케터 — devtools 랜딩 제작",
+      "improvement": "Adjust density, language, workflow order, and controls for '개발자 도구 회사 마케터 — devtools 랜딩 제작'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "개발자 도구 회사 마케터 — devtools 랜딩 제작"
+    },
+    "audience_need:스타트업-초기-마케팅-리드-투명하고-정직한-전환-페이지-0045344c": {
+      "label": "Fits audience context: 스타트업 초기 마케팅 리드 — 투명하고 정직한 전환 페이지",
+      "improvement": "Adjust density, language, workflow order, and controls for '스타트업 초기 마케팅 리드 — 투명하고 정직한 전환 페이지'.",
+      "expected_lift": 0.06,
+      "source": "brand_profile.audiences",
+      "target_value": "스타트업 초기 마케팅 리드 — 투명하고 정직한 전환 페이지"
+    },
+    "accessibility_target:wcag-2-2-aa-41a998cd": {
+      "label": "Supports accessibility target: WCAG 2.2 AA",
+      "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+      "expected_lift": 0.07,
+      "source": "brand_profile.accessibility_targets",
+      "target_value": "WCAG 2.2 AA"
+    }
+  },
+  "relations": [
+    {
+      "source": "DesignCandidate",
+      "relation": "evaluated_by",
+      "target": "AestheticDimension"
+    },
+    {
+      "source": "AestheticDimension",
+      "relation": "measured_by",
+      "target": "AestheticMetric"
+    },
+    {
+      "source": "AestheticMetric",
+      "relation": "improved_by",
+      "target": "ImprovementAction"
+    },
+    {
+      "source": "AestheticEvaluation",
+      "relation": "gates",
+      "target": "Execution"
+    }
+  ],
+  "context": {
+    "brand_name": "Beacon",
+    "system_name": "Beacon System",
+    "product_summary": "B2B/SaaS 팀을 위한 minimal-tech 톤 마케팅 랜딩 — hero · feature grid · pricing · social proof · testimonial · faq · cta · site header/footer, 한국어 1급",
+    "audiences": [
+      "B2B/SaaS 프로덕트 팀 — 성장/마케팅 엔지니어",
+      "개발자 도구 회사 마케터 — devtools 랜딩 제작",
+      "스타트업 초기 마케팅 리드 — 투명하고 정직한 전환 페이지"
+    ],
+    "brand_keywords": [
+      "marketing-landing",
+      "landing",
+      "saas-landing",
+      "hero",
+      "pricing",
+      "feature-grid",
+      "social-proof",
+      "testimonial",
+      "faq",
+      "cta-section",
+      "site-footer",
+      "site-header",
+      "minimal",
+      "precise"
+    ],
+    "anti_keywords": [
+      "bold-confident",
+      "saturated",
+      "magazine-serif",
+      "playful",
+      "decorative",
+      "ornamental",
+      "dashboard-heavy",
+      "warm-editorial"
+    ],
+    "tone_of_voice": [
+      "clean",
+      "neutral",
+      "precise",
+      "trustworthy",
+      "restrained"
+    ],
+    "product_primitives": [
+      "hero container",
+      "hero headline",
+      "hero subheadline",
+      "hero CTA group",
+      "hero visual",
+      "hero trust strip",
+      "feature section",
+      "feature grid",
+      "feature card",
+      "feature icon",
+      "social proof logo cloud",
+      "customer logo",
+      "metric highlight",
+      "testimonial section",
+      "testimonial card",
+      "pricing card",
+      "feature comparison",
+      "upgrade banner",
+      "FAQ section",
+      "FAQ item",
+      "CTA section",
+      "CTA headline",
+      "site header",
+      "site nav",
+      "site footer",
+      "footer column",
+      "footer legal"
+    ]
+  },
+  "brand_aesthetic_contract": {
+    "schema_version": "brand-aesthetic-contract/v1",
+    "brand_name": "Beacon",
+    "system_name": "Beacon System",
+    "research_basis": [
+      {
+        "id": "visawi",
+        "label": "VisAWI",
+        "construct": "perceived website visual aesthetics",
+        "operational_use": "Map simplicity, diversity, colorfulness, and craftsmanship into visual system coherence metrics.",
+        "source_url": "https://www.sciencedirect.com/science/article/pii/S1071581910000777"
+      },
+      {
+        "id": "apid",
+        "label": "APiD",
+        "construct": "aesthetic pleasure in designed artifacts",
+        "operational_use": "Keep a direct pleasure/desirability layer instead of only formal pixel metrics.",
+        "source_url": "https://opus.lib.uts.edu.au/handle/10453/81276"
+      },
+      {
+        "id": "beauvis",
+        "label": "BeauVis",
+        "construct": "aesthetic pleasure of visual representations",
+        "operational_use": "Treat scores as comparative, context-bound judgments rather than universal beauty values.",
+        "source_url": "https://arxiv.org/abs/2207.14147"
+      },
+      {
+        "id": "aesthemos",
+        "label": "AESTHEMOS",
+        "construct": "aesthetic emotions",
+        "operational_use": "Translate brand tone and target affect into measurable emotional-response proxies.",
+        "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0178899"
+      },
+      {
+        "id": "kansei",
+        "label": "Kansei / semantic differential",
+        "construct": "design element to impression mapping",
+        "operational_use": "Use brand keywords and anti-keywords as semantic impression targets and boundaries.",
+        "source_url": "https://www.mdpi.com/2073-8994/12/8/1340"
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "brand_semantic_fit",
+        "label": "Brand semantic fit",
+        "weight": 0.22,
+        "description": "Kansei-style alignment between brand/tone words and the perceived design impression.",
+        "metrics": [
+          "brand_keyword:marketing-landing-c2558c9a",
+          "brand_keyword:landing-b9561877",
+          "brand_keyword:saas-landing-bade413d",
+          "brand_keyword:hero-0911aed6",
+          "brand_keyword:pricing-00317b5e",
+          "brand_keyword:feature-grid-a98a0b97",
+          "brand_keyword:social-proof-ee8ad720",
+          "brand_keyword:testimonial-b48bb556",
+          "brand_tone:clean-6a1cec45",
+          "brand_tone:neutral-e7fb41a6",
+          "brand_tone:precise-d53a4c62",
+          "brand_tone:trustworthy-a4bdbf4a",
+          "brand_tone:restrained-f8ecbed8"
+        ],
+        "research_basis": [
+          "kansei",
+          "aesthemos"
+        ]
+      },
+      {
+        "id": "brand_boundary_fit",
+        "label": "Brand boundary fit",
+        "weight": 0.16,
+        "description": "How well the design avoids explicitly forbidden brand impressions and visual tropes.",
+        "metrics": [
+          "anti_keyword:bold-confident-cf0df8db",
+          "anti_keyword:saturated-08598c70",
+          "anti_keyword:magazine-serif-cccc885a",
+          "anti_keyword:playful-5a5e4a49",
+          "anti_keyword:decorative-ddfe48cb",
+          "anti_keyword:ornamental-4eab2773",
+          "anti_keyword:dashboard-heavy-98cd5dbc",
+          "anti_keyword:warm-editorial-87d57d87",
+          "avoid_pattern:magazine-serif-hero-21b7af4b",
+          "avoid_pattern:playful-pastel-illustration-c52c869c",
+          "avoid_pattern:saturated-sports-banner-f1e0b435",
+          "avoid_pattern:dense-dashboard-chrome-077c123c",
+          "avoid_pattern:social-feed-timeline-c7431491"
+        ],
+        "research_basis": [
+          "kansei"
+        ]
+      },
+      {
+        "id": "product_ontology_fit",
+        "label": "Product ontology fit",
+        "weight": 0.22,
+        "description": "How clearly product primitives and ontology-required signals appear in the design.",
+        "metrics": [
+          "product_primitive:hero-container-1db18764",
+          "product_primitive:hero-headline-bb967731",
+          "product_primitive:hero-subheadline-4fef6a38",
+          "product_primitive:hero-cta-group-20a4c254",
+          "product_primitive:hero-visual-12983a4f",
+          "product_primitive:hero-trust-strip-ef5a1fd2",
+          "product_primitive:feature-section-b8cadf51",
+          "product_primitive:feature-grid-df251d3d",
+          "product_primitive:feature-card-5bd85b28",
+          "product_primitive:feature-icon-1c1e46f4",
+          "must_include:hero-section-with-headline-subhead-c-8d64d5ec",
+          "must_include:feature-grid-with-icons-fcd65f6a",
+          "must_include:pricing-cards-with-monthly-yearly-to-8bab5a9a",
+          "must_include:logo-cloud-social-proof-strip-abde0511",
+          "must_include:testimonial-card-e745f0fb",
+          "must_include:faq-accordion-9bcae737"
+        ],
+        "research_basis": [
+          "beauvis",
+          "kansei"
+        ]
+      },
+      {
+        "id": "audience_context_fit",
+        "label": "Audience context fit",
+        "weight": 0.12,
+        "description": "How well the design serves declared users, platforms, and accessibility floors.",
+        "metrics": [
+          "audience_need:b2b-saas-프로덕트-팀-성장-마케팅-엔지니어-0ccca1df",
+          "audience_need:개발자-도구-회사-마케터-devtools-랜딩-제작-d6f48561",
+          "audience_need:스타트업-초기-마케팅-리드-투명하고-정직한-전환-페이지-0045344c",
+          "accessibility_target:wcag-2-2-aa-41a998cd"
+        ],
+        "research_basis": [
+          "visawi",
+          "aesthemos"
+        ]
+      }
+    ],
+    "metrics": {
+      "brand_keyword:marketing-landing-c2558c9a": {
+        "label": "Expresses brand keyword: marketing-landing",
+        "improvement": "Make 'marketing-landing' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "marketing-landing"
+      },
+      "brand_keyword:landing-b9561877": {
+        "label": "Expresses brand keyword: landing",
+        "improvement": "Make 'landing' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "landing"
+      },
+      "brand_keyword:saas-landing-bade413d": {
+        "label": "Expresses brand keyword: saas-landing",
+        "improvement": "Make 'saas-landing' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "saas-landing"
+      },
+      "brand_keyword:hero-0911aed6": {
+        "label": "Expresses brand keyword: hero",
+        "improvement": "Make 'hero' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "hero"
+      },
+      "brand_keyword:pricing-00317b5e": {
+        "label": "Expresses brand keyword: pricing",
+        "improvement": "Make 'pricing' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "pricing"
+      },
+      "brand_keyword:feature-grid-a98a0b97": {
+        "label": "Expresses brand keyword: feature-grid",
+        "improvement": "Make 'feature-grid' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "feature-grid"
+      },
+      "brand_keyword:social-proof-ee8ad720": {
+        "label": "Expresses brand keyword: social-proof",
+        "improvement": "Make 'social-proof' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "social-proof"
+      },
+      "brand_keyword:testimonial-b48bb556": {
+        "label": "Expresses brand keyword: testimonial",
+        "improvement": "Make 'testimonial' visible through palette, density, component rhythm, imagery, and microcopy choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.brand_keywords",
+        "target_value": "testimonial"
+      },
+      "brand_tone:clean-6a1cec45": {
+        "label": "Expresses tone of voice: clean",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'clean'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "clean"
+      },
+      "brand_tone:neutral-e7fb41a6": {
+        "label": "Expresses tone of voice: neutral",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'neutral'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "neutral"
+      },
+      "brand_tone:precise-d53a4c62": {
+        "label": "Expresses tone of voice: precise",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'precise'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "precise"
+      },
+      "brand_tone:trustworthy-a4bdbf4a": {
+        "label": "Expresses tone of voice: trustworthy",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'trustworthy'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "trustworthy"
+      },
+      "brand_tone:restrained-f8ecbed8": {
+        "label": "Expresses tone of voice: restrained",
+        "improvement": "Tune hierarchy, copy weight, and interaction tone so the surface feels 'restrained'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.tone_of_voice",
+        "target_value": "restrained"
+      },
+      "anti_keyword:bold-confident-cf0df8db": {
+        "label": "Avoids anti-keyword: bold-confident",
+        "improvement": "Remove cues that make the product read as 'bold-confident'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "bold-confident"
+      },
+      "anti_keyword:saturated-08598c70": {
+        "label": "Avoids anti-keyword: saturated",
+        "improvement": "Remove cues that make the product read as 'saturated'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "saturated"
+      },
+      "anti_keyword:magazine-serif-cccc885a": {
+        "label": "Avoids anti-keyword: magazine-serif",
+        "improvement": "Remove cues that make the product read as 'magazine-serif'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "magazine-serif"
+      },
+      "anti_keyword:playful-5a5e4a49": {
+        "label": "Avoids anti-keyword: playful",
+        "improvement": "Remove cues that make the product read as 'playful'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "playful"
+      },
+      "anti_keyword:decorative-ddfe48cb": {
+        "label": "Avoids anti-keyword: decorative",
+        "improvement": "Remove cues that make the product read as 'decorative'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "decorative"
+      },
+      "anti_keyword:ornamental-4eab2773": {
+        "label": "Avoids anti-keyword: ornamental",
+        "improvement": "Remove cues that make the product read as 'ornamental'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "ornamental"
+      },
+      "anti_keyword:dashboard-heavy-98cd5dbc": {
+        "label": "Avoids anti-keyword: dashboard-heavy",
+        "improvement": "Remove cues that make the product read as 'dashboard-heavy'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "dashboard-heavy"
+      },
+      "anti_keyword:warm-editorial-87d57d87": {
+        "label": "Avoids anti-keyword: warm-editorial",
+        "improvement": "Remove cues that make the product read as 'warm-editorial'.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.anti_keywords",
+        "target_value": "warm-editorial"
+      },
+      "avoid_pattern:magazine-serif-hero-21b7af4b": {
+        "label": "Avoids visual pattern: magazine serif hero",
+        "improvement": "Replace 'magazine serif hero' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "magazine serif hero"
+      },
+      "avoid_pattern:playful-pastel-illustration-c52c869c": {
+        "label": "Avoids visual pattern: playful pastel illustration",
+        "improvement": "Replace 'playful pastel illustration' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "playful pastel illustration"
+      },
+      "avoid_pattern:saturated-sports-banner-f1e0b435": {
+        "label": "Avoids visual pattern: saturated sports banner",
+        "improvement": "Replace 'saturated sports banner' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "saturated sports banner"
+      },
+      "avoid_pattern:dense-dashboard-chrome-077c123c": {
+        "label": "Avoids visual pattern: dense dashboard chrome",
+        "improvement": "Replace 'dense dashboard chrome' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "dense dashboard chrome"
+      },
+      "avoid_pattern:social-feed-timeline-c7431491": {
+        "label": "Avoids visual pattern: social feed timeline",
+        "improvement": "Replace 'social feed timeline' with brand-owned morphology and token-governed visual choices.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.visual_reference.avoid_patterns",
+        "target_value": "social feed timeline"
+      },
+      "product_primitive:hero-container-1db18764": {
+        "label": "Embodies product primitive: hero container",
+        "improvement": "Represent 'hero container' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "hero container"
+      },
+      "product_primitive:hero-headline-bb967731": {
+        "label": "Embodies product primitive: hero headline",
+        "improvement": "Represent 'hero headline' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "hero headline"
+      },
+      "product_primitive:hero-subheadline-4fef6a38": {
+        "label": "Embodies product primitive: hero subheadline",
+        "improvement": "Represent 'hero subheadline' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "hero subheadline"
+      },
+      "product_primitive:hero-cta-group-20a4c254": {
+        "label": "Embodies product primitive: hero CTA group",
+        "improvement": "Represent 'hero CTA group' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "hero CTA group"
+      },
+      "product_primitive:hero-visual-12983a4f": {
+        "label": "Embodies product primitive: hero visual",
+        "improvement": "Represent 'hero visual' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "hero visual"
+      },
+      "product_primitive:hero-trust-strip-ef5a1fd2": {
+        "label": "Embodies product primitive: hero trust strip",
+        "improvement": "Represent 'hero trust strip' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "hero trust strip"
+      },
+      "product_primitive:feature-section-b8cadf51": {
+        "label": "Embodies product primitive: feature section",
+        "improvement": "Represent 'feature section' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "feature section"
+      },
+      "product_primitive:feature-grid-df251d3d": {
+        "label": "Embodies product primitive: feature grid",
+        "improvement": "Represent 'feature grid' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "feature grid"
+      },
+      "product_primitive:feature-card-5bd85b28": {
+        "label": "Embodies product primitive: feature card",
+        "improvement": "Represent 'feature card' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "feature card"
+      },
+      "product_primitive:feature-icon-1c1e46f4": {
+        "label": "Embodies product primitive: feature icon",
+        "improvement": "Represent 'feature icon' as a first-class product surface, not as generic decoration.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.product_primitives",
+        "target_value": "feature icon"
+      },
+      "must_include:hero-section-with-headline-subhead-c-8d64d5ec": {
+        "label": "Includes required visual/system signal: hero section with headline + subhead + CTA group",
+        "improvement": "Make 'hero section with headline + subhead + CTA group' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "hero section with headline + subhead + CTA group"
+      },
+      "must_include:feature-grid-with-icons-fcd65f6a": {
+        "label": "Includes required visual/system signal: feature grid with icons",
+        "improvement": "Make 'feature grid with icons' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "feature grid with icons"
+      },
+      "must_include:pricing-cards-with-monthly-yearly-to-8bab5a9a": {
+        "label": "Includes required visual/system signal: pricing cards with monthly/yearly toggle",
+        "improvement": "Make 'pricing cards with monthly/yearly toggle' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "pricing cards with monthly/yearly toggle"
+      },
+      "must_include:logo-cloud-social-proof-strip-abde0511": {
+        "label": "Includes required visual/system signal: logo cloud social proof strip",
+        "improvement": "Make 'logo cloud social proof strip' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "logo cloud social proof strip"
+      },
+      "must_include:testimonial-card-e745f0fb": {
+        "label": "Includes required visual/system signal: testimonial card",
+        "improvement": "Make 'testimonial card' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "testimonial card"
+      },
+      "must_include:faq-accordion-9bcae737": {
+        "label": "Includes required visual/system signal: faq accordion",
+        "improvement": "Make 'faq accordion' visible and scannable in the main workflow.",
+        "expected_lift": 0.08,
+        "source": "brand_profile.visual_reference.must_include",
+        "target_value": "faq accordion"
+      },
+      "audience_need:b2b-saas-프로덕트-팀-성장-마케팅-엔지니어-0ccca1df": {
+        "label": "Fits audience context: B2B/SaaS 프로덕트 팀 — 성장/마케팅 엔지니어",
+        "improvement": "Adjust density, language, workflow order, and controls for 'B2B/SaaS 프로덕트 팀 — 성장/마케팅 엔지니어'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "B2B/SaaS 프로덕트 팀 — 성장/마케팅 엔지니어"
+      },
+      "audience_need:개발자-도구-회사-마케터-devtools-랜딩-제작-d6f48561": {
+        "label": "Fits audience context: 개발자 도구 회사 마케터 — devtools 랜딩 제작",
+        "improvement": "Adjust density, language, workflow order, and controls for '개발자 도구 회사 마케터 — devtools 랜딩 제작'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "개발자 도구 회사 마케터 — devtools 랜딩 제작"
+      },
+      "audience_need:스타트업-초기-마케팅-리드-투명하고-정직한-전환-페이지-0045344c": {
+        "label": "Fits audience context: 스타트업 초기 마케팅 리드 — 투명하고 정직한 전환 페이지",
+        "improvement": "Adjust density, language, workflow order, and controls for '스타트업 초기 마케팅 리드 — 투명하고 정직한 전환 페이지'.",
+        "expected_lift": 0.06,
+        "source": "brand_profile.audiences",
+        "target_value": "스타트업 초기 마케팅 리드 — 투명하고 정직한 전환 페이지"
+      },
+      "accessibility_target:wcag-2-2-aa-41a998cd": {
+        "label": "Supports accessibility target: WCAG 2.2 AA",
+        "improvement": "Verify 'WCAG 2.2 AA' with contrast, sizing, focus, motion, and alternate-view checks.",
+        "expected_lift": 0.07,
+        "source": "brand_profile.accessibility_targets",
+        "target_value": "WCAG 2.2 AA"
+      }
+    },
+    "rule": "Brand-owned aesthetic quality is evaluated as fit to declared semantic targets, explicit boundaries, product ontology, audience context, and visual craft."
+  },
+  "interpretation_rule": "Scores represent observed or reviewed response proxies in a declared context; they are not universal beauty claims."
+}

@@ -5,6 +5,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from .component_reference_baseline import core_baseline_components
+
 
 UI_PATTERNS: dict[str, dict] = {
     "workspace navigation": {
@@ -660,8 +662,8 @@ PATTERN_COMPONENTS: dict[str, list[dict]] = {
         {"name": "section-header", "family": "data-display", "role": "랭킹/비교 섹션의 정렬 및 설명 헤더"},
     ],
     "modal and dialog": [
-        {"name": "modal-dialog", "family": "overlay", "role": "확인/입력을 받는 모달"},
-        {"name": "bottom-sheet", "family": "overlay", "role": "모바일용 하단 시트"},
+        {"name": "dialog", "family": "overlay", "role": "확인/입력을 받는 표준 다이얼로그"},
+        {"name": "popover", "family": "overlay", "role": "트리거에 붙는 짧은 보조 입력/정보 표면"},
         {"name": "confirm-dialog", "family": "overlay", "role": "삭제/위험 작업 확인 다이얼로그"},
     ],
     "onboarding and stepper": [
@@ -911,7 +913,7 @@ PATTERN_COMPONENTS: dict[str, list[dict]] = {
         {"name": "editorial-analytics-kpi", "family": "dashboard-editorial", "role": "편집 운영 kpi-card 스택 — 이슈 리드 타임 · 리뷰 처리 · 발행 지연율 · 기고자당 발행 수, mono tabular-nums, sidebar-nav 진입"},
         {"name": "reading-analytics-kpi", "family": "dashboard-editorial", "role": "리딩 kpi-card 스택 — 평균 체류 · 완독률 · 스크롤 심도 · 메일 오픈, Naples Yellow trend indicator, chart-container 연계"},
         {"name": "archive-shelf", "family": "dashboard-editorial", "role": "과거 이슈 / 발행 기사 아카이브 — filter-sidebar + data-table + kpi-card 조합, issue-number chip, 태그 필터, sidebar-nav 진입"},
-        {"name": "tag-taxonomy-manager", "family": "dashboard-editorial", "role": "섹션/카테고리/태그 체계 편집 — tree + data-table + modal-dialog, sidebar-nav 진입, muted warm divider"},
+        {"name": "tag-taxonomy-manager", "family": "dashboard-editorial", "role": "섹션/카테고리/태그 체계 편집 — tree + data-table + dialog, sidebar-nav 진입, muted warm divider"},
     ],
     "publishing workflow": [
         {"name": "publishing-pipeline", "family": "dashboard-editorial", "role": "수평 publishing 파이프라인 보드 — pipeline-stage column (아이디어 → 초안 → 리뷰 → 스케줄 → 발행 → 아카이브), data-table 연계, sidebar-nav 진입, filter-chip 필터, article-preview-pane drawer 연계"},
@@ -951,13 +953,7 @@ PATTERN_COMPONENTS: dict[str, list[dict]] = {
 }
 
 # 모든 프로젝트에 기본으로 포함되는 컴포넌트
-BASELINE_COMPONENTS: list[dict] = [
-    {"name": "primary-button", "family": "button", "role": "주요 행동을 유도하는 CTA 버튼"},
-    {"name": "secondary-button", "family": "button", "role": "보조 행동 버튼"},
-    {"name": "ghost-button", "family": "button", "role": "최소한의 시각적 무게를 가진 버튼"},
-    {"name": "icon-button", "family": "button", "role": "아이콘만 있는 액션 버튼"},
-    {"name": "link-button", "family": "button", "role": "텍스트 링크 스타일 버튼"},
-]
+BASELINE_COMPONENTS: list[dict] = core_baseline_components()
 
 
 def analyze_spec(spec_text: str) -> list[dict]:

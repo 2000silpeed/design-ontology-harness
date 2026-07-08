@@ -223,11 +223,12 @@ def _render_preview_md(
             lines += ["### Core", *core]
         if semantic:
             lines += ["", "### Semantic", *semantic]
-        lines += [
-            "",
-            "> light/dark 변형은 어댑터(`nextjs-tailwind-shadcn` 등)가 파생. 원본 팔레트는 위 HEX 1세트.",
-            "",
-        ]
+        adapter_note = (
+            "> light/dark 변형은 어댑터(`nextjs-tailwind-shadcn` 등)가 파생. 원본 팔레트는 위 HEX 1세트."
+            if "dark" in color_modes
+            else "> 추가 color mode 변형은 어댑터(`nextjs-tailwind-shadcn` 등)가 파생. 원본 팔레트는 위 HEX 1세트."
+        )
+        lines += ["", adapter_note, ""]
     else:
         lines += [
             f"## Color Tokens ({mode_label})",

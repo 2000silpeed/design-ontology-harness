@@ -3,6 +3,7 @@ import unittest
 from design_ontology_harness.authoring import build_component_inventory
 from design_ontology_harness.advanced_components import recommend_advanced_components
 from design_ontology_harness.component_specs import generate_component_specs
+from design_ontology_harness.spec_analyzer import build_component_list
 from design_ontology_harness.synthesis import RESPONSIVE_RESILIENCE_POLICY
 
 
@@ -178,6 +179,45 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
         self.assertEqual(policy_matrix["archetype"], "advanced:policy-matrix")
         self.assertIn("status-cell", policy_matrix["anatomy"]["parts"])
         self.assertIn("caption describes policy scope", policy_matrix["accessibility"])
+
+    def test_astryx_geist_baseline_replaces_legacy_contextual_defaults(self) -> None:
+        brand_profile = {
+            "brand_name": "Lean Console",
+            "brand_keywords": ["minimal", "precise"],
+            "anti_keywords": [],
+            "product_primitives": [],
+        }
+        blueprint = {
+            "component_strategy": {
+                "required_component_families": ["button", "input", "navigation", "feedback", "overlay"],
+            }
+        }
+
+        inventory = build_component_inventory(brand_profile, blueprint)
+        inventory_names = {item["name"] for item in inventory["components"]}
+        analyzer_names = {item["name"] for item in build_component_list([])}
+
+        self.assertTrue({"primary-button", "secondary-button", "icon-button"} <= inventory_names)
+        self.assertTrue({"text-field", "select", "checkbox", "switch", "segmented-control"} <= inventory_names)
+        self.assertTrue({"breadcrumbs", "tabs", "pagination"} <= inventory_names)
+        self.assertTrue({"dialog", "popover", "tooltip"} <= inventory_names)
+
+        legacy_defaults = {
+            "ghost-button",
+            "link-button",
+            "cta-button",
+            "mobile-topbar",
+            "mobile-tab-bar",
+            "back-button",
+            "bottom-sheet",
+            "modal-dialog",
+        }
+        self.assertFalse(legacy_defaults & inventory_names)
+        self.assertFalse({"ghost-button", "link-button", "cta-button"} & analyzer_names)
+
+        reference_systems = {item["id"] for item in inventory["reference_baseline"]["systems"]}
+        self.assertEqual(reference_systems, {"astryx", "geist"})
+        self.assertIn("ghost-button", inventory["reference_baseline"]["contextual_not_baseline"])
 
     def test_operational_surfaces_suppress_card_named_advanced_recommendations(self) -> None:
         brand_profile = {

@@ -6,16 +6,12 @@
 - app_mode: `conversation-copilot` / brand_tone: `minimal-tech`
 
 ## Color Tokens (light + dark)
-### Core
-- primary: `#000080`
-- accent: `#CC7722`
-- surface_tint: `#87CEEB`
 
 ### Semantic
-- success: `#B6E3C1`
+- success: `#006A4E`
 - warning: `#CC7722`
 - danger: `#8B2252`
-- info: `#708090`
+- info: `#000080`
 
 > light/dark 변형은 어댑터(`nextjs-tailwind-shadcn` 등)가 파생. 원본 팔레트는 위 HEX 1세트.
 
@@ -26,9 +22,9 @@
 - korean: Spoqa Han Sans Neo
 
 ## 대표 컴포넌트
+- **audit-timeline** — parts: list, event-item, timestamp, actor, event-summary | states: default, filtered, expanded, empty
 - **primary-button** — parts: container, label, leading-icon(optional), trailing-icon(optional) | states: default, hover, active, disabled
 - **secondary-button** — parts: container, label, leading-icon(optional), trailing-icon(optional) | states: default, hover, active, disabled
-- **ghost-button** — parts: container, label, leading-icon(optional), trailing-icon(optional) | states: default, hover, active, disabled
 
 ## Locale Pairings
 - ko: heading=Pretendard / body=Pretendard
