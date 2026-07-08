@@ -1,38 +1,39 @@
-# ThreadSense Design System
+# Foldline Design System
 
 ## 1. Brand Concept
 
-ThreadSense는 패션 큐레이션 모바일 앱이다. 사용자가 오늘의 상황, 취향, 보유 옷, 예산을 신호로 넘기면 상품 목록이 아니라 하나의 착장 에디트를 먼저 제안한다.
+Foldline is a Korean-first mobile fashion curation app. It turns a daily style brief and closet memory into one outfit decision before shopping.
 
-핵심 톤은 editorial, personal, tactile, decisive, refined다. 고급스러움을 검정/금색 클리셰로 처리하지 않고, 소재와 레이어, 추천 근거가 만져지는 화면으로 만든다.
+The product should feel quiet, tactile, and decisive. It should not feel like a marketplace grid, a magazine landing page, or a dashboard. The first screen is a wardrobe work surface: brief, signal spine, look board, rationale, and contextual shop sheet.
 
 ## 2. Skeleton UI
 
-첫 화면은 다음 순서를 유지한다.
+The first screen keeps this order:
 
-1. Compact top bar: 위치, 날씨, 프로필 진입.
-2. Taste signal rail: 상황, 날씨, 피하고 싶은 요소, 무드.
-3. Outfit edit canvas: 실제 의류 이미지와 하나의 착장 결정.
-4. Why this works: 소재, 실루엣, 보유 옷 연결 근거.
-5. Garment stack: outer, top, bottom처럼 착장을 이루는 아이템.
-6. Shop drawer: 착장 문맥에서 열리는 가격, 사이즈, 저장, 구매 후보 액션.
-7. Bottom navigation: 오늘, 클로젯, 에딧, 쇼핑.
+1. Compact topbar with brand, date, and profile entry.
+2. Daily brief row for occasion, weather, comfort, and avoid condition.
+3. Signal spine beside the look board.
+4. Look board with one assembled outfit decision.
+5. Why-it-works strip with material, silhouette, and closet fit.
+6. Garment stack with owned and candidate items.
+7. Contextual shop sheet attached to the selected garment.
+8. Bottom tab bar.
 
-상품 그리드, 대시보드 카드, 마케팅 히어로는 첫 화면에서 금지한다.
+The first screen must not include a marketing hero, product grid, dashboard card set, generic command palette, or generic data table.
 
 ## 3. Visual Tokens
 
 Color roles:
 
-- Canvas: `#f8f3ed`
-- Paper: `#fffaf5`
-- Surface muted: `#eee5dc`
+- Canvas: `#f7efe7`
+- Paper: `#fffaf4`
+- Surface muted: `#ebe0d5`
 - Ink: `#24191d`
-- Muted ink: `#685d61`
+- Muted ink: `#6a5d61`
 - Primary claret: `#7f1734`
 - Prussian blue: `#003153`
-- Sage support: `#8fa38b`
-- Flax accent: `#eedc82`
+- Sage support: `#879c7d`
+- Fold accent: `#dccb9a`
 
 Typography:
 
@@ -43,44 +44,51 @@ Typography:
 
 Shape and spacing:
 
-- Cards and panels use `8px` radius or less.
-- Taste chips and segmented controls may use pill radius because they are controls, not content cards.
-- Fixed mobile controls must keep stable hit targets: 36px minimum for chips, 44px for primary actions.
+- Repeated framed items use `8px` radius or less.
+- Control chips may use pill radius because they are controls.
+- Primary mobile actions use at least `44px` height.
+- No section-level nested cards.
 
 ## 4. Component Set
 
-Keep these as the first implementation surface:
+Core implementation components:
 
 - app shell
-- compact top bar
-- taste signal chip rail
-- segmented control
+- topbar
+- tab bar
+- taste signal rail
+- taste signal chip
 - outfit edit canvas
-- reason note
+- edit confidence badge
+- garment stack
 - garment row
 - fabric swatch
-- alternative rail
-- shop drawer
+- why-this-works note
+- reason note
+- fit note
 - size chip group
-- bottom navigation
-- toast
+- save edit button
+- saved state toast
+- shop drawer
+- price size summary
+- alternative item rail
+- alternative item tile
+- closet compatibility badge
 
-Remove or defer generic dashboard, marketing, data table, hero CTA, and ecommerce grid components unless the app flow explicitly asks for them.
-
-Generated component inventory should use `product-primitives-first`. Astryx and Vercel Geist remain `coverage-only` references for state, anatomy, and accessibility checks; they should not repopulate the implementation list with generic buttons, dashboards, product grids, or marketing hero components when ThreadSense primitives are already explicit.
+Astryx and Vercel Geist are `coverage-only` references for state, anatomy, and accessibility. They must not repopulate Foldline with generic buttons, dashboards, product grids, command palettes, or marketing hero components.
 
 ## 5. LLM Invocation Contract
 
-This system should not select a preset. The calling LLM must derive the visual direction from the brand profile, domain objects, and skeleton UI.
+The calling LLM must derive the UI from brand profile, domain objects, and first-screen skeleton. It must not select a preset.
 
 Required decisions on every new app:
 
 - Name the primary user job before choosing layout.
 - Extract domain objects before choosing components.
-- Define the first viewport contract before choosing visual polish.
-- Translate colors into semantic roles instead of copying a palette.
-- Keep component coverage from Astryx and Vercel Geist, but rewrite the visual identity for the product.
-- Reject outputs that converge into the same card grid, dashboard, or landing-page hero.
+- Define the first viewport contract before visual polish.
+- Translate colors into semantic roles.
+- Keep Astryx/Geist as coverage references only.
+- Reject outputs that converge into card grid, dashboard, marketplace feed, or landing-page hero.
 
 ## 6. Mock UI
 
@@ -90,4 +98,4 @@ The static mock lives in:
 - `styles.css`
 - `app.js`
 
-It implements the first-screen contract with a 390px-class mobile layout, real garment imagery, interactive taste chips, garment selection, a shop drawer preview, and a save toast.
+It implements a 390px-class mobile layout with real garment imagery, a vertical signal spine, look board, rationale strip, garment stack, contextual shop sheet, bottom navigation, and small interactive states.

@@ -1,4 +1,4 @@
-# ThreadSense Harness Agent Brief
+# Foldline Harness Agent Brief
 
 This project uses `design-ontology-harness` as a reusable system-authoring harness.
 

@@ -1,29 +1,26 @@
-const shopDrawer = document.querySelector("[data-shop-drawer]");
-const drawerTitle = document.querySelector("[data-drawer-title]");
-const drawerFit = document.querySelector("[data-drawer-fit]");
-const drawerPrice = document.querySelector("[data-drawer-price]");
-const signalSummary = document.querySelector(".signal-summary");
+const shopSheet = document.querySelector("[data-shop-sheet]");
+const sheetTitle = document.querySelector("[data-sheet-title]");
+const sheetFit = document.querySelector("[data-sheet-fit]");
+const sheetPrice = document.querySelector("[data-sheet-price]");
+const signalSummary = document.querySelector("[data-signal-summary]");
 const toast = document.querySelector("[data-toast]");
 
-const refreshIcons = () => {
+const createIcons = () => {
   if (window.lucide) {
     window.lucide.createIcons();
   }
 };
 
-const updateSignals = () => {
-  const activeSignals = [...document.querySelectorAll(".taste-chip.is-active")]
-    .map((chip) => chip.dataset.signal)
+const updateSignalSummary = () => {
+  const active = [...document.querySelectorAll(".signal-node.is-active")]
+    .map((node) => node.dataset.signal)
     .slice(0, 3);
-
-  signalSummary.textContent = activeSignals.length
-    ? activeSignals.join(" · ")
-    : "신호 없음";
+  signalSummary.textContent = active.length ? active.join(" · ") : "신호 없음";
 };
 
-const setDrawerExpanded = (expanded) => {
-  shopDrawer.classList.toggle("is-expanded", expanded);
-  document.querySelectorAll("[data-open-shop]").forEach((button) => {
+const setSheetExpanded = (expanded) => {
+  shopSheet.classList.toggle("is-expanded", expanded);
+  document.querySelectorAll("[data-toggle-shop]").forEach((button) => {
     button.setAttribute("aria-expanded", String(expanded));
   });
 };
@@ -37,69 +34,74 @@ const showToast = (message) => {
   }, 1900);
 };
 
-document.querySelectorAll(".taste-chip").forEach((chip) => {
-  chip.addEventListener("click", () => {
-    chip.classList.toggle("is-active");
-    updateSignals();
-  });
-});
+const selectGarment = (itemKey) => {
+  const row = document.querySelector(`.garment-row[data-item="${itemKey}"]`);
+  if (!row) return;
 
-document.querySelectorAll(".mode-button").forEach((button) => {
-  button.addEventListener("click", () => {
-    document
-      .querySelectorAll(".mode-button")
-      .forEach((mode) => mode.classList.remove("is-active"));
-    button.classList.add("is-active");
+  document
+    .querySelectorAll(".garment-row")
+    .forEach((item) => item.classList.remove("is-selected"));
+  row.classList.add("is-selected");
+  sheetTitle.textContent = row.dataset.title;
+  sheetFit.textContent = row.dataset.fit;
+  sheetPrice.textContent = row.dataset.price;
+};
+
+document.querySelectorAll(".signal-node").forEach((node) => {
+  node.addEventListener("click", () => {
+    node.classList.toggle("is-active");
+    updateSignalSummary();
   });
 });
 
 document.querySelectorAll(".garment-row").forEach((row) => {
   row.addEventListener("click", () => {
-    document
-      .querySelectorAll(".garment-row")
-      .forEach((item) => item.classList.remove("is-selected"));
-    row.classList.add("is-selected");
-    drawerTitle.textContent = row.dataset.title;
-    drawerFit.textContent = row.dataset.fit;
-    drawerPrice.textContent = row.dataset.price;
-    setDrawerExpanded(true);
+    selectGarment(row.dataset.item);
+    setSheetExpanded(true);
   });
 });
 
-document.querySelectorAll(".row-action").forEach((button) => {
+document.querySelectorAll("[data-select-item]").forEach((pin) => {
+  pin.addEventListener("click", () => {
+    selectGarment(pin.dataset.selectItem);
+    setSheetExpanded(true);
+  });
+});
+
+document.querySelectorAll(".row-icon").forEach((button) => {
   button.addEventListener("click", (event) => {
     event.stopPropagation();
-    showToast("아이템을 클로젯에 저장했습니다.");
+    showToast("아이템을 옷장에 저장했습니다.");
   });
 });
 
-document.querySelectorAll("[data-open-shop]").forEach((button) => {
+document.querySelectorAll("[data-toggle-shop]").forEach((button) => {
   button.addEventListener("click", () => {
-    setDrawerExpanded(!shopDrawer.classList.contains("is-expanded"));
+    setSheetExpanded(!shopSheet.classList.contains("is-expanded"));
   });
 });
 
-document.querySelectorAll(".size-row button").forEach((button) => {
+document.querySelectorAll(".size-chips button").forEach((button) => {
   button.addEventListener("click", () => {
     document
-      .querySelectorAll(".size-row button")
+      .querySelectorAll(".size-chips button")
       .forEach((size) => size.classList.remove("is-active"));
     button.classList.add("is-active");
   });
 });
 
-document.querySelector("[data-save-edit]").addEventListener("click", () => {
-  showToast("오늘의 에딧을 저장했습니다.");
+document.querySelector("[data-save-look]").addEventListener("click", () => {
+  showToast("오늘의 보드를 저장했습니다.");
 });
 
-document.querySelectorAll(".alternative-tile").forEach((tile) => {
-  tile.addEventListener("click", () => {
+document.querySelectorAll(".alternative").forEach((button) => {
+  button.addEventListener("click", () => {
     document
-      .querySelectorAll(".alternative-tile")
+      .querySelectorAll(".alternative")
       .forEach((item) => item.classList.remove("is-active"));
-    tile.classList.add("is-active");
+    button.classList.add("is-active");
   });
 });
 
-updateSignals();
-refreshIcons();
+updateSignalSummary();
+createIcons();

@@ -1,4 +1,4 @@
-# ThreadSense
+# Foldline
 
 This folder is a self-contained harness project built on top of `design-ontology-harness`.
 
@@ -8,7 +8,8 @@ This folder is a self-contained harness project built on top of `design-ontology
 - `seeds/seed_urls.txt`: curated reference entry points
 - `project_manifest.json`: project metadata
 - `agent_brief.md`: instructions for human or agent collaborators
-- `design-system.md`: persistent brand, skeleton, token, and component contract
+- `spec.md`: product concept, skeleton, and mock UI requirements
+- `design-system.md`: persistent brand, token, component, and LLM invocation contract
 - `index.html`, `styles.css`, `app.js`: static mobile mock UI
 - `build/`: generated outputs
 

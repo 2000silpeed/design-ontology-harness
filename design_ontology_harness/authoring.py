@@ -898,6 +898,16 @@ def _component_rejection_reason(
         return "generic collaboration/profile component is outside this product skeleton"
     if support == "notifications":
         return "generic notification component is outside this product skeleton"
+    if support == "command palette" and not _has_any(positive_context, ["command palette", "keyboard command"]):
+        return "command palette component requires an explicit expert command surface"
+    if support == "search and filter" and not _has_any(positive_context, ["search and filter", "search workflow"]):
+        return "generic search/filter component is outside this product skeleton"
+    if support == "onboarding and stepper" and not _has_any(positive_context, ["onboarding", "wizard", "stepper"]):
+        return "onboarding/stepper component is outside this product skeleton"
+    if support == "pricing and plans" and not _has_any(positive_context, ["pricing and plans", "subscription plan"]):
+        return "pricing/plans component is outside this product skeleton"
+    if support == "growth analytics admin":
+        return "growth analytics admin component is outside this product skeleton"
     if support == "workspace navigation":
         mobile_nav_allowed = name in {"app-shell", "topbar", "tab-bar"} and _has_any(
             context,

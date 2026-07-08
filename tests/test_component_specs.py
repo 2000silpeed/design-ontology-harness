@@ -255,6 +255,10 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
                 {"name": "data-table", "family": "data-display", "source": "spec"},
                 {"name": "hero-cta-group", "family": "button", "source": "spec"},
                 {"name": "dashboard-card", "family": "dashboard-wellness", "source": "spec"},
+                {"name": "command-palette", "family": "overlay", "source": "command palette"},
+                {"name": "search-field", "family": "input", "source": "search and filter"},
+                {"name": "pricing-card", "family": "data-display", "source": "pricing and plans"},
+                {"name": "activation-funnel", "family": "dashboard-growth", "source": "growth analytics admin"},
             ],
         }
         blueprint = {
@@ -282,7 +286,16 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
         } <= inventory_names)
         self.assertTrue({"primary-button", "segmented-control", "toast"} <= coverage_names)
         self.assertFalse({"primary-button", "segmented-control", "data-table"} & inventory_names)
-        self.assertTrue({"product-grid", "data-table", "hero-cta-group", "dashboard-card"} <= rejected_names)
+        self.assertTrue({
+            "product-grid",
+            "data-table",
+            "hero-cta-group",
+            "dashboard-card",
+            "command-palette",
+            "search-field",
+            "pricing-card",
+            "activation-funnel",
+        } <= rejected_names)
         self.assertFalse({"inspector-drawer", "resizable-split-pane", "command-palette"} & advanced_names)
 
     def test_component_specs_use_pruned_inventory_when_available(self) -> None:
