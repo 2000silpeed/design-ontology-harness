@@ -140,16 +140,252 @@
     ]
   },
   "product_primitives": [
-    "taste signal chip rail",
-    "outfit edit canvas",
-    "garment stack",
-    "why-this-works note",
-    "fit and size note",
-    "save edit action",
-    "shop drawer",
-    "alternative item carousel",
-    "closet compatibility indicator"
+    "daily style brief",
+    "vertical signal spine",
+    "single look board",
+    "look board item pins",
+    "outfit rationale strip",
+    "garment layer stack",
+    "fabric swatch memory",
+    "closet compatibility cue",
+    "alternative line rail",
+    "contextual shop sheet",
+    "save look action"
   ],
+  "component_decision": {
+    "mode": "llm-authored",
+    "rationale": "Foldline should implement the mobile outfit-decision surface directly: brief, signal spine, one look board, rationale, garment layers, and contextual shop sheet. Generic ecommerce grids, hero sections, dashboards, and raw baseline controls stay out of the actual component set.",
+    "coverage_families": [
+      "button",
+      "input",
+      "navigation",
+      "feedback",
+      "overlay"
+    ],
+    "core_components": [
+      {
+        "name": "app-shell",
+        "family": "foundation",
+        "role": "Constrains the phone-scale task surface and thumb-zone layering.",
+        "supports_primitive": "mobile outfit decision surface",
+        "decision_reason": "The app needs a bounded mobile shell, not a responsive desktop dashboard frame.",
+        "states": ["default"]
+      },
+      {
+        "name": "topbar",
+        "family": "navigation",
+        "role": "Shows place, weather, brand, and compact brief/profile actions.",
+        "supports_primitive": "daily style brief",
+        "decision_reason": "The top area must carry today's context before any shopping action.",
+        "states": ["default"]
+      },
+      {
+        "name": "daily-brief",
+        "family": "content",
+        "role": "Summarizes occasion, avoid signal, and closet usage above the board.",
+        "supports_primitive": "daily style brief",
+        "decision_reason": "This replaces generic filter chips with a task-specific daily styling brief.",
+        "states": ["default", "adjusting"]
+      },
+      {
+        "name": "signal-spine",
+        "family": "input",
+        "role": "Pins the active recommendation signals as a vertical selection rhythm.",
+        "supports_primitive": "vertical signal spine",
+        "decision_reason": "Foldline needs a visible reasoning spine, not a horizontal category filter row.",
+        "states": ["default", "active"]
+      },
+      {
+        "name": "signal-node",
+        "family": "input",
+        "role": "Represents one active or inactive styling signal.",
+        "supports_primitive": "vertical signal spine",
+        "decision_reason": "Each signal must be inspectable and tappable without becoming a generic chip.",
+        "states": ["default", "active", "pressed"]
+      },
+      {
+        "name": "today-board",
+        "family": "content",
+        "role": "Pairs the signal spine and assembled look in the first viewport.",
+        "supports_primitive": "single look board",
+        "decision_reason": "The primary screen grammar is a decision board, not a feed or catalog.",
+        "states": ["default"]
+      },
+      {
+        "name": "look-board",
+        "family": "content",
+        "role": "Shows the one selected outfit composition with garment imagery and caption.",
+        "supports_primitive": "single look board",
+        "decision_reason": "The core object is one styled outfit decision, not multiple product cards.",
+        "states": ["default", "selected"]
+      },
+      {
+        "name": "board-confidence-mark",
+        "family": "feedback",
+        "role": "Shows confidence for the current outfit board.",
+        "supports_primitive": "single look board",
+        "decision_reason": "The recommendation confidence belongs on the board itself, not as a dashboard metric.",
+        "states": ["default", "high", "low"]
+      },
+      {
+        "name": "look-board-pin",
+        "family": "input",
+        "role": "Targets a garment on the look board and opens its item context.",
+        "supports_primitive": "look board item pins",
+        "decision_reason": "Item actions should start from the outfit image, not from a detached product grid.",
+        "states": ["default", "selected", "pressed"]
+      },
+      {
+        "name": "reason-strip",
+        "family": "content",
+        "role": "Groups the short rationale notes tied to today's active signals.",
+        "supports_primitive": "outfit rationale strip",
+        "decision_reason": "Recommendation explanation is a first-class surface, not helper copy under a card.",
+        "states": ["default"]
+      },
+      {
+        "name": "reason-note",
+        "family": "content",
+        "role": "Explains material, silhouette, weather, or closet fit in one compact note.",
+        "supports_primitive": "outfit rationale strip",
+        "decision_reason": "This keeps fashion reasoning concrete and inspectable.",
+        "states": ["default"]
+      },
+      {
+        "name": "garment-stack",
+        "family": "content",
+        "role": "Lists the selected outfit layers as a small wardrobe stack.",
+        "supports_primitive": "garment layer stack",
+        "decision_reason": "Layers are the product object; they should not be flattened into commerce cards.",
+        "states": ["default"]
+      },
+      {
+        "name": "garment-row",
+        "family": "content",
+        "role": "Shows one owned or candidate garment with fit and context.",
+        "supports_primitive": "garment layer stack",
+        "decision_reason": "The row encodes ownership, fit, and weather context instead of pure price display.",
+        "states": ["default", "selected"]
+      },
+      {
+        "name": "fabric-swatch",
+        "family": "content",
+        "role": "Represents owned garment color or material when an image is unnecessary.",
+        "supports_primitive": "fabric swatch memory",
+        "decision_reason": "Closet memory needs tactile cues without fake product thumbnails.",
+        "states": ["default"]
+      },
+      {
+        "name": "closet-compatibility-mark",
+        "family": "feedback",
+        "role": "Signals whether a candidate works with already-owned pieces.",
+        "supports_primitive": "closet compatibility cue",
+        "decision_reason": "Compatibility appears before price so the app stays curation-led.",
+        "states": ["default", "compatible", "warning"]
+      },
+      {
+        "name": "alternative-rail",
+        "family": "content",
+        "role": "Shows a small set of alternate styling lines for the same outfit intent.",
+        "supports_primitive": "alternative line rail",
+        "decision_reason": "Alternatives remain bounded to the current look instead of becoming an infinite feed.",
+        "states": ["default"]
+      },
+      {
+        "name": "alternative-item",
+        "family": "input",
+        "role": "Lets the user switch one alternative color or garment line.",
+        "supports_primitive": "alternative line rail",
+        "decision_reason": "This is a look refinement control, not a generic product tile.",
+        "states": ["default", "active", "pressed"]
+      },
+      {
+        "name": "shop-sheet",
+        "family": "overlay",
+        "role": "Handles size, price, save, and shopping actions for the selected garment.",
+        "supports_primitive": "contextual shop sheet",
+        "decision_reason": "Commerce must stay attached to one outfit item instead of taking over the home screen.",
+        "states": ["collapsed", "expanded"]
+      },
+      {
+        "name": "shop-sheet-item",
+        "family": "content",
+        "role": "Summarizes the currently selected garment inside the sheet.",
+        "supports_primitive": "contextual shop sheet",
+        "decision_reason": "The sheet needs garment memory and fit data before purchase actions.",
+        "states": ["default"]
+      },
+      {
+        "name": "size-chip-group",
+        "family": "input",
+        "role": "Allows compact size choice inside the contextual sheet.",
+        "supports_primitive": "contextual shop sheet",
+        "decision_reason": "Size is necessary transaction input but must remain scoped to the sheet.",
+        "states": ["default", "selected", "disabled"]
+      },
+      {
+        "name": "save-look-action",
+        "family": "button",
+        "role": "Saves today's board or selected garment decision.",
+        "supports_primitive": "save look action",
+        "decision_reason": "Saving the outfit is the success action, not a generic CTA.",
+        "states": ["default", "pressed", "saved"]
+      },
+      {
+        "name": "bottom-tab-bar",
+        "family": "navigation",
+        "role": "Keeps board, closet, saved looks, and candidates reachable in the thumb zone.",
+        "supports_primitive": "mobile outfit decision surface",
+        "decision_reason": "Primary navigation belongs at the bottom for this one-handed mobile task.",
+        "states": ["default", "active"]
+      },
+      {
+        "name": "saved-state-toast",
+        "family": "feedback",
+        "role": "Confirms that the current outfit board has been saved.",
+        "supports_primitive": "save look action",
+        "decision_reason": "A small confirmation is enough; the success state should not become a modal.",
+        "states": ["hidden", "visible"]
+      }
+    ],
+    "rejected_components": [
+      {
+        "name": "product-grid",
+        "family": "commerce",
+        "reason": "Would turn the first screen into a shopping catalog instead of an outfit decision."
+      },
+      {
+        "name": "product-card",
+        "family": "commerce",
+        "reason": "Too generic for a closet-aware garment layer."
+      },
+      {
+        "name": "hero-cta-group",
+        "family": "marketing",
+        "reason": "The app opens on a task surface, not a marketing hero."
+      },
+      {
+        "name": "dashboard-card",
+        "family": "data-display",
+        "reason": "Fashion rationale should not look like operational metrics."
+      },
+      {
+        "name": "filter-chip",
+        "family": "input",
+        "reason": "Generic filters are replaced by signal-node decisions."
+      },
+      {
+        "name": "modal-dialog",
+        "family": "overlay",
+        "reason": "Item shopping belongs in a contextual bottom sheet."
+      },
+      {
+        "name": "command-palette",
+        "family": "overlay",
+        "reason": "The mobile fashion flow is visual and thumb-led, not keyboard-command-led."
+      }
+    ]
+  },
   "reference_preferences": {
     "prioritize_sources_containing": [
       "mobile fashion curation",

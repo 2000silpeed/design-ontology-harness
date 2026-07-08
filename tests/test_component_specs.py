@@ -220,6 +220,110 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
         self.assertEqual(reference_systems, {"astryx", "geist"})
         self.assertIn("ghost-button", inventory["reference_baseline"]["contextual_not_baseline"])
 
+    def test_authored_component_decision_is_the_implementation_source_of_truth(self) -> None:
+        brand_profile = {
+            "brand_name": "Foldline",
+            "brand_keywords": ["editorial", "personal", "tactile", "decisive"],
+            "anti_keywords": ["generic", "dashboard-like", "infinite-card-wall"],
+            "product_summary": "Korean-first mobile fashion curation app for shoppable outfit decisions.",
+            "application_concept": {
+                "primary_job": "사용자가 오늘의 상황과 취향 신호를 바탕으로 하나의 착장 보드를 확정한다.",
+                "domain_objects": ["daily brief", "signal spine", "look board", "garment item"],
+            },
+            "layout_skeleton": {
+                "composition": "signal spine plus look board with contextual shop sheet",
+                "avoid_layouts": [
+                    "generic hero plus card grid",
+                    "uniform product card wall",
+                    "dashboard metric cards",
+                ],
+            },
+            "product_primitives": [
+                "taste signal chip rail",
+                "outfit edit canvas",
+                "shop drawer",
+            ],
+            "component_decision": {
+                "mode": "llm-authored",
+                "rationale": "Implement the outfit decision surface directly.",
+                "coverage_families": ["button", "input", "navigation", "feedback", "overlay"],
+                "core_components": [
+                    {
+                        "name": "daily-brief",
+                        "family": "content",
+                        "role": "Summarizes today's styling context.",
+                        "supports_primitive": "daily style brief",
+                        "decision_reason": "This replaces generic filter chips.",
+                        "states": ["default", "adjusting"],
+                    },
+                    {
+                        "name": "signal-spine",
+                        "family": "input",
+                        "role": "Shows active recommendation signals vertically.",
+                        "supports_primitive": "vertical signal spine",
+                        "decision_reason": "This replaces a generic chip rail.",
+                        "states": ["default", "active"],
+                    },
+                    {
+                        "name": "look-board",
+                        "family": "content",
+                        "role": "Shows the selected outfit decision.",
+                        "supports_primitive": "single look board",
+                        "decision_reason": "This replaces ecommerce product cards.",
+                        "states": ["default", "selected"],
+                    },
+                    {
+                        "name": "shop-sheet",
+                        "family": "overlay",
+                        "role": "Handles selected garment commerce in context.",
+                        "supports_primitive": "contextual shop sheet",
+                        "decision_reason": "This replaces a generic modal or catalog page.",
+                        "states": ["collapsed", "expanded"],
+                    },
+                ],
+                "rejected_components": [
+                    {
+                        "name": "product-grid",
+                        "family": "commerce",
+                        "reason": "Conflicts with the authored look-board skeleton.",
+                    }
+                ],
+            },
+            "_spec_components": [
+                {"name": "product-grid", "family": "commerce", "source": "spec"},
+                {"name": "hero-cta-group", "family": "button", "source": "spec"},
+                {"name": "data-table", "family": "data-display", "source": "spec"},
+            ],
+        }
+        blueprint = {
+            "component_strategy": {
+                "required_component_families": ["button", "input", "navigation", "feedback", "overlay"],
+                "product_primitives": brand_profile["product_primitives"],
+            },
+        }
+
+        inventory = build_component_inventory(brand_profile, blueprint)
+        inventory_names = [item["name"] for item in inventory["components"]]
+        coverage_names = {item["name"] for item in inventory["baseline_coverage_components"]}
+        rejected_names = {item["name"] for item in inventory["rejected_components"]}
+
+        self.assertEqual(
+            inventory["decision_model"]["implementation_basis"],
+            "llm-authored-component-decision",
+        )
+        self.assertEqual(inventory["decision_model"]["baseline_policy"], "coverage-only")
+        self.assertFalse(inventory["decision_model"]["fallback_allowed"])
+        self.assertEqual(
+            inventory_names,
+            ["daily-brief", "signal-spine", "look-board", "shop-sheet"],
+        )
+        self.assertFalse({"taste-signal-rail", "outfit-edit-canvas", "shop-drawer"} & set(inventory_names))
+        self.assertFalse({"hero-cta-group", "data-table"} & set(inventory_names))
+        self.assertEqual(inventory["advanced_recommendations"], [])
+        self.assertTrue({"primary-button", "segmented-control", "toast"} <= coverage_names)
+        self.assertEqual(rejected_names, {"product-grid"})
+        self.assertEqual(inventory["component_decision"]["component_count"], 4)
+
     def test_product_specific_primitives_keep_baseline_as_coverage_only(self) -> None:
         brand_profile = {
             "brand_name": "ThreadSense",
@@ -274,7 +378,7 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
         rejected_names = {item["name"] for item in inventory["rejected_components"]}
         advanced_names = {item["name"] for item in inventory["advanced_recommendations"]}
 
-        self.assertEqual(inventory["decision_model"]["implementation_basis"], "product-primitives-first")
+        self.assertEqual(inventory["decision_model"]["implementation_basis"], "legacy-product-primitive-fallback")
         self.assertEqual(inventory["decision_model"]["baseline_policy"], "coverage-only")
         self.assertTrue({
             "taste-signal-rail",

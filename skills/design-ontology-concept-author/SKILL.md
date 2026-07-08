@@ -14,6 +14,7 @@ The LLM must read the product idea, existing `spec.md`, and `brand_profile.json`
 - `application_concept`
 - `layout_skeleton`
 - `design_differentiation`
+- `component_decision`
 - supporting `product_primitives`, `visual_keywords`, and `interaction_keywords`
 
 ## Workflow
@@ -36,17 +37,23 @@ The LLM must read the product idea, existing `spec.md`, and `brand_profile.json`
    - Name what this product must not collapse into.
    - Add one or more signature structural moves tied to the workflow.
    - Add repetition risks the implementation agent should actively avoid.
-5. Patch `brand_profile.json`.
-6. Run or recommend:
+5. Author the actual implementation components:
+   - Write `component_decision.core_components` directly as the calling LLM.
+   - Do not rely on hidden primitive-to-component mapping.
+   - Use Astryx/Geist only to check state coverage and anatomy completeness, not to decide the app-specific component set.
+   - Include rejected or deferred generic components when they are tempting but wrong for the product skeleton.
+6. Patch `brand_profile.json`.
+7. Run or recommend:
 
 ```bash
 uv run design-ontology run-project --project-dir projects/<name> --kb-dir kb/default
 ```
 
-7. Inspect the generated output:
+8. Inspect the generated output:
    - `build/system/blueprint/design_system_blueprint.json`
    - `build/system/blueprint/system_spec.md`
    - `build/system/blueprint/token_schema.json`
+   - `build/system/blueprint/component_inventory.json`
 
 ## Output Contract
 
@@ -75,6 +82,22 @@ Minimum shape:
     "must_feel_different_from": [],
     "signature_moves": [],
     "repetition_risks": []
+  },
+  "component_decision": {
+    "mode": "llm-authored",
+    "rationale": "",
+    "coverage_families": [],
+    "core_components": [
+      {
+        "name": "",
+        "family": "",
+        "role": "",
+        "supports_primitive": "",
+        "decision_reason": "",
+        "states": []
+      }
+    ],
+    "rejected_components": []
   }
 }
 ```
@@ -82,6 +105,7 @@ Minimum shape:
 ## Judgment Rules
 
 - Do not pick a preset.
+- Do not let `product_primitives` choose the final implementation components by rule. The LLM-authored `component_decision.core_components` is the source of truth.
 - Do not solve sameness by adding more colors, gradients, shadows, or card variants.
 - Do not make every tool a dashboard. A dashboard is valid only when monitoring metrics is the user's real first job.
 - Do not open with a marketing hero unless the product is actually a landing page.
@@ -97,4 +121,5 @@ Before finishing, answer these internally:
 - Can an implementation agent tell what must appear above the fold? If no, rewrite `first_screen_contract`.
 - Are `signature_moves` structural rather than decorative? If no, rewrite them.
 - Did `product_primitives` follow from domain objects and jobs? If no, revise them.
+- Did `component_decision.core_components` read like a direct product judgment rather than a taxonomy lookup? If no, rewrite it.
 - Could the result still become a generic hero plus card grid or uniform dashboard? If yes, add that failure to `avoid_layouts` and `repetition_risks`.

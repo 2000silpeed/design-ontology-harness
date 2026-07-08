@@ -88,6 +88,44 @@ Weak:
 - `Use rounded cards.`
 - `Add microinteractions.`
 
+## `component_decision`
+
+```json
+{
+  "mode": "llm-authored",
+  "rationale": "Why this app needs this component set.",
+  "coverage_families": ["button", "input", "navigation", "feedback", "overlay"],
+  "core_components": [
+    {
+      "name": "domain-specific-component-name",
+      "family": "content | input | navigation | overlay | feedback | button | foundation | custom family",
+      "role": "What this component does in the first workflow.",
+      "supports_primitive": "The product primitive it serves.",
+      "decision_reason": "Why this is implemented instead of a generic UI component.",
+      "states": ["default", "selected", "empty", "loading"]
+    }
+  ],
+  "rejected_components": [
+    {
+      "name": "generic-product-grid",
+      "family": "commerce",
+      "reason": "Conflicts with the authored skeleton."
+    }
+  ]
+}
+```
+
+`component_decision.core_components` is the source of truth for actual implementation components. `product_primitives` are product-language inputs; they must not silently choose implementation components through a rule table.
+
+Write components that sound native to the product skeleton:
+
+- `case-evidence-strip`, not `card`
+- `look-board-pin`, not `product-card`
+- `source-confidence-row`, not `badge`
+- `brief-adjustment-sheet`, not `modal`
+
+Use Astryx/Geist only for coverage checks: required states, accessibility expectations, anatomy completeness, overlays, focus handling, and fallback baseline behavior.
+
 ## Supporting Fields
 
 Update these if they are still generic:
@@ -121,6 +159,7 @@ Reject or revise the profile if:
 
 - `first_screen_contract` could apply to five unrelated apps.
 - `signature_moves` describe visual styling instead of screen structure.
+- `component_decision.core_components` is missing, generic, or copied from a primitive mapping.
 - `domain_objects` are missing or generic (`data`, `content`, `users`) when the product has specific nouns.
 - `avoid_layouts` does not mention the failure pattern the user complained about.
 - `product_primitives` is only generic UI components.

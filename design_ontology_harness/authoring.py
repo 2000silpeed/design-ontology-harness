@@ -615,6 +615,44 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
         if not any(existing.get("name") == component_name for existing in all_components):
             all_components.append(component)
 
+    authored_decision = _authored_component_decision(brand_profile)
+    if authored_decision.get("components"):
+        coverage_families = _authored_coverage_families(
+            authored_decision,
+            required_families,
+        )
+        baseline_coverage_components = _baseline_coverage_components(coverage_families)
+        for component in authored_decision["components"]:
+            append_component(component)
+        rejected_components.extend(authored_decision.get("rejected_components", []))
+
+        return {
+            "families": sorted(
+                families.values(),
+                key=lambda item: (item["priority"] != "high", item["family"]),
+            ),
+            "components": all_components,
+            "decision_model": {
+                "implementation_basis": "llm-authored-component-decision",
+                "baseline_policy": "coverage-only",
+                "authored": True,
+                "fallback_allowed": False,
+            },
+            "component_decision": {
+                "mode": authored_decision.get("mode", "llm-authored"),
+                "rationale": authored_decision.get("rationale", ""),
+                "coverage_families": coverage_families,
+                "component_count": len(all_components),
+                "source": "brand_profile.component_decision",
+            },
+            "baseline_coverage_components": baseline_coverage_components,
+            "rejected_components": rejected_components,
+            "candidate_component_archetypes": candidate_archetypes,
+            "reference_baseline": reference_baseline_summary(),
+            "advanced_component_catalog": catalog_entries(),
+            "advanced_recommendations": [],
+        }
+
     if not product_specific_context:
         for family in required_families:
             ensure_family(family)
@@ -815,11 +853,13 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
         "components": all_components,
         "decision_model": {
             "implementation_basis": (
-                "product-primitives-first" if product_specific_context else "baseline-fallback"
+                "legacy-product-primitive-fallback" if product_specific_context else "baseline-fallback"
             ),
             "baseline_policy": (
                 "coverage-only" if product_specific_context else "implementation-fallback"
             ),
+            "authored": False,
+            "fallback_allowed": True,
         },
         "baseline_coverage_components": baseline_coverage_components,
         "rejected_components": rejected_components,
@@ -828,6 +868,139 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
         "advanced_component_catalog": catalog_entries(),
         "advanced_recommendations": accepted_advanced_recommendations,
     }
+
+
+def _authored_component_decision(brand_profile: dict) -> dict:
+    decision = brand_profile.get("component_decision") or brand_profile.get("component_decisions")
+    if not isinstance(decision, dict):
+        return {}
+
+    components: list[dict] = []
+    for entry in decision.get("core_components") or decision.get("components") or []:
+        component = _normalise_authored_component(entry)
+        if component:
+            components.append(component)
+
+    rejected_components: list[dict] = []
+    for entry in (
+        decision.get("rejected_components")
+        or decision.get("deferred_components")
+        or decision.get("excluded_components")
+        or []
+    ):
+        rejected = _normalise_authored_rejection(entry)
+        if rejected:
+            rejected_components.append(rejected)
+
+    return {
+        "mode": decision.get("mode", "llm-authored"),
+        "rationale": decision.get("rationale", ""),
+        "coverage_families": _string_list(
+            decision.get("coverage_families")
+            or decision.get("baseline_coverage_families")
+            or decision.get("reference_coverage_families")
+            or []
+        ),
+        "components": components,
+        "rejected_components": rejected_components,
+    }
+
+
+def _normalise_authored_component(entry) -> dict:
+    if isinstance(entry, str):
+        raw = {"name": entry}
+    elif isinstance(entry, dict):
+        raw = dict(entry)
+    else:
+        return {}
+
+    name = raw.get("name")
+    if not isinstance(name, str) or not name.strip():
+        return {}
+
+    component_name = name.strip()
+    family = raw.get("family") or classify_component_family(component_name)
+    supports_primitive = (
+        raw.get("supports_primitive")
+        or raw.get("primitive")
+        or raw.get("supports")
+        or raw.get("product_primitive")
+        or "llm-authored component decision"
+    )
+    component = {
+        "name": component_name,
+        "family": family,
+        "role": raw.get("role", ""),
+        "supports_primitive": supports_primitive,
+        "decision_layer": "llm-authored-core",
+        "decision_reason": raw.get("decision_reason") or raw.get("reason", ""),
+        "status": raw.get("status", "planned"),
+        "source": "llm-authored-component-decision",
+        "must_document": raw.get("must_document")
+        or ["anatomy", "states", "content rules", "accessibility", "dos and donts"],
+    }
+
+    for key in (
+        "states",
+        "anatomy",
+        "content_rules",
+        "accessibility_notes",
+        "token_notes",
+        "usage_guidance",
+        "avoid_when",
+        "pairs_with",
+        "matched_signals",
+    ):
+        if raw.get(key):
+            component[key] = raw[key]
+    return component
+
+
+def _normalise_authored_rejection(entry) -> dict:
+    if isinstance(entry, str):
+        raw = {"name": entry}
+    elif isinstance(entry, dict):
+        raw = dict(entry)
+    else:
+        return {}
+
+    name = raw.get("name")
+    if not isinstance(name, str) or not name.strip():
+        return {}
+
+    component_name = name.strip()
+    return {
+        "name": component_name,
+        "family": raw.get("family") or classify_component_family(component_name),
+        "source": raw.get("source", "llm-authored-component-decision"),
+        "reason": raw.get("reason", "excluded by authored component decision"),
+        "status": raw.get("status", "rejected-by-llm-decision"),
+    }
+
+
+def _authored_coverage_families(authored_decision: dict, required_families: list[str]) -> list[str]:
+    coverage_families = authored_decision.get("coverage_families") or required_families
+    return _dedupe_strings(coverage_families)
+
+
+def _string_list(value) -> list[str]:
+    if not isinstance(value, list):
+        return []
+    return [item.strip() for item in value if isinstance(item, str) and item.strip()]
+
+
+def _dedupe_strings(values) -> list[str]:
+    deduped: list[str] = []
+    seen: set[str] = set()
+    for item in values or []:
+        if not isinstance(item, str):
+            continue
+        normalized = item.strip()
+        if not normalized or normalized in seen:
+            continue
+        deduped.append(normalized)
+        seen.add(normalized)
+    return deduped
 
 
 def _baseline_coverage_components(families: list[str]) -> list[dict]:
@@ -1380,6 +1553,13 @@ def build_system_spec_markdown(
         for family in component_inventory.get("families", [])
     ) or "- No implementation families selected."
     decision_model = component_inventory.get("decision_model") or {}
+    component_decision = component_inventory.get("component_decision") or {}
+    component_decision_line = (
+        f"mode={component_decision.get('mode', 'none')}; "
+        f"source={component_decision.get('source', 'none')}; "
+        f"component_count={component_decision.get('component_count', 0)}; "
+        f"rationale={component_decision.get('rationale', '') or 'not provided'}"
+    )
     baseline_coverage_lines = "\n".join(
         f"- **{item.get('name')}** ({item.get('family')}): {item.get('role')}"
         for item in component_inventory.get("baseline_coverage_components", [])[:16]
@@ -1747,6 +1927,7 @@ def build_system_spec_markdown(
 
 - **Product primitives**: {', '.join(brand_profile.get('product_primitives', []))}
 - **Decision model**: implementation_basis={decision_model.get('implementation_basis', 'unknown')}; baseline_policy={decision_model.get('baseline_policy', 'unknown')}
+- **Authored component decision**: {component_decision_line}
 - **Implementation families**: {', '.join(item['family'] for item in component_inventory.get('families', [])) or 'none'}
 - **Reference baseline**: {reference_baseline_systems}
 - **Reference absorption rule**: {reference_baseline_policy}
