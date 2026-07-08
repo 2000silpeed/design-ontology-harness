@@ -187,7 +187,7 @@
         >
           <div class="decision-hero danger">
             <div>
-              <p class="eyebrow">필요 데이터 확인 결과</p>
+              <p class="eyebrow">필요 데이터 검토</p>
               <h2 id="failed-title">판단 불가</h2>
               <p id="failed-subtitle">필수 데이터가 부족합니다.</p>
             </div>
@@ -201,6 +201,23 @@
               이 두 정보가 없으면 EKOS는 운송사 확인이 최신인지, 승인 준비를 누구에게
               넘겨야 하는지 판단할 수 없습니다.
             </p>
+          </div>
+
+          <div class="status-summary-grid" data-model="required-data-summary">
+            <article class="status-summary-card">
+              <span>결론</span>
+              <strong id="failed-summary-conclusion">판단 불가</strong>
+            </article>
+            <article class="status-summary-card">
+              <span>이유</span>
+              <strong id="failed-summary-reason">필수 데이터 2개 부족</strong>
+            </article>
+            <article class="status-summary-card wide">
+              <span>업무 영향</span>
+              <strong id="failed-business-impact">
+                승인 준비용 Correction Workflow를 만들 수 없습니다.
+              </strong>
+            </article>
           </div>
 
           <div class="panel source-panel" data-runtime-surface="table-view" data-model="required-data-failed">
@@ -264,6 +281,15 @@
             <span class="status-badge ready">데이터 확인 완료</span>
           </div>
 
+          <div class="plain-explanation review-note-panel">
+            <strong>주의</strong>
+            <p id="passed-warning">
+              데이터가 충분하다는 뜻이지, 업무가 승인되었다는 뜻은 아닙니다.
+            </p>
+          </div>
+
+          <div class="status-summary-grid" id="passed-summary-grid" data-model="passed-data-summary"></div>
+
           <div class="panel source-panel" data-runtime-surface="table-view" data-model="required-data-passed">
             <div class="panel-header">
               <div>
@@ -290,6 +316,10 @@
             <article class="manager-card" data-model="decision-report">
               <p class="eyebrow">판단 결과</p>
               <h2 id="decision-primary-object">Delivery 80001241</h2>
+              <div class="conclusion-strip">
+                <span>결론</span>
+                <strong id="decision-conclusion">추천만 가능</strong>
+              </div>
               <div class="decision-summary-grid">
                 <div class="metric allowed">
                   <span>현재 해도 되는 일</span>
@@ -309,6 +339,7 @@
                 <p id="why-blocked-copy">
                   운송사 확인 정보가 오래되었고, 현재 확인이 필요합니다. 또한 최종 검토가 완료되지 않았습니다.
                 </p>
+                <ol id="decision-reasons-list" class="numbered-list"></ol>
               </div>
               <div class="action-row">
                 <button class="secondary-button" type="button" data-go="evidence-trace">
@@ -336,6 +367,18 @@
             </aside>
           </div>
 
+          <div class="decision-card-grid" id="decision-card-grid" data-model="decision-operational-cards"></div>
+
+          <section class="panel timeline-panel" data-runtime-surface="audit-timeline">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">상태 이력</p>
+                <h3>케이스 타임라인</h3>
+              </div>
+            </div>
+            <ol class="timeline-list" id="decision-timeline"></ol>
+          </section>
+
           <div class="report-sections" id="report-sections"></div>
         </section>
 
@@ -349,8 +392,8 @@
         >
           <div class="screen-heading">
             <div>
-              <p class="eyebrow">근거 및 정책 확인</p>
-              <h2>감사/검토 담당자를 위한 상세 근거</h2>
+              <p class="eyebrow">근거 및 정책 상세</p>
+              <h2>감사/검토 담당자를 위한 상세 화면</h2>
               <p class="lead">
                 이 화면은 감사/검토 담당자를 위한 상세 근거입니다. 운영 담당자는 먼저
                 판단 결과 화면을 보면 됩니다.
@@ -367,7 +410,7 @@
               <div class="panel-header">
                 <div>
                   <p class="eyebrow">사용한 근거</p>
-                  <h3>데이터가 판단에 영향을 준 방식</h3>
+                  <h3>생성된 근거</h3>
                 </div>
               </div>
               <div id="evidence-list" class="evidence-list" data-model="evidence-objects"></div>
@@ -390,7 +433,7 @@
               <strong>판단 경로</strong>
               <span>데이터 출처, 최신성, 정책 기준, 승인 기준이 함께 검토됩니다.</span>
             </figcaption>
-            <div class="visual-flow compact-flow" aria-hidden="true">
+            <div class="visual-flow compact-flow" id="trace-visual-flow" aria-hidden="true">
               <span>운송사 확인</span>
               <span>최신성 확인</span>
               <span>정책 기준</span>
@@ -407,6 +450,27 @@
               </div>
             </div>
             <div id="policy-authority" class="policy-grid"></div>
+          </div>
+
+          <div class="trace-table-grid">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">사용한 데이터</p>
+                  <h3>데이터 출처와 최신성</h3>
+                </div>
+              </div>
+              <div id="used-data-table" class="ops-table" data-model="used-data"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">이력</p>
+                  <h3>상태 변경 기록</h3>
+                </div>
+              </div>
+              <div id="trace-history-table" class="ops-table" data-model="status-history"></div>
+            </section>
           </div>
         </section>
 
@@ -437,6 +501,10 @@
                 <span class="status-badge review">검토 필요</span>
               </div>
               <dl class="review-meta" id="review-meta"></dl>
+              <section>
+                <h4>검토 전 확인할 항목</h4>
+                <ul class="check-list" id="review-checklist"></ul>
+              </section>
               <label class="review-note">
                 <span>담당자 메모</span>
                 <textarea id="review-note" rows="5"></textarea>
@@ -447,6 +515,10 @@
               <p class="eyebrow">요청 가능한 조치</p>
               <h3>검토 담당자 조치</h3>
               <div id="review-actions" class="review-actions"></div>
+              <section class="review-history">
+                <h4>상태 이력</h4>
+                <ol class="timeline-list compact" id="review-history-list"></ol>
+              </section>
             </aside>
           </div>
         </section>

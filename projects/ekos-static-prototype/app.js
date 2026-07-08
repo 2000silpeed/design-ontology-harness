@@ -98,16 +98,38 @@ function renderWorkflows() {
       const futureClass = workflow.status === "configured" ? "" : "future";
 
       return `
-        <article class="workflow-card ${futureClass}" data-model="workflow" data-item-id="${escapeHtml(workflow.workflow_id)}">
+        <article
+          class="workflow-card ${futureClass}"
+          data-model="workflow"
+          data-item-id="${escapeHtml(workflow.workflow_id)}"
+          data-clickable="${workflow.status === "configured" ? "true" : "false"}"
+          tabindex="${workflow.status === "configured" ? "0" : "-1"}"
+        >
           <div>
             <p class="eyebrow">${escapeHtml(workflow.category_label || workflow.workflow_id)}</p>
             <h3>${escapeHtml(workflow.name)}</h3>
-            <p>${escapeHtml(workflow.description)}</p>
+            <p>${escapeHtml(workflow.review_purpose || workflow.description)}</p>
           </div>
+          <section>
+            <h4>판단 가능한 작업</h4>
+            <ul class="mini-list">
+              ${(workflow.decision_actions || [workflow.result_summary])
+                .map((item) => `<li>${escapeHtml(item)}</li>`)
+                .join("")}
+            </ul>
+          </section>
+          <section>
+            <h4>필요 데이터 묶음</h4>
+            <ul class="field-list">
+              ${(workflow.required_data_labels || workflow.required_source_package)
+                .map((item) => `<li>${escapeHtml(item)}</li>`)
+                .join("")}
+            </ul>
+          </section>
           <dl class="workflow-meta">
-            <div><dt>필요 데이터</dt><dd>${workflow.required_source_package.length}개 항목</dd></div>
-            <div><dt>업무 담당</dt><dd>${escapeHtml(workflow.process_owner)}</dd></div>
-            <div><dt>결과</dt><dd>${escapeHtml(workflow.result_summary)}</dd></div>
+            <div><dt>담당 조직</dt><dd>${escapeHtml(workflow.process_owner)}</dd></div>
+            <div><dt>설정 버전</dt><dd>${escapeHtml(workflow.config_version)}</dd></div>
+            <div><dt>현재 상태</dt><dd>${escapeHtml(workflow.status_label)}</dd></div>
           </dl>
           <div class="workflow-card-footer">
             <span class="status-badge ${statusClass}">${escapeHtml(workflow.status_label)}</span>
@@ -122,6 +144,33 @@ function renderWorkflows() {
     .join("");
 
   bindNavigation();
+  bindWorkflowCards();
+}
+
+function bindWorkflowCards() {
+  document.querySelectorAll(".workflow-card[data-clickable='true']").forEach((card) => {
+    if (card.dataset.bound === "true") {
+      return;
+    }
+    card.dataset.bound = "true";
+    card.addEventListener("click", (event) => {
+      if (event.target.closest("button")) {
+        return;
+      }
+      state.selectedWorkflow = card.dataset.itemId;
+      renderSelectedWorkflow();
+      setScreen("case-input");
+    });
+    card.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") {
+        return;
+      }
+      event.preventDefault();
+      state.selectedWorkflow = card.dataset.itemId;
+      renderSelectedWorkflow();
+      setScreen("case-input");
+    });
+  });
 }
 
 function renderSelectedWorkflow() {
@@ -199,11 +248,20 @@ function renderSourceTables() {
   document.querySelector("#failed-missing-title").textContent = flow.failed.missing_title;
   document.querySelector("#failed-missing-summary").textContent = flow.failed.missing_summary;
   document.querySelector("#failed-missing-reason").textContent = flow.failed.missing_reason;
+  document.querySelector("#failed-summary-conclusion").textContent =
+    flow.failed.conclusion || flow.failed.title;
+  document.querySelector("#failed-summary-reason").textContent =
+    flow.failed.reason || flow.failed.subtitle;
+  document.querySelector("#failed-business-impact").textContent =
+    flow.failed.business_impact || flow.failed.missing_reason;
   document.querySelector("#missing-title").textContent = flow.failed.missing_screen_title;
   document.querySelector("#missing-lead").textContent = flow.failed.missing_screen_lead;
   document.querySelector("#passed-title").textContent = flow.passed.title;
   document.querySelector("#passed-subtitle").textContent = flow.passed.subtitle;
   document.querySelector("#passed-source-heading").textContent = flow.passed.source_heading;
+  document.querySelector("#passed-warning").textContent =
+    flow.passed.warning || "데이터가 충분하다는 뜻이지, 업무가 승인되었다는 뜻은 아닙니다.";
+  renderPassedSummary(flow.passed);
 
   renderAliasRows("#failed-source-table", flow.failed.aliases);
   renderAliasRows("#passed-source-table", flow.passed.aliases);
@@ -211,19 +269,45 @@ function renderSourceTables() {
 
 function renderAliasRows(selector, aliases) {
   const target = document.querySelector(selector);
-  target.innerHTML = aliases
+  target.innerHTML = `
+    <div class="source-row source-header" aria-hidden="true">
+      <strong>데이터 항목</strong>
+      <strong>상태</strong>
+      <strong>업무 영향</strong>
+      <strong>담당</strong>
+      <strong>다음 조치</strong>
+    </div>
+    ${aliases
     .map((alias) => {
-      const resultClass = normalizeStatusClass(alias.result);
       const readinessClass = normalizeStatusClass(alias.readiness);
       return `
         <article class="source-row" data-model="source-alias" data-item-id="${escapeHtml(alias.alias)}">
           <strong>${escapeHtml(alias.label || alias.alias)}</strong>
           <span class="status-badge ${readinessClass}">${escapeHtml(alias.readiness_label || alias.readiness)}</span>
-          <p>${escapeHtml(alias.why_it_matters)}</p>
-          <span class="status-badge ${resultClass}">${escapeHtml(alias.result_label || alias.result)}</span>
+          <p>${escapeHtml(alias.business_impact || alias.why_it_matters)}</p>
+          <p>${escapeHtml(alias.owner || "업무 담당")}</p>
+          <p>${escapeHtml(alias.next_action || alias.result_label || alias.result)}</p>
         </article>
       `;
     })
+    .join("")}
+  `;
+}
+
+function renderPassedSummary(passed) {
+  const target = document.querySelector("#passed-summary-grid");
+  const items = passed.summary_cards || [
+    ["데이터 완성도", "필수 항목 확인"],
+    ["승인 상태", "승인 아님"],
+    ["남은 조치", "담당자 검토 필요"]
+  ];
+  target.innerHTML = items
+    .map((item) => `
+      <article class="status-summary-card">
+        <span>${escapeHtml(item[0])}</span>
+        <strong>${escapeHtml(item[1])}</strong>
+      </article>
+    `)
     .join("");
 }
 
@@ -252,6 +336,10 @@ function renderMissingSources() {
           </ul>
         </section>
         <div class="workflow-meta">
+          <div><dt>막히는 작업</dt><dd>${escapeHtml(source.blocked_action || "승인 준비 작업")}</dd></div>
+          <div><dt>적용 후 결과</dt><dd>${escapeHtml(source.expected_result || "판단 가능 여부를 다시 확인합니다.")}</dd></div>
+        </div>
+        <div class="workflow-meta">
           <div><dt>담당 권장</dt><dd>${escapeHtml(source.suggested_owner)}</dd></div>
           <div><dt>신뢰 기준</dt><dd>${escapeHtml(source.trust_level)}</dd></div>
         </div>
@@ -272,10 +360,17 @@ function renderDecisionReport() {
   const manager = report.manager_view;
 
   document.querySelector("#decision-primary-object").textContent = flow.case.primary_object;
+  document.querySelector("#decision-conclusion").textContent =
+    manager.conclusion || manager.current_allowed_action;
   document.querySelector("#allowed-action").textContent = manager.current_allowed_action;
   document.querySelector("#blocked-action").textContent = manager.blocked_action;
   document.querySelector("#why-blocked-copy").textContent = manager.why_blocked;
   document.querySelector("#next-action-copy").textContent = manager.required_next_action;
+  document.querySelector("#decision-reasons-list").innerHTML = (manager.reasons || [])
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join("");
+  renderDecisionCards(report.cards || []);
+  renderTimeline("#decision-timeline", flow.status_history || []);
 
   const labels = {
     allows_now: "현재 허용되는 일",
@@ -298,6 +393,29 @@ function renderDecisionReport() {
     .join("");
 }
 
+function renderDecisionCards(cards) {
+  const target = document.querySelector("#decision-card-grid");
+  const fallbackCards = [
+    {
+      title: "업무 영향",
+      body: "승인 준비 단계로 넘기기 전에 추가 확인이 필요합니다."
+    },
+    {
+      title: "검토 상태",
+      body: "담당자 검토 기록이 없어 검토 필요 상태입니다."
+    }
+  ];
+  target.innerHTML = (cards.length ? cards : fallbackCards)
+    .map((card) => `
+      <article class="decision-info-card">
+        <p class="eyebrow">${escapeHtml(card.category || "검토 정보")}</p>
+        <h3>${escapeHtml(card.title)}</h3>
+        <p>${escapeHtml(card.body)}</p>
+      </article>
+    `)
+    .join("");
+}
+
 function renderEvidenceTrace() {
   const trace = getSelectedFlow().trace;
   const evidenceList = document.querySelector("#evidence-list");
@@ -306,7 +424,10 @@ function renderEvidenceTrace() {
     .map((evidence) => `
       <article class="evidence-item" data-model="evidence-object" data-item-id="${escapeHtml(evidence.evidence_id)}">
         <header>
-          <h4>${escapeHtml(evidence.evidence_id)}</h4>
+          <div>
+            <p class="eyebrow">근거 ID · ${escapeHtml(evidence.evidence_id)}</p>
+            <h4>${escapeHtml(evidence.label || evidence.evidence_id)}</h4>
+          </div>
           <span class="status-badge ${normalizeStatusClass(evidence.freshness)}">${escapeHtml(evidence.freshness_label || evidence.freshness)}</span>
         </header>
         <p><strong>의미:</strong> ${escapeHtml(evidence.business_meaning)}</p>
@@ -318,6 +439,47 @@ function renderEvidenceTrace() {
 
   renderDefinitionList("#packet-provenance", trace.packet_provenance);
   renderPolicyAuthority(trace);
+  renderTraceVisual(trace.visual_flow || []);
+  renderTraceTables(trace, getSelectedFlow().status_history || []);
+}
+
+function renderTraceVisual(steps) {
+  const target = document.querySelector("#trace-visual-flow");
+  const fallback = ["데이터 확인", "최신성 확인", "정책 기준", "차단 사유", "검토 필요"];
+  target.innerHTML = (steps.length ? steps : fallback)
+    .map((step) => `<span>${escapeHtml(step)}</span>`)
+    .join("");
+}
+
+function renderTraceTables(trace, history) {
+  renderOpsTable("#used-data-table", ["데이터", "출처", "최신성", "판단 영향"], (trace.evidence_objects || []).map((item) => [
+    item.source_alias_label || item.source_alias,
+    item.source_kind,
+    item.freshness_label || item.freshness,
+    item.decision_impact
+  ]));
+  renderOpsTable("#trace-history-table", ["시각", "이력", "상태"], history.map((item) => [
+    item.time,
+    item.event,
+    item.status
+  ]));
+}
+
+function renderOpsTable(selector, headers, rows) {
+  const target = document.querySelector(selector);
+  const gridStyle = `grid-template-columns: repeat(${headers.length}, minmax(0, 1fr));`;
+  target.innerHTML = `
+    <div class="ops-table-row ops-table-header" style="${gridStyle}">
+      ${headers.map((header) => `<strong>${escapeHtml(header)}</strong>`).join("")}
+    </div>
+    ${rows
+      .map((row) => `
+        <div class="ops-table-row" style="${gridStyle}">
+          ${row.map((cell) => `<span>${escapeHtml(cell)}</span>`).join("")}
+        </div>
+      `)
+      .join("")}
+  `;
 }
 
 function renderPolicyAuthority(trace) {
@@ -354,9 +516,14 @@ function renderReviewRequest() {
   renderDefinitionList("#review-meta", {
     검토자: review.assigned_reviewer,
     필요_역할: review.required_role,
+    요청_사유: review.request_reason || "업무 판단 경계 확인",
     검토_상태: review.packet_status_label || review.packet_status,
     경계: review.boundary_copy
   });
+  document.querySelector("#review-checklist").innerHTML = (review.pre_review_checklist || [])
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join("");
+  renderTimeline("#review-history-list", flow.status_history || []);
 
   const actions = document.querySelector("#review-actions");
   actions.innerHTML = review.actions
@@ -368,6 +535,19 @@ function renderReviewRequest() {
         </header>
         <p>${escapeHtml(action.meaning)}</p>
       </article>
+    `)
+    .join("");
+}
+
+function renderTimeline(selector, items) {
+  const target = document.querySelector(selector);
+  target.innerHTML = items
+    .map((item) => `
+      <li>
+        <time>${escapeHtml(item.time)}</time>
+        <span>${escapeHtml(item.event)}</span>
+        <strong>${escapeHtml(item.status)}</strong>
+      </li>
     `)
     .join("");
 }

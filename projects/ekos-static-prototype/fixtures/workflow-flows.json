@@ -15,12 +15,16 @@
           "placeholder": "선택 입력"
         },
         {
+          "label": "Shipping Point",
+          "placeholder": "선택 입력"
+        },
+        {
           "label": "운송사",
           "placeholder": "선택 입력"
         },
         {
-          "label": "기준일",
-          "placeholder": "선택 입력"
+          "label": "기준 시각",
+          "value": "2026-07-08 09:40"
         }
       ],
       "guidance": {
@@ -35,6 +39,9 @@
       "failed": {
         "title": "판단 불가",
         "subtitle": "필수 데이터가 부족합니다.",
+        "conclusion": "판단 불가",
+        "reason": "필수 데이터 2개가 부족합니다.",
+        "business_impact": "이 상태에서는 승인 준비용 Correction Workflow를 만들 수 없습니다. 추천 또는 데이터 보강 요청까지만 가능합니다.",
         "source_heading": "Delivery 80001241 데이터 상태",
         "missing_title": "부족한 정보",
         "missing_summary": "운송사 최신 확인 정보와 승인 기준표가 없습니다.",
@@ -49,7 +56,10 @@
             "readiness_label": "일부 확인됨",
             "result": "pass",
             "result_label": "통과",
-            "why_it_matters": "검토할 Delivery와 현재 납품 상태를 확인합니다."
+            "why_it_matters": "검토할 Delivery와 현재 납품 상태를 확인합니다.",
+            "business_impact": "케이스 식별 가능",
+            "owner": "물류 운영",
+            "next_action": "확인 유지"
           },
           {
             "alias": "tracking_events",
@@ -58,7 +68,10 @@
             "readiness_label": "일부 확인됨",
             "result": "pass",
             "result_label": "통과",
-            "why_it_matters": "납품 지연이 발생한 배경 이벤트를 확인합니다."
+            "why_it_matters": "납품 지연이 발생한 배경 이벤트를 확인합니다.",
+            "business_impact": "지연 상태 확인 가능",
+            "owner": "물류 운영",
+            "next_action": "최신 여부 확인"
           },
           {
             "alias": "policies",
@@ -67,7 +80,10 @@
             "readiness_label": "수동 매핑됨",
             "result": "pass",
             "result_label": "통과",
-            "why_it_matters": "승인 준비 전에 현재 운송사 확인이 필요한지 판단합니다."
+            "why_it_matters": "승인 준비 전에 현재 운송사 확인이 필요한지 판단합니다.",
+            "business_impact": "현재 운송사 확인 필요",
+            "owner": "운영 정책 담당",
+            "next_action": "버전 확인"
           },
           {
             "alias": "carrier_updates",
@@ -76,7 +92,10 @@
             "readiness_label": "부족함",
             "result": "fail",
             "result_label": "실패",
-            "why_it_matters": "운송사 확인이 최신인지, 오래된 정보인지 판단합니다."
+            "why_it_matters": "운송사 확인이 최신인지, 오래된 정보인지 판단합니다.",
+            "business_impact": "최신 ETA 판단 불가",
+            "owner": "3PL / 운송 담당",
+            "next_action": "파일 업로드"
           },
           {
             "alias": "approval_matrix",
@@ -85,7 +104,10 @@
             "readiness_label": "부족함",
             "result": "fail",
             "result_label": "실패",
-            "why_it_matters": "누가 검토하고 승인 준비를 넘길 수 있는지 판단합니다."
+            "why_it_matters": "누가 검토하고 승인 준비를 넘길 수 있는지 판단합니다.",
+            "business_impact": "승인 준비 권한 판단 불가",
+            "owner": "운영 리더 / 감사",
+            "next_action": "기준표 등록"
           }
         ],
         "missing_sources": [
@@ -108,7 +130,9 @@
             ],
             "suggested_owner": "물류 운영 데이터 담당자",
             "upload_option": "운송사 확인 정보 적용",
-            "trust_level": "운영팀 또는 운송사 확인 출처"
+            "trust_level": "운영팀 또는 운송사 확인 출처",
+            "blocked_action": "승인 준비용 Correction Workflow 작성",
+            "expected_result": "운송사 확인이 최신인지 판단할 수 있습니다."
           },
           {
             "alias": "approval_matrix",
@@ -129,14 +153,35 @@
             ],
             "suggested_owner": "업무 오너 또는 통제 담당자",
             "upload_option": "승인 기준표 적용",
-            "trust_level": "통제팀이 관리한 기준"
+            "trust_level": "통제팀이 관리한 기준",
+            "blocked_action": "승인 준비 대상자와 권한 경계 판단",
+            "expected_result": "승인 준비 요청을 누구에게 넘길 수 있는지 판단할 수 있습니다."
           }
         ]
       },
       "passed": {
         "title": "판단 가능",
         "subtitle": "필수 항목이 확인되었습니다. 이제 판단 결과를 만들 수 있습니다.",
+        "warning": "데이터가 충분하다는 뜻이지, 업무가 승인되었다는 뜻은 아닙니다.",
         "source_heading": "보강 후 데이터 상태",
+        "summary_cards": [
+          [
+            "데이터 완성도",
+            "필수 5개 항목 확인"
+          ],
+          [
+            "오래된 데이터 여부",
+            "운송사 확인 정보 오래됨"
+          ],
+          [
+            "수동 매핑 여부",
+            "정책 기준 수동 매핑"
+          ],
+          [
+            "남은 검토",
+            "담당자 검토 필요"
+          ]
+        ],
         "aliases": [
           {
             "alias": "deliveries",
@@ -145,7 +190,10 @@
             "readiness_label": "일부 확인됨",
             "result": "pass",
             "result_label": "통과",
-            "why_it_matters": "검토할 Delivery와 현재 납품 상태를 확인합니다."
+            "why_it_matters": "검토할 Delivery와 현재 납품 상태를 확인합니다.",
+            "business_impact": "케이스 식별 가능",
+            "owner": "물류 운영",
+            "next_action": "확인 유지"
           },
           {
             "alias": "tracking_events",
@@ -154,7 +202,10 @@
             "readiness_label": "일부 확인됨",
             "result": "pass",
             "result_label": "통과",
-            "why_it_matters": "납품 지연이 발생한 배경 이벤트를 확인합니다."
+            "why_it_matters": "납품 지연이 발생한 배경 이벤트를 확인합니다.",
+            "business_impact": "지연 상태 확인 가능",
+            "owner": "물류 운영",
+            "next_action": "최신 여부 확인"
           },
           {
             "alias": "policies",
@@ -163,7 +214,10 @@
             "readiness_label": "확인됨",
             "result": "pass",
             "result_label": "통과",
-            "why_it_matters": "현재 운송사 확인이 필요한지 판단합니다."
+            "why_it_matters": "현재 운송사 확인이 필요한지 판단합니다.",
+            "business_impact": "현재 운송사 확인 필요",
+            "owner": "운영 정책 담당",
+            "next_action": "버전 확인"
           },
           {
             "alias": "carrier_updates",
@@ -172,7 +226,10 @@
             "readiness_label": "확인됨",
             "result": "pass",
             "result_label": "통과",
-            "why_it_matters": "운송사 확인이 최신인지, 오래된 정보인지 판단합니다."
+            "why_it_matters": "운송사 확인이 최신인지, 오래된 정보인지 판단합니다.",
+            "business_impact": "최신 ETA 확인 가능",
+            "owner": "3PL / 운송 담당",
+            "next_action": "오래된 사유 검토"
           },
           {
             "alias": "approval_matrix",
@@ -181,17 +238,48 @@
             "readiness_label": "확인됨",
             "result": "pass",
             "result_label": "통과",
-            "why_it_matters": "누가 검토하고 승인 준비를 넘길 수 있는지 판단합니다."
+            "why_it_matters": "누가 검토하고 승인 준비를 넘길 수 있는지 판단합니다.",
+            "business_impact": "승인 준비 권한 확인 가능",
+            "owner": "운영 리더 / 감사",
+            "next_action": "검토자 지정"
           }
         ]
       },
       "decision": {
         "manager_view": {
+          "conclusion": "추천만 가능",
           "current_allowed_action": "추천만 가능",
           "blocked_action": "승인 준비용 Correction Workflow 작성",
           "why_blocked": "운송사 확인 정보가 오래되었고, 현재 확인이 필요합니다. 또한 최종 검토가 완료되지 않았습니다.",
-          "required_next_action": "운송사 최신 확인을 요청하고 담당자 검토를 진행하세요."
+          "required_next_action": "운송사 최신 확인을 요청하고 담당자 검토를 진행하세요.",
+          "reasons": [
+            "운송사 확인 정보가 오래되었습니다.",
+            "정책상 최신 외부 확인이 필요합니다.",
+            "사람 검토가 아직 완료되지 않았습니다."
+          ]
         },
+        "cards": [
+          {
+            "category": "업무 영향",
+            "title": "승인 준비 보류",
+            "body": "고객 안내나 SAP 변경을 준비하기 전에 운송사 최신 ETA와 승인 기준 확인이 필요합니다."
+          },
+          {
+            "category": "근거 요약",
+            "title": "지연 상태 + 오래된 운송사 확인",
+            "body": "Delivery 지연은 확인됐지만 운송사 확인 시각이 기준 시간을 넘겨 현재 상태로 보기 어렵습니다."
+          },
+          {
+            "category": "정책 / 승인 기준",
+            "title": "최신 외부 확인 필요",
+            "body": "정책 기준 v1과 승인 기준표 v1에 따라 최신 운송사 확인 없이는 승인 준비가 막힙니다."
+          },
+          {
+            "category": "데이터 최신성",
+            "title": "운송사 확인 오래됨",
+            "body": "운송사 확인 정보가 기준 시간을 넘어 현재 상태로 보기 어렵습니다. 추천과 데이터 보강 요청까지만 가능합니다."
+          }
+        ],
         "sections": {
           "allows_now": [
             "운송사 지연 가능성을 추천할 수 있습니다.",
@@ -240,7 +328,8 @@
             "source_kind": "SAP 유사 자산",
             "freshness": "current",
             "freshness_label": "상태 확인됨",
-            "decision_impact": "검토 대상 케이스를 확인하지만, 이 정보만으로 승인 준비가 허용되지는 않습니다."
+            "decision_impact": "검토 대상 케이스를 확인하지만, 이 정보만으로 승인 준비가 허용되지는 않습니다.",
+            "label": "납품 지연 상태"
           },
           {
             "evidence_id": "carrier_update_stale",
@@ -250,7 +339,8 @@
             "source_kind": "보강 운송사 자료",
             "freshness": "stale",
             "freshness_label": "오래됨",
-            "decision_impact": "현재 운송사 확인이 확보될 때까지 승인 준비용 Correction Workflow 작성을 막습니다."
+            "decision_impact": "현재 운송사 확인이 확보될 때까지 승인 준비용 Correction Workflow 작성을 막습니다.",
+            "label": "운송사 확인 오래됨"
           },
           {
             "evidence_id": "policy_confirmation_required",
@@ -260,7 +350,8 @@
             "source_kind": "운영 기준 매핑",
             "freshness": "governed_mapping",
             "freshness_label": "기준 확인됨",
-            "decision_impact": "추천만 가능하다는 판단 경계를 만듭니다."
+            "decision_impact": "추천만 가능하다는 판단 경계를 만듭니다.",
+            "label": "현재 확인 정책 필요"
           }
         ],
         "policy_mapping": {
@@ -280,15 +371,58 @@
         "packet_provenance": {
           "입력 방식": "보강 데이터 패키지",
           "설정 파일": "configs/onboarding/delivery_delay_confirmation_source_package.yaml",
-          "경계": "정적 프로토타입 데이터입니다. Live SAP 연동이 아닙니다."
+          "경계": "정적 프로토타입 데이터입니다. Live SAP 연동이 아닙니다.",
+          "Workflow 설정 버전": "delivery_delay_confirmation_source_package.yaml",
+          "정책 버전": "delay_confirmation_policy v1",
+          "승인 기준 버전": "v1",
+          "데이터 패키지 생성 시각": "2026-07-08 09:40"
         }
       },
+      "status_history": [
+        {
+          "time": "09:10",
+          "event": "Delivery 지연 상태 확인",
+          "status": "확인됨"
+        },
+        {
+          "time": "09:20",
+          "event": "Tracking 이벤트 수집",
+          "status": "일부 확인"
+        },
+        {
+          "time": "09:30",
+          "event": "운송사 확인 정보 stale 감지",
+          "status": "차단 사유"
+        },
+        {
+          "time": "09:35",
+          "event": "승인 기준표 확인",
+          "status": "확인됨"
+        },
+        {
+          "time": "09:40",
+          "event": "판단 결과 생성",
+          "status": "추천만 가능"
+        },
+        {
+          "time": "09:45",
+          "event": "검토 대기",
+          "status": "검토 필요"
+        }
+      ],
       "review": {
         "assigned_reviewer": "미지정",
         "required_role": "SAP 물류 관리자",
+        "request_reason": "운송사 확인 정보가 오래되어 승인 준비 가능 여부를 담당자가 확인해야 합니다.",
         "packet_status_label": "검토 필요",
         "boundary_copy": "이 화면은 실행 승인이 아닙니다. 실제 SAP 변경이나 고객 영향 작업은 별도 승인 절차가 필요합니다.",
         "reviewer_note_placeholder": "추가로 필요한 근거, 추천 단계 유지 사유, 반려 사유를 적어주세요.",
+        "pre_review_checklist": [
+          "운송사 최신 ETA 확인 여부",
+          "지연 담당자 확인 여부",
+          "정책 버전과 승인 기준표 버전 일치 여부",
+          "고객 영향 작업이 아직 실행되지 않았는지"
+        ],
         "actions": [
           {
             "action_id": "request_more_data",
@@ -338,6 +472,10 @@
         {
           "label": "Message Type",
           "placeholder": "선택 입력"
+        },
+        {
+          "label": "기준 시각",
+          "value": "2026-07-08 10:15"
         }
       ],
       "guidance": {
@@ -352,6 +490,9 @@
       "failed": {
         "title": "판단 불가",
         "subtitle": "재처리 충돌 판단에 필요한 데이터가 부족합니다.",
+        "conclusion": "판단 불가",
+        "reason": "재처리 판단에 필요한 데이터 2개가 부족합니다.",
+        "business_impact": "이 상태에서는 승인 준비용 IDoc 재처리 계획을 만들 수 없습니다. Lock/Queue 확인 요청까지만 가능합니다.",
         "source_heading": "IDoc 0000000000123456 데이터 상태",
         "missing_title": "부족한 정보",
         "missing_summary": "자재 Lock 정보와 신규 IDoc Queue 정보가 없습니다.",
@@ -366,7 +507,10 @@
             "readiness_label": "확인됨",
             "result": "pass",
             "result_label": "통과",
-            "why_it_matters": "실패 또는 차단된 IDoc과 재처리 횟수를 확인합니다."
+            "why_it_matters": "실패 또는 차단된 IDoc과 재처리 횟수를 확인합니다.",
+            "business_impact": "재처리 검토 대상 확인",
+            "owner": "SAP 인터페이스 운영",
+            "next_action": "확인 유지"
           },
           {
             "alias": "lock_events",
@@ -375,7 +519,10 @@
             "readiness_label": "부족함",
             "result": "fail",
             "result_label": "실패",
-            "why_it_matters": "Material / Plant 기준으로 활성 Lock이 있는지 확인합니다."
+            "why_it_matters": "Material / Plant 기준으로 활성 Lock이 있는지 확인합니다.",
+            "business_impact": "Lock 충돌 판단 불가",
+            "owner": "SAP Basis / 인터페이스 운영",
+            "next_action": "Lock export 업로드"
           },
           {
             "alias": "incoming_idoc_queue",
@@ -384,7 +531,10 @@
             "readiness_label": "부족함",
             "result": "fail",
             "result_label": "실패",
-            "why_it_matters": "새로 들어오는 IDoc과 재처리 작업이 충돌할 위험을 확인합니다."
+            "why_it_matters": "새로 들어오는 IDoc과 재처리 작업이 충돌할 위험을 확인합니다.",
+            "business_impact": "신규 처리 충돌 판단 불가",
+            "owner": "인터페이스 운영",
+            "next_action": "Queue export 업로드"
           },
           {
             "alias": "policy_idoc_reprocessing",
@@ -393,7 +543,10 @@
             "readiness_label": "확인됨",
             "result": "pass",
             "result_label": "통과",
-            "why_it_matters": "Lock 해제 전 재처리를 막아야 하는 기준을 확인합니다."
+            "why_it_matters": "Lock 해제 전 재처리를 막아야 하는 기준을 확인합니다.",
+            "business_impact": "Lock clearance 요구 확인",
+            "owner": "운영 정책 담당",
+            "next_action": "버전 확인"
           }
         ],
         "missing_sources": [
@@ -416,7 +569,9 @@
             ],
             "suggested_owner": "SAP 인터페이스 운영 담당자",
             "upload_option": "자재 Lock 정보 적용",
-            "trust_level": "SAP 운영 또는 인터페이스 운영 출처"
+            "trust_level": "SAP 운영 또는 인터페이스 운영 출처",
+            "blocked_action": "승인 준비용 IDoc 재처리 계획 작성",
+            "expected_result": "재처리 전 Lock 충돌 가능성을 판단할 수 있습니다."
           },
           {
             "alias": "incoming_idoc_queue",
@@ -437,14 +592,35 @@
             ],
             "suggested_owner": "SAP 인터페이스 운영 담당자",
             "upload_option": "신규 IDoc Queue 적용",
-            "trust_level": "SAP 인터페이스 운영 출처"
+            "trust_level": "SAP 인터페이스 운영 출처",
+            "blocked_action": "IDoc 배치 재처리 계획 준비",
+            "expected_result": "신규 IDoc과 수동 재처리 충돌 가능성을 판단할 수 있습니다."
           }
         ]
       },
       "passed": {
         "title": "판단 가능",
         "subtitle": "IDoc 재처리 판단에 필요한 항목이 확인되었습니다.",
+        "warning": "데이터가 충분하다는 뜻이지, IDoc 재처리 실행이 승인되었다는 뜻은 아닙니다.",
         "source_heading": "IDoc 재처리 데이터 상태",
+        "summary_cards": [
+          [
+            "데이터 완성도",
+            "필수 5개 항목 확인"
+          ],
+          [
+            "stale source 여부",
+            "활성 Lock 확인"
+          ],
+          [
+            "manual mapping 여부",
+            "재처리 정책 기준 수동 매핑"
+          ],
+          [
+            "남은 검토",
+            "인터페이스 운영 리드 검토 필요"
+          ]
+        ],
         "aliases": [
           {
             "alias": "idoc_events",
@@ -495,11 +671,39 @@
       },
       "decision": {
         "manager_view": {
+          "conclusion": "추천만 가능",
           "current_allowed_action": "추천만 가능",
           "blocked_action": "승인 준비용 IDoc 재처리 계획 작성",
           "why_blocked": "자재 Lock이 활성이고 신규 IDoc Queue가 있어 재처리 충돌 위험이 있습니다. 최종 검토도 완료되지 않았습니다.",
-          "required_next_action": "Lock 해제 여부와 신규 IDoc Queue 상태를 확인한 뒤 담당자 검토를 진행하세요."
+          "required_next_action": "Lock 해제 여부와 신규 IDoc Queue 상태를 확인한 뒤 담당자 검토를 진행하세요.",
+          "reasons": [
+            "자재 Lock이 활성 상태입니다.",
+            "신규 IDoc Queue가 있어 재처리 충돌 위험이 있습니다.",
+            "사람 검토가 아직 완료되지 않았습니다."
+          ]
         },
+        "cards": [
+          {
+            "category": "업무 영향",
+            "title": "재처리 계획 준비 보류",
+            "body": "Lock과 신규 Queue가 충돌할 수 있어 승인 준비용 재처리 계획을 만들 수 없습니다."
+          },
+          {
+            "category": "근거 요약",
+            "title": "IDoc 실패 + 활성 Lock",
+            "body": "실패 IDoc은 확인됐지만 같은 Material / Plant 기준 활성 Lock과 신규 Queue가 있습니다."
+          },
+          {
+            "category": "정책 / 승인 기준",
+            "title": "Lock clear 선행 필요",
+            "body": "policy_idoc_reprocessing v1 기준 Lock 해제와 Queue 확인 전에는 재처리 계획 준비가 막힙니다."
+          },
+          {
+            "category": "데이터 최신성",
+            "title": "active lock / active queue",
+            "body": "현재 자료상 Lock과 Queue가 활성 상태라 추천과 확인 요청까지만 가능합니다."
+          }
+        ],
         "sections": {
           "allows_now": [
             "자재 Lock 충돌 가능성을 추천할 수 있습니다.",
@@ -548,7 +752,8 @@
             "source_kind": "SAP 유사 IDoc 자료",
             "freshness": "current",
             "freshness_label": "상태 확인됨",
-            "decision_impact": "재처리 검토 대상임을 확인합니다."
+            "decision_impact": "재처리 검토 대상임을 확인합니다.",
+            "label": "IDoc 실패 상태"
           },
           {
             "evidence_id": "material_lock_active",
@@ -558,7 +763,8 @@
             "source_kind": "보강 Lock 자료",
             "freshness": "current",
             "freshness_label": "활성",
-            "decision_impact": "Lock 해제 전 재처리 계획 준비를 막습니다."
+            "decision_impact": "Lock 해제 전 재처리 계획 준비를 막습니다.",
+            "label": "자재 Lock 활성"
           },
           {
             "evidence_id": "incoming_idoc_queue_active",
@@ -568,7 +774,8 @@
             "source_kind": "보강 Queue 자료",
             "freshness": "current",
             "freshness_label": "활성",
-            "decision_impact": "재처리 배치와 신규 처리 충돌 위험을 만듭니다."
+            "decision_impact": "재처리 배치와 신규 처리 충돌 위험을 만듭니다.",
+            "label": "신규 IDoc Queue 활성"
           }
         ],
         "policy_mapping": {
@@ -588,15 +795,58 @@
         "packet_provenance": {
           "입력 방식": "정적 IDoc 데모 데이터",
           "설정 파일": "configs/onboarding/idoc_material_lock_reprocessing.yaml",
-          "경계": "정적 프로토타입 데이터입니다. Live SAP 연동이 아닙니다."
+          "경계": "정적 프로토타입 데이터입니다. Live SAP 연동이 아닙니다.",
+          "Workflow 설정 버전": "idoc_material_lock_reprocessing.yaml",
+          "정책 버전": "policy_idoc_reprocessing v1",
+          "승인 기준 버전": "v1",
+          "데이터 패키지 생성 시각": "2026-07-08 10:15"
         }
       },
+      "status_history": [
+        {
+          "time": "10:02",
+          "event": "IDoc 실패 상태 확인",
+          "status": "확인됨"
+        },
+        {
+          "time": "10:06",
+          "event": "Material / Plant 기준 Lock 확인",
+          "status": "활성"
+        },
+        {
+          "time": "10:09",
+          "event": "신규 IDoc Queue 확인",
+          "status": "활성"
+        },
+        {
+          "time": "10:12",
+          "event": "재처리 정책 기준 확인",
+          "status": "확인됨"
+        },
+        {
+          "time": "10:15",
+          "event": "판단 결과 생성",
+          "status": "추천만 가능"
+        },
+        {
+          "time": "10:16",
+          "event": "검토 대기",
+          "status": "검토 필요"
+        }
+      ],
       "review": {
         "assigned_reviewer": "미지정",
         "required_role": "SAP 인터페이스 운영 리드",
+        "request_reason": "활성 Lock과 신규 Queue가 있어 재처리 계획 준비 가능 여부를 담당자가 확인해야 합니다.",
         "packet_status_label": "검토 필요",
         "boundary_copy": "이 화면은 실행 승인이 아닙니다. 실제 IDoc 재처리나 SAP 변경은 별도 승인 절차가 필요합니다.",
         "reviewer_note_placeholder": "Lock 해제 확인, Queue 상태, 재처리 보류 사유를 적어주세요.",
+        "pre_review_checklist": [
+          "Lock 해제 여부",
+          "Lock owner 확인 여부",
+          "신규 IDoc Queue active 여부",
+          "재처리 정책 버전과 승인 기준표 버전 일치 여부"
+        ],
         "actions": [
           {
             "action_id": "request_more_data",
