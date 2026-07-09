@@ -6,8 +6,10 @@ from pathlib import Path
 
 from .semantic_color_ontology import build_semantic_color_context
 from .semantic_color_selector import (
+    build_ontology_supporting_colors,
     build_semantic_color_selection,
     colors_from_semantic_palette,
+    ontology_keyword_lookup,
 )
 
 
@@ -336,13 +338,16 @@ def resolve_color_reference(
         else:
             issues.append(f"color_reference.selected_colors entry not found: {name}")
 
+    ontology_lookup = ontology_keyword_lookup()
     resolved_roles: dict[str, dict] = {}
     for role, name in palette_roles.items():
-        color = colors_by_name.get(str(name).lower())
+        color = colors_by_name.get(str(name).lower()) or ontology_lookup.get(str(name).lower())
         if color:
             resolved_roles[str(role)] = color
         else:
-            issues.append(f"color_reference.palette_roles entry not found: {role} -> {name}")
+            issues.append(
+                f"color_reference.palette_roles entry not found in markdown or semantic ontology: {role} -> {name}"
+            )
 
     profile = brand_profile or {}
     palette_candidates = _build_palette_candidates(
@@ -418,14 +423,24 @@ def resolve_color_reference(
                 "candidate_id": (semantic_color_selection.get("active_palette") or {}).get("id"),
             }
             selection_mode = "semantic-ontology"
-            expanded_palette = _build_expanded_palette(
-                colors=parsed["colors"],
-                active_palette=active_palette,
-                preferred_families=preferred_families,
-                strategy=strategy,
-                expansion=expansion,
+            # 팔레트가 온톨로지에서 왔으면 supporting 확장도 온톨로지에서 가져온다.
+            # md 문서는 무드/패밀리 참고용 advisory로만 남는다.
+            ontology_supporting = build_ontology_supporting_colors(
                 brand_profile=profile,
+                strategy=strategy,
+                active_palette=active_palette,
+                count=expansion.get("supporting_color_count", 8),
             )
+            expanded_palette = {
+                "enabled": bool(ontology_supporting),
+                "search_strategy": {
+                    "source": "semantic-color-ontology",
+                    "selection_method": "ontology-search-per-run",
+                },
+                "supporting_colors": ontology_supporting,
+                "semantic_roles": resolved_roles,
+                "combination_lists": [],
+            }
 
     active_palette, resolved_roles, resolved_selected = _apply_chrome_strategy(
         active_palette, strategy
@@ -469,16 +484,43 @@ def resolve_semantic_color_reference(
         strategy=strategy,
         candidate_count=strategy.get("candidate_count"),
     )
+    selection_mode = "semantic-ontology"
     resolved_roles = colors_from_semantic_palette(semantic_color_selection.get("active_palette"))
+
+    # 수동 palette_roles는 md 파일 없이도 온톨로지 키워드 이름으로 해석한다.
+    manual_roles = reference_config.get("palette_roles") or {}
+    if manual_roles:
+        lookup = ontology_keyword_lookup()
+        manual_resolved: dict[str, dict] = {}
+        for role, name in manual_roles.items():
+            color = lookup.get(str(name).lower())
+            if color:
+                manual_resolved[str(role)] = color
+        if manual_resolved:
+            resolved_roles = manual_resolved
+            selection_mode = "manual"
+
     resolved_selected = _ordered_unique_colors_any_roles(resolved_roles)
     active_palette = {
-        "selection_mode": "semantic-ontology",
+        "selection_mode": selection_mode,
         "roles": resolved_roles,
         "selected_colors": resolved_selected,
-        "candidate_id": (semantic_color_selection.get("active_palette") or {}).get("id"),
+        "candidate_id": (
+            (semantic_color_selection.get("active_palette") or {}).get("id")
+            if selection_mode != "manual"
+            else None
+        ),
     }
     active_palette, resolved_roles, resolved_selected = _apply_chrome_strategy(
         active_palette, strategy
+    )
+    supporting_colors = build_ontology_supporting_colors(
+        brand_profile=brand_profile,
+        strategy=strategy,
+        active_palette=active_palette,
+        count=_normalize_palette_expansion(reference_config.get("palette_expansion", {})).get(
+            "supporting_color_count", 8
+        ),
     )
     semantic_ontology = build_semantic_color_context(
         parsed_reference={"title": "Semantic OS color ontology", "colors": []},
@@ -500,19 +542,19 @@ def resolve_semantic_color_reference(
         "selected_colors": resolved_selected,
         "palette_roles": resolved_roles,
         "preferred_families": [],
-        "selection_mode": "semantic-ontology",
+        "selection_mode": selection_mode,
         "strategy": strategy,
         "expansion": _normalize_palette_expansion(reference_config.get("palette_expansion", {})),
         "active_palette": active_palette,
         "palette_candidates": [],
         "semantic_color_selection": semantic_color_selection,
         "expanded_palette": {
-            "enabled": False,
+            "enabled": bool(supporting_colors),
             "search_strategy": {
                 "source": "semantic-color-ontology",
                 "selection_method": "ontology-search-per-run",
             },
-            "supporting_colors": [],
+            "supporting_colors": supporting_colors,
             "semantic_roles": resolved_roles,
             "combination_lists": [],
         },

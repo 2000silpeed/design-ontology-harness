@@ -288,6 +288,30 @@ uv run design-ontology lint-implementation --target-repo /path/to/implementation
 4. 제품 특화 primitive
 5. 문서화와 테스트
 
+## Semantic OS 컬러 온톨로지가 1차 컬러 소스
+
+컬러 파이프라인의 기본 진실 소스는 semantic-os에서 가져온 패키징 온톨로지
+(`design_ontology_harness/resources/semantic_color_ontology.json`)입니다.
+markdown 색상 문서(`color_reference.path`)는 이제 **완전히 선택 사항**이며,
+지정해도 무드/패밀리 참고 증거로만 쓰입니다.
+
+- **스냅샷 동기화**: `uv run python scripts/sync-semantic-color-ontology.py` —
+  로컬 semantic-os의 `domains/color/ontology/build/graph.json`을 추상화 계약
+  (로컬 경로 제거, 원문 테이블 미포함)을 검증하며 패키지 리소스로 갱신.
+- **레지스트리 인지 hue 감점**: 후보 키워드 스코어링이
+  `registry/style_fingerprints.json`의 최근 accent hue 사용 횟수를 읽어
+  반복 hue를 감점하고, 기본 후보의 액센트가 4회 이상 반복된 hue면
+  신선한 hue 후보를 기본으로 재정렬합니다
+  (`semantic_color_selection.registry_hue_pressure`, `hue_pressure_reordered`에 기록).
+- **수동 역할명**: `palette_roles`의 색 이름은 markdown 없이도 온톨로지
+  키워드 라벨로 해석됩니다 (예: `"primary": "Royal Purple"`).
+- **supporting 확장**: semantic-ontology 팔레트의 supporting color도 md가 아니라
+  온톨로지에서 스펙트럼 라운드로빈으로 뽑습니다.
+
+주의: 온톨로지 스냅샷을 갱신하면 supporting color 구성(이름)이 달라질 수 있습니다.
+이미 방출된 프로젝트의 tokens.css를 다시 `emit-tokens`로 갱신할 때는 구현 CSS가
+참조하는 `--ds-color-support-*` 이름이 유지되는지 확인하세요.
+
 ## Optional Curated Color Input
 
 색상 방향이 이미 별도 문서로 정리되어 있다면 `brand_profile.json`의 `color_reference`로 연결할 수 있습니다.

@@ -111,8 +111,15 @@ def build_semantic_color_selection(
 
     ontology = load_semantic_color_ontology()
     nodes = ontology.get("nodes", [])
-    keyword_nodes = [node for node in nodes if node.get("type") == "ColorKeyword"]
+    # 팔레트 풀은 hex 값이 있는 키워드만: 스냅샷에는 name-only extended 키워드도
+    # 실려 있는데(참조용), hex 없는 노드가 role에 앉으면 토큰이 깨진다.
+    keyword_nodes = [
+        node
+        for node in nodes
+        if node.get("type") == "ColorKeyword" and (node.get("properties") or {}).get("rgb_hex")
+    ]
     pattern_nodes = [node for node in nodes if node.get("type") == "ColorPattern"]
+    hue_pressure = _load_registry_hue_pressure()
 
     search_profile = _build_search_profile(brand_profile=brand_profile, strategy=strategy or {})
     matched_pattern = _select_pattern(pattern_nodes, search_profile)
@@ -133,12 +140,23 @@ def build_semantic_color_selection(
             search_profile=search_profile,
             variant=variant,
             index=index,
+            hue_pressure=hue_pressure,
         )
         for index, variant in enumerate(variants, start=1)
     ]
     candidates = [candidate for candidate in candidates if candidate]
     candidates = _dedupe_candidates(candidates)[:count]
-    active_palette = candidates[0] if candidates else None
+    candidates, hue_pressure_reordered = _reorder_by_hue_pressure(candidates, hue_pressure)
+    # strategy.active_candidate는 1-based. 문서가 약속한 대로 존중한다 —
+    # 항상 candidates[0]을 쓰면 모든 프로젝트가 best-fit 후보로 수렴한다.
+    active_index = 1
+    if strategy and strategy.get("active_candidate"):
+        try:
+            active_index = int(strategy["active_candidate"])
+        except (TypeError, ValueError):
+            active_index = 1
+    active_index = max(1, min(active_index, len(candidates))) if candidates else 1
+    active_palette = candidates[active_index - 1] if candidates else None
 
     return {
         "schema_version": "design-ontology-harness/semantic-color-selection-v1",
@@ -152,6 +170,8 @@ def build_semantic_color_selection(
         },
         "matched_pattern": _compact_pattern(matched_pattern) if matched_pattern else None,
         "role_model": role_model,
+        "registry_hue_pressure": hue_pressure,
+        "hue_pressure_reordered": hue_pressure_reordered,
         "candidate_palettes": candidates,
         "active_palette": active_palette,
         "rules": [
@@ -284,6 +304,201 @@ def _role_model_from_pattern(pattern_node: dict[str, Any] | None) -> list[dict[s
     return roles
 
 
+def _load_registry_hue_pressure(limit: int = 10) -> dict[str, int]:
+    """Count accent hue buckets across recent style-fingerprint registry entries.
+
+    The registry proved that unconstrained selection converges (teal appeared in
+    14/16 shipped mockups), so candidate scoring reads the registry and
+    penalizes hues the recent projects already used. Missing registry → {}.
+    """
+
+    from pathlib import Path
+
+    try:
+        from .style_fingerprint import load_registry
+
+        registry = load_registry(Path("registry") / "style_fingerprints.json")
+        pressure: dict[str, int] = {}
+        for entry in registry.get("entries", [])[-limit:]:
+            for bucket in (entry.get("fingerprint") or {}).get("accent_hue_buckets") or []:
+                pressure[bucket] = pressure.get(bucket, 0) + 1
+        return pressure
+    except Exception:
+        return {}
+
+
+def _hue_pressure_penalty(keyword: dict[str, Any], hue_pressure: dict[str, int]) -> float:
+    if not hue_pressure:
+        return 0.0
+    hex_value = keyword.get("hex")
+    if not isinstance(hex_value, str) or len(hex_value) != 7:
+        return 0.0
+    try:
+        from .style_fingerprint import _hex_to_hls, _hue_bucket
+
+        bucket = _hue_bucket(_hex_to_hls(hex_value)[0])
+    except Exception:
+        return 0.0
+    count = hue_pressure.get(bucket, 0)
+    if count < 2:
+        return 0.0
+    # 최근 등록 지문의 hue 반복 횟수에 비례. 무드 매칭 점수(항목당 +2.0)를 실제로
+    # 이길 수 있어야 수렴을 꺾는다 — 반복 5회면 -9.0.
+    return 1.8 * min(count, 5)
+
+
+def ontology_keyword_lookup() -> dict[str, dict[str, Any]]:
+    """Name → md-reference-shaped color dict for every hex-bearing ontology keyword.
+
+    Lets manual ``palette_roles`` names resolve against the semantic-os ontology
+    so ``color_reference.path`` (the markdown file) is fully optional.
+    """
+
+    ontology = load_semantic_color_ontology()
+    lookup: dict[str, dict[str, Any]] = {}
+    for node in ontology.get("nodes", []):
+        if node.get("type") != "ColorKeyword":
+            continue
+        props = node.get("properties") or {}
+        hex_value = props.get("rgb_hex")
+        label = props.get("label")
+        if not hex_value or not label:
+            continue
+        lookup[str(label).lower()] = {
+            "name": label,
+            "family": props.get("category") or props.get("family"),
+            "hex": hex_value,
+            "mood": ", ".join(props.get("mood_tags") or []) or props.get("summary"),
+            "usage": props.get("summary"),
+            "pairings": [],
+            "semantic_node_id": node.get("id"),
+            "source_type": "semantic-color-ontology",
+        }
+    return lookup
+
+
+def build_ontology_supporting_colors(
+    *,
+    brand_profile: dict[str, Any],
+    strategy: dict[str, Any] | None = None,
+    active_palette: dict[str, Any] | None = None,
+    count: int = 8,
+) -> list[dict[str, Any]]:
+    """Pick spectrum-diverse supporting colors from the ontology.
+
+    Replaces the markdown-expansion step for semantic-ontology palettes:
+    supporting colors (garment/domain material colors, state hints) come from
+    the same graph the active palette came from.
+    """
+
+    ontology = load_semantic_color_ontology()
+    strategy = strategy or {}
+    search_profile = _build_search_profile(brand_profile=brand_profile, strategy=strategy)
+    hue_pressure = _load_registry_hue_pressure()
+
+    used_ids: set[str] = set()
+    used_hexes: set[str] = set()
+    for item in ((active_palette or {}).get("roles") or {}).values():
+        if isinstance(item, dict):
+            if item.get("semantic_node_id"):
+                used_ids.add(item["semantic_node_id"])
+            if item.get("id"):
+                used_ids.add(item["id"])
+            if item.get("hex"):
+                used_hexes.add(str(item["hex"]).upper())
+
+    scored: list[tuple[float, dict[str, Any]]] = []
+    for node in ontology.get("nodes", []):
+        if node.get("type") != "ColorKeyword":
+            continue
+        props = node.get("properties") or {}
+        if not props.get("rgb_hex"):
+            continue
+        keyword = _compact_keyword_node(node)
+        if keyword["id"] in used_ids or str(keyword.get("hex", "")).upper() in used_hexes:
+            continue
+        score = _term_score(search_profile["terms"], _keyword_haystack(keyword))
+        score -= _term_score(search_profile["avoid_terms"], _keyword_haystack(keyword)) * 1.5
+        score -= _hue_pressure_penalty(keyword, hue_pressure)
+        scored.append((score, keyword))
+
+    scored.sort(key=lambda item: (-item[0], item[1]["name"]))
+
+    # spectrum round-robin: 상위 점수 안에서 스펙트럼이 몰리지 않게 뽑는다
+    picked: list[dict[str, Any]] = []
+    spectrum_counts: dict[str, int] = {}
+    for _, keyword in scored:
+        spectrum = str(keyword.get("spectrum") or "unknown")
+        if spectrum_counts.get(spectrum, 0) >= 2 and len(picked) < count:
+            continue
+        picked.append(keyword)
+        spectrum_counts[spectrum] = spectrum_counts.get(spectrum, 0) + 1
+        if len(picked) >= count:
+            break
+    if len(picked) < count:
+        remaining = [kw for _, kw in scored if kw not in picked]
+        picked.extend(remaining[: count - len(picked)])
+
+    return [
+        {
+            "name": keyword["name"],
+            "family": keyword.get("category") or keyword.get("family"),
+            "hex": keyword["hex"],
+            "mood": ", ".join(keyword.get("mood_tags") or []) or keyword.get("summary"),
+            "usage": keyword.get("summary"),
+            "pairings": [],
+            "semantic_node_id": keyword["id"],
+            "source_type": "semantic-color-ontology",
+        }
+        for keyword in picked
+    ]
+
+
+def _candidate_accent_bucket(candidate: dict[str, Any]) -> str | None:
+    roles = candidate.get("roles") or {}
+    accent = None
+    for key, item in roles.items():
+        if "accent" in key.lower():
+            accent = item
+            break
+    if accent is None and roles:
+        accent = next(iter(roles.values()))
+    hex_value = (accent or {}).get("hex")
+    if not isinstance(hex_value, str) or len(hex_value) != 7:
+        return None
+    try:
+        from .style_fingerprint import _hex_to_hls, _hue_bucket
+
+        return _hue_bucket(_hex_to_hls(hex_value)[0])
+    except Exception:
+        return None
+
+
+def _reorder_by_hue_pressure(
+    candidates: list[dict[str, Any]],
+    hue_pressure: dict[str, int],
+) -> tuple[list[dict[str, Any]], bool]:
+    """Move the first fresh-accent candidate ahead of a high-pressure default.
+
+    Score penalties alone cannot beat legitimate mood-term matches (신뢰→green),
+    so when the default candidate's accent hue was already used 4+ times in the
+    registry, the first candidate with a fresh accent hue (<2 uses) becomes the
+    default instead. Brief fit still decides *which* fresh candidate.
+    """
+
+    if not hue_pressure or len(candidates) < 2:
+        return candidates, False
+    first_bucket = _candidate_accent_bucket(candidates[0])
+    if first_bucket is None or hue_pressure.get(first_bucket, 0) < 4:
+        return candidates, False
+    for index, candidate in enumerate(candidates[1:], start=1):
+        bucket = _candidate_accent_bucket(candidate)
+        if bucket is not None and hue_pressure.get(bucket, 0) < 2:
+            reordered = [candidate] + candidates[:index] + candidates[index + 1 :]
+            return reordered, True
+    return candidates, False
+
+
 def _build_candidate_palette(
     *,
     keyword_pool: list[dict[str, Any]],
@@ -291,6 +506,7 @@ def _build_candidate_palette(
     search_profile: dict[str, Any],
     variant: dict[str, Any],
     index: int,
+    hue_pressure: dict[str, int] | None = None,
 ) -> dict[str, Any] | None:
     selected: dict[str, dict[str, Any]] = {}
     selected_ids: set[str] = set()
@@ -306,6 +522,7 @@ def _build_candidate_palette(
             variant=variant,
             selected_ids=selected_ids,
             selected_spectrums=selected_spectrums,
+            hue_pressure=hue_pressure,
         )
         if not ranked:
             return None
@@ -346,6 +563,7 @@ def _rank_keywords_for_role(
     variant: dict[str, Any],
     selected_ids: set[str],
     selected_spectrums: list[str],
+    hue_pressure: dict[str, int] | None = None,
 ) -> list[tuple[float, dict[str, Any], list[str]]]:
     ranked: list[tuple[float, dict[str, Any], list[str]]] = []
     role_terms = _tokenize_values([role.get("role", ""), role.get("behavior", ""), role.get("keyword_evidence", "")])
@@ -363,6 +581,7 @@ def _rank_keywords_for_role(
         role_bias, bias_reasons = _role_bias(keyword, role, variant)
         score += role_bias
         score += _diversity_score(keyword, selected_spectrums, variant)
+        score -= _hue_pressure_penalty(keyword, hue_pressure or {})
 
         reasons = []
         if role.get("behavior"):
