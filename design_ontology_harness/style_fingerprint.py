@@ -135,6 +135,7 @@ class StyleFingerprint:
     radius_values_px: list[float] = field(default_factory=list)
     uses_pill_shapes: bool = False
     color_count: int = 0
+    separation_style: str = "unknown"
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -286,6 +287,35 @@ def _extract_fonts(text: str) -> tuple[list[str], bool]:
     return families, serif_accent
 
 
+_CSS_BLOCK_RE = re.compile(r"[^{}]+\{(?P<body>[^{}]*)\}")
+
+
+def _detect_separation_style(css_text: str) -> str:
+    """Classify the surface's dominant separation grammar.
+
+    Palette and fonts alone miss composition repetition: two projects with
+    different colors can still share the same skeleton (hairline rows vs card
+    wall vs pure whitespace). This axis feeds the divergence comparison.
+    """
+
+    card_blocks = 0
+    hairline_decls = 0
+    for match in _CSS_BLOCK_RE.finditer(css_text):
+        body = match.group("body")
+        has_border = re.search(r"\bborder\s*:\s*1px\s+solid", body, re.IGNORECASE)
+        has_radius = re.search(r"\bborder-radius\s*:", body, re.IGNORECASE)
+        if has_border and has_radius:
+            card_blocks += 1
+        hairline_decls += len(
+            re.findall(r"\bborder-(?:bottom|top)\s*:\s*1px\s+solid", body, re.IGNORECASE)
+        )
+    if card_blocks >= 5 and card_blocks * 2 >= hairline_decls:
+        return "card-wall"
+    if hairline_decls >= 4:
+        return "hairline-rows"
+    return "whitespace"
+
+
 def extract_style_fingerprint(
     project_dir: Path,
     *,
@@ -362,6 +392,9 @@ def extract_style_fingerprint(
             else:
                 radius_values.add(number)
 
+    css_only = "\n".join(
+        text for name, text in texts.items() if name.lower().endswith(".css")
+    )
     return StyleFingerprint(
         project=project_name or project_dir.name,
         source_files=[path.name for path in files],
@@ -374,6 +407,7 @@ def extract_style_fingerprint(
         radius_values_px=sorted(radius_values),
         uses_pill_shapes=uses_pill,
         color_count=len(color_counts),
+        separation_style=_detect_separation_style(css_only or combined),
     )
 
 
@@ -429,14 +463,14 @@ def compare_fingerprints(a: StyleFingerprint | dict, b: StyleFingerprint | dict)
     score = 0.0
 
     if fa.get("surface_tone") == fb.get("surface_tone") and fa.get("surface_tone") != "unknown":
-        score += 0.25
+        score += 0.22
         reasons.append(f"surface tone 동일 ({fa.get('surface_tone')})")
 
     buckets_a = set(fa.get("accent_hue_buckets") or [])
     buckets_b = set(fb.get("accent_hue_buckets") or [])
     if buckets_a or buckets_b:
         jaccard = len(buckets_a & buckets_b) / max(len(buckets_a | buckets_b), 1)
-        score += 0.35 * jaccard
+        score += 0.30 * jaccard
         if jaccard >= 0.5:
             shared = ", ".join(sorted(buckets_a & buckets_b))
             reasons.append(f"accent hue 중복 {jaccard:.0%} ({shared})")
@@ -445,17 +479,23 @@ def compare_fingerprints(a: StyleFingerprint | dict, b: StyleFingerprint | dict)
     fonts_b = {name.lower() for name in fb.get("font_families") or []}
     if fonts_a or fonts_b:
         font_jaccard = len(fonts_a & fonts_b) / max(len(fonts_a | fonts_b), 1)
-        score += 0.20 * font_jaccard
+        score += 0.18 * font_jaccard
         if font_jaccard >= 0.5:
             reasons.append(
                 "font pairing 중복 (" + ", ".join(sorted(fonts_a & fonts_b)) + ")"
             )
 
     if fa.get("serif_accent") and fb.get("serif_accent"):
-        score += 0.10
+        score += 0.08
         reasons.append("둘 다 serif display accent 사용")
     elif not fa.get("serif_accent") and not fb.get("serif_accent"):
         score += 0.03
+
+    sep_a = fa.get("separation_style") or "unknown"
+    sep_b = fb.get("separation_style") or "unknown"
+    if sep_a != "unknown" and sep_a == sep_b:
+        score += 0.12
+        reasons.append(f"구성 문법 동일 ({sep_a})")
 
     radii_a = fa.get("radius_values_px") or []
     radii_b = fb.get("radius_values_px") or []
@@ -546,6 +586,20 @@ def _divergence_suggestions(
             f"surface tone `{fingerprint.surface_tone}`이 최근 가장 많이 반복된 톤입니다. "
             "blueprint token_schema의 배경 토큰을 그대로 쓰거나 다른 톤 계열로 옮기세요."
         )
+    used_separations: dict[str, int] = {}
+    for entry in recent_entries:
+        style = (entry.get("fingerprint") or {}).get("separation_style")
+        if style and style != "unknown":
+            used_separations[style] = used_separations.get(style, 0) + 1
+    if (
+        fingerprint.separation_style != "unknown"
+        and used_separations.get(fingerprint.separation_style, 0) >= 2
+    ):
+        suggestions.append(
+            f"구성 문법 `{fingerprint.separation_style}`이 최근 프로젝트들과 반복됩니다. "
+            "분리 문법 자체를 바꾸세요 — hairline-rows ↔ whitespace(여백·스케일 분리) ↔ "
+            "split-panel, dark instrument panel, 풀블리드 섹션 같은 다른 골격을 검토."
+        )
     repeated_fonts = [
         name for name in (f.lower() for f in fingerprint.font_families)
         if used_fonts.get(name, 0) >= 2 and name != "pretendard"
@@ -615,6 +669,21 @@ def check_style_divergence(
     attractors = detect_attractors(fingerprint, serif_sanctioned=serif_sanctioned)
 
     verdict = "fail" if (too_similar or attractors) else "ok"
+
+    warnings: list[str] = []
+    if recent:
+        last_fp = (recent[-1].get("fingerprint") or {})
+        last_sep = last_fp.get("separation_style")
+        if (
+            fingerprint.separation_style != "unknown"
+            and fingerprint.separation_style == last_sep
+        ):
+            warnings.append(
+                f"직전 프로젝트({recent[-1].get('project')})와 구성 문법이 같습니다 "
+                f"({fingerprint.separation_style}). 색·폰트가 달라도 골격이 같으면 "
+                "비슷하게 읽힙니다 — 분리 문법이나 밀도 구조를 의도적으로 바꾸는 것을 검토하세요."
+            )
+
     report: dict[str, Any] = {
         "schema_version": "style-divergence-report/v1",
         "project": fingerprint.project,
@@ -624,6 +693,7 @@ def check_style_divergence(
         "fingerprint": fingerprint.to_dict(),
         "attractor_matches": attractors,
         "too_similar_to": too_similar,
+        "warnings": warnings,
         "comparisons": comparisons,
     }
     if verdict == "fail":
@@ -652,6 +722,8 @@ def format_divergence_report(report: dict[str, Any]) -> str:
         )
         for reason in item.get("reasons", []):
             lines.append(f"    - {reason}")
+    for warning in report.get("warnings") or []:
+        lines.append(f"  [WARN] {warning}")
     for suggestion in report.get("suggestions") or []:
         lines.append(f"  [FIX] {suggestion}")
     if verdict == "OK" and report.get("comparisons"):

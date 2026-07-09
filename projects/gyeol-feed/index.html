@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>결 — 관심의 결을 따라 읽는 피드</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/static/complete/WantedSans.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./design-system/tokens.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main
+      class="app-shell app-mockup"
+      data-prototype-state-set="default,catching-up,composing"
+      data-state="default"
+      aria-label="결 읽기 피드"
+    >
+      <header class="feed-topline">
+        <h1 class="brand-mark">결</h1>
+        <button class="topline-action" type="button" aria-label="검색">
+          <i data-lucide="search" aria-hidden="true"></i>
+        </button>
+        <button class="topline-avatar" type="button" aria-label="내 프로필">
+          <span class="avatar avatar-me" aria-hidden="true">현</span>
+        </button>
+      </header>
+
+      <nav class="strand-rail" aria-label="관심 결 선택">
+        <button class="strand-token" type="button" data-state="active" aria-current="true">
+          전체
+        </button>
+        <button class="strand-token" type="button" data-state="unread">
+          디자인<span class="strand-count">14</span>
+        </button>
+        <button class="strand-token" type="button" data-state="unread">
+          AI<span class="strand-count">9</span>
+        </button>
+        <button class="strand-token" type="button" data-state="default">
+          야구
+        </button>
+        <button class="strand-token" type="button" data-state="default">
+          동네
+        </button>
+      </nav>
+
+      <p class="new-posts-pill" data-state="hidden" role="status" data-new-posts>
+        새 글 6개 ↑
+      </p>
+
+      <section class="reading-feed" aria-label="읽기 피드">
+        <!-- thread: two posts bound by a spine -->
+        <article class="post-row" data-state="unread" data-thread="start">
+          <span class="thread-spine" aria-hidden="true"></span>
+          <span class="avatar avatar-a" aria-hidden="true">서</span>
+          <div class="post-body">
+            <p class="author-line">
+              <strong class="author-name">김서혜</strong>
+              <span class="author-meta">@seohye · 디자인 · 8분</span>
+            </p>
+            <p class="post-text">
+              바리어블 폰트 라이선스 조항을 처음부터 다시 읽고 있는데, 웹 임베딩과 앱 번들을
+              다르게 취급하는 파운드리가 생각보다 많다. 계약 전에 확인할 체크리스트를 정리해봄.
+            </p>
+            <div class="action-meta-row">
+              <button type="button" data-state="default"><i data-lucide="message-circle" aria-hidden="true"></i>답글 12</button>
+              <button type="button" data-state="default"><i data-lucide="repeat-2" aria-hidden="true"></i>인용 3</button>
+              <button type="button" data-state="default" data-save><i data-lucide="bookmark" aria-hidden="true"></i>저장</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="post-row" data-state="unread" data-thread="continued">
+          <span class="thread-spine" aria-hidden="true"></span>
+          <span class="avatar avatar-b" aria-hidden="true">도</span>
+          <div class="post-body">
+            <p class="author-line">
+              <strong class="author-name">박도윤</strong>
+              <span class="author-meta">@dyun_p · 답글 · 3분</span>
+            </p>
+            <p class="post-text">
+              여기에 하나 더: 사내 디자인 툴에 폰트를 올리는 것도 "서버 배포"로 보는 곳이
+              있어서, Figma 팀 라이브러리 업로드가 조항 위반이 되는 케이스가 있었어요.
+            </p>
+            <div class="action-meta-row">
+              <button type="button" data-state="default"><i data-lucide="message-circle" aria-hidden="true"></i>답글 4</button>
+              <button type="button" data-state="active"><i data-lucide="repeat-2" aria-hidden="true"></i>인용 1</button>
+              <button type="button" data-state="default" data-save><i data-lucide="bookmark" aria-hidden="true"></i>저장</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- post with quote block -->
+        <article class="post-row" data-state="unread">
+          <span class="avatar avatar-c" aria-hidden="true">민</span>
+          <div class="post-body">
+            <p class="author-line">
+              <strong class="author-name">이민재</strong>
+              <span class="author-meta">@mjlee_ai · AI · 22분</span>
+            </p>
+            <p class="post-text">
+              발표 자료보다 이 한 줄이 핵심이라고 생각함. 온디바이스에서 이 지연 시간이면
+              입력기 수준의 통합이 가능해진다.
+            </p>
+            <blockquote class="quote-block">
+              <p class="quote-author">한지원 @jwhan · 어제</p>
+              <p class="quote-text">
+                새 경량 모델, 갤럭시 S26 기준 첫 토큰 지연 90ms. 서버 왕복 없이 문장 단위
+                요약이 돈다.
+              </p>
+            </blockquote>
+            <div class="action-meta-row">
+              <button type="button" data-state="default"><i data-lucide="message-circle" aria-hidden="true"></i>답글 31</button>
+              <button type="button" data-state="default"><i data-lucide="repeat-2" aria-hidden="true"></i>인용 18</button>
+              <button type="button" data-state="default" data-save><i data-lucide="bookmark" aria-hidden="true"></i>저장</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- catch-up marker -->
+        <div class="catch-up-marker" role="separator" aria-label="어제 21시 40분까지 읽음">
+          <span class="marker-label">어제 21:40까지 읽음</span>
+        </div>
+
+        <!-- post with inline media -->
+        <article class="post-row" data-state="default">
+          <span class="avatar avatar-d" aria-hidden="true">하</span>
+          <div class="post-body">
+            <p class="author-line">
+              <strong class="author-name">정하람</strong>
+              <span class="author-meta">@haram_j · 디자인 · 어제</span>
+            </p>
+            <p class="post-text">
+              옷장 아카이브 전시 다녀옴. 행거 간격과 조명만으로 위계를 만드는 방식이
+              온보딩 화면 설계랑 놀랍도록 비슷하다.
+            </p>
+            <figure class="inline-media">
+              <img
+                src="https://images.unsplash.com/photo-1516762689617-e1cffcef479d?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=82&w=1100"
+                alt="행거에 걸린 의류가 간격을 두고 정렬된 전시 공간"
+                loading="lazy"
+              />
+            </figure>
+            <div class="action-meta-row">
+              <button type="button" data-state="default"><i data-lucide="message-circle" aria-hidden="true"></i>답글 7</button>
+              <button type="button" data-state="default"><i data-lucide="repeat-2" aria-hidden="true"></i>인용 2</button>
+              <button type="button" data-state="active" data-save><i data-lucide="bookmark" aria-hidden="true"></i>저장됨</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- plain text posts -->
+        <article class="post-row" data-state="replied">
+          <span class="avatar avatar-e" aria-hidden="true">윤</span>
+          <div class="post-body">
+            <p class="author-line">
+              <strong class="author-name">최윤오</strong>
+              <span class="author-meta">@yuno_c · 야구 · 어제</span>
+            </p>
+            <p class="post-text">
+              9회말 2아웃에서 대타 카드 아껴둔 게 오늘 경기의 전부였다. 감독의 야구는
+              8회부터 시작된다는 말, 오늘은 맞았다.
+            </p>
+            <p class="replied-note">내가 답글을 남긴 스레드</p>
+            <div class="action-meta-row">
+              <button type="button" data-state="active"><i data-lucide="message-circle" aria-hidden="true"></i>답글 45</button>
+              <button type="button" data-state="default"><i data-lucide="repeat-2" aria-hidden="true"></i>인용 6</button>
+              <button type="button" data-state="default" data-save><i data-lucide="bookmark" aria-hidden="true"></i>저장</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="post-row" data-state="default">
+          <span class="avatar avatar-f" aria-hidden="true">수</span>
+          <div class="post-body">
+            <p class="author-line">
+              <strong class="author-name">강수린</strong>
+              <span class="author-meta">@surin_k · 동네 · 어제</span>
+            </p>
+            <p class="post-text">
+              연남동 세탁소 앞 평상, 오늘부로 철거. 십 년 동안 이 골목의 거실이었는데.
+              사진 한 장 못 찍어둔 게 아쉽다.
+            </p>
+            <div class="action-meta-row">
+              <button type="button" data-state="default"><i data-lucide="message-circle" aria-hidden="true"></i>답글 19</button>
+              <button type="button" data-state="default"><i data-lucide="repeat-2" aria-hidden="true"></i>인용 4</button>
+              <button type="button" data-state="default" data-save><i data-lucide="bookmark" aria-hidden="true"></i>저장</button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <button class="compose-action" type="button" data-state="default" data-compose aria-label="새 글 쓰기">
+        <i data-lucide="pen-line" aria-hidden="true"></i>
+      </button>
+      <p class="compose-toast" data-state="hidden" role="status" data-compose-toast>
+        작성 화면은 프로토타입 다음 단계예요
+      </p>
+
+      <nav class="bottom-mode-tabs" aria-label="주요 모드">
+        <button type="button" class="mode-tab" aria-current="page">
+          <i data-lucide="align-left" aria-hidden="true"></i>
+          피드
+        </button>
+        <button type="button" class="mode-tab">
+          <i data-lucide="messages-square" aria-hidden="true"></i>
+          스레드
+        </button>
+        <button type="button" class="mode-tab">
+          <i data-lucide="bell" aria-hidden="true"></i>
+          알림
+        </button>
+        <button type="button" class="mode-tab">
+          <i data-lucide="circle-user-round" aria-hidden="true"></i>
+          프로필
+        </button>
+      </nav>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

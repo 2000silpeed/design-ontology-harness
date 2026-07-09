@@ -1,0 +1,420 @@
+{
+  "brand_name": "AON Desk",
+  "system_name": "AON Operator Console System",
+  "product_summary": "Desktop operator console for Agent Org Network. Operators watch the incoming question queue, review how each question was routed to owner agent cards, arbitrate contested ownership with precedents, and supervise outgoing answers with corrections.",
+  "audiences": [
+    "질문 라우팅과 답변 품질을 책임지는 운영 매니저",
+    "자기 담당 범위(Agent Card)와 지식 번들을 관리하는 팀 담당자",
+    "다툼(Contested)과 무담당(Unowned) 질문을 판정하는 결정권자"
+  ],
+  "brand_keywords": [
+    "accountable",
+    "traceable",
+    "operational",
+    "calm",
+    "precise"
+  ],
+  "anti_keywords": [
+    "chatbot-toy",
+    "marketing-dashboard",
+    "card-wall",
+    "gamified-metrics",
+    "preset-looking",
+    "hairline-feed-like"
+  ],
+  "tone_of_voice": [
+    "사실 위주의",
+    "책임 소재가 분명한",
+    "과장 없는"
+  ],
+  "visual_keywords": [
+    "split-workbench",
+    "queue-rail",
+    "evidence-inspector",
+    "routing-trace",
+    "status-tagged"
+  ],
+  "interaction_keywords": [
+    "triage-queue",
+    "inspect-routing",
+    "arbitrate-ownership",
+    "approve-answer",
+    "append-correction"
+  ],
+  "platforms": [
+    "desktop web",
+    "macos"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "1280px minimum desktop layout",
+    "Korean copy with stable wrapping",
+    "keyboard-first triage"
+  ],
+  "application_concept": {
+    "primary_job": "운영자가 들어온 질문의 라우팅 상태를 한눈에 보고, 다툼은 판례로 판정하며, 나가는 답을 근거와 함께 승인한다.",
+    "domain_objects": [
+      "question",
+      "agent card",
+      "routing decision",
+      "precedent",
+      "answer draft",
+      "source citation",
+      "correction",
+      "sync status"
+    ],
+    "operating_mode": "desktop triage and supervision workbench",
+    "success_moment": "Contested 질문 하나가 판례와 함께 판정되고, 두 담당 지식이 합쳐진 답이 출처가 붙은 채 승인된 상태.",
+    "differentiation": [
+      "첫 화면은 채팅창이 아니라 라우팅 상태별 질문 큐다.",
+      "답변은 항상 어느 Agent Card의 어떤 문서를 근거로 했는지 꼬리표가 붙는다.",
+      "다툼 판정 화면에는 과거 판례가 판단 근거로 함께 놓인다.",
+      "정정은 원본을 덮지 않고 append-only 기록으로 쌓인다."
+    ]
+  },
+  "layout_skeleton": {
+    "composition": "three-pane split workbench: queue rail, decision surface, evidence inspector",
+    "navigation_model": "left queue rail with top org bar; no bottom tabs (desktop)",
+    "density": "dense",
+    "primary_regions": [
+      {
+        "name": "Org topbar",
+        "role": "조직명, 동기화 상태, 검색, 운영자 계정",
+        "priority": "secondary"
+      },
+      {
+        "name": "Queue rail",
+        "role": "Routed/Contested/Unowned 상태별 질문 큐. 선택이 중앙 화면을 바꾼다",
+        "priority": "primary"
+      },
+      {
+        "name": "Decision surface",
+        "role": "선택된 질문의 라우팅 근거, 합성된 답변 초안, 출처, 승인 액션",
+        "priority": "primary"
+      },
+      {
+        "name": "Evidence inspector",
+        "role": "담당 Agent Card, 관련 판례, 정정 기록",
+        "priority": "primary"
+      }
+    ],
+    "first_screen_contract": [
+      "첫 viewport에 큐 레일, 결정 화면, 인스펙터가 동시에 살아 있어야 함",
+      "선택된 질문의 라우팅 상태와 후보 점수가 결정 화면에 보여야 함",
+      "답변 초안에는 출처 인용이 두 개 이상 붙어 있어야 함",
+      "승인/에스컬레이션 액션이 결정 화면 안에 있어야 함",
+      "채팅 입력창이 화면의 주인공이 되면 실패"
+    ],
+    "avoid_layouts": [
+      "chatbot conversation as the main surface",
+      "hairline mobile feed",
+      "uniform dashboard metric cards",
+      "generic hero plus card grid"
+    ]
+  },
+  "design_differentiation": {
+    "must_feel_different_from": [
+      "ChatGPT-style chat app",
+      "generic admin dashboard",
+      "previous Tinge/Gyeol hairline mobile mocks",
+      "SaaS analytics template"
+    ],
+    "signature_moves": [
+      "Routing trace: 후보 Agent Card들의 점수와 선정 이유가 결정 화면의 첫 번째 객체다.",
+      "Merged answer: 걸친 질문은 두 담당 출처가 나란히 붙은 하나의 답으로 보인다.",
+      "Precedent dock: 판정 화면 옆에 과거 판례가 근거로 상주한다.",
+      "Append-only corrections: 정정 기록이 타임라인으로 쌓인 걸 보여준다."
+    ],
+    "repetition_risks": [
+      "큐를 모바일 피드처럼 헤어라인 행으로만 처리하는 것",
+      "인스펙터를 카드 더미로 채우는 것",
+      "상태 색을 남발해 대시보드처럼 보이는 것",
+      "다크 테마 관성으로 세련됨을 흉내 내는 것"
+    ]
+  },
+  "product_primitives": [
+    "org topbar",
+    "queue rail",
+    "queue item",
+    "routing state tag",
+    "routing trace",
+    "candidate score row",
+    "answer draft",
+    "source citation",
+    "merged answer provenance",
+    "agent card panel",
+    "precedent entry",
+    "correction timeline",
+    "approve action",
+    "escalate action",
+    "sync status"
+  ],
+  "component_decision": {
+    "mode": "llm-authored",
+    "rationale": "AON Desk is a triage workbench: a stateful queue rail, a decision surface with routing evidence and answer provenance, and an evidence inspector. Chat surfaces, metric card grids, and mobile feed patterns are excluded.",
+    "coverage_families": [
+      "button",
+      "input",
+      "navigation",
+      "feedback",
+      "content",
+      "overlay"
+    ],
+    "core_components": [
+      {
+        "name": "app-shell",
+        "family": "foundation",
+        "role": "Three-pane desktop workbench frame.",
+        "supports_primitive": "queue rail",
+        "decision_reason": "The job is triage across three co-present panes, not a single scroll.",
+        "states": [
+          "default"
+        ]
+      },
+      {
+        "name": "org-topbar",
+        "family": "navigation",
+        "role": "Org identity, sync status, search, operator account.",
+        "supports_primitive": "org topbar",
+        "decision_reason": "Operators need org-level status without leaving triage.",
+        "states": [
+          "default",
+          "syncing"
+        ]
+      },
+      {
+        "name": "queue-rail",
+        "family": "navigation",
+        "role": "Question queue grouped by routing state.",
+        "supports_primitive": "queue rail",
+        "decision_reason": "State-grouped triage replaces chat history.",
+        "states": [
+          "default"
+        ]
+      },
+      {
+        "name": "queue-item",
+        "family": "content",
+        "role": "One question: snippet, state tag, owner, age.",
+        "supports_primitive": "queue item",
+        "decision_reason": "Each row is a work item, not a message bubble.",
+        "states": [
+          "default",
+          "selected",
+          "urgent"
+        ]
+      },
+      {
+        "name": "routing-state-tag",
+        "family": "feedback",
+        "role": "Routed/Contested/Unowned status marker.",
+        "supports_primitive": "routing state tag",
+        "decision_reason": "The three routing outcomes are the product's core vocabulary.",
+        "states": [
+          "routed",
+          "contested",
+          "unowned"
+        ]
+      },
+      {
+        "name": "routing-trace",
+        "family": "content",
+        "role": "Candidate agent cards with scores and match reasons.",
+        "supports_primitive": "routing trace",
+        "decision_reason": "Why-this-owner evidence is the first object of the decision surface.",
+        "states": [
+          "default"
+        ]
+      },
+      {
+        "name": "candidate-score-row",
+        "family": "content",
+        "role": "One candidate: agent id, scope match, score bar.",
+        "supports_primitive": "candidate score row",
+        "decision_reason": "Arbitration needs comparable evidence rows.",
+        "states": [
+          "default",
+          "winner",
+          "rejected"
+        ]
+      },
+      {
+        "name": "answer-draft",
+        "family": "content",
+        "role": "Assembled answer text with inline provenance markers.",
+        "supports_primitive": "answer draft",
+        "decision_reason": "The answer is a supervised document, not a chat reply.",
+        "states": [
+          "draft",
+          "approved"
+        ]
+      },
+      {
+        "name": "source-citation",
+        "family": "content",
+        "role": "One cited document with owner agent and path.",
+        "supports_primitive": "source citation",
+        "decision_reason": "Every answer carries its evidence tags.",
+        "states": [
+          "default"
+        ]
+      },
+      {
+        "name": "agent-card-panel",
+        "family": "content",
+        "role": "Owner identity, scope, knowledge bundle status.",
+        "supports_primitive": "agent card panel",
+        "decision_reason": "The inspector grounds decisions in the card registry.",
+        "states": [
+          "default",
+          "stale"
+        ]
+      },
+      {
+        "name": "precedent-entry",
+        "family": "content",
+        "role": "One past ruling with question pattern and decision.",
+        "supports_primitive": "precedent entry",
+        "decision_reason": "Precedents are the arbitration evidence.",
+        "states": [
+          "default",
+          "applied"
+        ]
+      },
+      {
+        "name": "correction-timeline",
+        "family": "content",
+        "role": "Append-only list of corrections on an answer.",
+        "supports_primitive": "correction timeline",
+        "decision_reason": "Supervision history must be visible and immutable.",
+        "states": [
+          "default"
+        ]
+      },
+      {
+        "name": "approve-action",
+        "family": "button",
+        "role": "Approve the answer draft for sending.",
+        "supports_primitive": "approve action",
+        "decision_reason": "Approval is the operator's success action.",
+        "states": [
+          "default",
+          "pressed",
+          "approved"
+        ]
+      },
+      {
+        "name": "escalate-action",
+        "family": "button",
+        "role": "Send the question to a human manager.",
+        "supports_primitive": "escalate action",
+        "decision_reason": "The no-question-dropped invariant needs a visible exit.",
+        "states": [
+          "default"
+        ]
+      },
+      {
+        "name": "sync-status",
+        "family": "feedback",
+        "role": "Knowledge bundle sync freshness indicator.",
+        "supports_primitive": "sync status",
+        "decision_reason": "Answer quality depends on bundle freshness.",
+        "states": [
+          "fresh",
+          "syncing",
+          "stale"
+        ]
+      }
+    ],
+    "rejected_components": [
+      {
+        "name": "chat-composer",
+        "family": "input",
+        "reason": "The console supervises answers; it does not chat."
+      },
+      {
+        "name": "metric-card-grid",
+        "family": "data-display",
+        "reason": "Operational counts live in the rail, not a KPI wall."
+      },
+      {
+        "name": "post-feed",
+        "family": "content",
+        "reason": "A mobile feed grammar would repeat the previous mocks."
+      },
+      {
+        "name": "modal-wizard",
+        "family": "overlay",
+        "reason": "Arbitration happens in-pane with evidence co-present."
+      }
+    ]
+  },
+  "font_system": {
+    "heading": {
+      "name": "SUIT"
+    },
+    "body": {
+      "name": "Pretendard"
+    },
+    "mono": {
+      "name": "JetBrains Mono"
+    }
+  },
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "workbench",
+      "operations console",
+      "design system components",
+      "accessibility",
+      "data density"
+    ],
+    "avoid_sources_containing": [
+      "marketing landing",
+      "generic ecommerce"
+    ]
+  },
+  "seeds": [],
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Standard Violets",
+      "Deep Violets",
+      "Warm Gray"
+    ],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 5,
+      "active_candidate": 1,
+      "temperature": "neutral",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "airy",
+      "chrome_strategy": "achromatic-photographic",
+      "prefer_moods": [
+        "신뢰감",
+        "정돈",
+        "판단"
+      ],
+      "avoid_moods": [
+        "명품 클리셰",
+        "달콤함",
+        "차가운 테크"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 8,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": false
+    },
+    "notes": [
+      "Manual violet pick (Royal Purple): teal appears in 14/16 registry entries and greens dominated the auto candidates; the arbitration/precedent domain justifies the violet weight.",
+      "Routing states use semantic success/warning/danger tokens, kept small."
+    ],
+    "palette_roles": {
+      "primary": "Royal Purple",
+      "surface_tint": "Lilac Violet"
+    }
+  }
+}

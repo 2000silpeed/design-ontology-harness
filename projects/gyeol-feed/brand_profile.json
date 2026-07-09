@@ -1,0 +1,356 @@
+{
+  "brand_name": "Gyeol",
+  "system_name": "Gyeol Reading Feed System",
+  "product_summary": "A Korean-first short-text feed app. Readers follow strands of interest through a calm, newspaper-rhythm timeline, catch up on threads, and add one thought back into the conversation.",
+  "audiences": [
+    "출퇴근길에 관심 주제의 짧은 글을 따라잡고 싶은 20-40대 한국어 사용자",
+    "알고리즘 피드의 소음 대신 자신이 고른 결(주제 흐름)만 읽고 싶은 사용자",
+    "긴 글 대신 짧은 생각을 스레드에 얹는 방식으로 대화하고 싶은 작성자"
+  ],
+  "brand_keywords": [
+    "readable",
+    "calm",
+    "threaded",
+    "current",
+    "typographic"
+  ],
+  "anti_keywords": [
+    "engagement-bait",
+    "card-wall",
+    "twitter-clone-blue",
+    "dashboard-like",
+    "gamified-metrics",
+    "preset-looking"
+  ],
+  "tone_of_voice": [
+    "간결하고 중립적인",
+    "낚시성 없는",
+    "대화를 존중하는"
+  ],
+  "visual_keywords": [
+    "newspaper-rhythm",
+    "hairline-feed",
+    "strand-selector",
+    "thread-spine",
+    "typographic-density"
+  ],
+  "interaction_keywords": [
+    "follow-strand",
+    "catch-up",
+    "reply-in-thread",
+    "quote",
+    "compose-one-thought"
+  ],
+  "platforms": [
+    "mobile web",
+    "ios"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "320px mobile without horizontal overflow",
+    "Korean copy with stable wrapping",
+    "44px minimum touch targets"
+  ],
+  "application_concept": {
+    "primary_job": "사용자가 자신이 고른 관심 결(strand)의 새 글을 따라잡고, 스레드에 짧은 생각 하나를 얹는다.",
+    "domain_objects": [
+      "post",
+      "thread",
+      "strand",
+      "author",
+      "quote",
+      "reply",
+      "catch-up marker"
+    ],
+    "operating_mode": "reading-first mobile timeline",
+    "success_moment": "사용자가 안 읽은 글을 다 따라잡고, 하나의 스레드에 답글이나 인용을 남긴 상태.",
+    "differentiation": [
+      "타임라인은 카드 벽이 아니라 신문 조판 리듬의 헤어라인 피드다.",
+      "피드 상단의 strand 선택이 알고리즘 대신 무엇을 읽을지 결정한다.",
+      "이어진 글은 thread spine(세로 연결선)으로 묶여 대화 단위로 읽힌다.",
+      "지표는 낚시가 되지 않도록 절제된 메타 텍스트로만 존재한다."
+    ]
+  },
+  "layout_skeleton": {
+    "composition": "single-column reading feed with strand selector and thread spines",
+    "navigation_model": "bottom mode tabs with floating compose action",
+    "density": "dense",
+    "primary_regions": [
+      {
+        "name": "Feed topline",
+        "role": "브랜드, 계정, 검색 진입",
+        "priority": "secondary"
+      },
+      {
+        "name": "Strand rail",
+        "role": "관심 결 선택 — 전체, 디자인, AI, 야구 같은 주제 흐름 전환",
+        "priority": "primary"
+      },
+      {
+        "name": "Reading feed",
+        "role": "헤어라인으로 분리된 글 행의 연속. 스레드는 spine으로 묶임",
+        "priority": "primary"
+      },
+      {
+        "name": "Catch-up marker",
+        "role": "여기까지 읽음 표시와 새 글 경계",
+        "priority": "secondary"
+      },
+      {
+        "name": "Compose action",
+        "role": "thumb zone의 글쓰기 진입",
+        "priority": "primary"
+      }
+    ],
+    "first_screen_contract": [
+      "첫 viewport에 strand rail과 글 행 3개 이상이 함께 보여야 함",
+      "글 행은 카드 프레임 없이 헤어라인으로만 분리되어야 함",
+      "스레드로 이어진 글은 세로 spine으로 시각적으로 묶여야 함",
+      "compose 액션은 thumb zone에 고정",
+      "engagement 지표가 본문보다 시각적으로 우세하면 실패"
+    ],
+    "avoid_layouts": [
+      "post cards with rounded frames and shadows",
+      "trending card grid",
+      "stories row",
+      "generic hero plus card grid",
+      "dashboard metric cards"
+    ]
+  },
+  "design_differentiation": {
+    "must_feel_different_from": [
+      "Twitter/X clone with blue accent",
+      "generic social feed template",
+      "SaaS dashboard",
+      "Tinge fashion calibration mock (previous project)"
+    ],
+    "signature_moves": [
+      "Strand rail: 알고리즘 탭 대신 사용자가 고른 주제 결로 피드를 전환한다.",
+      "Thread spine: 이어진 대화를 세로 연결선으로 묶어 한 단위로 읽게 한다.",
+      "Catch-up marker: '여기까지 읽음' 경계가 피드의 시간 감각을 만든다.",
+      "Typographic feed: 아바타보다 본문 타이포그래피가 행의 주인공이다."
+    ],
+    "repetition_risks": [
+      "글 행을 라운드 카드로 감싸는 것",
+      "파란 단일 액센트로 회귀하는 것",
+      "지표 아이콘 행이 본문만큼 커지는 것",
+      "strand rail이 generic filter chip row처럼 보이는 것"
+    ]
+  },
+  "product_primitives": [
+    "strand rail",
+    "strand token",
+    "post row",
+    "thread spine",
+    "quote block",
+    "inline media",
+    "action meta row",
+    "catch-up marker",
+    "new posts pill",
+    "compose action",
+    "bottom mode tabs"
+  ],
+  "component_decision": {
+    "mode": "llm-authored",
+    "rationale": "Gyeol is a reading instrument: a strand selector, a hairline text feed with thread spines, and one compose action. Rounded post cards, trending grids, and stories rows are excluded so the timeline stays typographic and calm.",
+    "coverage_families": [
+      "button",
+      "input",
+      "navigation",
+      "feedback",
+      "content"
+    ],
+    "core_components": [
+      {
+        "name": "app-shell",
+        "family": "foundation",
+        "role": "Constrains the mobile reading column and fixed thumb-zone controls.",
+        "supports_primitive": "reading feed",
+        "decision_reason": "The feed needs a phone-scale reading column, not a dashboard shell.",
+        "states": ["default"]
+      },
+      {
+        "name": "feed-topline",
+        "family": "navigation",
+        "role": "Brand mark, account avatar, search entry.",
+        "supports_primitive": "reading feed",
+        "decision_reason": "The topline orients without becoming a marketing header.",
+        "states": ["default"]
+      },
+      {
+        "name": "strand-rail",
+        "family": "navigation",
+        "role": "Horizontal strand selector that switches the feed's topic flow.",
+        "supports_primitive": "strand rail",
+        "decision_reason": "User-chosen strands replace algorithmic tabs as the core control.",
+        "states": ["default"]
+      },
+      {
+        "name": "strand-token",
+        "family": "input",
+        "role": "One selectable strand with unread count.",
+        "supports_primitive": "strand token",
+        "decision_reason": "Strands must read as reading destinations, not filter chips.",
+        "states": ["default", "active", "unread"]
+      },
+      {
+        "name": "post-row",
+        "family": "content",
+        "role": "One post: author line, body text, restrained meta row.",
+        "supports_primitive": "post row",
+        "decision_reason": "Hairline rows keep the timeline typographic instead of a card wall.",
+        "states": ["default", "unread", "replied"]
+      },
+      {
+        "name": "thread-spine",
+        "family": "content",
+        "role": "Vertical line binding consecutive posts of one conversation.",
+        "supports_primitive": "thread spine",
+        "decision_reason": "Threads should be read as one unit without card nesting.",
+        "states": ["default", "continued"]
+      },
+      {
+        "name": "quote-block",
+        "family": "content",
+        "role": "Compact embedded reference to another post inside a post body.",
+        "supports_primitive": "quote block",
+        "decision_reason": "Quotes need containment without turning the row into a card stack.",
+        "states": ["default"]
+      },
+      {
+        "name": "inline-media",
+        "family": "content",
+        "role": "Edge-to-edge image attachment inside a post row.",
+        "supports_primitive": "inline media",
+        "decision_reason": "Media supports the text; it must not become a gallery card.",
+        "states": ["default"]
+      },
+      {
+        "name": "action-meta-row",
+        "family": "feedback",
+        "role": "Reply, repost, save actions as quiet meta text and small icons.",
+        "supports_primitive": "action meta row",
+        "decision_reason": "Metrics stay subordinate to the body text to avoid engagement bait.",
+        "states": ["default", "active"]
+      },
+      {
+        "name": "catch-up-marker",
+        "family": "feedback",
+        "role": "Boundary line showing where the reader left off.",
+        "supports_primitive": "catch-up marker",
+        "decision_reason": "The reading job needs a visible sense of progress.",
+        "states": ["default"]
+      },
+      {
+        "name": "new-posts-pill",
+        "family": "feedback",
+        "role": "Floating notice that new posts arrived above.",
+        "supports_primitive": "new posts pill",
+        "decision_reason": "Arrival should be announced without auto-scrolling the reader.",
+        "states": ["hidden", "visible"]
+      },
+      {
+        "name": "compose-action",
+        "family": "button",
+        "role": "Fixed thumb-zone entry into writing one thought.",
+        "supports_primitive": "compose action",
+        "decision_reason": "Writing is the one creation action and stays reachable.",
+        "states": ["default", "pressed"]
+      },
+      {
+        "name": "bottom-mode-tabs",
+        "family": "navigation",
+        "role": "Switches between feed, threads, alerts, and profile modes.",
+        "supports_primitive": "bottom mode tabs",
+        "decision_reason": "Mode navigation belongs at the bottom for one-handed use.",
+        "states": ["default", "active"]
+      }
+    ],
+    "rejected_components": [
+      {
+        "name": "post-card",
+        "family": "content",
+        "reason": "Rounded card frames break the newspaper rhythm and re-create the generic feed."
+      },
+      {
+        "name": "trending-card-grid",
+        "family": "content",
+        "reason": "Trends belong in a quiet list, not a marketing grid."
+      },
+      {
+        "name": "stories-row",
+        "family": "content",
+        "reason": "Ephemeral media circles contradict the reading-first promise."
+      },
+      {
+        "name": "engagement-counter-bar",
+        "family": "feedback",
+        "reason": "Large metric bars turn reading into scorekeeping."
+      },
+      {
+        "name": "modal-composer",
+        "family": "overlay",
+        "reason": "Composing opens as a focused surface, not an interruptive modal in the mock."
+      }
+    ]
+  },
+  "font_system": {
+    "heading": { "name": "Wanted Sans" },
+    "body": { "name": "Pretendard" }
+  },
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "typography",
+      "reading experience",
+      "feed design",
+      "design system components",
+      "accessibility"
+    ],
+    "avoid_sources_containing": [
+      "dashboard",
+      "marketing landing",
+      "generic ecommerce"
+    ]
+  },
+  "seeds": [],
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Standard Oranges",
+      "Natural Reds",
+      "Citrus",
+      "Warm Gray"
+    ],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 5,
+      "active_candidate": 4,
+      "temperature": "warm",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "airy",
+      "chrome_strategy": "achromatic-photographic",
+      "prefer_moods": [
+        "명확함",
+        "활기",
+        "신뢰감"
+      ],
+      "avoid_moods": [
+        "테크 대시보드",
+        "차가움",
+        "과한 파스텔"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 8,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": false
+    },
+    "notes": [
+      "Chrome stays achromatic; the single restrained accent must NOT be blue (anti twitter-clone).",
+      "Avatars and inline media carry the color."
+    ]
+  }
+}

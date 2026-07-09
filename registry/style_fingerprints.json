@@ -3,8 +3,8 @@
   "entries": [
     {
       "project": "agent-org-network",
-      "recorded_at": "2026-07-08T09:33:28+00:00",
-      "note": "backfill 2026-07-08",
+      "recorded_at": "2026-07-08T13:08:45+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "agent-org-network",
         "schema_version": "style-fingerprint/v1",
@@ -45,13 +45,14 @@
           6.0
         ],
         "uses_pill_shapes": true,
-        "color_count": 50
+        "color_count": 50,
+        "separation_style": "card-wall"
       }
     },
     {
       "project": "ai-chat-mobile-mock",
-      "recorded_at": "2026-07-08T09:33:29+00:00",
-      "note": "backfill 2026-07-08",
+      "recorded_at": "2026-07-08T13:08:45+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "ai-chat-mobile-mock",
         "schema_version": "style-fingerprint/v1",
@@ -102,13 +103,14 @@
           40.0
         ],
         "uses_pill_shapes": true,
-        "color_count": 27
+        "color_count": 27,
+        "separation_style": "card-wall"
       }
     },
     {
       "project": "contract-copilot-mock",
-      "recorded_at": "2026-07-08T09:33:29+00:00",
-      "note": "backfill 2026-07-08",
+      "recorded_at": "2026-07-08T13:08:45+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "contract-copilot-mock",
         "schema_version": "style-fingerprint/v1",
@@ -143,18 +145,21 @@
           "#5FC27D"
         ],
         "font_families": [
-          "Pretendard Variable"
+          "Pretendard Variable",
+          "Pretendard",
+          "JetBrains Mono"
         ],
         "serif_accent": false,
         "radius_values_px": [],
         "uses_pill_shapes": true,
-        "color_count": 32
+        "color_count": 32,
+        "separation_style": "card-wall"
       }
     },
     {
       "project": "ekos-static-prototype",
-      "recorded_at": "2026-07-08T09:33:29+00:00",
-      "note": "backfill 2026-07-08",
+      "recorded_at": "2026-07-08T13:08:45+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "ekos-static-prototype",
         "schema_version": "style-fingerprint/v1",
@@ -191,13 +196,14 @@
         "serif_accent": false,
         "radius_values_px": [],
         "uses_pill_shapes": false,
-        "color_count": 32
+        "color_count": 32,
+        "separation_style": "whitespace"
       }
     },
     {
       "project": "faircite-dual-mode-console",
-      "recorded_at": "2026-07-08T09:33:29+00:00",
-      "note": "backfill 2026-07-08",
+      "recorded_at": "2026-07-08T13:08:45+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "faircite-dual-mode-console",
         "schema_version": "style-fingerprint/v1",
@@ -234,13 +240,14 @@
         "serif_accent": false,
         "radius_values_px": [],
         "uses_pill_shapes": true,
-        "color_count": 26
+        "color_count": 26,
+        "separation_style": "card-wall"
       }
     },
     {
       "project": "faircite-harness-console",
-      "recorded_at": "2026-07-08T09:33:29+00:00",
-      "note": "backfill 2026-07-08",
+      "recorded_at": "2026-07-08T13:08:45+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "faircite-harness-console",
         "schema_version": "style-fingerprint/v1",
@@ -272,17 +279,20 @@
           "#50C878",
           "#CC7722"
         ],
-        "font_families": [],
+        "font_families": [
+          "Pretendard"
+        ],
         "serif_accent": false,
         "radius_values_px": [],
         "uses_pill_shapes": true,
-        "color_count": 15
+        "color_count": 15,
+        "separation_style": "card-wall"
       }
     },
     {
       "project": "fashion-magazine-pipeline-test",
-      "recorded_at": "2026-07-08T09:33:29+00:00",
-      "note": "backfill 2026-07-08",
+      "recorded_at": "2026-07-08T13:08:46+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "fashion-magazine-pipeline-test",
         "schema_version": "style-fingerprint/v1",
@@ -323,13 +333,14 @@
           8.0
         ],
         "uses_pill_shapes": true,
-        "color_count": 29
+        "color_count": 29,
+        "separation_style": "card-wall"
       }
     },
     {
       "project": "omnigen-crm-demo",
-      "recorded_at": "2026-07-08T09:33:30+00:00",
-      "note": "backfill 2026-07-08",
+      "recorded_at": "2026-07-08T13:08:46+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "omnigen-crm-demo",
         "schema_version": "style-fingerprint/v1",
@@ -375,13 +386,14 @@
           8.0
         ],
         "uses_pill_shapes": true,
-        "color_count": 42
+        "color_count": 42,
+        "separation_style": "card-wall"
       }
     },
     {
       "project": "panel-pop-mobile-mock",
-      "recorded_at": "2026-07-08T09:33:30+00:00",
-      "note": "backfill 2026-07-08",
+      "recorded_at": "2026-07-08T13:08:47+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "panel-pop-mobile-mock",
         "schema_version": "style-fingerprint/v1",
@@ -416,18 +428,21 @@
           "#8B2252"
         ],
         "font_families": [
-          "Pretendard Variable"
+          "Pretendard Variable",
+          "Pretendard",
+          "JetBrains Mono"
         ],
         "serif_accent": false,
         "radius_values_px": [],
         "uses_pill_shapes": true,
-        "color_count": 30
+        "color_count": 30,
+        "separation_style": "whitespace"
       }
     },
     {
       "project": "seoul-alley-mood-map",
-      "recorded_at": "2026-07-08T09:33:30+00:00",
-      "note": "backfill 2026-07-08",
+      "recorded_at": "2026-07-08T13:08:47+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "seoul-alley-mood-map",
         "schema_version": "style-fingerprint/v1",
@@ -464,13 +479,14 @@
         "serif_accent": false,
         "radius_values_px": [],
         "uses_pill_shapes": true,
-        "color_count": 32
+        "color_count": 32,
+        "separation_style": "card-wall"
       }
     },
     {
       "project": "sprout-community-mock",
-      "recorded_at": "2026-07-08T09:33:30+00:00",
-      "note": "backfill 2026-07-08",
+      "recorded_at": "2026-07-08T13:08:47+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "sprout-community-mock",
         "schema_version": "style-fingerprint/v1",
@@ -506,13 +522,14 @@
         "serif_accent": false,
         "radius_values_px": [],
         "uses_pill_shapes": true,
-        "color_count": 21
+        "color_count": 21,
+        "separation_style": "card-wall"
       }
     },
     {
       "project": "tactic-lens-mock",
-      "recorded_at": "2026-07-08T09:33:30+00:00",
-      "note": "backfill 2026-07-08",
+      "recorded_at": "2026-07-08T13:08:47+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "tactic-lens-mock",
         "schema_version": "style-fingerprint/v1",
@@ -546,13 +563,14 @@
         "serif_accent": false,
         "radius_values_px": [],
         "uses_pill_shapes": true,
-        "color_count": 22
+        "color_count": 22,
+        "separation_style": "card-wall"
       }
     },
     {
       "project": "world-cup-hub",
-      "recorded_at": "2026-07-08T09:33:30+00:00",
-      "note": "backfill 2026-07-08",
+      "recorded_at": "2026-07-08T13:08:47+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "world-cup-hub",
         "schema_version": "style-fingerprint/v1",
@@ -588,17 +606,23 @@
           "#F36C21",
           "#003893"
         ],
-        "font_families": [],
+        "font_families": [
+          "Space Grotesk",
+          "Pretendard",
+          "Inter",
+          "JetBrains Mono"
+        ],
         "serif_accent": false,
         "radius_values_px": [],
         "uses_pill_shapes": true,
-        "color_count": 60
+        "color_count": 60,
+        "separation_style": "card-wall"
       }
     },
     {
       "project": "fashion-curation-mobile",
-      "recorded_at": "2026-07-08T12:47:08+00:00",
-      "note": "registered on divergence pass",
+      "recorded_at": "2026-07-08T13:08:47+00:00",
+      "note": "backfill v2 2026-07-08",
       "fingerprint": {
         "project": "fashion-curation-mobile",
         "schema_version": "style-fingerprint/v1",
@@ -637,7 +661,97 @@
         "serif_accent": true,
         "radius_values_px": [],
         "uses_pill_shapes": false,
-        "color_count": 19
+        "color_count": 19,
+        "separation_style": "hairline-rows"
+      }
+    },
+    {
+      "project": "gyeol-feed",
+      "recorded_at": "2026-07-08T13:10:09+00:00",
+      "note": "registered on divergence pass",
+      "fingerprint": {
+        "project": "gyeol-feed",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css",
+          "tokens.css"
+        ],
+        "surface_tone": "neutral-light",
+        "surface_hexes": [
+          "#FAFAFA",
+          "#FFFFFF",
+          "#F5DEB3",
+          "#C9C9C9"
+        ],
+        "accent_hue_buckets": [
+          "red",
+          "blue"
+        ],
+        "accent_hexes": [
+          "#DC4C46",
+          "#E2725B",
+          "#967BB6",
+          "#FA8072"
+        ],
+        "font_families": [
+          "Noto Serif KR",
+          "Georgia",
+          "Wanted Sans",
+          "Pretendard"
+        ],
+        "serif_accent": true,
+        "radius_values_px": [],
+        "uses_pill_shapes": false,
+        "color_count": 18,
+        "separation_style": "hairline-rows"
+      }
+    },
+    {
+      "project": "agent-org-desk",
+      "recorded_at": "2026-07-08T13:32:02+00:00",
+      "note": "registered on divergence pass",
+      "fingerprint": {
+        "project": "agent-org-desk",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "index.html",
+          "styles.css",
+          "tokens.css"
+        ],
+        "surface_tone": "neutral-light",
+        "surface_hexes": [
+          "#FAFAFA",
+          "#FFFFFF",
+          "#FAFAFA",
+          "#FFFFFF"
+        ],
+        "accent_hue_buckets": [
+          "blue",
+          "red",
+          "lime",
+          "orange"
+        ],
+        "accent_hexes": [
+          "#6C3BAA",
+          "#E2725B",
+          "#967BB6",
+          "#50C878",
+          "#59308C",
+          "#CC7722"
+        ],
+        "font_families": [
+          "Noto Serif KR",
+          "Georgia",
+          "SUIT",
+          "Pretendard",
+          "JetBrains Mono"
+        ],
+        "serif_accent": false,
+        "radius_values_px": [],
+        "uses_pill_shapes": false,
+        "color_count": 19,
+        "separation_style": "whitespace"
       }
     }
   ]

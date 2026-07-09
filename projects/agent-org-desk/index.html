@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AON Desk — 라우팅 감독 콘솔</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./design-system/tokens.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main
+      class="app-shell app-mockup"
+      data-prototype-state-set="default,arbitrating,approved"
+      data-state="arbitrating"
+      aria-label="AON Desk 라우팅 감독 콘솔"
+    >
+      <header class="org-topbar">
+        <h1 class="brand-mark">AON Desk</h1>
+        <span class="org-name">우아한상사</span>
+        <div class="sync-status" data-state="fresh">
+          <span class="sync-dot" aria-hidden="true"></span>
+          지식 번들 12/12 최신 · 09:12 동기화
+        </div>
+        <label class="topbar-search">
+          <i data-lucide="search" class="lucide-icon" aria-hidden="true"></i>
+          <input type="search" placeholder="질문·에이전트·판례 검색" aria-label="검색" />
+        </label>
+        <span class="operator-chip">운영 · 한지원</span>
+      </header>
+
+      <div class="workbench">
+        <!-- queue rail -->
+        <nav class="queue-rail" aria-label="질문 큐">
+          <section class="queue-group" aria-label="다툼 질문">
+            <h2 class="group-head">
+              Contested <span class="group-count">2</span>
+            </h2>
+            <button class="queue-item" type="button" data-state="selected" aria-current="true">
+              <span class="routing-state-tag" data-state="contested">다툼</span>
+              <span class="item-snippet">환불 불가 조항이 있으면 청약철회도 못 하나요?</span>
+              <span class="item-meta">김수민 · CS 접수 · 10:42</span>
+            </button>
+            <button class="queue-item" type="button" data-state="urgent">
+              <span class="routing-state-tag" data-state="contested">다툼</span>
+              <span class="item-snippet">퇴사자 급여 정산일에 미사용 연차 수당도 포함되나요?</span>
+              <span class="item-meta">이현우 · 인사 접수 · 10:31</span>
+            </button>
+          </section>
+
+          <section class="queue-group" aria-label="무담당 질문">
+            <h2 class="group-head">
+              Unowned <span class="group-count">1</span>
+            </h2>
+            <button class="queue-item" type="button" data-state="default">
+              <span class="routing-state-tag" data-state="unowned">무담당</span>
+              <span class="item-snippet">해외 법인 카드로 결제한 교육비는 어디에 청구하죠?</span>
+              <span class="item-meta">박세영 · 슬랙 유입 · 10:18</span>
+            </button>
+          </section>
+
+          <section class="queue-group" aria-label="라우팅 완료 질문">
+            <h2 class="group-head">
+              Routed <span class="group-count">14</span>
+            </h2>
+            <button class="queue-item" type="button" data-state="default">
+              <span class="routing-state-tag" data-state="routed">완료</span>
+              <span class="item-snippet">구독 해지 후 데이터 보관 기간이 며칠인가요?</span>
+              <span class="item-meta">cs-retention · 10:37</span>
+            </button>
+            <button class="queue-item" type="button" data-state="default">
+              <span class="routing-state-tag" data-state="routed">완료</span>
+              <span class="item-snippet">재택 근무 장비 지원 한도가 얼마였죠?</span>
+              <span class="item-meta">hr-benefits · 10:29</span>
+            </button>
+            <button class="queue-item" type="button" data-state="default">
+              <span class="routing-state-tag" data-state="routed">완료</span>
+              <span class="item-snippet">B2B 계약서 표준 템플릿 최신본 위치 알려주세요.</span>
+              <span class="item-meta">legal-contracts · 10:12</span>
+            </button>
+          </section>
+        </nav>
+
+        <!-- decision surface -->
+        <section class="decision-surface" aria-label="판정 화면">
+          <header class="question-head">
+            <div class="question-status">
+              <span class="routing-state-tag" data-state="contested">다툼</span>
+              <span class="question-meta">Q-2618 · 김수민 · CS 접수 · 10:42</span>
+            </div>
+            <h2 class="question-text">환불 불가 조항이 있으면 청약철회도 못 하나요?</h2>
+          </header>
+
+          <section class="routing-trace" aria-label="라우팅 근거">
+            <div class="trace-head">
+              <h3 class="pane-label">Routing Trace</h3>
+              <figure class="coverage-map" aria-label="담당 범위 커버리지: 질문이 두 담당 범위의 교집합에 위치">
+                <svg viewBox="0 0 260 96" data-product-surface="ownership-coverage" aria-hidden="true">
+                  <title>담당 범위 교집합 지도</title>
+                  <circle cx="96" cy="48" r="40" fill="color-mix(in srgb, var(--ds-color-ink) 4%, transparent)" stroke="var(--ds-color-ink)" stroke-width="1" />
+                  <circle cx="164" cy="48" r="40" fill="color-mix(in srgb, var(--ds-color-ink) 4%, transparent)" stroke="var(--ds-color-ink)" stroke-width="1" stroke-dasharray="4 3" />
+                  <circle cx="130" cy="48" r="5" fill="var(--ds-color-ink)" />
+                  <text x="96" y="16" text-anchor="middle" font-size="9" fill="var(--ds-color-ink-muted)">cs-refund-policy</text>
+                  <text x="164" y="90" text-anchor="middle" font-size="9" fill="var(--ds-color-ink-muted)">legal-terms-clauses</text>
+                  <text x="130" y="36" text-anchor="middle" font-size="9" font-weight="700" fill="var(--ds-color-ink)">Q-2618</text>
+                </svg>
+                <figcaption class="coverage-caption">질문이 두 담당 범위에 걸침 → 공동 답변</figcaption>
+              </figure>
+            </div>
+            <div class="candidate-score-row" data-state="winner">
+              <span class="candidate-id">cs-refund-policy</span>
+              <span class="candidate-reason">환불·반품 범위 일치, 청약철회 문서 보유</span>
+              <span class="score-track" aria-hidden="true"><span class="score-fill" data-score="82"></span></span>
+              <span class="score-value">0.82</span>
+            </div>
+            <div class="candidate-score-row" data-state="winner">
+              <span class="candidate-id">legal-terms-clauses</span>
+              <span class="candidate-reason">약관 조항 해석 범위 일치</span>
+              <span class="score-track" aria-hidden="true"><span class="score-fill" data-score="79"></span></span>
+              <span class="score-value">0.79</span>
+            </div>
+            <div class="candidate-score-row" data-state="rejected">
+              <span class="candidate-id">cs-general-faq</span>
+              <span class="candidate-reason">일반 FAQ — 조항 해석 범위 밖</span>
+              <span class="score-track" aria-hidden="true"><span class="score-fill" data-score="41"></span></span>
+              <span class="score-value">0.41</span>
+            </div>
+            <p class="precedent-note">
+              판례 PR-041 적용 — 걸친 질문은 두 담당 지식을 합쳐 하나의 답으로. 담당 정리는 별도 판정.
+            </p>
+          </section>
+
+          <section class="answer-draft" data-state="draft" aria-label="답변 초안">
+            <div class="draft-head">
+              <h3 class="pane-label"><i data-lucide="file-check-2" class="lucide-icon" aria-hidden="true"></i>Answer Draft</h3>
+              <span class="draft-state" data-draft-state>초안 · 공동 답변</span>
+            </div>
+            <div class="draft-body">
+              <p>
+                가능합니다. 약관의 "환불 불가" 조항은 단순 변심 환불에만 적용되고, 전자상거래법상
+                청약철회권은 약관으로 제한할 수 없습니다<sup>[1]</sup>. 수령일로부터 7일 이내라면
+                해당 조항과 무관하게 청약철회를 진행하실 수 있습니다<sup>[2]</sup>.
+              </p>
+            </div>
+            <div class="source-citation">
+              <span class="citation-index">[1]</span>
+              <span class="citation-path">legal-terms-clauses / okf/약관해석/환불불가조항-범위.md</span>
+              <span class="citation-quote">"본 조항은 법정 청약철회권에 우선하지 아니한다"</span>
+            </div>
+            <div class="source-citation">
+              <span class="citation-index">[2]</span>
+              <span class="citation-path">cs-refund-policy / okf/청약철회/처리절차-7일기준.md</span>
+              <span class="citation-quote">"수령일 기준 7일 이내 접수 건은 조항 예외 없이 처리"</span>
+            </div>
+            <div class="decision-actions">
+              <button class="approve-action" type="button" data-state="default" data-approve>
+                <i data-lucide="check" class="lucide-icon" aria-hidden="true"></i>답변 승인
+              </button>
+              <button class="escalate-action" type="button" data-escalate>
+                <i data-lucide="corner-up-right" class="lucide-icon" aria-hidden="true"></i>매니저 에스컬레이션
+              </button>
+              <p class="action-note" data-action-note>승인 시 요청자에게 출처 꼬리표와 함께 전송됩니다.</p>
+            </div>
+          </section>
+        </section>
+
+        <!-- evidence inspector -->
+        <aside class="evidence-inspector" aria-label="근거 인스펙터">
+          <section class="agent-card-panel" data-state="default" aria-label="담당 에이전트 카드">
+            <h3 class="pane-label"><i data-lucide="id-card" class="lucide-icon" aria-hidden="true"></i>Agent Card</h3>
+            <p class="agent-id">cs-refund-policy</p>
+            <dl class="card-fields">
+              <div class="card-field"><dt>소유자</dt><dd>박지연 · CS팀</dd></div>
+              <div class="card-field"><dt>담당 범위</dt><dd>환불 · 반품 · 취소 수수료 · 청약철회</dd></div>
+              <div class="card-field"><dt>지식 번들</dt><dd>문서 24개 · 오늘 09:12 동기화</dd></div>
+              <div class="card-field"><dt>공동 담당</dt><dd>legal-terms-clauses (이번 답변)</dd></div>
+            </dl>
+            <figure class="bundle-visual" aria-label="지식 번들 문서 구성: 절차 12, 조항 해석 8, FAQ 4">
+              <svg viewBox="0 0 280 44" data-product-surface="bundle-composition" aria-hidden="true">
+                <title>지식 번들 문서 구성</title>
+                <rect x="0" y="0" width="140" height="10" fill="var(--ds-color-ink)" />
+                <rect x="141" y="0" width="93" height="10" fill="var(--ds-color-border-strong)" />
+                <rect x="235" y="0" width="45" height="10" fill="var(--ds-color-border)" />
+                <text x="0" y="26" font-size="9" fill="var(--ds-color-ink-muted)">절차 12</text>
+                <text x="141" y="26" font-size="9" fill="var(--ds-color-ink-muted)">조항 해석 8</text>
+                <text x="235" y="26" font-size="9" fill="var(--ds-color-ink-muted)">FAQ 4</text>
+              </svg>
+            </figure>
+          </section>
+
+          <section class="precedent-dock" aria-label="관련 판례">
+            <h3 class="pane-label"><i data-lucide="scale" class="lucide-icon" aria-hidden="true"></i>Precedents</h3>
+            <button class="precedent-entry" type="button" data-state="applied">
+              <span class="precedent-id">PR-041</span>
+              <span class="precedent-rule">환불×청약철회 걸친 질문 → 공동 답변, 담당 별도 판정</span>
+              <span class="precedent-meta">6/28 확정 · 적용 3회</span>
+            </button>
+            <button class="precedent-entry" type="button" data-state="default">
+              <span class="precedent-id">PR-033</span>
+              <span class="precedent-rule">약관 해석이 걸리면 법무 검토를 우선</span>
+              <span class="precedent-meta">6/12 확정 · 적용 11회</span>
+            </button>
+          </section>
+
+          <section class="correction-timeline" aria-label="정정 기록">
+            <h3 class="pane-label"><i data-lucide="pen-line" class="lucide-icon" aria-hidden="true"></i>Corrections</h3>
+            <div class="correction-entry">
+              <span class="correction-when">6/30 14:20 · 박지연</span>
+              <span class="correction-what">A-2544 환불 수수료 기준을 3%→2.5%로 정정 (원본 보존)</span>
+            </div>
+            <div class="correction-entry">
+              <span class="correction-when">6/27 09:55 · 시스템</span>
+              <span class="correction-what">PR-041 확정으로 A-2531 담당 표기 갱신</span>
+            </div>
+          </section>
+        </aside>
+      </div>
+
+      <footer class="status-bar">
+        <span>대기 17</span>
+        <span>오늘 승인 9</span>
+        <span>에스컬레이션 1</span>
+        <span class="status-right">불변식: 버려지는 질문 없음 · 정정은 append-only</span>
+      </footer>
+
+      <p class="approve-toast" data-state="hidden" role="status" aria-live="polite" data-toast>
+        답변이 승인되어 전송 대기열에 들어갔습니다
+      </p>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

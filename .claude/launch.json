@@ -4,8 +4,40 @@
     {
       "name": "tinge-mockup",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4321", "--directory", "projects/fashion-curation-mobile"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4321",
+        "--directory",
+        "projects/fashion-curation-mobile"
+      ],
       "port": 4321,
+      "autoPort": false
+    },
+    {
+      "name": "gyeol-mockup",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4322",
+        "--directory",
+        "projects/gyeol-feed"
+      ],
+      "port": 4322,
+      "autoPort": false
+    },
+    {
+      "name": "aon-desk-mockup",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4323",
+        "--directory",
+        "projects/agent-org-desk"
+      ],
+      "port": 4323,
       "autoPort": false
     }
   ]

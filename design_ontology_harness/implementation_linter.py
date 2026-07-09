@@ -135,6 +135,9 @@ CSS_PAINTED_GRIDFIELD_RE = re.compile(
     r"linear-gradient\([^;]*?1px[^;]*?transparent[^;]*?;[^}]*?background-size\s*:",
     re.IGNORECASE | re.DOTALL,
 )
+CSS_RULE_BLOCK_RE = re.compile(r"(?P<selector>[^{}]+)\{(?P<body>[^{}]*)\}")
+EDGE_BAR_EDGE_RE = re.compile(r"\b(?:left|right)\s*:\s*0(?:px)?(?![\w.%])", re.IGNORECASE)
+EDGE_BAR_WIDTH_RE = re.compile(r"\bwidth\s*:\s*[1-5](?:\.\d+)?px\b", re.IGNORECASE)
 COLOR_SCHEME_DARK_RE = re.compile(r"\bcolor-scheme\s*:\s*dark\b", re.IGNORECASE)
 COLOR_SCHEME_LIGHT_RE = re.compile(r"\bcolor-scheme\s*:\s*light\b", re.IGNORECASE)
 DARK_MODE_MARKER_RE = re.compile(r"(?:data-theme=['\"]dark['\"]|prefers-color-scheme\s*:\s*dark|\bcolor-scheme\s*:\s*dark\b)", re.IGNORECASE)
@@ -973,6 +976,30 @@ def _lint_llm_default_tells(
                 _single_line_snippet(painted_grid.group(0), limit=200),
             )
         )
+
+    # DS096 — 엣지 세로 바 장식: 상태/강조를 화면 가장자리 세로 바로 표시하는 습관.
+    # DS090(callout 셀렉터의 border-left)을 셀렉터명을 바꿔 우회하는 pseudo-element 변형을 잡는다.
+    for block in CSS_RULE_BLOCK_RE.finditer(css_text):
+        body = block.group("body")
+        if (
+            "absolute" in body
+            and EDGE_BAR_EDGE_RE.search(body)
+            and EDGE_BAR_WIDTH_RE.search(body)
+            and re.search(r"\btop\s*:", body)
+            and re.search(r"\bbottom\s*:", body)
+            and re.search(r"\bbackground\s*:", body)
+        ):
+            issues.append(
+                _issue(
+                    "DS096",
+                    first_ui_path,
+                    1,
+                    1,
+                    "Edge vertical bar decoration: status/emphasis rendered as a thin full-height bar at the container edge is doc-callout grammar in disguise; use a dot, a short label, or a subtle background tint instead.",
+                    _single_line_snippet(block.group(0), limit=200),
+                )
+            )
+            break
 
     # DS094 — placeholder copy: 실데이터 대신 채움말
     placeholder = PLACEHOLDER_COPY_RE.search(combined)

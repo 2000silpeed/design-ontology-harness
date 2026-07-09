@@ -102,6 +102,28 @@ def test_divergence_gate_fails_on_repeat(tmp_path):
     assert fresh_report["verdict"] == "ok"
 
 
+def test_separation_style_detection(tmp_path):
+    hairline_css = "\n".join(
+        f".row{i} {{ border-bottom: 1px solid var(--ds-color-border); }}" for i in range(6)
+    )
+    fp = extract_style_fingerprint(_write_project(tmp_path, "hair", hairline_css))
+    assert fp.separation_style == "hairline-rows"
+
+    card_css = "\n".join(
+        f".card{i} {{ border: 1px solid var(--ds-color-border); border-radius: var(--ds-radius-md); }}"
+        for i in range(6)
+    )
+    fp_card = extract_style_fingerprint(_write_project(tmp_path, "card", card_css))
+    assert fp_card.separation_style == "card-wall"
+
+    same_a = extract_style_fingerprint(_write_project(tmp_path, "ha", hairline_css))
+    same_b = extract_style_fingerprint(_write_project(tmp_path, "hb", hairline_css))
+    diff = extract_style_fingerprint(_write_project(tmp_path, "cw", card_css))
+    same_score = compare_fingerprints(same_a, same_b)["similarity"]
+    diff_score = compare_fingerprints(same_a, diff)["similarity"]
+    assert same_score > diff_score, "shared composition grammar must raise similarity"
+
+
 def test_registry_upserts_by_project(tmp_path):
     registry_path = tmp_path / "registry.json"
     fp = StyleFingerprint(project="x", surface_tone="dark")

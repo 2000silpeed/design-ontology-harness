@@ -149,6 +149,43 @@ def test_ds095_ignores_svg_instrument(tmp_path: Path):
     assert "DS095" not in _codes(report)
 
 
+def test_ds096_flags_edge_status_bar(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        """
+        .post-row[data-state="unread"]::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: var(--ds-space-5);
+          bottom: var(--ds-space-5);
+          width: 2px;
+          background: var(--ds-color-ink);
+        }
+        """,
+    )
+    report = lint_implementation(tmp_path)
+    assert "DS096" in _codes(report)
+
+
+def test_ds096_ignores_inline_thread_spine(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        """
+        .thread-spine {
+          position: absolute;
+          left: calc(var(--ds-space-5) + 19px);
+          top: 0;
+          bottom: 0;
+          width: 2px;
+          background: var(--ds-color-border-strong);
+        }
+        """,
+    )
+    report = lint_implementation(tmp_path)
+    assert "DS096" not in _codes(report)
+
+
 def test_realistic_surface_passes_all_tells(tmp_path: Path):
     _write_ui(
         tmp_path,
