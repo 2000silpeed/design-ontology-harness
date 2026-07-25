@@ -282,6 +282,26 @@ def _validate_preset_dir(
         except json.JSONDecodeError as exc:
             report.errors.append(f"[{preset_id}] token_schema.json parse error: {exc}")
 
+    if manifest.get("component_contract_version"):
+        if manifest.get("component_contract_version") != "component-contract/v1":
+            report.errors.append(
+                f"[{preset_id}] unsupported component_contract_version "
+                f"'{manifest.get('component_contract_version')}'"
+            )
+        component_specs_path = preset_dir / "components" / "component_specs.json"
+        if not component_specs_path.exists():
+            report.errors.append(f"[{preset_id}] component contract metadata requires components/component_specs.json")
+        else:
+            try:
+                component_specs = json.loads(component_specs_path.read_text(encoding="utf-8"))
+                from .component_contracts import validate_component_contracts
+
+                contract_report = validate_component_contracts(component_specs, strict_authored=True)
+                for error in contract_report["errors"]:
+                    report.errors.append(f"[{preset_id}] component contract: {error}")
+            except json.JSONDecodeError as exc:
+                report.errors.append(f"[{preset_id}] component_specs.json parse error: {exc}")
+
     sources_path = preset_dir / "sources.json"
     if sources_path.exists():
         report.extend(_validate_sources_file(preset_id=preset_id, path=sources_path))

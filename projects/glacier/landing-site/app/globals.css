@@ -151,6 +151,9 @@ html {
 }
 
 body {
+  /* 한글 줄바꿈 계약(DS106). 없으면 한글이 어절 중간에서 잘린다. */
+  word-break: var(--ds-wrap-word-break);
+  overflow-wrap: var(--ds-wrap-overflow);
   background: var(--color-canvas);
   color: var(--color-text);
   font-family: var(--font-body);

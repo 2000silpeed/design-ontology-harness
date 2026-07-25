@@ -19,7 +19,7 @@ body {
   color: var(--ds-color-ink);
   word-break: keep-all;
   overflow-wrap: normal;
-  line-height: 1.55;
+  line-height: var(--ds-leading-body);
   min-height: 100vh;
 }
 

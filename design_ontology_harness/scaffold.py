@@ -116,9 +116,9 @@ def scaffold_project(
                 "prefer_related_families": True,
             },
             "notes": [
-                "REFERENCE X Vol.1 Color Reference (30 families, blues/greens/violets 포함)",
-                "preferred_families 를 브랜드 방향에 맞춰 채우세요",
-                "prefer_moods / avoid_moods 로 mood 기반 팔레트 선택 가능",
+                "docs/color-reference.md is the synchronized Semantic OS color authority",
+                "preferred_families를 브랜드 방향에 맞춰 채우세요",
+                "prefer_moods / avoid_moods로 mood 기반 팔레트 선택 가능",
             ],
         }
 

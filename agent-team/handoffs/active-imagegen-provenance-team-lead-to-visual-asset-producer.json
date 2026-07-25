@@ -1,0 +1,63 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "active-imagegen-provenance-2026-07-13-001",
+  "created_at": "2026-07-13T23:44:49+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "team-lead",
+  "to_role": "visual-asset-producer",
+  "stage": "visual",
+  "status": "needs-work",
+  "summary": "The harness emits image_gen prompt packets and validates resulting files, but generated-asset manifests do not structurally prove which generator run and candidate produced an accepted asset. Make real Codex/GPT image generation provenance a fail-closed, versioned manifest property and migrate the World Cup Hub integrated asset.",
+  "input_artifacts": [
+    {
+      "path": "design_ontology_harness/visual_asset_prompts.py",
+      "sha256": "aa9bf7c23d93c1d7a7b43eb550b551135cc975e6c1f7dc349aff844d91048b48"
+    },
+    {
+      "path": "tests/test_visual_asset_registry.py",
+      "sha256": "d200f601659dc38c99b96f40566d1fa721815713003b1fd6780b7f3e706c357e"
+    },
+    {
+      "path": "plugins/design-system-harness/skills/design-system-visual-assets/SKILL.md",
+      "sha256": "69ba7939b02e3ecc2bb19720e3596b7b88fcb1b92b7ffd8b223740eab1d475ae"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/manifest.json",
+      "sha256": "4ab6f6b11eae5cb0045c3db77229cc543780258b9ed0e7c779308b3faaa65107"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "design_ontology_harness/visual_asset_registry.py",
+      "sha256": "1a55a95117373e2c796b6dad4a1b9b806d46dc1133f1f1e69bcf3788284c335b"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/active-imagegen-provenance-team-lead-to-visual-asset-producer.json"
+  ],
+  "decisions": [
+    "A generated asset is not accepted on prompt text and file hashes alone; it must identify the actual generator, generation run, and selected candidate.",
+    "Keep prompt-packet construction deterministic while making the Visual Asset Producer responsible for invoking the available image tool and recording its returned identity.",
+    "Migrate the existing World Cup Hub asset from its verified Codex generated_images path instead of inventing provenance."
+  ],
+  "gate_results": [
+    {
+      "command": "jq -e '.assets[] | select(.acquisition_mode == \"generated\" and .status == \"integrated\") | has(\"generator\") and has(\"generation_run_id\") and has(\"candidate_id\")' projects/world-cup-hub/public/generated/design-system/manifest.json",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "The integrated generated hero records hashes and an original Codex path but lacks explicit generator, generation_run_id, and candidate_id fields."
+    },
+    {
+      "command": "uv run pytest tests/test_visual_asset_prompts.py tests/test_visual_asset_registry.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Current prompt and registry tests pass, confirming the missing producer identity is not covered by the existing validation contract."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Provenance fields must come from a real tool result or a verifiable local generation path; user-authored arbitrary strings must not be treated as equivalent evidence.",
+    "Changing the asset schema without a migration path would invalidate existing accepted assets."
+  ],
+  "next_action": "Visual Asset Producer adds versioned generator/run/candidate provenance validation and tests, updates the image-generation skill contract, migrates the verified World Cup Hub asset, validates all image assets, and returns a schema-valid handoff with current hashes."
+}

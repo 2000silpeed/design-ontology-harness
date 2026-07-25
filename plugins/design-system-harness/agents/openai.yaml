@@ -1,0 +1,3 @@
+display_name: Design System Harness
+short_description: Author app concepts and apply local design-system artifacts
+default_prompt: Use $design-system-concept-author to author application_concept, layout_skeleton, and design_differentiation before synthesis; then implement UI changes using the generated design-system artifacts; use website reference inspections only as advisory morphology/density/interaction evidence

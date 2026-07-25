@@ -1,0 +1,4 @@
+interface:
+  display_name: "Release Governor"
+  short_description: "Run the release-governor stage with evidence"
+  default_prompt: "Use $design-release-governor for the assigned team stage and return gate evidence."

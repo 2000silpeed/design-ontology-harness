@@ -1,0 +1,94 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "semantic-color-authority-improvement-2026-07-13-001",
+  "created_at": "2026-07-13T23:24:00+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "token-curator",
+  "to_role": "team-lead",
+  "stage": "tokens-and-components",
+  "status": "ready",
+  "summary": "Embedded Semantic OS ontology and generated COY catalog namespaces now fail closed on malformed, partial, duplicated, out-of-order, or checksum-inconsistent markers while genuinely marker-free custom card documents retain local fallback.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/ontology-corrupt-marker-to-token-curator.json",
+      "sha256": "3fc408935b542b93ac231de5cd1224eac606858f5f2aa89f4c50be655e0c790e"
+    },
+    {
+      "path": "agent-team/handoffs/semantic-color-corrupt-marker-token-curator-to-team-lead.json",
+      "sha256": "8dcfdfa72e75772104df54c794a60ec3d756a8d06bb96616e43f7f3c718ceb8a"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "design_ontology_harness/semantic_color_markdown.py",
+      "sha256": "8a0e7600aa9cfa3d0d0d91bdb79e9d1888821f4cf5394ca0f80e1660a5ff4e24"
+    },
+    {
+      "path": "tests/test_semantic_color_markdown.py",
+      "sha256": "62eba7ab8ab16889c9bb0b1abe622ca01391d05ce06f41fe51ce81dd18078096"
+    }
+  ],
+  "changed_paths": [
+    "design_ontology_harness/semantic_color_markdown.py",
+    "tests/test_semantic_color_markdown.py",
+    "agent-team/handoffs/semantic-color-ontology-marker-token-curator-to-team-lead.json"
+  ],
+  "decisions": [
+    "Treat any ontology begin-prefix, end marker, or typed-fence sentinel as namespace presence and require exactly one correctly formed instance of each before parsing or stripping.",
+    "Reject non-hex and short ontology checksum tokens before the loader can interpret the embedded graph as absent and rebuild from visible cards.",
+    "Treat any catalog begin-prefix or end marker as namespace presence, require exactly one correctly formed pair, and bind the catalog marker digest to the checksum-verified embedded ontology payload.",
+    "Allow a catalog-free document with a valid embedded ontology and a fully marker-free custom card document, but reject a catalog namespace that has no embedded ontology authority.",
+    "Validate and replace the existing catalog before replacing the ontology during sync so an internally consistent old snapshot can advance to a new source payload while corrupt marker metadata still fails closed.",
+    "Keep catalog table-body exactness in the deterministic sync/check contract; marker validity and marker-to-payload identity are parser invariants."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run pytest tests/test_semantic_color_markdown.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "34 passed, including malformed/partial ontology and catalog namespaces, catalog-to-payload checksum mismatch, marker-free fallback, ontology-without-catalog, catalog-without-ontology, duplicate prevention, and old-to-new source sync."
+    },
+    {
+      "command": "uv run pytest <semantic color, adapter, style, and graph targets> -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "111 passed in 8.48s."
+    },
+    {
+      "command": "uv run pytest -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "470 passed, 10 warnings, 2 subtests passed in 29.21s."
+    },
+    {
+      "command": "uv run ruff check design_ontology_harness/semantic_color_markdown.py tests/test_semantic_color_markdown.py && git diff --check",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "All checks passed with no whitespace errors."
+    },
+    {
+      "command": "uv run design-ontology sync-semantic-colors --source ../semantic-os/domains/color/ontology/build/graph.json --color-reference-output docs/color-reference.md --ontology-output design_ontology_harness/resources/semantic_color_ontology.json --check --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "ok=true and changed=false; 358 nodes, 1227 edges, 290 keywords, 113 HEX keywords, 29 Pantone COY identities, payload SHA 62dafefbd3a981d8e34564bec44f9de02111e84bec78e20b87b7ba458f46e7ef, runtime policy valid."
+    },
+    {
+      "command": "uv run pytest tests/test_agent_team.py tests/test_agent_packs.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "23 passed, 2 subtests passed in 0.14s."
+    },
+    {
+      "command": "uv run design-ontology validate-agent-team --target-repo . --artifact-dir agent-team --targets codex,claude --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "ok=true, role_count=9, errors=[]."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Namespace detection is intentionally strict: literal ontology or catalog marker syntax in unrelated prose is treated as corruption rather than ignored.",
+    "Catalog table-body edits are detected by sync --check rather than by parse; its marker digest identifies the embedded ontology payload from which the table must be regenerated."
+  ],
+  "next_action": "Team Lead independently validates this superseding handoff and continues the release audit from the now fail-closed Markdown color authority."
+}

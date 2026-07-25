@@ -4,8 +4,9 @@
   "repo": "semantic-os",
   "path": "domains/color/ontology/build/graph.json",
   "built_at": "2026-06-17T23:12:02.191192+00:00",
-  "imported_at": "2026-07-08T13:40:41+00:00",
   "source_schema_version": "default-video-production-ontology-v1",
+  "source_graph_sha256": "288b40d9cc03b552e802cf061dcd5a1dc193ad47f84e18d13d1b71160344c301",
+  "transport": "docs/color-reference.md",
   "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included."
  },
  "node_count": 358,

@@ -50,9 +50,9 @@ Color rule: Token binding is necessary but not sufficient. Do not recombine `--d
 ## Typography
 | Role | Font | Token | Notes |
 | --- | --- | --- | --- |
-| heading | Pretendard | `--ds-font-heading` | 한글 UI 서체의 사실상 표준. Apple SD Gothic Neo 기반이지만 더 정교함. 라틴은 Inter 계열. |
-| body | Pretendard | `--ds-font-body` | 한글 UI 서체의 사실상 표준. Apple SD Gothic Neo 기반이지만 더 정교함. 라틴은 Inter 계열. |
-| mono | IBM Plex Mono | `--ds-font-mono` | data, code, shortcuts only |
+| heading | Inter | `--ds-font-heading` | enterprise neutral sans — workspace-header / thread-title / policy-check 라벨 / compliance-artifact... |
+| body | Inter | `--ds-font-body` | chat-message body / compliance-artifact paragraph / audit-trail description 공용 본문, line-height 1.... |
+| mono | JetBrains Mono | `--ds-font-mono` | data, code, shortcuts only |
 | korean | Pretendard | `--ds-font-ko` | primary script support |
 
 - type scale: `xs`=12, `sm`=13, `md`=15, `lg`=19, `xl`=24, `2xl`=30, `3xl`=37
@@ -62,19 +62,19 @@ Color rule: Token binding is necessary but not sufficient. Do not recombine `--d
 
 ## Spacing And Shape
 - spacing scale: `0`, `2`, `4`, `8`, `12`, `16`, `24`, `32`, `48`, `64`, `96`
-- density bias: `airy`
+- density bias: `balanced`
 - radius scale: `none`, `sm`, `md`, `lg`, `xl`, `pill`
 - corner bias: `round`
 
 ## Component Priorities
 | Family | Priority | States | Components |
 | --- | --- | --- | --- |
-| button | high | `default`, `hover`, `active`, `disabled`, `loading` | `primary-button`, `secondary-button`, `ghost-button`, `icon-button`, `cta-button`, `link-button`, +8 more |
-| data-display | high | `default`, `sorted`, `filtered`, `empty` | `chat-message`, `chat-thread`, `comment-thread`, `tag`, `data-table`, `column-header`, +20 more |
-| editorial | high | `default`, `selected`, `editing` | `editor-canvas`, `editor-toolbar`, `inline-format-menu`, `slash-command-menu`, `block-controls`, `content-card`, +3 more |
-| feedback | high | `info`, `success`, `warning`, `danger` | `inline-alert`, `empty-state`, `toast`, `status-badge`, `empty-conversation-state`, `banner`, +7 more |
-| input | high | `default`, `focus`, `error`, `disabled` | `text-field`, `search-field`, `segmented-control`, `chat-input`, `comment-input`, `chip`, +20 more |
-| marketing | high | `default`, `hover`, `in-view` | `logo-cloud`, `customer-logo`, `metric-highlight`, `press-quote`, `faq-section`, `faq-item`, +7 more |
+| button | high | `default`, `hover`, `active`, `disabled`, `loading` | `primary-button`, `secondary-button`, `icon-button`, `regenerate-button`, `stop-generation-button`, `new-thread-button`, +5 more |
+| copilot-artifact | high | `default`, `loading`, `verified`, `error` | `message-artifact`, `artifact-preview-panel`, `draft-document`, `outline-sidebar`, `revision-timeline`, `reading-mode-toggle`, +5 more |
+| copilot-chat | high | `default`, `loading`, `complete`, `error` | `streaming-cursor`, `typing-indicator`, `inline-citation`, `mention-chip`, `suggestion-card`, `thread-header` |
+| data-display | high | `default`, `sorted`, `filtered`, `empty`, `loading` | `chat-message`, `chat-thread`, `comment-thread`, `tag`, `metric-strip`, `status-summary-row`, +24 more |
+| document | high | `default`, `selected`, `commenting`, `resolved` | `article-body`, `table-of-contents`, `heading-anchor`, `prose-block`, `reading-pane`, `footnote`, +3 more |
+| editorial | high | `default`, `selected`, `editing` | `editor-canvas`, `editor-toolbar`, `inline-format-menu`, `slash-command-menu`, `block-controls` |
 
 ## Signature Components
 | Component | Family | Anatomy | Token Binding |
@@ -84,7 +84,34 @@ Color rule: Token binding is necessary but not sufficient. Do not recombine `--d
 | `chat-thread` | data-display | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
 | `mention-chip` | copilot-chat | parts: container, header, content-area, footer(optional), action(optional); states: default, loading, empty, error | slots: surface, text, border, radius, padding |
 | `suggestion-card` | copilot-chat | parts: container, inner-content; states: default, hover, focus-visible | slots: surface, border, radius, padding |
-| `prompt-composer` | input | parts: container, label, input-area, helper-text(optional), leading-icon(optional), +1 more; states: default, focus,... | slots: surface, text, border, radius, padding, font |
+| `audit-timeline` | data-display | parts: list, event-item, timestamp, actor, event-summary, +1 more; states: default, filtered, expanded, empty | slots: surface, border |
+
+## Advanced Component Menu
+| Component | Use When | Pairs With |
+| --- | --- | --- |
+| `resizable-split-pane` | primary work happens between list, canvas/chat, and detail panels; users need to compare or inspect adjacent information without navigation | `thread-list`, `artifact-preview-panel`, `inspector-drawer` |
+| `citation-drawer` | answers must show supporting policy, document, or source records; users need to inspect evidence without losing conversation context | `inline-citation`, `source-card`, `evidence-graph` |
+| `decision-record-card` | a reviewer or AI-assisted workflow reaches a durable decision; regulated teams need record ids and retention status | `audit-timeline`, `approval-rail`, `citation-drawer` |
+| `policy-matrix` | multiple policy rules must be checked against multiple claims or fields; reviewers need dense scan-and-drill compliance status | `risk-summary-card`, `exception-queue`, `approval-rail` |
+| `source-card` | AI output depends on external or internal source records; users need a repeatable citation preview component | `citation-drawer`, `evidence-graph`, `inline-citation` |
+| `audit-timeline` | regulated workflows require traceable user and AI actions; reviewers need to reconstruct what happened before approval | `decision-record-card`, `approval-rail`, `tool-call-trace` |
+| `diff-viewer` | AI rewrites, policy edits, or reviewer changes need auditability; users must approve what changed before publishing | `redline-viewer`, `revision-timeline`, `approval-rail` |
+| `redline-viewer` | legal, compliance, or editorial text needs reviewer markup; comments must stay anchored to exact text ranges | `diff-viewer`, `comment-thread`, `approval-rail` |
+
+Use these as ontology-approved building blocks when the workflow calls for richer professional UI. They still inherit token, typography, accessibility, and reference-governance rules.
+
+## Design Context Pack
+- activation: `planned`
+- providers: `pinterest`=preview, `lazyweb`=suggested
+- flow coverage: general-product-ui(covered), messaging(covered), navigation(covered), settings(covered), data-review(gap), document(gap)
+| Context | Provider | Allowed Use |
+| --- | --- | --- |
+| chatgpt enterprise admin console | `lazyweb` | morphology: `general-interface-composition`; flows: `settings` |
+| anthropic claude enterprise workspace | `lazyweb` | morphology: `general-interface-composition`; flows: `navigation` |
+| stripe dialog documentation | `lazyweb` | morphology: `general-interface-composition`; flows: `general-product-ui` |
+| salesforce einstein assistant | `lazyweb` | morphology: `general-interface-composition`; flows: `messaging` |
+- research gap `no-observed-screens`: Capture or export 3-8 representative screens before treating morphology guidance as grounded.
+- research gap `real-app-corpus-provider-not-connected`: Connect Lazyweb MCP or export selected Lazyweb screens into visual_reference.sources with provenance.
 
 ## Reference Governance
 - allowed from references: `component morphology`, `layout density`, `panel/card proportions`, `hierarchy rhythm`, `interaction affordance patterns`
@@ -93,9 +120,14 @@ Color rule: Token binding is necessary but not sufficient. Do not recombine `--d
   - 기존 핵심 화면, 진입점, 작업 흐름은 명시적 승인 없이 제거하거나 숨기지 않음.
   - 전면 셸 리라이트보다 토큰 -> primitive -> feature surface 순서의 점진적 롤아웃을 우선.
   - 새 시각 규칙은 지원 대상 테마와 breakpoint 전체에서 먼저 검증.
-  - 기존 데이터 밀도와 업무 완료 경로를 유지한 상태에서 시각 품질을 높이는 방향을 우선.
-  - 기능 위치 변경, 정보 구조 변경, 패널 제거는 별도의 migration plan이 있을 때만 수행.
-  - 아이콘 자리에 이모지(🎨 ✅ 🔥 등)를 넣지 않음 — SVG 아이콘 또는 아이콘 라이브러리만 사용.
+  - 일반(light) 모드와 dark 모드를 함께 제공하고, light를 기본 :root 또는 앱 기본값으로 둠.
+  - 모바일 320/360/390/430px에서 horizontal scroll 또는 버튼/CTA 잘림이 있으면 완료로 보지 않음.
+  - 버튼·CTA·탭·필터칩·툴바 액션은 fixed width/min-width에 의존하지 않고 wrap 또는 stack fallback을 가져야 함.
+- visual asset medium selection: Visual asset slots must choose the medium that matches the subject and runtime role; narrative/content media needs high-fidelity raster or approved production artwork, not ad-hoc SVG sketches.
+  - medium override `user-raster-asset-directive`: project-local raster image asset.; denied `svg`, `inline svg`, `deterministic svg placeholder`; triggers `SVG 만들지 말고`, `SVG 금지`, `실제 그림파일`, `실제 이미지 파일`, +6 more
+  - A user/reviewer sentence such as 'SVG 만들지 말고 실제 그림파일로 만들거나 검색해서 넣어' is a binding medium override, not a preference. Store it in governance/system_ontology/IMPLEMENTATION_CONTRACT and satisfy it before visual QA.
+  - When a raster-only/no-SVG directive is active, do not create SVG avatars, inline SVG sprites, SVG favicons, SVG placeholder art, or SVG UI icons for the affected scope; create or source project-local PNG/WebP/JPEG assets instead.
+  - Comic, manga, and webtoon cover or panel-preview slots default to image_gen-generated raster, user-supplied artwork, or licensed/sourced artwork.
 - failure pattern `token-bound-reference-palette-mixing`: Token binding is necessary but not sufficient; color role composition must still follow the ontology palette roles.
 - prevention: Derived colors may alias a semantic token or mix one semantic role with a neutral surface/transparent value. Do not mix multiple chromatic roles to create a local palette.
 

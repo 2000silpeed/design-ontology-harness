@@ -195,7 +195,7 @@ p {
   width: 20px;
   height: 20px;
   place-items: center;
-  border: 1px solid var(--ds-color-border);
+  border: 1px solid var(--ds-color-border-strong);
   border-radius: var(--ds-radius-sm);
   background: var(--ds-color-surface);
   color: var(--ds-color-ink-muted);
@@ -217,7 +217,7 @@ p {
   min-width: 0;
   color: var(--ds-color-ink-muted);
   font-size: 0.74rem;
-  line-height: 1.3;
+  line-height: var(--ds-leading-body);
   overflow-wrap: anywhere;
 }
 
@@ -622,7 +622,7 @@ p {
   align-items: center;
   color: var(--ds-color-ink-muted);
   font-size: 0.82rem;
-  line-height: 1.35;
+  line-height: var(--ds-leading-body);
 }
 
 .checklist span,
@@ -677,7 +677,7 @@ p {
   width: 24px;
   height: 24px;
   place-items: center;
-  border: 1px solid var(--ds-color-border);
+  border: 1px solid var(--ds-color-border-strong);
   border-radius: var(--ds-radius-sm);
   background: var(--ds-color-surface);
   color: var(--ds-color-ink-muted);
@@ -889,7 +889,7 @@ td {
   gap: 9px;
   color: var(--ds-color-ink-muted);
   font-size: 0.78rem;
-  line-height: 1.35;
+  line-height: var(--ds-leading-body);
 }
 
 .audit-card time {

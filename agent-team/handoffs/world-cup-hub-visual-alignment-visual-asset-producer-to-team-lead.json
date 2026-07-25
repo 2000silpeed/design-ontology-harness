@@ -1,0 +1,211 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-production-ui-improvement-2026-07-13-001",
+  "created_at": "2026-07-14T04:46:11+09:00",
+  "project": "world-cup-hub",
+  "from_role": "visual-asset-producer",
+  "to_role": "team-lead",
+  "stage": "visual",
+  "status": "ready",
+  "summary": "The visual pipeline now derives two active fixture-led slots from the accepted product concept: a morphology-only UI direction mockup and an optional secondary fixture-context raster. It preserves the earlier command-center image as an inactive legacy-supporting asset, with its original prompt packet copied into a content-addressed archive and a strict from/to prompt-contract migration chain. The regenerated ontology promotes that demotion, so no active hero/card/comic fallback remains.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/world-cup-hub-visual-alignment-team-lead-to-visual-asset-producer.json",
+      "sha256": "21aa3c3617976b582ee847b6f59122df2882665e647ace8a275309dedd1f3cf6"
+    },
+    {
+      "path": "projects/world-cup-hub/brand_profile.json",
+      "sha256": "78358cef596cd3be39205adb2c8ed6e007f8d79d0cad02a525ac8caf4d255abd"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/component-contracts.json",
+      "sha256": "3211e4a1c27fe1d08aba22c070b968649627b1c7ffcc1cc32c7a0598bc007af4"
+    },
+    {
+      "path": "docs/color-reference.md",
+      "sha256": "9bdf641a69d3c97089a543f8838610b2204493680921aa09877a062a652e97ca"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/references/selected-direction-03-fixture-compass.png",
+      "sha256": "8c01aaa55b553fc507fe8248a6285de2ca9e3dcaac256478e1d7b993bde9a0db"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/build/project_summary.json",
+      "sha256": "d4087d5ce49f101474f25c3b0f545c8d3fbf132f07c25ccf2568965c90faaffa"
+    },
+    {
+      "path": "design_ontology_harness/graph_builders.py",
+      "sha256": "6a11273fe2ea01b98e7beec9a6e4c17905232f38269908b7864e46e05b5a1aad"
+    },
+    {
+      "path": "design_ontology_harness/visual_asset_prompts.py",
+      "sha256": "74e05c094c9da2076e21498daa7e91a9da54edc9545633706319f7d0d1942de1"
+    },
+    {
+      "path": "design_ontology_harness/visual_asset_registry.py",
+      "sha256": "2f5e0bd814e6b8f80c7e828306aa4fa4fd46d6f41a0598ab0f02908553496d81"
+    },
+    {
+      "path": "design_ontology_harness/cli.py",
+      "sha256": "f1b8c4b9200402b0b2ab5450eab9db5e7c8d01867b4f4e0335189ffaf9212723"
+    },
+    {
+      "path": "docs/AGENT_INTEGRATIONS.md",
+      "sha256": "0e09d93401e922ad5f311c3ff9eec261d1145cee3b7524f75ed78c19310f9be4"
+    },
+    {
+      "path": "tests/test_visual_asset_prompts.py",
+      "sha256": "4cd28d709d805bcd570b80f2910f91189fd6693a5a5cb455ff84578d6ebdadca"
+    },
+    {
+      "path": "tests/test_visual_asset_registry.py",
+      "sha256": "886922ff84101e5b8fedb80da6730a5d77be19c9a11dff4e6bb7982c1086152b"
+    },
+    {
+      "path": "tests/test_visual_asset_ontology.py",
+      "sha256": "5e16f1262de8f6305756d33564edb29ea3f93eaf35afdb1cae21fb16e95a008f"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/system_ontology.json",
+      "sha256": "0233b0ae38a3ca2924c22f235de2d4baefe5c0674835f10086853fd136513e5c"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/token_schema.json",
+      "sha256": "e0c4d2338b8af22613a79b6ddfa3f60c177e8f35fc5d7557c52326a5dd1743a3"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/component_inventory.json",
+      "sha256": "c579610ce7c105c2dca30b192fedbcc35c5eebc592ec11de5afc2b662b05d179"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/profile_validation.json",
+      "sha256": "8cb7ac56afe2fd372968dc95e2d1987958994d651a68fe42ee98fff8dcd786f2"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/system_spec.md",
+      "sha256": "9af167bcef51885c65596e91ddd86a0538bd3f6ee6f1abe981ec10fb622afdc7"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/components/component_specs.json",
+      "sha256": "5c600370cd449f51c399388b6f738d3e08bd8ae045d99ef173abc48a23cf4b4e"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/components/component_specs.md",
+      "sha256": "a6c33070b7ae7af30e147d2ab734933af64a54c0a88d25903ae7e7f20239e1d6"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/components/component_contract_validation.json",
+      "sha256": "169f16c6023fcaa64597ca8d2124c3f320f33a04c3c7b0985fceb9ddaaffb020"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/design_system_blueprint.json",
+      "sha256": "60be870bf9ff809c1805c55bcd442585a999691d94879d4f66e9a63255367989"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/tokens.css",
+      "sha256": "2a243d08c28fb722aa21d2be67a5cc2623571c10c49acaebf75baf6cf740274e"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/imagegen-prompt-packet.json",
+      "sha256": "e47b265fdc7c193d66caccc382ce102d03998dda1f76e4dbc1967522160e70c6"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/imagegen-prompts.md",
+      "sha256": "17f13527a7696e03f27ac20a02e16bd3b417320a2562ca1aaf87cf0f3d335a64"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/manifest.json",
+      "sha256": "28309ac55d8afca68dce62b91e435fe4b929218147ca87a6e1354bcc2c1c8923"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/prompt-contract-history/577745db9adda241a95266e61ea076602077604d75736a45371a5ce903d59cab.json",
+      "sha256": "577745db9adda241a95266e61ea076602077604d75736a45371a5ce903d59cab"
+    }
+  ],
+  "changed_paths": [
+    "design_ontology_harness/graph_builders.py",
+    "design_ontology_harness/visual_asset_prompts.py",
+    "design_ontology_harness/visual_asset_registry.py",
+    "design_ontology_harness/cli.py",
+    "docs/AGENT_INTEGRATIONS.md",
+    "tests/test_visual_asset_prompts.py",
+    "tests/test_visual_asset_registry.py",
+    "tests/test_visual_asset_ontology.py",
+    "projects/world-cup-hub/build/project_summary.json",
+    "projects/world-cup-hub/build/system/blueprint/system_ontology.json",
+    "projects/world-cup-hub/build/system/blueprint/design_system_blueprint.json",
+    "projects/world-cup-hub/build/system/blueprint/token_schema.json",
+    "projects/world-cup-hub/build/system/blueprint/component_inventory.json",
+    "projects/world-cup-hub/build/system/blueprint/profile_validation.json",
+    "projects/world-cup-hub/build/system/blueprint/system_spec.md",
+    "projects/world-cup-hub/build/system/components/component_specs.json",
+    "projects/world-cup-hub/build/system/components/component_specs.md",
+    "projects/world-cup-hub/build/system/components/component_contract_validation.json",
+    "projects/world-cup-hub/design-system/tokens.css",
+    "projects/world-cup-hub/public/generated/design-system/imagegen-prompt-packet.json",
+    "projects/world-cup-hub/public/generated/design-system/imagegen-prompts.md",
+    "projects/world-cup-hub/public/generated/design-system/manifest.json",
+    "projects/world-cup-hub/public/generated/design-system/prompt-contract-history/577745db9adda241a95266e61ea076602077604d75736a45371a5ce903d59cab.json"
+  ],
+  "decisions": [
+    "Fixture-led products no longer receive generic hero, thumbnail, comic-panel, or brand-raster fallback slots merely because component names contain panel or card terms.",
+    "The selected Direction 03 image is carried only as a morphology, density, contextual-rail, and selection-linkage reference. Its palette, typography, copy, logos, and imagery do not become runtime authority.",
+    "The prompt generator receives project_dir from the CLI, so the selected local reference and its sha256 are present in the UI-direction prompt packet.",
+    "Any final generated asset affected by a packet rebuild retains direct current linkage and an append-only prompt_contract_migrations chain. Each previous raw packet is stored under prompt-contract-history/<sha256>.json and verified against the archived slot, prompt, criteria, and digest.",
+    "The existing command-center image remains an integrated legacy-supporting asset for the preserved older screen only. It is inactive for new generation and cannot be overwritten through register-image-asset.",
+    "Prompt palette text continues to come from the regenerated Semantic OS-backed blueprint and not from the selected design reference."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run design-ontology sync-semantic-colors --check --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Semantic OS Markdown authority is current: 358 nodes, 1227 edges, 290 keywords, 113 HEX keywords, 29 COY identities; runtime policy validation passed."
+    },
+    {
+      "command": "uv run design-ontology run-project --project-dir projects/world-cup-hub --kb-dir kb/default",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Regenerated 19 component specifications, 81 declared token variables, and the system ontology after importing the migrated asset manifest."
+    },
+    {
+      "command": "uv run design-ontology build-image-prompts --project-dir projects/world-cup-hub --candidates-per-slot 3 --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Writes exactly two active slots. A repeated build preserved both packet and manifest SHA-256 values, so it did not append a duplicate migration."
+    },
+    {
+      "command": "uv run design-ontology validate-image-assets --project-dir projects/world-cup-hub --require-integrated --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "ok=true; three manifest records, one integrated asset, and no archive, prompt-link, generation-run, workspace-copy, or runtime-integration errors."
+    },
+    {
+      "command": "uv run design-ontology validate-component-contracts --project-dir projects/world-cup-hub --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "ok=true; 19 authored component contracts, 28 primitive reconciliations, three approved waivers, and no needs-authoring component."
+    },
+    {
+      "command": "uv run pytest tests/test_visual_asset_prompts.py tests/test_visual_asset_registry.py tests/test_visual_asset_ontology.py tests/test_graph_builders.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "36 targeted visual prompt, archive migration, registry, graph, and slot-inference tests passed."
+    },
+    {
+      "command": "uv run pytest -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "504 passed, 11 existing deprecation warnings, and two subtests passed."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "The built-in image generation service returned 403 during this run, so no new fixture raster candidate is claimed. The active direction mockup is grounded in the already approved Direction 03 reference; fixture-context-raster remains optional and planned rather than accepted.",
+    "The old command-center image retains a historic first-viewport prompt in its archived evidence. Its current ontology and manifest role are explicitly legacy-supporting and must not override the fixture-first UI contract.",
+    "Fresh runtime implementation, browser evidence, component runtime conformance, and independent release audit are still required before production readiness can be claimed."
+  ],
+  "next_action": "Team Lead hands the frozen fixture-led system, current Semantic OS tokens, component contracts, selected Direction 03 morphology reference, and legacy asset constraints to the UI Implementer. Implement the new mock alongside the existing page, then collect fresh in-app-browser evidence after the implementation is frozen."
+}

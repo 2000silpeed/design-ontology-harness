@@ -1,0 +1,91 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "component-runtime-conformance-2026-07-13-001",
+  "created_at": "2026-07-14T00:03:19+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "component-author",
+  "to_role": "team-lead",
+  "stage": "tokens-and-components",
+  "status": "ready",
+  "summary": "Implemented versioned, fail-closed component runtime conformance. Production verification now requires every complete component contract to map to current runtime-tree source files, exact data-component DOM markers, hashed and fresh state/interaction/responsive scenario evidence, and explicit contract coverage. Static HTML fixtures, tamper cases, runtime changes, and the non-production-only v0 legacy boundary are covered by tests and documentation.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/component-runtime-conformance-team-lead-to-component-author.json",
+      "sha256": "10f020fb2e94cf389bb1585274fc71f6012d258f37358658093f225a540fc3c6"
+    },
+    {
+      "path": "design_ontology_harness/component_contracts.py",
+      "sha256": "a98301e075a5bc717dbcc65aee8c7fa3655b3802dd033f5de70334b71845f8ca"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "design_ontology_harness/component_runtime.py",
+      "sha256": "6a414e49fb8456a2659e222aea0ad0d5717fc91a19a65379a9da769649e3417e"
+    },
+    {
+      "path": "design_ontology_harness/production_verifier.py",
+      "sha256": "b03d878a50a1e2e0543dc852a88bc5be73919ca3c7b7902bfd78ffc03a9b5b88"
+    },
+    {
+      "path": "tests/test_component_runtime.py",
+      "sha256": "47691ab7e1a6658200feb39298e736a4b65bffb0c33943d9282eb4eabccf1cfe"
+    },
+    {
+      "path": "tests/test_production_verifier.py",
+      "sha256": "a871dfe95e93e615049ba31163a78e86835e0be448579e4249db47585375a050"
+    },
+    {
+      "path": "docs/COMPONENT_RUNTIME_CONFORMANCE.md",
+      "sha256": "3e027fb2dd4c50d518e77224d6b9186ad287eecc60e3f5e18276dc8fd24086e3"
+    }
+  ],
+  "changed_paths": [
+    "design_ontology_harness/component_runtime.py",
+    "design_ontology_harness/production_verifier.py",
+    "tests/test_component_runtime.py",
+    "tests/test_production_verifier.py",
+    "docs/COMPONENT_RUNTIME_CONFORMANCE.md",
+    "agent-team/handoffs/component-runtime-conformance-component-author-to-team-lead.json"
+  ],
+  "decisions": [
+    "Use component-runtime-manifest/v1 and component-runtime-evidence/v1 as explicit production schemas; an absent manifest or component-runtime-manifest/v0 is never production eligible.",
+    "Bind every complete contract ID to source files that are both content-hashed and present in the current sha256-runtime-tree-v1 file list, preventing excluded build evidence from impersonating runtime source.",
+    "Require exact quoted data-component-id and data-component-part source markers, then bind the same markers into the hashed evidence artifact instead of inferring correspondence from CSS selectors or visual similarity.",
+    "Require complete state, event, transition, focus, responsive-width, control-rule, container, prop, data, content, accessibility, variant, provenance, and empty-state coverage before a component is verified.",
+    "Keep cli.py unchanged by using the documented project-local default manifest path and an optional verifier API override.",
+    "Permit missing or explicit v0 evidence only when a caller opts out of a production claim; such reports remain verified false and production_eligible false."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run pytest tests/test_component_runtime.py tests/test_component_contracts.py tests/test_implementation_linter.py tests/test_production_verifier.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "83 tests passed, including valid static HTML mapping, missing/v0 fail-closed boundaries, state/event/transition/responsive omissions, runtime-tree exclusion, freshness, marker, and hash tampering."
+    },
+    {
+      "command": "uv run pytest -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "491 tests passed with 2 subtests passed; 11 existing datetime deprecation warnings were reported."
+    },
+    {
+      "command": "uv run ruff check design_ontology_harness/component_runtime.py design_ontology_harness/production_verifier.py tests/test_component_runtime.py tests/test_production_verifier.py",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "All checks passed."
+    },
+    {
+      "command": "uv run design-ontology validate-component-contracts --project-dir projects/world-cup-hub --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "19 component contracts validated with needs_authoring_count 0 and 81 declared tokens."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Existing projects that lack v1 runtime evidence now intentionally fail production verification until UI implementation and production QA generate current evidence.",
+    "The validator verifies hashes, freshness, exact markers, and coverage structure; production QA must still confirm that passed assertions were emitted by the recorded browser or component-test run rather than manually authored."
+  ],
+  "next_action": "Team Lead validates this handoff, assigns the UI Implementer and Production QA to add data-component markers and generate v1 runtime evidence for the World Cup Hub, then sends the current project through the independent release audit."
+}

@@ -1,42 +1,205 @@
 {
-  "schema_version": "visual-asset-manifest/v1",
+  "schema_version": "visual-asset-manifest/v2",
   "project": "world-cup-hub",
   "brand": "World Cup Hub",
   "generator": {
     "id": "image-model:codex-imagegen",
-    "label": "Codex image_gen skill",
-    "runtime": "Codex built-in image_gen",
-    "api_fallback": "disabled",
-    "failure_policy": "no API fallback"
+    "api_fallback": "disabled"
   },
   "source_session": {
     "id": "019e2de5-941b-7971-98e3-6ed84372f36b",
     "default_directory": "/Users/sungwoon/.codex/generated_images/019e2de5-941b-7971-98e3-6ed84372f36b",
     "preserve_originals": true
   },
+  "prompt_packet": "imagegen-prompt-packet.json",
+  "prompt_packet_sha256": "e47b265fdc7c193d66caccc382ce102d03998dda1f76e4dbc1967522160e70c6",
   "assets": [
     {
-      "id": "visual-asset:world-cup-command-center",
+      "id": "visual-asset:fixture-led-ui-direction-mockup",
+      "label": "Fixture-led UI direction mockup",
+      "slot": "fixture-led-ui-direction-mockup",
+      "expected_aspect_ratios": [
+        "16:10",
+        "16:9"
+      ],
+      "status": "planned",
+      "acquisition_mode": "generated",
+      "asset_path": null,
+      "original_png_path": null,
+      "format": null,
+      "dimensions": null,
+      "size_kb": null,
+      "sha256": null,
+      "intended_for": [
+        "component:app-shell",
+        "component:schedule-table",
+        "component:match-detail-panel"
+      ],
+      "alt_text": null,
+      "prompt_summary": "High-fidelity production UI direction for World Cup Hub, a 월드컵 일정, 경기 결과, 승부예측, 팬 의견을 한 화면에서 다루는 한국어 스포츠 데이터 커뮤니티 product. Create a concrete fixture-led-ui-direction-mockup design reference for: Design-reference mockup for a fixture-led command desk. The first viewport must start with fixture filters and a comparison table, then connect one selected match to a contextual rail. This slot is not runtime hero content.. The product facts are: 팬이 여러 사이트를 오가지 않고 다음 경기와 조별 흐름을 파악한 뒤, 한 경기를 골라 예측과 의견까지 이어가게 한다.; fixture-monitoring-and-fan-participation; fixture-led-command-desk-with-synchronized-match-rail; 대회 상태 strip에 데모·공식 여부, 데이터 출처와 KST 갱신 시각을 숨김없이 표시한다.; 대한민국의 다음 경기, 상대, 로컬 킥오프 시간을 첫 viewport에서 10초 안에 찾을 수 있게 한다.; 날짜·조·팀·상태 필터와 실제 일정 행을 장식 이미지나 요약 카드보다 먼저 조작할 수 있게 한다.; 선택 경기의 상세와 팬 예측 상태를 일정표 옆 또는 바로 이어지는 영역에 함께 노출한다.; 하나의 selectedMatchId가 경기 ticker, 일정 행, 상세 rail, 예측 패널과 의견 스레드를 동시에 전환하는 match-context spine을 만든다.. Use a controlled palette of primary #0F4C81, accent #50C878, surface_tint #FFBF00, danger #BD2E4A, neutral_anchor #003153; reflect density: dense, surface style: tinted. Show a compact operation header, date/group/team/status filters, a dense fixture comparison table, and a persistent selected-match rail that connects match detail, prediction, source state, and fan discussion. The fixture workflow must occupy the first viewport before any imagery. Use practical Korean sports-data UI hierarchy and real interface affordances, but leave exact runtime copy to the implementation. This is a design-reference mockup, not an in-product hero asset. Avoid generic hero plus card grid, uniform dashboard metric cards, betting odds board, one card per fixture when a comparison table is required, nested cards used as page sections, cinematic stadium imagery before the fixture workflow, generic SaaS dashboard, sportsbook or betting interface, sports news homepage, tournament marketing landing page, four equal metric cards dominating the first viewport, oversized trophy or stadium hero art, every module using the same radius, tint and padding, fixture data fragmented into decorative cards, prediction visuals resembling odds, stake or payout controls, betting-first, gambling, casino, fantasy-only, generic-news-site, marketing-landing, decorative-cards, single-hue-blue, childish, black-box-ai, misinformation, betting controls, casino cues, oversized stadium art, and uniform card walls. A selected local visual direction is available as a morphology-only reference: design-system/references/selected-direction-03-fixture-compass.png (morphology, density, contextual-rail, and selection-linkage reference only). Do not copy its palette, typography, text, logos, or images.",
+      "selection_reason": null,
+      "reviewed_criteria": [],
+      "review_criteria": [
+        "domain subject is immediately recognizable",
+        "visual language matches the design tokens and component surfaces",
+        "asset adds product meaning rather than atmosphere alone",
+        "crop works at every declared aspect ratio",
+        "no accidental text, logos, anatomy defects, or misleading product state"
+      ],
+      "review_gate_version": "visual-asset-review/v1",
+      "generation_provenance_version": null,
+      "generator": null,
+      "generation_run_id": null,
+      "candidate_id": null,
+      "visual_scope": "design-reference-only",
+      "active_generation": true,
+      "lifecycle_role": "active-generation-slot",
+      "prompt_packet_sha256": "e47b265fdc7c193d66caccc382ce102d03998dda1f76e4dbc1967522160e70c6",
+      "prompt_packet_slot_id": "visual-asset:fixture-led-ui-direction-mockup",
+      "prompt_slot_sha256": "0d2d61ebb6907888a20c394a3ea62a2fe001bdf0ff8162f156f6a2058696eca4"
+    },
+    {
+      "id": "visual-asset:fixture-context-raster",
+      "label": "Fixture context raster",
+      "slot": "fixture-context-raster",
+      "expected_aspect_ratios": [
+        "3:2",
+        "16:9"
+      ],
+      "status": "planned",
+      "acquisition_mode": "generated",
+      "asset_path": null,
+      "original_png_path": null,
+      "format": null,
+      "dimensions": null,
+      "size_kb": null,
+      "sha256": null,
+      "intended_for": [
+        "component:generated-visual-context"
+      ],
+      "alt_text": null,
+      "prompt_summary": "Professional production supporting visual for World Cup Hub, a 월드컵 일정, 경기 결과, 승부예측, 팬 의견을 한 화면에서 다루는 한국어 스포츠 데이터 커뮤니티 product. Create a concrete fixture-context-raster asset for: Optional supporting raster for the selected-match context after the fixture table. It may add verified match-day atmosphere or editorial context, but may not contain a fake interface, betting cues, or primary workflow content.. The product facts are: 팬이 여러 사이트를 오가지 않고 다음 경기와 조별 흐름을 파악한 뒤, 한 경기를 골라 예측과 의견까지 이어가게 한다.; fixture-monitoring-and-fan-participation; fixture-led-command-desk-with-synchronized-match-rail; 대회 상태 strip에 데모·공식 여부, 데이터 출처와 KST 갱신 시각을 숨김없이 표시한다.; 대한민국의 다음 경기, 상대, 로컬 킥오프 시간을 첫 viewport에서 10초 안에 찾을 수 있게 한다.; 날짜·조·팀·상태 필터와 실제 일정 행을 장식 이미지나 요약 카드보다 먼저 조작할 수 있게 한다.; 선택 경기의 상세와 팬 예측 상태를 일정표 옆 또는 바로 이어지는 영역에 함께 노출한다.; 하나의 selectedMatchId가 경기 ticker, 일정 행, 상세 rail, 예측 패널과 의견 스레드를 동시에 전환하는 match-context spine을 만든다.. Use a controlled palette of primary #0F4C81, accent #50C878, surface_tint #FFBF00, danger #BD2E4A, neutral_anchor #003153; reflect density: dense, surface style: tinted. Show domain-specific subject matter and believable materials, lighting, scale, and context. This asset appears only after the fixture filters, schedule table, and selected-match rail; it must add context rather than replace product data. Compose for responsive UI cropping with calm negative space. Avoid generic hero plus card grid, uniform dashboard metric cards, betting odds board, one card per fixture when a comparison table is required, nested cards used as page sections, cinematic stadium imagery before the fixture workflow, generic SaaS dashboard, sportsbook or betting interface, sports news homepage, tournament marketing landing page, four equal metric cards dominating the first viewport, oversized trophy or stadium hero art, every module using the same radius, tint and padding, fixture data fragmented into decorative cards, prediction visuals resembling odds, stake or payout controls, betting-first, gambling, casino, fantasy-only, generic-news-site, marketing-landing, decorative-cards, single-hue-blue, childish, black-box-ai, misinformation, logos, readable text, stock-photo clichés, generic gradients, fake interface screenshots, betting language, and decorative card walls.",
+      "selection_reason": null,
+      "reviewed_criteria": [],
+      "review_criteria": [
+        "domain subject is immediately recognizable",
+        "visual language matches the design tokens and component surfaces",
+        "asset adds product meaning rather than atmosphere alone",
+        "crop works at every declared aspect ratio",
+        "no accidental text, logos, anatomy defects, or misleading product state"
+      ],
+      "review_gate_version": "visual-asset-review/v1",
+      "generation_provenance_version": null,
+      "generator": null,
+      "generation_run_id": null,
+      "candidate_id": null,
+      "visual_scope": "secondary-runtime-support",
+      "active_generation": true,
+      "lifecycle_role": "active-generation-slot",
+      "prompt_packet_sha256": "e47b265fdc7c193d66caccc382ce102d03998dda1f76e4dbc1967522160e70c6",
+      "prompt_packet_slot_id": "visual-asset:fixture-context-raster",
+      "prompt_slot_sha256": "1d4c09d70e8527d7e2442b41b6905c32314cb826eb5f6455c635352a993a4500"
+    },
+    {
+      "id": "visual-asset:hero-image",
       "label": "World Cup command center",
       "slot": "hero-image",
+      "expected_aspect_ratios": [
+        "16:9",
+        "3:2"
+      ],
       "status": "integrated",
-      "asset_path": "assets/world-cup-command-center.webp",
+      "acquisition_mode": "generated",
+      "asset_path": "assets/world-cup-command-center-64809ab56a.webp",
       "original_png_path": "/Users/sungwoon/.codex/generated_images/019e2de5-941b-7971-98e3-6ed84372f36b/ig_05e8553d24da513b016a07d77edabc8191bf7569ff5368de06.png",
       "format": "webp",
       "dimensions": {
         "width": 1672,
         "height": 941,
-        "aspect_ratio": "16:9"
+        "aspect_ratio": "1672:941"
       },
-      "size_kb": 188,
+      "size_kb": 186.3,
       "sha256": "64809ab56a32fecf73a4938701cd28f0b6326a13d48248330223e7cf31a0cec9",
       "intended_for": [
-        "component:hero-board",
-        "component:hero-image",
-        "component:tournament-dashboard"
+        "component:generated-visual-context"
       ],
       "alt_text": "야간 경기장 안에 월드컵 일정, 예측, 경기 분석 보드가 표시된 커맨드 센터",
-      "prompt_summary": "Wide 16:9 World Cup Hub hero image showing a football tournament command center with pitch analytics, schedule cards, prediction bars, fan discussion pulse, deep blue stadium lighting, green pitch accents, amber highlights, and no official branding."
+      "prompt_summary": "Professional production visual for World Cup Hub, a 월드컵 일정, 경기 결과, 승부예측, 팬 의견을 한 화면에서 다루는 한국어 스포츠 데이터 커뮤니티 product. Create a concrete hero-image asset for: First-viewport visual signal for landing, product, or editorial hero sections.. Use a controlled palette of primary #0F4C81, accent #50C878, surface_tint #FFBF00, danger #BD2E4A, neutral_anchor #003153; reflect density: dense, surface style: tinted. Show domain-specific subject matter and believable materials, lighting, scale, and context. Compose for responsive UI cropping with quiet negative space for interface copy. Avoid betting-first, gambling, casino, fantasy-only, generic-news-site, marketing-landing, decorative-cards, single-hue-blue, childish, black-box-ai, misinformation, logos, readable text, stock-photo clichés, generic gradients, and decorative interface mockups inside the image.",
+      "selection_reason": "세 후보 검수 기준을 적용했을 때 경기장·일정·예측이라는 업종 맥락이 즉시 읽히고, 토큰 팔레트와 16:9/모바일 크롭이 가장 안정적이며 공식 브랜드나 베팅 UI를 모방하지 않아 선택했다.",
+      "reviewed_criteria": [
+        "domain subject is immediately recognizable",
+        "visual language matches the design tokens and component surfaces",
+        "asset adds product meaning rather than atmosphere alone",
+        "crop works at every declared aspect ratio",
+        "no accidental text, logos, anatomy defects, or misleading product state"
+      ],
+      "review_criteria": [
+        "domain subject is immediately recognizable",
+        "visual language matches the design tokens and component surfaces",
+        "asset adds product meaning rather than atmosphere alone",
+        "crop works at every declared aspect ratio",
+        "no accidental text, logos, anatomy defects, or misleading product state"
+      ],
+      "review_gate_version": "visual-asset-review/v1",
+      "generation_provenance_version": "visual-asset-generation-provenance/v1",
+      "generator": "image-model:codex-imagegen",
+      "generation_run_id": "019e2de5-941b-7971-98e3-6ed84372f36b",
+      "candidate_id": "ig_05e8553d24da513b016a07d77edabc8191bf7569ff5368de06",
+      "prompt_packet_slot_id": "visual-asset:hero-image",
+      "prompt_packet_sha256": "e47b265fdc7c193d66caccc382ce102d03998dda1f76e4dbc1967522160e70c6",
+      "prompt_slot_sha256": "9693c5885eb5a85e6386a0bacb9ea9081c0ea04e2f043b3458aaec246f880ad8",
+      "original_sha256": "66509d459c2c7d515ad76cda78fd66e3bdb8d37cbbe8b2d206d5ec389a4748ac",
+      "runtime_integration": {
+        "gate": "implementation-reference/v1",
+        "references": [
+          {
+            "path": "index.html",
+            "line": 210,
+            "kind": "img",
+            "source": "./assets/world-cup-command-center-64809ab56a.webp"
+          }
+        ]
+      },
+      "visual_scope": "legacy-supporting-asset",
+      "active_generation": false,
+      "lifecycle_role": "legacy-supporting-asset",
+      "prompt_contract_migrations": [
+        {
+          "schema_version": "visual-asset-prompt-contract-migration/v1",
+          "reason": "The active product slot plan no longer permits this reviewed asset as a primary generation target; retain it only as a legacy supporting asset.",
+          "from": {
+            "prompt_packet_sha256": "577745db9adda241a95266e61ea076602077604d75736a45371a5ce903d59cab",
+            "prompt_packet_slot_id": "visual-asset:hero-image",
+            "prompt_slot_sha256": "36d6df14296058158ea68fb7573281f98dafaebc83a1eefe41cf52cb0acf9800",
+            "prompt_summary": "Professional production visual for World Cup Hub, a 월드컵 일정, 경기 결과, 승부예측, 팬 의견을 한 화면에서 다루는 한국어 스포츠 데이터 커뮤니티 product. Create a concrete hero-image asset for: First-viewport visual signal for landing, product, or editorial hero sections.. Use a controlled palette of primary #0F4C81, accent #50C878, surface_tint #FFBF00, danger #BD2E4A, neutral_anchor #003153; reflect density: dense, surface style: tinted. Show domain-specific subject matter and believable materials, lighting, scale, and context. Compose for responsive UI cropping with quiet negative space for interface copy. Avoid betting-first, gambling, casino, fantasy-only, generic-news-site, marketing-landing, decorative-cards, single-hue-blue, childish, black-box-ai, misinformation, logos, readable text, stock-photo clichés, generic gradients, and decorative interface mockups inside the image.",
+            "review_criteria": [
+              "domain subject is immediately recognizable",
+              "visual language matches the design tokens and component surfaces",
+              "asset adds product meaning rather than atmosphere alone",
+              "crop works at every declared aspect ratio",
+              "no accidental text, logos, anatomy defects, or misleading product state"
+            ]
+          },
+          "to": {
+            "prompt_packet_sha256": "e47b265fdc7c193d66caccc382ce102d03998dda1f76e4dbc1967522160e70c6",
+            "prompt_packet_slot_id": "visual-asset:hero-image",
+            "prompt_slot_sha256": "9693c5885eb5a85e6386a0bacb9ea9081c0ea04e2f043b3458aaec246f880ad8",
+            "prompt_summary": "Professional production visual for World Cup Hub, a 월드컵 일정, 경기 결과, 승부예측, 팬 의견을 한 화면에서 다루는 한국어 스포츠 데이터 커뮤니티 product. Create a concrete hero-image asset for: First-viewport visual signal for landing, product, or editorial hero sections.. Use a controlled palette of primary #0F4C81, accent #50C878, surface_tint #FFBF00, danger #BD2E4A, neutral_anchor #003153; reflect density: dense, surface style: tinted. Show domain-specific subject matter and believable materials, lighting, scale, and context. Compose for responsive UI cropping with quiet negative space for interface copy. Avoid betting-first, gambling, casino, fantasy-only, generic-news-site, marketing-landing, decorative-cards, single-hue-blue, childish, black-box-ai, misinformation, logos, readable text, stock-photo clichés, generic gradients, and decorative interface mockups inside the image.",
+            "review_criteria": [
+              "domain subject is immediately recognizable",
+              "visual language matches the design tokens and component surfaces",
+              "asset adds product meaning rather than atmosphere alone",
+              "crop works at every declared aspect ratio",
+              "no accidental text, logos, anatomy defects, or misleading product state"
+            ]
+          },
+          "archive": {
+            "path": "prompt-contract-history/577745db9adda241a95266e61ea076602077604d75736a45371a5ce903d59cab.json",
+            "packet_sha256": "577745db9adda241a95266e61ea076602077604d75736a45371a5ce903d59cab",
+            "slot_id": "visual-asset:hero-image"
+          }
+        }
+      ]
     }
   ]
 }

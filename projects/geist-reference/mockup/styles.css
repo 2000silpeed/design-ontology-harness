@@ -16,6 +16,9 @@ html {
 }
 
 body {
+  /* 한글 줄바꿈 계약(DS106). 없으면 한글이 어절 중간에서 잘린다. */
+  word-break: keep-all;
+  overflow-wrap: normal;
   margin: 0;
   min-height: 100vh;
   background: var(--app-bg);

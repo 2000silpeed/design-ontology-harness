@@ -1,0 +1,4 @@
+interface:
+  display_name: "Visual & Runtime QA Auditor"
+  short_description: "Run the production-qa stage with evidence"
+  default_prompt: "Use $design-production-qa for the assigned team stage and return gate evidence."

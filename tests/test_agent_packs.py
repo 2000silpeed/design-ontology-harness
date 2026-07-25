@@ -6,6 +6,10 @@ import unittest
 from pathlib import Path
 
 from design_ontology_harness.agent_packs import (
+    _claude_implement_skill,
+    _claude_implementer_agent,
+    _claude_rebuild_agent,
+    _claude_rebuild_skill,
     _codex_concept_author_skill,
     _codex_implementer_skill,
     _codex_reference_inspect_skill,
@@ -40,6 +44,16 @@ class AgentPackTests(unittest.TestCase):
         self.assertIn("Medium Selection Contract", skill_text)
         self.assertIn("comic covers", skill_text)
         self.assertIn("alt_text", skill_text)
+        self.assertIn("register-image-asset", skill_text)
+        self.assertIn("promote-image-asset", skill_text)
+        self.assertIn("validate-image-assets", skill_text)
+        self.assertIn("planned → accepted → integrated", skill_text)
+        self.assertIn("visual-asset-manifest/v2", skill_text)
+        self.assertIn("generation_provenance_version", skill_text)
+        self.assertIn("generation_run_id", skill_text)
+        self.assertIn("candidate_id", skill_text)
+        self.assertIn("arbitrary caller-authored values are not provenance", skill_text)
+        self.assertIn("DS087", skill_text)
 
     def test_codex_implementer_reads_style_capsule_first(self) -> None:
         skill_text = _codex_implementer_skill("design-system")
@@ -53,6 +67,34 @@ class AgentPackTests(unittest.TestCase):
         self.assertIn("image-free commercial mockups", skill_text)
         self.assertIn("approved icon systems", skill_text)
         self.assertIn("data-icon-set", skill_text)
+        self.assertIn("validate-component-contracts", skill_text)
+        self.assertIn("needs-authoring", skill_text)
+        self.assertIn("verify-production-ui", skill_text)
+        self.assertIn("multimodal-review", skill_text)
+
+    def test_ui_producing_skills_carry_the_ui_base_rules(self) -> None:
+        for artifact_dir, skill_text in (
+            ("design-system", _codex_implementer_skill("design-system")),
+            ("design-system", _claude_implement_skill("design-system")),
+            ("design-system", _claude_implementer_agent("design-system")),
+            ("design-system", _claude_rebuild_skill("design-system")),
+            ("design-system", _claude_rebuild_agent("design-system")),
+        ):
+            with self.subTest(artifact_dir=artifact_dir, skill=skill_text[:60]):
+                self.assertIn("UI base rules", skill_text)
+                for code in ("DS100", "DS101", "DS102", "DS103", "DS104", "DS105", "DS106", "DS107"):
+                    self.assertIn(code, skill_text)
+                self.assertIn("--ds-leading-body", skill_text)
+                self.assertIn("--ds-tracking-body", skill_text)
+                self.assertIn("--ds-wrap-word-break", skill_text)
+
+    def test_korean_labels_do_not_inherit_the_latin_uppercase_convention(self) -> None:
+        """대문자 + 넓은 자간 권고는 한글 라벨에 그대로 옮기면 안 된다."""
+        skill_text = _claude_rebuild_skill("design-system")
+
+        self.assertNotIn("uppercase + letter-spacing (optional)", skill_text)
+        self.assertIn("라벨의 uppercase + 넓은 letter-spacing은 라틴 전용 관례", skill_text)
+        self.assertIn("한글 라벨은 크기·굵기·색으로만 구분", skill_text)
 
     def test_codex_reference_inspect_skill_keeps_references_advisory(self) -> None:
         skill_text = _codex_reference_inspect_skill("design-system")
@@ -81,6 +123,10 @@ class AgentPackTests(unittest.TestCase):
         self.assertIn("first_screen_contract", skill_text)
         self.assertIn("signature_moves", skill_text)
         self.assertIn("Astryx and Geist only as component taxonomy", skill_text)
+        self.assertIn("component_decision", skill_text)
+        self.assertIn("validate-component-contracts", skill_text)
+        self.assertIn("data_contract", skill_text)
+        self.assertIn("needs-authoring", skill_text)
 
     def test_codex_scaffold_includes_visual_asset_and_concept_author_skills(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -125,6 +171,16 @@ class AgentPackTests(unittest.TestCase):
             self.assertTrue(concept_skill_path.exists())
             self.assertTrue(skill_path.exists())
             self.assertTrue(reference_skill_path.exists())
+            team_skill_path = (
+                Path(tmp)
+                / "plugins"
+                / "design-system-harness"
+                / "skills"
+                / "design-ontology-team-orchestrator"
+                / "SKILL.md"
+            )
+            self.assertTrue(team_skill_path.exists())
+            self.assertIn("verify-production-ui", team_skill_path.read_text(encoding="utf-8"))
             self.assertIn(str(concept_skill_path), result["created"])
             self.assertIn(str(skill_path), result["created"])
             self.assertIn(str(reference_skill_path), result["created"])
@@ -137,6 +193,7 @@ class AgentPackTests(unittest.TestCase):
             self.assertIn("Never copy", reference_skill_path.read_text(encoding="utf-8"))
 
             plugin_manifest = json.loads(plugin_manifest_path.read_text(encoding="utf-8"))
+            self.assertEqual("0.2.0", plugin_manifest["version"])
             self.assertIn("concept-authoring", plugin_manifest["keywords"])
             self.assertIn("layout-skeleton", plugin_manifest["keywords"])
             self.assertIn("imagery", plugin_manifest["keywords"])

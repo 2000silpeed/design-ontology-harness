@@ -543,7 +543,7 @@ path.danger {
   margin-top: 12px;
   color: var(--muted);
   font-size: 22px;
-  line-height: 1.42;
+  line-height: 1.6;
   word-break: keep-all;
 }
 
@@ -602,7 +602,7 @@ path.danger {
   background: rgba(6, 17, 22, 0.82);
   font-size: 26px;
   font-weight: 800;
-  line-height: 1.34;
+  line-height: 1.6;
   text-align: center;
   word-break: keep-all;
 }

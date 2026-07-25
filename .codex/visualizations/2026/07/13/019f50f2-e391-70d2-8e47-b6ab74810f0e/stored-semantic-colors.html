@@ -1,0 +1,128 @@
+<div id="stored-semantic-colors">
+  <div class="card viz-row" aria-live="polite">
+    <span class="selected-color-mark" id="stored-color-mark" aria-hidden="true"></span>
+    <strong id="stored-color-name">Pure Red</strong>
+    <code id="stored-color-hex">#FF0000</code>
+    <span class="text-muted" id="stored-color-meta">Standard Reds · 표시 카드</span>
+  </div>
+  <div class="viz-row text-small text-muted" aria-label="색상 데이터 구성">
+    <span>표시 카드 87개</span>
+    <span>내장 온톨로지 전용 22개</span>
+    <span>고유 HEX 109개</span>
+  </div>
+  <div id="stored-color-sections"></div>
+</div>
+
+<style>
+  #stored-semantic-colors .selected-color-mark {
+    inline-size: 2.25rem;
+    block-size: 2.25rem;
+    background: var(--selected-color);
+    border: 1px solid color-mix(in srgb, var(--foreground) 22%, transparent);
+  }
+
+  #stored-semantic-colors .palette-section {
+    margin-block-start: 1.25rem;
+  }
+
+  #stored-semantic-colors .palette-section h3 {
+    margin-block-end: 0.5rem;
+  }
+
+  #stored-semantic-colors .palette-color-mark {
+    display: block;
+    inline-size: 100%;
+    block-size: 2.5rem;
+    background: var(--swatch);
+    border: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent);
+  }
+
+  #stored-semantic-colors .palette-name {
+    display: block;
+    margin-block-start: 0.45rem;
+    overflow-wrap: anywhere;
+    font-weight: 500;
+  }
+</style>
+
+<script type="application/json" id="stored-color-data">[{"group":"red","category":"Standard Reds","name":"Pure Red","hex":"#FF0000","source":"Visible card"},{"group":"red","category":"Standard Reds","name":"Scarlet","hex":"#FF2400","source":"Visible card"},{"group":"red","category":"Standard Reds","name":"Crimson","hex":"#BD2E4A","source":"Visible card"},{"group":"red","category":"Standard Reds","name":"Ruby","hex":"#E11F51","source":"Visible card"},{"group":"red","category":"Natural Reds","name":"Coral Red","hex":"#E44327","source":"Visible card"},{"group":"red","category":"Natural Reds","name":"Terracotta","hex":"#E2725B","source":"Visible card"},{"group":"red","category":"Natural Reds","name":"Rose Red","hex":"#C21E56","source":"Visible card"},{"group":"red","category":"Deep Reds","name":"Oxblood","hex":"#4A0404","source":"Visible card"},{"group":"red","category":"Deep Reds","name":"Claret","hex":"#7F1734","source":"Visible card"},{"group":"red","category":"Deep Reds","name":"Sangria","hex":"#9C1F4B","source":"Visible card"},{"group":"red","category":"Pastel Reds","name":"Salmon","hex":"#FA8072","source":"Visible card"},{"group":"red","category":"Pastel Reds","name":"Blush","hex":"#F9C0C4","source":"Visible card"},{"group":"red","category":"Pastel Reds","name":"Rose Quartz","hex":"#F7CAC9","source":"Visible card"},{"group":"red","category":"Pantone Trend Reds","name":"Marsala","hex":"#964F4C","source":"Visible card"},{"group":"red","category":"Pantone Trend Reds","name":"Grenadine","hex":"#DC4C46","source":"Visible card"},{"group":"red","category":"Pantone Trend Reds","name":"Goji Berry","hex":"#CC142F","source":"Visible card"},{"group":"red","category":"Pantone Color of the Year","name":"Fuchsia Rose (Pantone COY 2001)","hex":"#C94476","source":"Embedded ontology"},{"group":"red","category":"Pantone Color of the Year","name":"True Red (Pantone COY 2002)","hex":"#C02034","source":"Embedded ontology"},{"group":"red","category":"Pantone Color of the Year","name":"Chili Pepper (Pantone COY 2007)","hex":"#9C1B31","source":"Embedded ontology"},{"group":"red","category":"Pantone Color of the Year","name":"Honeysuckle (Pantone COY 2011)","hex":"#DA4F70","source":"Embedded ontology"},{"group":"red","category":"Pantone Color of the Year","name":"Marsala (Pantone COY 2015)","hex":"#955251","source":"Embedded ontology"},{"group":"red","category":"Pantone Color of the Year","name":"Viva Magenta (Pantone COY 2023)","hex":"#BB2649","source":"Embedded ontology"},{"group":"orange","category":"Standard Oranges","name":"Pure Orange","hex":"#FFA500","source":"Visible card"},{"group":"orange","category":"Standard Oranges","name":"Tangerine","hex":"#F28500","source":"Visible card"},{"group":"orange","category":"Standard Oranges","name":"Ochre","hex":"#CC7722","source":"Visible card"},{"group":"orange","category":"Natural Oranges","name":"Apricot","hex":"#FFB27F","source":"Visible card"},{"group":"orange","category":"Natural Oranges","name":"Persimmon","hex":"#EC5800","source":"Visible card"},{"group":"orange","category":"Natural Oranges","name":"Pumpkin","hex":"#FF7518","source":"Visible card"},{"group":"orange","category":"Deep Oranges","name":"Rust","hex":"#B7410E","source":"Visible card"},{"group":"orange","category":"Deep Oranges","name":"Copper","hex":"#B87333","source":"Visible card"},{"group":"orange","category":"Deep Oranges","name":"Burnt Orange","hex":"#CC5500","source":"Visible card"},{"group":"orange","category":"Pastel Oranges","name":"Peach Puff","hex":"#FFDAB9","source":"Visible card"},{"group":"orange","category":"Pastel Oranges","name":"Coral Blush","hex":"#F88379","source":"Visible card"},{"group":"orange","category":"Pastel Oranges","name":"Creamsicle","hex":"#FFD7A0","source":"Visible card"},{"group":"orange","category":"Pastel Oranges","name":"Dark Salmon","hex":"#E9967A","source":"Visible card"},{"group":"orange","category":"Pantone Trend Oranges","name":"Living Coral","hex":"#FF6F61","source":"Visible card"},{"group":"orange","category":"Pantone Trend Oranges","name":"Flame","hex":"#F2552C","source":"Visible card"},{"group":"orange","category":"Pantone Trend Oranges","name":"Chili Oil","hex":"#944537","source":"Visible card"},{"group":"orange","category":"Pantone Color of the Year","name":"Tigerlily (Pantone COY 2004)","hex":"#E4583E","source":"Embedded ontology"},{"group":"orange","category":"Pantone Color of the Year","name":"Tangerine Tango (Pantone COY 2012)","hex":"#F05442","source":"Embedded ontology"},{"group":"orange","category":"Pantone Color of the Year","name":"Peach Fuzz (Pantone COY 2024)","hex":"#FFBE98","source":"Embedded ontology"},{"group":"orange","category":"Pantone Color of the Year","name":"Mocha Mousse (Pantone COY 2025)","hex":"#A47864","source":"Embedded ontology"},{"group":"yellow","category":"Standard Yellows","name":"Lemon Yellow","hex":"#FFF44F","source":"Visible card"},{"group":"yellow","category":"Standard Yellows","name":"Goldenrod","hex":"#DAA520","source":"Visible card"},{"group":"yellow","category":"Standard Yellows","name":"Amber","hex":"#FFBF00","source":"Visible card"},{"group":"yellow","category":"Natural Yellows","name":"Mustard Yellow","hex":"#FFCE1B","source":"Visible card"},{"group":"yellow","category":"Natural Yellows","name":"Wheat","hex":"#F5DEB3","source":"Visible card"},{"group":"yellow","category":"Natural Yellows","name":"Flax","hex":"#EEDC82","source":"Visible card"},{"group":"yellow","category":"Deep Yellows","name":"Ochre Yellow","hex":"#CB9D06","source":"Visible card"},{"group":"yellow","category":"Deep Yellows","name":"Bronze Gold","hex":"#A97132","source":"Visible card"},{"group":"yellow","category":"Pastel Yellows","name":"Naples Yellow","hex":"#FADA5E","source":"Visible card"},{"group":"yellow","category":"Pastel Yellows","name":"Cornsilk","hex":"#FFF8DC","source":"Visible card"},{"group":"yellow","category":"Pastel Yellows","name":"Buttercream","hex":"#F3E5AB","source":"Visible card"},{"group":"yellow","category":"Pastel Yellows","name":"Blanched Almond","hex":"#FFEBCD","source":"Visible card"},{"group":"yellow","category":"Pantone Trend Yellows","name":"Illuminating","hex":"#F5DF4D","source":"Visible card"},{"group":"yellow","category":"Pantone Trend Yellows","name":"Honey Gold","hex":"#DDB67D","source":"Visible card"},{"group":"yellow","category":"Pantone Trend Yellows","name":"Autumn Blaze","hex":"#D1933F","source":"Visible card"},{"group":"yellow","category":"Pantone Color of the Year","name":"Sand Dollar (Pantone COY 2006)","hex":"#DECDBF","source":"Embedded ontology"},{"group":"yellow","category":"Pantone Color of the Year","name":"Mimosa (Pantone COY 2009)","hex":"#F0BF59","source":"Embedded ontology"},{"group":"green","category":"Standard Greens","name":"Emerald Green","hex":"#50C878","source":"Visible card"},{"group":"green","category":"Standard Greens","name":"Kelly Green","hex":"#4CBB17","source":"Visible card"},{"group":"green","category":"Standard Greens","name":"Olive Green","hex":"#708238","source":"Visible card"},{"group":"green","category":"Natural Greens","name":"Moss Green","hex":"#8A9A5B","source":"Visible card"},{"group":"green","category":"Natural Greens","name":"Fern Green","hex":"#4F7942","source":"Visible card"},{"group":"green","category":"Deep Greens","name":"Forest Green","hex":"#27503D","source":"Visible card"},{"group":"green","category":"Deep Greens","name":"Hunter Green","hex":"#355E3B","source":"Visible card"},{"group":"green","category":"Deep Greens","name":"Bottle Green","hex":"#006A4E","source":"Visible card"},{"group":"green","category":"Pastel Greens","name":"Mint Green","hex":"#98FF98","source":"Visible card"},{"group":"green","category":"Pastel Greens","name":"Celadon","hex":"#ACE1AF","source":"Visible card"},{"group":"green","category":"Pantone Trend Greens","name":"Greenery","hex":"#88B04B","source":"Visible card"},{"group":"green","category":"Pantone Trend Greens","name":"Arcadia","hex":"#00A591","source":"Visible card"},{"group":"green","category":"Pantone Trend Greens","name":"Cascade","hex":"#76C1B1","source":"Visible card"},{"group":"green","category":"Pantone Color of the Year","name":"Emerald (Pantone COY 2013)","hex":"#009473","source":"Embedded ontology"},{"group":"blue","category":"Standard Blues","name":"Teal Blue","hex":"#01889F","source":"Visible card"},{"group":"blue","category":"Standard Blues","name":"Cerulean","hex":"#2A52BE","source":"Visible card"},{"group":"blue","category":"Standard Blues","name":"Azure Blue","hex":"#007FFF","source":"Visible card"},{"group":"blue","category":"Natural Blues","name":"Sky Blue","hex":"#87CEEB","source":"Visible card"},{"group":"blue","category":"Natural Blues","name":"Ocean Blue","hex":"#4F97A3","source":"Visible card"},{"group":"blue","category":"Deep Blues","name":"Navy Blue","hex":"#000080","source":"Visible card"},{"group":"blue","category":"Deep Blues","name":"Prussian Blue","hex":"#003153","source":"Visible card"},{"group":"blue","category":"Pastel Blues","name":"Ice Blue","hex":"#D6EAF8","source":"Visible card"},{"group":"blue","category":"Pastel Blues","name":"Powder Blue","hex":"#B0E0E6","source":"Visible card"},{"group":"blue","category":"Pastel Blues","name":"Misty Blue","hex":"#B5C7EB","source":"Visible card"},{"group":"blue","category":"Pantone Trend Blues","name":"Classic Blue","hex":"#0F4C81","source":"Visible card"},{"group":"blue","category":"Pantone Trend Blues","name":"Super Sonic","hex":"#0071A8","source":"Visible card"},{"group":"blue","category":"Pantone Trend Blues","name":"Blue Atoll","hex":"#00B1D2","source":"Visible card"},{"group":"blue","category":"Pantone Color of the Year","name":"Cerulean (Pantone COY 2000)","hex":"#9BB7D6","source":"Embedded ontology"},{"group":"blue","category":"Pantone Color of the Year","name":"Aqua Sky (Pantone COY 2003)","hex":"#7AC5C5","source":"Embedded ontology"},{"group":"blue","category":"Pantone Color of the Year","name":"Blue Turquoise (Pantone COY 2005)","hex":"#4FB0AE","source":"Embedded ontology"},{"group":"blue","category":"Pantone Color of the Year","name":"Turquoise (Pantone COY 2010)","hex":"#41B6AB","source":"Embedded ontology"},{"group":"blue","category":"Pantone Color of the Year","name":"Serenity (Pantone COY 2016)","hex":"#92A8D1","source":"Embedded ontology"},{"group":"violet","category":"Standard Violets","name":"Cobalt Violet","hex":"#804AA8","source":"Visible card"},{"group":"violet","category":"Standard Violets","name":"Royal Purple","hex":"#6C3BAA","source":"Visible card"},{"group":"violet","category":"Natural Violets","name":"Lavender Violet","hex":"#967BB6","source":"Visible card"},{"group":"violet","category":"Natural Violets","name":"Lilac Violet","hex":"#C8A2C8","source":"Visible card"},{"group":"violet","category":"Natural Violets","name":"Iris Violet","hex":"#5A4FCF","source":"Visible card"},{"group":"violet","category":"Deep Violets","name":"Aubergine","hex":"#614051","source":"Visible card"},{"group":"violet","category":"Deep Violets","name":"Byzantium","hex":"#702963","source":"Visible card"},{"group":"violet","category":"Deep Violets","name":"Midnight Violet","hex":"#2E1A47","source":"Visible card"},{"group":"violet","category":"Pastel Violets","name":"Periwinkle","hex":"#8E9AF1","source":"Visible card"},{"group":"violet","category":"Pastel Violets","name":"Mauve","hex":"#E0B0FF","source":"Visible card"},{"group":"violet","category":"Pastel Violets","name":"Lavender Mist","hex":"#E6E6FA","source":"Visible card"},{"group":"violet","category":"Pantone Trend Violets","name":"Ultra Violet","hex":"#5F4B8B","source":"Visible card"},{"group":"violet","category":"Pantone Trend Violets","name":"Very Peri","hex":"#6667AB","source":"Visible card"},{"group":"violet","category":"Pantone Trend Violets","name":"Grape Compote","hex":"#6B5876","source":"Visible card"},{"group":"violet","category":"Pantone Color of the Year","name":"Blue Iris (Pantone COY 2008)","hex":"#595CA1","source":"Embedded ontology"},{"group":"violet","category":"Pantone Color of the Year","name":"Radiant Orchid (Pantone COY 2014)","hex":"#B565A7","source":"Embedded ontology"},{"group":"neutral","category":"Pantone Color of the Year","name":"Ultimate Gray (Pantone COY 2021)","hex":"#939597","source":"Embedded ontology"},{"group":"neutral","category":"Pantone Color of the Year","name":"Cloud Dancer (Pantone COY 2026)","hex":"#F0EEE9","source":"Embedded ontology"}]</script>
+
+<script>
+  (() => {
+    const root = document.getElementById('stored-semantic-colors');
+    const data = JSON.parse(document.getElementById('stored-color-data').textContent);
+    const sections = document.getElementById('stored-color-sections');
+    const groupLabels = {
+      red: '빨강',
+      orange: '주황',
+      yellow: '노랑',
+      green: '초록',
+      blue: '파랑',
+      violet: '보라',
+      neutral: '중립색'
+    };
+    const groupOrder = ['red', 'orange', 'yellow', 'green', 'blue', 'violet', 'neutral'];
+
+    function displayName(item) {
+      return item.name.replace(/ \(Pantone COY \d{4}\)$/, '');
+    }
+
+    function displayCategory(item) {
+      const year = item.name.match(/Pantone COY (\d{4})/);
+      return year ? `Pantone Color of the Year ${year[1]}` : item.category;
+    }
+
+    function sourceLabel(item) {
+      return item.source === 'Visible card' ? '표시 카드' : '내장 온톨로지';
+    }
+
+    function selectColor(item, button) {
+      root.querySelectorAll('button[aria-pressed="true"]').forEach((current) => {
+        current.setAttribute('aria-pressed', 'false');
+      });
+      button.setAttribute('aria-pressed', 'true');
+      document.getElementById('stored-color-name').textContent = displayName(item);
+      document.getElementById('stored-color-hex').textContent = item.hex;
+      document.getElementById('stored-color-meta').textContent = `${displayCategory(item)} · ${sourceLabel(item)}`;
+      document.getElementById('stored-color-mark').style.setProperty('--selected-color', item.hex);
+    }
+
+    groupOrder.forEach((group) => {
+      const groupItems = data.filter((item) => item.group === group);
+      if (!groupItems.length) return;
+
+      const section = document.createElement('section');
+      section.className = 'palette-section';
+      const heading = document.createElement('h3');
+      heading.textContent = `${groupLabels[group]} · ${groupItems.length}`;
+      section.appendChild(heading);
+
+      const grid = document.createElement('div');
+      grid.className = 'viz-grid';
+      groupItems.forEach((item, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'btn viz-tile';
+        button.setAttribute('aria-pressed', group === 'red' && index === 0 ? 'true' : 'false');
+        button.setAttribute('aria-label', `${displayName(item)}, ${item.hex}, ${displayCategory(item)}, ${sourceLabel(item)}`);
+
+        const mark = document.createElement('span');
+        mark.className = 'palette-color-mark';
+        mark.style.setProperty('--swatch', item.hex);
+        mark.setAttribute('aria-hidden', 'true');
+
+        const name = document.createElement('span');
+        name.className = 'palette-name';
+        name.textContent = displayName(item);
+
+        button.append(mark, name);
+        button.addEventListener('click', () => selectColor(item, button));
+        grid.appendChild(button);
+      });
+      section.appendChild(grid);
+      sections.appendChild(section);
+    });
+
+    document.getElementById('stored-color-mark').style.setProperty('--selected-color', data[0].hex);
+  })();
+</script>

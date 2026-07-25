@@ -1,0 +1,4 @@
+interface:
+  display_name: "Component Contract Author"
+  short_description: "Run the component-author stage with evidence"
+  default_prompt: "Use $design-component-author for the assigned team stage and return gate evidence."

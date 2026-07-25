@@ -1,0 +1,149 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "browser-evidence-provenance-2026-07-14-001",
+  "created_at": "2026-07-14T00:35:15+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "production-qa",
+  "to_role": "team-lead",
+  "stage": "qa",
+  "status": "ready",
+  "summary": "The harness now requires a versioned Codex Desktop in-app Browser evidence bundle for production verification. Screenshots, raw DOM/state/console, interaction, overflow, accessibility, and component-runtime observations must share one current runtime-tree digest, producer run, browser session, timestamps, and verified artifact hashes. Legacy production-ui-runtime-check/v1 narrative JSON cannot satisfy the new blocking gate.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/browser-evidence-provenance-team-lead-to-production-qa.json",
+      "sha256": "859b593481e50731824bfa3808dd772aeb46eaf9c81786ad8b68d6082101b5a5"
+    },
+    {
+      "path": "agent-team/handoffs/component-runtime-conformance-component-author-to-team-lead.json",
+      "sha256": "0a257d1b2fd957f33ccce9bff3a00456976dc77954306ca786087ccf9c09cf74"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/production/runtime/interaction.json",
+      "sha256": "96c7300da3ccdf7cbcb62e86503129769b7ee96cb089ada6a01c9cfdaf8ca135"
+    },
+    {
+      "path": "design_ontology_harness/component_runtime.py",
+      "sha256": "6a414e49fb8456a2659e222aea0ad0d5717fc91a19a65379a9da769649e3417e"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "design_ontology_harness/visual_evidence.py",
+      "sha256": "2d65a3ee569568b4d55fe707d5599254a34a4decf585045006f59d1fdb336cac"
+    },
+    {
+      "path": "design_ontology_harness/production_verifier.py",
+      "sha256": "e154b5eae7d9a4e7c49695d107a5cde5aa1df6bae71cbf18efa64fb6eb80cc5e"
+    },
+    {
+      "path": "design_ontology_harness/cli.py",
+      "sha256": "e2552a22cf916035c760001cb38acc8d33ec5bd3f97d63ef5189e2f985d4aaa0"
+    },
+    {
+      "path": "design_ontology_harness/agent_team.py",
+      "sha256": "f57eb2c350a9bf776fb24cf7b6b77a041992f115862b70586a26e0867d4ed70e"
+    },
+    {
+      "path": "agent-team/agent-team.json",
+      "sha256": "78776067525f2a985cedf283fe0411c45cdfb7ed09310d3a143458c1b3f66014"
+    },
+    {
+      "path": "plugins/design-system-harness/skills/design-production-qa/SKILL.md",
+      "sha256": "df0f83abf19650a351ea077ae0ed3a3f1b31e4340a02624b06ed1c53d1bbcb59"
+    },
+    {
+      "path": "tests/test_production_verifier.py",
+      "sha256": "7504a6005692e34e2f1e7f5dc8cd67dc3fbb7a0325050e23ee81ec3ddb16619e"
+    },
+    {
+      "path": "tests/test_agent_team.py",
+      "sha256": "a31f26f84237d9f6292b5eedac807b3b20d5f5d890c1d52d022fa0ea8a968ff2"
+    },
+    {
+      "path": "docs/BROWSER_EVIDENCE_BUNDLE.md",
+      "sha256": "e89e436d70e18428747cc79eb542dd96d4896d1a2d519de7b67f8f244b9da62f"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_WORKFLOW.md",
+      "sha256": "f6ae5794b341d0c581a0db133d73d3b0f7dcd7eb1c598ab77dd338193b4963b0"
+    },
+    {
+      "path": "README.md",
+      "sha256": "f04487ec5a7ead385bda7aa7ada742a9f5ee4b3dccf1984d6a8646b2c3a0abb4"
+    }
+  ],
+  "changed_paths": [
+    "design_ontology_harness/visual_evidence.py",
+    "design_ontology_harness/production_verifier.py",
+    "design_ontology_harness/cli.py",
+    "design_ontology_harness/agent_team.py",
+    "agent-team/agent-team.json",
+    "plugins/design-system-harness/skills/design-production-qa/SKILL.md",
+    "tests/test_production_verifier.py",
+    "tests/test_agent_team.py",
+    "docs/BROWSER_EVIDENCE_BUNDLE.md",
+    "docs/IMPLEMENTATION_WORKFLOW.md",
+    "README.md",
+    "agent-team/handoffs/browser-evidence-provenance-production-qa-to-team-lead.json"
+  ],
+  "decisions": [
+    "production-browser-evidence-bundle/v1 is the only browser evidence contract accepted by the new production gate; the default registered path is build/system/production/browser-evidence-bundle.json.",
+    "The bundle requires an explicit codex-desktop-in-app-browser producer, in-app-browser tool, Browser skill, agent run id, and one timestamped browser session. Python validates the resulting files but does not claim to launch or attest the privileged IAB backend.",
+    "Every validated screenshot SHA and one aggregate raw observation for DOM, state, console, interaction, overflow, accessibility, and component-runtime must be present. Non-screenshot observations use production-browser-observation/v1 and bind their own producer/session/tree metadata.",
+    "The component-runtime browser observation must match the complete component-runtime-manifest/v1 component id and evidence SHA sets and link the session's DOM, state, and interaction observation ids. The existing component_runtime.py validator remains unchanged.",
+    "production-ui-runtime-check/v1 may remain as historical aesthetic-report compatibility data, but it is legacy-unverified and cannot satisfy browser_evidence_bundle; a missing bundle therefore fails closed.",
+    "production_verifier.py was limited to resolving paths and adding the new blocking browser_evidence_bundle gate; bundle semantics live in visual_evidence.py."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run pytest tests/test_visual_evidence.py tests/test_production_verifier.py tests/test_agent_team.py tests/test_agent_packs.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "42 tests and 2 subtests passed, including valid bundle integration, missing-bundle blocking, legacy runtime-check/v1 rejection, cross-session rejection, component-runtime binding, and generated QA skill assertions."
+    },
+    {
+      "command": "uv run pytest -q --disable-warnings",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "498 tests passed, 2 subtests passed, with 11 warnings in 40.44 seconds."
+    },
+    {
+      "command": "uv run ruff check design_ontology_harness/visual_evidence.py design_ontology_harness/production_verifier.py design_ontology_harness/cli.py design_ontology_harness/agent_team.py tests/test_production_verifier.py tests/test_agent_team.py && git diff --check",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Ruff reported no issues and git found no whitespace errors."
+    },
+    {
+      "command": "uv run pytest tests/test_agent_team.py tests/test_agent_packs.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "23 tests and 2 subtests passed in 0.17 seconds."
+    },
+    {
+      "command": "uv run design-ontology verify-production-ui --help",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "The CLI exposes --browser-evidence-bundle while retaining the established project, target, screenshot, aesthetic, registry, and artifact options."
+    },
+    {
+      "command": "generated QA adapter parity check using codex_specialist_skill('production-qa', 'agent-team') and team_contract('agent-team')",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "The checked-in Codex QA skill and agent-team.json exactly match their authored generator outputs."
+    },
+    {
+      "command": "validate_handoff_payload(browser-evidence-provenance-production-qa-to-team-lead.json, target_repo=Path('.'))",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "The production-qa to team-lead handoff returned an empty validation error list with current output hashes."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Producer and session metadata are traceability controls, not a cryptographic browser attestation. Release review must still confirm the Production QA agent actually used the IAB tool and inspect its raw observations.",
+    "The existing World Cup Hub runtime-check/v1 files were intentionally not rewritten or promoted. They will not satisfy the new browser gate; a fresh real IAB session and bundle are still required after the runtime tree is frozen.",
+    "Test fixtures synthesize contract-shaped observations to exercise validator behavior. They demonstrate fail-closed parsing and binding, not evidence that a real application browser session occurred.",
+    "Repository-wide validate-agent-team is deferred to Team Lead after the concurrently regenerated World Cup compiler artifacts receive their own current completion handoff; this QA handoff itself validates cleanly."
+  ],
+  "next_action": "Team Lead may now dispatch a project Production QA run after implementation freeze. That agent must use browser:browser against the actual app, capture and register the full v1 bundle, then hand current evidence to the Release Governor for an independent verify-production-ui decision."
+}

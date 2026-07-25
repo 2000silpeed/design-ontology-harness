@@ -88,7 +88,7 @@ img {
   border-radius: var(--ds-radius-pill);
   display: grid;
   place-items: center;
-  font-family: var(--ds-font-heading);
+  font-family: var(--ds-font-body);
   font-size: 0.875rem;
   font-weight: 700;
   color: var(--ds-color-ink-inverse);
@@ -119,7 +119,7 @@ img {
   display: inline-flex;
   align-items: center;
   gap: var(--ds-space-2);
-  font-family: var(--ds-font-heading);
+  font-family: var(--ds-font-body);
   font-size: 0.9375rem;
   font-weight: 700;
   color: var(--ds-color-ink-muted);
@@ -213,7 +213,7 @@ img {
 }
 
 .author-name {
-  font-family: var(--ds-font-heading);
+  font-family: var(--ds-font-body);
   font-size: 0.9375rem;
   font-weight: 700;
 }

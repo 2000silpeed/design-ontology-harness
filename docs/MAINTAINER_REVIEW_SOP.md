@@ -139,14 +139,21 @@ uv run design-ontology match-preset \
 ls projects/<source-project>/
 wc -l projects/<source-project>/spec.md
 jq '.palette_roles // {}' projects/<source-project>/brand_profile.json
+uv run design-ontology sync-semantic-colors \
+  --source ../semantic-os/domains/color/ontology/build/graph.json \
+  --color-reference-output docs/color-reference.md \
+  --ontology-output design_ontology_harness/resources/semantic_color_ontology.json \
+  --check
 ```
 
 - [ ] `projects/<source-project>/` 에 `brand_profile.json` + `spec.md` + (선택) `locale_pairings.json` + `project_manifest.json` 모두 존재
 - [ ] `spec.md` ≥ 150 라인 (너무 얇으면 component 추출이 부실 — 현재 P3 선례 평균 170–185 라인)
-- [ ] `brand_profile.color_reference.palette_roles.{primary,accent,surface_tint}` 의 이름이 모두 `docs/color-reference.md` 에 등록된 이름과 일치 (case-insensitive)
+- [ ] `sync-semantic-colors --check` 통과: `docs/color-reference.md`의 embedded graph·checksum이 source graph와 일치하고, 보이는 색상 카드는 동기화 과정에서 그대로 보존됨
+- [ ] `brand_profile.color_reference.palette_roles.{primary,accent,surface_tint}`의 이름이 보이는 카드 + embedded `ColorKeyword` 이름 공간에서 해석됨 (case-insensitive)
+- [ ] Semantic OS에 없는 색은 출처·사용 범위가 기록된 Markdown-only 로컬 확장으로 표시됨
 - [ ] `brand_profile.seeds` ≥ 3 개의 URL — `sources.json.seeds` 와 일치
 
-**실패 시** → 기여자 수정 PR 요청 (보통 palette_roles 오타가 주 원인).
+**실패 시** → palette role 오타는 기여자 수정을 요청하고, graph/checksum drift는 메인테이너가 `sync-semantic-colors`로 재생성한 별도 PR에서 해결.
 
 ### h. 병합 후 rebuild + matrix sync (≤ 5분)
 
@@ -226,7 +233,8 @@ PR 본문에 **머지된 ISO 날짜를 댓글로 기록** — 6 개월 재평가
 ```
 HEX 겹침 {N} 개 감지 (details: primary=<hex> same as <preset-id>, accent=<hex> same as <preset-id>).
 docs/color-reference.md 에서 동일 `brand_tone` 군에서 아직 안 쓴 색을 골라 palette_roles 를 조정하거나,
-필요 시 `docs/color-reference.md` 에 신규 HEX 등록 PR 을 먼저 제출해 주세요.
+공용 신규 색이 필요하면 Semantic OS graph에 `ColorKeyword`를 먼저 반영한 뒤 `sync-semantic-colors`로 동기화해 주세요.
+프로젝트 전용 색은 출처와 사용 범위를 밝힌 Markdown-only 로컬 확장으로 분리해야 합니다.
 참고: 동일 brand_tone 군 내 0–1 겹침이 권장.
 ```
 → 기여자 수정 PR 푸시 → §a 부터 다시.
@@ -273,7 +281,7 @@ docs/color-reference.md 에서 동일 `brand_tone` 군에서 아직 안 쓴 색�
 다음 신호 중 2 개 이상이면 **P3 수락 보류** + 별도 discussion issue 로 전환:
 
 - 시드가 모두 한 조직/기업 내부 자료 (예: 전부 한 회사의 브랜드 가이드 페이지)
-- palette_roles 가 지난 주 내에 `docs/color-reference.md` 에 기여자 본인이 등록한 색 (self-referential 팔레트, 검증 곤란)
+- palette_roles가 기여자 본인이 추가한 로컬 확장에만 근거하면서 출처·사용 범위가 없음 (self-referential 팔레트, 검증 곤란)
 - preset_id 의 `brand_tone` 선택이 시드 브랜드의 실제 톤과 크게 다름 (ex. Stripe 시드로 playful-soft 주장)
 - spec.md 내용이 일반론 복붙 수준이고 도메인 특화 컴포넌트 1–2 개밖에 없음
 - PR 본문 self-match 출력 bucket 이 Medium 이하로 제출됨
@@ -321,7 +329,7 @@ Total ≈ 22 minutes per PR; actual dogfood numbers live in §11.
 ### Failure playbook (quick ref)
 
 - Workflow fails → reproduce locally with the same command, tell the contributor.
-- HEX ≥ 2 overlap → ask for palette rework, possibly prefixed by a `docs/color-reference.md` PR.
+- HEX ≥ 2 overlap → ask for palette rework; shared colors go upstream to Semantic OS and are synced, while project-only colors require an explicit Markdown-only extension with provenance.
 - self-match fails → try query rewording; if still failing, open a maintainer PR for `keywords.json`.
 - Brand IP doubt → request public seeds, reject pixel-perfect palette copies.
 - Post-merge regression → hotfix PR over revert (contributor may not be at fault).

@@ -132,6 +132,31 @@ def _load_json_dict(path: Path) -> dict:
     return data if isinstance(data, dict) else {}
 
 
+def _validate_component_contract_source(system_dir: Path) -> dict:
+    specs_path = system_dir / "components" / "component_specs.json"
+    specs_data = _load_json_dict(specs_path)
+    specs = specs_data.get("specs") if isinstance(specs_data, dict) else None
+    if not isinstance(specs, list) or not any(
+        isinstance(spec, dict) and spec.get("contract_version") == "component-contract/v1"
+        for spec in specs
+    ):
+        return {}
+
+    from .component_contracts import validate_component_contracts
+
+    report = validate_component_contracts(specs_data, strict_authored=True)
+    if not report["ok"]:
+        raise ValueError(
+            "Component contracts are not promotion-ready: "
+            + "; ".join(report["errors"][:8])
+        )
+    return {
+        "component_contract_version": "component-contract/v1",
+        "component_contract_count": report["component_count"],
+        "component_contract_needs_authoring": report["needs_authoring_count"],
+    }
+
+
 def _render_preview_md(
     *,
     preset_id: str,
@@ -330,6 +355,7 @@ def build_preset(request: BuildRequest) -> dict:
         raise FileNotFoundError(
             f"build/system/ not found in {project_dir}. Run `design-ontology run-project` first."
         )
+    component_contract_metadata = _validate_component_contract_source(system_dir)
 
     compat = _compatibility()
     preset_api_version = compat["current_preset_api_version"]
@@ -418,6 +444,7 @@ def build_preset(request: BuildRequest) -> dict:
         "owner": request.owner,
         "tier": request.tier,
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        **component_contract_metadata,
     }
     if request.description:
         manifest["description"] = request.description

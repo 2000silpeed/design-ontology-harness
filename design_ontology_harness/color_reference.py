@@ -4,12 +4,17 @@ import colorsys
 import re
 from pathlib import Path
 
+from .semantic_color_markdown import (
+    load_ontology_from_color_reference,
+    load_runtime_color_policy,
+    runtime_role_values,
+)
 from .semantic_color_ontology import build_semantic_color_context
 from .semantic_color_selector import (
     build_ontology_supporting_colors,
     build_semantic_color_selection,
     colors_from_semantic_palette,
-    ontology_keyword_lookup,
+    ontology_keyword_lookup_details,
 )
 
 
@@ -29,51 +34,6 @@ DEFAULT_PALETTE_STRATEGY = {
     "avoid_moods": [],
 }
 
-# 사진이 컬러를 담당하는 제품(패션, 갤러리, 커머스 등)을 위한 무채색 크롬 램프.
-# UI 크롬은 상품 이미지와 색으로 경쟁하지 않고, 유채색은 restrained_accent 하나만 남긴다.
-ACHROMATIC_CHROME_ROLES = {
-    "chrome_ink": {
-        "name": "Chrome Ink",
-        "family": "Chrome Strategy",
-        "hex": "#141414",
-        "mood": "무채색 크롬 잉크. 텍스트와 primary action을 담당",
-        "usage": "본문, 헤딩, 블랙 CTA. 상품 이미지가 컬러를 담당하므로 크롬은 무채색을 유지한다.",
-        "source_type": "chrome-strategy",
-    },
-    "chrome_paper": {
-        "name": "Chrome Paper",
-        "family": "Chrome Strategy",
-        "hex": "#FFFFFF",
-        "mood": "순백 표면",
-        "usage": "카드/시트 표면. 사진의 색이 그대로 읽히는 바탕.",
-        "source_type": "chrome-strategy",
-    },
-    "chrome_canvas": {
-        "name": "Chrome Canvas",
-        "family": "Chrome Strategy",
-        "hex": "#FAFAFA",
-        "mood": "미세 그레이 캔버스",
-        "usage": "앱 배경. 표면과 1단계 분리.",
-        "source_type": "chrome-strategy",
-    },
-    "chrome_line": {
-        "name": "Chrome Line",
-        "family": "Chrome Strategy",
-        "hex": "#E5E5E5",
-        "mood": "헤어라인",
-        "usage": "구분선, 보더. 그림자보다 라인 분리를 우선.",
-        "source_type": "chrome-strategy",
-    },
-    "chrome_muted": {
-        "name": "Chrome Muted",
-        "family": "Chrome Strategy",
-        "hex": "#737373",
-        "mood": "보조 텍스트 그레이",
-        "usage": "메타 정보, 캡션, 비활성 라벨.",
-        "source_type": "chrome-strategy",
-    },
-}
-
 DEFAULT_PALETTE_EXPANSION = {
     "enabled": True,
     "supporting_color_count": 12,
@@ -81,6 +41,48 @@ DEFAULT_PALETTE_EXPANSION = {
     "prefer_pairings": True,
     "prefer_related_families": True,
 }
+
+
+def _runtime_policy_role(role: str) -> dict:
+    """Return one typed runtime role as a reference-shaped color value."""
+
+    normalized = role.replace("_", "-")
+    policy = load_runtime_color_policy()
+    values = runtime_role_values()
+    entry = (policy.get("light_roles") or {}).get(normalized)
+    if not isinstance(entry, dict) or normalized not in values:
+        raise ValueError(f"Runtime color policy role is unavailable: {normalized}")
+    return {
+        "name": normalized.replace("-", " ").title(),
+        "family": "Runtime Role Policy",
+        "hex": values[normalized],
+        "mood": "typed runtime fallback",
+        "usage": f"Fallback for the {normalized} semantic UI role.",
+        "pairings": [],
+        "source_type": entry.get("kind"),
+        "source_reference_id": entry.get("source_reference_id"),
+        "runtime_role": normalized,
+        "value_kind": entry.get("kind"),
+    }
+
+
+def _achromatic_chrome_roles() -> dict[str, dict]:
+    policy = load_runtime_color_policy()
+    roles: dict[str, dict] = {}
+    for role, entry in sorted((policy.get("chrome_roles") or {}).items()):
+        roles[role] = {
+            "name": entry.get("name") or role.replace("_", " ").title(),
+            "family": "Chrome Strategy",
+            "hex": entry.get("value"),
+            "mood": entry.get("mood"),
+            "usage": entry.get("usage"),
+            "pairings": [],
+            "source_type": entry.get("kind"),
+            "source_reference_id": entry.get("source_reference_id"),
+            "runtime_role": role,
+            "value_kind": entry.get("kind"),
+        }
+    return roles
 
 KEYWORD_SIGNAL_MAP = {
     "analytical": {
@@ -231,66 +233,21 @@ ROLE_TONE_WEIGHTS = {
 
 
 def parse_color_reference_markdown(path: Path) -> dict:
-    title = path.stem
-    current_family: str | None = None
-    current_color: dict | None = None
-    colors: list[dict] = []
+    _, parsed = load_ontology_from_color_reference(path)
+    return parsed
 
-    for raw_line in path.read_text(encoding="utf-8").splitlines():
-        line = raw_line.strip()
-        if not line:
-            continue
 
-        if line.startswith("# "):
-            title = line[2:].strip()
-            continue
-
-        if line.startswith("## "):
-            current_family = line[3:].strip()
-            continue
-
-        if line.startswith("### "):
-            current_color = {
-                "name": line[4:].strip(),
-                "family": current_family,
-                "hex": None,
-                "cmyk": None,
-                "mood": None,
-                "usage": None,
-                "pairings": [],
-            }
-            colors.append(current_color)
-            continue
-
-        if not current_color or not line.startswith("- **"):
-            continue
-
-        try:
-            label_part, value = line[2:].split("**:", 1)
-        except ValueError:
-            continue
-
-        label = label_part.replace("**", "").strip().lower()
-        value = value.strip()
-
-        if label == "hex":
-            match = COLOR_HEX_RE.search(value)
-            current_color["hex"] = match.group(0).upper() if match else value
-        elif label == "cmyk":
-            current_color["cmyk"] = value
-        elif label in {"톤/무드", "tone/mood"}:
-            current_color["mood"] = value
-        elif label == "활용":
-            current_color["usage"] = value
-        elif label == "배색":
-            current_color["pairings"] = [item.upper() for item in COLOR_HEX_RE.findall(value)]
-
-    return {
-        "title": title,
-        "source_path": str(path),
-        "families": sorted({color["family"] for color in colors if color.get("family")}),
-        "colors": colors,
-    }
+def _manual_color_ambiguity_issue(field: str, query: str, evidence: dict) -> str:
+    candidates = ", ".join(
+        f"{item.get('label')} ({item.get('semantic_node_id')}, {item.get('hex')})"
+        for item in evidence.get("candidates", [])
+    )
+    selected = evidence.get("selected_semantic_node_id") or "none"
+    return (
+        f"color_reference.{field} canonical name is ambiguous: {query!r}; "
+        f"selected exact identity {selected}. Use a full label or Semantic ID to choose "
+        f"another identity. Candidates: {candidates}"
+    )
 
 
 def resolve_color_reference(
@@ -315,6 +272,7 @@ def resolve_color_reference(
         return None, issues
 
     parsed = parse_color_reference_markdown(source_path)
+    ontology = parsed["semantic_ontology"]
     colors_by_name = {color["name"].lower(): color for color in parsed["colors"]}
     selected_names = [
         str(item).strip()
@@ -330,20 +288,32 @@ def resolve_color_reference(
     strategy = _normalize_palette_strategy(reference_config.get("palette_strategy", {}))
     expansion = _normalize_palette_expansion(reference_config.get("palette_expansion", {}))
 
+    ontology_index = ontology_keyword_lookup_details(ontology)
+    ontology_lookup = ontology_index["lookup"]
+    lookup_ambiguities = ontology_index["ambiguities"]
     resolved_selected: list[dict] = []
     for name in selected_names:
-        color = colors_by_name.get(name.lower())
+        key = name.casefold()
+        color = ontology_lookup.get(key) or colors_by_name.get(key)
         if color:
             resolved_selected.append(color)
+            if key in lookup_ambiguities:
+                issues.append(_manual_color_ambiguity_issue("selected_colors", name, lookup_ambiguities[key]))
         else:
             issues.append(f"color_reference.selected_colors entry not found: {name}")
 
-    ontology_lookup = ontology_keyword_lookup()
     resolved_roles: dict[str, dict] = {}
     for role, name in palette_roles.items():
-        color = colors_by_name.get(str(name).lower()) or ontology_lookup.get(str(name).lower())
+        key = str(name).casefold()
+        color = ontology_lookup.get(key) or colors_by_name.get(key)
         if color:
             resolved_roles[str(role)] = color
+            if key in lookup_ambiguities:
+                issues.append(
+                    _manual_color_ambiguity_issue(
+                        f"palette_roles.{role}", str(name), lookup_ambiguities[key]
+                    )
+                )
         else:
             issues.append(
                 f"color_reference.palette_roles entry not found in markdown or semantic ontology: {role} -> {name}"
@@ -387,9 +357,6 @@ def resolve_color_reference(
         "candidate_id": active_candidate.get("id") if active_candidate and selection_mode != "manual" else None,
     }
 
-    if not resolved_roles:
-        issues.append("color_reference did not resolve an active palette")
-
     expanded_palette = _build_expanded_palette(
         colors=parsed["colors"],
         active_palette=active_palette,
@@ -410,6 +377,7 @@ def resolve_color_reference(
         brand_profile=profile,
         strategy=strategy,
         candidate_count=strategy.get("candidate_count"),
+        ontology=ontology,
     )
     if selection_mode != "manual":
         semantic_roles = colors_from_semantic_palette(semantic_color_selection.get("active_palette"))
@@ -417,40 +385,46 @@ def resolve_color_reference(
             resolved_roles = semantic_roles
             resolved_selected = _ordered_unique_colors_any_roles(semantic_roles)
             active_palette = {
-                "selection_mode": "semantic-ontology",
+                "selection_mode": "semantic-os-markdown",
                 "roles": resolved_roles,
                 "selected_colors": resolved_selected,
                 "candidate_id": (semantic_color_selection.get("active_palette") or {}).get("id"),
             }
-            selection_mode = "semantic-ontology"
-            # 팔레트가 온톨로지에서 왔으면 supporting 확장도 온톨로지에서 가져온다.
-            # md 문서는 무드/패밀리 참고용 advisory로만 남는다.
+            selection_mode = "semantic-os-markdown"
+            # 자동 팔레트와 supporting 확장은 같은 Markdown 이관본만 사용한다.
             ontology_supporting = build_ontology_supporting_colors(
                 brand_profile=profile,
                 strategy=strategy,
                 active_palette=active_palette,
                 count=expansion.get("supporting_color_count", 8),
+                ontology=ontology,
+            )
+            runtime_semantic_roles = _build_semantic_roles(
+                active_palette, ontology_supporting
             )
             expanded_palette = {
                 "enabled": bool(ontology_supporting),
                 "search_strategy": {
-                    "source": "semantic-color-ontology",
-                    "selection_method": "ontology-search-per-run",
+                    "source": "semantic-os-synced-markdown",
+                    "selection_method": "semantic-os-markdown-search-per-run",
                 },
                 "supporting_colors": ontology_supporting,
-                "semantic_roles": resolved_roles,
+                "semantic_roles": runtime_semantic_roles,
                 "combination_lists": [],
             }
 
     active_palette, resolved_roles, resolved_selected = _apply_chrome_strategy(
         active_palette, strategy
     )
+    if not resolved_roles:
+        issues.append("color_reference did not resolve an active palette")
 
     semantic_ontology = build_semantic_color_context(
         parsed_reference=parsed,
         active_palette=active_palette,
         brand_profile=profile,
         strategy=strategy,
+        ontology=ontology,
     )
 
     summary = {
@@ -478,27 +452,36 @@ def resolve_semantic_color_reference(
     reference_config: dict | None = None,
 ) -> dict:
     reference_config = reference_config or {}
+    ontology, parsed = load_ontology_from_color_reference()
     strategy = _normalize_palette_strategy(reference_config.get("palette_strategy", {}))
     semantic_color_selection = build_semantic_color_selection(
         brand_profile=brand_profile,
         strategy=strategy,
         candidate_count=strategy.get("candidate_count"),
+        ontology=ontology,
     )
-    selection_mode = "semantic-ontology"
+    selection_mode = "semantic-os-markdown"
     resolved_roles = colors_from_semantic_palette(semantic_color_selection.get("active_palette"))
 
     # 수동 palette_roles는 md 파일 없이도 온톨로지 키워드 이름으로 해석한다.
     manual_roles = reference_config.get("palette_roles") or {}
     if manual_roles:
-        lookup = ontology_keyword_lookup()
+        lookup_index = ontology_keyword_lookup_details(ontology)
+        lookup = lookup_index["lookup"]
         manual_resolved: dict[str, dict] = {}
+        manual_ambiguities: dict[str, dict] = {}
         for role, name in manual_roles.items():
-            color = lookup.get(str(name).lower())
+            key = str(name).casefold()
+            color = lookup.get(key)
             if color:
                 manual_resolved[str(role)] = color
+            if key in lookup_index["ambiguities"]:
+                manual_ambiguities[str(role)] = lookup_index["ambiguities"][key]
         if manual_resolved:
             resolved_roles = manual_resolved
             selection_mode = "manual"
+    else:
+        manual_ambiguities = {}
 
     resolved_selected = _ordered_unique_colors_any_roles(resolved_roles)
     active_palette = {
@@ -521,17 +504,20 @@ def resolve_semantic_color_reference(
         count=_normalize_palette_expansion(reference_config.get("palette_expansion", {})).get(
             "supporting_color_count", 8
         ),
+        ontology=ontology,
     )
+    runtime_semantic_roles = _build_semantic_roles(active_palette, supporting_colors)
     semantic_ontology = build_semantic_color_context(
-        parsed_reference={"title": "Semantic OS color ontology", "colors": []},
+        parsed_reference=parsed,
         active_palette=active_palette,
         brand_profile=brand_profile,
         strategy=strategy,
+        ontology=ontology,
     )
 
     return {
-        "title": "Semantic OS color ontology",
-        "source_path": None,
+        "title": parsed["title"],
+        "source_path": parsed["source_path"],
         "families": sorted(
             {
                 item.get("family")
@@ -551,14 +537,15 @@ def resolve_semantic_color_reference(
         "expanded_palette": {
             "enabled": bool(supporting_colors),
             "search_strategy": {
-                "source": "semantic-color-ontology",
-                "selection_method": "ontology-search-per-run",
+                "source": "semantic-os-synced-markdown",
+                "selection_method": "semantic-os-markdown-search-per-run",
             },
             "supporting_colors": supporting_colors,
-            "semantic_roles": resolved_roles,
+            "semantic_roles": runtime_semantic_roles,
             "combination_lists": [],
         },
         "semantic_ontology": semantic_ontology,
+        "manual_lookup_ambiguities": manual_ambiguities,
         "notes": reference_config.get("notes", []),
     }
 
@@ -619,7 +606,7 @@ def _apply_chrome_strategy(
             best_score = score
             accent_pick = color
 
-    roles: dict[str, dict] = {key: dict(value) for key, value in ACHROMATIC_CHROME_ROLES.items()}
+    roles: dict[str, dict] = _achromatic_chrome_roles()
     if accent_pick:
         accent = dict(accent_pick)
         accent["usage"] = (
@@ -1292,7 +1279,7 @@ def _build_semantic_roles(active_palette: dict, supporting_colors: list[dict]) -
         min_lightness=94,
         max_saturation=18,
         prefer_source_types={"pairing-reference", "pairing-swatch"},
-    ) or _fallback_color("Canvas White", "#F7F8FA")
+    ) or _runtime_policy_role("canvas")
     # Surface should be near-white, NOT the branded surface_tint. Previously the
     # fallback returned surface_tint which produced Sky Blue as surface in Glacier.
     semantic_roles["surface"] = _choose_palette_entry(
@@ -1300,47 +1287,47 @@ def _build_semantic_roles(active_palette: dict, supporting_colors: list[dict]) -
         min_lightness=95,
         max_saturation=10,
         prefer_source_types={"pairing-reference", "pairing-swatch"},
-    ) or _fallback_color("Paper", "#FFFFFF")
+    ) or _runtime_policy_role("surface")
     semantic_roles["surface_muted"] = _choose_palette_entry(
         pool,
         min_lightness=88,
         max_lightness=95,
         max_saturation=14,
         prefer_source_types={"pairing-reference", "pairing-swatch"},
-    ) or _fallback_color("Surface Muted", "#EEF1F6")
-    semantic_roles["surface_elevated"] = semantic_roles.get("surface") or _fallback_color("Surface Elevated", "#FFFFFF")
+    ) or _runtime_policy_role("surface-muted")
+    semantic_roles["surface_elevated"] = semantic_roles.get("surface") or _runtime_policy_role("surface-elevated")
     semantic_roles["border"] = _choose_palette_entry(
         pool,
         min_lightness=76,
         max_lightness=92,
         max_saturation=20,
         prefer_source_types={"pairing-reference", "pairing-swatch"},
-    ) or _fallback_color("Border Neutral", "#D6DDE6")
+    ) or _runtime_policy_role("border")
     semantic_roles["border_strong"] = _choose_palette_entry(
         pool,
         min_lightness=58,
         max_lightness=78,
         max_saturation=24,
         prefer_source_types={"pairing-reference", "pairing-swatch"},
-    ) or _fallback_color("Border Strong", "#B0BAC7")
+    ) or _runtime_policy_role("border-strong")
     semantic_roles["ink"] = _choose_palette_entry(
         pool,
         max_lightness=20,
         prefer_source_types={"pairing-reference", "pairing-swatch", "reference-color"},
-    ) or _fallback_color("Ink", "#111111")
+    ) or _runtime_policy_role("ink")
     semantic_roles["ink_muted"] = _choose_palette_entry(
         pool,
         min_lightness=30,
         max_lightness=52,
         max_saturation=32,
-    ) or _fallback_color("Muted Ink", "#4B5563")
+    ) or _runtime_policy_role("ink-muted")
     semantic_roles["ink_subtle"] = _choose_palette_entry(
         pool,
         min_lightness=46,
         max_lightness=66,
         max_saturation=28,
-    ) or _fallback_color("Subtle Ink", "#6B7280")
-    semantic_roles["ink_inverse"] = _fallback_color("Ink Inverse", "#FFFFFF")
+    ) or _runtime_policy_role("ink-subtle")
+    semantic_roles["ink_inverse"] = _runtime_policy_role("ink-inverse")
 
     if primary:
         primary_hue = _family_hue(primary)
@@ -1359,25 +1346,27 @@ def _build_semantic_roles(active_palette: dict, supporting_colors: list[dict]) -
             strict_hue_match=True,
         ) or accent
 
-    semantic_roles["info"] = _choose_palette_entry(pool, prefer_hues={"blue", "purple"}, strict_hue_match=True) or _fallback_color("Info", "#4A6B8A")
-    semantic_roles["success"] = _choose_palette_entry(pool, prefer_hues={"green"}, strict_hue_match=True) or _fallback_color("Success", "#4A7C59")
+    semantic_roles["info"] = _choose_palette_entry(pool, prefer_hues={"blue", "purple"}, strict_hue_match=True) or _runtime_policy_role("info")
+    semantic_roles["success"] = _choose_palette_entry(pool, prefer_hues={"green"}, strict_hue_match=True) or _runtime_policy_role("success")
     semantic_roles["warning"] = (
         accent
         if accent and _family_hue(accent) in {"orange", "yellow"}
         else _choose_palette_entry(pool, prefer_hues={"orange", "yellow"}, strict_hue_match=True)
-    ) or _fallback_color("Warning", "#B8860B")
+    ) or _runtime_policy_role("warning")
     semantic_roles["danger"] = (
         primary
         if primary and _family_hue(primary) == "red"
         else _choose_palette_entry(pool, prefer_hues={"red"}, strict_hue_match=True)
-    ) or _fallback_color("Danger", "#8B2252")
+    ) or _runtime_policy_role("danger")
 
     link_source = primary or accent
     if link_source:
         link_hex = link_source.get("hex")
         semantic_roles["link"] = link_source
         if link_hex:
-            semantic_roles["link_hover"] = _fallback_color("Link Hover", _shift_hex(link_hex, dl=-0.08) or link_hex)
+            semantic_roles["link_hover"] = _derived_runtime_color(
+                "Link Hover", _shift_hex(link_hex, dl=-0.08) or link_hex, derived_from="link"
+            )
 
     return {role: item for role, item in semantic_roles.items() if item}
 
@@ -1505,15 +1494,19 @@ def _dedupe_palette_entries(items: list[dict]) -> list[dict]:
     return deduped
 
 
-def _fallback_color(name: str, hex_value: str) -> dict:
+def _derived_runtime_color(name: str, hex_value: str, *, derived_from: str) -> dict:
+    policy = load_runtime_color_policy()
     return {
         "name": name,
-        "family": "Generated Fallback",
+        "family": "Derived Runtime Role",
         "hex": hex_value.upper(),
-        "mood": "Generated fallback support color",
-        "usage": "Used when the reference file does not expose a suitable support swatch.",
+        "mood": "Derived from an authored runtime role",
+        "usage": f"Derived from {derived_from}; no new ColorKeyword identity is created.",
         "pairings": [],
-        "source_type": "generated-fallback",
+        "source_type": "derived-runtime-role",
+        "source_reference_id": (policy.get("authority") or {}).get("source_reference_id"),
+        "derived_from": derived_from,
+        "value_kind": "derived-runtime-role",
     }
 
 
@@ -1887,20 +1880,22 @@ def build_component_color_sets(semantic_roles: dict[str, dict]) -> dict[str, dic
             return item.get("hex")
         return None
 
+    runtime_defaults = runtime_role_values()
+
     brand_primary = _hex("brand_primary")
     brand_accent = _hex("brand_accent")
-    surface = _hex("surface") or "#FFFFFF"
-    canvas = _hex("canvas") or "#F7F8FA"
-    ink = _hex("ink") or "#111111"
-    ink_muted = _hex("ink_muted") or "#4B5563"
-    border = _hex("border") or "#D6DDE6"
+    surface = _hex("surface") or runtime_defaults["surface"]
+    canvas = _hex("canvas") or runtime_defaults["canvas"]
+    ink = _hex("ink") or runtime_defaults["ink"]
+    ink_muted = _hex("ink_muted") or runtime_defaults["ink-muted"]
+    border = _hex("border") or runtime_defaults["border"]
     info = _hex("info")
     success = _hex("success")
     warning = _hex("warning")
     danger = _hex("danger")
 
     primary_on_light = _is_dark(brand_primary)
-    primary_text = "#FFFFFF" if primary_on_light else ink
+    primary_text = runtime_defaults["ink-inverse"] if primary_on_light else ink
 
     sets: dict[str, dict[str, str]] = {}
 
@@ -1945,7 +1940,7 @@ def build_component_color_sets(semantic_roles: dict[str, dict]) -> dict[str, dic
             "surface_default": danger,
             "surface_hover": _shift_hex(danger, dl=-0.06) or danger,
             "surface_active": _shift_hex(danger, dl=-0.1) or danger,
-            "text_default": "#FFFFFF" if _is_dark(danger) else ink,
+            "text_default": runtime_defaults["ink-inverse"] if _is_dark(danger) else ink,
             "border_default": danger,
             "focus_ring": danger,
         }
@@ -1960,7 +1955,7 @@ def build_component_color_sets(semantic_roles: dict[str, dict]) -> dict[str, dic
         "border_default": border,
         "border_hover": _shift_hex(border, dl=-0.1) or border,
         "border_focus": brand_primary or ink,
-        "border_error": danger or "#B3261E",
+        "border_error": danger or runtime_defaults["danger"],
         "border_disabled": _shift_hex(border, dl=0.05) or border,
     }
 

@@ -24,12 +24,20 @@ def _metrics(value: float) -> dict[str, float]:
     return {metric_id: value for metric_id in DEFAULT_METRICS}
 
 
+def _metric_evidence() -> dict[str, list[dict[str, str]]]:
+    return {
+        metric_id: [{"source": "human", "reviewer": "design-review", "note": "Reviewed against the rendered UI."}]
+        for metric_id in DEFAULT_METRICS
+    }
+
+
 def test_aesthetic_loop_passes_when_overall_and_dimensions_clear_threshold():
     ontology = build_aesthetic_ontology({"brand_name": "Signal Desk"})
     candidate = {
         "design_id": "landing-v3",
         "score_scale": 10,
         "metrics": _metrics(9.0),
+        "metric_evidence": _metric_evidence(),
     }
 
     report = run_self_improvement_loop(candidate, ontology, threshold=0.82)
@@ -50,6 +58,7 @@ def test_aesthetic_loop_blocks_and_returns_action_brief_for_weak_candidate():
         "design_id": "landing-v3",
         "score_scale": 10,
         "metrics": metrics,
+        "metric_evidence": _metric_evidence(),
     }
 
     report = run_self_improvement_loop(candidate, ontology, threshold=0.82)
@@ -72,6 +81,7 @@ def test_aesthetic_loop_uses_later_candidate_iteration_as_real_pass():
             {"iteration_id": "v1", "metrics": _metrics(5.0)},
             {"iteration_id": "v2", "metrics": _metrics(9.0)},
         ],
+        "metric_evidence": _metric_evidence(),
     }
 
     report = run_self_improvement_loop(candidate, ontology, threshold=0.82, max_iterations=3)
@@ -87,6 +97,7 @@ def test_aesthetic_loop_recommends_actions_when_average_is_below_threshold_only(
         "design_id": "landing-v3",
         "score_scale": 10,
         "metrics": _metrics(7.6),
+        "metric_evidence": _metric_evidence(),
     }
 
     report = run_self_improvement_loop(candidate, ontology, threshold=0.82)
@@ -96,20 +107,19 @@ def test_aesthetic_loop_recommends_actions_when_average_is_below_threshold_only(
 
 
 def test_brand_profile_generates_brand_owned_aesthetic_metrics():
-    ontology = build_aesthetic_ontology(
-        {
-            "brand_name": "Alley Sense",
-            "brand_keywords": ["quiet", "sensory"],
-            "anti_keywords": ["generic-map"],
-            "product_primitives": ["map pin layer"],
-            "audiences": ["서울 산책자"],
-            "accessibility_targets": ["WCAG 2.2 AA"],
-            "visual_reference": {
-                "must_include": ["sensory metadata visible on cards"],
-                "avoid_patterns": ["photo feed dominance"],
-            },
-        }
-    )
+    profile = {
+        "brand_name": "Alley Sense",
+        "brand_keywords": ["quiet", "sensory"],
+        "anti_keywords": ["generic-map"],
+        "product_primitives": ["map pin layer"],
+        "audiences": ["서울 산책자"],
+        "accessibility_targets": ["WCAG 2.2 AA"],
+        "visual_reference": {
+            "must_include": ["sensory metadata visible on cards"],
+            "avoid_patterns": ["photo feed dominance"],
+        },
+    }
+    ontology = build_aesthetic_ontology(profile)
 
     dimension_ids = {dimension["id"] for dimension in ontology["dimensions"]}
     metric_ids = set(ontology["metrics"])
@@ -121,6 +131,11 @@ def test_brand_profile_generates_brand_owned_aesthetic_metrics():
     assert any(metric_id.startswith("brand_keyword:quiet") for metric_id in metric_ids)
     assert any(metric_id.startswith("anti_keyword:generic-map") for metric_id in metric_ids)
     assert any(metric_id.startswith("product_primitive:map-pin-layer") for metric_id in metric_ids)
+
+    reloaded = build_aesthetic_ontology(profile, ontology)
+    reloaded_ids = [dimension["id"] for dimension in reloaded["dimensions"]]
+    assert len(reloaded_ids) == len(set(reloaded_ids))
+    assert reloaded_ids == [dimension["id"] for dimension in ontology["dimensions"]]
 
 
 def test_write_aesthetic_project_artifacts_creates_ontology_template_and_policy(tmp_path: Path):
@@ -152,6 +167,7 @@ def test_cli_aesthetic_loop_exits_nonzero_before_execution_when_blocked(tmp_path
             "design_id": "landing-v3",
             "score_scale": 10,
             "metrics": _metrics(4.0),
+            "metric_evidence": _metric_evidence(),
         },
     )
 
@@ -214,6 +230,7 @@ def test_cli_aesthetic_loop_project_dir_uses_default_candidate_and_writes_report
             "design_id": "landing-v3",
             "score_scale": 10,
             "metrics": _metrics(9.0),
+            "metric_evidence": _metric_evidence(),
         },
     )
 
@@ -239,3 +256,35 @@ def test_cli_aesthetic_loop_project_dir_uses_default_candidate_and_writes_report
     report_path = output_dir / AESTHETIC_LATEST_REPORT_RELATIVE_PATH
     assert report_path.exists()
     assert '"ready_to_execute": true' in report_path.read_text(encoding="utf-8")
+
+
+def test_dimension_overrides_and_zero_metric_coverage_cannot_open_gate():
+    ontology = build_aesthetic_ontology({"brand_name": "Signal Desk"})
+    candidate = {
+        "design_id": "override-only",
+        "score_scale": 10,
+        "dimension_scores": {
+            dimension["id"]: 9.0 for dimension in ontology["dimensions"]
+        },
+    }
+
+    report = run_self_improvement_loop(candidate, ontology, threshold=0.82)
+    iteration = report["iterations"][0]
+
+    assert not report["ready_to_execute"]
+    assert iteration["coverage_ratio"] == 0.0
+    assert any("overrides" in failure for failure in iteration["gate_failures"])
+
+
+def test_full_scores_without_metric_evidence_cannot_open_gate():
+    ontology = build_aesthetic_ontology({"brand_name": "Signal Desk"})
+    candidate = {
+        "design_id": "unsupported-scores",
+        "score_scale": 10,
+        "metrics": _metrics(9.0),
+    }
+
+    report = run_self_improvement_loop(candidate, ontology, threshold=0.82)
+
+    assert not report["ready_to_execute"]
+    assert len(report["iterations"][0]["unsubstantiated_metrics"]) == len(DEFAULT_METRICS)

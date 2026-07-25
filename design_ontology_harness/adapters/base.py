@@ -28,6 +28,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Literal
 
+from ..semantic_color_markdown import load_runtime_color_policy, runtime_role_values
+
 FileAction = Literal["create", "overwrite", "merge", "proposed", "skip"]
 
 
@@ -159,22 +161,6 @@ def _to_hex(rgb: tuple[float, float, float]) -> str:
     )
 
 
-# Lightness targets for dark-mode derivation per semantic role family.
-_DARK_L_TARGETS: dict[str, float] = {
-    "canvas": 0.06,
-    "surface": 0.09,
-    "surface-muted": 0.13,
-    "surface-elevated": 0.11,
-    "surface-tint": 0.22,
-    "border": 0.20,
-    "border-strong": 0.28,
-    "ink": 0.94,
-    "ink-muted": 0.72,
-    "ink-subtle": 0.56,
-    "ink-inverse": 0.10,
-}
-
-
 def _hsl_from_rgb(r: float, g: float, b: float) -> tuple[float, float, float]:
     hue, lightness, saturation = colorsys.rgb_to_hls(r, g, b)
     return hue, saturation, lightness
@@ -198,17 +184,129 @@ def _derive_dark(role: str, light_hex: str) -> str:
     r, g, b = parsed
     h, s, lightness = _hsl_from_rgb(r, g, b)
 
-    target_l = _DARK_L_TARGETS.get(role)
+    policy = load_runtime_color_policy().get("dark_derivation") or {}
+    target_l = (policy.get("role_lightness_targets") or {}).get(role)
     if target_l is not None:
         # Pull saturation down slightly for surface/ink neutrals.
-        neutral_s = min(s, 0.12)
+        neutral_s = min(s, float(policy["neutral_max_saturation"]))
         return _to_hex(_rgb_from_hsl(h, neutral_s, target_l))
 
     # Chromatic roles (primary/accent/info/success/warning/danger/link): keep
     # hue, raise lightness a touch so they pop on a dark canvas, cap saturation.
-    new_l = max(0.42, min(0.72, lightness + 0.18))
-    new_s = min(1.0, max(s, 0.45))
+    min_l, max_l = policy["chromatic_lightness_range"]
+    new_l = max(min_l, min(max_l, lightness + policy["chromatic_lightness_delta"]))
+    new_s = min(1.0, max(s, policy["chromatic_min_saturation"]))
     return _to_hex(_rgb_from_hsl(h, new_s, new_l))
+
+
+def _relative_luminance(value: str) -> float:
+    parsed = _parse_hex(value)
+    if parsed is None:
+        return 0.0
+    linear = [
+        channel / 12.92
+        if channel <= 0.04045
+        else ((channel + 0.055) / 1.055) ** 2.4
+        for channel in parsed
+    ]
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+
+def _contrast_ratio(foreground: str, background: str) -> float:
+    lighter, darker = sorted(
+        (_relative_luminance(foreground), _relative_luminance(background)),
+        reverse=True,
+    )
+    return (lighter + 0.05) / (darker + 0.05)
+
+
+def _mix_hex(start: str, target: str, amount: float) -> str:
+    start_rgb = _parse_hex(start)
+    target_rgb = _parse_hex(target)
+    if start_rgb is None or target_rgb is None:
+        return start
+    return _to_hex(
+        tuple(
+            start_channel + (target_channel - start_channel) * amount
+            for start_channel, target_channel in zip(start_rgb, target_rgb, strict=True)
+        )
+    )
+
+
+def _apply_contrast_floor(
+    tokens: dict[str, str],
+    contrast_floor: dict,
+) -> dict[str, str]:
+    adjusted_tokens = dict(tokens)
+    minimum_ratio = float(contrast_floor["minimum_ratio"])
+    background_values = [
+        adjusted_tokens[role]
+        for role in contrast_floor["background_roles"]
+        if role in adjusted_tokens
+    ]
+    target = adjusted_tokens.get(contrast_floor["adjustment_target_role"])
+    if target is None or not background_values:
+        return adjusted_tokens
+    adjusted_roles = contrast_floor.get("adjusted_roles") or contrast_floor["chromatic_roles"]
+    for role in adjusted_roles:
+        value = adjusted_tokens.get(role)
+        if value is None:
+            continue
+        if all(
+            _contrast_ratio(value, background) >= minimum_ratio
+            for background in background_values
+        ):
+            continue
+        for step in range(1, 101):
+            adjusted = _mix_hex(value, target, step / 100)
+            if all(
+                _contrast_ratio(adjusted, background) >= minimum_ratio
+                for background in background_values
+            ):
+                adjusted_tokens[role] = adjusted
+                break
+    return adjusted_tokens
+
+
+def apply_light_contrast_floor(tokens: dict[str, str]) -> dict[str, str]:
+    """Apply the typed light-mode contrast contracts to semantic roles.
+
+    Two floors run in sequence: the 4.5:1 text floor on chromatic roles, then the
+    3:1 WCAG 1.4.11 floor on control-boundary roles. Without the second one the
+    emitted `border-strong` stays too faint to identify a form field or button
+    edge, which no implementation can fix by binding tokens correctly.
+    """
+
+    policy = load_runtime_color_policy()
+    adjusted = _apply_contrast_floor(tokens, policy["light_contrast_floor"])
+    return _apply_contrast_floor(adjusted, policy["non_text_contrast_floor"])
+
+
+def derive_dark_tokens(
+    light_tokens: dict[str, str],
+    *,
+    explicit_dark: dict | None = None,
+) -> dict[str, str]:
+    """Derive a complete dark role set from the checksum-verified policy.
+
+    HSL targets preserve the selected project hue. The typed contrast floor in
+    ``docs/color-reference.md`` then moves chromatic roles toward dark-mode ink
+    only as far as needed to remain readable on the declared dark backgrounds.
+    """
+
+    explicit_dark = explicit_dark or {}
+    derived: dict[str, str] = {}
+    for role, value in light_tokens.items():
+        entry = explicit_dark.get(role)
+        override = entry.get("hex") if isinstance(entry, dict) else entry
+        if isinstance(override, str) and _parse_hex(override):
+            derived[role] = override.upper()
+        else:
+            derived[role] = _derive_dark(role, value)
+
+    policy = load_runtime_color_policy()["dark_derivation"]
+    adjusted = _apply_contrast_floor(derived, policy["contrast_floor"])
+    return _apply_contrast_floor(adjusted, policy["non_text_contrast_floor"])
 
 
 def _extract_semantic_roles(bundle: PresetBundle) -> dict[str, str]:
@@ -250,27 +348,11 @@ def _ensure_base_roles(tokens: dict[str, str]) -> dict[str, str]:
     Only fills gaps; never overrides values already present.
     """
 
-    defaults_light = {
-        "primary": "#2563EB",
-        "accent": "#F59E0B",
-        "surface-tint": "#E0E7FF",
-        "canvas": "#F7F8FA",
-        "surface": "#FFFFFF",
-        "surface-muted": "#EEF1F6",
-        "surface-elevated": "#FFFFFF",
-        "border": "#D6DDE6",
-        "border-strong": "#9AA6B2",
-        "ink": "#0F172A",
-        "ink-muted": "#475569",
-        "ink-subtle": "#64748B",
-        "ink-inverse": "#FFFFFF",
-        "info": "#2F6FEB",
-        "success": "#15803D",
-        "warning": "#B45309",
-        "danger": "#B91C1C",
-        "link": tokens.get("primary", "#2563EB"),
-    }
+    defaults_light = runtime_role_values()
     out = dict(tokens)
+    # A project-selected primary also owns the derived default link role.
+    if "link" not in out and "primary" in out:
+        out["link"] = out["primary"]
     for role, default in defaults_light.items():
         out.setdefault(role, default)
     return out
@@ -286,25 +368,18 @@ def tokens_for_mode(bundle: PresetBundle, color_mode: str) -> dict[str, str]:
     if color_mode not in ("light", "dark"):
         raise ValueError(f"color_mode must be 'light' or 'dark', got {color_mode}")
 
-    light_tokens = _ensure_base_roles(_extract_semantic_roles(bundle))
+    light_tokens = apply_light_contrast_floor(
+        _ensure_base_roles(_extract_semantic_roles(bundle))
+    )
     if color_mode == "light":
         return light_tokens
 
-    # Look for an explicit dark palette hook on the blueprint first.
     explicit_dark = (
         bundle.blueprint.get("color_reference", {})
         .get("expanded_palette", {})
         .get("dark_semantic_roles")
     ) or {}
-    derived: dict[str, str] = {}
-    for role, value in light_tokens.items():
-        if role in explicit_dark and isinstance(explicit_dark[role], dict):
-            override = explicit_dark[role].get("hex")
-            if override and _parse_hex(override):
-                derived[role] = override.upper()
-                continue
-        derived[role] = _derive_dark(role, value)
-    return derived
+    return derive_dark_tokens(light_tokens, explicit_dark=explicit_dark)
 
 
 def css_var_declarations(tokens: dict[str, str], prefix: str = "--ds-color-") -> list[str]:

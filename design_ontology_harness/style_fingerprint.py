@@ -136,6 +136,7 @@ class StyleFingerprint:
     uses_pill_shapes: bool = False
     color_count: int = 0
     separation_style: str = "unknown"
+    composition_markers: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -172,8 +173,8 @@ def _classify_surface(hexes: list[str]) -> tuple[str, list[str]]:
         return "unknown", []
     scored: list[tuple[str, float, float, float]] = []
     for value in hexes:
-        h, l, s = _hex_to_hls(value)
-        scored.append((value, h, l, s))
+        hue, lightness, saturation = _hex_to_hls(value)
+        scored.append((value, hue, lightness, saturation))
 
     darks = [item for item in scored if item[2] < 0.35]
     lights = [item for item in scored if item[2] >= 0.78]
@@ -224,18 +225,21 @@ def _resolve_color_token(value: str, custom_props: dict[str, str]) -> str | None
 
 def _collect_source_files(project_dir: Path) -> list[Path]:
     out: list[Path] = []
-    for pattern in ("*.html", "*.css"):
-        out.extend(sorted(project_dir.glob(pattern)))
-        out.extend(sorted(project_dir.glob(f"mockup/{pattern}")))
-        out.extend(sorted(project_dir.glob(f"src/{pattern}")))
-        out.extend(sorted(project_dir.glob(f"styles/{pattern}")))
-        out.extend(sorted(project_dir.glob(f"assets/{pattern}")))
+    extensions = {".html", ".css", ".scss", ".sass", ".less", ".tsx", ".jsx", ".ts", ".js", ".vue", ".svelte"}
+    excluded = {".git", ".next", "build", "dist", "node_modules", "screenshots", "coverage"}
+    for path in project_dir.rglob("*"):
+        if not path.is_file() or path.suffix.lower() not in extensions:
+            continue
+        relative = path.relative_to(project_dir)
+        if any(part in excluded for part in relative.parts):
+            continue
+        out.append(path)
     # Token-bound projects keep their actual palette in design-system/*.css.
     out.extend(sorted(project_dir.glob("design-system/*.css")))
     seen: set[Path] = set()
     unique: list[Path] = []
     for path in out:
-        if path in seen or "build" in path.parts or "node_modules" in path.parts:
+        if path in seen:
             continue
         seen.add(path)
         unique.append(path)
@@ -309,11 +313,67 @@ def _detect_separation_style(css_text: str) -> str:
         hairline_decls += len(
             re.findall(r"\bborder-(?:bottom|top)\s*:\s*1px\s+solid", body, re.IGNORECASE)
         )
-    if card_blocks >= 5 and card_blocks * 2 >= hairline_decls:
+    card_tokens = len(re.findall(r"\b(?:card|panel|tile|rounded-(?:md|lg|xl|2xl)|shadow-(?:md|lg|xl))\b", css_text, re.IGNORECASE))
+    row_tokens = len(re.findall(r"\b(?:table|ledger|list-row|data-row|border-b|divide-y)\b", css_text, re.IGNORECASE))
+    spatial_tokens = len(re.findall(r"\b(?:canvas|map|graph|node|edge|timeline|spatial)\b", css_text, re.IGNORECASE))
+    split_tokens = len(re.findall(r"\b(?:split|inspector|detail-pane|master-detail|grid-cols-[23])\b", css_text, re.IGNORECASE))
+    operations_tokens = len(
+        re.findall(
+            r"\b(?:schedule|fixture|ticker|ledger|standings|scoreline|filter|table|rail|result|match-row)\b",
+            css_text,
+            re.IGNORECASE,
+        )
+    )
+    # Dense operational products often use bordered/radiused containers while
+    # their dominant grammar is still tables, ledgers and horizontal rails.
+    # Count that product structure before treating every rounded boundary as a
+    # generic card wall.
+    if row_tokens >= 8 and operations_tokens >= 8 and card_tokens <= row_tokens * 2:
+        return "operations-table-rail"
+    if card_blocks >= 5 and (row_tokens == 0 or card_tokens > row_tokens * 2):
         return "card-wall"
+    if row_tokens >= 4:
+        return "table-ledger"
+    if spatial_tokens >= 4:
+        return "canvas-spatial"
+    if split_tokens >= 3:
+        return "split-workbench"
     if hairline_decls >= 4:
         return "hairline-rows"
     return "whitespace"
+
+
+def _composition_markers(text: str) -> list[str]:
+    marker_terms = {
+        "header": ("header", "topbar", "app-bar"),
+        "sidebar": ("sidebar", "side-nav", "navigation-rail"),
+        "hero": ("hero", "masthead"),
+        "card-grid": ("card-grid", "grid-cols-3", "grid-cols-4", "feature-card", "metric-card"),
+        "metric-strip": ("metric-strip", "stat-strip", "kpi-strip"),
+        "filter-bar": ("filter-bar", "filter-row", "filter-toolbar"),
+        "table": ("data-table", "table-row", "table-header", "<table"),
+        "split-pane": ("split-pane", "split-workbench", "master-detail", "detail-pane"),
+        "inspector": ("inspector", "property-panel", "context-panel"),
+        "timeline": ("timeline", "activity-stream", "event-rail"),
+        "canvas": ("canvas", "node-graph", "map-canvas", "spatial"),
+        "feed": ("feed", "post-list", "stream-item"),
+        "tabs": ("tab-list", "tablist", "segmented-control"),
+        "drawer": ("drawer", "bottom-sheet", "side-sheet"),
+        "bottom-nav": ("bottom-nav", "tab-bar", "mobile-nav"),
+        "command-bar": ("command-bar", "command-palette", "omnibox"),
+        "chart": ("chart", "plot", "sparkline"),
+        "match-ticker": ("match-ticker", "ticker-rail", "score-ticker"),
+        "source-ledger": ("source-ledger", "source ledger"),
+        "status-strip": ("status-strip", "status strip"),
+        "fixture-workspace": ("schedule-table", "fixture-review-workspace", "standings-table"),
+        "footer": ("footer",),
+    }
+    lowered = text.lower()
+    return sorted(
+        marker
+        for marker, terms in marker_terms.items()
+        if any(term in lowered for term in terms)
+    )
 
 
 def extract_style_fingerprint(
@@ -333,7 +393,7 @@ def extract_style_fingerprint(
     texts: dict[str, str] = {}
     for path in files:
         try:
-            texts[path.name] = path.read_text(encoding="utf-8")
+            texts[path.relative_to(project_dir).as_posix()] = path.read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError):
             continue
 
@@ -362,11 +422,20 @@ def extract_style_fingerprint(
         ]
 
     surface_tone, surface_hexes = _classify_surface(background_hexes)
+    if (
+        re.search(r":root\s*\{", combined, re.IGNORECASE)
+        and re.search(
+            r"html\s*\[\s*data-theme\s*=\s*['\"]dark['\"]\s*\]",
+            combined,
+            re.IGNORECASE,
+        )
+    ):
+        surface_tone = "dual-theme"
 
     accent_entries: list[tuple[str, str, int]] = []
     for value, count in color_counts.items():
-        _, l, s = _hex_to_hls(value)
-        if s >= 0.22 and 0.14 <= l <= 0.74:
+        _, lightness, saturation = _hex_to_hls(value)
+        if saturation >= 0.22 and 0.14 <= lightness <= 0.74:
             accent_entries.append((_hue_bucket(_hex_to_hls(value)[0]), value, count))
     accent_entries.sort(key=lambda item: item[2], reverse=True)
     accent_buckets: list[str] = []
@@ -408,6 +477,7 @@ def extract_style_fingerprint(
         uses_pill_shapes=uses_pill,
         color_count=len(color_counts),
         separation_style=_detect_separation_style(css_only or combined),
+        composition_markers=_composition_markers(combined),
     )
 
 
@@ -497,6 +567,18 @@ def compare_fingerprints(a: StyleFingerprint | dict, b: StyleFingerprint | dict)
         score += 0.12
         reasons.append(f"구성 문법 동일 ({sep_a})")
 
+    markers_a = set(fa.get("composition_markers") or [])
+    markers_b = set(fb.get("composition_markers") or [])
+    structural_similarity = 0.0
+    if markers_a or markers_b:
+        structural_similarity = len(markers_a & markers_b) / max(len(markers_a | markers_b), 1)
+        score += 0.25 * structural_similarity
+        if structural_similarity >= 0.6:
+            reasons.append(
+                "구성 마커 중복 "
+                f"{structural_similarity:.0%} ({', '.join(sorted(markers_a & markers_b))})"
+            )
+
     radii_a = fa.get("radius_values_px") or []
     radii_b = fb.get("radius_values_px") or []
     if radii_a and radii_b:
@@ -508,6 +590,8 @@ def compare_fingerprints(a: StyleFingerprint | dict, b: StyleFingerprint | dict)
         "project_a": fa.get("project"),
         "project_b": fb.get("project"),
         "similarity": round(min(score, 1.0), 4),
+        "structural_similarity": round(structural_similarity, 4),
+        "shared_composition_markers": sorted(markers_a & markers_b),
         "reasons": reasons,
     }
 
@@ -665,7 +749,15 @@ def check_style_divergence(
         for entry in recent
     ]
     comparisons.sort(key=lambda item: item["similarity"], reverse=True)
-    too_similar = [item for item in comparisons if item["similarity"] >= threshold]
+    too_similar = [
+        item
+        for item in comparisons
+        if item["similarity"] >= threshold
+        or (
+            item.get("structural_similarity", 0.0) >= 0.85
+            and len(item.get("shared_composition_markers") or []) >= 4
+        )
+    ]
     attractors = detect_attractors(fingerprint, serif_sanctioned=serif_sanctioned)
 
     verdict = "fail" if (too_similar or attractors) else "ok"

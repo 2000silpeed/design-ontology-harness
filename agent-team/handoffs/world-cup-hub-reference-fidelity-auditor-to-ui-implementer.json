@@ -1,0 +1,65 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-reference-fidelity-20260714",
+  "created_at": "2026-07-14T21:41:00+09:00",
+  "project": "world-cup-hub",
+  "from_role": "reference-fidelity-auditor",
+  "to_role": "ui-implementer",
+  "stage": "implementation",
+  "status": "needs-work",
+  "summary": "현재 Fixture Desk는 standalone aesthetic, browser, component, lint gate를 통과하지만 승인된 Fixture Compass 방향과의 paired fidelity는 37.90점으로 차단됐다. 여섯 개 critical invariant를 포함해 여덟 항목이 모두 최소 점수에 미달했다.",
+  "input_artifacts": [
+    {
+      "path": "projects/world-cup-hub/design-system/reference-fidelity-contract.json",
+      "sha256": "ffc5da9dfc9319c9d0726b754690f74dc3395206f64979c2a89a1ff594bade07"
+    },
+    {
+      "path": "projects/world-cup-hub/fixture-desk/screenshots/production/fixture-desk-light-desktop.png",
+      "sha256": "7b2fb85207bcc3037b3410fd059ef7f66e57621f2d307f1eec78dc0cb81c7fee"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/build/system/production/reference-fidelity/review-01-current-fixture-desk.json",
+      "sha256": "f2588d610a11ca18cd23797c20415ac3ecb6b864c2ee7e13a9f492903bc366cd"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/production/reference-fidelity/latest_loop_report.json",
+      "sha256": "9a818aba3e1694c7d303955694fc29474084a40aae46abcde015f94938c88dfc"
+    }
+  ],
+  "changed_paths": [
+    "projects/world-cup-hub/build/system/production/reference-fidelity/review-01-current-fixture-desk.json",
+    "projects/world-cup-hub/build/system/production/reference-fidelity/latest_loop_report.json"
+  ],
+  "decisions": [
+    "기존 aesthetic pass는 유지하되 승인 시안 fidelity를 대신하지 못하는 별도 증거로 취급한다.",
+    "계약과 reference SHA는 수정하지 않는다. 다음 구현은 생성된 eight-metric correction brief만 해결한다.",
+    "다음 반복은 새 runtime-tree SHA와 새 desktop/mobile light/dark screenshot SHA 묶음이 없으면 접수하지 않는다."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run design-ontology reference-fidelity-loop --project-dir projects/world-cup-hub --target-repo projects/world-cup-hub/fixture-desk --contract projects/world-cup-hub/design-system/reference-fidelity-contract.json --screenshot-manifest projects/world-cup-hub/build/system/production/fixture-desk/screenshots.json --review-artifact projects/world-cup-hub/build/system/production/reference-fidelity/review-01-current-fixture-desk.json --output projects/world-cup-hub/build/system/production/reference-fidelity/latest_loop_report.json --json",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "Weighted fidelity score 0.379 versus threshold 0.800; all eight metrics failed and six were critical failures."
+    },
+    {
+      "command": "uv run design-ontology verify-production-ui --project-dir projects/world-cup-hub --target-repo projects/world-cup-hub/fixture-desk --screenshot-manifest projects/world-cup-hub/build/system/production/fixture-desk/screenshots.json --aesthetic-report projects/world-cup-hub/build/system/production/fixture-desk/aesthetic/latest_loop_report.json --browser-evidence-bundle projects/world-cup-hub/build/system/production/fixture-desk/browser-evidence-bundle.json --json",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "The new reference_fidelity gate failed while component contracts, runtime conformance, lint, screenshots, browser evidence, aesthetic evidence, and style divergence remained green."
+    }
+  ],
+  "blockers": [
+    "first viewport is prose/KPI/ticker-first instead of fixture-workspace-first",
+    "the persistent contextual rail is not present as a first-viewport primary region",
+    "the selectedMatchId spine is visually fragmented",
+    "mobile does not expose the primary fixture workflow in the first viewport"
+  ],
+  "risks": [
+    "단순 CSS polish만으로는 composition과 task priority critical failures를 해결하기 어렵다.",
+    "구현 변경 후 기존 screenshot, browser, aesthetic, component-runtime evidence는 모두 새 runtime tree에 맞게 다시 만들어야 한다."
+  ],
+  "next_action": "UI Implementer가 latest_loop_report.json의 수정 브리프에 따라 첫 화면 구조를 고치고, 새 runtime tree와 새 네 개 스크린샷을 만든 뒤 Fidelity Auditor에게 다시 넘긴다."
+}

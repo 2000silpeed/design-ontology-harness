@@ -14,6 +14,7 @@ from .graph_schema import (
     OntologyEdge,
     OntologyNode,
 )
+from .semantic_color_markdown import runtime_role_values
 
 
 def slugify(value: str) -> str:
@@ -669,7 +670,8 @@ def build_contrast_audit_layer(graph: DesignOntologyGraph, brand_profile: dict) 
 
     If `contrast_surfaces` is manually defined in color_reference, it is honored via
     `_build_contrast_pairs` (already called from build_color_layer). Otherwise we auto-
-    compose the palette roles against black/white baselines so Section 18 is never empty.
+    compose the palette roles against runtime policy surface/ink baselines so Section 18
+    is never empty.
     """
     color_ref = brand_profile.get("_resolved_color_reference") or {}
     roles = color_ref.get("palette_roles", {}) or {}
@@ -682,9 +684,10 @@ def build_contrast_audit_layer(graph: DesignOntologyGraph, brand_profile: dict) 
     if not role_colors:
         return
 
+    runtime_colors = runtime_role_values()
     baselines = [
-        {"name": "Paper", "hex": "#FFFFFF"},
-        {"name": "Ink", "hex": "#111111"},
+        {"name": "Paper", "hex": runtime_colors["surface"]},
+        {"name": "Ink", "hex": runtime_colors["ink"]},
     ]
     for baseline in baselines:
         token_id = f"color:{slugify(baseline['name'])}"
@@ -796,7 +799,8 @@ VISUAL_ASSET_CONTRACT_ID = "governance:generated-visual-asset-contract"
 SOURCED_VISUAL_ASSET_CONTRACT_ID = "governance:sourced-visual-asset-fallback-contract"
 SOURCED_VISUAL_ASSET_FALLBACK_POLICY = "license-verified sourced visual fallback"
 SOURCED_VISUAL_ASSET_CANDIDATE_MANIFEST_PATH = "public/generated/design-system/sourced-visual-candidates.json"
-VISUAL_ASSET_MANIFEST_SCHEMA = "visual-asset-manifest/v1"
+VISUAL_ASSET_MANIFEST_SCHEMA = "visual-asset-manifest/v2"
+VISUAL_ASSET_GENERATION_PROVENANCE_VERSION = "visual-asset-generation-provenance/v1"
 VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS = [
     VISUAL_ASSET_MANIFEST_PATH,
     "design-system/generated_visual_assets.json",
@@ -823,6 +827,10 @@ VISUAL_ASSET_RECORD_REQUIRED_FIELDS = [
     "intended_for",
     "alt_text",
     "prompt_summary",
+    "generation_provenance_version",
+    "generator",
+    "generation_run_id",
+    "candidate_id",
 ]
 SOURCED_VISUAL_ASSET_RECORD_REQUIRED_FIELDS = [
     "id",
@@ -1199,6 +1207,50 @@ VISUAL_ASSET_SLOT_RULES = [
 ]
 
 
+FIXTURE_LED_VISUAL_ASSET_SLOT_RULES = [
+    {
+        "slot": "fixture-led-ui-direction-mockup",
+        "label": "Fixture-led UI direction mockup",
+        "keywords": (),
+        "family_keywords": (),
+        "aspect_ratios": ["16:10", "16:9"],
+        "usage": (
+            "Design-reference mockup for a fixture-led command desk. The first viewport must "
+            "start with fixture filters and a comparison table, then connect one selected "
+            "match to a contextual rail. This slot is not runtime hero content."
+        ),
+        "activation": (
+            "design-reference-only before implementation; never replace the fixture workflow "
+            "or become a first-viewport marketing hero"
+        ),
+        "medium_role": "ui-design-reference",
+        "default_acquisition_modes": ["image_gen", "user_supplied"],
+        "deterministic_svg_allowed": False,
+        "visual_scope": "design-reference-only",
+    },
+    {
+        "slot": "fixture-context-raster",
+        "label": "Fixture context raster",
+        "keywords": (),
+        "family_keywords": (),
+        "aspect_ratios": ["3:2", "16:9"],
+        "usage": (
+            "Optional supporting raster for the selected-match context after the fixture table. "
+            "It may add verified match-day atmosphere or editorial context, but may not contain "
+            "a fake interface, betting cues, or primary workflow content."
+        ),
+        "activation": (
+            "only in a secondary generated-visual-context surface after the fixture filters, "
+            "schedule table, and selected-match rail are already available"
+        ),
+        "medium_role": "supporting-fixture-context",
+        "default_acquisition_modes": ["image_gen", "user_supplied", "sourced"],
+        "deterministic_svg_allowed": False,
+        "visual_scope": "secondary-runtime-support",
+    },
+]
+
+
 def build_generated_visual_asset_layer(
     graph: DesignOntologyGraph,
     brand_profile: dict,
@@ -1252,7 +1304,11 @@ def build_generated_visual_asset_layer(
     if brand_profile.get("_resolved_visual_reference") or blueprint.get("visual_reference"):
         prompt_basis.append("visual_reference_report.json")
 
-    slot_plans = _infer_visual_asset_slots(component_inventory)
+    slot_plans = _infer_visual_asset_slots(
+        component_inventory,
+        brand_profile=brand_profile,
+        blueprint=blueprint,
+    )
     for rule, targets in slot_plans:
         asset_id = f"visual-asset:{rule['slot']}"
         graph.add_node(OntologyNode(
@@ -1277,6 +1333,7 @@ def build_generated_visual_asset_layer(
                 "usage": rule["usage"],
                 "activation": rule["activation"],
                 "medium_role": rule.get("medium_role", "brand-aligned-raster"),
+                "visual_scope": rule.get("visual_scope", "runtime-support"),
                 "default_acquisition_modes": rule.get("default_acquisition_modes", ["image_gen", "user_supplied", "sourced"]),
                 "deterministic_svg_allowed": rule.get("deterministic_svg_allowed", False),
                 "medium_selection_policy_id": VISUAL_ASSET_MEDIUM_SELECTION_POLICY_ID,
@@ -1675,7 +1732,14 @@ def _add_integrated_visual_assets_from_manifest(
     if not isinstance(assets, list):
         return
 
-    for index, asset in enumerate(asset for asset in assets if isinstance(asset, dict)):
+    integrated_assets = (
+        asset
+        for asset in assets
+        if isinstance(asset, dict)
+        and asset.get("status") == "integrated"
+        and asset.get("asset_path")
+    )
+    for index, asset in enumerate(integrated_assets):
         is_sourced = _is_sourced_visual_asset_record(asset)
         raw_id = str(asset.get("id") or "").strip()
         if raw_id:
@@ -1712,6 +1776,10 @@ def _add_integrated_visual_assets_from_manifest(
             "intended_for": asset.get("intended_for", []),
             "alt_text": asset.get("alt_text"),
             "prompt_summary": asset.get("prompt_summary"),
+            "visual_scope": asset.get("visual_scope"),
+            "active_generation": asset.get("active_generation"),
+            "lifecycle_role": asset.get("lifecycle_role"),
+            "prompt_contract_migrations": asset.get("prompt_contract_migrations"),
             "source_url": asset.get("source_url") or asset.get("source_page_url"),
             "download_url": asset.get("download_url"),
             "provider": provider_id,
@@ -1965,9 +2033,65 @@ def build_reference_context_layer(
             graph.add_edge(OntologyEdge(type=EdgeType.captures, source=provider_node_id, target=card_id))
 
 
-def _infer_visual_asset_slots(component_inventory: dict) -> list[tuple[dict, list[str]]]:
+def _infer_visual_asset_slots(
+    component_inventory: dict,
+    *,
+    brand_profile: dict | None = None,
+    blueprint: dict | None = None,
+) -> list[tuple[dict, list[str]]]:
+    """Infer only visual slots the accepted product layout can actually use.
+
+    Component-name matching alone used to turn terms such as ``panel`` and
+    ``card`` into comic previews, generic thumbnails, or first-viewport hero
+    art. That is especially harmful for fixture-led data products, where the
+    table and selected-match context are the product. The product brief is the
+    authority for that decision, so inspect it before falling back to generic
+    component/family inference.
+    """
+    brand_profile = brand_profile or {}
     components = component_inventory.get("components", [])
     families = component_inventory.get("families", [])
+    component_names = {
+        str(component.get("name", "")).strip()
+        for component in components
+        if str(component.get("name", "")).strip()
+    }
+    layout = brand_profile.get("layout_skeleton") or {}
+    composition = str(layout.get("composition") or "").casefold()
+    avoid_layouts = " ".join(
+        str(item) for item in layout.get("avoid_layouts", []) if item
+    ).casefold()
+    application_concept = brand_profile.get("application_concept") or {}
+    operating_mode = str(application_concept.get("operating_mode") or "").casefold()
+
+    fixture_led = (
+        "fixture" in composition
+        or "selected-match" in composition
+        or "fixture" in operating_mode
+        or (
+            "schedule-table" in component_names
+            and "match-detail-panel" in component_names
+            and "generated-visual-context" in component_names
+        )
+    )
+    if fixture_led:
+        direction_targets = [
+            f"component:{slugify(name)}"
+            for name in ("app-shell", "schedule-table", "match-detail-panel")
+            if name in component_names
+        ]
+        context_targets = [
+            f"component:{slugify(name)}"
+            for name in ("generated-visual-context",)
+            if name in component_names
+        ]
+        plans: list[tuple[dict, list[str]]] = []
+        for rule in FIXTURE_LED_VISUAL_ASSET_SLOT_RULES:
+            targets = direction_targets if rule["slot"] == "fixture-led-ui-direction-mockup" else context_targets
+            if targets:
+                plans.append((rule, targets))
+        return plans
+
     family_names = {
         str(family.get("family", "")).strip().lower()
         for family in families
@@ -1976,6 +2100,12 @@ def _infer_visual_asset_slots(component_inventory: dict) -> list[tuple[dict, lis
     plans: list[tuple[dict, list[str]]] = [(VISUAL_ASSET_SLOT_RULES[0], [])]
 
     for rule in VISUAL_ASSET_SLOT_RULES[1:]:
+        if rule["slot"] == "hero-image" and "hero" in avoid_layouts:
+            continue
+        if rule["slot"] == "card-thumbnail" and (
+            "card grid" in avoid_layouts or "decorative card" in avoid_layouts
+        ):
+            continue
         targets: list[str] = []
         for component in components:
             text = " ".join(

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from .agent_team import scaffold_shared_team
 from .graph_builders import (
     FREE_SOURCED_VISUAL_PROVIDER_RULES,
     LICENSED_VISUAL_PROVIDER_RULES,
@@ -18,6 +19,9 @@ from .graph_builders import (
     VISUAL_ASSET_RECORD_REQUIRED_FIELDS,
 )
 from .utils import ensure_dir
+
+
+CODEX_PLUGIN_VERSION = "0.2.0"
 
 
 def scaffold_agent_pack(
@@ -50,6 +54,14 @@ def scaffold_agent_pack(
     if "codex" in normalized_targets:
         _scaffold_codex_pack(target_repo, artifact_dir, force, created)
 
+    scaffold_shared_team(
+        target_repo=target_repo,
+        artifact_dir=artifact_dir,
+        targets=normalized_targets,
+        force=force,
+        created=created,
+    )
+
     return {
         "target_repo": str(target_repo),
         "artifact_dir": artifact_dir,
@@ -66,6 +78,7 @@ def _scaffold_claude_pack(target_repo: Path, artifact_dir: str, force: bool, cre
     implement_skill_dir = ensure_dir(skills_dir / "design-system-implement")
     architect_skill_dir = ensure_dir(skills_dir / "design-system-architect")
     concept_skill_dir = ensure_dir(skills_dir / "design-system-concept-author")
+    visual_assets_skill_dir = ensure_dir(skills_dir / "design-system-visual-assets")
 
     _write_if_allowed(
         concept_skill_dir / "SKILL.md",
@@ -86,24 +99,11 @@ def _scaffold_claude_pack(target_repo: Path, artifact_dir: str, force: bool, cre
         created=created,
     )
     _write_if_allowed(
-        agents_dir / "design-system-architect.md",
-        _claude_architect_agent(artifact_dir),
+        visual_assets_skill_dir / "SKILL.md",
+        _codex_visual_asset_skill(artifact_dir),
         force=force,
         created=created,
     )
-    _write_if_allowed(
-        agents_dir / "design-system-concept-author.md",
-        _claude_concept_author_agent(artifact_dir),
-        force=force,
-        created=created,
-    )
-    _write_if_allowed(
-        agents_dir / "design-system-implementer.md",
-        _claude_implementer_agent(artifact_dir),
-        force=force,
-        created=created,
-    )
-
     refactor_skill_dir = ensure_dir(skills_dir / "design-system-refactor")
     _write_if_allowed(
         refactor_skill_dir / "SKILL.md",
@@ -161,7 +161,7 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
 
     plugin_manifest = {
         "name": "design-system-harness",
-        "version": "0.1.0",
+        "version": CODEX_PLUGIN_VERSION,
         "description": "Skills for applying design-system-harness outputs inside an implementation repository.",
         "author": {
             "name": "Design Ontology Harness",
@@ -201,7 +201,7 @@ def _scaffold_codex_pack(target_repo: Path, artifact_dir: str, force: bool, crea
     }
 
     marketplace = {
-        "name": "Local Plugins",
+        "name": "local-plugins",
         "interface": {"displayName": "Local Plugins"},
         "plugins": [
             {
@@ -318,6 +318,25 @@ If `system_spec.md` or `token_schema.json` contains typography `script_guardrail
 - For wide or serif Hangul display fonts, start one type step smaller than English-first hero comps and only scale up after wrap review.
 - Respect font-specific line-height and letter-spacing guidance from the artifacts instead of reusing English defaults.
 - Never set Hangul display line-height below the artifact safety minimum, and never tighten tracking past the allowed min/max range.
+"""
+
+
+def _ui_base_rules_guidance() -> str:
+    return """
+## UI base rules
+
+These are the readability floors `lint-implementation` enforces as `DS100`-`DS107`. Token binding proves where a value came from; these rules decide whether the bound value is readable. Treat every one as blocking, not as polish.
+
+- Running text keeps `line-height: var(--ds-leading-body)`. The floor is 1.5 for Latin copy and 1.6 for Korean, because Hangul carries 받침 below the baseline. Tight leading belongs to display type only. (`DS100`)
+- Text needs 4.5:1 contrast against its own background, or 3:1 above 24px regular / 18px bold. Check the resolved token values in both light and dark mode, not just the light default. (`DS101`)
+- Form fields, buttons, and other control boundaries need 3:1 against their own fill. A 1.4:1 hairline border is decoration, not an affordance. A filled control whose border token equals its background is fine — its fill is the identifier. (`DS102`)
+- Never let color be the only difference between states. A status dot needs a shape, glyph, or adjacent label so the state survives color blindness and grayscale. (`DS103`)
+- Use at most two text typefaces. Hierarchy comes from size and weight. The Korean/Latin locale pairing does not count as a third family. (`DS104`)
+- Korean reading text keeps tracking between -0.02em and 0 via `var(--ds-tracking-body)`. Positive letter-spacing dissolves 어절 grouping, which is the Hangul equivalent of the Latin all-caps failure. Wide tracking stays with Latin-only uppercase labels, wordmarks, dates, and numerals. (`DS105`)
+- Korean surfaces need a wrap contract: `word-break: var(--ds-wrap-word-break)` plus `overflow-wrap: var(--ds-wrap-overflow)`. Without keep-all, Hangul breaks mid-어절. (`DS106`)
+- Keep running text left aligned. Justified text opens word rivers and is worse in Korean, where 어절 gaps stretch. (`DS107`)
+
+Two Latin conventions do not transfer to Hangul and must not be copied from English comps: x-height selection has no Hangul counterpart, so judge Korean body faces by 자소 balance and small-size legibility from the artifacts instead; and letter case does not exist, so `text-transform: uppercase` on Korean copy is a no-op that signals an English-first spec.
 """
 
 
@@ -557,6 +576,8 @@ Implementation rules:
 
 {_script_aware_typography_guidance()}
 
+{_ui_base_rules_guidance()}
+
 {_color_mode_parity_guidance()}
 
 {_commercial_product_realism_guidance()}
@@ -671,6 +692,8 @@ Implementation rules:
 
 {_script_aware_typography_guidance()}
 
+{_ui_base_rules_guidance()}
+
 {_commercial_product_realism_guidance()}
 
 {_responsive_resilience_guidance()}
@@ -694,6 +717,8 @@ paths:
 # Design System Refactor
 
 AI가 생성한 UI 코드나 급하게 만든 프로토타입을, 디자인 시스템 스펙 기준으로 체계적으로 리팩토링합니다.
+
+먼저 `{artifact_dir}/agent-team.json`과 `{artifact_dir}/handoffs/`의 최신 인수인계를 읽습니다. UI Implementer가 배정한 범위만 수정하고, 결과는 Team Lead에게 돌려줍니다.
 
 ## 실행 절차
 
@@ -944,11 +969,12 @@ Your job is to take existing UI code (often AI-generated or prototyped quickly) 
 
 ## Startup
 
-1. Read `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md` when present.
-2. Read `{artifact_dir}/component_specs.json` or `{artifact_dir}/components/component_specs.json`.
+1. Read `{artifact_dir}/agent-team.json` and the latest file under `{artifact_dir}/handoffs/`.
+2. Read `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md` when present.
+3. Read `{artifact_dir}/component_specs.json` or `{artifact_dir}/components/component_specs.json`.
    - Fallback: `{artifact_dir}/component_inventory.json`
-3. Read `{artifact_dir}/token_schema.json`.
-4. Read `{artifact_dir}/system_spec.md`.
+4. Read `{artifact_dir}/token_schema.json`.
+5. Read `{artifact_dir}/system_spec.md`.
 
 These artifacts are your source of truth. If any core file is missing, report which files are needed.
 
@@ -1022,6 +1048,8 @@ paths:
 기존 AI 생성 UI나 프로토타입을 디자인 시스템 스펙 기반으로 **처음부터 다시 구성**합니다.
 Refactor(토큰 교체)와 다릅니다 — 레이아웃, 타이포그래피 위계, 색상 구성, 컴포넌트 구조를 모두 재설계합니다.
 
+먼저 `{artifact_dir}/agent-team.json`과 `{artifact_dir}/handoffs/`의 최신 인수인계를 읽습니다. 사용자가 rebuild를 명시적으로 승인한 경우에만 진행하고, 결과는 Team Lead에게 돌려줍니다.
+
 ## Refactor vs Rebuild 차이
 
 | | Refactor | **Rebuild** |
@@ -1086,19 +1114,23 @@ system_spec.md의 Typography System에서:
 - **body 서체**: 본문, UI 라벨에 적용
 - **mono 서체**: 데이터, 코드, 숫자에 적용
 - **type scale**: 각 위치의 font-size를 scale에서 선택
-- **line-height**: preset에 따라 적용
+- **line-height**: 본문은 `var(--ds-leading-body)`, display는 preset의 tight 값
 
 위계 구성 원칙:
 ```
 페이지 제목: heading font, 2xl-3xl, weight 800
 섹션 제목:   heading font, xl, weight 700
 카드 제목:   body font, lg, weight 600
-본문:        body font, md, weight 400
-캡션/라벨:   body font, sm, weight 500, uppercase + letter-spacing (optional)
+본문:        body font, md, weight 400, leading-body
+캡션/라벨:   body font, sm, weight 500
 데이터 숫자: mono 또는 tabular figures, lg-2xl, weight 700-800
 ```
 
+라벨의 uppercase + 넓은 letter-spacing은 라틴 전용 관례입니다. 한글 라벨에 대문자 변환은 아무 효과가 없고 양수 자간은 어절을 풀어버리므로, 한글 라벨은 크기·굵기·색으로만 구분합니다.
+
 {_script_aware_typography_guidance()}
+
+{_ui_base_rules_guidance()}
 
 {_commercial_product_realism_guidance()}
 
@@ -1213,12 +1245,13 @@ Refactoring: `color: #3b82f6` → `color: var(--accent)` (same layout, different
 
 ## Startup
 
-1. Read `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md` when present.
-2. Read `{artifact_dir}/system_spec.md` — extract brand keywords, principles, color palette, typography system
-3. Read `{artifact_dir}/token_schema.json` — get the actual token values
-4. Read `{artifact_dir}/components/component_specs.json` — component anatomy, states, accessibility
-5. If color palette exists, use those EXACT colors (not Tailwind defaults)
-6. If typography system exists, use those EXACT fonts and scale
+1. Read `{artifact_dir}/agent-team.json` and the latest file under `{artifact_dir}/handoffs/`.
+2. Read `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md` when present.
+3. Read `{artifact_dir}/system_spec.md` — extract brand keywords, principles, color palette, typography system
+4. Read `{artifact_dir}/token_schema.json` — get the actual token values
+5. Read `{artifact_dir}/components/component_specs.json` — component anatomy, states, accessibility
+6. If color palette exists, use those EXACT colors (not Tailwind defaults)
+7. If typography system exists, use those EXACT fonts and scale
 
 ## Process
 
@@ -1238,6 +1271,8 @@ Refactoring: `color: #3b82f6` → `color: var(--accent)` (same layout, different
 - Commercial product realism matters — operational product screens lead with real workflow state, filters, data rows, and provenance before hero imagery or feature-card grids
 
 {_script_aware_typography_guidance()}
+
+{_ui_base_rules_guidance()}
 
 {_commercial_product_realism_guidance()}
 
@@ -1278,6 +1313,8 @@ paths:
 # Design System Reference Inspect
 
 Use this skill when a screen should learn from `inspect-reference-site` outputs without cloning the referenced website.
+
+Read `{artifact_dir}/agent-team.json` and the latest file under `{artifact_dir}/handoffs/` first. Return the advisory plan to the Team Lead; do not change stage ownership yourself.
 
 ## Required Inputs
 
@@ -1344,13 +1381,14 @@ Your job is to read website inspection outputs and explain how they may influenc
 
 Always:
 
-1. Read `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md` first when present.
-2. Read `{artifact_dir}/system_spec.md`, `{artifact_dir}/token_schema.json`, and component specs.
-3. Read `design_context_pack.json`, `PAGE_TOPOLOGY.md`, `BEHAVIORS.md`, and `website_reference_report.json` when present.
-4. Map observed sections to local component families and states.
-5. Mark every recommendation as advisory morphology, density, hierarchy, or interaction affordance.
-6. Reject reference palette, typography, IA, copy, logos, and unlicensed assets.
-7. Produce an implementation checklist plus verification checklist.
+1. Read `{artifact_dir}/agent-team.json` and the latest file under `{artifact_dir}/handoffs/`.
+2. Read `{artifact_dir}/STYLE.md` or `{artifact_dir}/DESIGN.md` first when present.
+3. Read `{artifact_dir}/system_spec.md`, `{artifact_dir}/token_schema.json`, and component specs.
+4. Read `design_context_pack.json`, `PAGE_TOPOLOGY.md`, `BEHAVIORS.md`, and `website_reference_report.json` when present.
+5. Map observed sections to local component families and states.
+6. Mark every recommendation as advisory morphology, density, hierarchy, or interaction affordance.
+7. Reject reference palette, typography, IA, copy, logos, and unlicensed assets.
+8. Produce an implementation checklist plus verification checklist for the Team Lead.
 
 You do not implement code by default; hand off to the implementer or rebuild skill after the reference-safe plan is clear.
 """
@@ -1387,18 +1425,23 @@ Read the user's brief, then read available project files:
 4. Write `application_concept`.
 5. Write `layout_skeleton` as a custom screen grammar, not a preset label.
 6. Write `design_differentiation` with structural signature moves.
-7. Update supporting fields when generic: `product_primitives`, `visual_keywords`, `interaction_keywords`.
-8. Patch `brand_profile.json`.
-9. Run or recommend:
+7. Author `component_decision.core_components` from the product primitives. Each component must define its own anatomy, domain states, content rules, accessibility contract, variants/props, interaction events, data contract, responsive behavior, and dos/don'ts. Family defaults are coverage references, not substitutes for domain contracts.
+8. Update supporting fields when generic: `product_primitives`, `visual_keywords`, `interaction_keywords`.
+9. Patch `brand_profile.json`.
+10. Run or recommend:
 
 ```bash
 uv run design-ontology run-project --project-dir projects/<name> --kb-dir kb/default
 ```
 
-10. Verify the generated artifacts contain the authored decisions:
+11. Verify the generated artifacts contain the authored decisions:
     - `build/system/blueprint/design_system_blueprint.json`
     - `build/system/blueprint/system_spec.md`
     - `build/system/blueprint/token_schema.json`
+    - `build/system/blueprint/component_inventory.json`
+    - `build/system/components/component_specs.json`
+    - `build/system/components/component_contract_validation.json`
+12. Run `design-ontology validate-component-contracts --project-dir projects/<name>`. Do not hand off to implementation while an authored contract is `needs-authoring`.
 
 ## Field Contract
 
@@ -1425,6 +1468,30 @@ uv run design-ontology run-project --project-dir projects/<name> --kb-dir kb/def
     "must_feel_different_from": [],
     "signature_moves": [],
     "repetition_risks": []
+  }},
+  "component_decision": {{
+    "mode": "llm-authored",
+    "rationale": "",
+    "core_components": [
+      {{
+        "name": "domain-component-name",
+        "family": "content",
+        "role": "",
+        "supports_primitive": "",
+        "decision_reason": "",
+        "anatomy": ["root", "domain-content", "state-region", "action-slot"],
+        "states": ["default", "domain-state"],
+        "content_rules": [],
+        "accessibility_notes": [],
+        "variants": {{"axes": [], "default": "default", "constraints": []}},
+        "props": {{"state": {{"type": "enum", "values": ["default", "domain-state"]}}}},
+        "interaction": {{"events": [], "state_transitions": [], "focus_behavior": "", "state_coverage": []}},
+        "data_contract": {{"domain_object": "", "required_fields": [], "provenance_required": false, "empty_state_required": false}},
+        "responsive": {{"required_widths_px": [320, 390, 768], "control_rules": [], "container_behavior": ""}},
+        "dos_and_donts": {{"do": [], "dont": []}}
+      }}
+    ],
+    "rejected_components": []
   }}
 }}
 ```
@@ -1437,6 +1504,8 @@ Before finishing, check:
 - Does `first_screen_contract` name actual above-the-fold regions, controls, state, or domain objects?
 - Are `signature_moves` structural, not decorative?
 - Did `product_primitives` follow from domain objects rather than generic components?
+- Does every core component preserve a domain primitive, domain states, actual data fields, interaction events, and responsive behavior?
+- Would `validate-component-contracts` pass without `--allow-needs-authoring`?
 - Did you explicitly reject generic hero/card/dashboard layouts when they are not the user's real workflow?
 
 ## Rules
@@ -1446,6 +1515,7 @@ Before finishing, check:
 - Do not make every product a dashboard; dashboard is valid only when monitoring metrics is the first job.
 - Do not open with a marketing hero unless the product is a landing page.
 - Use Astryx and Geist only as component taxonomy and state-coverage references.
+- Never let family defaults overwrite authored states or stand in for a missing domain component contract.
 - Prefer concrete screen grammar over adjectives.
 """
 
@@ -1469,6 +1539,8 @@ Read these files first when they exist:
 - `{artifact_dir}/system_spec.md`
 - `{artifact_dir}/token_schema.json`
 - `{artifact_dir}/component_inventory.json`
+- `{artifact_dir}/components/component_specs.json`
+- `{artifact_dir}/components/component_contract_validation.json`
 - `{artifact_dir}/system_ontology.json`
 
 ## Workflow
@@ -1529,8 +1601,12 @@ Read these files first when they exist:
 17. **NEVER ship generic initials tiles as final app icons.** Favicon, app-shell marks, and web manifests need brand-specific SVG identity assets.
 18. **NEVER let dashboard/tool/data/community products open like pitch decks** unless the user explicitly asks for a landing page. Lead with operational state, filters, tables/lists, and source/update context.
 19. **NEVER treat image-free commercial mockups as complete** when the product, place, object, article, game, venue, or content model naturally needs visual assets. Use generated, sourced, user-provided, or deterministic identity imagery with manifest records.
+20. **NEVER implement an authored component marked `needs-authoring`.** Run `design-ontology validate-component-contracts --project-dir <project>` before implementation and preserve every domain state, prop/data field, interaction, accessibility rule, responsive mode, and `--ds-*` token binding.
+21. **Do not claim production readiness from one lint or one screenshot.** Record matching light/dark mobile/desktop evidence for the same route, state, and implementation SHA; add human or multimodal-review evidence for semantic industry-fit metrics; then run `design-ontology verify-production-ui --project-dir <project> --target-repo .`.
 
 {_script_aware_typography_guidance()}
+
+{_ui_base_rules_guidance()}
 
 {_color_mode_parity_guidance()}
 
@@ -1545,6 +1621,7 @@ Read these files first when they exist:
 - State which artifact files informed the implementation.
 - Mention any gap between the requested UI and the current system artifacts.
 - Call out any remaining feature-regression or theme-regression risk.
+- Report `verify-production-ui` as the final release gate and list any failed evidence category.
 """
 
 
@@ -1557,6 +1634,8 @@ description: Use website reference inspection outputs safely while implementing 
 # Design System Reference Inspect
 
 Use this skill when the repository has outputs from `inspect-reference-site` and the implementation should learn from a reference website without copying it.
+
+Read `{artifact_dir}/agent-team.json` and the latest file under `{artifact_dir}/handoffs/` first. Return the advisory plan to the Team Lead; do not change stage ownership yourself.
 
 ## Required Inputs
 
@@ -1719,6 +1798,8 @@ Never switch to CLI, SDK runner, or OpenAI image API fallback unless the user ex
 
 When Codex exposes the built-in `image_gen` tool through the installed imagegen skill:
 
+When `{artifact_dir}/agent-team.json` exists and you are assigned `visual-asset-producer`, stop at the `accepted` state after manifest validation without `--require-integrated`. The UI Implementer owns runtime wiring, promotion to `integrated`, and the strict integrated-asset gate. In standalone use, one agent may complete both halves, but it must still preserve the state transition.
+
 1. Use the built-in `image_gen` path. Do not invoke CLI mode, SDK runners, or OpenAI API fallback.
 2. Generate 2-4 candidates for each major image slot with one built-in call per candidate or variant.
 3. Base prompts on the artifact files, not on generic style words.
@@ -1727,8 +1808,11 @@ When Codex exposes the built-in `image_gen` tool through the installed imagegen 
    - hero: `16:9`, `3:2`, or wide responsive crop
    - card thumbnail: `4:3` or `1:1`
    - editorial cover: `4:5` or `3:4`
-6. Copy accepted project-bound assets into the workspace before code references them. Preserve the original `$CODEX_HOME/generated_images/<session-id>/...` PNG path in the manifest when available, but never make runtime code depend on that agent-local path.
-7. Write or update the visual asset manifest using schema `{VISUAL_ASSET_MANIFEST_SCHEMA}`.
+6. Copy accepted project-bound assets into the workspace before code references them. Preserve the exact `$CODEX_HOME/generated_images/<generation-run-id>/<candidate-id>.png` output path in the manifest, but never make runtime code depend on that agent-local path. Do not rename or invent the run or candidate identity.
+7. Register the reviewed candidate as `accepted`; do not hand-edit it directly to `integrated`. When the harness CLI is available, run `design-ontology register-image-asset --project-dir . --asset-id <id> --source <png> --alt-text <text> --selection-reason <reason> --reviewed-criterion <criterion> --session-id <generation-run-id>` and repeat `--reviewed-criterion` for every prompt-packet review gate. The registry derives `generator`, `generation_run_id`, and `candidate_id` from the verified original path; arbitrary caller-authored values are not provenance.
+8. Hand accepted assets to the UI Implementer. The implementer wires each workspace copy into its intended component, then runs `design-ontology promote-image-asset --project-dir . --asset-id <id>`.
+9. The UI Implementer runs `design-ontology validate-image-assets --project-dir . --require-integrated`, followed by `design-ontology lint-implementation --target-repo .`. Do not report the image as integrated while either command fails.
+10. Use schema `{VISUAL_ASSET_MANIFEST_SCHEMA}`. If the CLI is unavailable, preserve the same `planned → accepted → integrated` lifecycle and all metadata fields manually, then state that CLI verification is still pending.
 
 Preferred manifest path:
 
@@ -1745,6 +1829,8 @@ Required top-level manifest fields:
 Required asset record fields:
 
 {asset_record_fields}
+
+For generated records, `generation_provenance_version`, `generator`, `generation_run_id`, and `candidate_id` may be null only while `status=planned`. An `accepted` or `integrated` record is fail-closed unless those values match the preserved Codex `image_gen` output path under `$CODEX_HOME/generated_images/`. Do not fabricate them from prompt text, a copied derivative, or a manually chosen session label.
 
 If the built-in imagegen path is unavailable or fails, do not pretend an image was generated and do not call an API fallback. Move to the sourced visual fallback below, or create a ready-to-run prompt pack at `{VISUAL_ASSET_PROMPT_PACK_PATH}` or the nearest existing docs/assets directory, then report that generation was skipped.
 
@@ -1811,6 +1897,9 @@ For Korean-first products, include Hangul-safe composition constraints:
 - Keep generated and sourced assets in the same manifest, but distinguish them with `acquisition_mode`.
 - For sourced assets, include visible or documented attribution whenever `attribution_required` is true.
 - Every integrated raster image needs a manifest record before runtime code references it.
+- `accepted` means the candidate passed every packet review criterion; `integrated` means application code references the verified workspace copy. Never skip this state transition.
+- Generated `accepted` and `integrated` records must use the current manifest and generation-provenance versions. A legacy manifest, arbitrary generator label, or run/candidate value that does not match `original_png_path` is blocking.
+- Treat DS087, DS088, and DS089 from `lint-implementation` as blocking: they indicate an invalid manifest, missing/unregistered file, unsafe hotlink/agent-local path, or missing runtime alt text.
 - Define stable aspect ratios, object-fit/object-position, and mobile crop behavior so imagery does not obscure Korean text or controls.
 - Verify desktop and mobile screenshots after integration; check that images render, crop cleanly, and do not obscure text.
 

@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gyeopmal — 번역 검수 대기열</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <!-- 원격 폰트 CDN을 링크하지 않는다. 참조 화면은 오프라인에서 렌더되어야 하고,
+         고정할 수 없는 원격 참조는 production 증거의 content tree가 검증하지 못한다.
+         서체는 tokens.css의 --ds-font-* 스택이 정하고, 웹폰트가 없는 환경에서는
+         스택의 system-ui로 떨어진다. 이 화면이 증명하는 것은 특정 서체가 아니라
+         행간·자간·줄바꿈 계약이므로 폴백에서도 그대로 성립한다. -->
+    <link rel="stylesheet" href="./design-system/tokens.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main
+      class="app-shell app-mockup"
+      data-prototype-state-set="default,reviewing,resolved,empty"
+      data-state="reviewing"
+      data-product-surface="translation-review-queue"
+      data-product-model="segment"
+      data-product-source="aurora-3.2-ko-batch-07"
+      data-product-id="batch-07"
+      aria-label="Gyeopmal 번역 검수 대기열"
+    >
+      <header class="desk-topbar">
+        <a class="brandmark" href="#ledger">
+          <svg class="brandmark-icon" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="32" height="32" rx="6" fill="var(--ds-color-ink)" />
+            <rect x="7" y="8" width="8" height="16" rx="1.5" fill="var(--ds-color-canvas)" />
+            <rect x="17" y="8" width="8" height="16" rx="1.5" fill="var(--ds-color-success)" />
+            <rect x="7" y="15" width="18" height="2" fill="var(--ds-color-ink)" />
+          </svg>
+          <span class="brandmark-text">
+            <strong class="brandmark-name">Gyeopmal</strong>
+            <span class="brandmark-batch">Aurora 3.2 사용자 안내서 · KO · 배치 07</span>
+          </span>
+        </a>
+
+        <label class="segment-search">
+          <svg class="control-icon" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+            <line x1="10.4" y1="10.4" x2="14" y2="14" stroke="currentColor" stroke-width="1.5" />
+          </svg>
+          <span class="visually-hidden">구간 검색</span>
+          <input
+            class="segment-search-input"
+            type="search"
+            placeholder="구간 번호나 원문 단어로 찾기"
+            value=""
+          />
+        </label>
+
+        <label class="translator-filter">
+          <span class="visually-hidden">번역가로 좁히기</span>
+          <select class="translator-select">
+            <option>번역가 전체</option>
+            <option>정현우</option>
+            <option>배소윤</option>
+            <option>문지호</option>
+          </select>
+        </label>
+
+        <button class="theme-toggle" type="button" data-theme-target="dark" aria-pressed="false">
+          <svg class="control-icon" viewBox="0 0 16 16" aria-hidden="true">
+            <path
+              d="M11.2 9.6A5.2 5.2 0 0 1 6.4 4.8c0-.6.1-1.2.3-1.7A5.6 5.6 0 1 0 12.9 9.3c-.5.2-1.1.3-1.7.3Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+            />
+          </svg>
+          어두운 화면
+        </button>
+      </header>
+
+      <section class="batch-rail" aria-labelledby="batch-rail-title">
+        <div class="batch-rail-head">
+          <h2 class="batch-rail-title" id="batch-rail-title">배치 07 진행</h2>
+          <p class="batch-rail-count">148구간 중 <strong>112구간</strong> 정리 완료 · 남은 36구간</p>
+        </div>
+
+        <figure class="batch-progress-visual" aria-labelledby="batch-progress-caption">
+          <svg viewBox="0 0 480 46" class="batch-progress-chart" role="img" aria-labelledby="batch-progress-title">
+            <title id="batch-progress-title">배치 07 구간 상태 분포: 통과 68, 보강 29, 수정 15, 대기 36</title>
+            <rect
+              data-subject="status-pass"
+              x="0" y="14" width="220" height="14"
+              fill="var(--ds-color-success)"
+            />
+            <rect
+              data-subject="status-revise"
+              x="221" y="14" width="94" height="14"
+              fill="var(--ds-color-warning)"
+            />
+            <rect
+              data-subject="status-rework"
+              x="316" y="14" width="49" height="14"
+              fill="var(--ds-color-danger)"
+            />
+            <rect
+              data-subject="status-pending"
+              x="366" y="14" width="114" height="14"
+              fill="var(--ds-color-border)"
+            />
+            <line x1="0" y1="34" x2="480" y2="34" stroke="var(--ds-color-border)" stroke-width="1" />
+            <text x="0" y="10" class="chart-label">통과 68</text>
+            <text x="221" y="10" class="chart-label">보강 29</text>
+            <text x="316" y="10" class="chart-label">수정 15</text>
+            <text x="366" y="10" class="chart-label">대기 36</text>
+            <text x="0" y="44" class="chart-axis">구간 1</text>
+            <text x="452" y="44" class="chart-axis">148</text>
+          </svg>
+          <figcaption class="batch-progress-caption" id="batch-progress-caption">
+            수정 15구간은 모두 의견이 달린 상태이므로 번역가가 바로 손볼 수 있습니다.
+          </figcaption>
+        </figure>
+      </section>
+
+      <div class="desk-body">
+        <section class="segment-ledger" id="ledger" aria-labelledby="ledger-title">
+          <div class="ledger-head">
+            <h2 class="ledger-title" id="ledger-title">구간 원장</h2>
+            <p class="ledger-hint">행을 열면 오른쪽에 원문과 번역문이 나란히 놓입니다.</p>
+          </div>
+
+          <ul class="ledger-rows">
+            <li class="ledger-row" data-state="resolved">
+              <button class="ledger-row-button" type="button">
+                <span class="segment-status" data-status="pass">
+                  <span class="status-dot" data-status="pass" aria-hidden="true"></span>통과
+                </span>
+                <span class="segment-id">S-041</span>
+                <span class="segment-preview">구독은 결제일 기준으로 자동 갱신됩니다.</span>
+                <span class="segment-meta">정현우 · 수정 0회</span>
+              </button>
+            </li>
+
+            <li class="ledger-row" data-state="resolved">
+              <button class="ledger-row-button" type="button">
+                <span class="segment-status" data-status="revise">
+                  <span class="status-dot" data-status="revise" aria-hidden="true"></span>보강
+                </span>
+                <span class="segment-id">S-042</span>
+                <span class="segment-preview">관리자는 조직 구성원의 권한을 언제든 바꿀 수 있습니다.</span>
+                <span class="segment-meta">정현우 · 수정 1회</span>
+              </button>
+            </li>
+
+            <li class="ledger-row" data-state="reviewing" aria-current="true">
+              <button class="ledger-row-button" type="button">
+                <span class="segment-status" data-status="rework">
+                  <span class="status-dot" data-status="rework" aria-hidden="true"></span>수정
+                </span>
+                <span class="segment-id">S-043</span>
+                <span class="segment-preview">결제 주기 중에 구독을 해지하면 해당 주기가 끝날 때까지…</span>
+                <span class="segment-meta">배소윤 · 수정 2회</span>
+              </button>
+            </li>
+
+            <li class="ledger-row" data-state="resolved">
+              <button class="ledger-row-button" type="button">
+                <span class="segment-status" data-status="pass">
+                  <span class="status-dot" data-status="pass" aria-hidden="true"></span>통과
+                </span>
+                <span class="segment-id">S-044</span>
+                <span class="segment-preview">내보낸 파일은 30일 동안 다시 받을 수 있습니다.</span>
+                <span class="segment-meta">문지호 · 수정 0회</span>
+              </button>
+            </li>
+
+            <li class="ledger-row" data-state="default">
+              <button class="ledger-row-button" type="button">
+                <span class="segment-status" data-status="pending">
+                  <span class="status-dot" data-status="pending" aria-hidden="true"></span>대기
+                </span>
+                <span class="segment-id">S-045</span>
+                <span class="segment-preview">요금제를 낮추면 다음 결제일부터 새 요금이 적용됩니다.</span>
+                <span class="segment-meta">배소윤 · 수정 0회</span>
+              </button>
+            </li>
+          </ul>
+        </section>
+
+        <section class="reading-pane" aria-labelledby="reading-pane-title">
+          <header class="reading-pane-head">
+            <p class="pane-eyebrow">SEGMENT 43 / 148</p>
+            <h2 class="reading-pane-title" id="reading-pane-title">해지 시점과 환불 범위</h2>
+            <p class="reading-pane-meta">배소윤 번역 · 2차 수정 · 용어집 Aurora-KO v4 적용</p>
+          </header>
+
+          <div class="bitext">
+            <article class="bitext-column" lang="en">
+              <h3 class="bitext-label">원문 · EN</h3>
+              <p class="source-text">
+                If the subscription is cancelled during a billing period, access to premium
+                features remains available until the end of that period, and no partial refund
+                is issued.
+              </p>
+            </article>
+
+            <article class="bitext-column" lang="ko">
+              <h3 class="bitext-label">번역문 · KO</h3>
+              <p class="target-text">
+                결제 주기 중에 구독을 해지하면 해당 주기가 끝날 때까지는 프리미엄 기능을 계속 쓸
+                수 있고, 남은 기간에 대한 부분 환불은 제공되지 않습니다.
+              </p>
+            </article>
+          </div>
+
+          <section class="glossary-check" aria-labelledby="glossary-title">
+            <h3 class="glossary-title" id="glossary-title">용어집 대조</h3>
+
+            <figure class="glossary-figure" aria-labelledby="glossary-caption">
+              <svg viewBox="0 0 300 62" class="glossary-chart" role="img" aria-labelledby="glossary-chart-title">
+                <title id="glossary-chart-title">용어 3건 중 2건 일치, 1건 미등록</title>
+                <line x1="8" y1="30" x2="292" y2="30" stroke="var(--ds-color-border)" stroke-width="1" />
+                <circle data-subject="term-billing-period" cx="52" cy="30" r="6" fill="var(--ds-color-success)" />
+                <circle data-subject="term-premium-features" cx="150" cy="30" r="6" fill="var(--ds-color-success)" />
+                <circle data-subject="term-partial-refund" cx="248" cy="30" r="6" fill="var(--ds-color-warning)" />
+                <text x="52" y="18" text-anchor="middle" class="chart-label">결제 주기</text>
+                <text x="150" y="18" text-anchor="middle" class="chart-label">프리미엄 기능</text>
+                <text x="248" y="18" text-anchor="middle" class="chart-label">부분 환불</text>
+                <text x="52" y="52" text-anchor="middle" class="chart-axis">일치</text>
+                <text x="150" y="52" text-anchor="middle" class="chart-axis">일치</text>
+                <text x="248" y="52" text-anchor="middle" class="chart-axis">미등록</text>
+              </svg>
+              <figcaption class="glossary-caption" id="glossary-caption">
+                '부분 환불'은 용어집에 없는 표현입니다. 이번 검수에서 등재할지 결정해야 합니다.
+              </figcaption>
+            </figure>
+          </section>
+
+          <section class="reviewer-note" aria-labelledby="reviewer-note-title">
+            <h3 class="reviewer-note-title" id="reviewer-note-title">검수 의견</h3>
+            <p class="reviewer-note-body">
+              원문의 'no partial refund is issued'를 '부분 환불은 제공되지 않습니다'로 옮긴 것은
+              뜻은 맞지만 앞 절과 주체가 어긋납니다. 앞 절은 사용자가 주체인데 뒤 절은 회사가
+              주체이고, 둘 다 피동으로 처리해서 누가 환불하지 않는지가 흐려졌습니다. '남은
+              기간에 대해서는 환불하지 않습니다'로 능동으로 바꾸면 책임 주체가 살아납니다.
+              용어집의 'billing period → 결제 주기'는 지켰으니 그대로 두면 됩니다.
+            </p>
+
+            <label class="note-editor-label" for="note-editor">번역가에게 남길 의견</label>
+            <textarea
+              class="note-editor"
+              id="note-editor"
+              rows="3"
+            >뒤 절을 능동으로 바꿔주세요. '남은 기간에 대해서는 환불하지 않습니다'.</textarea>
+
+            <div class="note-actions">
+              <label class="status-picker">
+                <span class="visually-hidden">이 구간의 상태</span>
+                <select class="status-select">
+                  <option selected>수정 요청</option>
+                  <option>보강 요청</option>
+                  <option>통과</option>
+                </select>
+              </label>
+              <button class="action-primary" type="button">의견 저장하고 다음 구간</button>
+              <button class="action-secondary" type="button">이 구간 건너뛰기</button>
+            </div>
+          </section>
+        </section>
+      </div>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

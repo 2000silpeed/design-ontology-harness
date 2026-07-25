@@ -1,0 +1,165 @@
+{
+  "schema_version": "design-ontology.visual-prompt-packet.v1",
+  "brand": "World Cup Hub",
+  "domain_context": "월드컵 일정, 경기 결과, 승부예측, 팬 의견을 한 화면에서 다루는 한국어 스포츠 데이터 커뮤니티",
+  "prompt_basis": [
+    "brand_profile.json",
+    "design_system_blueprint.json",
+    "system_ontology.json"
+  ],
+  "palette_context": "a controlled palette of primary #0F4C81, accent #50C878, surface_tint #FFBF00, danger #BD2E4A, neutral_anchor #003153",
+  "visual_cues": [
+    "density: dense",
+    "surface style: tinted"
+  ],
+  "slots": [
+    {
+      "id": "visual-asset:brand-aligned-raster",
+      "slot": "brand-aligned-raster",
+      "label": "Brand-aligned raster image",
+      "purpose": "Optional Codex imagery when a screen needs professional raster substance.",
+      "intended_for": [],
+      "aspect_ratios": [
+        "16:9",
+        "4:3",
+        "1:1"
+      ],
+      "candidate_count": 3,
+      "prompt": "Professional production visual for World Cup Hub, a 월드컵 일정, 경기 결과, 승부예측, 팬 의견을 한 화면에서 다루는 한국어 스포츠 데이터 커뮤니티 product. Create a concrete brand-aligned-raster asset for: Optional Codex imagery when a screen needs professional raster substance.. Use a controlled palette of primary #0F4C81, accent #50C878, surface_tint #FFBF00, danger #BD2E4A, neutral_anchor #003153; reflect density: dense, surface style: tinted. Show domain-specific subject matter and believable materials, lighting, scale, and context. Compose for responsive UI cropping with quiet negative space for interface copy. Avoid betting-first, gambling, casino, fantasy-only, generic-news-site, marketing-landing, decorative-cards, single-hue-blue, childish, black-box-ai, misinformation, logos, readable text, stock-photo clichés, generic gradients, and decorative interface mockups inside the image.",
+      "negative_constraints": [
+        "no logos or third-party trademarks",
+        "no readable interface text embedded in the image",
+        "no generic SaaS gradient or stock-photo staging",
+        "no emoji, watermark, or decorative UI chrome",
+        "betting-first",
+        "gambling",
+        "casino",
+        "fantasy-only",
+        "generic-news-site",
+        "marketing-landing",
+        "decorative-cards",
+        "single-hue-blue",
+        "childish",
+        "black-box-ai",
+        "misinformation"
+      ],
+      "composition_constraints": [
+        "preserve a clear focal subject at desktop and mobile crops",
+        "leave calm negative space near likely heading and control regions",
+        "keep important subjects away from crop-sensitive edges"
+      ],
+      "review_criteria": [
+        "domain subject is immediately recognizable",
+        "visual language matches the design tokens and component surfaces",
+        "asset adds product meaning rather than atmosphere alone",
+        "crop works at every declared aspect ratio",
+        "no accidental text, logos, anatomy defects, or misleading product state"
+      ],
+      "generation": {
+        "preferred_tool": "Codex/GPT built-in image generation",
+        "api_fallback": "disabled",
+        "status": "ready"
+      }
+    },
+    {
+      "id": "visual-asset:hero-image",
+      "slot": "hero-image",
+      "label": "Hero image",
+      "purpose": "First-viewport visual signal for landing, product, or editorial hero sections.",
+      "intended_for": [
+        "component:match-ticker"
+      ],
+      "aspect_ratios": [
+        "16:9",
+        "3:2"
+      ],
+      "candidate_count": 3,
+      "prompt": "Professional production visual for World Cup Hub, a 월드컵 일정, 경기 결과, 승부예측, 팬 의견을 한 화면에서 다루는 한국어 스포츠 데이터 커뮤니티 product. Create a concrete hero-image asset for: First-viewport visual signal for landing, product, or editorial hero sections.. Use a controlled palette of primary #0F4C81, accent #50C878, surface_tint #FFBF00, danger #BD2E4A, neutral_anchor #003153; reflect density: dense, surface style: tinted. Show domain-specific subject matter and believable materials, lighting, scale, and context. Compose for responsive UI cropping with quiet negative space for interface copy. Avoid betting-first, gambling, casino, fantasy-only, generic-news-site, marketing-landing, decorative-cards, single-hue-blue, childish, black-box-ai, misinformation, logos, readable text, stock-photo clichés, generic gradients, and decorative interface mockups inside the image.",
+      "negative_constraints": [
+        "no logos or third-party trademarks",
+        "no readable interface text embedded in the image",
+        "no generic SaaS gradient or stock-photo staging",
+        "no emoji, watermark, or decorative UI chrome",
+        "betting-first",
+        "gambling",
+        "casino",
+        "fantasy-only",
+        "generic-news-site",
+        "marketing-landing",
+        "decorative-cards",
+        "single-hue-blue",
+        "childish",
+        "black-box-ai",
+        "misinformation"
+      ],
+      "composition_constraints": [
+        "preserve a clear focal subject at desktop and mobile crops",
+        "leave calm negative space near likely heading and control regions",
+        "keep important subjects away from crop-sensitive edges"
+      ],
+      "review_criteria": [
+        "domain subject is immediately recognizable",
+        "visual language matches the design tokens and component surfaces",
+        "asset adds product meaning rather than atmosphere alone",
+        "crop works at every declared aspect ratio",
+        "no accidental text, logos, anatomy defects, or misleading product state"
+      ],
+      "generation": {
+        "preferred_tool": "Codex/GPT built-in image generation",
+        "api_fallback": "disabled",
+        "status": "ready"
+      }
+    },
+    {
+      "id": "visual-asset:card-thumbnail",
+      "slot": "card-thumbnail",
+      "label": "Card thumbnail",
+      "purpose": "Content image for product, venue, object, media, or feature cards.",
+      "intended_for": [
+        "component:result-summary-card",
+        "family:data-display"
+      ],
+      "aspect_ratios": [
+        "4:3",
+        "1:1"
+      ],
+      "candidate_count": 3,
+      "prompt": "Professional production visual for World Cup Hub, a 월드컵 일정, 경기 결과, 승부예측, 팬 의견을 한 화면에서 다루는 한국어 스포츠 데이터 커뮤니티 product. Create a concrete card-thumbnail asset for: Content image for product, venue, object, media, or feature cards.. Use a controlled palette of primary #0F4C81, accent #50C878, surface_tint #FFBF00, danger #BD2E4A, neutral_anchor #003153; reflect density: dense, surface style: tinted. Show domain-specific subject matter and believable materials, lighting, scale, and context. Compose for responsive UI cropping with quiet negative space for interface copy. Avoid betting-first, gambling, casino, fantasy-only, generic-news-site, marketing-landing, decorative-cards, single-hue-blue, childish, black-box-ai, misinformation, logos, readable text, stock-photo clichés, generic gradients, and decorative interface mockups inside the image.",
+      "negative_constraints": [
+        "no logos or third-party trademarks",
+        "no readable interface text embedded in the image",
+        "no generic SaaS gradient or stock-photo staging",
+        "no emoji, watermark, or decorative UI chrome",
+        "betting-first",
+        "gambling",
+        "casino",
+        "fantasy-only",
+        "generic-news-site",
+        "marketing-landing",
+        "decorative-cards",
+        "single-hue-blue",
+        "childish",
+        "black-box-ai",
+        "misinformation"
+      ],
+      "composition_constraints": [
+        "preserve a clear focal subject at desktop and mobile crops",
+        "leave calm negative space near likely heading and control regions",
+        "keep important subjects away from crop-sensitive edges"
+      ],
+      "review_criteria": [
+        "domain subject is immediately recognizable",
+        "visual language matches the design tokens and component surfaces",
+        "asset adds product meaning rather than atmosphere alone",
+        "crop works at every declared aspect ratio",
+        "no accidental text, logos, anatomy defects, or misleading product state"
+      ],
+      "generation": {
+        "preferred_tool": "Codex/GPT built-in image generation",
+        "api_fallback": "disabled",
+        "status": "ready"
+      }
+    }
+  ],
+  "project": "world-cup-hub"
+}

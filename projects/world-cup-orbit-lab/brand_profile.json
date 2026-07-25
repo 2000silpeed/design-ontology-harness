@@ -1,0 +1,71 @@
+{
+  "brand_name": "World Cup Orbit",
+  "system_name": "Orbit Match Intelligence",
+  "product_summary": "A match-intelligence companion that helps global football fans choose, understand, and follow decisive World Cup fixtures in their local time.",
+  "audiences": ["Fans following a national team", "Global viewers choosing which fixture matters now", "Small groups coordinating a shared watch"],
+  "brand_keywords": ["decisive", "global", "live", "precise", "communal"],
+  "anti_keywords": ["betting-first", "casino", "generic dashboard", "score-widget wall", "neon esports"],
+  "tone_of_voice": ["direct", "informed", "charged but never shouty"],
+  "visual_keywords": ["celestial tournament map", "editorial field markings", "night-match clarity", "crisp data labels"],
+  "interaction_keywords": ["glanceable", "progressive disclosure", "local-time aware", "decision oriented"],
+  "platforms": ["responsive web"],
+  "accessibility_targets": ["WCAG 2.2 AA", "keyboard-operable match selection", "text alternatives for tournament paths"],
+  "application_concept": {
+    "primary_job": "Choose the next World Cup match to watch with enough context to understand its stakes.",
+    "domain_objects": ["fixture", "tournament path", "qualification scenario", "local kickoff", "watch circle"],
+    "operating_mode": "exploration",
+    "success_moment": "A fan has selected a fixture, understood why it changes the bracket, and opted into a local-time reminder.",
+    "differentiation": ["The first screen is a navigable match-orbit rather than a score-card grid.", "Tournament consequences remain co-present with local-time planning."]
+  },
+  "layout_skeleton": {
+    "composition": "map-or-graph-canvas",
+    "navigation_model": "local-tabs",
+    "density": "balanced",
+    "primary_regions": [
+      {"name": "Tournament orbit", "role": "Select a fixture by its stage and live relevance.", "priority": "primary"},
+      {"name": "Match intelligence panel", "role": "Read local kickoff, scenario, and the next consequence.", "priority": "primary"},
+      {"name": "Follow-up strip", "role": "Coordinate a reminder or shared watch without leaving the match.", "priority": "secondary"}
+    ],
+    "first_screen_contract": ["An actual selectable match orbit and a selected fixture must appear above the fold.", "Kickoff in the viewer's local time and one concrete tournament consequence must be visible before any promotional content."],
+    "avoid_layouts": ["generic hero plus card grid", "uniform dashboard metric cards", "scoreboard-only landing page"]
+  },
+  "design_differentiation": {
+    "must_feel_different_from": ["generic sports-score site", "template card wall", "betting interface"],
+    "signature_moves": ["Fixtures sit on a stage-based orbital path whose distance conveys tournament progression.", "The selected fixture opens as an editorial match brief with a visible next consequence."],
+    "repetition_risks": ["repeated team-versus-team cards", "oversized trophy hero art", "unexplained mini-stat tiles"]
+  },
+  "product_primitives": ["match orbit", "knockout path", "local-time ribbon", "attention brief", "fan presence cluster", "follow-match control", "fixture ledger"],
+  "reference_preferences": {"prioritize_sources_containing": ["accessibility", "tournament logic"], "avoid_sources_containing": ["brand-only", "existing World Cup Hub"]},
+  "seeds": [],
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": ["blue", "yellow", "neutral"],
+    "palette_strategy": {"mode": "brand-guided", "candidate_count": 3, "active_candidate": 2, "temperature": "neutral", "contrast": "vivid", "diversity": "cohesive", "surface_style": "grounded", "prefer_moods": ["night stadium", "signal clarity", "global broadcast"], "avoid_moods": ["casino neon", "corporate SaaS", "warm paper editorial"]},
+    "palette_expansion": {"enabled": true, "supporting_color_count": 8, "combination_count": 3, "prefer_pairings": true, "prefer_related_families": true},
+    "notes": ["Semantic OS Markdown is the only color authority for this project.", "No colors were sampled from an existing World Cup screen."]
+  },
+  "visual_reference": {
+    "mode": "local-images", "query": [], "sources": [], "preferred_count": 0,
+    "weights": {"layout": 0.3, "component_shape": 0.25, "color_balance": 0.2, "typography_mood": 0.15, "surface_style": 0.1},
+    "extraction_policy": "advisory-only",
+    "must_include": ["stage-based fixture orbit", "clear local kickoff ribbon", "one visible tournament consequence"],
+    "avoid_patterns": ["reference copying", "generic score-card grid", "sports betting cues"],
+    "notes": ["No visual references are intentionally attached. The product ontology is the visual source of truth."],
+    "pinterest_assist": {"enabled": false, "capture_mode": "manual-save", "capture_dir": "references/visual", "max_candidates_per_query": 0, "max_selected_per_query": 0, "preferred_sources": [], "notes": ["Disabled: this exploration must not depend on existing screens."]}
+  },
+  "component_decision": {
+    "mode": "authored-product-contract",
+    "rationale": "World Cup Orbit helps a fan make one informed viewing decision. Every core component either locates a fixture in the tournament, explains its consequence, or lets the fan follow it in local time.",
+    "coverage_families": ["foundation", "navigation", "data-display", "content", "button", "feedback"],
+    "core_components": [
+      {"name":"orbit-shell","family":"foundation","role":"Canvas frame that keeps tournament stages and selected match co-present.","supports_primitive":"match orbit","decision_reason":"The decision depends on spatial context, not a feed.","anatomy":["stage rail","orbit canvas","detail dock"],"states":["default","compact"],"variants":{"mode":["full","focused"]},"props":{"selectedFixture":"fixture id"},"interaction":{"select":"updates selected fixture"},"data_contract":{"stages":"ordered stage array","fixtures":"fixture array"},"responsive":{"desktop":"canvas plus dock","mobile":"stage rail above detail"},"content_rules":["Keep the selected fixture visible when the orbit changes."],"accessibility_notes":["Provide a list alternative for the spatial canvas."],"dos_and_donts":{"do":["Use stage order as the primary hierarchy."],"dont":["Replace the canvas with a generic card grid."]}},
+      {"name":"stage-rail","family":"navigation","role":"Shows tournament stages and filters the orbit.","supports_primitive":"fixture ledger","decision_reason":"Fans need a simple way to narrow the tournament without losing progress context.","anatomy":["stage label","fixture count","active marker"],"states":["default","active","complete"],"variants":{"density":["full","compact"]},"props":{"activeStage":"stage id"},"interaction":{"activate":"filters fixtures"},"data_contract":{"stage":"name, status, fixture count"},"responsive":{"desktop":"vertical rail","mobile":"horizontal scroll"},"content_rules":["Use real stage names and counts."],"accessibility_notes":["Use tabs with an announced active stage."],"dos_and_donts":{"do":["Expose stage progression."],"dont":["Hide the active stage in color alone."]}},
+      {"name":"match-orbit-node","family":"data-display","role":"One selectable fixture placed in its tournament stage.","supports_primitive":"match orbit","decision_reason":"A compact node lets fixtures stay comparable while retaining stage position.","anatomy":["team marks","kickoff","relevance signal"],"states":["upcoming","live","selected","completed"],"variants":{"emphasis":["standard","decisive"]},"props":{"fixture":"fixture object"},"interaction":{"select":"opens attention brief"},"data_contract":{"fixture":"teams, kickoff, stage, status, consequence"},"responsive":{"desktop":"orbit node","mobile":"ledger row"},"content_rules":["Show local kickoff or live minute, never both as decoration."],"accessibility_notes":["Use a named button with teams, time, and stage."],"dos_and_donts":{"do":["Use one concise consequence signal."],"dont":["Turn each node into a full score card."]}},
+      {"name":"attention-brief","family":"content","role":"Editorial summary of a selected match and its concrete stakes.","supports_primitive":"attention brief","decision_reason":"Fans need the why-now answer before they commit time.","anatomy":["fixture title","local-time ribbon","stakes sentence","next consequence"],"states":["upcoming","live","final"],"variants":{"tone":["standard","decisive"]},"props":{"fixture":"selected fixture"},"interaction":{"expand":"shows scenario detail"},"data_contract":{"brief":"headline, stakes, next consequence"},"responsive":{"desktop":"right dock","mobile":"primary sheet"},"content_rules":["Use a single verifiable stakes sentence."],"accessibility_notes":["Keep heading order and time zone explicit."],"dos_and_donts":{"do":["Prioritize the next consequence."],"dont":["Use hype without tournament meaning."]}},
+      {"name":"knockout-path","family":"data-display","role":"Shows the next bracket destination caused by a fixture result.","supports_primitive":"knockout path","decision_reason":"Tournament consequence needs a concrete destination, not an abstract probability.","anatomy":["current fixture","connector","next slot"],"states":["open","resolved"],"variants":{"stage":["group","knockout"]},"props":{"path":"path object"},"interaction":{"inspect":"reveals slot condition"},"data_contract":{"path":"source, condition, destination"},"responsive":{"desktop":"inline diagram","mobile":"stacked sequence"},"content_rules":["Name the result condition on every connector."],"accessibility_notes":["Supply a text sequence for the diagram."],"dos_and_donts":{"do":["Draw only the immediate path."],"dont":["Show an unreadable full bracket."]}},
+      {"name":"local-time-ribbon","family":"feedback","role":"Converts kickoff into the viewer's local time and reminder state.","supports_primitive":"local-time ribbon","decision_reason":"Local-time clarity makes the product useful across the world.","anatomy":["date","local kickoff","timezone label"],"states":["upcoming","reminder-set","live"],"variants":{"size":["inline","prominent"]},"props":{"kickoff":"ISO date"},"interaction":{"changeTimezone":"updates display"},"data_contract":{"kickoff":"UTC ISO datetime","timezone":"IANA zone"},"responsive":{"desktop":"inline ribbon","mobile":"full-width ribbon"},"content_rules":["Always include the timezone abbreviation."],"accessibility_notes":["Do not rely on relative time alone."],"dos_and_donts":{"do":["Show absolute date and time."],"dont":["Assume the viewer's city."]}},
+      {"name":"follow-match-control","family":"button","role":"Sets a reminder and optional watch-circle visibility for a fixture.","supports_primitive":"follow-match control","decision_reason":"The product's success moment ends with a concrete follow action.","anatomy":["follow label","reminder status","presence count"],"states":["idle","following","reminder-set"],"variants":{"scope":["personal","watch-circle"]},"props":{"fixtureId":"fixture id"},"interaction":{"toggleFollow":"sets reminder"},"data_contract":{"follow":"fixture id, user preference, reminder time"},"responsive":{"desktop":"dock action","mobile":"sticky action"},"content_rules":["State the exact reminder outcome after activation."],"accessibility_notes":["Use pressed state and polite confirmation."],"dos_and_donts":{"do":["Keep the action tied to one match."],"dont":["Prompt for a social action before follow is chosen."]}}
+    ],
+    "rejected_components": [{"name":"odds-panel","family":"data-display","reason":"The product helps fans understand tournament stakes, not place bets."},{"name":"metric-card-grid","family":"data-display","reason":"Counts do not help choose a fixture."},{"name":"generic-hero","family":"content","reason":"The task surface must start immediately."}]
+  }
+}

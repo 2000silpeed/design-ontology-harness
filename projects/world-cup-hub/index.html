@@ -7,12 +7,13 @@
     <link rel="icon" href="./assets/app-icon.svg?v=brand-icon-20260516" type="image/svg+xml" />
     <link rel="manifest" href="./site.webmanifest?v=brand-icon-20260516" />
     <link rel="stylesheet" href="./design-system/tokens.css?v=flag-badges-20260516" />
-    <link rel="stylesheet" href="./styles.css?v=ticker-fit-20260516c" />
+    <link rel="stylesheet" href="./design-system/runtime-theme.css?v=semantic-os-20260712" />
+    <link rel="stylesheet" href="./styles.css?v=production-gate-20260712" />
   </head>
   <body>
     <a class="skip-link" href="#main">본문으로 이동</a>
 
-    <svg class="icon-sprite" aria-hidden="true">
+    <svg class="icon-sprite" data-icon-set="approved-custom-world-cup-ops" aria-hidden="true">
       <symbol id="icon-calendar" viewBox="0 0 24 24">
         <path d="M8 2v4M16 2v4M3 10h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" />
       </symbol>
@@ -122,7 +123,14 @@
         </div>
       </header>
 
-      <main id="main" class="workspace">
+      <main
+        id="main"
+        class="workspace"
+        data-product-surface="tournament-operations-dashboard"
+        data-model="fixture-prediction-result-fan-opinion"
+        data-source="fifa-schedule-seed-and-static-mvp-data"
+        data-state="pre-tournament-selected-match"
+      >
         <section id="dashboard" class="status-strip" aria-label="대회 운영 현황">
           <div class="status-copy">
             <p class="eyebrow">FIFA World Cup 2026 · operations view</p>
@@ -171,7 +179,14 @@
           <div id="tickerRail" class="ticker-rail"></div>
         </section>
 
-        <section class="ops-board" aria-label="운영 체크 포인트">
+        <section
+          class="ops-board"
+          aria-label="운영 체크 포인트"
+          data-product-surface="tournament-operations-board"
+          data-model="favorite-match-source-ledger-generated-visual-context"
+          data-source="fifa-schedule-seed-and-reviewed-generated-asset"
+          data-state="pre-tournament-demo"
+        >
           <article class="ops-card next-match">
             <div class="ops-card-heading">
               <div>
@@ -200,7 +215,7 @@
           </article>
 
           <article class="ops-card visual-context">
-            <img src="./assets/world-cup-command-center.webp" alt="야간 경기장 안에 월드컵 일정, 예측, 경기 분석 보드가 표시된 커맨드 센터" />
+            <img src="./assets/world-cup-command-center-64809ab56a.webp" alt="야간 경기장 안에 월드컵 일정, 예측, 경기 분석 보드가 표시된 커맨드 센터" />
             <div>
               <p class="eyebrow">visual context</p>
               <h2>경기장 커맨드 센터</h2>
@@ -209,7 +224,13 @@
           </article>
         </section>
 
-        <div class="dashboard-grid">
+        <div
+          class="dashboard-grid"
+          data-product-surface="fixture-review-workspace"
+          data-model="match-fixture-selection-detail"
+          data-source="fifa-schedule-seed"
+          data-state="scheduled-match-selected"
+        >
           <section id="schedule" class="panel schedule-panel" aria-labelledby="schedule-title">
             <div class="panel-heading">
               <div>
@@ -219,7 +240,13 @@
               <div class="panel-tools">
                 <label class="search-box">
                   <svg><use href="#icon-search" /></svg>
-                  <input id="matchSearch" type="search" placeholder="팀, 도시, 조 검색" autocomplete="off" />
+                  <input
+                    id="matchSearch"
+                    type="search"
+                    aria-label="팀, 도시, 조 검색"
+                    placeholder="팀, 도시, 조 검색"
+                    autocomplete="off"
+                  />
                 </label>
                 <button class="icon-button" type="button" aria-label="필터">
                   <svg><use href="#icon-filter" /></svg>
@@ -339,6 +366,6 @@
       </main>
     </div>
 
-    <script src="./app.js?v=ticker-fit-20260516"></script>
+    <script src="./app.js?v=production-gate-20260712b"></script>
   </body>
 </html>

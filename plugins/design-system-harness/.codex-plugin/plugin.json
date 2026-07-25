@@ -1,0 +1,43 @@
+{
+  "name": "design-system-harness",
+  "version": "0.2.0",
+  "description": "Skills for applying design-system-harness outputs inside an implementation repository.",
+  "author": {
+    "name": "Design Ontology Harness"
+  },
+  "license": "MIT",
+  "keywords": [
+    "design-system",
+    "tokens",
+    "ui",
+    "concept-authoring",
+    "layout-skeleton",
+    "imagery",
+    "reference-inspection",
+    "codex",
+    "skills"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Design System Harness",
+    "shortDescription": "Author and apply design-system artifacts inside real product repos",
+    "longDescription": "Provides Codex skills for actively authoring product concept and layout skeleton fields before synthesis, reading design-system artifacts, implementing tokens/components, using advisory website reference inspections without cloning protected site assets, creating brand-aligned generated imagery with the built-in Codex image_gen skill, and using license-verified sourced visual fallback when generation is unavailable or real-world photography is more appropriate. API and CLI image fallbacks are disabled.",
+    "developerName": "Design Ontology Harness",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Before running synthesis, use the concept-author skill to write application_concept, layout_skeleton, and design_differentiation from the actual app brief",
+      "Implement UI changes using the local design-system artifacts and component inventory",
+      "Ship normal light mode and dark mode together unless a single mode is explicitly requested",
+      "When a screen needs professional imagery, use Codex image_gen first; if unavailable, use license-verified sourced visual fallback without API fallback",
+      "Use website reference inspections only as advisory morphology, density, hierarchy, and interaction affordance evidence; never clone copy, palette, typography, IA, logos, or unlicensed assets",
+      "Treat favicon, app-shell mark, and web manifest icon as required brand-specific identity assets",
+      "For dashboards, tools, sports/data, and community products, lead with operational product surfaces instead of pitch-deck heroes or homogeneous card walls"
+    ],
+    "screenshots": [],
+    "brandColor": "#6B7B8D"
+  }
+}

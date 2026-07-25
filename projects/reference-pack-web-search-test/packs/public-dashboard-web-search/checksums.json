@@ -1,0 +1,8 @@
+{
+  "schema_version": "reference-pack-checksums/v1",
+  "files": {
+    "pack.json": "220da5cd16c23a0ddc8a57452995a77e455421ae9208dd9f4a4e9f06e5aad86a",
+    "assets.jsonl": "43943e9a18c2e87cf84a3a6e6fb6e045b3e3a0828fe8f63b97916f9ffe640eb4",
+    "index.sqlite": "8690635ce54811da23f8073fcf24134dd4c40f41dbd5b850f5947589e1b12641"
+  }
+}

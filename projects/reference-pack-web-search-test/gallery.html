@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Public Web Reference Pack Test</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #122033;
+      --muted: #5d6979;
+      --line: #d8e0ea;
+      --surface: #ffffff;
+      --soft: #f5f7fa;
+      --accent: #0f5b7f;
+      --accent-2: #28785f;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--soft); color: var(--ink); }
+    header { padding: 32px 40px 24px; background: #0b2538; color: white; }
+    header h1 { margin: 0 0 10px; font-size: 30px; line-height: 1.2; letter-spacing: 0; }
+    header p { margin: 0; max-width: 920px; color: #c6d8e5; line-height: 1.7; }
+    main { padding: 24px 40px 48px; }
+    .stats { display: grid; grid-template-columns: repeat(4, minmax(160px, 1fr)); gap: 12px; margin-bottom: 18px; }
+    .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
+    .stat strong { display: block; font-size: 24px; margin-bottom: 4px; overflow-wrap: anywhere; }
+    .stat span { color: var(--muted); font-size: 13px; }
+    section { margin-top: 24px; }
+    section > h2 { margin: 0 0 12px; font-size: 20px; letter-spacing: 0; }
+    .note { background: #eef6f3; border: 1px solid #c6ded4; border-radius: 8px; padding: 14px 16px; color: #214536; line-height: 1.6; }
+    .sources { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; }
+    .sources ul { margin: 8px 0 0; padding-left: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; min-width: 0; }
+    .card.selected { border-color: #95c7b5; box-shadow: inset 0 0 0 1px #95c7b5; }
+    .thumb { height: 176px; background: #e7edf4; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .empty-copy { color: var(--muted); }
+    .empty-image { color: var(--muted); font-size: 13px; }
+    .meta { padding: 12px 14px 14px; }
+    .row { display: flex; justify-content: space-between; gap: 8px; align-items: center; color: var(--accent); font-size: 12px; }
+    .row span { color: var(--accent-2); }
+    h3 { margin: 8px 0 4px; font-size: 14px; line-height: 1.35; overflow-wrap: anywhere; letter-spacing: 0; }
+    .meta p { margin: 0 0 10px; color: var(--muted); font-size: 12px; }
+    .links { display: flex; gap: 10px; flex-wrap: wrap; }
+    a { color: #0c5c8a; text-decoration: none; font-weight: 650; }
+    a:hover { text-decoration: underline; }
+    @media (max-width: 760px) {
+      header, main { padding-left: 18px; padding-right: 18px; }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .thumb { height: 150px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Public Web Reference Pack Test</h1>
+    <p>Preview the visual references that entered this pack. Remote images remain reference-analysis-only unless you explicitly materialize licensed assets.</p>
+  </header>
+  <main>
+    <div class="stats">
+      <div class="stat"><strong>37</strong><span>assets in pack</span></div>
+      <div class="stat"><strong>18</strong><span>selected references</span></div>
+      <div class="stat"><strong>metadata</strong><span>materialization</span></div>
+      <div class="stat"><strong>public-dashboard-web-search</strong><span>pack id</span></div>
+    </div>
+    <div class="note">Use this gallery for review and curation. Do not redistribute remote search/gallery images as product assets unless license metadata permits it.</div>
+    <section class="sources">
+      <h2>Source Pages</h2>
+      <ul><li><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">https://saasinterface.com/pages/dashboard/</a></li>
+<li><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">https://www.geckoboard.com/dashboard-examples/</a></li></ul>
+    </section>
+    <section>
+      <h2>Selected References</h2>
+      <div class="grid">
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/Sales-Team-Leaderboard-dashboard.07clj5kseh3s_.png" alt="Sales-Team-Leaderboard-dashboard.07clj5kseh3s_" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#1</strong><span>score 42</span></div>
+          <h3>Sales-Team-Leaderboard-dashboard.07clj5kseh3s_</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/Sales-Team-Leaderboard-dashboard.07clj5kseh3s_.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/uploads/Sales-Team-Leaderboard-dashboard.png" alt="Sales-Team-Leaderboard-dashboard" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#2</strong><span>score 42</span></div>
+          <h3>Sales-Team-Leaderboard-dashboard</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/uploads/Sales-Team-Leaderboard-dashboard.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/uploads/2023/06/grafana-3-400x250.png" alt="grafana-3-400x250" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#3</strong><span>score 24</span></div>
+          <h3>grafana-3-400x250</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/uploads/2023/06/grafana-3-400x250.png" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/hero-sales.012t5ya3~v.1..webp" alt="hero-sales.012t5ya3~v.1." loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#4</strong><span>score 24</span></div>
+          <h3>hero-sales.012t5ya3~v.1.</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/hero-sales.012t5ya3~v.1..webp" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/uploads/2022/06/mixpanel-400x250.png" alt="mixpanel-400x250" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#5</strong><span>score 24</span></div>
+          <h3>mixpanel-400x250</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/uploads/2022/06/mixpanel-400x250.png" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/salesforce.0-5gg0_q_k9_t.svg" alt="salesforce.0-5gg0_q_k9_t" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#6</strong><span>score 24</span></div>
+          <h3>salesforce.0-5gg0_q_k9_t</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/salesforce.0-5gg0_q_k9_t.svg" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/uploads/2023/07/visitors-1-400x250.png" alt="visitors-1-400x250" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#7</strong><span>score 24</span></div>
+          <h3>visitors-1-400x250</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/uploads/2023/07/visitors-1-400x250.png" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/AWS-dashboard-example.0xc43hzy1_9q1.png" alt="AWS-dashboard-example.0xc43hzy1_9q1" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#8</strong><span>score 22</span></div>
+          <h3>AWS-dashboard-example.0xc43hzy1_9q1</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/AWS-dashboard-example.0xc43hzy1_9q1.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/ceo-overview-dashboard-example.0s12_p~xwfbnm.png" alt="ceo-overview-dashboard-example.0s12_p~xwfbnm" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#9</strong><span>score 22</span></div>
+          <h3>ceo-overview-dashboard-example.0s12_p~xwfbnm</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/ceo-overview-dashboard-example.0s12_p~xwfbnm.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/CMO-dashboard.0y-0f8-9c9a1a.png" alt="CMO-dashboard.0y-0f8-9c9a1a" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#10</strong><span>score 22</span></div>
+          <h3>CMO-dashboard.0y-0f8-9c9a1a</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/CMO-dashboard.0y-0f8-9c9a1a.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/uploads/daily-pulse-company-dashboard-example.png" alt="daily-pulse-company-dashboard-example" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#11</strong><span>score 22</span></div>
+          <h3>daily-pulse-company-dashboard-example</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/uploads/daily-pulse-company-dashboard-example.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/dashboard-examples-og.14yx2hh_dt9z0.webp" alt="dashboard-examples-og.14yx2hh_dt9z0" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#12</strong><span>score 22</span></div>
+          <h3>dashboard-examples-og.14yx2hh_dt9z0</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/dashboard-examples-og.14yx2hh_dt9z0.webp" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/floating-dashboard.0h798xef-n1u5.webp" alt="floating-dashboard.0h798xef-n1u5" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#13</strong><span>score 22</span></div>
+          <h3>floating-dashboard.0h798xef-n1u5</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/floating-dashboard.0h798xef-n1u5.webp" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/Forecast-dashboard-example.0qcub~cigo8f_.png" alt="Forecast-dashboard-example.0qcub~cigo8f_" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#14</strong><span>score 22</span></div>
+          <h3>Forecast-dashboard-example.0qcub~cigo8f_</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/Forecast-dashboard-example.0qcub~cigo8f_.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/live-call-center-dashboard-example.0qdqjuf1-f~7f.png" alt="live-call-center-dashboard-example.0qdqjuf1-f~7f" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#15</strong><span>score 22</span></div>
+          <h3>live-call-center-dashboard-example.0qdqjuf1-f~7f</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/live-call-center-dashboard-example.0qdqjuf1-f~7f.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/uploads/live-call-center-dashboard-example.png" alt="live-call-center-dashboard-example" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#16</strong><span>score 22</span></div>
+          <h3>live-call-center-dashboard-example</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/uploads/live-call-center-dashboard-example.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/Shopify-Facebook-Ads-dashboard.0kxsre.r8askm.png" alt="Shopify-Facebook-Ads-dashboard.0kxsre.r8askm" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#17</strong><span>score 22</span></div>
+          <h3>Shopify-Facebook-Ads-dashboard.0kxsre.r8askm</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/Shopify-Facebook-Ads-dashboard.0kxsre.r8askm.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/zendesk-service-desk-dashboard-example.0b850cw2f.t7b.png" alt="zendesk-service-desk-dashboard-example.0b850cw2f.t7b" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>#18</strong><span>score 22</span></div>
+          <h3>zendesk-service-desk-dashboard-example.0b850cw2f.t7b</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/zendesk-service-desk-dashboard-example.0b850cw2f.t7b.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    </div>
+    </section>
+    <section>
+      <h2>Pack Assets</h2>
+      <div class="grid">
+      <article class="card">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/uploads/2023/07/secfi-3-400x250.png" alt="secfi-3-400x250" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>secfi-3-400x250</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/uploads/2023/07/secfi-3-400x250.png" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/uploads/2022/06/june-2-400x250.png" alt="june-2-400x250" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>june-2-400x250</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/uploads/2022/06/june-2-400x250.png" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/uploads/2023/07/compound-5-400x250.png" alt="compound-5-400x250" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>compound-5-400x250</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/uploads/2023/07/compound-5-400x250.png" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/uploads/2023/07/visitors-1-400x250.png" alt="visitors-1-400x250" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>visitors-1-400x250</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/uploads/2023/07/visitors-1-400x250.png" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/uploads/2023/06/grafana-3-400x250.png" alt="grafana-3-400x250" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>grafana-3-400x250</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/uploads/2023/06/grafana-3-400x250.png" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/uploads/2022/06/ahrefs-400x250.png" alt="ahrefs-400x250" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>ahrefs-400x250</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/uploads/2022/06/ahrefs-400x250.png" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/uploads/2022/07/casual-400x250.png" alt="casual-400x250" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>casual-400x250</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/uploads/2022/07/casual-400x250.png" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/uploads/2022/07/similarweb-3-400x250.png" alt="similarweb-3-400x250" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>similarweb-3-400x250</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/uploads/2022/07/similarweb-3-400x250.png" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/uploads/2022/06/mixpanel-400x250.png" alt="mixpanel-400x250" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>mixpanel-400x250</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/uploads/2022/06/mixpanel-400x250.png" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/themes/saasinterface/dist/images/features-home-illustration.svg" alt="features-home-illustration" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>features-home-illustration</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/themes/saasinterface/dist/images/features-home-illustration.svg" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/themes/saasinterface/dist/images/x-davide.jpg" alt="x-davide" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>x-davide</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/themes/saasinterface/dist/images/x-davide.jpg" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/themes/saasinterface/dist/images/x-pasquale.jpg" alt="x-pasquale" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>x-pasquale</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/themes/saasinterface/dist/images/x-pasquale.jpg" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://saasinterface.com/wp-content/themes/saasinterface/dist/images/cta-modal.jpg" alt="cta-modal" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>cta-modal</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://saasinterface.com/wp-content/themes/saasinterface/dist/images/cta-modal.jpg" target="_blank" rel="noreferrer">image url</a><a href="https://saasinterface.com/pages/dashboard/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/dashboard-examples-og.14yx2hh_dt9z0.webp" alt="dashboard-examples-og.14yx2hh_dt9z0" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>dashboard-examples-og.14yx2hh_dt9z0</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/dashboard-examples-og.14yx2hh_dt9z0.webp" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/GeckoboardLogo.0ul92r6_v.7xf.svg" alt="GeckoboardLogo.0ul92r6_v.7xf" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>GeckoboardLogo.0ul92r6_v.7xf</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/GeckoboardLogo.0ul92r6_v.7xf.svg" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/hero-sales.012t5ya3~v.1..webp" alt="hero-sales.012t5ya3~v.1." loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>hero-sales.012t5ya3~v.1.</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/hero-sales.012t5ya3~v.1..webp" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/hubspot.0_5uuabyjuksm.svg" alt="hubspot.0_5uuabyjuksm" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>hubspot.0_5uuabyjuksm</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/hubspot.0_5uuabyjuksm.svg" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/salesforce.0-5gg0_q_k9_t.svg" alt="salesforce.0-5gg0_q_k9_t" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>salesforce.0-5gg0_q_k9_t</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/salesforce.0-5gg0_q_k9_t.svg" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/zendesk.0n1kdum2humjm.svg" alt="zendesk.0n1kdum2humjm" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>zendesk.0n1kdum2humjm</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/zendesk.0n1kdum2humjm.svg" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/aircall.0io_jkxp_~hak.svg" alt="aircall.0io_jkxp_~hak" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>aircall.0io_jkxp_~hak</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/aircall.0io_jkxp_~hak.svg" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/hamburger.026.wdi6gf4lg.svg" alt="hamburger.026.wdi6gf4lg" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>hamburger.026.wdi6gf4lg</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/hamburger.026.wdi6gf4lg.svg" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/close.0~9lbcuf15mc-.svg" alt="close.0~9lbcuf15mc-" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>close.0~9lbcuf15mc-</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/close.0~9lbcuf15mc-.svg" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/uploads/daily-pulse-company-dashboard-example.png" alt="daily-pulse-company-dashboard-example" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>daily-pulse-company-dashboard-example</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/uploads/daily-pulse-company-dashboard-example.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/uploads/Sales-Team-Leaderboard-dashboard.png" alt="Sales-Team-Leaderboard-dashboard" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>Sales-Team-Leaderboard-dashboard</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/uploads/Sales-Team-Leaderboard-dashboard.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/uploads/live-call-center-dashboard-example.png" alt="live-call-center-dashboard-example" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>live-call-center-dashboard-example</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/uploads/live-call-center-dashboard-example.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/Sales-Team-Leaderboard-dashboard.07clj5kseh3s_.png" alt="Sales-Team-Leaderboard-dashboard.07clj5kseh3s_" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>Sales-Team-Leaderboard-dashboard.07clj5kseh3s_</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/Sales-Team-Leaderboard-dashboard.07clj5kseh3s_.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/CMO-dashboard.0y-0f8-9c9a1a.png" alt="CMO-dashboard.0y-0f8-9c9a1a" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>CMO-dashboard.0y-0f8-9c9a1a</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/CMO-dashboard.0y-0f8-9c9a1a.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/live-call-center-dashboard-example.0qdqjuf1-f~7f.png" alt="live-call-center-dashboard-example.0qdqjuf1-f~7f" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>live-call-center-dashboard-example.0qdqjuf1-f~7f</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/live-call-center-dashboard-example.0qdqjuf1-f~7f.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/ceo-overview-dashboard-example.0s12_p~xwfbnm.png" alt="ceo-overview-dashboard-example.0s12_p~xwfbnm" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>ceo-overview-dashboard-example.0s12_p~xwfbnm</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/ceo-overview-dashboard-example.0s12_p~xwfbnm.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/Forecast-dashboard-example.0qcub~cigo8f_.png" alt="Forecast-dashboard-example.0qcub~cigo8f_" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>Forecast-dashboard-example.0qcub~cigo8f_</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/Forecast-dashboard-example.0qcub~cigo8f_.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/AWS-dashboard-example.0xc43hzy1_9q1.png" alt="AWS-dashboard-example.0xc43hzy1_9q1" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>AWS-dashboard-example.0xc43hzy1_9q1</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/AWS-dashboard-example.0xc43hzy1_9q1.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/Shopify-Facebook-Ads-dashboard.0kxsre.r8askm.png" alt="Shopify-Facebook-Ads-dashboard.0kxsre.r8askm" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>Shopify-Facebook-Ads-dashboard.0kxsre.r8askm</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/Shopify-Facebook-Ads-dashboard.0kxsre.r8askm.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/zendesk-service-desk-dashboard-example.0b850cw2f.t7b.png" alt="zendesk-service-desk-dashboard-example.0b850cw2f.t7b" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>zendesk-service-desk-dashboard-example.0b850cw2f.t7b</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/zendesk-service-desk-dashboard-example.0b850cw2f.t7b.png" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card selected">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/floating-dashboard.0h798xef-n1u5.webp" alt="floating-dashboard.0h798xef-n1u5" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>selected</strong></div>
+          <h3>floating-dashboard.0h798xef-n1u5</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/floating-dashboard.0h798xef-n1u5.webp" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/LinkedIn.0ky4g~z3pzq1c.svg" alt="LinkedIn.0ky4g~z3pzq1c" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>LinkedIn.0ky4g~z3pzq1c</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/LinkedIn.0ky4g~z3pzq1c.svg" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/YouTube.131b_epolrqfq.svg" alt="YouTube.131b_epolrqfq" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>YouTube.131b_epolrqfq</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/YouTube.131b_epolrqfq.svg" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    
+
+      <article class="card">
+        <div class="thumb"><img src="https://www.geckoboard.com/_next/static/media/Instagram.0922v-vq6n8vu.svg" alt="Instagram.0922v-vq6n8vu" loading="lazy"></div>
+        <div class="meta">
+          <div class="row"><strong>pack</strong></div>
+          <h3>Instagram.0922v-vq6n8vu</h3>
+          <p>web-reference</p>
+          <div class="links"><a href="https://www.geckoboard.com/_next/static/media/Instagram.0922v-vq6n8vu.svg" target="_blank" rel="noreferrer">image url</a><a href="https://www.geckoboard.com/dashboard-examples/" target="_blank" rel="noreferrer">source page</a></div>
+        </div>
+      </article>
+    </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-reference-fidelity-20260714-iteration-2",
+  "created_at": "2026-07-14T22:33:33+09:00",
+  "project": "world-cup-hub",
+  "from_role": "reference-fidelity-auditor",
+  "to_role": "production-qa",
+  "stage": "qa",
+  "status": "ready",
+  "summary": "Independent paired review compared the approved Fixture Compass direction with the frozen iteration-2 runtime in light/dark desktop/mobile. The weighted score is 0.8742, all metric minimums pass, and no critical fidelity failure remains.",
+  "input_artifacts": [
+    {
+      "path": "projects/world-cup-hub/design-system/reference-fidelity-contract.json",
+      "sha256": "ffc5da9dfc9319c9d0726b754690f74dc3395206f64979c2a89a1ff594bade07"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/production/fixture-desk-iteration-2/screenshots.json",
+      "sha256": "16810118709d225a3a6ad6ad4fbec3eacbca7294b6cbae2ecd16dae85333ba92"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/build/system/production/reference-fidelity/review-02-fixture-desk-iteration-2.json",
+      "sha256": "f089bdaa37e7a60e1a0f3f45ca9177f16bd889481cbcd7dbc9234c134f5a24c7"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/production/reference-fidelity/latest_loop_report.json",
+      "sha256": "aad3b1ff6ca04d333bdbabb61ddfdf4e7a791e4b2bda24601c0c41cd1dc19036"
+    }
+  ],
+  "changed_paths": [
+    "projects/world-cup-hub/build/system/production/reference-fidelity/review-02-fixture-desk-iteration-2.json",
+    "projects/world-cup-hub/build/system/production/reference-fidelity/latest_loop_report.json"
+  ],
+  "decisions": [
+    "Reference fidelity passed at 0.8742 against the 0.80 threshold.",
+    "All eight contract metrics passed and no critical metric failed.",
+    "Palette, typography, copy, logos, and visual assets were excluded from similarity scoring; Semantic OS remains authoritative.",
+    "Responsive translation passed at 0.78, with the documented follow-up risk that mobile selected-match detail starts below the first viewport."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run design-ontology reference-fidelity-loop --project-dir projects/world-cup-hub --target-repo projects/world-cup-hub/fixture-desk --contract projects/world-cup-hub/design-system/reference-fidelity-contract.json --screenshot-manifest projects/world-cup-hub/build/system/production/fixture-desk-iteration-2/screenshots.json --review-artifact projects/world-cup-hub/build/system/production/reference-fidelity/review-01-current-fixture-desk.json --review-artifact projects/world-cup-hub/build/system/production/reference-fidelity/review-02-fixture-desk-iteration-2.json --output projects/world-cup-hub/build/system/production/reference-fidelity/latest_loop_report.json --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "The loop selected iteration-2, reported score 0.8742, status passed, no metric failures, and no critical failures."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Production browser, accessibility, component-runtime, and standalone aesthetic evidence from the earlier runtime remains stale and must be regenerated against cf3e1b0d232bd80fc072a4c92d240f4ceeaf1cd448618fba86a9a5fc085fb1f6.",
+    "Mobile selected-match detail follows the first fixture record rather than appearing in the first viewport; preserve the direct context action and avoid adding content above the fixture."
+  ],
+  "next_action": "Production QA regenerates current browser, interaction, accessibility, component-runtime, screenshot, and aesthetic evidence, then runs the full production verifier without changing the implementation."
+}

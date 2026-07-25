@@ -1,0 +1,71 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "fixture-desk-production-qa-2026-07-14-001",
+  "created_at": "2026-07-13T20:47:49Z",
+  "project": "world-cup-hub",
+  "from_role": "team-lead",
+  "to_role": "production-qa",
+  "stage": "qa",
+  "status": "ready",
+  "summary": "Fixture Desk implementation is frozen after responsive interaction and visual review. Fresh in-app Browser captures cover the default route in light/dark at 390×844 and 1440×960. Build the current component-runtime evidence and bind the frozen runtime to a versioned browser-evidence bundle without touching legacy dashboard evidence.",
+  "input_artifacts": [
+    {
+      "path": "projects/world-cup-hub/design-system/component-contracts.json",
+      "sha256": "3211e4a1c27fe1d08aba22c070b968649627b1c7ffcc1cc32c7a0598bc007af4"
+    },
+    {
+      "path": "projects/world-cup-hub/fixture-desk/app.js",
+      "sha256": "401cc5cc65c00e4ceedae7a44170af924cfef72d94dd9df50eff806ae1865fcc"
+    },
+    {
+      "path": "projects/world-cup-hub/fixture-desk/styles.css",
+      "sha256": "c4db215b9caf8876a1f64d1a246ed250aa2f0716552792e6c891a864176ccdab"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/fixture-desk/screenshots/production/fixture-desk-light-mobile.png",
+      "sha256": "ca3a2aad9150877ad0f1a3eb52f2e9dbda1c46950a3455bd5c422f345c80bb94"
+    },
+    {
+      "path": "projects/world-cup-hub/fixture-desk/screenshots/production/fixture-desk-dark-mobile.png",
+      "sha256": "5634a355bbd6bc30b0647a0898402030835454e089424245cdc8d726a0241553"
+    },
+    {
+      "path": "projects/world-cup-hub/fixture-desk/screenshots/production/fixture-desk-light-desktop.png",
+      "sha256": "7b2fb85207bcc3037b3410fd059ef7f66e57621f2d307f1eec78dc0cb81c7fee"
+    },
+    {
+      "path": "projects/world-cup-hub/fixture-desk/screenshots/production/fixture-desk-dark-desktop.png",
+      "sha256": "4226b54b0ebc914451efdbb82d166787216c4ac42f49366df1da54cb012d8018"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/world-cup-hub-fixture-desk-team-lead-to-production-qa.json"
+  ],
+  "decisions": [
+    "Semantic OS remains the color authority; the production evidence must not introduce raw palette values.",
+    "The new Fixture Desk is a separate implementation target; legacy World Cup Hub screenshots and production evidence are out of scope.",
+    "The current runtime tree is frozen. Any source change invalidates all four screenshots and the ensuing runtime evidence."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run design-ontology validate-component-contracts --project-dir projects/world-cup-hub",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "19 components validated, with needs_authoring=0 and 81 emitted tokens."
+    },
+    {
+      "command": "uv run design-ontology lint-implementation --target-repo projects/world-cup-hub/fixture-desk",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "All three Fixture Desk source files passed implementation lint with no issues."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Current source is uncommitted but the verifier binds a content-tree digest separately from Git HEAD.",
+    "The component-runtime manifest path is fixed by the verifier and must be populated without overwriting legacy screenshot evidence."
+  ],
+  "next_action": "Production QA creates only current Fixture Desk component-runtime and browser evidence, records the new screenshots, and returns a schema-valid handoff for independent release audit."
+}

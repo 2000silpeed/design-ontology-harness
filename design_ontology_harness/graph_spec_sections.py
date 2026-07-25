@@ -160,7 +160,7 @@ def build_generated_visual_asset_section(graph: DesignOntologyGraph) -> str:
     contract = graph.get_node("governance:generated-visual-asset-contract")
     if contract:
         lines.append(
-            f"- **Contract**: `{contract.meta.get('schema_version', 'visual-asset-manifest/v1')}` / "
+            f"- **Contract**: `{contract.meta.get('schema_version', 'visual-asset-manifest/v2')}` / "
             f"preferred manifest `{contract.meta.get('preferred_manifest_path', 'public/generated/design-system/manifest.json')}`"
         )
         compatible_paths = contract.meta.get("compatible_manifest_paths") or []

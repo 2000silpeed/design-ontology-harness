@@ -1,0 +1,65 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-production-ui-improvement-2026-07-13-001",
+  "created_at": "2026-07-13T23:38:46+09:00",
+  "project": "world-cup-hub",
+  "from_role": "team-lead",
+  "to_role": "brief-author",
+  "stage": "concept",
+  "status": "needs-work",
+  "summary": "The World Cup Hub source brief is specific, but the brand profile omits the three concept fields required to keep system synthesis out of generic task-led-product-surface fallbacks. Author a domain-specific application concept, layout skeleton, and design differentiation before any downstream regeneration.",
+  "input_artifacts": [
+    {
+      "path": "projects/world-cup-hub/spec.md",
+      "sha256": "8f958871bee5c8cb32289f71921af9bf54207b554071de4d43aa56df4207fe47"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/component-contracts.json",
+      "sha256": "4a39b2f4da3c6d32406453688e704a9fb091e09033fc93abf9f6cb774a4ce8f4"
+    },
+    {
+      "path": "docs/color-reference.md",
+      "sha256": "b715c0c9073613ac36c425a049f4c7197bd1534bd799047bba64eff3ba5d66fd"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/brand_profile.json",
+      "sha256": "41c141d3764d9e43e2e338f86f43de3038fde434ce7a9cd4b59ba4e5b5ea0592"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/world-cup-hub-concept-team-lead-to-brief-author.json"
+  ],
+  "decisions": [
+    "Restart at the earliest incomplete stage, concept, rather than polishing the existing generated UI.",
+    "Preserve the source brief, approved component scope, and Semantic OS color authority; the concept fields must translate this domain evidence into a distinctive application model.",
+    "Do not pass the project to token curation or system compilation until all three concept fields are explicit and the profile validation contract covers them."
+  ],
+  "gate_results": [
+    {
+      "command": "jq -e 'has(\"application_concept\") and has(\"layout_skeleton\") and has(\"design_differentiation\")' projects/world-cup-hub/brand_profile.json",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "All three queried fields are null because they are absent from the current profile."
+    },
+    {
+      "command": "uv run design-ontology validate-component-contracts --input projects/world-cup-hub/build/system/components/component_specs.json --strict",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "The existing generated component inventory passes with 19 components, 0 needs-authoring items, and 81 declared tokens; this does not compensate for the earlier concept-stage omission."
+    },
+    {
+      "command": "uv run design-ontology sync-semantic-colors --source ../semantic-os/domains/color/ontology/build/graph.json --color-reference-output docs/color-reference.md --ontology-output design_ontology_harness/resources/semantic_color_ontology.json --check --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Semantic color authority is current and unchanged; the remediation is concept synthesis, not another color migration."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Regenerating downstream artifacts before concept authoring would preserve generic fallback composition and stale semantic-color provenance.",
+    "The current profile validator does not require these concept fields, so a green validation result is not yet sufficient concept-stage evidence."
+  ],
+  "next_action": "Brief Author adds application_concept, layout_skeleton, and design_differentiation to the World Cup Hub brand profile, extends concept validation coverage if required, validates the profile, and hands the completed concept back to Team Lead with current artifact hashes."
+}

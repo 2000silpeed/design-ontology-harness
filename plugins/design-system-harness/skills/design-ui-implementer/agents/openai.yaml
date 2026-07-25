@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Implementer"
+  short_description: "Run the ui-implementer stage with evidence"
+  default_prompt: "Use $design-ui-implementer for the assigned team stage and return gate evidence."

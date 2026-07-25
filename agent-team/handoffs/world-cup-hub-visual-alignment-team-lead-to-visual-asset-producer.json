@@ -1,0 +1,101 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-production-ui-improvement-2026-07-13-001",
+  "created_at": "2026-07-14T04:04:19+09:00",
+  "project": "world-cup-hub",
+  "from_role": "team-lead",
+  "to_role": "visual-asset-producer",
+  "stage": "visual",
+  "status": "needs-work",
+  "summary": "The selected visual direction is preserved as a generated Fixture Compass reference, but the current ontology-derived prompt packet still proposes a first-viewport hero and generic card thumbnails. Repair prompt-slot inference so a fixture-led sports data product receives an active, production-appropriate visual direction/mockup prompt plus any genuinely supporting visual slot, never a hero/card-grid fallback. Preserve the verified existing generated asset and its run/candidate/original-file provenance without presenting it as the new UI's primary visual.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/world-cup-hub-system-ontology-compiler-to-team-lead.json",
+      "sha256": "3a926e0fd3ba9324791cba0af81fecce8a498e660c0e280c54ac9885698a29cd"
+    },
+    {
+      "path": "projects/world-cup-hub/brand_profile.json",
+      "sha256": "78358cef596cd3be39205adb2c8ed6e007f8d79d0cad02a525ac8caf4d255abd"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/component-contracts.json",
+      "sha256": "3211e4a1c27fe1d08aba22c070b968649627b1c7ffcc1cc32c7a0598bc007af4"
+    },
+    {
+      "path": "docs/color-reference.md",
+      "sha256": "9bdf641a69d3c97089a543f8838610b2204493680921aa09877a062a652e97ca"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/references/selected-direction-03-fixture-compass.png",
+      "sha256": "8c01aaa55b553fc507fe8248a6285de2ca9e3dcaac256478e1d7b993bde9a0db"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/references/selected-direction.md",
+      "sha256": "5521562402bc77e4b93b7928958f8a3a840d74560105c969828f16ab9593343d"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/imagegen-prompt-packet.json",
+      "sha256": "577745db9adda241a95266e61ea076602077604d75736a45371a5ce903d59cab"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/manifest.json",
+      "sha256": "a5cbf6f2d89dc77dfa02f8620937ff3e8be2a5488b1f448aa1cf21b5538c8db2"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "design_ontology_harness/graph_builders.py",
+      "sha256": "92190050141d2ff73e1c70271276be2a424562dbd295bc0fe518c3a284c623b5"
+    },
+    {
+      "path": "design_ontology_harness/visual_asset_prompts.py",
+      "sha256": "331afdecf54bd05d3384f7ef56cbbd8eff928f5ee0aa47d925e16a0dd14c6671"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/system_ontology.json",
+      "sha256": "a1270373ed97b0639c1f4c2abcf560aba2ccca5d901507a1b5c830b306f035b4"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/imagegen-prompt-packet.json",
+      "sha256": "577745db9adda241a95266e61ea076602077604d75736a45371a5ce903d59cab"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/imagegen-prompts.md",
+      "sha256": "bf4a30e8f66d6859d53ad677aed4fea6535128710f68c980427ffd6c05cc5d41"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/manifest.json",
+      "sha256": "a5cbf6f2d89dc77dfa02f8620937ff3e8be2a5488b1f448aa1cf21b5538c8db2"
+    },
+    {
+      "path": "tests/test_visual_asset_prompts.py",
+      "sha256": "09ce8c336bc6d2213dff764798ce1187a2a851cf54920896c57d4023637d39c7"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/world-cup-hub-visual-alignment-team-lead-to-visual-asset-producer.json"
+  ],
+  "decisions": [
+    "The selected Direction 03 image is advisory morphology evidence only. It may guide density, thin rules, contextual rail, and selection linking, but not final palette, typography, IA, copy, logos, or runtime imagery.",
+    "When layout_skeleton.avoid_layouts rejects hero/card-grid patterns, no active image-generation slot may use a first-viewport hero or generic card-thumbnail purpose, activation, or prompt.",
+    "For fixture-led sports data products, derive active slots from the accepted application concept and actual component contracts: a design-reference UI direction mockup and, only if useful, a secondary fixture-context raster for generated-visual-context. Both must explicitly keep the fixture table and selected-match rail ahead of imagery.",
+    "The existing World Cup command-center asset remains traceable but is a demoted legacy supporting asset. Preserve its generator, generation_run_id, candidate_id, original PNG path/hash, workspace hash, and runtime integration evidence. Do not fabricate a new image or move to a CLI/API fallback after image_gen's 403 failure.",
+    "If a packet rebuild changes the manifest packet digest, retain a machine-verifiable historic prompt-contract record for any accepted/integrated asset and require explicit migration metadata rather than silently rewriting provenance.",
+    "All prompt palette context must be derived from the current Semantic OS-driven blueprint/tokens, never from the selected reference screenshot."
+  ],
+  "gate_results": [
+    {
+      "command": "fixture-led visual prompt alignment audit",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "imagegen-prompt-packet.json contains active visual-asset:hero-image with first-viewport landing/editorial hero purpose and generic card-thumbnail, contradicting brand_profile.layout_skeleton.avoid_layouts and the selected fixture-led concept."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "An integrated manifest record currently binds to the existing hero-image prompt slot. Removing or mutating it without explicit historic prompt-contract migration will make strict image validation fail or erase truthful generation evidence.",
+    "The built-in image generation service returned 403 during this run. The producer may refine the prompt packet and use the already approved Direction 03 reference, but must not claim a new generated candidate exists.",
+    "Any graph-slot change must be followed by deterministic regeneration and current-hash handoff evidence before implementation begins."
+  ],
+  "next_action": "Visual Asset Producer updates concept-aware slot inference and prompt/manifest migration behavior, regenerates the affected ontology and prompt outputs, validates image provenance without a fallback generation path, and returns a completion handoff with current hashes."
+}

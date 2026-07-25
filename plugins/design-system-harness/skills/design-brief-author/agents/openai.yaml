@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Brief Author"
+  short_description: "Run the brief-author stage with evidence"
+  default_prompt: "Use $design-brief-author for the assigned team stage and return gate evidence."

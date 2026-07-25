@@ -1,0 +1,496 @@
+{
+  "mode": "local-images",
+  "query": [
+    "split review workbench with fact list and detail editor",
+    "evidence panel with source excerpt comparison",
+    "korean enterprise knowledge intake form calm archive tone"
+  ],
+  "preferred_count": 12,
+  "weights": {
+    "layout": 0.32,
+    "component_shape": 0.26,
+    "color_balance": 0.16,
+    "typography_mood": 0.14,
+    "surface_style": 0.12
+  },
+  "extraction_policy": "advisory-only",
+  "notes": [
+    "이미지 레퍼런스는 밀도·레이아웃 리듬·컴포넌트 형태 힌트에만 사용",
+    "색상·서체·IA의 진실 소스는 spec.md와 brand_profile.json"
+  ],
+  "must_include": [
+    "fact list and detail editor co-present in one viewport",
+    "status tags encoded with color plus icon plus text",
+    "approval control with visible scope and count"
+  ],
+  "avoid_patterns": [
+    "decorative node graph as hero",
+    "numeric score badges without reasons",
+    "spinner-only loading",
+    "metric card dashboards"
+  ],
+  "sources": [],
+  "images": [],
+  "selected_images": [],
+  "duplicate_groups": [],
+  "similar_groups": [],
+  "coverage": {
+    "source_count": 0,
+    "resolved_source_count": 0,
+    "image_count": 0,
+    "selected_image_count": 0,
+    "format_counts": {},
+    "orientation_counts": {},
+    "aspect_ratio_buckets": {}
+  },
+  "visual_motifs": {
+    "density": {
+      "value": "airy",
+      "confidence": 0.35,
+      "evidence": [
+        "editorial x1.55",
+        "hero x0.25",
+        "whitespace x0.8",
+        "calm x1.2"
+      ],
+      "candidates": [
+        {
+          "value": "airy",
+          "score": 7.2
+        },
+        {
+          "value": "dense",
+          "score": 4.8
+        },
+        {
+          "value": "balanced",
+          "score": 1.8
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "surface_style": {
+      "value": "tinted",
+      "confidence": 0.23,
+      "evidence": [
+        "warm x0.8",
+        "editorial x1.55",
+        "paper x0.9"
+      ],
+      "candidates": [
+        {
+          "value": "tinted",
+          "score": 4.15
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "typography_mood": {
+      "value": "editorial",
+      "confidence": 0.29,
+      "evidence": [
+        "editorial x1.55",
+        "serif x0.8"
+      ],
+      "candidates": [
+        {
+          "value": "editorial",
+          "score": 6.25
+        },
+        {
+          "value": "utilitarian",
+          "score": 3.9
+        },
+        {
+          "value": "premium",
+          "score": 0.2
+        }
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image selection was available."
+      }
+    },
+    "corner_style": {
+      "value": "medium",
+      "confidence": 0.21,
+      "evidence": [
+        "card x2.75"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Derived from query and brand context only because no local image geometry was available."
+      }
+    },
+    "color_balance": {
+      "observed": false,
+      "temperature": "unknown",
+      "contrast_profile": "unknown",
+      "neutral_bias": "unknown",
+      "dominant": [],
+      "supporting": [],
+      "provenance": {
+        "level": "unverified",
+        "detail": "No reliable pixel-color sample was available from the current selection."
+      }
+    },
+    "image_selection": {
+      "selected_image_count": 0,
+      "available_image_count": 0,
+      "provenance": {
+        "level": "unverified",
+        "detail": "No local image files were available for selection."
+      }
+    }
+  },
+  "layout_cues": [
+    {
+      "id": "data-review-surface",
+      "label": "Data review surface",
+      "confidence": 0.52,
+      "evidence": [
+        "table x0.9",
+        "data x0.9",
+        "timeline x0.9",
+        "comparison x1.35",
+        "ranking x0.1",
+        "review x2.6"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "split-pane-workspace",
+      "label": "Split-pane workspace",
+      "confidence": 0.48,
+      "evidence": [
+        "workspace x1.8",
+        "editor x2.25",
+        "navigation x0.9",
+        "topbar x0.9"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "editorial-feed",
+      "label": "Editorial feed",
+      "confidence": 0.42,
+      "evidence": [
+        "editorial x1.55",
+        "review x2.6"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "dashboard-grid",
+      "label": "Dashboard grid",
+      "confidence": 0.21,
+      "evidence": [
+        "dashboard x0.1",
+        "metric x0.25",
+        "table x0.9"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Layout cue inferred from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  ],
+  "component_style_hints": {
+    "cards": {
+      "direction": "low-elevation tinted cards를 기본으로 하고, 넓은 내부 여백과 강한 section breathing room. 중간 반경으로 제품 UI 절제 유지.",
+      "confidence": 0.19,
+      "evidence": [
+        "surface=tinted",
+        "density=airy",
+        "corner=medium"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "navigation": {
+      "direction": "고정 sidebar 또는 split-pane navigation을 우선하고, 현재 위치와 scope를 항상 명시한다.",
+      "confidence": 0.26,
+      "evidence": [
+        "Split-pane workspace"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "typography": {
+      "direction": "headline rhythm과 본문 리듬의 대비를 키우고, label/metadata는 조용하게 유지한다.",
+      "confidence": 0.16,
+      "evidence": [
+        "typography_mood=editorial"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    "data_display": {
+      "direction": "정보 밀도를 유지하되 thin dividers와 restrained accent로 hierarchy를 만든다.",
+      "confidence": 0.19,
+      "evidence": [
+        "layout=dashboard-grid",
+        "density=airy"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Component styling hint synthesized from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  },
+  "candidate_component_archetypes": [
+    {
+      "id": "review-coverage-system",
+      "label": "Review coverage system",
+      "family": "editorial",
+      "confidence": 0.48,
+      "suggested_components": [
+        "review-card",
+        "score-badge",
+        "comparison-table",
+        "ranking-list",
+        "filter-chip"
+      ],
+      "supports_primitives": [
+        "comparison and ranking",
+        "search and filter",
+        "tags and labels"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.52)",
+        "layout=editorial-feed (0.42)",
+        "review x2.6",
+        "score x0.25",
+        "comparison x1.35",
+        "ranking x0.1"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "workspace-shell",
+      "label": "Workspace shell",
+      "family": "navigation",
+      "confidence": 0.48,
+      "suggested_components": [
+        "app-shell",
+        "sidebar-nav",
+        "workspace-switcher",
+        "breadcrumb",
+        "context-panel"
+      ],
+      "supports_primitives": [
+        "workspace navigation"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.48)",
+        "workspace x1.8",
+        "navigation x0.9",
+        "panel x3.05"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "editorial-content-block",
+      "label": "Editorial content block",
+      "family": "editorial",
+      "confidence": 0.39,
+      "suggested_components": [
+        "content-card",
+        "featured-story-card",
+        "section-header",
+        "content-meta",
+        "byline-row"
+      ],
+      "supports_primitives": [
+        "rich text editor"
+      ],
+      "evidence": [
+        "layout=editorial-feed (0.42)",
+        "editorial x1.55"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "data-review-table",
+      "label": "Data review table",
+      "family": "data-display",
+      "confidence": 0.37,
+      "suggested_components": [
+        "data-table",
+        "column-header",
+        "row-actions",
+        "filter-toolbar",
+        "pagination"
+      ],
+      "supports_primitives": [
+        "data tables",
+        "search and filter"
+      ],
+      "evidence": [
+        "layout=data-review-surface (0.52)",
+        "layout=dashboard-grid (0.21)",
+        "table x0.9",
+        "data x0.9"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    },
+    {
+      "id": "conversation-sidecar",
+      "label": "Conversation sidecar",
+      "family": "overlay",
+      "confidence": 0.3,
+      "suggested_components": [
+        "chat-panel",
+        "message-thread",
+        "message-composer",
+        "context-drawer"
+      ],
+      "supports_primitives": [
+        "chat and messaging"
+      ],
+      "evidence": [
+        "layout=split-pane-workspace (0.48)",
+        "panel x3.05"
+      ],
+      "provenance": {
+        "level": "inferred",
+        "detail": "Archetype candidate inferred from query and brand context only; local image grounding was unavailable."
+      }
+    }
+  ],
+  "reference_mood_summary": {
+    "top_layout": "Data review surface",
+    "recommended_direction": [
+      "layout는 Data review surface 기준으로 정리",
+      "surface language는 tinted 성향 우선",
+      "typography mood는 editorial 축 유지",
+      "density는 airy 기준으로 primitive spacing 조정",
+      "palette temperature는 unknown 쪽을 우선"
+    ],
+    "avoidance": [
+      "decorative node graph as hero",
+      "numeric score badges without reasons",
+      "spinner-only loading",
+      "metric card dashboards"
+    ],
+    "component_focus": [
+      "cards",
+      "data_display",
+      "navigation",
+      "typography"
+    ],
+    "provenance": {
+      "level": "inferred",
+      "detail": "Mood summary synthesized from visual motifs, layout cues, and component hints."
+    }
+  },
+  "brand_context": {
+    "brand_name": "EKOS Knowledge Intake",
+    "system_name": "EKOS Knowledge Intake Design System",
+    "brand_keywords": [
+      "archive",
+      "evidence-first",
+      "sentence-first",
+      "trustworthy",
+      "calm",
+      "editorial-operational",
+      "reviewable",
+      "korean-first"
+    ],
+    "anti_keywords": [
+      "graph-tech jargon",
+      "decorative node graph",
+      "sci-fi glow",
+      "generic dashboard metric cards",
+      "numeric-score-only ranking",
+      "spinner-only progress",
+      "marketing hero",
+      "paper texture over legibility"
+    ],
+    "visual_keywords": [
+      "prussian blue archive authority",
+      "cornsilk warm paper surfaces flattened for reading",
+      "ocean blue trust accents for focus and links",
+      "hunter green success, goldenrod warning, marsala failure",
+      "rust as rare editorial emphasis only",
+      "sentence-first fact rows with status tags",
+      "split review workbench with evidence panel",
+      "long-form korean text at comfortable measure",
+      "serif display for knowledge sentences, sans for controls",
+      "quiet rules and generous whitespace instead of card walls"
+    ],
+    "interaction_keywords": [
+      "describe knowledge in free sentences with optional help frames",
+      "watch a five-stage sentence-based analysis progress",
+      "triage extracted facts by needs-choice and conflict first",
+      "compare relation candidates as business sentences with reasons",
+      "edit a fact under its one-sentence summary",
+      "approve with visible scope and count, blocked with visible reason",
+      "return to the source text at any time without losing edits",
+      "propose a company-specific term without ontology vocabulary",
+      "connect two search results and send to review",
+      "retry failed intake without duplicating jobs"
+    ],
+    "product_primitives": [
+      "global search input",
+      "intake method list",
+      "free-sentence composer with help frames",
+      "upload manifest with trust notice",
+      "five-stage sentence progress",
+      "failure recovery panel",
+      "sentence-first fact row",
+      "five-state fact status tag",
+      "fact sentence editor with scoped fields",
+      "relation candidate comparison card",
+      "collapsible evidence panel",
+      "source-versus-structured compare view",
+      "scoped review action bar",
+      "new concept proposal form",
+      "link workspace canvas with keyboard path",
+      "link verdict card",
+      "knowledge lifecycle badge",
+      "provenance timeline",
+      "impact question buttons",
+      "advanced drawer for raw ontology artifacts",
+      "operations queue table",
+      "quarantine list",
+      "sample data badge",
+      "empty state guide",
+      "left navigation",
+      "workspace topbar"
+    ]
+  }
+}

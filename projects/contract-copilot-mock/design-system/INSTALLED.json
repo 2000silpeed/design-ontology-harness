@@ -3,16 +3,16 @@
   "preset_api_version": "1.0.0",
   "adapter_id": "raw-css-variables",
   "adapter_version": "0.1.0",
-  "harness_version": "0.1.0",
+  "harness_version": "0.2.0",
   "color_mode": "light",
   "locale": "ko",
-  "installed_at": "2026-04-30T13:10:54Z",
-  "content_hash": "sha256:641769859ef5e7606e156ee2c55262992022eabf7bdd436f5b422b4c743f8cfb",
+  "installed_at": "2026-07-25T04:47:01Z",
+  "content_hash": "sha256:bcc0802b7951efad2f1bb1ad1e14cf7b46c8b415d6633c2c080918fbe9e17fdf",
   "proposed_files": [],
   "counts": {
-    "created": 1,
+    "created": 0,
     "merged": 2,
-    "overwritten": 23,
+    "overwritten": 28,
     "proposed": 0,
     "skipped": 0
   }

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ontology Compiler"
+  short_description: "Run the ontology-compiler stage with evidence"
+  default_prompt: "Use $design-ontology-compiler for the assigned team stage and return gate evidence."

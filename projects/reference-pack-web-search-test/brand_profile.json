@@ -1,0 +1,569 @@
+{
+  "name": "External Reference Pack Search Test",
+  "description": "A public-web reference pack workflow test that does not depend on the local Omnigen vault.",
+  "product": {
+    "category": "SaaS CRM dashboard",
+    "audience": "product teams building operational web apps"
+  },
+  "product_primitives": [
+    "crm",
+    "dashboard",
+    "admin",
+    "analytics",
+    "pipeline",
+    "data table",
+    "web app"
+  ],
+  "visual_reference": {
+    "mode": "remote-web-references",
+    "extraction_policy": "advisory-only",
+    "preferred_count": 18,
+    "query": "crm dashboard admin analytics pipeline data table saas",
+    "sources": [
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "Sales-Team-Leaderboard-dashboard.07clj5kseh3s_",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "next",
+          "static",
+          "media",
+          "sales",
+          "team",
+          "leaderboard",
+          "dashboard-07clj5kseh3s"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/_next/static/media/Sales-Team-Leaderboard-dashboard.07clj5kseh3s_.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:sales-team-leaderboard-dashboard-07clj5kseh3s:e4fc07f19ba7",
+          "score": 42
+        },
+        "url": "https://www.geckoboard.com/_next/static/media/Sales-Team-Leaderboard-dashboard.07clj5kseh3s_.png"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "Sales-Team-Leaderboard-dashboard",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "uploads",
+          "sales",
+          "team",
+          "leaderboard",
+          "dashboard"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/uploads/Sales-Team-Leaderboard-dashboard.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:sales-team-leaderboard-dashboard:e4fc07f19ba7",
+          "score": 42
+        },
+        "url": "https://www.geckoboard.com/uploads/Sales-Team-Leaderboard-dashboard.png"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "grafana-3-400x250",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "wp",
+          "content",
+          "uploads",
+          "2023",
+          "06",
+          "grafana",
+          "3",
+          "400x250"
+        ],
+        "source_url": "https://saasinterface.com/pages/dashboard/",
+        "download_url": "https://saasinterface.com/wp-content/uploads/2023/06/grafana-3-400x250.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:grafana-3-400x250:4d65fa60eed8",
+          "score": 24
+        },
+        "url": "https://saasinterface.com/wp-content/uploads/2023/06/grafana-3-400x250.png"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "hero-sales.012t5ya3~v.1.",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "next",
+          "static",
+          "media",
+          "hero",
+          "sales-012t5ya3-v-1"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/_next/static/media/hero-sales.012t5ya3~v.1..webp",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:hero-sales-012t5ya3-v-1:e4fc07f19ba7",
+          "score": 24
+        },
+        "url": "https://www.geckoboard.com/_next/static/media/hero-sales.012t5ya3~v.1..webp"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "mixpanel-400x250",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "wp",
+          "content",
+          "uploads",
+          "2022",
+          "06",
+          "mixpanel",
+          "400x250"
+        ],
+        "source_url": "https://saasinterface.com/pages/dashboard/",
+        "download_url": "https://saasinterface.com/wp-content/uploads/2022/06/mixpanel-400x250.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:mixpanel-400x250:4d65fa60eed8",
+          "score": 24
+        },
+        "url": "https://saasinterface.com/wp-content/uploads/2022/06/mixpanel-400x250.png"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "salesforce.0-5gg0_q_k9_t",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "next",
+          "static",
+          "media",
+          "salesforce-0",
+          "5gg0",
+          "q",
+          "k9",
+          "t"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/_next/static/media/salesforce.0-5gg0_q_k9_t.svg",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:salesforce-0-5gg0-q-k9-t:e4fc07f19ba7",
+          "score": 24
+        },
+        "url": "https://www.geckoboard.com/_next/static/media/salesforce.0-5gg0_q_k9_t.svg"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "visitors-1-400x250",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "wp",
+          "content",
+          "uploads",
+          "2023",
+          "07",
+          "visitors",
+          "1",
+          "400x250"
+        ],
+        "source_url": "https://saasinterface.com/pages/dashboard/",
+        "download_url": "https://saasinterface.com/wp-content/uploads/2023/07/visitors-1-400x250.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:visitors-1-400x250:4d65fa60eed8",
+          "score": 24
+        },
+        "url": "https://saasinterface.com/wp-content/uploads/2023/07/visitors-1-400x250.png"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "AWS-dashboard-example.0xc43hzy1_9q1",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "next",
+          "static",
+          "media",
+          "aws",
+          "dashboard",
+          "example-0xc43hzy1",
+          "9q1"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/_next/static/media/AWS-dashboard-example.0xc43hzy1_9q1.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:aws-dashboard-example-0xc43hzy1-9q1:e4fc07f19ba7",
+          "score": 22
+        },
+        "url": "https://www.geckoboard.com/_next/static/media/AWS-dashboard-example.0xc43hzy1_9q1.png"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "ceo-overview-dashboard-example.0s12_p~xwfbnm",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "next",
+          "static",
+          "media",
+          "ceo",
+          "overview",
+          "dashboard",
+          "example-0s12",
+          "p-xwfbnm"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/_next/static/media/ceo-overview-dashboard-example.0s12_p~xwfbnm.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:ceo-overview-dashboard-example-0s12-p-xwfbnm:e4fc07f19ba7",
+          "score": 22
+        },
+        "url": "https://www.geckoboard.com/_next/static/media/ceo-overview-dashboard-example.0s12_p~xwfbnm.png"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "CMO-dashboard.0y-0f8-9c9a1a",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "next",
+          "static",
+          "media",
+          "cmo",
+          "dashboard-0y",
+          "0f8",
+          "9c9a1a"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/_next/static/media/CMO-dashboard.0y-0f8-9c9a1a.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:cmo-dashboard-0y-0f8-9c9a1a:e4fc07f19ba7",
+          "score": 22
+        },
+        "url": "https://www.geckoboard.com/_next/static/media/CMO-dashboard.0y-0f8-9c9a1a.png"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "daily-pulse-company-dashboard-example",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "uploads",
+          "daily",
+          "pulse",
+          "company",
+          "dashboard",
+          "example"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/uploads/daily-pulse-company-dashboard-example.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:daily-pulse-company-dashboard-example:e4fc07f19ba7",
+          "score": 22
+        },
+        "url": "https://www.geckoboard.com/uploads/daily-pulse-company-dashboard-example.png"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "dashboard-examples-og.14yx2hh_dt9z0",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "next",
+          "static",
+          "media",
+          "dashboard",
+          "examples",
+          "og-14yx2hh",
+          "dt9z0"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/_next/static/media/dashboard-examples-og.14yx2hh_dt9z0.webp",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:dashboard-examples-og-14yx2hh-dt9z0:e4fc07f19ba7",
+          "score": 22
+        },
+        "url": "https://www.geckoboard.com/_next/static/media/dashboard-examples-og.14yx2hh_dt9z0.webp"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "floating-dashboard.0h798xef-n1u5",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "next",
+          "static",
+          "media",
+          "floating",
+          "dashboard-0h798xef",
+          "n1u5"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/_next/static/media/floating-dashboard.0h798xef-n1u5.webp",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:floating-dashboard-0h798xef-n1u5:e4fc07f19ba7",
+          "score": 22
+        },
+        "url": "https://www.geckoboard.com/_next/static/media/floating-dashboard.0h798xef-n1u5.webp"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "Forecast-dashboard-example.0qcub~cigo8f_",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "next",
+          "static",
+          "media",
+          "forecast",
+          "dashboard",
+          "example-0qcub-cigo8f"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/_next/static/media/Forecast-dashboard-example.0qcub~cigo8f_.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:forecast-dashboard-example-0qcub-cigo8f:e4fc07f19ba7",
+          "score": 22
+        },
+        "url": "https://www.geckoboard.com/_next/static/media/Forecast-dashboard-example.0qcub~cigo8f_.png"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "live-call-center-dashboard-example.0qdqjuf1-f~7f",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "next",
+          "static",
+          "media",
+          "live",
+          "call",
+          "center",
+          "dashboard",
+          "example-0qdqjuf1",
+          "f-7f"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/_next/static/media/live-call-center-dashboard-example.0qdqjuf1-f~7f.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:live-call-center-dashboard-example-0qdqjuf1-f-7f:e4fc07f19ba7",
+          "score": 22
+        },
+        "url": "https://www.geckoboard.com/_next/static/media/live-call-center-dashboard-example.0qdqjuf1-f~7f.png"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "live-call-center-dashboard-example",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "uploads",
+          "live",
+          "call",
+          "center",
+          "dashboard",
+          "example"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/uploads/live-call-center-dashboard-example.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:live-call-center-dashboard-example:e4fc07f19ba7",
+          "score": 22
+        },
+        "url": "https://www.geckoboard.com/uploads/live-call-center-dashboard-example.png"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "Shopify-Facebook-Ads-dashboard.0kxsre.r8askm",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "next",
+          "static",
+          "media",
+          "shopify",
+          "facebook",
+          "ads",
+          "dashboard-0kxsre-r8askm"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/_next/static/media/Shopify-Facebook-Ads-dashboard.0kxsre.r8askm.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:shopify-facebook-ads-dashboard-0kxsre-r8askm:e4fc07f19ba7",
+          "score": 22
+        },
+        "url": "https://www.geckoboard.com/_next/static/media/Shopify-Facebook-Ads-dashboard.0kxsre.r8askm.png"
+      },
+      {
+        "kind": "external-reference",
+        "provider_id": "web-crawl",
+        "label": "zendesk-service-desk-dashboard-example.0b850cw2f.t7b",
+        "tags": [
+          "reference-pack",
+          "web-reference",
+          "public-web",
+          "reference-only",
+          "source",
+          "next",
+          "static",
+          "media",
+          "zendesk",
+          "service",
+          "desk",
+          "dashboard",
+          "example-0b850cw2f-t7b"
+        ],
+        "source_url": "https://www.geckoboard.com/dashboard-examples/",
+        "download_url": "https://www.geckoboard.com/_next/static/media/zendesk-service-desk-dashboard-example.0b850cw2f.t7b.png",
+        "usage_scope": "reference-analysis-only",
+        "redistribution_allowed": false,
+        "reference_pack": {
+          "pack_id": "public-dashboard-web-search",
+          "version": "2026.06.20",
+          "asset_id": "web-crawl:zendesk-service-desk-dashboard-example-0b850cw2f:e4fc07f19ba7",
+          "score": 22
+        },
+        "url": "https://www.geckoboard.com/_next/static/media/zendesk-service-desk-dashboard-example.0b850cw2f.t7b.png"
+      }
+    ],
+    "reference_pack": {
+      "pack_id": "public-dashboard-web-search",
+      "version": "2026.06.20",
+      "selected_count": 18
+    }
+  }
+}

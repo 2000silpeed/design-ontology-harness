@@ -18,7 +18,8 @@
 - Inline SVG icon sprite: 일정, 경기장, 예측, 결과, 출처 같은 반복 UI 신호용 결정론적 아이콘 세트
 - `assets/app-icon.svg`: favicon, web app manifest, app shell brand mark에 연결된 브랜드 특정 앱 아이콘
 - `site.webmanifest`: 앱 아이콘과 theme metadata
-- `assets/world-cup-command-center.webp`: Codex `image_gen`으로 생성해 workspace에 복사한 hero 이미지
+- `assets/world-cup-command-center-64809ab56a.webp`: prompt packet과 원본 SHA-256을 검증한 뒤 실제 화면에 연결한 Codex `image_gen` 이미지
+- `design-system/runtime-theme.css`: Semantic OS Markdown에서 생성된 역할 토큰을 이 제품의 light/dark surface와 팀 식별 토큰에 연결하는 보존형 확장 레이어
 - `public/generated/design-system/manifest.json`: 전역 visual asset manifest 계약에 맞춘 provenance 기록
 
 ## Commands

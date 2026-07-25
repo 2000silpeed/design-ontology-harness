@@ -317,7 +317,7 @@ img {
 .episode-copy p,
 .shelf-tile p {
   color: var(--ds-color-ink-muted);
-  line-height: 1.55;
+  line-height: var(--ds-leading-body);
 }
 
 .primary-action,
@@ -670,7 +670,7 @@ img {
 
 .nav-item.active {
   background: var(--ds-color-surface-tint);
-  color: var(--ds-color-primary);
+  color: var(--ds-color-ink);
 }
 
 .nav-item span {

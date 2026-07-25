@@ -1,0 +1,115 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "semantic-color-authority-improvement-2026-07-13-001",
+  "created_at": "2026-07-13T23:07:21+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "token-curator",
+  "to_role": "team-lead",
+  "stage": "tokens-and-components",
+  "status": "ready",
+  "summary": "The Markdown color authority now exposes every Pantone COY identity, resolves safe canonical aliases with collision evidence, carries parsed provenance and explicit local extensions, and owns typed runtime neutral/state/chrome defaults consumed by core token paths.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/semantic-color-audit-to-token-curator.json",
+      "sha256": "4b045d96b390f5a019e256a49a7c691fee0841aa6335b82520cab96a2677279d"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "docs/color-reference.md",
+      "sha256": "b715c0c9073613ac36c425a049f4c7197bd1534bd799047bba64eff3ba5d66fd"
+    },
+    {
+      "path": "design_ontology_harness/semantic_color_markdown.py",
+      "sha256": "a26986d3feba6db513a4b18433bc5180c817aee0bea40f30941257f545504a68"
+    },
+    {
+      "path": "design_ontology_harness/semantic_color_selector.py",
+      "sha256": "f3fcbc7b091be53f37064c246d1e1a160fc424a5e8f2003fe848fc1a4dbb80c8"
+    },
+    {
+      "path": "design_ontology_harness/color_reference.py",
+      "sha256": "347a3856bdfbeb1b7837461c83f9bd98913e1d9b143e2902e61716b6224e5432"
+    },
+    {
+      "path": "design_ontology_harness/adapters/base.py",
+      "sha256": "f294f1c5c5e9581bb2c63970f906db39bd516864d0073869c37961945cb7470f"
+    },
+    {
+      "path": "design_ontology_harness/token_emitter.py",
+      "sha256": "6d49262fd724e977177b38ee22243c4a99d716123e9b3c6ef8a9a4559a23cbd1"
+    },
+    {
+      "path": "design_ontology_harness/resources/semantic_color_ontology.json",
+      "sha256": "501be5598fc706c87e17f91cebce4081dfb7a5c5bb1aa161b0db54c84649b2af"
+    },
+    {
+      "path": "tests/test_semantic_color_markdown.py",
+      "sha256": "09e49aa7890591a236921d734ed90890dc59bb52b318e17c2f5dfbb7b552ac78"
+    },
+    {
+      "path": "tests/test_semantic_color_upgrade.py",
+      "sha256": "2f935d8cbf6f10c3b41bb961cded31b88586abd670f56a1f3651232a278fa5c8"
+    }
+  ],
+  "changed_paths": [
+    "docs/color-reference.md",
+    "design_ontology_harness/semantic_color_markdown.py",
+    "design_ontology_harness/semantic_color_selector.py",
+    "design_ontology_harness/color_reference.py",
+    "design_ontology_harness/adapters/base.py",
+    "design_ontology_harness/token_emitter.py",
+    "design_ontology_harness/resources/semantic_color_ontology.json",
+    "tests/test_semantic_color_markdown.py",
+    "tests/test_semantic_color_upgrade.py",
+    "agent-team/handoffs/semantic-color-token-curator-to-team-lead.json"
+  ],
+  "decisions": [
+    "Keep the 87 authored card API stable and generate a checksum-bound visible index for all 29 Pantone COY Semantic IDs from the embedded payload.",
+    "Resolve exact labels and Semantic IDs before aliases; register color_name only when unique, and retain explicit two-identity evidence for Cerulean and Marsala.",
+    "Treat numeric card citations as aliases for real ColorReference IDs and expose resolved provenance on every parsed card.",
+    "Align Hunter Green and Teal Blue with their Semantic OS families and bind Rose Quartz to its Pantone COY identity.",
+    "Represent Dark Salmon and Blanched Almond as named local ColorKeyword extensions with a local ColorReference plus contains, cites, and spectrum-topic edges without mutating the upstream payload.",
+    "Store runtime neutral, state, chrome, and dark-derivation values in a checksum-verified typed Markdown policy; keep them distinct from ColorKeyword nodes and let explicit project roles win.",
+    "Fail closed when the default Markdown authority loses its runtime policy; custom card references without a policy explicitly inherit the packaged default policy.",
+    "Lock the manual role identity and HEX values for the seven affected real projects (lattice, quill, broadside, lattice-dash, panel-pop, orchard, and world-cup-hub) against the repository-local Markdown authority."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run python scripts/sync-semantic-color-ontology.py --check",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "ok=true, changed=false, raw payload 358 nodes/1227 edges/290 keywords/113 HEX keywords, Pantone COY identity count=29, runtime policy valid with sha256=ff8838525f5f72e805cc1c518e689503baf7c6e8c784923ccb24f48b4d417d8b."
+    },
+    {
+      "command": "two consecutive semantic color sync writes plus SHA-256 comparison",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "docs/color-reference.md remained b715c0c9073613ac36c425a049f4c7197bd1534bd799047bba64eff3ba5d66fd and the packaged snapshot remained 501be5598fc706c87e17f91cebce4081dfb7a5c5bb1aa161b0db54c84649b2af across both writes."
+    },
+    {
+      "command": "uv run ruff check <owned color modules and tests>",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "All checks passed."
+    },
+    {
+      "command": "uv run pytest -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "451 passed, 10 warnings, 2 subtests passed in 27.80s."
+    },
+    {
+      "command": "uv build --wheel --out-dir /tmp/doh-wheel and isolated package-resource import",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Wheel contained resources/color-reference.md; from /tmp the package fallback loaded 87 cards, 29 COY identities, the verified runtime policy, and the merged 361-node/1235-edge runtime ontology."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "The embedded Semantic OS payload intentionally remains 358 nodes and 1227 edges; the local runtime overlay is 361 nodes and 1235 edges, so consumers must not compare those two layers as if they were the same artifact.",
+    "The generated COY identity table is an index rather than 29 additional authored cards; consumers that need complete visible identity coverage should use color_index or pantone_coy_index instead of assuming colors contains generated rows."
+  ],
+  "next_action": "Team Lead validates this handoff and the shared agent-team ledger, then combines the independently routed contrast-graph cleanup before requesting a release audit."
+}

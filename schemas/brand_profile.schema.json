@@ -31,6 +31,94 @@
     "platforms": { "type": "array", "items": { "type": "string" } },
     "accessibility_targets": { "type": "array", "items": { "type": "string" } },
     "product_primitives": { "type": "array", "items": { "type": "string" } },
+    "component_decision_path": {
+      "type": "string",
+      "pattern": "^[^/].*\\.json$",
+      "description": "Project-relative JSON file containing an authored component_decision contract."
+    },
+    "component_decision": {
+      "type": "object",
+      "required": [
+        "core_components",
+        "primitive_reconciliation_version",
+        "primitive_reconciliation"
+      ],
+      "properties": {
+        "mode": { "type": "string" },
+        "rationale": { "type": "string", "minLength": 1 },
+        "coverage_families": { "type": "array", "items": { "type": "string" } },
+        "primitive_reconciliation_version": {
+          "const": "product-primitive-reconciliation/v1"
+        },
+        "primitive_reconciliation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["primitive", "resolution", "reason"],
+            "properties": {
+              "primitive": { "type": "string", "minLength": 1 },
+              "resolution": { "enum": ["component", "anatomy", "waiver"] },
+              "component": { "type": "string", "minLength": 1 },
+              "anatomy_parts": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1 }
+              },
+              "reason": { "type": "string", "minLength": 1 },
+              "waiver": {
+                "type": "object",
+                "required": [
+                  "kind",
+                  "replacement_components",
+                  "decision_source",
+                  "approval_status"
+                ],
+                "properties": {
+                  "kind": { "type": "string", "minLength": 1 },
+                  "replacement_components": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": { "type": "string", "minLength": 1 }
+                  },
+                  "decision_source": { "type": "string", "minLength": 1 },
+                  "approval_status": { "const": "approved" }
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": { "properties": { "resolution": { "const": "component" } } },
+                "then": { "required": ["component"] }
+              },
+              {
+                "if": { "properties": { "resolution": { "const": "anatomy" } } },
+                "then": { "required": ["component", "anatomy_parts"] }
+              },
+              {
+                "if": { "properties": { "resolution": { "const": "waiver" } } },
+                "then": { "required": ["waiver"] }
+              }
+            ]
+          }
+        },
+        "core_components": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/componentContractInput" }
+        },
+        "rejected_components": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "reason"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "family": { "type": "string" },
+              "reason": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
     "reference_preferences": {
       "type": "object",
       "properties": {
@@ -161,6 +249,63 @@
               }
             },
             "notes": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "componentContractInput": {
+      "type": "object",
+      "required": [
+        "name", "family", "role", "supports_primitive", "decision_reason",
+        "anatomy", "states", "variants", "props", "interaction",
+        "data_contract", "responsive", "content_rules", "accessibility_notes",
+        "dos_and_donts", "tokens"
+      ],
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
+        "family": { "type": "string", "minLength": 1 },
+        "role": { "type": "string", "minLength": 1 },
+        "supports_primitive": { "type": "string", "minLength": 1 },
+        "decision_reason": { "type": "string", "minLength": 1 },
+        "anatomy": {
+          "oneOf": [
+            { "type": "array", "minItems": 2, "items": { "type": "string" } },
+            {
+              "type": "object",
+              "required": ["parts"],
+              "properties": {
+                "parts": { "type": "array", "minItems": 2, "items": { "type": "string" } }
+              }
+            }
+          ]
+        },
+        "states": { "type": "array", "minItems": 2, "items": { "type": "string" } },
+        "variants": { "type": "object", "minProperties": 1 },
+        "props": { "type": "object", "minProperties": 1 },
+        "interaction": { "type": "object", "minProperties": 1 },
+        "data_contract": { "type": "object", "minProperties": 1 },
+        "responsive": { "type": "object", "minProperties": 1 },
+        "content_rules": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "accessibility_notes": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "dos_and_donts": {
+          "type": "object",
+          "required": ["do", "dont"],
+          "properties": {
+            "do": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+            "dont": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+          }
+        },
+        "tokens": {
+          "type": "object",
+          "minProperties": 2,
+          "propertyNames": {
+            "pattern": "^(component|part|state)\\.[a-z0-9-]+\\.[a-z0-9-]+(?:\\.[a-z0-9-]+)*$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "var\\(\\s*--ds-[a-zA-Z0-9-]+"
           }
         }
       }

@@ -1,0 +1,29 @@
+{
+  "schema_version": "production-ui-runtime-check/v1",
+  "kind": "accessibility",
+  "run_id": "fixture-desk-iteration-2-accessibility-20260714-01",
+  "implementation_tree_sha256": "cf3e1b0d232bd80fc072a4c92d240f4ceeaf1cd448618fba86a9a5fc085fb1f6",
+  "checked_at": "2026-07-14T22:38:00+09:00",
+  "method": "Semantic DOM inspection of the current in-app Browser state; keyboard focus sequence intentionally remains blocked.",
+  "standard": "WCAG 2.2 AA",
+  "automated_violations": 0,
+  "assertions": [
+    {
+      "id": "landmarks-and-regions-are-named",
+      "passed": true,
+      "evidence": "The current DOM exposes a skip link, banner, primary navigation, main, named schedule region, and selected-match complementary landmark."
+    },
+    {
+      "id": "table-and-form-controls-are-named",
+      "passed": true,
+      "evidence": "The schedule has a caption and column headers; prediction radios, opinion textbox, combobox, searchbox, and theme action have accessible names."
+    }
+  ],
+  "keyboard_assertions": [
+    {
+      "id": "continuous-tab-order-and-focus-visible",
+      "passed": false,
+      "evidence": "The current Production QA agent could not acquire the in-app Browser after handoff, so a fresh continuous Tab sequence and focus-visible check were not captured."
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "semantic-color-authority-improvement-2026-07-13-001",
+  "created_at": "2026-07-13T22:38:52+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "team-lead",
+  "to_role": "token-curator",
+  "stage": "tokens-and-components",
+  "status": "needs-work",
+  "summary": "Semantic OS transport is checksum-complete, but the visible catalog, canonical-name lookup, provenance parsing, and runtime fallback authority are incomplete and must be reconciled without hand-editing the embedded graph.",
+  "input_artifacts": [
+    {
+      "path": "docs/color-reference.md",
+      "sha256": "dd35151943b0a68d377eacbff6f2d3783ced7f4eb46cf48887abd0ac63685065"
+    },
+    {
+      "path": "design_ontology_harness/semantic_color_markdown.py",
+      "sha256": "d500e6388f2bafe20e8758c3feb9816059224043374095b72d149b07b60ef8fb"
+    },
+    {
+      "path": "design_ontology_harness/semantic_color_selector.py",
+      "sha256": "874377f48f18c09129e7c6d29805fe69fc424bf33c482fa801f8c7ab3f9d5622"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "tests/test_semantic_color_markdown.py",
+      "sha256": "b6679a9b21a4be6773fdb85143119438f9f419d3646e8cb662105ee12ca9a65d"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/semantic-color-audit-to-token-curator.json"
+  ],
+  "decisions": [
+    "Keep the Semantic OS build graph as upstream authority and the checksum-verified Markdown payload as transport.",
+    "Generate visible Pantone coverage and provenance metadata from the payload instead of hand-editing the embedded graph.",
+    "Treat runtime neutral and state ramps as typed role policy rather than pretending every derived token is a ColorKeyword.",
+    "Preserve exact Semantic OS node identity when canonical color names are ambiguous."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run python scripts/sync-semantic-color-ontology.py --check",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "ok=true, changed=false, payload_sha256=62dafefbd3a981d8e34564bec44f9de02111e84bec78e20b87b7ba458f46e7ef, 358 nodes, 1227 edges, 290 keywords, 113 with HEX"
+    },
+    {
+      "command": "uv run pytest tests/test_semantic_color_markdown.py tests/test_semantic_color_ontology.py tests/test_semantic_color_upgrade.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "20 passed in 1.23s; the existing suite does not cover visible Pantone completeness, canonical color_name lookup, or out-of-authority runtime defaults"
+    },
+    {
+      "command": "read-only exhaustive color coverage audit",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "22 unique Pantone HEX values are embedded-only, 20 simple COY names are not manually resolvable, 3 visible categories drift from ontology, 2 local colors lack graph relations, and 27 runtime fallback HEX values are absent from the Markdown authority"
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "The worktree already contains user-owned changes in the target color modules and tests; edits must preserve them.",
+    "Changing visible-card generation can alter runtime merge counts and must be guarded by deterministic tests.",
+    "Cerulean and Marsala have legitimate same-name, different-HEX anchors and must not be silently collapsed."
+  ],
+  "next_action": "Token Curator implements deterministic visible coverage, canonical-name lookup, explicit provenance, typed runtime role policy, and regression gates; then returns a schema-valid handoff with exact changed paths and command results."
+}

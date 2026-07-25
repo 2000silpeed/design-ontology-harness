@@ -1,0 +1,82 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "fixture-desk-release-governor-20260714-001",
+  "created_at": "2026-07-13T21:08:19Z",
+  "project": "world-cup-hub",
+  "from_role": "release-governor",
+  "to_role": "team-lead",
+  "stage": "release",
+  "status": "ready",
+  "summary": "APPROVED: 독립 Release Governor 감사에서 Fixture Desk의 현재 런타임 트리 d36cdadee63719b6ab54c3da02e4cf1bfa0ffefe1fb4e83de19b0357067fb839에 대해 요청된 다섯 개 게이트가 모두 통과했습니다. Semantic OS 기반 컴포넌트 계약, 구현 린트, 현재 스크린샷, Codex 인앱 브라우저 증거, 미관 검토가 같은 트리에 결속되어 있습니다.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/world-cup-hub-fixture-desk-production-qa-to-release-governor.json",
+      "sha256": "b7ca857198975f1c832dfadc2d78b6199b8a6ab53d88ec867568f4d8f5f1a762"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/production/fixture-desk/screenshots.json",
+      "sha256": "6694bc8a2c596bbeaada6f457ae6f4bd0dfeabb99d2b86a630872df3a2680c97"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/production/component-runtime-manifest.json",
+      "sha256": "5290dbf97319d9b858eda1e36ba6628bd9ff1ab60fbe662868ceb001c0b9aed2"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/build/system/production/fixture-desk/browser-evidence-bundle.json",
+      "sha256": "44c00e1ed046e293253f620e5c241403456f0c297ba2bfad62db3933b8a45c6d"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/production/fixture-desk/aesthetic/latest_loop_report.json",
+      "sha256": "cf29c03306a7106d8b2d146e44b50af0e39b743a6ad4e3d882f338c3d0a7e6e4"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/world-cup-hub-fixture-desk-release-decision.json"
+  ],
+  "decisions": [
+    "Fixture Desk를 현재 동결된 런타임 트리에 한해 릴리스 준비 상태로 승인한다.",
+    "승인은 월드컵 허브의 기존 구현이 아니라 projects/world-cup-hub/fixture-desk 대상에만 적용한다.",
+    "색상 권위는 계속 docs/color-reference.md에 포함된 Semantic OS 그래프이며, 브라우저 증거는 이를 대체하지 않는다.",
+    "소스, 토큰, 테마, 자산 또는 컴포넌트 계약을 바꾸면 캡처·브라우저 번들·릴리스 결정을 새 트리에 맞춰 다시 발급해야 한다."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run pytest tests/test_agent_team.py tests/test_agent_packs.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "23 passed, 2 subtests passed in 0.16s."
+    },
+    {
+      "command": "uv run design-ontology validate-agent-team --target-repo . --artifact-dir agent-team --targets codex,claude",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "roles: 9 | targets: codex, claude."
+    },
+    {
+      "command": "uv run design-ontology validate-component-contracts --project-dir projects/world-cup-hub",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "components=19, needs_authoring=0, tokens=81."
+    },
+    {
+      "command": "uv run design-ontology lint-implementation --target-repo projects/world-cup-hub/fixture-desk",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Implementation lint: OK (3 files checked, 0 issues)."
+    },
+    {
+      "command": "uv run design-ontology verify-production-ui --project-dir projects/world-cup-hub --target-repo projects/world-cup-hub/fixture-desk --screenshot-manifest projects/world-cup-hub/build/system/production/fixture-desk/screenshots.json --aesthetic-report projects/world-cup-hub/build/system/production/fixture-desk/aesthetic/latest_loop_report.json --browser-evidence-bundle projects/world-cup-hub/build/system/production/fixture-desk/browser-evidence-bundle.json --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "All seven production gates passed: component contracts, component runtime conformance, implementation lint, screenshot evidence, browser evidence, aesthetic evidence, and style divergence. Browser bundle contains 11 observations and 19 verified component records."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "작업 트리가 의도적으로 더러워 Git HEAD만으로 준비 상태를 식별할 수 없으므로, 이 결정은 기록된 런타임 콘텐츠 트리에만 결속된다.",
+    "Fixture Desk 관련 파일을 변경하면 현재 증거의 유효성이 사라진다."
+  ],
+  "next_action": "Team Lead는 이 독립 승인 기록과 함께 사용자에게 Fixture Desk 미리보기를 전달할 수 있다. 이후 UI 변경이 생기면 Production QA부터 새 증거를 수집해 릴리스 감사를 다시 진행한다."
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Token & Color Curator"
+  short_description: "Run the token-curator stage with evidence"
+  default_prompt: "Use $design-token-curator for the assigned team stage and return gate evidence."

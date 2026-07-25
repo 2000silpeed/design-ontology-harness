@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 from .advanced_components import catalog_entries, get_advanced_component, recommend_advanced_components
@@ -40,6 +41,34 @@ REQUIRED_PROFILE_KEYS = {
     "platforms": list,
     "accessibility_targets": list,
     "product_primitives": list,
+}
+
+CONCEPT_PROFILE_KEYS = (
+    "application_concept",
+    "layout_skeleton",
+    "design_differentiation",
+)
+
+PRIMITIVE_RECONCILIATION_VERSION = "product-primitive-reconciliation/v1"
+AUTHORED_TOKEN_SCOPES = {"component", "part", "state"}
+
+# Compatibility policy: profiles that predate concept authoring may continue to
+# use synthesis fallbacks only while all three concept fields and an authored
+# component decision are absent. Reserving an inline/external component scope,
+# or adding any concept field, opts the profile into the strict concept gate.
+CONCEPT_PLACEHOLDER_VALUES = {
+    "The first job this product helps users complete",
+    "Primary objects users inspect, create, compare, or decide on",
+    "monitoring | authoring | transaction | exploration | review | coordination",
+    "The visible state that proves the workflow succeeded",
+    "What should feel structurally different from a generic SaaS dashboard",
+    "command-center | split-workbench | document-canvas | feed-detail | marketplace-grid | wizard-flow | map-or-graph-canvas | timeline-ledger",
+    "sidebar | topbar | local-tabs | command-palette | task-rail | none",
+    "dense | balanced | spacious",
+    "The region users operate most of the time",
+    "Name the actual task surface that must appear above the fold",
+    "Name the real controls or state indicators that must be visible before decoration",
+    "A distinctive structural move tied to the product's workflow",
 }
 
 PRIMITIVE_COMPONENTS = {
@@ -139,6 +168,9 @@ def generate_system_pack(
     blueprint_dir = ensure_dir(output_dir / "blueprint")
 
     validation = validate_brand_profile(brand_profile)
+    if not validation["valid"]:
+        details = "; ".join(validation["errors"])
+        raise ValueError(f"Invalid brand profile: {details}")
     foundations = derive_foundations(blueprint)
     token_schema = build_token_schema(brand_profile, blueprint)
     component_inventory = build_component_inventory(brand_profile, blueprint)
@@ -201,6 +233,299 @@ def generate_system_pack(
     }
 
 
+def _concept_gate_enabled(profile: dict) -> bool:
+    return any(
+        key in profile
+        for key in (
+            *CONCEPT_PROFILE_KEYS,
+            "component_decision",
+            "component_decision_path",
+        )
+    )
+
+
+def _validate_concept_text(errors: list[str], path: str, value: object) -> None:
+    if not isinstance(value, str) or not value.strip():
+        errors.append(f"{path} must be a non-empty string")
+        return
+    if value.strip() in CONCEPT_PLACEHOLDER_VALUES:
+        errors.append(f"{path} still contains a scaffold placeholder")
+
+
+def _validate_concept_text_list(errors: list[str], path: str, value: object) -> None:
+    if not isinstance(value, list) or not value:
+        errors.append(f"{path} must be a non-empty list")
+        return
+    for index, item in enumerate(value):
+        _validate_concept_text(errors, f"{path}[{index}]", item)
+
+
+def _validate_authored_concept(profile: dict, errors: list[str]) -> None:
+    missing = [key for key in CONCEPT_PROFILE_KEYS if key not in profile]
+    errors.extend(f"Missing required concept key: {key}" for key in missing)
+    if missing:
+        return
+
+    concept = profile.get("application_concept")
+    skeleton = profile.get("layout_skeleton")
+    differentiation = profile.get("design_differentiation")
+    for key, value in (
+        ("application_concept", concept),
+        ("layout_skeleton", skeleton),
+        ("design_differentiation", differentiation),
+    ):
+        if not isinstance(value, dict):
+            errors.append(f"{key} must be a structured object")
+    if not all(isinstance(value, dict) for value in (concept, skeleton, differentiation)):
+        return
+
+    _validate_concept_text(errors, "application_concept.primary_job", concept.get("primary_job"))
+    _validate_concept_text_list(
+        errors,
+        "application_concept.domain_objects",
+        concept.get("domain_objects"),
+    )
+    _validate_concept_text(
+        errors,
+        "application_concept.operating_mode",
+        concept.get("operating_mode"),
+    )
+    _validate_concept_text(
+        errors,
+        "application_concept.success_moment",
+        concept.get("success_moment"),
+    )
+    _validate_concept_text_list(
+        errors,
+        "application_concept.differentiation",
+        concept.get("differentiation"),
+    )
+
+    for field in ("composition", "navigation_model", "density"):
+        _validate_concept_text(errors, f"layout_skeleton.{field}", skeleton.get(field))
+    regions = skeleton.get("primary_regions")
+    if not isinstance(regions, list) or not regions:
+        errors.append("layout_skeleton.primary_regions must be a non-empty list")
+    else:
+        for index, region in enumerate(regions):
+            if not isinstance(region, dict):
+                errors.append(f"layout_skeleton.primary_regions[{index}] must be an object")
+                continue
+            for field in ("name", "role", "priority"):
+                _validate_concept_text(
+                    errors,
+                    f"layout_skeleton.primary_regions[{index}].{field}",
+                    region.get(field),
+                )
+    _validate_concept_text_list(
+        errors,
+        "layout_skeleton.first_screen_contract",
+        skeleton.get("first_screen_contract"),
+    )
+    _validate_concept_text_list(
+        errors,
+        "layout_skeleton.avoid_layouts",
+        skeleton.get("avoid_layouts"),
+    )
+
+    for field in ("must_feel_different_from", "signature_moves", "repetition_risks"):
+        _validate_concept_text_list(
+            errors,
+            f"design_differentiation.{field}",
+            differentiation.get(field),
+        )
+
+
+def _input_string_list(value: object) -> list[str]:
+    if not isinstance(value, list):
+        return []
+    return [item.strip() for item in value if isinstance(item, str) and item.strip()]
+
+
+def _input_anatomy_parts(value: object) -> list[str]:
+    if isinstance(value, dict):
+        return _input_string_list(value.get("parts"))
+    return _input_string_list(value)
+
+
+def _validate_authored_token_map(
+    component: dict,
+    *,
+    prefix: str,
+    errors: list[str],
+) -> None:
+    anatomy_parts = set(_input_anatomy_parts(component.get("anatomy")))
+    states = set(_input_string_list(component.get("states")))
+    tokens = component.get("tokens")
+    if not isinstance(tokens, dict) or not tokens:
+        errors.append(f"{prefix}.tokens must be a non-empty authored object")
+        return
+
+    targeted_parts: set[str] = set()
+    targeted_states: set[str] = set()
+    for slot, value in tokens.items():
+        slot_prefix = f"{prefix}.tokens.{slot}"
+        if not isinstance(slot, str) or not slot.strip():
+            errors.append(f"{prefix}.tokens contains an empty slot name")
+            continue
+        segments = slot.split(".")
+        if len(segments) < 3 or segments[0] not in AUTHORED_TOKEN_SCOPES:
+            errors.append(
+                f"{slot_prefix} must use component.<slot>.<property>, "
+                "part.<anatomy-part>.<property>, or state.<state>.<property>"
+            )
+            continue
+        scope, target = segments[0], segments[1]
+        if scope == "part":
+            if target not in anatomy_parts:
+                errors.append(f"{slot_prefix} targets unknown anatomy part {target}")
+            targeted_parts.add(target)
+        elif scope == "state":
+            if target not in states:
+                errors.append(f"{slot_prefix} targets unknown state {target}")
+            targeted_states.add(target)
+        if not isinstance(value, str) or not value.strip():
+            errors.append(f"{slot_prefix} must be a non-empty string")
+        elif re.search(r"var\(\s*--ds-[a-zA-Z0-9-]+", value) is None:
+            errors.append(f"{slot_prefix} must reference an emitted --ds-* token")
+
+    if not targeted_parts:
+        errors.append(f"{prefix}.tokens must bind at least one authored anatomy part")
+    if not targeted_states:
+        errors.append(f"{prefix}.tokens must bind at least one authored state")
+
+
+def _validate_primitive_reconciliation(
+    profile: dict,
+    decision: dict,
+    components: list[dict],
+    errors: list[str],
+) -> None:
+    if decision.get("primitive_reconciliation_version") != PRIMITIVE_RECONCILIATION_VERSION:
+        errors.append(
+            "component_decision.primitive_reconciliation_version must be "
+            f"{PRIMITIVE_RECONCILIATION_VERSION}"
+        )
+    expected = _input_string_list(profile.get("product_primitives"))
+    if len(expected) != len(set(expected)):
+        errors.append("product_primitives must not contain duplicates")
+
+    records = decision.get("primitive_reconciliation")
+    if not isinstance(records, list):
+        errors.append("component_decision.primitive_reconciliation must be a list")
+        records = []
+    component_by_name = {
+        str(component.get("name") or ""): component
+        for component in components
+        if isinstance(component, dict) and component.get("name")
+    }
+    seen: set[str] = set()
+    for index, record in enumerate(records):
+        prefix = f"component_decision.primitive_reconciliation[{index}]"
+        if not isinstance(record, dict):
+            errors.append(f"{prefix} must be an object")
+            continue
+        primitive = str(record.get("primitive") or "").strip()
+        if not primitive:
+            errors.append(f"{prefix}.primitive is required")
+            continue
+        if primitive in seen:
+            errors.append(f"{prefix}.primitive duplicates {primitive}")
+        seen.add(primitive)
+        resolution = record.get("resolution")
+        if resolution not in {"component", "anatomy", "waiver"}:
+            errors.append(f"{prefix}.resolution must be component, anatomy, or waiver")
+            continue
+        reason = str(record.get("reason") or "").strip()
+        if not reason:
+            errors.append(f"{prefix}.reason is required")
+        if resolution == "waiver":
+            if len(reason) < 16:
+                errors.append(f"{prefix}.reason must substantiate the waiver")
+            if record.get("component") or record.get("anatomy_parts"):
+                errors.append(f"{prefix} waiver must not claim component or anatomy coverage")
+            waiver = record.get("waiver")
+            if not isinstance(waiver, dict):
+                errors.append(f"{prefix}.waiver must be a structured object")
+                continue
+            for field in ("kind", "decision_source"):
+                if not str(waiver.get(field) or "").strip():
+                    errors.append(f"{prefix}.waiver.{field} is required")
+            if waiver.get("approval_status") != "approved":
+                errors.append(f"{prefix}.waiver.approval_status must be approved")
+            replacements = _input_string_list(waiver.get("replacement_components"))
+            if not replacements:
+                errors.append(
+                    f"{prefix}.waiver.replacement_components must not be empty"
+                )
+            unknown_replacements = sorted(set(replacements) - set(component_by_name))
+            if unknown_replacements:
+                errors.append(
+                    f"{prefix}.waiver.replacement_components contains unknown components: "
+                    + ", ".join(unknown_replacements)
+                )
+            continue
+
+        component_name = str(record.get("component") or "").strip()
+        component = component_by_name.get(component_name)
+        if component is None:
+            errors.append(f"{prefix}.component must name an authored core component")
+            continue
+        anatomy_parts = _input_string_list(record.get("anatomy_parts"))
+        if resolution == "anatomy":
+            if not anatomy_parts:
+                errors.append(f"{prefix}.anatomy_parts must not be empty")
+            available_parts = set(_input_anatomy_parts(component.get("anatomy")))
+            unknown_parts = sorted(set(anatomy_parts) - available_parts)
+            if unknown_parts:
+                errors.append(
+                    f"{prefix}.anatomy_parts contains unknown parts: "
+                    + ", ".join(unknown_parts)
+                )
+
+    missing = sorted(set(expected) - seen)
+    unknown = sorted(seen - set(expected))
+    if missing:
+        errors.append(
+            "component_decision.primitive_reconciliation is missing: "
+            + ", ".join(missing)
+        )
+    if unknown:
+        errors.append(
+            "component_decision.primitive_reconciliation contains unknown primitives: "
+            + ", ".join(unknown)
+        )
+
+
+def _validate_authored_component_decision(profile: dict, errors: list[str]) -> None:
+    decision = profile.get("component_decision")
+    if decision is None:
+        return
+    if not isinstance(decision, dict):
+        errors.append("component_decision must be a structured object")
+        return
+    components = decision.get("core_components") or decision.get("components")
+    if not isinstance(components, list) or not components:
+        errors.append("component_decision.core_components must be a non-empty list")
+        return
+    seen_names: set[str] = set()
+    valid_components: list[dict] = []
+    for index, component in enumerate(components):
+        prefix = f"component_decision.core_components[{index}]"
+        if not isinstance(component, dict):
+            errors.append(f"{prefix} must be an object")
+            continue
+        name = str(component.get("name") or "").strip()
+        if not name:
+            errors.append(f"{prefix}.name is required")
+        elif name in seen_names:
+            errors.append(f"{prefix}.name duplicates {name}")
+        seen_names.add(name)
+        valid_components.append(component)
+        _validate_authored_token_map(component, prefix=prefix, errors=errors)
+    _validate_primitive_reconciliation(profile, decision, valid_components, errors)
+
+
 def validate_brand_profile(profile: dict) -> dict:
     errors: list[str] = []
     warnings: list[str] = []
@@ -225,6 +550,9 @@ def validate_brand_profile(profile: dict) -> dict:
         warnings.append("Add more product_primitives so component planning reflects the real app surface.")
     if not profile.get("accessibility_targets"):
         warnings.append("Define accessibility_targets so the system has an explicit compliance floor.")
+    if _concept_gate_enabled(profile):
+        _validate_authored_concept(profile, errors)
+    _validate_authored_component_decision(profile, errors)
     for issue in profile.get("_color_reference_issues", []):
         warnings.append(issue)
     for issue in profile.get("_visual_reference_issues", []):
@@ -643,8 +971,18 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
                 "rationale": authored_decision.get("rationale", ""),
                 "coverage_families": coverage_families,
                 "component_count": len(all_components),
+                "primitive_reconciliation_version": authored_decision.get(
+                    "primitive_reconciliation_version"
+                ),
+                "primitive_reconciliation_count": len(
+                    authored_decision.get("primitive_reconciliation", [])
+                ),
                 "source": "brand_profile.component_decision",
             },
+            "product_primitives": list(primitives),
+            "primitive_reconciliation": authored_decision.get(
+                "primitive_reconciliation", []
+            ),
             "baseline_coverage_components": baseline_coverage_components,
             "rejected_components": rejected_components,
             "candidate_component_archetypes": candidate_archetypes,
@@ -724,8 +1062,10 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
         append_component({
             "name": component_name,
             "family": family,
+            "role": entry.get("role", ""),
             "supports_primitive": primitive,
-            "decision_layer": "spec-detected",
+            "decision_layer": entry.get("decision_layer", "spec-detected"),
+            "source": entry.get("source", primitive),
             "status": "planned",
             "must_document": ["anatomy", "states", "content rules", "accessibility", "dos and donts"],
         })
@@ -903,6 +1243,14 @@ def _authored_component_decision(brand_profile: dict) -> dict:
         ),
         "components": components,
         "rejected_components": rejected_components,
+        "primitive_reconciliation_version": decision.get(
+            "primitive_reconciliation_version"
+        ),
+        "primitive_reconciliation": [
+            dict(entry)
+            for entry in decision.get("primitive_reconciliation", [])
+            if isinstance(entry, dict)
+        ],
     }
 
 
@@ -950,6 +1298,16 @@ def _normalise_authored_component(entry) -> dict:
         "avoid_when",
         "pairs_with",
         "matched_signals",
+        "variants",
+        "props",
+        "interaction",
+        "interactions",
+        "data_contract",
+        "responsive",
+        "responsive_rules",
+        "dos_and_donts",
+        "tokens",
+        "context_contract",
     ):
         if raw.get(key):
             component[key] = raw[key]
@@ -2352,7 +2710,7 @@ def _build_color_reference_section(color_reference: dict | None) -> str:
     if semantic_selection:
         lines.append(
             "- **Semantic color selection**: "
-            f"{semantic_selection.get('selection_method', 'ontology-search-per-run')}"
+            f"{semantic_selection.get('selection_method', 'semantic-os-markdown-search-per-run')}"
         )
         pattern = semantic_selection.get("matched_pattern") or {}
         if pattern:

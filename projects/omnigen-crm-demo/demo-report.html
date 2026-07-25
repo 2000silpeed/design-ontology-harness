@@ -33,6 +33,9 @@
     }
 
     body {
+      /* 한글 줄바꿈 계약(DS106). 없으면 한글이 어절 중간에서 잘린다. */
+      word-break: keep-all;
+      overflow-wrap: normal;
       margin: 0;
       min-width: 1080px;
       background: var(--canvas);
@@ -307,7 +310,7 @@
       padding: 10px;
       color: var(--ink-muted);
       font-size: 12px;
-      line-height: 1.45;
+      line-height: 1.6;
     }
 
     .mapping {

@@ -9,6 +9,7 @@ application code should bind back to `--ds-*` variables.
 from __future__ import annotations
 
 import json
+import os
 import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -179,6 +180,22 @@ INTERACTIVE_UI_RE = re.compile(
 VISUAL_AFFORDANCE_RE = re.compile(
     r"(?:<svg\b|<img\b|<picture\b|<video\b|<canvas\b|<use\b|use\s+href=|href=['\"]#icon-|lucide-|heroicon|icon-|Icon[A-Z]|background-image|mask-image)",
     re.IGNORECASE,
+)
+RUNTIME_IMAGE_TAG_RE = re.compile(r"<(?P<tag>img|Image)\b(?P<attrs>[^>]*)>", re.IGNORECASE | re.DOTALL)
+RUNTIME_IMAGE_SRC_RE = re.compile(r"\bsrc\s*=\s*['\"](?P<src>[^'\"]+)['\"]", re.IGNORECASE)
+RUNTIME_IMAGE_ALT_RE = re.compile(r"\balt\s*=\s*['\"](?P<alt>[^'\"]*)['\"]", re.IGNORECASE)
+RUNTIME_DECORATIVE_IMAGE_RE = re.compile(
+    r"(?:\brole\s*=\s*['\"]presentation['\"]|\baria-hidden\s*=\s*['\"]true['\"])",
+    re.IGNORECASE,
+)
+RUNTIME_CSS_IMAGE_RE = re.compile(
+    r"url\(\s*['\"]?(?P<src>[^)'\"\s]+\.(?:png|jpe?g|webp|avif|gif)(?:[?#][^)'\"\s]*)?)['\"]?\s*\)",
+    re.IGNORECASE,
+)
+RUNTIME_RASTER_PATH_RE = re.compile(r"\.(?:png|jpe?g|webp|avif|gif)(?:[?#].*)?$", re.IGNORECASE)
+VISUAL_ASSET_MANIFEST_PATHS = (
+    "public/generated/design-system/manifest.json",
+    "design-system/generated_visual_assets.json",
 )
 DOMAIN_VISUAL_RE = re.compile(
     r"(?:<img\b|<picture\b|<video\b|<canvas\b|class(?:Name)?=['\"][^'\"]*(?:sketch|illustration|map|visual|media|figure|thumbnail|photo|image|texture|scene|sprite)[^'\"]*)",
@@ -370,6 +387,107 @@ VISUAL_SUBJECT_KEYWORDS = {
 CONTROL_MIN_WIDTH_LIMIT_PX = 240
 CONTROL_WIDTH_LIMIT_PX = 280
 
+# ── UI base rules (DS100+) ──
+# 라틴 UI 관례(Adham Dannaway, "UI design tips")를 하네스 게이트로 옮긴 기본 규칙.
+# 한글이 섞인 소스에서는 임계값과 예외가 한글 조판 기준으로 바뀐다: 행간은 더 높고,
+# 자간은 음수 쪽이며, keep-all 줄바꿈이 필수다. 라틴 전제 규칙(x-height, uppercase)은
+# 한글에서 성립하지 않으므로 그대로 옮기지 않고 자간/행간/줄바꿈 규칙으로 치환한다.
+HANGUL_RE = re.compile(r"[가-힣]")
+BODY_ELEMENT_SELECTOR_RE = re.compile(
+    r"(?:^|[,>~+\s])(?:p|body|article|blockquote|li|dd|figcaption)(?=[\s,{:.\[]|$)"
+)
+BODY_TEXT_SELECTOR_RE = re.compile(
+    r"(?:paragraph|prose|copy|description|\bdesc\b|excerpt|summary|article|content|caption|blurb|lead|body)",
+    re.IGNORECASE,
+)
+HEADING_SELECTOR_RE = re.compile(
+    r"(?:heading|headline|title|display|hero|\bh[1-6]\b)",
+    re.IGNORECASE,
+)
+# 라벨·수치·브랜드처럼 읽는 텍스트가 아닌 슬롯. 본문 조판 규칙의 대상이 아니다.
+CHROME_SELECTOR_RE = re.compile(
+    r"(?:badge|chip|\btag\b|button|\bbtn\b|\bnav\b|\btab\b|label|kpi|logo|brand|wordmark|icon|"
+    r"eyebrow|kicker|overline|meta|metric|number|\bstat\b|\bdate\b|\btime\b|ticker|count|\bcode\b|\bvalue\b)",
+    re.IGNORECASE,
+)
+CONTROL_SELECTOR_RE = re.compile(
+    r"(?:^|[-\s.#:'\"\[\]>~+,_])"
+    r"(?:input|select|textarea|button|btn|checkbox|radio|switch|toggle|field|form-control|combobox)"
+    r"(?:$|[-\s.#:'\"\[\]>~+,_{])",
+    re.IGNORECASE,
+)
+STATUS_DOT_SELECTOR_RE = re.compile(
+    r"(?:status-dot|state-dot|\bdot\b|indicator|status-light|\bled\b|marker-dot|pulse)",
+    re.IGNORECASE,
+)
+STATE_MODIFIER_RE = re.compile(
+    r"(?P<base>[.#][A-Za-z0-9_-]+?)(?:--|__|-|\.|:)(?P<state>success|ok|done|warning|warn|error|danger|fail|failed|critical|active|inactive|idle|positive|negative|\bup\b|\bdown\b)\b",
+    re.IGNORECASE,
+)
+# `[data-status="pass"]` 형태의 상태 변형. 속성 이름 자체가 상태를 선언하므로 값 어휘는
+# 제한하지 않는다. 제품마다 상태 이름이 다르고, 그걸 고정 어휘로 묶으면 규칙이 못 본다.
+STATE_ATTRIBUTE_RE = re.compile(
+    r"(?P<base>[.#][A-Za-z0-9_-]+)\[data-(?:status|state)\s*=\s*['\"](?P<state>[A-Za-z0-9_-]+)['\"]\]",
+    re.IGNORECASE,
+)
+LINE_HEIGHT_DECL_RE = re.compile(r"\bline-height\s*:\s*(?P<value>[^;}]+)", re.IGNORECASE)
+LETTER_SPACING_DECL_RE = re.compile(r"\bletter-spacing\s*:\s*(?P<value>[^;}]+)", re.IGNORECASE)
+TEXT_TRANSFORM_UPPER_RE = re.compile(r"\btext-transform\s*:\s*uppercase\b", re.IGNORECASE)
+TEXT_ALIGN_JUSTIFY_RE = re.compile(r"\btext-align\s*:\s*justify\b", re.IGNORECASE)
+WORD_BREAK_DECL_RE = re.compile(r"\bword-break\s*:\s*(?P<value>[^;}]+)", re.IGNORECASE)
+CSS_VAR_REFERENCE_RE = re.compile(r"var\(\s*(--[a-z0-9-]+)\s*\)", re.IGNORECASE)
+FONT_TOKEN_USAGE_RE = re.compile(r"var\(\s*(--ds-font-[a-z0-9-]+)", re.IGNORECASE)
+TEXT_COLOR_TOKEN_RE = re.compile(
+    r"(?<![-\w])color\s*:\s*var\(\s*(--ds-color-[a-z0-9-]+)\s*\)", re.IGNORECASE
+)
+BACKGROUND_TOKEN_RE = re.compile(
+    r"\bbackground(?:-color)?\s*:\s*var\(\s*(--ds-color-[a-z0-9-]+)\s*\)", re.IGNORECASE
+)
+BORDER_COLOR_TOKEN_RE = re.compile(
+    r"\bborder(?:-(?:top|right|bottom|left|inline|block)(?:-(?:start|end))?)?(?:-color)?\s*:"
+    r"[^;}]*?var\(\s*(--ds-color-[a-z0-9-]+)\s*\)",
+    re.IGNORECASE,
+)
+BLOCK_FONT_SIZE_RE = re.compile(
+    r"\bfont-size\s*:\s*(?P<value>[^;}]+)", re.IGNORECASE
+)
+BLOCK_FONT_WEIGHT_RE = re.compile(
+    r"\bfont-weight\s*:\s*(?P<value>[^;}]+)", re.IGNORECASE
+)
+NON_COLOR_STATE_PROPERTY_RE = re.compile(
+    r"\b(?:content|border-style|border-width|text-decoration|font-weight|transform|mask|background-image|"
+    r"box-shadow|width|height|outline-style|animation|clip-path|border-radius)\s*:",
+    re.IGNORECASE,
+)
+STYLESHEET_HREF_RE = re.compile(
+    r"""<link\b(?=[^>]*rel\s*=\s*['"]stylesheet['"])[^>]*href\s*=\s*['"](?P<href>[^'"]+)['"]""",
+    re.IGNORECASE,
+)
+# 다크 오버라이드 스코프. 어댑터마다 형태가 다르다. 하나만 인식하면 나머지 프로젝트의
+# 다크 모드가 라이트 값으로 판정되어 DS101/DS102가 조용히 틀린 답을 낸다.
+DARK_THEME_SCOPE_RE = re.compile(
+    r"(?:(?:html|:root|body)?\s*\[data-theme\s*=\s*['\"]dark['\"]\]"
+    r"|@media[^{]*prefers-color-scheme\s*:\s*dark"
+    r"|(?:html|:root|body)?\s*\.dark\b[^{]*\{)",
+    re.IGNORECASE,
+)
+
+# 본문 행간 하한. 라틴은 WCAG/가독성 관례의 1.5, 한글은 받침 때문에 자면 높이가 커서 1.6.
+BODY_LINE_HEIGHT_FLOOR = 1.5
+BODY_LINE_HEIGHT_FLOOR_HANGUL = 1.6
+# WCAG 2.1 AA: 본문 4.5:1, 큰 텍스트 3:1, 비텍스트 UI 요소 3:1.
+TEXT_CONTRAST_FLOOR = 4.5
+LARGE_TEXT_CONTRAST_FLOOR = 3.0
+NON_TEXT_CONTRAST_FLOOR = 3.0
+LARGE_TEXT_MIN_REM = 1.5
+LARGE_TEXT_BOLD_MIN_REM = 1.125
+# 이 크기 이상은 읽는 본문이 아니라 display 조판이고, 좁은 행간이 정답이다.
+# 셀렉터 이름이 아니라 블록 안의 실제 크기로 판정한다. `.thumb-copy strong`처럼
+# 이름은 본문 같지만 92px인 헤드라인을 키워드로는 계속 놓친다.
+DISPLAY_TYPE_MIN_REM = 1.75
+# 한글+라틴 2스택은 정상 구조이므로 mono와 로케일 페어링 서체는 개수에서 제외한다.
+MAX_TEXT_TYPEFACES = 2
+
 
 @dataclass
 class ImplementationIssue:
@@ -437,9 +555,246 @@ def lint_implementation(
             artifact_dir=artifact_dir,
         )
     )
+    report.issues.extend(_lint_runtime_visual_assets(file_texts, target=target))
+    report.issues.extend(
+        _lint_base_ui_rules(
+            file_texts,
+            target=target,
+            artifact_dir=artifact_dir,
+        )
+    )
     report.checked_files.sort()
     report.issues.sort(key=lambda issue: (issue.path, issue.line, issue.column, issue.code))
     return report
+
+
+def _lint_runtime_visual_assets(
+    file_texts: dict[str, str],
+    *,
+    target: Path,
+) -> list[ImplementationIssue]:
+    """Close the runtime reference -> workspace file -> integrated manifest loop."""
+    from .visual_asset_registry import validate_visual_asset_manifest
+
+    issues: list[ImplementationIssue] = []
+    manifests: list[tuple[Path, dict]] = []
+    for relative in VISUAL_ASSET_MANIFEST_PATHS:
+        manifest_path = target / relative
+        if not manifest_path.is_file():
+            continue
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+            issues.append(_issue(
+                "DS087",
+                relative,
+                1,
+                1,
+                "Visual asset manifest is unreadable; runtime images cannot be verified.",
+                str(exc),
+            ))
+            continue
+        validation = validate_visual_asset_manifest(
+            manifest_path,
+            project_dir=target,
+            strict_production=True,
+        )
+        if not validation["ok"]:
+            for error in validation["errors"]:
+                issues.append(_issue(
+                    "DS087",
+                    relative,
+                    1,
+                    1,
+                    "Visual asset manifest failed file and metadata validation.",
+                    error,
+                ))
+            continue
+        manifests.append((manifest_path, manifest))
+
+    integrated: dict[Path, tuple[str, dict]] = {}
+    for manifest_path, manifest in manifests:
+        for record in manifest.get("assets", []):
+            if not isinstance(record, dict) or record.get("status") != "integrated" or not record.get("asset_path"):
+                continue
+            resolved = (target / str(record["asset_path"])).resolve()
+            integrated[resolved] = (manifest_path.relative_to(target).as_posix(), record)
+
+    referenced_integrated: set[Path] = set()
+    for reference in _runtime_raster_references(file_texts):
+        rel_path = reference["path"]
+        raw_src = reference["src"]
+        if _unsafe_runtime_image_source(raw_src):
+            issues.append(_issue(
+                "DS089",
+                rel_path,
+                reference["line"],
+                1,
+                "Unsafe runtime image source; use a verified workspace copy, never a hotlink, data URI, or agent-local generated-image path.",
+                raw_src,
+            ))
+            continue
+        resolved = _resolve_runtime_image_path(target, rel_path, raw_src)
+        if resolved is None or not resolved.is_file():
+            issues.append(_issue(
+                "DS088",
+                rel_path,
+                reference["line"],
+                1,
+                "Runtime raster image does not resolve to an existing workspace file.",
+                raw_src,
+            ))
+            continue
+        manifest_record = integrated.get(resolved.resolve())
+        if manifest_record is None:
+            issues.append(_issue(
+                "DS088",
+                rel_path,
+                reference["line"],
+                1,
+                "Runtime raster image is not registered as an integrated visual asset.",
+                _workspace_relative(resolved, target),
+            ))
+            continue
+        referenced_integrated.add(resolved.resolve())
+        if reference["kind"] == "img" and not reference["decorative"] and not reference["alt"].strip():
+            issues.append(_issue(
+                "DS089",
+                rel_path,
+                reference["line"],
+                1,
+                "Integrated content image needs non-empty runtime alt text matching its manifest intent.",
+                raw_src,
+            ))
+
+    for path, (manifest_rel, record) in integrated.items():
+        if path not in referenced_integrated:
+            issues.append(_issue(
+                "DS088",
+                manifest_rel,
+                1,
+                1,
+                "Visual asset is marked integrated but no implementation file references its workspace copy.",
+                f"{record.get('id')}: {record.get('asset_path')}",
+            ))
+    return issues
+
+
+def _workspace_relative(path: Path, target: Path) -> str:
+    """워크스페이스 기준 경로. 밖을 가리키면 절대경로를 그대로 보여준다.
+
+    에셋이 워크스페이스 밖을 가리키는 것 자체가 보고할 값어치가 있는 사실이다.
+    여기서 예외가 나면 린터가 리포트 대신 크래시해서 아무 신호도 주지 못한다.
+    """
+    try:
+        return path.relative_to(target).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
+def find_runtime_visual_asset_references(
+    target_repo: Path,
+    asset_path: str,
+    *,
+    artifact_dir: str = "design-system",
+) -> list[dict[str, object]]:
+    """Return concrete implementation references to one project-local raster asset.
+
+    Promotion uses this read-only gate before changing an asset to ``integrated``.
+    Keeping it here ensures the CLI transition and DS088 inspect runtime source
+    with exactly the same path-resolution rules.
+    """
+    target = target_repo.resolve()
+    candidate = (target / asset_path).resolve()
+    try:
+        candidate.relative_to(target)
+    except ValueError:
+        return []
+    file_texts: dict[str, str] = {}
+    for path in _iter_candidate_files(
+        target,
+        artifact_dir=artifact_dir,
+        extensions=DEFAULT_INCLUDE_EXTENSIONS,
+    ):
+        rel = path.relative_to(target).as_posix()
+        try:
+            file_texts[rel] = path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
+    matches: list[dict[str, object]] = []
+    for reference in _runtime_raster_references(file_texts):
+        raw_src = str(reference["src"])
+        if _unsafe_runtime_image_source(raw_src):
+            continue
+        resolved = _resolve_runtime_image_path(target, str(reference["path"]), raw_src)
+        if resolved is not None and resolved.resolve() == candidate:
+            matches.append({
+                "path": reference["path"],
+                "line": reference["line"],
+                "kind": reference["kind"],
+                "source": raw_src,
+            })
+    return matches
+
+
+def _runtime_raster_references(file_texts: dict[str, str]) -> list[dict[str, object]]:
+    references: list[dict[str, object]] = []
+    for rel_path, text in file_texts.items():
+        for match in RUNTIME_IMAGE_TAG_RE.finditer(text):
+            attrs = match.group("attrs")
+            src_match = RUNTIME_IMAGE_SRC_RE.search(attrs)
+            if not src_match or not RUNTIME_RASTER_PATH_RE.search(src_match.group("src")):
+                continue
+            alt_match = RUNTIME_IMAGE_ALT_RE.search(attrs)
+            references.append({
+                "path": rel_path,
+                "src": src_match.group("src"),
+                "line": text[:match.start()].count("\n") + 1,
+                "kind": "img",
+                "alt": alt_match.group("alt") if alt_match else "",
+                "decorative": bool(RUNTIME_DECORATIVE_IMAGE_RE.search(attrs)),
+            })
+        for match in RUNTIME_CSS_IMAGE_RE.finditer(text):
+            references.append({
+                "path": rel_path,
+                "src": match.group("src"),
+                "line": text[:match.start()].count("\n") + 1,
+                "kind": "css",
+                "alt": "",
+                "decorative": True,
+            })
+    return references
+
+
+def _unsafe_runtime_image_source(value: str) -> bool:
+    lowered = value.lower()
+    return (
+        lowered.startswith(("http://", "https://", "//", "data:"))
+        or "$codex_home" in lowered
+        or ".codex/generated_images" in lowered
+    )
+
+
+def _resolve_runtime_image_path(target: Path, source_file: str, raw_src: str) -> Path | None:
+    clean = re.split(r"[?#]", raw_src, maxsplit=1)[0]
+    if not clean:
+        return None
+    if clean.startswith("/"):
+        relative = clean.lstrip("/")
+        candidates = [target / relative, target / "public" / relative]
+    else:
+        relative = clean.removeprefix("./")
+        source_parent = (target / source_file).parent
+        candidates = [source_parent / clean, target / relative, target / "public" / relative]
+    for candidate in candidates:
+        resolved = candidate.resolve()
+        try:
+            resolved.relative_to(target)
+        except ValueError:
+            continue
+        if resolved.is_file():
+            return resolved
+    return candidates[0].resolve() if candidates else None
 
 
 def format_report(report: ImplementationLintReport) -> str:
@@ -1517,3 +1872,696 @@ def _issue(
         message=message,
         snippet=raw_line.strip(),
     )
+
+
+# ──────────────────────────────────────────────
+# UI base rules (DS100+)
+# ──────────────────────────────────────────────
+#
+# 토큰 바인딩은 값이 "어디서 왔는지"만 증명한다. 여기서는 바인딩된 값이 실제로 읽히는지를
+# 판정한다. 원 규칙은 라틴 UI 관례라서 한글 표면에서는 전제가 깨지는 항목이 있다.
+# - x-height/대소문자 규칙: 한글에 해당 개념이 없으므로 자간·행간 규칙으로 치환했다.
+# - 행간 1.5: 한글은 받침 때문에 자면 높이가 커서 1.6을 하한으로 쓴다.
+# - 단일 서체: 한글+라틴 2스택은 정상 구조이므로 로케일 페어링 서체는 개수에서 뺀다.
+# 한글 표면 판정 기준은 소스 자체의 한글 검출이다(주석·생성 블록 제외).
+
+KOREAN_SURFACE_MIN_HANGUL = 20
+
+
+def _lint_base_ui_rules(
+    file_texts: dict[str, str],
+    *,
+    target: Path,
+    artifact_dir: str,
+) -> list[ImplementationIssue]:
+    if not file_texts:
+        return []
+
+    tokens = _load_ds_token_values(target, artifact_dir)
+    normalized = {
+        rel_path: _normalize_for_base_rules(raw_text)
+        for rel_path, raw_text in sorted(file_texts.items())
+    }
+    # 한글 표면 판정은 구현 단위로 한다. 한글 카피는 마크업에, 조판은 CSS에 있어서
+    # 파일 단위로 보면 정작 규칙이 필요한 스타일시트가 라틴으로 분류된다.
+    korean_paths = [rel for rel, text in normalized.items() if _is_korean_surface(text)]
+    project_korean = bool(korean_paths)
+
+    issues: list[ImplementationIssue] = []
+    state_blocks: list[tuple[str, str, str, int]] = []
+
+    for rel_path, text in normalized.items():
+        for selector, body, body_offset in _iter_css_blocks(text):
+            state_blocks.append((rel_path, selector, body, _line_of(text, body_offset)))
+            issues.extend(
+                _lint_reading_rhythm(
+                    rel_path, text, selector, body, body_offset, tokens, project_korean
+                )
+            )
+            issues.extend(
+                _lint_block_contrast(rel_path, text, selector, body, body_offset, tokens)
+            )
+            issues.extend(
+                _lint_korean_tracking(
+                    rel_path, text, selector, body, body_offset, tokens, project_korean
+                )
+            )
+
+        issues.extend(_lint_justified_text(rel_path, text))
+
+    issues.extend(_lint_color_only_state(state_blocks, normalized))
+    issues.extend(_lint_typeface_budget(normalized, project_korean, tokens))
+    issues.extend(_lint_korean_wrap(normalized, korean_paths, tokens))
+    return issues
+
+
+def _lint_reading_rhythm(
+    rel_path: str,
+    text: str,
+    selector: str,
+    body: str,
+    body_offset: int,
+    tokens: dict[str, dict[str, str]],
+    is_korean: bool,
+) -> list[ImplementationIssue]:
+    """DS100 — 본문 행간 하한."""
+    if not _is_body_text_selector(selector):
+        return []
+    if _block_is_display_scale(body, tokens["light"]):
+        return []
+    match = LINE_HEIGHT_DECL_RE.search(body)
+    if not match:
+        return []
+    value = _resolve_line_height(match.group("value"), tokens["light"])
+    if value is None:
+        return []
+    floor = BODY_LINE_HEIGHT_FLOOR_HANGUL if is_korean else BODY_LINE_HEIGHT_FLOOR
+    if value >= floor:
+        return []
+    script = "Korean" if is_korean else "Latin"
+    return [
+        _issue(
+            "DS100",
+            rel_path,
+            _line_of(text, body_offset + match.start()),
+            1,
+            f"Body line-height {value:g} is under the {floor:g} reading floor for {script} copy; "
+            "use var(--ds-leading-relaxed) for running text and keep tight leading for display type.",
+            f"{selector} {{ line-height: {match.group('value').strip()} }}",
+        )
+    ]
+
+
+def _lint_block_contrast(
+    rel_path: str,
+    text: str,
+    selector: str,
+    body: str,
+    body_offset: int,
+    tokens: dict[str, dict[str, str]],
+) -> list[ImplementationIssue]:
+    """DS101/DS102 — 같은 블록에서 확정되는 전경/배경 대비비."""
+    issues: list[ImplementationIssue] = []
+    background = BACKGROUND_TOKEN_RE.search(body)
+    if background is None:
+        return issues
+
+    foreground = TEXT_COLOR_TOKEN_RE.search(body)
+    if foreground is not None:
+        large = _is_large_text_block(body, tokens["light"])
+        floor = LARGE_TEXT_CONTRAST_FLOOR if large else TEXT_CONTRAST_FLOOR
+        failures = _contrast_failures(tokens, foreground.group(1), background.group(1), floor)
+        if failures:
+            tier = "large text" if large else "body text"
+            issues.append(
+                _issue(
+                    "DS101",
+                    rel_path,
+                    _line_of(text, body_offset + foreground.start()),
+                    1,
+                    f"Text on background falls below the WCAG {floor:g}:1 floor for {tier}; "
+                    "repoint the pair at ink/surface roles that clear the floor instead of tinting the text.",
+                    f"{selector} → {foreground.group(1)} on {background.group(1)} ({_format_failures(failures)})",
+                )
+            )
+
+    border = BORDER_COLOR_TOKEN_RE.search(body)
+    if (
+        border is not None
+        # 테두리 토큰이 배경과 같으면 채움형 컨트롤이다. 이때 식별 단서는 테두리가 아니라
+        # 페이지 배경 대비 채움색이므로, 자기 자신과의 대비를 따지는 것은 의미가 없다.
+        and border.group(1).lower() != background.group(1).lower()
+        and CONTROL_SELECTOR_RE.search(selector)
+    ):
+        failures = _contrast_failures(
+            tokens, border.group(1), background.group(1), NON_TEXT_CONTRAST_FLOOR
+        )
+        if failures:
+            issues.append(
+                _issue(
+                    "DS102",
+                    rel_path,
+                    _line_of(text, body_offset + border.start()),
+                    1,
+                    f"Control boundary falls below the WCAG {NON_TEXT_CONTRAST_FLOOR:g}:1 floor for "
+                    "non-text UI elements; bind form field and button edges to --ds-color-border-strong, "
+                    "which the runtime policy holds at the 3:1 floor, and keep --ds-color-border for decorative dividers.",
+                    f"{selector} → {border.group(1)} on {background.group(1)} ({_format_failures(failures)})",
+                )
+            )
+
+    return issues
+
+
+def _lint_korean_tracking(
+    rel_path: str,
+    text: str,
+    selector: str,
+    body: str,
+    body_offset: int,
+    tokens: dict[str, dict[str, str]],
+    is_korean: bool,
+) -> list[ImplementationIssue]:
+    """DS105 — 한글 표면의 양수 자간.
+
+    라틴 규칙의 "대문자 자제"는 한글에 대응물이 없다. 한글에서 같은 실패를 만드는 것은
+    양수 자간이다. 어절 덩어리가 풀려서 읽기 단위가 무너진다. 대상은 읽는 텍스트 슬롯으로
+    한정한다. 워드마크, 날짜, 수치, 대문자 라벨은 라틴 관례가 그대로 유효한 자리다.
+    """
+    if not is_korean:
+        return []
+    if not _is_reading_text_selector(selector):
+        return []
+    match = LETTER_SPACING_DECL_RE.search(body)
+    if match is None:
+        return []
+    tracking = _positive_tracking(match.group("value"), tokens["light"])
+    if tracking is None:
+        return []
+    if TEXT_TRANSFORM_UPPER_RE.search(body):
+        # uppercase는 한글에 아무 효과가 없다. 그 선언이 붙어 있다는 것 자체가
+        # 라틴 전용 슬롯이라는 뜻이고, 넓은 자간은 그쪽 관례로 유효하다.
+        return []
+    return [
+        _issue(
+            "DS105",
+            rel_path,
+            _line_of(text, body_offset + match.start()),
+            1,
+            "Positive letter-spacing on a Korean surface breaks 어절 grouping; keep Hangul tracking "
+            "between -0.02em and 0, and reserve wide tracking for Latin-only uppercase labels.",
+            f"{selector} {{ letter-spacing: {match.group('value').strip()} }}",
+        )
+    ]
+
+
+def _lint_justified_text(rel_path: str, text: str) -> list[ImplementationIssue]:
+    """DS107 — 양쪽 정렬."""
+    issues: list[ImplementationIssue] = []
+    for match in TEXT_ALIGN_JUSTIFY_RE.finditer(text):
+        line_start = text.rfind("\n", 0, match.start()) + 1
+        line_end = text.find("\n", match.start())
+        snippet = text[line_start : line_end if line_end != -1 else len(text)]
+        issues.append(
+            _issue(
+                "DS107",
+                rel_path,
+                _line_of(text, match.start()),
+                match.start() - line_start + 1,
+                "Justified text opens uneven word rivers and is worse in Korean, where 어절 gaps stretch; "
+                "keep running text left aligned.",
+                snippet,
+            )
+        )
+    return issues
+
+
+def _lint_color_only_state(
+    state_blocks: list[tuple[str, str, str, int]],
+    normalized: dict[str, str],
+) -> list[ImplementationIssue]:
+    """DS103 — 색만으로 구분되는 상태 표시등.
+
+    라벨이 붙은 배지는 색이 유일한 단서가 아니므로 대상이 아니다. 점/인디케이터처럼
+    글자가 없는 슬롯에서 상태 변형이 색 선언만 다를 때가 실제 실패다.
+    """
+    groups: dict[tuple[str, str], list[tuple[str, str, int]]] = {}
+    for rel_path, selector, body, line_no in state_blocks:
+        if not STATUS_DOT_SELECTOR_RE.search(selector):
+            continue
+        match = STATE_ATTRIBUTE_RE.search(selector) or STATE_MODIFIER_RE.search(selector)
+        if match is None:
+            continue
+        key = (rel_path, match.group("base").lower())
+        groups.setdefault(key, []).append((match.group("state").lower(), body, line_no))
+
+    markup = "\n".join(
+        text
+        for rel, text in normalized.items()
+        if Path(rel).suffix.lower() in UI_MARKUP_EXTENSIONS
+    )
+    issues: list[ImplementationIssue] = []
+    for (rel_path, base), variants in sorted(groups.items()):
+        states = sorted({state for state, _, _ in variants})
+        if len(states) < 2:
+            continue
+        if any(NON_COLOR_STATE_PROPERTY_RE.search(body) for _, body, _ in variants):
+            continue
+        if not all(COLOR_PROPERTY_RE.search(body) for _, body, _ in variants):
+            continue
+        if _indicator_carries_label(markup, base):
+            continue
+        issues.append(
+            _issue(
+                "DS103",
+                rel_path,
+                min(line_no for _, _, line_no in variants),
+                1,
+                "Status indicator states differ by color alone; add a shape, glyph, or text label so the "
+                "state survives color blindness and grayscale printing.",
+                f"{base} states={states}",
+            )
+        )
+    return issues
+
+
+def _indicator_carries_label(markup: str, base_selector: str) -> bool:
+    """상태 점 옆에 글자나 글리프가 있으면 색이 유일한 단서가 아니다."""
+    base = base_selector.lstrip(".#")
+    if not base:
+        return False
+    pattern = re.compile(
+        r"(?P<before>[^<>\n]{0,80})"
+        r"<(?P<tag>[a-z]+)[^>]*class(?:Name)?=['\"][^'\"]*\b" + re.escape(base) + r"\b[^'\"]*['\"][^>]*>"
+        r"(?P<inner>.*?)</(?P=tag)>"
+        r"(?P<after>[^<>\n]{0,80})",
+        re.IGNORECASE | re.DOTALL,
+    )
+    for match in pattern.finditer(markup):
+        if match.group("before").strip() or match.group("after").strip():
+            return True
+        inner = match.group("inner")
+        if inner.strip() or "<svg" in inner.lower():
+            return True
+    return False
+
+
+def _lint_typeface_budget(
+    normalized: dict[str, str],
+    project_korean: bool,
+    tokens: dict[str, dict[str, str]],
+) -> list[ImplementationIssue]:
+    """DS104 — 한 화면에서 쓰는 텍스트 서체 수.
+
+    토큰 수가 아니라 실제 서체군을 센다. display/heading/body가 모두 같은 서체로
+    해석되는 프로젝트에서 토큰만 세면 서체 1종을 3종으로 잘못 읽는다.
+
+    집계 단위는 화면이다. HTML 진입점과 그것이 링크한 스타일시트를 한 묶음으로 본다.
+    한 프로젝트 안에 독립된 목업 여러 개가 있을 때 전체를 합산하면, 각자 2종씩 쓰는
+    화면 셋을 3종 위반으로 잘못 읽는다.
+    """
+    issues: list[ImplementationIssue] = []
+    for report_path, group_text in _surface_groups(normalized):
+        used = {token.lower() for token in FONT_TOKEN_USAGE_RE.findall(group_text)}
+        used.discard("--ds-font-mono")
+        if project_korean:
+            used.discard("--ds-font-ko")
+        families = {_token_font_family(tokens["light"], token) for token in sorted(used)}
+        if len(families) <= MAX_TEXT_TYPEFACES:
+            continue
+        issues.append(
+            _issue(
+                "DS104",
+                report_path,
+                1,
+                1,
+                f"More than {MAX_TEXT_TYPEFACES} text typefaces in one surface; hierarchy should come from "
+                "size and weight, not from a third family. The Korean/Latin locale pairing does not count toward this budget.",
+                f"text_typefaces={sorted(families)}",
+            )
+        )
+    return issues
+
+
+def _surface_groups(normalized: dict[str, str]) -> list[tuple[str, str]]:
+    """화면 단위 묶음. HTML 진입점 + 그것이 링크한 로컬 스타일시트."""
+    markup_paths = sorted(
+        rel for rel in normalized if Path(rel).suffix.lower() in UI_MARKUP_EXTENSIONS
+    )
+    html_paths = [rel for rel in markup_paths if Path(rel).suffix.lower() == ".html"]
+    if not html_paths:
+        # 프레임워크 앱은 진입점이 라우터에 있고 링크 태그가 없다. 전체를 한 화면으로 본다.
+        return [(_first_report_path(normalized), "\n".join(normalized.values()))] if normalized else []
+
+    groups: list[tuple[str, str]] = []
+    for html_rel in html_paths:
+        parts = [normalized[html_rel]]
+        base = Path(html_rel).parent
+        for href in STYLESHEET_HREF_RE.findall(normalized[html_rel]):
+            if href.startswith(("http://", "https://", "//", "data:")):
+                continue
+            resolved = os.path.normpath(str(base / href.lstrip("./"))).replace("\\", "/")
+            if resolved in normalized:
+                parts.append(normalized[resolved])
+        groups.append((html_rel, "\n".join(parts)))
+    return groups
+
+
+def _token_font_family(token_values: dict[str, str], token: str) -> str:
+    """서체 토큰을 스택 첫 서체 이름으로 해석한다. 미해석 토큰은 이름 자체로 센다."""
+    stack = token_values.get(token.lower())
+    if not stack:
+        return token
+    first = stack.split(",")[0].strip().strip("\"'").strip()
+    return first.lower() or token
+
+
+def _lint_korean_wrap(
+    normalized: dict[str, str],
+    korean_paths: list[str],
+    tokens: dict[str, dict[str, str]],
+) -> list[ImplementationIssue]:
+    """DS106 — 한글 줄바꿈 계약.
+
+    `word-break: keep-all` 없이는 한글이 어절 중간에서 잘린다. 라틴 원문에는 없는
+    항목이지만 한글 기본 규칙에서는 빠질 수 없다. 리터럴과 `--ds-wrap-*` 토큰
+    바인딩을 모두 인정한다. 토큰 소비가 권장 경로인데 그것을 벌하면 안 된다.
+    """
+    if not korean_paths:
+        return []
+    combined = "\n".join(normalized.values())
+    for match in WORD_BREAK_DECL_RE.finditer(combined):
+        if _resolve_keyword(match.group("value"), tokens["light"]) == "keep-all":
+            return []
+    return [
+        _issue(
+            "DS106",
+            korean_paths[0],
+            1,
+            1,
+            "Korean copy without a keep-all wrap contract; Hangul breaks mid-어절 without "
+            "`word-break: keep-all` (pair it with `overflow-wrap: normal`, and `text-wrap: balance` on headings).",
+            f"korean_files={len(korean_paths)}",
+        )
+    ]
+
+
+def _normalize_for_base_rules(text: str) -> str:
+    """Blank managed token blocks and comments while preserving line numbering."""
+
+    def _blank(match: re.Match[str]) -> str:
+        return "\n" * match.group(0).count("\n")
+
+    managed = re.compile(
+        re.escape(DS_BLOCK_START) + r".*?" + re.escape(DS_BLOCK_END), re.DOTALL
+    )
+    out = managed.sub(_blank, text)
+    out = re.sub(r"/\*.*?\*/", _blank, out, flags=re.DOTALL)
+    out = re.sub(r"<!--.*?-->", _blank, out, flags=re.DOTALL)
+    out = re.sub(r"(?m)^\s*//.*$", "", out)
+    return out
+
+
+def _is_korean_surface(text: str) -> bool:
+    return len(HANGUL_RE.findall(text)) >= KOREAN_SURFACE_MIN_HANGUL
+
+
+def _iter_css_blocks(text: str):
+    for match in CSS_RULE_BLOCK_RE.finditer(text):
+        # 콤마로 묶인 셀렉터 그룹 전체를 한 줄로 본다. 규칙은 모두 "그룹 안에 해당
+        # 슬롯이 있는가" 판정이라 마지막 셀렉터만 보면 앞쪽 셀렉터를 놓친다.
+        selector = " ".join(match.group("selector").split())
+        if not selector:
+            continue
+        yield selector, match.group("body"), match.start("body")
+
+
+def _line_of(text: str, position: int) -> int:
+    return text.count("\n", 0, position) + 1
+
+
+def _first_report_path(file_texts: dict[str, str]) -> str:
+    ui_paths = sorted(
+        rel for rel in file_texts if Path(rel).suffix.lower() in UI_MARKUP_EXTENSIONS
+    )
+    return ui_paths[0] if ui_paths else sorted(file_texts)[0]
+
+
+def _selector_parts(selector: str) -> list[str]:
+    """콤마 그룹은 개별 셀렉터로 나눠서 본다. 하나라도 해당 슬롯이면 규칙이 걸린다."""
+    return [part.strip() for part in selector.split(",") if part.strip()]
+
+
+def _is_body_text_selector(selector: str) -> bool:
+    return any(_is_body_text_part(part) for part in _selector_parts(selector))
+
+
+def _is_body_text_part(part: str) -> bool:
+    if CHROME_SELECTOR_RE.search(part) or HEADING_SELECTOR_RE.search(part):
+        return False
+    return bool(
+        BODY_ELEMENT_SELECTOR_RE.search(f" {part}") or BODY_TEXT_SELECTOR_RE.search(part)
+    )
+
+
+def _is_reading_text_selector(selector: str) -> bool:
+    """본문 + 헤딩. 읽는 텍스트가 실제로 놓이는 슬롯만 한글 조판 규칙의 대상이다."""
+    return any(_is_reading_text_part(part) for part in _selector_parts(selector))
+
+
+def _is_reading_text_part(part: str) -> bool:
+    if CHROME_SELECTOR_RE.search(part):
+        return False
+    return bool(
+        HEADING_SELECTOR_RE.search(part)
+        or BODY_ELEMENT_SELECTOR_RE.search(f" {part}")
+        or BODY_TEXT_SELECTOR_RE.search(part)
+    )
+
+
+def _resolve_line_height(raw: str, token_values: dict[str, str], depth: int = 4) -> float | None:
+    value = raw.strip().rstrip(";").strip()
+    if not value:
+        return None
+    var_match = re.fullmatch(r"var\(\s*(--[a-z0-9-]+)\s*\)", value, re.IGNORECASE)
+    if var_match:
+        if depth <= 0:
+            return None
+        referenced = token_values.get(var_match.group(1).lower())
+        if referenced is None:
+            return None
+        return _resolve_line_height(referenced, token_values, depth - 1)
+    if value.endswith("%"):
+        try:
+            return float(value[:-1]) / 100
+        except ValueError:
+            return None
+    try:
+        return float(value)
+    except ValueError:
+        return None
+
+
+def _resolve_keyword(raw: str, token_values: dict[str, str], depth: int = 4) -> str:
+    """CSS 키워드 값을 토큰 참조까지 풀어서 소문자로 돌려준다."""
+    value = raw.strip().rstrip(";").strip()
+    match = CSS_VAR_REFERENCE_RE.fullmatch(value)
+    if match is None:
+        return value.lower()
+    if depth <= 0:
+        return ""
+    referenced = token_values.get(match.group(1).lower())
+    return _resolve_keyword(referenced, token_values, depth - 1) if referenced else ""
+
+
+def _positive_tracking(raw: str, token_values: dict[str, str], depth: int = 4) -> float | None:
+    value = raw.strip().rstrip(";").strip().lower()
+    var_match = CSS_VAR_REFERENCE_RE.fullmatch(value)
+    if var_match is not None:
+        if depth <= 0:
+            return None
+        referenced = token_values.get(var_match.group(1).lower())
+        return (
+            _positive_tracking(referenced, token_values, depth - 1)
+            if referenced
+            else None
+        )
+    match = re.fullmatch(r"(-?\d*\.?\d+)(em|rem|px)?", value)
+    if not match:
+        return None
+    try:
+        amount = float(match.group(1))
+    except ValueError:
+        return None
+    return amount if amount > 0 else None
+
+
+def _is_large_text_block(body: str, token_values: dict[str, str]) -> bool:
+    size_match = BLOCK_FONT_SIZE_RE.search(body)
+    if size_match is None:
+        return False
+    size_rem = _resolve_font_size_rem(size_match.group("value"), token_values)
+    if size_rem is None:
+        return False
+    if size_rem >= LARGE_TEXT_MIN_REM:
+        return True
+    weight_match = BLOCK_FONT_WEIGHT_RE.search(body)
+    weight_value = (weight_match.group("value").strip().rstrip(";").strip().lower()
+                    if weight_match else "")
+    bold = weight_value in {"bold", "bolder"} or (
+        weight_value.isdigit() and int(weight_value) >= 700
+    )
+    return bold and size_rem >= LARGE_TEXT_BOLD_MIN_REM
+
+
+def _resolve_font_size_rem(raw: str, token_values: dict[str, str], depth: int = 4) -> float | None:
+    value = raw.strip().rstrip(";").strip()
+    var_match = re.fullmatch(r"var\(\s*(--[a-z0-9-]+)\s*\)", value, re.IGNORECASE)
+    if var_match:
+        if depth <= 0:
+            return None
+        referenced = token_values.get(var_match.group(1).lower())
+        if referenced is None:
+            return None
+        return _resolve_font_size_rem(referenced, token_values, depth - 1)
+    match = re.fullmatch(r"(\d*\.?\d+)(rem|em|px)", value, re.IGNORECASE)
+    if not match:
+        return None
+    amount = float(match.group(1))
+    return amount / 16 if match.group(2).lower() == "px" else amount
+
+
+def _block_is_display_scale(body: str, token_values: dict[str, str]) -> bool:
+    """블록이 display 크기로 조판되는가.
+
+    `clamp()`/`min()`/`max()`는 가장 작은 길이를 기준으로 본다. 그 값이 이미 display
+    스케일이면 어떤 뷰포트에서도 본문이 아니다.
+    """
+    match = BLOCK_FONT_SIZE_RE.search(body)
+    if match is None:
+        return False
+    raw = match.group("value")
+    sizes = [
+        size
+        for size in (
+            _resolve_font_size_rem(candidate, token_values)
+            for candidate in re.findall(r"var\(\s*--[a-z0-9-]+\s*\)|[\d.]+(?:rem|em|px)", raw, re.IGNORECASE)
+        )
+        if size is not None
+    ]
+    if not sizes:
+        return False
+    return min(sizes) >= DISPLAY_TYPE_MIN_REM
+
+
+def _contrast_failures(
+    tokens: dict[str, dict[str, str]],
+    foreground_token: str,
+    background_token: str,
+    floor: float,
+) -> list[tuple[str, float]]:
+    failures: list[tuple[str, float]] = []
+    for mode in ("light", "dark"):
+        ratio = _token_contrast(tokens[mode], foreground_token, background_token)
+        if ratio is not None and ratio < floor:
+            failures.append((mode, ratio))
+    return failures
+
+
+def _format_failures(failures: list[tuple[str, float]]) -> str:
+    return ", ".join(f"{mode}={ratio:.2f}:1" for mode, ratio in failures)
+
+
+def _token_contrast(
+    token_values: dict[str, str],
+    foreground_token: str,
+    background_token: str,
+) -> float | None:
+    foreground = _token_hex(token_values, foreground_token)
+    background = _token_hex(token_values, background_token)
+    if foreground is None or background is None:
+        return None
+    return _wcag_contrast(foreground, background)
+
+
+def _token_hex(token_values: dict[str, str], token: str) -> tuple[int, int, int] | None:
+    value = token_values.get(token.lower())
+    if not value:
+        return None
+    return _parse_hex_color(value)
+
+
+def _parse_hex_color(value: str) -> tuple[int, int, int] | None:
+    match = re.fullmatch(r"#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})", value.strip())
+    if not match:
+        return None
+    digits = match.group(1)
+    if len(digits) == 3:
+        digits = "".join(char * 2 for char in digits)
+    return int(digits[0:2], 16), int(digits[2:4], 16), int(digits[4:6], 16)
+
+
+def _wcag_contrast(foreground: tuple[int, int, int], background: tuple[int, int, int]) -> float:
+    lighter = max(_relative_luminance(foreground), _relative_luminance(background))
+    darker = min(_relative_luminance(foreground), _relative_luminance(background))
+    return (lighter + 0.05) / (darker + 0.05)
+
+
+def _relative_luminance(rgb: tuple[int, int, int]) -> float:
+    def _channel(value: int) -> float:
+        normalized = value / 255.0
+        return (
+            normalized / 12.92
+            if normalized <= 0.03928
+            else ((normalized + 0.055) / 1.055) ** 2.4
+        )
+
+    red, green, blue = rgb
+    return 0.2126 * _channel(red) + 0.7152 * _channel(green) + 0.0722 * _channel(blue)
+
+
+def _load_ds_token_values(target: Path, artifact_dir: str) -> dict[str, dict[str, str]]:
+    """Read the installed tokens.css so lint can judge the resolved values."""
+    empty: dict[str, dict[str, str]] = {"light": {}, "dark": {}}
+    tokens_path = target / artifact_dir / "tokens.css"
+    if not tokens_path.is_file():
+        return empty
+    try:
+        text = tokens_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return empty
+
+    dark_marker = DARK_THEME_SCOPE_RE.search(text)
+    light_text = text[: dark_marker.start()] if dark_marker else text
+    dark_text = text[dark_marker.start() :] if dark_marker else ""
+
+    light = _collect_custom_properties(light_text)
+    dark = dict(light)
+    dark.update(_collect_custom_properties(dark_text))
+    return {"light": _resolve_var_chain(light), "dark": _resolve_var_chain(dark)}
+
+
+def _collect_custom_properties(text: str) -> dict[str, str]:
+    values: dict[str, str] = {}
+    for match in CUSTOM_PROPERTY_RE.finditer(text):
+        raw = match.group("value").split("}")[0].strip().rstrip(";").strip()
+        if raw:
+            values[match.group("name").lower()] = raw
+    return values
+
+
+def _resolve_var_chain(values: dict[str, str], depth: int = 4) -> dict[str, str]:
+    resolved = dict(values)
+    for _ in range(depth):
+        changed = False
+        for name, value in list(resolved.items()):
+            match = re.fullmatch(r"var\(\s*(--[a-z0-9-]+)\s*\)", value, re.IGNORECASE)
+            if match is None:
+                continue
+            referenced = resolved.get(match.group(1).lower())
+            if referenced and referenced != value:
+                resolved[name] = referenced
+                changed = True
+        if not changed:
+            break
+    return resolved

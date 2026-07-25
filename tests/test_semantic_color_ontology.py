@@ -94,7 +94,8 @@ def test_semantic_color_selection_searches_ontology_for_app_brief():
         strategy={"candidate_count": 3},
     )
 
-    assert selection["selection_method"] == "ontology-search-per-run"
+    assert selection["selection_method"] == "semantic-os-markdown-search-per-run"
+    assert selection["source"]["authority"] == "semantic-os-synced-markdown"
     assert selection["matched_pattern"]["id"] == "pattern-brief-palette-manga-magazine-pop-editorial"
     assert len(selection["candidate_palettes"]) >= 5
     active_roles = selection["active_palette"]["roles"]
@@ -117,8 +118,12 @@ def test_semantic_color_reference_can_run_without_manual_color_file():
         {"palette_strategy": {"candidate_count": 2}},
     )
 
-    assert resolved["selection_mode"] == "semantic-ontology"
-    assert resolved["semantic_color_selection"]["selection_method"] == "ontology-search-per-run"
+    assert resolved["selection_mode"] == "semantic-os-markdown"
+    assert resolved["source_path"].endswith("docs/color-reference.md")
+    assert (
+        resolved["semantic_color_selection"]["selection_method"]
+        == "semantic-os-markdown-search-per-run"
+    )
     assert len(resolved["semantic_color_selection"]["candidate_palettes"]) >= 5
     assert len(resolved["palette_roles"]) == 5
     assert resolved["active_palette"]["candidate_id"].startswith("ontology-")
@@ -137,7 +142,7 @@ def test_token_schema_and_spec_surface_semantic_color_ontology():
     assert semantic["node_count"] >= 137
     assert any(item["name"] == "Navy Blue" for item in semantic["matched_keywords"])
     assert any("palette tables" in rule for rule in semantic["rules"])
-    assert selection["selection_method"] == "ontology-search-per-run"
+    assert selection["selection_method"] == "semantic-os-markdown-search-per-run"
     assert len(selection["candidate_palettes"]) >= 5
 
     spec = build_system_spec_markdown(

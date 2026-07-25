@@ -1,0 +1,63 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "semantic-color-authority-improvement-2026-07-13-001",
+  "created_at": "2026-07-13T22:56:17+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "ontology-compiler",
+  "to_role": "team-lead",
+  "stage": "system",
+  "status": "ready",
+  "summary": "Repository-level handoff validation now preserves immutable historical digests while checking current content only against the latest handoff occurrence for each canonical artifact path.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/color-authority-to-handoff-validator.json",
+      "sha256": "ff14dfd2aea710be0ad7d3c4a25e5e5b564583e53e290a645a60ce539a679d86"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "design_ontology_harness/agent_team.py",
+      "sha256": "58da4a86cfe9b7d4de0aa0e4e0824795b3ea5fa722d7d959d07f751b99fe8125"
+    },
+    {
+      "path": "tests/test_agent_team.py",
+      "sha256": "6e917b194a684cd7b330045f2dc2f9900af6858287b2a80b5e563827991069ff"
+    }
+  ],
+  "changed_paths": [
+    "design_ontology_harness/agent_team.py",
+    "tests/test_agent_team.py",
+    "agent-team/handoffs/handoff-validator-to-team-lead.json"
+  ],
+  "decisions": [
+    "Canonical repository-relative artifact paths define supersession identity across runs.",
+    "Latest occurrence order is created_at, then handoff path, then artifact occurrence order so timestamp ties are deterministic and output evidence can supersede input evidence in one handoff.",
+    "Historical records retain structural, digest-format, and repository path-safety validation without mutable worktree digest comparison.",
+    "Direct validate_handoff_payload calls with target_repo retain strict current-file existence and SHA checks."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run pytest tests/test_agent_team.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "18 passed, 2 subtests passed in 0.13s"
+    },
+    {
+      "command": "uv run pytest tests/test_agent_team.py tests/test_agent_packs.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "23 passed, 2 subtests passed in 0.15s"
+    },
+    {
+      "command": "uv run ruff check design_ontology_harness/agent_team.py tests/test_agent_team.py",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "All checks passed."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "The shared repository validator can remain red until concurrently edited color artifacts receive their own newer completion handoff."
+  ],
+  "next_action": "Team Lead reruns the shared agent-team validator after the Token Curator publishes the newer color-artifact handoff."
+}

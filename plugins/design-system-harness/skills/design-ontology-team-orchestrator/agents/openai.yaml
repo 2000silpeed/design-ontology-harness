@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Ontology Team"
+  short_description: "Coordinate a verified design-system agent team"
+  default_prompt: "Use $design-ontology-team-orchestrator to run the next incomplete harness stage."

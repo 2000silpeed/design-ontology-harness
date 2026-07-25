@@ -1,0 +1,57 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "semantic-color-authority-improvement-2026-07-13-001",
+  "created_at": "2026-07-13T22:57:58+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "team-lead",
+  "to_role": "ontology-compiler",
+  "stage": "system",
+  "status": "needs-work",
+  "summary": "Remove the final application contrast-audit Paper/Ink HEX literals so graph generation consumes the typed runtime color policy authority.",
+  "input_artifacts": [
+    {
+      "path": "design_ontology_harness/graph_builders.py",
+      "sha256": "816c0ef728b2d383e8a51bd7f2a6d9e0123dc43ecd50ab352a19dd138c353e4a"
+    },
+    {
+      "path": "tests/test_graph_builders.py",
+      "sha256": "772deba7cd8ee54514133c79904aacd4429bc383ebe2b00165c05056baee8dc0"
+    },
+    {
+      "path": "agent-team/handoffs/handoff-validator-to-team-lead.json",
+      "sha256": "ddc30d1156e0ef3d0d9940495638f038ed31f65ad03dec8b1fed7eb6f6cf6862"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "design_ontology_harness/graph_builders.py",
+      "sha256": "816c0ef728b2d383e8a51bd7f2a6d9e0123dc43ecd50ab352a19dd138c353e4a"
+    },
+    {
+      "path": "tests/test_graph_builders.py",
+      "sha256": "772deba7cd8ee54514133c79904aacd4429bc383ebe2b00165c05056baee8dc0"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/color-policy-to-contrast-graph.json"
+  ],
+  "decisions": [
+    "Use runtime policy surface and ink roles for the automatic contrast baselines.",
+    "Preserve explicit project palette colors and all contrast edge semantics.",
+    "Treat the plugin manifest brandColor as packaging metadata, not an application UI runtime role."
+  ],
+  "gate_results": [
+    {
+      "command": "rg package runtime HEX literal audit",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "graph_builders.py still contains #FFFFFF and #111111 as automatic application contrast baselines outside the Markdown runtime policy."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "The graph file already contains user-owned changes; limit edits to the contrast baseline and a focused regression test.",
+    "Changing baseline labels or IDs would cause avoidable graph churn, so keep Paper and Ink node identities stable."
+  ],
+  "next_action": "Ontology Compiler imports the runtime policy value accessor, replaces only the two baseline literals, adds a focused graph test, runs graph and color regressions, and returns a completion handoff."
+}

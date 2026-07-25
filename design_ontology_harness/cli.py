@@ -7,6 +7,7 @@ from copy import deepcopy
 from pathlib import Path
 
 from .agent_packs import scaffold_agent_pack
+from .agent_team import validate_agent_team
 from .benchmark_kb import get_benchmark_systems, get_benchmark_by_keywords, save_benchmark_report
 from .component_specs import generate_component_specs, write_component_specs
 from .css_pipeline import run_and_save as run_css_extraction
@@ -53,6 +54,11 @@ from .reference_packs import (
     sync_reference_pack_sources,
 )
 from .spec_analyzer import analyze_spec_file, build_component_list, detected_to_primitives
+from .semantic_color_markdown import (
+    DEFAULT_COLOR_REFERENCE_PATH,
+    DEFAULT_ONTOLOGY_SNAPSHOT_PATH,
+    DEFAULT_SEMANTIC_OS_SOURCE,
+)
 from .synthesis import build_blueprint, load_brand_profile
 from .utils import ensure_dir, write_json, write_jsonl
 from .visual_queries import generate_visual_queries
@@ -103,6 +109,32 @@ def build_parser() -> argparse.ArgumentParser:
     init_parser.add_argument("--kb-dir", default=None, help="Optional default knowledge base path to store in the project manifest")
     init_parser.add_argument("--force", action="store_true", help="Allow writing into a non-empty directory")
 
+    color_sync_parser = subparsers.add_parser(
+        "sync-semantic-colors",
+        help="Migrate the Semantic OS color graph into color-reference.md",
+    )
+    color_sync_parser.add_argument(
+        "--source",
+        default=str(DEFAULT_SEMANTIC_OS_SOURCE),
+        help="Semantic OS domains/color/ontology/build/graph.json",
+    )
+    color_sync_parser.add_argument(
+        "--color-reference-output",
+        default=str(DEFAULT_COLOR_REFERENCE_PATH),
+        help="Markdown authority to update",
+    )
+    color_sync_parser.add_argument(
+        "--ontology-output",
+        default=str(DEFAULT_ONTOLOGY_SNAPSHOT_PATH),
+        help="Compatibility transport snapshot to update; pass an empty string to skip",
+    )
+    color_sync_parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Exit non-zero when the Markdown or compatibility snapshot is stale",
+    )
+    color_sync_parser.add_argument("--json", action="store_true", help="Emit JSON output")
+
     agent_pack_parser = subparsers.add_parser("init-agent-pack", help="Scaffold Codex and/or Claude Code integrations into an implementation repo")
     agent_pack_parser.add_argument("--target-repo", required=True, help="Implementation repository path")
     agent_pack_parser.add_argument("--artifact-dir", default="design-system", help="Directory inside the target repo where synced design-system artifacts live")
@@ -112,6 +144,15 @@ def build_parser() -> argparse.ArgumentParser:
         help="Comma-separated targets: codex, claude, or both",
     )
     agent_pack_parser.add_argument("--force", action="store_true", help="Overwrite existing integration files")
+
+    agent_team_validate_parser = subparsers.add_parser(
+        "validate-agent-team",
+        help="Validate the shared Codex/Claude Code team contract and runtime adapters",
+    )
+    agent_team_validate_parser.add_argument("--target-repo", required=True, help="Implementation repository path")
+    agent_team_validate_parser.add_argument("--artifact-dir", default="design-system", help="Shared design-system artifact directory")
+    agent_team_validate_parser.add_argument("--targets", default="codex,claude", help="Comma-separated runtimes to validate")
+    agent_team_validate_parser.add_argument("--json", action="store_true", help="Emit JSON output")
 
     seed_parser = subparsers.add_parser("extract-seed", help="Only extract references")
     seed_parser.add_argument("--seed-url", required=True, help="Seed URL. Can be a curated article or a direct design-system URL.")
@@ -319,6 +360,65 @@ def build_parser() -> argparse.ArgumentParser:
     comp_parser.add_argument("--project-dir", required=True, help="Project directory with brand_profile.json")
     comp_parser.add_argument("--kb-dir", default=None, help="Optional override for the knowledge base path")
 
+    image_prompt_parser = subparsers.add_parser(
+        "build-image-prompts",
+        help="Build Codex/GPT image-generation prompt packets from synthesized visual asset slots",
+    )
+    image_prompt_parser.add_argument("--project-dir", required=True, help="Project directory created by init")
+    image_prompt_parser.add_argument("--output-dir", default=None, help="Optional output directory")
+    image_prompt_parser.add_argument("--candidates-per-slot", type=int, default=3, choices=range(1, 5))
+    image_prompt_parser.add_argument("--json", action="store_true", help="Emit JSON summary")
+
+    register_image_parser = subparsers.add_parser(
+        "register-image-asset",
+        help="Validate and register a generated image against a planned visual asset slot",
+    )
+    register_image_parser.add_argument("--project-dir", required=True, help="Project directory created by init")
+    register_image_parser.add_argument("--asset-id", required=True, help="Planned visual asset id")
+    register_image_parser.add_argument("--source", required=True, help="Generated PNG, JPEG, or WebP file")
+    register_image_parser.add_argument("--alt-text", required=True, help="Meaningful accessibility text")
+    register_image_parser.add_argument("--selection-reason", required=True, help="Why this candidate was selected")
+    register_image_parser.add_argument("--reviewed-criterion", action="append", required=True, help="Review criterion this candidate passed; repeat as needed")
+    register_image_parser.add_argument("--label", default=None, help="Optional human-readable asset label")
+    register_image_parser.add_argument("--intended-for", action="append", default=None, help="Component ontology id; repeat as needed")
+    register_image_parser.add_argument("--original-png-path", default=None, help="Optional original Codex/GPT image output path")
+    register_image_parser.add_argument("--session-id", required=True, help="Codex/GPT image generation session id")
+    register_image_parser.add_argument("--manifest", default=None, help="Optional manifest path override")
+    register_image_parser.add_argument("--json", action="store_true", help="Emit JSON summary")
+
+    promote_image_parser = subparsers.add_parser(
+        "promote-image-asset",
+        help="Promote a reviewed accepted image to integrated after wiring its component targets",
+    )
+    promote_image_parser.add_argument("--project-dir", required=True, help="Project directory containing the workspace asset")
+    promote_image_parser.add_argument("--asset-id", required=True, help="Accepted visual asset id")
+    promote_image_parser.add_argument("--intended-for", action="append", default=None, help="Component ontology id; repeat as needed")
+    promote_image_parser.add_argument("--manifest", default=None, help="Optional manifest path override")
+    promote_image_parser.add_argument("--json", action="store_true", help="Emit JSON summary")
+
+    validate_image_parser = subparsers.add_parser(
+        "validate-image-assets",
+        help="Validate visual asset manifest metadata, files, dimensions, and hashes",
+    )
+    validate_image_parser.add_argument("--project-dir", required=True, help="Implementation or harness project directory")
+    validate_image_parser.add_argument("--manifest", default=None, help="Optional manifest path override")
+    validate_image_parser.add_argument("--require-integrated", action="store_true", help="Fail unless at least one asset is integrated")
+    validate_image_parser.add_argument("--json", action="store_true", help="Emit JSON report")
+
+    validate_component_parser = subparsers.add_parser(
+        "validate-component-contracts",
+        help="Validate component-level anatomy, domain states, structured contracts, and emitted token references",
+    )
+    validate_component_parser.add_argument("--project-dir", required=True, help="Harness project directory")
+    validate_component_parser.add_argument("--specs", default=None, help="Optional component_specs.json path")
+    validate_component_parser.add_argument("--tokens", default=None, help="Optional emitted tokens.css path")
+    validate_component_parser.add_argument(
+        "--allow-needs-authoring",
+        action="store_true",
+        help="Report incomplete authored contracts as warnings instead of blocking",
+    )
+    validate_component_parser.add_argument("--json", action="store_true", help="Emit JSON report")
+
     bench_parser = subparsers.add_parser("benchmark", help="Show benchmark references matching brand keywords")
     bench_parser.add_argument(
         "--keywords",
@@ -486,6 +586,22 @@ def build_parser() -> argparse.ArgumentParser:
         help="Command to run only after the aesthetic gate passes",
     )
 
+    apply_review_parser = subparsers.add_parser(
+        "apply-aesthetic-review",
+        help="Merge a hashed multimodal review artifact into a screenshot candidate as iteration 2",
+    )
+    apply_review_parser.add_argument("--candidate", required=True, help="Base aesthetic candidate JSON")
+    apply_review_parser.add_argument(
+        "--review-artifact",
+        required=True,
+        help="production-ui-review-artifact/v1 JSON",
+    )
+    apply_review_parser.add_argument("--output", required=True, help="Output path for the two-iteration candidate")
+    apply_review_parser.add_argument("--reviewer", required=True, help="Reviewer or review agent identity")
+    apply_review_parser.add_argument("--model", required=True, help="Multimodal model identity")
+    apply_review_parser.add_argument("--method", required=True, help="Structured visual review method")
+    apply_review_parser.add_argument("--json", action="store_true", help="Emit the merged candidate JSON")
+
     score_screenshot_parser = subparsers.add_parser(
         "score-screenshot",
         help="Generate aesthetic-loop candidate metrics from screenshot image files",
@@ -507,6 +623,58 @@ def build_parser() -> argparse.ArgumentParser:
     score_screenshot_parser.add_argument("--threshold", type=float, default=0.82)
     score_screenshot_parser.add_argument("--min-dimension-score", type=float, default=0.70)
     score_screenshot_parser.add_argument("--max-iterations", type=int, default=3)
+
+    screenshot_evidence_parser = subparsers.add_parser(
+        "record-screenshot-evidence",
+        help="Record route/state/theme/viewport screenshot evidence for production verification",
+    )
+    screenshot_evidence_parser.add_argument("--project-dir", required=True, help="Harness project directory")
+    screenshot_evidence_parser.add_argument("--target-repo", default=None, help="Implementation repository; defaults to project-dir")
+    screenshot_evidence_parser.add_argument("--screenshot", required=True, help="Screenshot PNG/JPEG/WebP path")
+    screenshot_evidence_parser.add_argument("--route", required=True, help="Application route or screen id")
+    screenshot_evidence_parser.add_argument("--state", required=True, help="Visible product state or scenario")
+    screenshot_evidence_parser.add_argument("--theme", required=True, choices=["light", "dark"])
+    screenshot_evidence_parser.add_argument("--implementation-sha", required=True, help="Git commit or immutable implementation revision")
+    screenshot_evidence_parser.add_argument("--manifest", default=None, help="Optional screenshot manifest path")
+    screenshot_evidence_parser.add_argument("--required-theme", action="append", choices=["light", "dark"], default=None)
+    screenshot_evidence_parser.add_argument("--json", action="store_true", help="Emit JSON entry")
+
+    reference_fidelity_parser = subparsers.add_parser(
+        "reference-fidelity-loop",
+        help="Evaluate paired approved-reference reviews and emit a blocking correction loop",
+    )
+    reference_fidelity_parser.add_argument("--project-dir", required=True, help="Harness project directory")
+    reference_fidelity_parser.add_argument("--target-repo", default=None, help="Implementation repository; defaults to project-dir")
+    reference_fidelity_parser.add_argument("--contract", default=None, help="Optional reference-fidelity-contract/v1 path")
+    reference_fidelity_parser.add_argument("--screenshot-manifest", default=None, help="Optional validated screenshot manifest")
+    reference_fidelity_parser.add_argument(
+        "--review-artifact",
+        action="append",
+        dest="reference_fidelity_reviews",
+        required=True,
+        help="Paired reference-fidelity-review-artifact/v1 JSON; repeat in iteration order",
+    )
+    reference_fidelity_parser.add_argument("--output", default=None, help="Optional loop report output path")
+    reference_fidelity_parser.add_argument("--json", action="store_true", help="Emit the complete loop report")
+
+    verify_production_parser = subparsers.add_parser(
+        "verify-production-ui",
+        help="Run the blocking component, implementation, screenshot, aesthetic, and style-divergence release gate",
+    )
+    verify_production_parser.add_argument("--project-dir", required=True, help="Harness project directory")
+    verify_production_parser.add_argument("--target-repo", default=None, help="Implementation repository; defaults to project-dir")
+    verify_production_parser.add_argument("--screenshot-manifest", default=None, help="Optional screenshot evidence manifest")
+    verify_production_parser.add_argument("--aesthetic-report", default=None, help="Optional aesthetic loop report")
+    verify_production_parser.add_argument("--reference-fidelity-contract", default=None, help="Optional approved-reference fidelity contract")
+    verify_production_parser.add_argument("--reference-fidelity-report", default=None, help="Optional paired reference fidelity loop report")
+    verify_production_parser.add_argument(
+        "--browser-evidence-bundle",
+        default=None,
+        help="Optional versioned Codex Desktop browser evidence bundle",
+    )
+    verify_production_parser.add_argument("--registry", default="registry/style_fingerprints.json", help="Style fingerprint registry")
+    verify_production_parser.add_argument("--artifact-dir", default="design-system", help="Installed design-system artifact directory")
+    verify_production_parser.add_argument("--json", action="store_true", help="Emit JSON report")
 
     rebuild_parser = subparsers.add_parser(
         "rebuild-all-presets",
@@ -777,10 +945,60 @@ def _component_specs_source_from_inventory(component_list: list[dict], component
     ]
 
 
+def _write_component_contract_validation(
+    *,
+    project_dir: Path,
+    output_dir: Path,
+    specs_data: dict,
+    strict_authored: bool,
+) -> tuple[Path, dict]:
+    from .component_contracts import validate_component_contracts
+    from .token_emitter import emit_project_tokens
+
+    tokens_path = emit_project_tokens(project_dir)
+    report = validate_component_contracts(
+        specs_data,
+        token_css=tokens_path.read_text(encoding="utf-8"),
+        strict_authored=strict_authored,
+    )
+    validation_path = output_dir / "components" / "component_contract_validation.json"
+    write_json(validation_path, report)
+    return tokens_path, report
+
+
 def main() -> None:
     args = build_parser().parse_args()
     raw_output = getattr(args, "output_dir", None)
     output_dir = ensure_dir(Path(raw_output)) if raw_output else None
+
+    if args.command == "sync-semantic-colors":
+        from .semantic_color_markdown import sync_semantic_colors
+
+        try:
+            result = sync_semantic_colors(
+                source_path=Path(args.source),
+                color_reference_output=Path(args.color_reference_output),
+                ontology_output=Path(args.ontology_output) if args.ontology_output else None,
+                check=args.check,
+            )
+        except (FileNotFoundError, ValueError, json.JSONDecodeError) as exc:
+            raise SystemExit(str(exc)) from exc
+        if args.json:
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            verdict = "CURRENT" if result["ok"] else "STALE"
+            action = "검사" if args.check else "동기화"
+            print(
+                f"[sync-semantic-colors] {action} {verdict}: "
+                f"{result['node_count']} nodes / {result['edge_count']} edges / "
+                f"{result['hex_keyword_count']} HEX keywords"
+            )
+            print(f"  -> {result['color_reference_output']}")
+            if result["ontology_output"]:
+                print(f"  -> {result['ontology_output']} (호환 스냅샷)")
+        if args.check and not result["ok"]:
+            raise SystemExit(1)
+        return
 
     if args.command == "build-preset":
         color_modes = [m.strip() for m in args.color_modes.split(",") if m.strip()]
@@ -939,6 +1157,38 @@ def main() -> None:
             raise SystemExit(1)
         return
 
+    if args.command == "apply-aesthetic-review":
+        from .aesthetic_loop import apply_aesthetic_review, load_json
+
+        candidate_path = Path(args.candidate).resolve()
+        review_artifact_path = Path(args.review_artifact).resolve()
+        output_path = Path(args.output).resolve()
+        try:
+            merged = apply_aesthetic_review(
+                load_json(candidate_path),
+                load_json(review_artifact_path),
+                review_artifact_path=review_artifact_path,
+                reviewer=args.reviewer,
+                model=args.model,
+                method=args.method,
+                candidate_path=candidate_path,
+            )
+        except (FileNotFoundError, ValueError, json.JSONDecodeError) as exc:
+            raise SystemExit(str(exc)) from exc
+        ensure_dir(output_path.parent)
+        write_json(output_path, merged)
+        if args.json:
+            print(json.dumps(merged, ensure_ascii=False, indent=2))
+        else:
+            findings = merged["iterations"][1]["applied_review"]["artifact"]
+            print(
+                "[apply-aesthetic-review] iteration-2 created: "
+                f"{len(merged['iterations'][1]['metrics'])} total metrics"
+            )
+            print(f"  -> artifact: {findings['path']} ({findings['sha256'][:12]})")
+            print(f"  -> {output_path}")
+        return
+
     if args.command == "aesthetic-loop":
         import shlex
         import subprocess
@@ -1064,6 +1314,152 @@ def main() -> None:
             print(format_loop_report(report))
             if not report["ready_to_execute"]:
                 raise SystemExit(1)
+        return
+
+    if args.command == "record-screenshot-evidence":
+        from .production_verifier import record_screenshot_evidence
+
+        project_dir = Path(args.project_dir).resolve()
+        target_repo = Path(args.target_repo).resolve() if args.target_repo else project_dir
+        manifest_path = (
+            Path(args.manifest).resolve()
+            if args.manifest
+            else project_dir / "build" / "system" / "production" / "screenshots.json"
+        )
+        entry = record_screenshot_evidence(
+            manifest_path=manifest_path,
+            project=project_dir.name,
+            target_repo=target_repo,
+            screenshot_path=Path(args.screenshot),
+            route=args.route,
+            state=args.state,
+            theme=args.theme,
+            implementation_sha=args.implementation_sha,
+            required_themes=args.required_theme,
+        )
+        if args.json:
+            print(json.dumps(entry, ensure_ascii=False, indent=2))
+        else:
+            viewport = entry["viewport"]
+            print(
+                f"[record-screenshot-evidence] {entry['theme']} {viewport['width']}x{viewport['height']} "
+                f"{entry['route']} / {entry['state']}"
+            )
+            print(f"  -> {manifest_path}")
+        return
+
+    if args.command == "reference-fidelity-loop":
+        from .production_verifier import _runtime_implementation_tree, validate_screenshot_manifest
+        from .reference_fidelity import (
+            DEFAULT_CONTRACT_PATH,
+            DEFAULT_REPORT_PATH,
+            run_reference_fidelity_loop,
+        )
+
+        project_dir = Path(args.project_dir).resolve()
+        target_repo = Path(args.target_repo).resolve() if args.target_repo else project_dir
+        contract_path = (
+            Path(args.contract).resolve()
+            if args.contract
+            else project_dir / DEFAULT_CONTRACT_PATH
+        )
+        screenshot_manifest = (
+            Path(args.screenshot_manifest).resolve()
+            if args.screenshot_manifest
+            else project_dir / "build" / "system" / "production" / "screenshots.json"
+        )
+        screenshot_report = validate_screenshot_manifest(
+            screenshot_manifest,
+            project=project_dir.name,
+            target_repo=target_repo,
+        )
+        if not screenshot_report["ok"]:
+            raise SystemExit(
+                "Reference fidelity requires a valid current screenshot manifest: "
+                + "; ".join(screenshot_report["errors"])
+            )
+        implementation_tree = _runtime_implementation_tree(target_repo)
+        report = run_reference_fidelity_loop(
+            contract_path=contract_path,
+            review_artifact_paths=[Path(path).resolve() for path in args.reference_fidelity_reviews],
+            project_dir=project_dir,
+            expected_screenshot_sha256={
+                str(record["sha256"])
+                for record in screenshot_report["screenshots"]
+            },
+            implementation_tree_sha256=str(implementation_tree["sha256"]),
+        )
+        output_path = (
+            Path(args.output).resolve()
+            if args.output
+            else project_dir / DEFAULT_REPORT_PATH
+        )
+        write_json(output_path, report)
+        if args.json:
+            print(json.dumps(report, ensure_ascii=False, indent=2))
+        else:
+            verdict = "PASS" if report["passed"] else "BLOCKED"
+            print(
+                f"[reference-fidelity-loop] {verdict}: "
+                f"{report['iterations'][-1]['score'] * 100:.2f}"
+            )
+            print(f"  -> {output_path}")
+            for metric_id in report["iterations"][-1]["metric_failures"]:
+                print(f"  - {metric_id}")
+        if not report["passed"]:
+            raise SystemExit(1)
+        return
+
+    if args.command == "verify-production-ui":
+        from .production_verifier import verify_production_ui
+
+        project_dir = Path(args.project_dir).resolve()
+        target_repo = Path(args.target_repo).resolve() if args.target_repo else project_dir
+        screenshot_manifest = (
+            Path(args.screenshot_manifest).resolve()
+            if args.screenshot_manifest
+            else project_dir / "build" / "system" / "production" / "screenshots.json"
+        )
+        aesthetic_report = (
+            Path(args.aesthetic_report).resolve()
+            if args.aesthetic_report
+            else project_dir / "build" / "system" / "aesthetic" / "latest_loop_report.json"
+        )
+        browser_evidence_bundle = (
+            Path(args.browser_evidence_bundle).resolve()
+            if args.browser_evidence_bundle
+            else None
+        )
+        report = verify_production_ui(
+            project_dir=project_dir,
+            target_repo=target_repo,
+            screenshot_manifest_path=screenshot_manifest,
+            aesthetic_report_path=aesthetic_report,
+            registry_path=Path(args.registry).resolve(),
+            artifact_dir=args.artifact_dir,
+            browser_evidence_bundle_path=browser_evidence_bundle,
+            reference_fidelity_contract_path=(
+                Path(args.reference_fidelity_contract).resolve()
+                if args.reference_fidelity_contract
+                else None
+            ),
+            reference_fidelity_report_path=(
+                Path(args.reference_fidelity_report).resolve()
+                if args.reference_fidelity_report
+                else None
+            ),
+        )
+        if args.json:
+            print(json.dumps(report, ensure_ascii=False, indent=2))
+        else:
+            verdict = "PASS" if report["ok"] else "FAIL"
+            print(f"[verify-production-ui] {verdict}: project={report['project']}")
+            for gate in report["gates"]:
+                print(f"  [{'PASS' if gate['ok'] else 'FAIL'}] {gate['name']}")
+                for error in gate["errors"][:8]:
+                    print(f"    - {error}")
+        if not report["ok"]:
+            raise SystemExit(1)
         return
 
     if args.command == "rebuild-all-presets":
@@ -1376,6 +1772,189 @@ def main() -> None:
         print(f"  -> 타이포그래피: {typo_info['scale_entries']}개 스케일, {typo_info['unique_families']}개 폰트 패밀리")
         return
 
+    if args.command == "build-image-prompts":
+        from .visual_asset_prompts import (
+            build_visual_prompt_packet,
+            load_json_object,
+            write_visual_prompt_outputs,
+        )
+
+        project_dir = Path(args.project_dir)
+        manifest = load_project(project_dir)
+        system_dir = project_dir / manifest.get("build_dir", "build") / "system"
+        blueprint_dir = system_dir / "blueprint"
+        brand_profile = load_brand_profile(project_dir / manifest["brand_profile"])
+        blueprint_path = blueprint_dir / "design_system_blueprint.json"
+        ontology_path = blueprint_dir / "system_ontology.json"
+        missing = [str(path) for path in (blueprint_path, ontology_path) if not path.exists()]
+        if missing:
+            raise SystemExit(
+                "Run run-project before build-image-prompts. Missing: " + ", ".join(missing)
+            )
+        packet = build_visual_prompt_packet(
+            brand_profile=brand_profile,
+            blueprint=load_json_object(blueprint_path),
+            ontology=load_json_object(ontology_path),
+            candidates_per_slot=args.candidates_per_slot,
+            project_dir=project_dir,
+        )
+        packet["project"] = manifest.get("project_slug") or project_dir.name
+        target_dir = (
+            Path(args.output_dir)
+            if args.output_dir
+            else project_dir / "public" / "generated" / "design-system"
+        )
+        result = write_visual_prompt_outputs(target_dir, packet)
+        summary = {
+            "prompt_count": result.prompt_count,
+            "packet_path": str(result.packet_path),
+            "markdown_path": str(result.markdown_path),
+            "manifest_path": str(result.manifest_path),
+        }
+        if args.json:
+            print(json.dumps(summary, ensure_ascii=False, indent=2))
+        else:
+            print(f"[build-image-prompts] 이미지 생성 패킷 {result.prompt_count}개 슬롯 작성")
+            print(f"  -> {result.packet_path}")
+            print(f"  -> {result.markdown_path}")
+            print(f"  -> {result.manifest_path}")
+        return
+
+    if args.command == "register-image-asset":
+        from .visual_asset_registry import register_generated_visual_asset
+
+        project_dir = Path(args.project_dir).resolve()
+        manifest_path = (
+            Path(args.manifest).resolve()
+            if args.manifest
+            else project_dir / "public" / "generated" / "design-system" / "manifest.json"
+        )
+        result = register_generated_visual_asset(
+            project_dir=project_dir,
+            manifest_path=manifest_path,
+            asset_id=args.asset_id,
+            source_path=Path(args.source).resolve(),
+            alt_text=args.alt_text,
+            selection_reason=args.selection_reason,
+            reviewed_criteria=args.reviewed_criterion,
+            label=args.label,
+            intended_for=args.intended_for,
+            original_png_path=args.original_png_path,
+            session_id=args.session_id,
+        )
+        summary = {
+            "asset_id": result.asset_id,
+            "status": result.status,
+            "asset_path": str(result.asset_path),
+            "manifest_path": str(result.manifest_path),
+            "sha256": result.sha256,
+            "dimensions": {"width": result.width, "height": result.height},
+        }
+        if args.json:
+            print(json.dumps(summary, ensure_ascii=False, indent=2))
+        else:
+            print(f"[register-image-asset] {result.asset_id} -> {result.status}")
+            print(f"  -> {result.asset_path}")
+            print(f"  -> {result.manifest_path}")
+        return
+
+    if args.command == "promote-image-asset":
+        from .visual_asset_registry import promote_generated_visual_asset
+
+        project_dir = Path(args.project_dir).resolve()
+        manifest_path = (
+            Path(args.manifest).resolve()
+            if args.manifest
+            else project_dir / "public" / "generated" / "design-system" / "manifest.json"
+        )
+        result = promote_generated_visual_asset(
+            project_dir=project_dir,
+            manifest_path=manifest_path,
+            asset_id=args.asset_id,
+            intended_for=args.intended_for,
+        )
+        summary = {
+            "asset_id": result.asset_id,
+            "status": result.status,
+            "asset_path": str(result.asset_path),
+            "manifest_path": str(result.manifest_path),
+        }
+        if args.json:
+            print(json.dumps(summary, ensure_ascii=False, indent=2))
+        else:
+            print(f"[promote-image-asset] {result.asset_id} -> integrated")
+            print(f"  -> {result.asset_path}")
+            print(f"  -> {result.manifest_path}")
+        return
+
+    if args.command == "validate-image-assets":
+        from .visual_asset_registry import validate_visual_asset_manifest
+
+        project_dir = Path(args.project_dir).resolve()
+        manifest_path = (
+            Path(args.manifest).resolve()
+            if args.manifest
+            else project_dir / "public" / "generated" / "design-system" / "manifest.json"
+        )
+        report = validate_visual_asset_manifest(
+            manifest_path,
+            project_dir=project_dir,
+            require_integrated=args.require_integrated,
+        )
+        if args.json:
+            print(json.dumps(report, ensure_ascii=False, indent=2))
+        else:
+            verdict = "PASS" if report["ok"] else "FAIL"
+            print(
+                f"[validate-image-assets] {verdict}: assets={report['asset_count']} "
+                f"integrated={report['integrated_count']}"
+            )
+            for warning in report["warnings"]:
+                print(f"  warning: {warning}")
+            for error in report["errors"]:
+                print(f"  error: {error}")
+        if not report["ok"]:
+            raise SystemExit(1)
+        return
+
+    if args.command == "validate-component-contracts":
+        from .component_contracts import load_and_validate_component_contracts
+
+        project_dir = Path(args.project_dir).resolve()
+        specs_path = (
+            Path(args.specs).resolve()
+            if args.specs
+            else project_dir / "build" / "system" / "components" / "component_specs.json"
+        )
+        tokens_path = (
+            Path(args.tokens).resolve()
+            if args.tokens
+            else project_dir / "design-system" / "tokens.css"
+        )
+        try:
+            report = load_and_validate_component_contracts(
+                specs_path,
+                tokens_path=tokens_path,
+                strict_authored=not args.allow_needs_authoring,
+            )
+        except (ValueError, json.JSONDecodeError) as exc:
+            raise SystemExit(str(exc)) from exc
+        if args.json:
+            print(json.dumps(report, ensure_ascii=False, indent=2))
+        else:
+            verdict = "PASS" if report["ok"] else "FAIL"
+            print(
+                f"[validate-component-contracts] {verdict}: components={report['component_count']} "
+                f"needs_authoring={report['needs_authoring_count']} tokens={report['declared_token_count']}"
+            )
+            for warning in report["warnings"]:
+                print(f"  warning: {warning}")
+            for error in report["errors"]:
+                print(f"  error: {error}")
+        if not report["ok"]:
+            raise SystemExit(1)
+        return
+
     if args.command == "build-components":
         spec_path = Path(args.spec_file)
         project_dir = Path(args.project_dir)
@@ -1407,9 +1986,22 @@ def main() -> None:
             documents=documents,
         )
         write_component_specs(output_dir, specs_data)
+        tokens_path, contract_report = _write_component_contract_validation(
+            project_dir=project_dir,
+            output_dir=output_dir,
+            specs_data=specs_data,
+            strict_authored=False,
+        )
+        if not contract_report["ok"]:
+            raise SystemExit(
+                "Generated component contracts failed internal validation: "
+                + "; ".join(contract_report["errors"][:5])
+            )
         print("[build-components] 컴포넌트 스펙 생성 완료:")
         print(f"  -> {output_dir}/components/component_specs.md")
         print(f"  -> {output_dir}/components/component_specs.json")
+        print(f"  -> {output_dir}/components/component_contract_validation.json")
+        print(f"  -> {tokens_path}")
         return
 
     if args.command == "inspect-reference-site":
@@ -2027,13 +2619,33 @@ def main() -> None:
         return
 
     if args.command == "init-agent-pack":
-        scaffold_agent_pack(
+        result = scaffold_agent_pack(
             target_repo=Path(args.target_repo),
             artifact_dir=args.artifact_dir,
             targets=[item.strip() for item in args.targets.split(",") if item.strip()],
             force=args.force,
         )
         print(f"[init-agent-pack] 에이전트 팩 생성 완료: {args.target_repo}")
+        print(f"  -> 공용 팀 계약: {args.artifact_dir}/agent-team.json")
+        print(f"  -> 역할/런북: {args.artifact_dir}/TEAM_RUNBOOK.md")
+        print(f"  -> 생성 파일: {len(result['created'])}개")
+        return
+
+    if args.command == "validate-agent-team":
+        result = validate_agent_team(
+            target_repo=Path(args.target_repo),
+            artifact_dir=args.artifact_dir,
+            targets=[item.strip() for item in args.targets.split(",") if item.strip()],
+        )
+        if args.json:
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            print(f"[validate-agent-team] {'PASS' if result['ok'] else 'FAIL'}: {args.target_repo}")
+            print(f"  -> roles: {result['role_count']} | targets: {', '.join(result['targets'])}")
+            for error in result["errors"]:
+                print(f"  [ERROR] {error}")
+        if not result["ok"]:
+            raise SystemExit(1)
         return
 
     if args.command == "synthesize":
@@ -2116,6 +2728,11 @@ def main() -> None:
         if visual_asset_manifests:
             asset_count = sum(len(manifest.get("assets", []) or []) for manifest in visual_asset_manifests)
             print(f"  생성 이미지 manifest: {len(visual_asset_manifests)}개 | asset {asset_count}개 자동 승격")
+        visual_asset_manifest_issues = brand_profile.get("_generated_visual_asset_manifest_issues", [])
+        if visual_asset_manifest_issues:
+            print(f"  생성 이미지 manifest 이슈: {len(visual_asset_manifest_issues)}개 (승격 제외)")
+            for issue in visual_asset_manifest_issues[:5]:
+                print(f"    - {issue}")
         identity_assets = brand_profile.get("_identity_assets", [])
         if identity_assets:
             print(f"  브랜드 identity asset: {len(identity_assets)}개 자동 승격")
@@ -2167,7 +2784,22 @@ def main() -> None:
                 documents=documents,
             )
             write_component_specs(output_dir, specs_data)
+            tokens_path, contract_report = _write_component_contract_validation(
+                project_dir=project_dir,
+                output_dir=output_dir,
+                specs_data=specs_data,
+                strict_authored=False,
+            )
+            if not contract_report["ok"]:
+                raise SystemExit(
+                    "Generated component contracts failed internal validation: "
+                    + "; ".join(contract_report["errors"][:5])
+                )
             print(f"  -> 설계서({spec_file.name}) + inventory에서 {len(specs_source)}개 컴포넌트 스펙 자동 생성")
+            print(
+                f"  -> component contract: needs-authoring {contract_report['needs_authoring_count']}개 | "
+                f"tokens {contract_report['declared_token_count']}개 ({tokens_path})"
+            )
 
         print(f"[run-project] 시스템 산출물 생성 완료: {output_dir}/blueprint/")
         print(f"  -> 레퍼런스: {len(references)}개 | 문서: {len(documents)}개")

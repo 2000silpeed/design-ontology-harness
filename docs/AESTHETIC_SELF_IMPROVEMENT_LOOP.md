@@ -151,6 +151,20 @@ uv run design-ontology score-screenshot \
 
 한계도 분명합니다. `score-screenshot`은 이미지 안의 의미를 완전히 이해하지 못하므로 `token_binding`, `domain_fit`, `keyword_alignment` 같은 항목은 프록시 점수입니다. 최종 판단에는 사람/모델 리뷰 또는 구현 lint를 함께 써야 합니다.
 
+프로덕션 판정에서는 멀티모달 리뷰를 별도 JSON으로 남긴 뒤 candidate에 합칩니다.
+
+```bash
+uv run design-ontology apply-aesthetic-review \
+  --candidate projects/my-app/build/system/aesthetic/candidate.json \
+  --review-artifact projects/my-app/build/system/production/reviews/multimodal-review.json \
+  --output projects/my-app/build/system/aesthetic/reviewed-candidate.json \
+  --reviewer codex-visual-qa \
+  --model gpt-5-codex \
+  --method "Structured light/dark mobile/desktop review"
+```
+
+review artifact의 스키마는 `production-ui-review-artifact/v1`입니다. 기록된 모든 스크린샷 SHA-256과 선택 metric별 점수·구체적인 관찰을 포함해야 합니다. 명령은 artifact 파일의 SHA-256을 두 번째 iteration에 고정하고, 화면 해시가 다르거나 알 수 없는 metric·허용 범위 밖의 점수가 있으면 병합하지 않습니다. 이후 `aesthetic-loop`에는 `reviewed-candidate.json`을 전달합니다.
+
 게이트가 닫히면 종료코드 1을 반환합니다. 그래서 CI나 에이전트 루프에서 다음 작업을 막는 데 바로 쓸 수 있습니다.
 
 통과한 경우에만 후속 명령을 실행하려면:

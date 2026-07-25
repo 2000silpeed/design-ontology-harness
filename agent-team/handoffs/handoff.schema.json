@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/design-ontology-handoff.schema.json",
+  "title": "Design Ontology Agent Handoff",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "created_at",
+    "project",
+    "from_role",
+    "to_role",
+    "stage",
+    "status",
+    "summary",
+    "input_artifacts",
+    "output_artifacts",
+    "changed_paths",
+    "decisions",
+    "gate_results",
+    "blockers",
+    "risks",
+    "next_action"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "design-ontology-handoff/v1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "project": {
+      "type": "string",
+      "minLength": 1
+    },
+    "from_role": {
+      "enum": [
+        "team-lead",
+        "brief-author",
+        "token-curator",
+        "component-author",
+        "ontology-compiler",
+        "visual-asset-producer",
+        "ui-implementer",
+        "reference-fidelity-auditor",
+        "production-qa",
+        "release-governor"
+      ]
+    },
+    "to_role": {
+      "enum": [
+        "team-lead",
+        "brief-author",
+        "token-curator",
+        "component-author",
+        "ontology-compiler",
+        "visual-asset-producer",
+        "ui-implementer",
+        "reference-fidelity-auditor",
+        "production-qa",
+        "release-governor"
+      ]
+    },
+    "stage": {
+      "enum": [
+        "concept",
+        "tokens-and-components",
+        "system",
+        "visual",
+        "implementation",
+        "fidelity",
+        "qa",
+        "release"
+      ]
+    },
+    "status": {
+      "enum": [
+        "ready",
+        "needs-work",
+        "blocked"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "input_artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    },
+    "output_artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    },
+    "changed_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "gate_results": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "command",
+          "status",
+          "exit_code",
+          "evidence"
+        ],
+        "properties": {
+          "command": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "passed",
+              "failed",
+              "not-run"
+            ]
+          },
+          "exit_code": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "evidence": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_action": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    }
+  }
+}

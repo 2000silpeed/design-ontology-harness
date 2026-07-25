@@ -1,0 +1,118 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "active-imagegen-provenance-2026-07-13-001",
+  "created_at": "2026-07-14T00:02:19+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "visual-asset-producer",
+  "to_role": "team-lead",
+  "stage": "visual",
+  "status": "ready",
+  "summary": "Generated visual assets now use visual-asset-manifest/v2 and fail closed at accepted/integrated unless versioned generator, generation_run_id, and candidate_id evidence matches the preserved Codex image_gen output path. The World Cup Hub integrated hero was migrated only from its real Codex generation event, original PNG path, candidate id, and verified original/derivative hashes.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/active-imagegen-provenance-team-lead-to-visual-asset-producer.json",
+      "sha256": "9551ec4864b0030293e57020082ac4ecf872f378dda1b654a9792dbc43b12453"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/imagegen-prompt-packet.json",
+      "sha256": "577745db9adda241a95266e61ea076602077604d75736a45371a5ce903d59cab"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "design_ontology_harness/visual_asset_registry.py",
+      "sha256": "0704d2d41ab351819b8541d9249284c3b9025df3b20f5861589bc6088f3e52ec"
+    },
+    {
+      "path": "design_ontology_harness/visual_asset_prompts.py",
+      "sha256": "331afdecf54bd05d3384f7ef56cbbd8eff928f5ee0aa47d925e16a0dd14c6671"
+    },
+    {
+      "path": "design_ontology_harness/graph_builders.py",
+      "sha256": "92190050141d2ff73e1c70271276be2a424562dbd295bc0fe518c3a284c623b5"
+    },
+    {
+      "path": "design_ontology_harness/agent_packs.py",
+      "sha256": "eae4998ad1775ce589d75d04f2ebe3c84005b3fc24240ec2e2f6a292f1779f0e"
+    },
+    {
+      "path": "plugins/design-system-harness/skills/design-system-visual-assets/SKILL.md",
+      "sha256": "6ef64525634da84ff7c004031a6bff6a3481e909ba805ca38ddc98a745c8fa10"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/manifest.json",
+      "sha256": "a5cbf6f2d89dc77dfa02f8620937ff3e8be2a5488b1f448aa1cf21b5538c8db2"
+    },
+    {
+      "path": "tests/test_visual_asset_registry.py",
+      "sha256": "1c7ca0fbf252db728361979a547ad1be1314292f729f5b9dd2bfb98362532f16"
+    }
+  ],
+  "changed_paths": [
+    "design_ontology_harness/visual_asset_registry.py",
+    "design_ontology_harness/visual_asset_prompts.py",
+    "design_ontology_harness/graph_builders.py",
+    "design_ontology_harness/graph_spec_sections.py",
+    "design_ontology_harness/agent_packs.py",
+    "plugins/design-system-harness/skills/design-system-visual-assets/SKILL.md",
+    "plugins/design-system-harness/skills/design-visual-asset-producer/SKILL.md",
+    "projects/world-cup-hub/public/generated/design-system/manifest.json",
+    "tests/test_visual_asset_registry.py",
+    "tests/test_visual_asset_prompts.py",
+    "tests/test_visual_asset_ontology.py",
+    "tests/test_implementation_linter.py",
+    "tests/test_agent_packs.py",
+    "agent-team/handoffs/active-imagegen-provenance-visual-asset-producer-to-team-lead.json"
+  ],
+  "decisions": [
+    "Bump new generated-asset manifests to visual-asset-manifest/v2 while retaining v1 only for planned or sourced compatibility; a v1 generated accepted/integrated record is a hard error.",
+    "Use visual-asset-generation-provenance/v1 with per-asset generator, generation_run_id, and candidate_id fields. Planned records carry null placeholders; final generated records require real values.",
+    "Derive run and candidate identity from the exact $CODEX_HOME/generated_images/<generation-run-id>/<candidate-id>.png path and require the registration session id to match, so arbitrary caller strings cannot establish provenance.",
+    "Keep cli.py and production_verifier.py unchanged. Existing registration arguments remain compatible because the registry derives the new fields instead of accepting new user-authored provenance arguments.",
+    "Migrate the World Cup Hub hero with generation run 019e2de5-941b-7971-98e3-6ed84372f36b and candidate ig_05e8553d24da513b016a07d77edabc8191bf7569ff5368de06 only after matching its image_generation_end event and both verified hashes."
+  ],
+  "gate_results": [
+    {
+      "command": "jq -e -c 'select(.type == \"event_msg\" and .payload.type == \"image_generation_end\" and .payload.call_id == \"ig_05e8553d24da513b016a07d77edabc8191bf7569ff5368de06\" and .payload.saved_path == \"/Users/sungwoon/.codex/generated_images/019e2de5-941b-7971-98e3-6ed84372f36b/ig_05e8553d24da513b016a07d77edabc8191bf7569ff5368de06.png\")' /Users/sungwoon/.codex/sessions/2026/05/16/rollout-2026-05-16T08-08-00-019e2de5-941b-7971-98e3-6ed84372f36b.jsonl && shasum -a 256 <original-png> <workspace-webp>",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "The real Codex image_generation_end event names the exact candidate and saved path. The original PNG hash is 66509d459c2c7d515ad76cda78fd66e3bdb8d37cbbe8b2d206d5ec389a4748ac and the integrated WebP hash is 64809ab56a32fecf73a4938701cd28f0b6326a13d48248330223e7cf31a0cec9."
+    },
+    {
+      "command": "uv run pytest tests/test_visual_asset_prompts.py tests/test_visual_asset_registry.py tests/test_visual_asset_ontology.py tests/test_implementation_linter.py tests/test_agent_packs.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "88 tests passed, including missing legacy provenance, fabricated generator/run/candidate values, session/path mismatch, registry migration, linter integration, ontology schema, and skill generation coverage."
+    },
+    {
+      "command": "uv run design-ontology validate-image-assets --project-dir projects/world-cup-hub --require-integrated --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "ok=true, errors=[], warnings=[], asset_count=3, integrated_count=1 under the v2 fail-closed contract."
+    },
+    {
+      "command": "uv run ruff check design_ontology_harness/visual_asset_registry.py design_ontology_harness/visual_asset_prompts.py design_ontology_harness/graph_builders.py design_ontology_harness/agent_packs.py tests/test_visual_asset_registry.py tests/test_visual_asset_prompts.py tests/test_visual_asset_ontology.py tests/test_implementation_linter.py tests/test_agent_packs.py",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Ruff reported All checks passed."
+    },
+    {
+      "command": "uv run pytest -q --disable-warnings",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "490 tests and 2 subtests passed in 31.46 seconds; 11 existing warnings were reported."
+    },
+    {
+      "command": "uv run python -c 'from design_ontology_harness.agent_team import validate_handoff_payload; validate the visual-asset-producer handoff with target_repo=Path(\".\")'",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "The project handoff validator returned schema-valid for this handoff, including role transition, required fields, artifact paths, and current artifact hashes."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Legacy generated final assets in other projects intentionally fail the v2 gate until re-registered from their real preserved Codex output path; the validator does not fabricate a migration identity.",
+    "The manifest still depends on preservation of the agent-local original PNG for strict production validation, matching the existing source-session policy."
+  ],
+  "next_action": "Team Lead reviews and accepts this visual-stage handoff, then lets later owners regenerate stale World Cup Hub system/runtime/QA artifacts against the new concept, token, component, and asset contracts before release audit."
+}

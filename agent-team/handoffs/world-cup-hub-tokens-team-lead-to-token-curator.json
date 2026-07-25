@@ -1,0 +1,63 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-production-ui-improvement-2026-07-13-001",
+  "created_at": "2026-07-13T23:49:37+09:00",
+  "project": "world-cup-hub",
+  "from_role": "team-lead",
+  "to_role": "token-curator",
+  "stage": "tokens-and-components",
+  "status": "needs-work",
+  "summary": "The authored concept is ready, but the visible World Cup Hub theme still overrides generated Semantic OS roles with unproven local UI colors. Re-establish one generated semantic token authority, retain only separately identified team/flag identity colors, and prepare the project for deterministic regeneration.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/world-cup-hub-concept-brief-author-to-team-lead.json",
+      "sha256": "6d93adbafd2ff84ca3c54491fdba3e8c8ed2655d075aaacdf50c807d778c8a2d"
+    },
+    {
+      "path": "projects/world-cup-hub/brand_profile.json",
+      "sha256": "c6603c493ff0e09d8d2382cbc813887e1071e955f116f27dc894a9af9aaf09f6"
+    },
+    {
+      "path": "docs/color-reference.md",
+      "sha256": "b715c0c9073613ac36c425a049f4c7197bd1534bd799047bba64eff3ba5d66fd"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/tokens.css",
+      "sha256": "f8e4bbcc458350fab7f8072e8fd7eae35a4d967de8f442e567d8ea11148c1c0c"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/design-system/runtime-theme.css",
+      "sha256": "d31417632caa93be77b4b7b96097dcfb6608191a9daf69110e9bb0945fec362b"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/world-cup-hub-tokens-team-lead-to-token-curator.json"
+  ],
+  "decisions": [
+    "Generated tokens.css is the only authority for application UI color roles in both light and dark themes.",
+    "Team and flag identity colors may remain product-specific only in a clearly separated identity namespace with provenance and must never be the sole status cue.",
+    "Do not hand-edit generated tokens.css; correct brand inputs, runtime-policy consumption, or emitter behavior and let Ontology Compiler regenerate it."
+  ],
+  "gate_results": [
+    {
+      "command": "! rg -n '#[0-9A-Fa-f]{6}' projects/world-cup-hub/design-system/runtime-theme.css",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "runtime-theme.css contains many local UI HEX overrides after tokens.css; audit found 30 application-surface colors without current Semantic OS coordinates or derivation metadata."
+    },
+    {
+      "command": "uv run design-ontology sync-semantic-colors --source ../semantic-os/domains/color/ontology/build/graph.json --color-reference-output docs/color-reference.md --ontology-output design_ontology_harness/resources/semantic_color_ontology.json --check --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "The Semantic OS Markdown authority is current and unchanged, so the defect is downstream consumption rather than source migration."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Deleting runtime overrides before confirming regenerated light/dark semantic roles could temporarily reduce contrast or break app-specific aliases.",
+    "Identity colors must not be confused with general success, warning, danger, or selection roles."
+  ],
+  "next_action": "Token Curator removes unproven application color overrides, establishes explicit identity-only exceptions and semantic aliases, validates contrast and source provenance, and returns a ready handoff before Ontology Compiler regenerates tokens."
+}

@@ -1,5 +1,7 @@
+import re
 from pathlib import Path
 
+from design_ontology_harness.adapters.base import _contrast_ratio
 from design_ontology_harness.style_fingerprint import (
     StyleFingerprint,
     check_style_divergence,
@@ -124,6 +126,72 @@ def test_separation_style_detection(tmp_path):
     assert same_score > diff_score, "shared composition grammar must raise similarity"
 
 
+def test_operational_table_rail_is_not_mislabeled_as_card_wall(tmp_path):
+    operational_css = "\n".join(
+        [
+            *(f".ops-card-{i} {{ border: 1px solid #ddd; border-radius: 8px; }}" for i in range(10)),
+            *(f".schedule-table-{i} .fixture-row {{ border-bottom: 1px solid #ddd; }}" for i in range(10)),
+            ".match-ticker .ticker-rail { display: grid; }",
+            ".source-ledger .ledger-row { border-bottom: 1px solid #ddd; }",
+            ".standings-table .result-row { border-bottom: 1px solid #ddd; }",
+        ]
+    )
+    project = _write_project(tmp_path, "operations", operational_css)
+    (project / "index.html").write_text(
+        "<main data-product-surface='fixture-review-workspace'><table class='schedule-table'></table></main>",
+        encoding="utf-8",
+    )
+
+    fingerprint = extract_style_fingerprint(project)
+
+    assert fingerprint.separation_style == "operations-table-rail"
+    assert "fixture-workspace" in fingerprint.composition_markers
+
+
+def test_explicit_light_dark_tokens_report_dual_theme(tmp_path):
+    css = """
+    :root { --surface: #ffffff; }
+    body { background: var(--surface); color: #101820; }
+    html[data-theme="dark"] { --surface: #071821; }
+    """
+    fingerprint = extract_style_fingerprint(_write_project(tmp_path, "dual", css))
+    assert fingerprint.surface_tone == "dual-theme"
+
+
+def test_tsx_structure_clone_fails_even_when_palette_and_fonts_change(tmp_path):
+    registry_path = tmp_path / "registry.json"
+    structure = """
+      export function App() {
+        return <><header className="header"/><aside className="sidebar"/>
+          <div className="filter-bar"/><section className="card-grid feature-card metric-card"/>
+          <table className="data-table"><tbody><tr className="table-row"/></tbody></table></>
+      }
+    """
+    first = tmp_path / "first"
+    (first / "src").mkdir(parents=True)
+    (first / "src" / "App.tsx").write_text(structure, encoding="utf-8")
+    (first / "styles.css").write_text(
+        'body { background: #F1F5F9; color: #162033; font-family: "Wanted Sans", sans-serif; } .action { background: #C66A2B; border-radius: 2px; }',
+        encoding="utf-8",
+    )
+    register_fingerprint(registry_path, extract_style_fingerprint(first))
+
+    second = tmp_path / "second"
+    (second / "src").mkdir(parents=True)
+    (second / "src" / "App.tsx").write_text(structure, encoding="utf-8")
+    (second / "styles.css").write_text(
+        'body { background: #101816; color: #E8F2ED; font-family: "IBM Plex Sans", sans-serif; } .action { background: #B13A86; border-radius: 18px; }',
+        encoding="utf-8",
+    )
+
+    report = check_style_divergence(second, registry_path=registry_path)
+
+    assert "App.tsx" in report["fingerprint"]["source_files"]
+    assert len(report["fingerprint"]["composition_markers"]) >= 4
+    assert report["verdict"] == "fail"
+    assert report["too_similar_to"][0]["structural_similarity"] == 1.0
+
+
 def test_registry_upserts_by_project(tmp_path):
     registry_path = tmp_path / "registry.json"
     fp = StyleFingerprint(project="x", surface_tone="dark")
@@ -174,7 +242,15 @@ def test_emit_project_tokens_binds_blueprint_palette(tmp_path):
     assert target == project / "design-system" / "tokens.css"
     assert "--ds-color-brand-anchor-surface: #27503D;" in css
     assert "--ds-color-primary: #27503D;" in css, "primary must derive from the anchor role, not a generic default"
-    assert "--ds-color-accent: #00A591;" in css
+    assert "--ds-color-brand-fresh-accent: #00A591;" in css
+    runtime_accent = re.search(r"(?m)^\s*--ds-color-accent:\s*(#[0-9A-F]{6});", css)
+    assert runtime_accent is not None
+    assert runtime_accent.group(1) != "#00A591"
+    assert _contrast_ratio(runtime_accent.group(1), "#FFFFFF") >= 4.5
     assert '--ds-font-heading: "Wanted Sans"' in css
     assert "--ds-radius-lg: 16px;" in css
     assert "--ds-space-2: 8px;" in css
+    assert "--ds-space-px-24: 24px;" in css
+    assert "--ds-text-md: 1rem;" in css
+    assert "--ds-duration-180: 180ms;" in css
+    assert "--ds-ease-standard:" in css

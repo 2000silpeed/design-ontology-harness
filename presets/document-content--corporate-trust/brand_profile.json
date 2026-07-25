@@ -1,0 +1,2199 @@
+{
+  "brand_name": "EKOS Knowledge Intake",
+  "system_name": "EKOS Knowledge Intake Design System",
+  "product_summary": "SAP 업무 지식을 아는 현업 사용자가 온톨로지 용어 없이 문서·설명을 지식으로 정리하고, 시스템이 이해한 사실을 고치고, 근거를 확인해 승인하는 데스크톱 웹 지식 등록·검토 워크벤치",
+  "audiences": [
+    "현업 지식 제공자 (SAP 운영 담당자, 온톨로지 비전문가)",
+    "지식 검토자 (팀 리드, 승인 권한자)",
+    "운영 관리자 (입력 큐·검증 실패·연결 시스템 관리)"
+  ],
+  "brand_keywords": [
+    "archive",
+    "evidence-first",
+    "sentence-first",
+    "trustworthy",
+    "calm",
+    "editorial-operational",
+    "reviewable",
+    "korean-first"
+  ],
+  "anti_keywords": [
+    "graph-tech jargon",
+    "decorative node graph",
+    "sci-fi glow",
+    "generic dashboard metric cards",
+    "numeric-score-only ranking",
+    "spinner-only progress",
+    "marketing hero",
+    "paper texture over legibility"
+  ],
+  "tone_of_voice": [
+    "업무 문장으로 말한다 (기술 어휘 번역)",
+    "행동의 결과와 영향 범위를 미리 알려준다",
+    "실패를 숨기지 않고 복구 행동과 함께 보여준다",
+    "차분하고 사무적이되 딱딱하지 않다"
+  ],
+  "visual_keywords": [
+    "prussian blue archive authority",
+    "cornsilk warm paper surfaces flattened for reading",
+    "ocean blue trust accents for focus and links",
+    "hunter green success, goldenrod warning, marsala failure",
+    "rust as rare editorial emphasis only",
+    "sentence-first fact rows with status tags",
+    "split review workbench with evidence panel",
+    "long-form korean text at comfortable measure",
+    "serif display for knowledge sentences, sans for controls",
+    "quiet rules and generous whitespace instead of card walls"
+  ],
+  "interaction_keywords": [
+    "describe knowledge in free sentences with optional help frames",
+    "watch a five-stage sentence-based analysis progress",
+    "triage extracted facts by needs-choice and conflict first",
+    "compare relation candidates as business sentences with reasons",
+    "edit a fact under its one-sentence summary",
+    "approve with visible scope and count, blocked with visible reason",
+    "return to the source text at any time without losing edits",
+    "propose a company-specific term without ontology vocabulary",
+    "connect two search results and send to review",
+    "retry failed intake without duplicating jobs"
+  ],
+  "platforms": [
+    "web",
+    "desktop-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "full keyboard completion of all core tasks",
+    "list/table alternative for canvas graph",
+    "non-color status encoding (color + icon + text)",
+    "focus and state changes announced to assistive tech",
+    "prefers-reduced-motion respected",
+    "body text 14-16px, long copy at 65-75ch measure"
+  ],
+  "application_concept": {
+    "primary_job": "현업 사용자가 문서나 업무 설명을 넣고, 시스템이 이해한 사실 초안을 고친 뒤, 근거를 확인해 승인까지 끝낸다",
+    "domain_objects": [
+      "지식 초안 (추출된 사실)",
+      "원문 (문서·화면·코드 발췌)",
+      "근거 (원문 위치·매칭 키·추론 규칙·수정 이력)",
+      "관계 후보 (업무 문장으로 번역된 연결)",
+      "새 개념 제안",
+      "승인 이력과 지식 상태"
+    ],
+    "operating_mode": "review",
+    "success_moment": "검토 가능한 사실이 반영 범위·개수와 함께 승인되고, 지식 상세에서 원문·근거·승인자가 한 화면에 보인다",
+    "differentiation": [
+      "그래프가 아니라 업무 문장이 1급 시민이다 — 모든 지식은 먼저 한 문장으로 보인다",
+      "내부 어휘(ontology/fragment/node/edge/SHACL)는 화면에서 번역되고, 원문은 고급 서랍에만 있다",
+      "승인 버튼은 항상 반영 범위와 개수를 옆에 달고, 불가 항목은 이유와 해결 행동을 보여준다",
+      "원문은 불변 근거로 보존되고, 사용자는 언제든 원문과 구조화 문장을 나란히 대조할 수 있다"
+    ]
+  },
+  "layout_skeleton": {
+    "composition": "split-review-workbench: 좌측 사실 목록(상태 태그 + 필터), 우측 선택 사실의 문장 편집 + 접이식 근거 패널이 첫 화면에서 공존",
+    "navigation_model": "sidebar",
+    "density": "balanced",
+    "primary_regions": [
+      {
+        "name": "Fact list",
+        "role": "추출된 사실의 업무 문장 목록과 상태 태그, 초기 필터는 선택 필요+충돌 확인",
+        "priority": "primary"
+      },
+      {
+        "name": "Fact detail and editor",
+        "role": "선택한 사실의 한 문장 요약과 대상/조건/결과/범위/유효기간 편집, 관계 후보 비교",
+        "priority": "primary"
+      },
+      {
+        "name": "Evidence panel",
+        "role": "원문 발췌·매칭 키·추론 규칙·수정 이력, 필요할 때만 여는 우측 패널",
+        "priority": "secondary"
+      },
+      {
+        "name": "Review action bar",
+        "role": "보류/제외/수정 저장/승인, 반영 범위·개수, 승인 불가 사유",
+        "priority": "primary"
+      }
+    ],
+    "first_screen_contract": [
+      "지식 초안 검토 화면은 사실 목록과 선택 사실 편집면을 첫 viewport에 함께 노출한다",
+      "홈은 통합 검색 입력과 '지식 추가' 주 버튼, 내가 확인할 항목 3종을 장식 요소보다 먼저 배치한다",
+      "승인 계열 버튼 옆에는 반영 범위와 개수가 항상 보인다",
+      "그래프 통계·노드 수·Pack 수는 첫 화면에 등장하지 않는다"
+    ],
+    "avoid_layouts": [
+      "generic hero plus card grid",
+      "uniform dashboard metric cards",
+      "graph canvas as the primary surface",
+      "nested cards as page sections"
+    ]
+  },
+  "design_differentiation": {
+    "must_feel_different_from": [
+      "generic SaaS dashboard",
+      "graph database admin console (Neo4j-style)",
+      "developer ontology editor (Protégé-style)",
+      "template card wall"
+    ],
+    "signature_moves": [
+      "sentence-first fact row: 모든 지식 항목은 상태 태그가 붙은 한 문장으로 시작하고, 구조 필드는 그 아래에 종속된다",
+      "evidence side panel: 근거(원문 발췌, 매칭 키, 추론 규칙, 수정 이력)가 항상 한 제스처 거리에 있는 접이식 패널",
+      "translated-vocabulary chrome: 내부 기술 어휘는 UI 어디에도 없고, 고급 서랍(advanced drawer)에서만 원문 노출",
+      "scoped approval bar: 승인 행동에 반영 범위·개수·불가 사유가 상시 병기되는 하단 액션 바"
+    ],
+    "repetition_risks": [
+      "검토 화면이 표 중심 admin CRUD로 회귀",
+      "관계 후보를 숫자 점수 배지로만 표시",
+      "진행 상태를 스피너 하나로 축약",
+      "아카이브 감성을 위해 종이 질감·장식 테두리를 본문 위에 얹어 가독성 훼손",
+      "상태 색상을 텍스트·아이콘 없이 색만으로 구분"
+    ]
+  },
+  "component_decision": {
+    "mode": "llm-authored",
+    "rationale": "화면 명세 v0의 8개 화면과 13절 수용 과업에서 직접 도출. 그래프 캔버스는 보조 표면으로 강등하고, 문장 편집·근거 대조·범위 명시 승인을 핵심 계약으로 고정한다.",
+    "coverage_families": [
+      "navigation",
+      "search",
+      "intake-input",
+      "progress-and-failure",
+      "fact-review",
+      "evidence",
+      "approval",
+      "concept-proposal",
+      "link-workspace",
+      "knowledge-detail",
+      "operations",
+      "feedback-and-empty-states"
+    ],
+    "core_components": [
+      {
+        "name": "left-nav",
+        "family": "navigation",
+        "role": "홈/검색/지식 추가/검토함/영향과 원인/관리 6항목 좌측 메뉴",
+        "supports_primitive": "workspace navigation",
+        "decision_reason": "8개 화면을 잇는 유일한 전역 구조. 업무 어휘 라벨만 사용",
+        "states": [
+          "default",
+          "active",
+          "keyboard-focus",
+          "collapsed"
+        ],
+        "anatomy": [
+          "nav-rail",
+          "nav-item",
+          "nav-label",
+          "active-indicator"
+        ],
+        "tokens": {
+          "component.container.background": "var(--ds-color-surface-muted)",
+          "part.nav-item.color": "var(--ds-color-ink-muted)",
+          "part.nav-label.font-family": "var(--ds-font-body)",
+          "part.active-indicator.background": "var(--ds-color-primary)",
+          "state.active.color": "var(--ds-color-primary)",
+          "state.keyboard-focus.outline": "2px solid var(--ds-color-link)"
+        },
+        "content_rules": [
+          "메뉴 라벨은 업무 어휘만 사용한다: 홈·검색·지식 추가·검토함·영향과 원인·관리",
+          "내부 기술 어휘(ontology·graph·Pack)를 라벨에 쓰지 않는다"
+        ],
+        "accessibility_notes": [
+          "nav landmark와 aria-current로 현재 위치를 보조기기에 알린다",
+          "모든 항목을 Tab과 화살표 키로 이동할 수 있다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "현재 화면을 active-indicator와 aria-current로 함께 표시한다",
+            "6개 항목의 순서를 모든 화면에서 고정한다"
+          ],
+          "dont": [
+            "배지·카운트로 메뉴를 어지럽히지 않는다",
+            "권한 없는 항목을 숨기는 대신 비활성 상태와 사유로 표시한다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "navigate",
+            "toggle-collapse"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "default",
+            "active",
+            "keyboard-focus",
+            "collapsed"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "workspace navigation",
+          "required_fields": [
+            "menu_items",
+            "active_item",
+            "permissions"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "global-search-input",
+        "family": "search",
+        "role": "업무 질문·찾을 내용을 받는 대형 통합 검색",
+        "supports_primitive": "통합 검색",
+        "decision_reason": "홈의 첫 번째 정보이자 관계 연결 작업실의 진입점",
+        "states": [
+          "empty",
+          "typing",
+          "results",
+          "no-results",
+          "keyboard-focus"
+        ],
+        "anatomy": [
+          "input-field",
+          "placeholder",
+          "search-icon",
+          "results-popover"
+        ],
+        "tokens": {
+          "component.container.border": "1px solid var(--ds-color-border)",
+          "part.input-field.font-family": "var(--ds-font-body)",
+          "part.placeholder.color": "var(--ds-color-ink-subtle)",
+          "part.results-popover.background": "var(--ds-color-surface-elevated)",
+          "state.keyboard-focus.border-color": "var(--ds-color-link)",
+          "state.no-results.color": "var(--ds-color-ink-muted)"
+        },
+        "content_rules": [
+          "placeholder는 '업무 질문이나 찾을 내용을 입력하세요'로 고정한다",
+          "결과 없음 문구는 다음 행동(지식 추가)을 제안한다"
+        ],
+        "accessibility_notes": [
+          "combobox 패턴(aria-expanded, aria-activedescendant)을 따른다",
+          "결과 갱신을 aria-live로 알린다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "검색 결과에 지식 상태 배지를 함께 표시한다",
+            "키보드만으로 결과를 선택할 수 있게 한다"
+          ],
+          "dont": [
+            "IRI·내부 키를 결과에 노출하지 않는다",
+            "검색 중 스피너만 단독으로 표시하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "input",
+            "submit",
+            "select-result",
+            "clear"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "empty",
+            "typing",
+            "results",
+            "no-results",
+            "keyboard-focus"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "통합 검색",
+          "required_fields": [
+            "query",
+            "results",
+            "result_status"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "intake-method-list",
+        "family": "intake-input",
+        "role": "직접 설명/자료 올리기/SAP 가져오기/시스템 연결의 큰 선택 목록",
+        "supports_primitive": "지식 추가 첫 선택",
+        "decision_reason": "지식 추가의 분기점. 카드 그리드가 아니라 설명이 붙은 세로 목록",
+        "states": [
+          "default",
+          "hover",
+          "keyboard-focus",
+          "disabled-by-permission"
+        ],
+        "anatomy": [
+          "method-row",
+          "method-icon",
+          "method-title",
+          "method-description"
+        ],
+        "tokens": {
+          "part.method-row.background": "var(--ds-color-surface)",
+          "part.method-title.color": "var(--ds-color-ink)",
+          "part.method-description.color": "var(--ds-color-ink-muted)",
+          "state.hover.background": "var(--ds-color-surface-muted)",
+          "state.keyboard-focus.outline": "2px solid var(--ds-color-link)",
+          "state.disabled-by-permission.color": "var(--ds-color-ink-subtle)"
+        },
+        "content_rules": [
+          "각 방식은 이름 + 한 줄 설명 + 예시를 함께 보여준다",
+          "방식 이름은 행동형 동사구(직접 설명하기, 자료 올리기)로 쓴다"
+        ],
+        "accessibility_notes": [
+          "목록은 단일 Tab 스톱 + 화살표 탐색으로 조작한다",
+          "비활성 사유를 aria-describedby로 제공한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "권한이 없으면 비활성 사유를 그 자리에서 보여준다"
+          ],
+          "dont": [
+            "카드 그리드로 바꾸지 않는다",
+            "아이콘만으로 방식을 구분하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "select-method",
+            "focus-method"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "default",
+            "hover",
+            "keyboard-focus",
+            "disabled-by-permission"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "지식 추가 첫 선택",
+          "required_fields": [
+            "methods",
+            "permissions"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "describe-composer",
+        "family": "intake-input",
+        "role": "자유문장 대형 입력창 + 도움 틀 칩 + 유도 질문 줄",
+        "supports_primitive": "직접 설명하기",
+        "decision_reason": "필드 강제 없이 자유문장을 받는 것이 명세의 핵심 제약",
+        "states": [
+          "empty",
+          "with-help-frame",
+          "with-guided-questions",
+          "filled",
+          "submitting"
+        ],
+        "anatomy": [
+          "textarea",
+          "help-frame-chips",
+          "guided-question-strip",
+          "submit-button"
+        ],
+        "tokens": {
+          "part.textarea.background": "var(--ds-color-surface)",
+          "part.help-frame-chips.background": "var(--ds-color-surface-tint)",
+          "part.guided-question-strip.color": "var(--ds-color-ink-muted)",
+          "part.submit-button.background": "var(--ds-color-primary)",
+          "state.with-guided-questions.border-color": "var(--ds-color-info)",
+          "state.submitting.background": "var(--ds-color-surface-muted)"
+        },
+        "content_rules": [
+          "도움 틀은 제안일 뿐이며 자유문장 입력을 강제 필드로 바꾸지 않는다",
+          "업무 규칙 선택 시 유도 질문 3종을 입력창 위에 짧게 표시한다"
+        ],
+        "accessibility_notes": [
+          "textarea에 레이블과 안내를 연결한다",
+          "한글 IME 조합 중 Enter 제출을 방지한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "표 붙여넣기를 허용하고 구조를 보존한다",
+            "제출 전 원문 보존을 안내한다"
+          ],
+          "dont": [
+            "도움말을 온톨로지 용어로 쓰지 않는다",
+            "입력을 단계 위저드로 강제하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "input",
+            "select-help-frame",
+            "submit",
+            "cancel"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "empty",
+            "with-help-frame",
+            "with-guided-questions",
+            "filled",
+            "submitting"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "직접 설명하기",
+          "required_fields": [
+            "draft_text",
+            "help_frame",
+            "submit_state"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "upload-manifest-card",
+        "family": "intake-input",
+        "role": "파일 메타(이름·형식·크기·보안 범위) + 원문 보존/비공식/격리 3줄 안내",
+        "supports_primitive": "자료 올리기",
+        "decision_reason": "업로드 전 신뢰 계약(원문 보존, 자동 공식화 없음)을 명시해야 함",
+        "states": [
+          "pending",
+          "uploading",
+          "uploaded",
+          "sensitive-quarantine-warning",
+          "failed"
+        ],
+        "anatomy": [
+          "file-meta",
+          "trust-notice",
+          "progress-line",
+          "action-row"
+        ],
+        "tokens": {
+          "part.file-meta.font-family": "var(--ds-font-mono)",
+          "part.trust-notice.color": "var(--ds-color-ink-muted)",
+          "part.progress-line.background": "var(--ds-color-info)",
+          "part.action-row.color": "var(--ds-color-link)",
+          "state.sensitive-quarantine-warning.border-color": "var(--ds-color-warning)",
+          "state.failed.color": "var(--ds-color-danger)",
+          "state.uploaded.color": "var(--ds-color-success)"
+        },
+        "content_rules": [
+          "원문 보존·자동 공식화 없음·민감정보 격리 가능 3줄 안내를 업로드 전에 보여준다",
+          "파일 메타는 이름·형식·크기·보안 범위 순으로 표기한다"
+        ],
+        "accessibility_notes": [
+          "업로드 진행을 aria-live=polite로 알린다",
+          "실패 사유를 색이 아닌 텍스트로 제공한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "주 버튼 라벨은 '지식으로 정리하기'로 고정한다"
+          ],
+          "dont": [
+            "'온톨로지 변환'·'fragment 생성' 같은 표현을 쓰지 않는다",
+            "실패를 색만으로 표시하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "select-file",
+            "upload",
+            "cancel-upload",
+            "retry"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "pending",
+            "uploading",
+            "uploaded",
+            "sensitive-quarantine-warning",
+            "failed"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "자료 올리기",
+          "required_fields": [
+            "file_name",
+            "file_type",
+            "file_size",
+            "security_scope",
+            "upload_state"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "analysis-stage-list",
+        "family": "progress-and-failure",
+        "role": "원문 보관→읽기→비교→확인 탐지→초안 준비 5단계 문장형 진행 표시",
+        "supports_primitive": "분석 진행",
+        "decision_reason": "스피너 단독 금지가 명세 요구. 취소 시 원문 보존 여부 고지 포함",
+        "states": [
+          "stage-done",
+          "stage-active",
+          "stage-pending",
+          "cancelled",
+          "background"
+        ],
+        "anatomy": [
+          "stage-row",
+          "stage-sentence",
+          "stage-marker",
+          "cancel-note"
+        ],
+        "tokens": {
+          "part.stage-sentence.color": "var(--ds-color-ink)",
+          "part.stage-marker.background": "var(--ds-color-info)",
+          "part.cancel-note.color": "var(--ds-color-ink-muted)",
+          "state.stage-done.color": "var(--ds-color-success)",
+          "state.stage-pending.color": "var(--ds-color-ink-subtle)",
+          "state.cancelled.color": "var(--ds-color-warning)"
+        },
+        "content_rules": [
+          "5단계 각각을 완료/진행/대기 문장으로 표시한다",
+          "취소 시 원문 보존 여부를 알려준다"
+        ],
+        "accessibility_notes": [
+          "진행 변경을 aria-live로 알린다",
+          "회전 표시를 단독으로 쓰지 않고 항상 텍스트를 병기한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "오래 걸리는 작업은 백그라운드 전환을 안내한다"
+          ],
+          "dont": [
+            "단계 없이 스피너만 표시하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "cancel",
+            "move-to-background",
+            "stage-change"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "stage-done",
+            "stage-active",
+            "stage-pending",
+            "cancelled",
+            "background"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "분석 진행",
+          "required_fields": [
+            "stages",
+            "current_stage",
+            "cancellable"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "analysis-failure-panel",
+        "family": "progress-and-failure",
+        "role": "실패 파일·구간 + 다시 시도/항목 제외/직접 작성/운영 이관 4행동 + 기술 예외 접기",
+        "supports_primitive": "실패 상태",
+        "decision_reason": "실패를 막다른 길이 아니라 복구 행동 목록으로 제시",
+        "states": [
+          "partial-failure",
+          "full-failure",
+          "retrying",
+          "details-expanded"
+        ],
+        "anatomy": [
+          "failure-list",
+          "recovery-actions",
+          "technical-details"
+        ],
+        "tokens": {
+          "component.container.border": "1px solid var(--ds-color-danger)",
+          "part.failure-list.color": "var(--ds-color-ink)",
+          "part.recovery-actions.color": "var(--ds-color-link)",
+          "part.technical-details.font-family": "var(--ds-font-mono)",
+          "state.retrying.color": "var(--ds-color-info)",
+          "state.details-expanded.background": "var(--ds-color-surface-muted)"
+        },
+        "content_rules": [
+          "실패 원인은 업무 문장으로 쓰고 기술 예외는 '자세히 보기' 안에 둔다",
+          "복구 행동 4종(다시 시도·항목 제외·직접 작성·운영 이관)을 항상 함께 제시한다"
+        ],
+        "accessibility_notes": [
+          "실패 알림은 role=alert로 전달한다",
+          "펼침 상태를 aria-expanded로 표시한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "실패 항목별 개별 재시도를 허용한다"
+          ],
+          "dont": [
+            "스택트레이스를 기본 노출하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "retry",
+            "exclude-item",
+            "write-manually",
+            "escalate",
+            "toggle-details"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "partial-failure",
+            "full-failure",
+            "retrying",
+            "details-expanded"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "실패 상태",
+          "required_fields": [
+            "failed_items",
+            "recovery_actions",
+            "technical_detail"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "fact-list-row",
+        "family": "fact-review",
+        "role": "업무 문장 요약 + 상태 태그 + 근거 개수의 한 줄",
+        "supports_primitive": "추출된 사실 목록",
+        "decision_reason": "sentence-first 시그니처의 기본 단위",
+        "states": [
+          "default",
+          "selected",
+          "edited-unsaved",
+          "approved",
+          "excluded",
+          "conflict"
+        ],
+        "anatomy": [
+          "fact-sentence",
+          "status-tag-slot",
+          "evidence-count"
+        ],
+        "tokens": {
+          "part.fact-sentence.font-family": "var(--ds-font-body)",
+          "part.status-tag-slot.background": "var(--ds-color-surface)",
+          "part.evidence-count.color": "var(--ds-color-ink-subtle)",
+          "state.selected.background": "var(--ds-color-surface-tint)",
+          "state.conflict.border-color": "var(--ds-color-danger)",
+          "state.approved.color": "var(--ds-color-success)"
+        },
+        "content_rules": [
+          "첫 줄은 항상 업무 문장 요약이다",
+          "상태 태그와 근거 개수를 문장 뒤에 붙인다"
+        ],
+        "accessibility_notes": [
+          "행 선택 상태를 aria-selected로 표시한다",
+          "상태는 색+아이콘+텍스트로 병기한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "수정 미저장 상태를 행에 표시한다"
+          ],
+          "dont": [
+            "기술 ID를 행에 노출하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "select",
+            "open-editor",
+            "toggle-check"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "default",
+            "selected",
+            "edited-unsaved",
+            "approved",
+            "excluded",
+            "conflict"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "추출된 사실 목록",
+          "required_fields": [
+            "fact_sentence",
+            "status",
+            "evidence_count"
+          ],
+          "provenance_required": true,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "fact-status-tag",
+        "family": "fact-review",
+        "role": "바로 확인 가능/선택 필요/새 개념 제안/충돌 확인/제외됨 5상태 태그",
+        "supports_primitive": "목록 상태",
+        "decision_reason": "색+아이콘+텍스트 3중 인코딩으로 색맹 대응. Rust는 사용 금지",
+        "states": [
+          "ready",
+          "needs-choice",
+          "new-concept",
+          "conflict",
+          "excluded"
+        ],
+        "anatomy": [
+          "tag-icon",
+          "tag-label"
+        ],
+        "tokens": {
+          "component.container.border-radius": "var(--ds-radius-sm)",
+          "part.tag-label.font-family": "var(--ds-font-body)",
+          "part.tag-icon.color": "var(--ds-color-ink-muted)",
+          "state.ready.color": "var(--ds-color-success)",
+          "state.needs-choice.color": "var(--ds-color-warning)",
+          "state.conflict.color": "var(--ds-color-danger)",
+          "state.new-concept.color": "var(--ds-color-info)",
+          "state.excluded.color": "var(--ds-color-ink-subtle)"
+        },
+        "content_rules": [
+          "라벨은 5상태 업무 어휘를 그대로 쓴다: 바로 확인 가능·선택 필요·새 개념 제안·충돌 확인·제외됨",
+          "상태 의미를 바꾸는 커스텀 색을 만들지 않는다"
+        ],
+        "accessibility_notes": [
+          "아이콘과 텍스트를 병기해 색맹에 대응한다",
+          "sr-only로 상태 전체 문구를 제공한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "성공 계열=Hunter Green, 선택 필요=Goldenrod, 충돌=Marsala 역할을 지킨다"
+          ],
+          "dont": [
+            "Rust를 상태 색으로 쓰지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "filter-by-status"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "ready",
+            "needs-choice",
+            "new-concept",
+            "conflict",
+            "excluded"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "목록 상태",
+          "required_fields": [
+            "status",
+            "label"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "fact-sentence-editor",
+        "family": "fact-review",
+        "role": "한 문장 기본 표시 아래 대상/조건/결과/적용 범위/유효기간 편집",
+        "supports_primitive": "사실 편집",
+        "decision_reason": "내부 관계 종류를 업무 문장으로 번역해 보여주는 핵심 편집기",
+        "states": [
+          "read",
+          "editing",
+          "dirty",
+          "saved",
+          "validation-blocked"
+        ],
+        "anatomy": [
+          "sentence-display",
+          "scoped-fields",
+          "field-label",
+          "validity-note"
+        ],
+        "tokens": {
+          "part.sentence-display.font-family": "var(--ds-font-heading)",
+          "part.scoped-fields.background": "var(--ds-color-surface)",
+          "part.field-label.color": "var(--ds-color-ink-muted)",
+          "part.validity-note.color": "var(--ds-color-danger)",
+          "state.editing.border-color": "var(--ds-color-link)",
+          "state.saved.color": "var(--ds-color-success)",
+          "state.validation-blocked.border-color": "var(--ds-color-danger)"
+        },
+        "content_rules": [
+          "기본 표시는 한 문장이고 구조 필드는 그 아래에 종속된다",
+          "내부 관계 종류는 업무 문장으로 번역해 보여준다"
+        ],
+        "accessibility_notes": [
+          "필드 레이블과 오류를 aria-describedby로 연결한다",
+          "저장·차단 상태 변경을 보조기기에 알린다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "수정 사유를 기록할 수 있게 한다"
+          ],
+          "dont": [
+            "숫자 신뢰도만 단독으로 표시하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "edit",
+            "save",
+            "revert",
+            "validation-fail"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "read",
+            "editing",
+            "dirty",
+            "saved",
+            "validation-blocked"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "사실 편집",
+          "required_fields": [
+            "sentence",
+            "target",
+            "condition",
+            "result",
+            "scope",
+            "valid_period"
+          ],
+          "provenance_required": true,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "relation-candidate-card",
+        "family": "fact-review",
+        "role": "관계 후보를 업무 문장 + '왜 이 후보인가' 근거 줄로 비교",
+        "supports_primitive": "애매한 관계",
+        "decision_reason": "숫자 점수 단독 표시 금지가 명세 요구",
+        "states": [
+          "default",
+          "selected",
+          "keyboard-focus",
+          "insufficient-evidence"
+        ],
+        "anatomy": [
+          "candidate-sentence",
+          "reason-line",
+          "select-control"
+        ],
+        "tokens": {
+          "part.candidate-sentence.color": "var(--ds-color-ink)",
+          "part.reason-line.color": "var(--ds-color-ink-muted)",
+          "part.select-control.color": "var(--ds-color-primary)",
+          "state.selected.border-color": "var(--ds-color-primary)",
+          "state.keyboard-focus.outline": "2px solid var(--ds-color-link)",
+          "state.insufficient-evidence.color": "var(--ds-color-warning)"
+        },
+        "content_rules": [
+          "후보는 비교 가능한 업무 문장으로 표기한다",
+          "'왜 이 후보인가' 근거 줄을 반드시 포함한다"
+        ],
+        "accessibility_notes": [
+          "radiogroup 패턴으로 후보를 선택한다",
+          "근거 줄을 후보와 함께 낭독하게 한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "중간 저장 단계가 필요한 후보를 명시한다"
+          ],
+          "dont": [
+            "숫자 점수만으로 순위를 보여주지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "select-candidate",
+            "expand-reason"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "default",
+            "selected",
+            "keyboard-focus",
+            "insufficient-evidence"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "애매한 관계",
+          "required_fields": [
+            "candidates",
+            "selected_candidate",
+            "reasons"
+          ],
+          "provenance_required": true,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "evidence-panel",
+        "family": "evidence",
+        "role": "원문 발췌+위치, 매칭 키, 추론 규칙, 사람 수정 이력의 접이식 우측 패널",
+        "supports_primitive": "근거 패널",
+        "decision_reason": "evidence-first 시그니처. 원문-구조화 문장 동시 대조 지원",
+        "states": [
+          "collapsed",
+          "open",
+          "source-compare",
+          "pinned"
+        ],
+        "anatomy": [
+          "source-excerpt",
+          "source-compare-view",
+          "match-keys",
+          "inference-rules",
+          "edit-history"
+        ],
+        "tokens": {
+          "part.source-excerpt.background": "var(--ds-color-surface-tint)",
+          "part.source-compare-view.background": "var(--ds-color-surface-muted)",
+          "part.match-keys.font-family": "var(--ds-font-mono)",
+          "part.edit-history.color": "var(--ds-color-ink-muted)",
+          "state.open.background": "var(--ds-color-surface-elevated)",
+          "state.pinned.border-color": "var(--ds-color-info)"
+        },
+        "content_rules": [
+          "근거 4종(원문 발췌·매칭 키·추론 규칙·수정 이력)을 항상 같은 순서로 보여준다",
+          "원문 위치(문서·화면·코드)를 발췌와 함께 표기한다"
+        ],
+        "accessibility_notes": [
+          "complementary landmark로 마크업한다",
+          "패널 열림·고정 상태를 보조기기에 알린다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "원문과 구조화 문장을 같은 화면에서 대조하게 한다"
+          ],
+          "dont": [
+            "원문 발췌를 수정 가능하게 두지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "open",
+            "collapse",
+            "pin",
+            "open-source-compare"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "collapsed",
+            "open",
+            "source-compare",
+            "pinned"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "근거 패널",
+          "required_fields": [
+            "source_excerpt",
+            "source_location",
+            "match_keys",
+            "inference_rules",
+            "edit_history"
+          ],
+          "provenance_required": true,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "review-action-bar",
+        "family": "approval",
+        "role": "보류/제외/수정 저장/선택 승인/전체 승인 + 반영 범위·개수 + 불가 사유",
+        "supports_primitive": "하단 행동",
+        "decision_reason": "scoped approval 시그니처. 검증 실패 예상 항목은 승인 비활성+이유",
+        "states": [
+          "idle",
+          "selection-active",
+          "approve-enabled",
+          "approve-blocked-with-reason",
+          "submitting"
+        ],
+        "anatomy": [
+          "scope-count",
+          "approve-button",
+          "secondary-actions",
+          "blocked-reason"
+        ],
+        "tokens": {
+          "part.scope-count.color": "var(--ds-color-ink-muted)",
+          "part.approve-button.background": "var(--ds-color-primary)",
+          "part.secondary-actions.color": "var(--ds-color-link)",
+          "part.blocked-reason.color": "var(--ds-color-danger)",
+          "state.approve-blocked-with-reason.background": "var(--ds-color-surface-muted)",
+          "state.submitting.background": "var(--ds-color-surface-muted)"
+        },
+        "content_rules": [
+          "승인 버튼 옆에 반영 범위와 개수를 상시 표기한다",
+          "승인 불가는 이유와 해결 행동을 함께 보여준다"
+        ],
+        "accessibility_notes": [
+          "버튼의 결과와 영향 범위를 버튼 근처 텍스트로 명시한다",
+          "차단 사유를 aria-describedby로 연결한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "검증 실패가 예상되는 항목은 승인을 비활성화한다"
+          ],
+          "dont": [
+            "'모두 승인'이 검증 실패 항목까지 포함하게 하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "hold",
+            "exclude",
+            "save-edit",
+            "approve-selected",
+            "approve-all-reviewable"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "idle",
+            "selection-active",
+            "approve-enabled",
+            "approve-blocked-with-reason",
+            "submitting"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "하단 행동",
+          "required_fields": [
+            "selection_count",
+            "approve_scope",
+            "blocked_reasons"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "new-concept-form",
+        "family": "concept-proposal",
+        "role": "현업 이름/뜻·예시/유사 용어/사용 업무 입력 + 대기 지식 목록",
+        "supports_primitive": "새 개념 제안",
+        "decision_reason": "Core 종류·Pack·제약 후보는 고급 보기로 격리",
+        "states": [
+          "empty",
+          "filled",
+          "submitted",
+          "in-official-review",
+          "approved",
+          "rejected"
+        ],
+        "anatomy": [
+          "field-group",
+          "waiting-knowledge-list",
+          "review-status-line"
+        ],
+        "tokens": {
+          "part.field-group.background": "var(--ds-color-surface)",
+          "part.waiting-knowledge-list.color": "var(--ds-color-ink-muted)",
+          "part.review-status-line.color": "var(--ds-color-info)",
+          "state.in-official-review.color": "var(--ds-color-info)",
+          "state.approved.color": "var(--ds-color-success)",
+          "state.rejected.color": "var(--ds-color-danger)"
+        },
+        "content_rules": [
+          "입력 항목은 현업 어휘 5종만 받는다: 이름·뜻과 예시·비슷한 용어·사용 업무·대기 지식",
+          "Core 종류·Pack·제약 후보는 고급 보기로 격리한다"
+        ],
+        "accessibility_notes": [
+          "필수 항목을 시각과 텍스트로 함께 표시한다",
+          "제출 후 상태 변화를 알림으로 전달한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "이 개념을 기다리는 지식 목록을 함께 보여준다"
+          ],
+          "dont": [
+            "승인이 늦어져도 원래 입력한 지식을 잃지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "submit",
+            "save-draft",
+            "view-waiting-knowledge"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "empty",
+            "filled",
+            "submitted",
+            "in-official-review",
+            "approved",
+            "rejected"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "새 개념 제안",
+          "required_fields": [
+            "business_name",
+            "meaning_example",
+            "similar_terms",
+            "business_area",
+            "waiting_knowledge"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "link-workspace-canvas",
+        "family": "link-workspace",
+        "role": "검색 결과 배치 + 선 연결 + 점선 분석 중 표시의 작업 공간",
+        "supports_primitive": "관계 연결 작업실",
+        "decision_reason": "본 그래프 비오염 원칙(분석 중에는 쓰지 않음)과 키보드 대안 경로 필수",
+        "states": [
+          "empty",
+          "items-placed",
+          "linking",
+          "analyzing-dashed",
+          "verdict-shown"
+        ],
+        "anatomy": [
+          "work-surface",
+          "item-node",
+          "link-line",
+          "keyboard-path-bar"
+        ],
+        "tokens": {
+          "part.work-surface.background": "var(--ds-color-canvas)",
+          "part.item-node.background": "var(--ds-color-surface)",
+          "part.link-line.color": "var(--ds-color-info)",
+          "part.keyboard-path-bar.color": "var(--ds-color-link)",
+          "state.analyzing-dashed.border-color": "var(--ds-color-info)",
+          "state.empty.color": "var(--ds-color-ink-subtle)"
+        },
+        "content_rules": [
+          "분석 중 연결은 점선과 '분석 중' 라벨로 표시한다",
+          "승인 전에는 본 그래프에 아무것도 쓰지 않는다"
+        ],
+        "accessibility_notes": [
+          "캔버스와 같은 내용을 목록·표로 제공한다",
+          "키보드 경로(연결 시작→대상 검색→연결 후보 보기)를 완비한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "연결 후보와 결과를 문장으로 표시한다"
+          ],
+          "dont": [
+            "장식적 그래프 배경을 쓰지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "place-item",
+            "start-link",
+            "draw-link",
+            "keyboard-link",
+            "remove-item"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "empty",
+            "items-placed",
+            "linking",
+            "analyzing-dashed",
+            "verdict-shown"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "관계 연결 작업실",
+          "required_fields": [
+            "items",
+            "links",
+            "analysis_state"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "link-verdict-card",
+        "family": "link-workspace",
+        "role": "동일 대상/동일 후보/기존 경로/직접 후보/중간 필요/근거 부족 6결과 카드",
+        "supports_primitive": "분석 결과",
+        "decision_reason": "연결 분석의 전 결과 공간을 문장으로 커버",
+        "states": [
+          "same-entity",
+          "possible-duplicate",
+          "already-connected",
+          "direct-candidate",
+          "needs-intermediate",
+          "insufficient-evidence"
+        ],
+        "anatomy": [
+          "verdict-sentence",
+          "evidence-line",
+          "next-action"
+        ],
+        "tokens": {
+          "part.verdict-sentence.color": "var(--ds-color-ink)",
+          "part.evidence-line.color": "var(--ds-color-ink-muted)",
+          "part.next-action.color": "var(--ds-color-link)",
+          "state.same-entity.color": "var(--ds-color-success)",
+          "state.needs-intermediate.color": "var(--ds-color-warning)",
+          "state.insufficient-evidence.color": "var(--ds-color-ink-subtle)"
+        },
+        "content_rules": [
+          "6종 결과를 각각 고정 문구 틀로 표기한다",
+          "다음 행동(수정·검토함 보내기)을 결과와 함께 제시한다"
+        ],
+        "accessibility_notes": [
+          "결과 유형을 텍스트로 먼저 낭독하게 한다",
+          "카드 간 이동을 화살표 키로 지원한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "방향·관계 문장·적용 범위·근거의 수정 진입점을 제공한다"
+          ],
+          "dont": [
+            "근거 부족 결과를 실패처럼 표시하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "accept-verdict",
+            "edit-relation",
+            "send-to-review"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "same-entity",
+            "possible-duplicate",
+            "already-connected",
+            "direct-candidate",
+            "needs-intermediate",
+            "insufficient-evidence"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "분석 결과",
+          "required_fields": [
+            "verdict_type",
+            "verdict_sentence",
+            "evidence_refs"
+          ],
+          "provenance_required": true,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "knowledge-status-badge",
+        "family": "knowledge-detail",
+        "role": "초안/확인 필요/팀 확인/공식/철회됨 수명주기 배지",
+        "supports_primitive": "현재 상태",
+        "decision_reason": "지식 신뢰 수준의 1급 표시. 공식=Hunter Green 계열",
+        "states": [
+          "draft",
+          "needs-check",
+          "team-confirmed",
+          "official",
+          "retracted"
+        ],
+        "anatomy": [
+          "badge-icon",
+          "badge-label"
+        ],
+        "tokens": {
+          "component.container.border-radius": "var(--ds-radius-sm)",
+          "part.badge-label.font-family": "var(--ds-font-body)",
+          "part.badge-icon.color": "var(--ds-color-ink-muted)",
+          "state.official.color": "var(--ds-color-success)",
+          "state.needs-check.color": "var(--ds-color-warning)",
+          "state.retracted.color": "var(--ds-color-danger)",
+          "state.draft.color": "var(--ds-color-ink-subtle)"
+        },
+        "content_rules": [
+          "5상태 라벨을 고정한다: 초안·확인 필요·팀 확인·공식·철회됨"
+        ],
+        "accessibility_notes": [
+          "상태를 색+아이콘+텍스트로 병기한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "공식 상태에만 Hunter Green을 쓴다"
+          ],
+          "dont": [
+            "새 상태를 임의로 추가하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "view-status-history"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "draft",
+            "needs-check",
+            "team-confirmed",
+            "official",
+            "retracted"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "현재 상태",
+          "required_fields": [
+            "status"
+          ],
+          "provenance_required": true,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "provenance-timeline",
+        "family": "knowledge-detail",
+        "role": "변경·승인 이력 (누가·언제·무엇을·왜)",
+        "supports_primitive": "변경·승인 이력",
+        "decision_reason": "수용 과업 6(승인자 찾기)의 대상 표면",
+        "states": [
+          "default",
+          "entry-expanded",
+          "empty"
+        ],
+        "anatomy": [
+          "timeline-entry",
+          "actor-name",
+          "change-reason",
+          "timestamp"
+        ],
+        "tokens": {
+          "part.timeline-entry.border": "1px solid var(--ds-color-border)",
+          "part.actor-name.color": "var(--ds-color-ink)",
+          "part.change-reason.color": "var(--ds-color-ink-muted)",
+          "part.timestamp.font-family": "var(--ds-font-mono)",
+          "state.entry-expanded.background": "var(--ds-color-surface-muted)",
+          "state.empty.color": "var(--ds-color-ink-subtle)"
+        },
+        "content_rules": [
+          "각 항목은 누가·언제·무엇을·왜 순으로 쓴다",
+          "승인자는 실명 또는 역할로 표기한다"
+        ],
+        "accessibility_notes": [
+          "시간순 리스트 시맨틱(ol)을 사용한다",
+          "펼침 상태를 aria-expanded로 표시한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "원본 변경으로 재검토가 필요하면 타임라인에 표시한다"
+          ],
+          "dont": [
+            "시스템 내부 ID로 행위자를 표기하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "expand-entry",
+            "open-evidence"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "default",
+            "entry-expanded",
+            "empty"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "변경·승인 이력",
+          "required_fields": [
+            "entries",
+            "actors",
+            "timestamps"
+          ],
+          "provenance_required": true,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "impact-question-buttons",
+        "family": "knowledge-detail",
+        "role": "왜?/어디서 왔나?/무엇이 영향 받나? 즉시 실행 버튼, 결과는 문장·단계 목록 우선",
+        "supports_primitive": "영향과 원인",
+        "decision_reason": "lineage 질의를 그래프가 아닌 문장 답변으로 번역",
+        "states": [
+          "idle",
+          "loading",
+          "answer-shown",
+          "graph-secondary-view"
+        ],
+        "anatomy": [
+          "question-button",
+          "answer-list",
+          "graph-toggle"
+        ],
+        "tokens": {
+          "part.question-button.border": "1px solid var(--ds-color-border-strong)",
+          "part.answer-list.color": "var(--ds-color-ink)",
+          "part.graph-toggle.color": "var(--ds-color-link)",
+          "state.loading.color": "var(--ds-color-ink-subtle)",
+          "state.answer-shown.background": "var(--ds-color-surface)"
+        },
+        "content_rules": [
+          "버튼 라벨을 고정한다: 왜? · 어디서 왔나? · 무엇이 영향 받나?",
+          "결과는 문장과 단계 목록을 우선하고 그래프는 보조 보기로 둔다"
+        ],
+        "accessibility_notes": [
+          "결과 로딩을 aria-busy로 표시한다",
+          "그래프 보기에는 표 대체를 제공한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "답변에 근거 링크를 포함한다"
+          ],
+          "dont": [
+            "그래프를 기본 결과 화면으로 쓰지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "ask-why",
+            "ask-origin",
+            "ask-impact",
+            "toggle-graph-view"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "idle",
+            "loading",
+            "answer-shown",
+            "graph-secondary-view"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "영향과 원인",
+          "required_fields": [
+            "knowledge_id",
+            "answer_sentences",
+            "answer_steps"
+          ],
+          "provenance_required": true,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "advanced-drawer",
+        "family": "knowledge-detail",
+        "role": "그래프·IRI·Pack·SHACL 리포트 원문을 담는 고급 보기 서랍",
+        "supports_primitive": "고급 정보",
+        "decision_reason": "translated-vocabulary 시그니처의 배출구. 기본 화면 어휘 오염 방지",
+        "states": [
+          "closed",
+          "open",
+          "raw-report-view"
+        ],
+        "anatomy": [
+          "drawer-toggle",
+          "raw-content",
+          "vocabulary-warning"
+        ],
+        "tokens": {
+          "part.drawer-toggle.color": "var(--ds-color-ink-muted)",
+          "part.raw-content.font-family": "var(--ds-font-mono)",
+          "part.vocabulary-warning.color": "var(--ds-color-warning)",
+          "state.open.background": "var(--ds-color-surface-elevated)",
+          "state.raw-report-view.background": "var(--ds-color-surface-muted)"
+        },
+        "content_rules": [
+          "서랍 밖에서는 내부 어휘를 쓰지 않는다",
+          "서랍 내용이 내부 기술 정보의 원문임을 명시한다"
+        ],
+        "accessibility_notes": [
+          "drawer/dialog 패턴으로 포커스 트랩과 Esc 닫기를 지원한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "IRI·Pack·SHACL 리포트를 원문 그대로 표시한다"
+          ],
+          "dont": [
+            "고급 정보를 기본 화면으로 승격하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "open",
+            "close",
+            "copy-raw"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "closed",
+            "open",
+            "raw-report-view"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "고급 정보",
+          "required_fields": [
+            "raw_iri",
+            "pack_info",
+            "shacl_report"
+          ],
+          "provenance_required": true,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "ops-queue-table",
+        "family": "operations",
+        "role": "입력 작업 대기/진행/성공/실패 테이블 + 재시도(기존 작업의 새 시도임을 구분)",
+        "supports_primitive": "운영 상태",
+        "decision_reason": "재시도 중복 생성 금지 계약을 행 수준에서 표현",
+        "states": [
+          "queued",
+          "running",
+          "succeeded",
+          "failed",
+          "retry-of-existing",
+          "blocked-by-policy"
+        ],
+        "anatomy": [
+          "table-header",
+          "job-row",
+          "status-cell",
+          "retry-control"
+        ],
+        "tokens": {
+          "part.table-header.background": "var(--ds-color-surface-muted)",
+          "part.job-row.border": "1px solid var(--ds-color-border)",
+          "part.status-cell.font-family": "var(--ds-font-mono)",
+          "part.retry-control.color": "var(--ds-color-link)",
+          "state.failed.color": "var(--ds-color-danger)",
+          "state.succeeded.color": "var(--ds-color-success)",
+          "state.blocked-by-policy.color": "var(--ds-color-warning)"
+        },
+        "content_rules": [
+          "재시도는 기존 작업의 새 시도임을 행에 표기한다",
+          "차단 사유(권한·정책)를 상태와 함께 보여준다"
+        ],
+        "accessibility_notes": [
+          "테이블 헤더에 scope를 지정한다",
+          "상태 변경을 aria-live로 알린다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "실패 원인과 재시도 가능 여부를 함께 표시한다"
+          ],
+          "dont": [
+            "재시도가 새 지식 입력으로 보이게 하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "retry-job",
+            "cancel-job",
+            "filter-status",
+            "open-job-detail"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "queued",
+            "running",
+            "succeeded",
+            "failed",
+            "retry-of-existing",
+            "blocked-by-policy"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "운영 상태",
+          "required_fields": [
+            "jobs",
+            "job_status",
+            "retry_lineage"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "quarantine-list",
+        "family": "operations",
+        "role": "검증 실패·격리 항목 목록 + 실패 원인 + 재시도 가능 여부",
+        "supports_primitive": "격리된 항목",
+        "decision_reason": "민감정보 격리와 검증 실패를 운영자 행동으로 연결",
+        "states": [
+          "quarantined",
+          "reviewable",
+          "released",
+          "permanently-excluded"
+        ],
+        "anatomy": [
+          "quarantine-row",
+          "failure-reason",
+          "retry-flag"
+        ],
+        "tokens": {
+          "part.quarantine-row.background": "var(--ds-color-surface)",
+          "part.failure-reason.color": "var(--ds-color-danger)",
+          "part.retry-flag.color": "var(--ds-color-info)",
+          "state.released.color": "var(--ds-color-success)",
+          "state.permanently-excluded.color": "var(--ds-color-ink-subtle)"
+        },
+        "content_rules": [
+          "격리 사유를 업무 문장으로 표기한다",
+          "해제·영구 제외의 영향 범위를 행동 버튼 근처에 명시한다"
+        ],
+        "accessibility_notes": [
+          "행동 버튼에 결과 설명을 연결한다",
+          "위험 행동에는 확인 대화 상자를 둔다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "민감정보 격리와 검증 실패를 구분해 표시한다"
+          ],
+          "dont": [
+            "격리 항목을 조용히 삭제하지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "release",
+            "exclude-permanently",
+            "retry-validation"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "quarantined",
+            "reviewable",
+            "released",
+            "permanently-excluded"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "격리된 항목",
+          "required_fields": [
+            "items",
+            "quarantine_reason",
+            "retry_available"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "empty-state-guide",
+        "family": "feedback-and-empty-states",
+        "role": "첫 사용 빈 상태 안내 + 샘플로 체험하기 + 샘플 데이터 구분 라벨",
+        "supports_primitive": "빈 상태",
+        "decision_reason": "샘플과 회사 데이터의 색·라벨 구분이 명세 요구",
+        "states": [
+          "first-use",
+          "sample-active",
+          "no-permission",
+          "offline"
+        ],
+        "anatomy": [
+          "guide-message",
+          "sample-cta",
+          "sample-badge"
+        ],
+        "tokens": {
+          "part.guide-message.color": "var(--ds-color-ink-muted)",
+          "part.sample-cta.background": "var(--ds-color-primary)",
+          "part.sample-badge.background": "var(--ds-color-surface-tint)",
+          "state.sample-active.border-color": "var(--ds-color-accent)",
+          "state.no-permission.color": "var(--ds-color-warning)",
+          "state.offline.color": "var(--ds-color-ink-subtle)"
+        },
+        "content_rules": [
+          "빈 상태 문구는 다음 행동을 제안한다: 문서를 올리거나 알고 있는 업무를 설명해 주세요",
+          "샘플 데이터는 색과 라벨로 회사 데이터와 구분한다"
+        ],
+        "accessibility_notes": [
+          "안내 문구를 heading 구조에 포함한다",
+          "샘플 배지를 텍스트로 병기한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "'샘플로 체험하기' 진입점을 제공한다"
+          ],
+          "dont": [
+            "빈 상태를 그래프 통계로 채우지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "start-sample",
+            "add-knowledge"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "first-use",
+            "sample-active",
+            "no-permission",
+            "offline"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "빈 상태",
+          "required_fields": [
+            "state_kind",
+            "sample_available"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      },
+      {
+        "name": "workspace-topbar",
+        "family": "navigation",
+        "role": "현재 작업공간 이름 + 통합 검색 슬롯 + 도움말 + 사용자 메뉴 상단 바",
+        "supports_primitive": "workspace topbar",
+        "decision_reason": "작업공간 컨텍스트와 전역 도구(검색·도움말)를 모든 화면에서 상시 노출하는 유일한 상단 구조",
+        "states": [
+          "default",
+          "search-focus",
+          "menu-open"
+        ],
+        "anatomy": [
+          "workspace-name",
+          "search-slot",
+          "help-entry",
+          "user-menu"
+        ],
+        "tokens": {
+          "component.container.border-bottom": "1px solid var(--ds-color-border)",
+          "part.workspace-name.font-family": "var(--ds-font-heading)",
+          "part.search-slot.background": "var(--ds-color-surface)",
+          "part.user-menu.color": "var(--ds-color-ink-muted)",
+          "state.search-focus.border-color": "var(--ds-color-link)",
+          "state.menu-open.background": "var(--ds-color-surface-elevated)"
+        },
+        "content_rules": [
+          "현재 작업공간 이름을 항상 표시한다",
+          "검색 슬롯은 홈 통합 검색과 같은 동작을 한다"
+        ],
+        "accessibility_notes": [
+          "banner landmark를 사용한다",
+          "메뉴 열림을 aria-expanded로 표시한다"
+        ],
+        "dos_and_donts": {
+          "do": [
+            "도움말을 업무 어휘로 제공한다"
+          ],
+          "dont": [
+            "상단 바에 상태 통계를 넣지 않는다"
+          ]
+        },
+        "interaction": {
+          "events": [
+            "open-search",
+            "open-help",
+            "open-user-menu",
+            "switch-workspace"
+          ],
+          "state_transitions": [],
+          "focus_behavior": "Preserve visible focus and logical DOM order.",
+          "state_coverage": [
+            "default",
+            "search-focus",
+            "menu-open"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "workspace topbar",
+          "required_fields": [
+            "workspace_name",
+            "user"
+          ],
+          "provenance_required": false,
+          "empty_state_required": true
+        }
+      }
+    ],
+    "rejected_components": [
+      {
+        "name": "graph-explorer-canvas (primary)",
+        "reason": "그래프는 지식 상세의 보조 보기와 고급 서랍으로 강등. 주 표면으로 쓰면 온톨로지 어휘 은폐 원칙이 무너진다"
+      },
+      {
+        "name": "metric-kpi-card-row",
+        "reason": "홈에서 그래프 통계·노드 수·Pack 수 노출 금지. 운영 관리자 요약은 운영 상태 화면으로 격리"
+      },
+      {
+        "name": "confidence-score-badge",
+        "reason": "숫자 점수 단독 표시 금지. '왜 이 후보인가' 문장형 근거로 대체"
+      },
+      {
+        "name": "wizard-stepper (intake)",
+        "reason": "직접 설명하기는 자유문장이 원칙. 단계 강제는 명세의 '별도 필드로 강제하지 않는다'와 충돌"
+      }
+    ],
+    "primitive_reconciliation_version": "product-primitive-reconciliation/v1",
+    "primitive_reconciliation": [
+      {
+        "primitive": "global search input",
+        "resolution": "component",
+        "component": "global-search-input",
+        "reason": "홈과 상단 바에서 같은 통합 검색 컴포넌트를 사용한다"
+      },
+      {
+        "primitive": "intake method list",
+        "resolution": "component",
+        "component": "intake-method-list",
+        "reason": "지식 추가 첫 선택을 전담하는 목록 컴포넌트"
+      },
+      {
+        "primitive": "free-sentence composer with help frames",
+        "resolution": "component",
+        "component": "describe-composer",
+        "reason": "자유문장 입력과 도움 틀·유도 질문을 한 컴포넌트로 묶는다"
+      },
+      {
+        "primitive": "upload manifest with trust notice",
+        "resolution": "component",
+        "component": "upload-manifest-card",
+        "reason": "파일 메타와 신뢰 계약 안내를 업로드 카드가 담당한다"
+      },
+      {
+        "primitive": "five-stage sentence progress",
+        "resolution": "component",
+        "component": "analysis-stage-list",
+        "reason": "5단계 문장형 진행 표시 전담 컴포넌트"
+      },
+      {
+        "primitive": "failure recovery panel",
+        "resolution": "component",
+        "component": "analysis-failure-panel",
+        "reason": "실패 항목과 4가지 복구 행동을 담는 패널"
+      },
+      {
+        "primitive": "sentence-first fact row",
+        "resolution": "component",
+        "component": "fact-list-row",
+        "reason": "sentence-first 시그니처의 기본 목록 단위"
+      },
+      {
+        "primitive": "five-state fact status tag",
+        "resolution": "component",
+        "component": "fact-status-tag",
+        "reason": "5상태를 색+아이콘+텍스트로 인코딩하는 태그"
+      },
+      {
+        "primitive": "fact sentence editor with scoped fields",
+        "resolution": "component",
+        "component": "fact-sentence-editor",
+        "reason": "한 문장 요약 아래 범위 필드를 편집하는 핵심 편집기"
+      },
+      {
+        "primitive": "relation candidate comparison card",
+        "resolution": "component",
+        "component": "relation-candidate-card",
+        "reason": "관계 후보를 업무 문장과 이유로 비교하는 카드"
+      },
+      {
+        "primitive": "collapsible evidence panel",
+        "resolution": "component",
+        "component": "evidence-panel",
+        "reason": "근거 4종을 접이식 우측 패널이 담당한다"
+      },
+      {
+        "primitive": "source-versus-structured compare view",
+        "resolution": "anatomy",
+        "component": "evidence-panel",
+        "anatomy_parts": [
+          "source-compare-view"
+        ],
+        "reason": "원문-구조화 문장 대조는 evidence-panel의 source-compare-view 파트가 담당한다"
+      },
+      {
+        "primitive": "scoped review action bar",
+        "resolution": "component",
+        "component": "review-action-bar",
+        "reason": "반영 범위·개수·불가 사유를 병기하는 하단 액션 바"
+      },
+      {
+        "primitive": "new concept proposal form",
+        "resolution": "component",
+        "component": "new-concept-form",
+        "reason": "현업 어휘만으로 새 개념을 제안하는 폼"
+      },
+      {
+        "primitive": "link workspace canvas with keyboard path",
+        "resolution": "component",
+        "component": "link-workspace-canvas",
+        "reason": "연결 작업 공간과 키보드 대안 경로를 함께 제공한다"
+      },
+      {
+        "primitive": "link verdict card",
+        "resolution": "component",
+        "component": "link-verdict-card",
+        "reason": "연결 분석 6종 결과를 문장 카드로 표현한다"
+      },
+      {
+        "primitive": "knowledge lifecycle badge",
+        "resolution": "component",
+        "component": "knowledge-status-badge",
+        "reason": "지식 수명주기 5상태 배지"
+      },
+      {
+        "primitive": "provenance timeline",
+        "resolution": "component",
+        "component": "provenance-timeline",
+        "reason": "변경·승인 이력을 시간순으로 보여준다"
+      },
+      {
+        "primitive": "impact question buttons",
+        "resolution": "component",
+        "component": "impact-question-buttons",
+        "reason": "왜/어디서/영향 질문을 즉시 실행하는 버튼 그룹"
+      },
+      {
+        "primitive": "advanced drawer for raw ontology artifacts",
+        "resolution": "component",
+        "component": "advanced-drawer",
+        "reason": "IRI·Pack·SHACL 원문을 격리하는 고급 서랍"
+      },
+      {
+        "primitive": "operations queue table",
+        "resolution": "component",
+        "component": "ops-queue-table",
+        "reason": "입력 작업 상태와 재시도를 다루는 운영 테이블"
+      },
+      {
+        "primitive": "quarantine list",
+        "resolution": "component",
+        "component": "quarantine-list",
+        "reason": "검증 실패·격리 항목과 복구 가능 여부 목록"
+      },
+      {
+        "primitive": "sample data badge",
+        "resolution": "anatomy",
+        "component": "empty-state-guide",
+        "anatomy_parts": [
+          "sample-badge"
+        ],
+        "reason": "샘플 데이터 구분 라벨은 empty-state-guide의 sample-badge 파트가 담당한다"
+      },
+      {
+        "primitive": "empty state guide",
+        "resolution": "component",
+        "component": "empty-state-guide",
+        "reason": "첫 사용 빈 상태 안내와 샘플 체험 진입점"
+      },
+      {
+        "primitive": "left navigation",
+        "resolution": "component",
+        "component": "left-nav",
+        "reason": "6항목 좌측 메뉴 전역 내비게이션"
+      },
+      {
+        "primitive": "workspace topbar",
+        "resolution": "component",
+        "component": "workspace-topbar",
+        "reason": "작업공간 컨텍스트와 전역 도구 상단 바"
+      }
+    ]
+  },
+  "product_primitives": [
+    "global search input",
+    "intake method list",
+    "free-sentence composer with help frames",
+    "upload manifest with trust notice",
+    "five-stage sentence progress",
+    "failure recovery panel",
+    "sentence-first fact row",
+    "five-state fact status tag",
+    "fact sentence editor with scoped fields",
+    "relation candidate comparison card",
+    "collapsible evidence panel",
+    "source-versus-structured compare view",
+    "scoped review action bar",
+    "new concept proposal form",
+    "link workspace canvas with keyboard path",
+    "link verdict card",
+    "knowledge lifecycle badge",
+    "provenance timeline",
+    "impact question buttons",
+    "advanced drawer for raw ontology artifacts",
+    "operations queue table",
+    "quarantine list",
+    "sample data badge",
+    "empty state guide",
+    "left navigation",
+    "workspace topbar"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility",
+      "forms",
+      "review",
+      "table",
+      "status",
+      "progress",
+      "notification",
+      "data density"
+    ],
+    "avoid_sources_containing": [
+      "brand-only",
+      "marketing-only",
+      "graph visualization gallery"
+    ]
+  },
+  "seeds": [
+    {
+      "url": "https://carbondesignsystem.com",
+      "kind": "design-system",
+      "title": "Carbon",
+      "notes": "엔터프라이즈 데이터 UI, 상태 태그, 접근성 가이드"
+    },
+    {
+      "url": "https://primer.style",
+      "kind": "design-system",
+      "title": "Primer",
+      "notes": "리뷰·승인 워크플로우와 밀도 있는 목록 표면"
+    },
+    {
+      "url": "https://atlassian.design",
+      "kind": "design-system",
+      "title": "Atlassian Design System",
+      "notes": "워크스페이스 내비게이션, 권한, 운영 SaaS 패턴"
+    }
+  ],
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [
+      "Deep Blues",
+      "Natural Blues",
+      "Pastel Yellows",
+      "Deep Greens",
+      "Standard Yellows",
+      "Pantone Trend Reds",
+      "Deep Oranges"
+    ],
+    "selected_colors": [
+      "Prussian Blue",
+      "Ocean Blue",
+      "Cornsilk",
+      "Hunter Green",
+      "Goldenrod",
+      "Marsala",
+      "Rust"
+    ],
+    "palette_roles": {
+      "primary": "Prussian Blue",
+      "accent": "Rust",
+      "surface_tint": "Cornsilk",
+      "structural_support": "Ocean Blue",
+      "proof_support": "Hunter Green"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "balanced",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "flat",
+      "prefer_moods": [
+        "신뢰감",
+        "집중",
+        "차분함",
+        "고전적 권위",
+        "따뜻함"
+      ],
+      "avoid_moods": [
+        "네온",
+        "몽환적",
+        "유아적",
+        "장식적"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 8,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": false
+    },
+    "notes": [
+      "정체성 축: Prussian Blue(잉크·권위) + Ocean Blue(신뢰·포커스) + Cornsilk(따뜻한 종이 표면)",
+      "지식 작성·검토 화면의 표면은 종이 질감 없이 평면(flat)으로, 본문 가독성이 항상 우선",
+      "역할 고정: 성공=Hunter Green, 경고=Goldenrod, 실패·충돌=Marsala",
+      "Rust는 승인·위험 의미로 금지, 드문 편집적 강조(브랜드 포인트)에만 사용",
+      "상태는 색+아이콘+텍스트 3중 인코딩, 색 단독 구분 금지",
+      "다크 모드: 프러시안 심해 표면 위 콘실크 잉크(역전 도면) 방향 유지"
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [
+      "split review workbench with fact list and detail editor",
+      "evidence panel with source excerpt comparison",
+      "korean enterprise knowledge intake form calm archive tone"
+    ],
+    "sources": [],
+    "preferred_count": 12,
+    "weights": {
+      "layout": 0.32,
+      "component_shape": 0.26,
+      "color_balance": 0.16,
+      "typography_mood": 0.14,
+      "surface_style": 0.12
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [
+      "fact list and detail editor co-present in one viewport",
+      "status tags encoded with color plus icon plus text",
+      "approval control with visible scope and count"
+    ],
+    "avoid_patterns": [
+      "decorative node graph as hero",
+      "numeric score badges without reasons",
+      "spinner-only loading",
+      "metric card dashboards"
+    ],
+    "notes": [
+      "이미지 레퍼런스는 밀도·레이아웃 리듬·컴포넌트 형태 힌트에만 사용",
+      "색상·서체·IA의 진실 소스는 spec.md와 brand_profile.json"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "이 프로젝트는 로컬 레퍼런스 없이 spec 기반 합성을 기본으로 한다"
+      ]
+    }
+  }
+}

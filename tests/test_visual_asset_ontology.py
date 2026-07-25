@@ -1,7 +1,10 @@
 import unittest
 import tempfile
 import json
+import hashlib
 from pathlib import Path
+
+from PIL import Image
 
 from design_ontology_harness.graph_builders import build_full_ontology_graph
 from design_ontology_harness.graph_schema import EdgeType, NodeType
@@ -86,9 +89,11 @@ class VisualAssetOntologyTests(unittest.TestCase):
         contract = graph.get_node("governance:generated-visual-asset-contract")
         self.assertIsNotNone(contract)
         self.assertEqual(contract.type, NodeType.GovernanceRule)
-        self.assertEqual(contract.meta["schema_version"], "visual-asset-manifest/v1")
+        self.assertEqual(contract.meta["schema_version"], "visual-asset-manifest/v2")
         self.assertIn("design-system/generated_visual_assets.json", contract.meta["compatible_manifest_paths"])
         self.assertIn("sha256", contract.meta["asset_record_required_fields"])
+        self.assertIn("generation_run_id", contract.meta["asset_record_required_fields"])
+        self.assertIn("candidate_id", contract.meta["asset_record_required_fields"])
         self.assertTrue(contract.meta["preserve_originals"])
 
         assets = graph.get_nodes_by_type(NodeType.GeneratedVisualAsset)
@@ -105,7 +110,7 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIn("visual_reference_report.json", hero.meta["prompt_basis"])
         self.assertEqual(hero.meta["manifest_path"], "public/generated/design-system/manifest.json")
         self.assertEqual(hero.meta["prompt_pack_path"], "public/generated/design-system/imagegen-prompts.md")
-        self.assertEqual(hero.meta["manifest_schema"], "visual-asset-manifest/v1")
+        self.assertEqual(hero.meta["manifest_schema"], "visual-asset-manifest/v2")
         self.assertIn("original_png_path", hero.meta["asset_record_required_fields"])
         self.assertTrue(hero.meta["workspace_copy_required"])
         self.assertTrue(hero.meta["original_preservation_required"])
@@ -121,6 +126,86 @@ class VisualAssetOntologyTests(unittest.TestCase):
         prevention_edges = graph.get_edges_from("governance:generated-visual-asset-contract", EdgeType.prevents)
         self.assertIn("failure-pattern:generated-image-untracked-asset", {edge.target for edge in prevention_edges})
         self.assertIn("failure-pattern:wrong-medium-svg-for-narrative-media", {edge.target for edge in prevention_edges})
+
+    def test_fixture_led_product_gets_only_fixture_specific_promptable_slots(self) -> None:
+        graph = build_full_ontology_graph(
+            brand_profile={
+                "brand_name": "World Cup Hub",
+                "application_concept": {
+                    "operating_mode": "fixture-monitoring-and-fan-participation",
+                },
+                "layout_skeleton": {
+                    "composition": "fixture-led-command-desk-with-synchronized-match-rail",
+                    "avoid_layouts": ["generic hero plus card grid"],
+                },
+            },
+            blueprint={"principles": []},
+            component_inventory={
+                "families": [
+                    {
+                        "family": "navigation",
+                        "components": ["app-shell"],
+                    },
+                    {
+                        "family": "data-display",
+                        "components": [
+                            "schedule-table",
+                            "match-detail-panel",
+                            "generated-visual-context",
+                            "result-summary-card",
+                        ],
+                    },
+                ],
+                "components": [
+                    {"name": "app-shell", "family": "navigation"},
+                    {"name": "schedule-table", "family": "data-display"},
+                    {"name": "match-detail-panel", "family": "data-display"},
+                    {
+                        "name": "generated-visual-context",
+                        "family": "data-display",
+                    },
+                    {"name": "result-summary-card", "family": "data-display"},
+                ],
+            },
+            token_schema={"categories": {}},
+        )
+
+        promptable = {
+            node.id: node
+            for node in graph.get_nodes_by_type(NodeType.GeneratedVisualAsset)
+            if node.meta.get("status") == "promptable"
+        }
+        self.assertEqual(
+            set(promptable),
+            {
+                "visual-asset:fixture-led-ui-direction-mockup",
+                "visual-asset:fixture-context-raster",
+            },
+        )
+        direction = promptable["visual-asset:fixture-led-ui-direction-mockup"]
+        context = promptable["visual-asset:fixture-context-raster"]
+        self.assertEqual(direction.meta["visual_scope"], "design-reference-only")
+        self.assertEqual(context.meta["visual_scope"], "secondary-runtime-support")
+        self.assertIn("first viewport must", direction.meta["usage"])
+        self.assertIn("may not contain a fake interface", context.meta["usage"])
+
+        direction_targets = {
+            edge.target
+            for edge in graph.get_edges_from(direction.id, EdgeType.intended_for)
+        }
+        context_targets = {
+            edge.target
+            for edge in graph.get_edges_from(context.id, EdgeType.intended_for)
+        }
+        self.assertEqual(
+            direction_targets,
+            {
+                "component:app-shell",
+                "component:schedule-table",
+                "component:match-detail-panel",
+            },
+        )
+        self.assertEqual(context_targets, {"component:generated-visual-context"})
 
     def test_generated_visual_asset_plan_is_rendered_in_system_spec_sections(self) -> None:
         graph = build_full_ontology_graph(
@@ -146,7 +231,7 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIn("Codex image_gen skill", sections)
         self.assertIn("no API fallback", sections)
         self.assertIn("public/generated/design-system/manifest.json", sections)
-        self.assertIn("visual-asset-manifest/v1", sections)
+        self.assertIn("visual-asset-manifest/v2", sections)
         self.assertIn("design-system/generated_visual_assets.json", sections)
         self.assertIn("workspace copy required", sections)
 
@@ -284,6 +369,17 @@ class VisualAssetOntologyTests(unittest.TestCase):
     def test_project_visual_asset_manifest_is_auto_discovered_from_brand_profile_path(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             project_dir = Path(tmp)
+            generation_run_id = "019e2de5-941b-7971-98e3-6ed84372f36b"
+            candidate_id = "ig_05e8553d24da513b016a07d77edabc8191bf7569ff5368de06"
+            original_path = (
+                project_dir
+                / ".codex"
+                / "generated_images"
+                / generation_run_id
+                / f"{candidate_id}.png"
+            )
+            original_path.parent.mkdir(parents=True)
+            Image.new("RGB", (16, 9), "#20344a").save(original_path)
             (project_dir / "public" / "generated" / "design-system").mkdir(parents=True)
             (project_dir / "brand_profile.json").write_text(
                 json.dumps({
@@ -303,13 +399,13 @@ class VisualAssetOntologyTests(unittest.TestCase):
                 encoding="utf-8",
             )
             manifest = {
-                "schema_version": "visual-asset-manifest/v1",
+                "schema_version": "visual-asset-manifest/v2",
                 "project": "world-cup-hub",
                 "brand": "World Cup Hub",
                 "generator": {"id": "image-model:codex-imagegen"},
                 "source_session": {
-                    "id": "session-1",
-                    "default_directory": "/Users/example/.codex/generated_images/session-1",
+                    "id": generation_run_id,
+                    "default_directory": str(original_path.parent),
                     "preserve_originals": True,
                 },
                 "assets": [
@@ -319,17 +415,27 @@ class VisualAssetOntologyTests(unittest.TestCase):
                         "slot": "hero-image",
                         "status": "integrated",
                         "asset_path": "assets/world-cup-command-center.webp",
-                        "original_png_path": "/Users/example/.codex/generated_images/session-1/source.png",
+                        "original_png_path": str(original_path),
+                        "original_sha256": hashlib.sha256(original_path.read_bytes()).hexdigest(),
                         "format": "webp",
-                        "dimensions": {"width": 1672, "height": 941, "aspect_ratio": "16:9"},
-                        "size_kb": 188,
-                        "sha256": "abc123",
+                        "dimensions": {"width": 16, "height": 9, "aspect_ratio": "16:9"},
+                        "size_kb": 1,
+                        "sha256": "pending",
                         "intended_for": ["component:hero-board"],
                         "alt_text": "야간 경기장 커맨드 센터",
                         "prompt_summary": "World Cup dashboard hero image",
+                        "generation_provenance_version": "visual-asset-generation-provenance/v1",
+                        "generator": "image-model:codex-imagegen",
+                        "generation_run_id": generation_run_id,
+                        "candidate_id": candidate_id,
                     }
                 ],
             }
+            asset_path = project_dir / "assets" / "world-cup-command-center.webp"
+            asset_path.parent.mkdir()
+            Image.new("RGB", (16, 9), "#20344a").save(asset_path)
+            manifest["assets"][0]["sha256"] = hashlib.sha256(asset_path.read_bytes()).hexdigest()
+            manifest["assets"][0]["size_kb"] = round(asset_path.stat().st_size / 1024, 2)
             (project_dir / "public" / "generated" / "design-system" / "manifest.json").write_text(
                 json.dumps(manifest),
                 encoding="utf-8",
@@ -342,7 +448,10 @@ class VisualAssetOntologyTests(unittest.TestCase):
 
             profile = load_brand_profile(project_dir / "brand_profile.json")
             self.assertIn("_generated_visual_asset_manifests", profile)
-            self.assertEqual(profile["_generated_visual_asset_manifests"][0]["source_session"]["id"], "session-1")
+            self.assertEqual(
+                profile["_generated_visual_asset_manifests"][0]["source_session"]["id"],
+                generation_run_id,
+            )
 
     def test_project_app_icon_is_auto_discovered_as_identity_asset(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -380,6 +489,28 @@ class VisualAssetOntologyTests(unittest.TestCase):
             profile = load_brand_profile(project_dir / "brand_profile.json")
             self.assertEqual(profile["_identity_assets"][0]["asset_path"], "assets/app-icon.svg")
 
+    def test_invalid_visual_manifest_exposes_discovery_issues(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            project_dir = Path(tmp)
+            manifest_path = project_dir / "public" / "generated" / "design-system" / "manifest.json"
+            manifest_path.parent.mkdir(parents=True)
+            manifest_path.write_text("{invalid", encoding="utf-8")
+            (project_dir / "brand_profile.json").write_text(
+                json.dumps({
+                    "brand_name": "Fieldnote",
+                    "brand_keywords": [],
+                    "anti_keywords": [],
+                    "product_primitives": [],
+                }),
+                encoding="utf-8",
+            )
+
+            profile = load_brand_profile(project_dir / "brand_profile.json")
+
+            self.assertNotIn("_generated_visual_asset_manifests", profile)
+            self.assertTrue(profile["_generated_visual_asset_manifest_issues"])
+            self.assertIn("invalid JSON", profile["_generated_visual_asset_manifest_issues"][0])
+
     def test_discovered_manifest_assets_are_promoted_to_graph_and_spec(self) -> None:
         manifest = {
             "path": "public/generated/design-system/manifest.json",
@@ -402,6 +533,10 @@ class VisualAssetOntologyTests(unittest.TestCase):
                     "intended_for": ["component:hero-board"],
                     "alt_text": "야간 경기장 커맨드 센터",
                     "prompt_summary": "World Cup dashboard hero image",
+                    "visual_scope": "legacy-supporting-asset",
+                    "active_generation": False,
+                    "lifecycle_role": "legacy-supporting-asset",
+                    "prompt_contract_migrations": [{"schema_version": "visual-asset-prompt-contract-migration/v1"}],
                 }
             ],
         }
@@ -425,6 +560,13 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertEqual(asset.meta["asset_path"], "assets/world-cup-command-center.webp")
         self.assertEqual(asset.meta["alt_text"], "야간 경기장 커맨드 센터")
         self.assertEqual(asset.meta["source_session_id"], "session-1")
+        self.assertEqual(asset.meta["visual_scope"], "legacy-supporting-asset")
+        self.assertFalse(asset.meta["active_generation"])
+        self.assertEqual(asset.meta["lifecycle_role"], "legacy-supporting-asset")
+        self.assertEqual(
+            asset.meta["prompt_contract_migrations"][0]["schema_version"],
+            "visual-asset-prompt-contract-migration/v1",
+        )
 
         target_edges = graph.get_edges_from("visual-asset:world-cup-command-center", EdgeType.intended_for)
         self.assertIn("component:hero-board", {edge.target for edge in target_edges})
@@ -433,6 +575,29 @@ class VisualAssetOntologyTests(unittest.TestCase):
         self.assertIn("Integrated Assets", sections)
         self.assertIn("assets/world-cup-command-center.webp", sections)
         self.assertIn("야간 경기장 커맨드 센터", sections)
+
+    def test_planned_manifest_assets_are_not_promoted_as_integrated(self) -> None:
+        manifest = {
+            "path": "public/generated/design-system/manifest.json",
+            "schema_version": "visual-asset-manifest/v1",
+            "project": "fieldnote",
+            "brand": "Fieldnote",
+            "assets": [{
+                "id": "visual-asset:planned-only",
+                "label": "Planned only",
+                "slot": "hero-image",
+                "status": "planned",
+                "asset_path": None,
+            }],
+        }
+        graph = build_full_ontology_graph(
+            brand_profile={"brand_name": "Fieldnote", "_generated_visual_asset_manifests": [manifest]},
+            blueprint={"principles": [], "generated_visual_assets": [manifest]},
+            component_inventory={"families": [], "components": []},
+            token_schema={"categories": {}},
+        )
+
+        self.assertIsNone(graph.get_node("visual-asset:planned-only"))
 
     def test_sourced_manifest_assets_are_promoted_to_graph_and_spec(self) -> None:
         manifest = {

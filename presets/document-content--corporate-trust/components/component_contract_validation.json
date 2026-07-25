@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "component_count": 24,
+  "needs_authoring_count": 0,
+  "declared_token_count": 79,
+  "authored_contract_count": 24,
+  "primitive_reconciliation_count": 26,
+  "primitive_waiver_count": 0
+}

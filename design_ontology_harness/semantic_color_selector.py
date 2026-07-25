@@ -100,8 +100,9 @@ def build_semantic_color_selection(
     brand_profile: dict[str, Any],
     strategy: dict[str, Any] | None = None,
     candidate_count: int | None = None,
+    ontology: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Search the packaged Semantic OS color ontology for this app's palette.
+    """Search the Markdown-synchronized Semantic OS ontology for this app's palette.
 
     This deliberately does not contain pre-authored palette sets. It uses the
     current application brief, product primitives, and detected spec components
@@ -109,7 +110,8 @@ def build_semantic_color_selection(
     synthesizes a design system.
     """
 
-    ontology = load_semantic_color_ontology()
+    if ontology is None:
+        ontology = load_semantic_color_ontology()
     nodes = ontology.get("nodes", [])
     # 팔레트 풀은 hex 값이 있는 키워드만: 스냅샷에는 name-only extended 키워드도
     # 실려 있는데(참조용), hex 없는 노드가 role에 앉으면 토큰이 깨진다.
@@ -160,7 +162,7 @@ def build_semantic_color_selection(
 
     return {
         "schema_version": "design-ontology-harness/semantic-color-selection-v1",
-        "selection_method": "ontology-search-per-run",
+        "selection_method": "semantic-os-markdown-search-per-run",
         "source": ontology.get("source", {}),
         "node_count": ontology.get("node_count", 0),
         "edge_count": ontology.get("edge_count", 0),
@@ -197,7 +199,7 @@ def colors_from_semantic_palette(candidate: dict[str, Any] | None) -> dict[str, 
             "usage": item.get("behavior") or item.get("reason"),
             "pairings": [],
             "semantic_node_id": item.get("id"),
-            "source_type": "semantic-color-ontology",
+            "source_type": item.get("source_type") or "semantic-os-synced-markdown",
         }
     return roles
 
@@ -347,16 +349,33 @@ def _hue_pressure_penalty(keyword: dict[str, Any], hue_pressure: dict[str, int])
     return 1.8 * min(count, 5)
 
 
-def ontology_keyword_lookup() -> dict[str, dict[str, Any]]:
+def ontology_keyword_lookup(
+    ontology: dict[str, Any] | None = None,
+) -> dict[str, dict[str, Any]]:
     """Name → md-reference-shaped color dict for every hex-bearing ontology keyword.
 
-    Lets manual ``palette_roles`` names resolve against the semantic-os ontology
-    so ``color_reference.path`` (the markdown file) is fully optional.
+    Manual roles resolve against the exact ontology carried by color-reference.md.
     """
 
-    ontology = load_semantic_color_ontology()
-    lookup: dict[str, dict[str, Any]] = {}
-    for node in ontology.get("nodes", []):
+    return ontology_keyword_lookup_details(ontology)["lookup"]
+
+
+def ontology_keyword_lookup_details(
+    ontology: dict[str, Any] | None = None,
+) -> dict[str, dict[str, Any]]:
+    """Build an order-independent lookup plus explicit canonical-name collisions.
+
+    Exact labels and Semantic IDs always win. ``color_name`` and authored aliases
+    are registered only when they identify one node. If an exact base label and
+    a COY ``color_name`` share a name but use different HEX values, the base label
+    remains backward compatible and ``ambiguities`` tells callers which qualified
+    label or ID is required for the other identity.
+    """
+
+    if ontology is None:
+        ontology = load_semantic_color_ontology()
+    records: list[tuple[dict[str, Any], dict[str, Any], dict[str, Any]]] = []
+    for node in sorted(ontology.get("nodes", []), key=lambda item: str(item.get("id"))):
         if node.get("type") != "ColorKeyword":
             continue
         props = node.get("properties") or {}
@@ -364,17 +383,114 @@ def ontology_keyword_lookup() -> dict[str, dict[str, Any]]:
         label = props.get("label")
         if not hex_value or not label:
             continue
-        lookup[str(label).lower()] = {
+        shaped = {
             "name": label,
             "family": props.get("category") or props.get("family"),
             "hex": hex_value,
-            "mood": ", ".join(props.get("mood_tags") or []) or props.get("summary"),
-            "usage": props.get("summary"),
-            "pairings": [],
+            "mood": props.get("curated_mood")
+            or ", ".join(props.get("mood_tags") or [])
+            or props.get("summary"),
+            "usage": props.get("curated_usage") or props.get("summary"),
+            "pairings": props.get("curated_pairings") or [],
             "semantic_node_id": node.get("id"),
-            "source_type": "semantic-color-ontology",
+            "source_type": props.get("source_type") or "semantic-os-synced-markdown",
+            "source_reference_id": props.get("source_reference_id"),
+            "color_name": props.get("color_name"),
         }
-    return lookup
+        records.append((node, props, shaped))
+
+    lookup: dict[str, dict[str, Any]] = {}
+    ambiguities: dict[str, dict[str, Any]] = {}
+    exact_kinds: dict[str, str] = {}
+    for node, props, shaped in records:
+        for key, kind in (
+            (str(props["label"]).casefold(), "exact-label"),
+            (str(node.get("id")).casefold(), "semantic-node-id"),
+        ):
+            existing = lookup.get(key)
+            if existing and existing["semantic_node_id"] != shaped["semantic_node_id"]:
+                ambiguities[key] = _lookup_ambiguity(
+                    key,
+                    [existing, shaped],
+                    selected=existing,
+                    reason="duplicate-exact-key",
+                )
+                continue
+            lookup[key] = shaped
+            exact_kinds[key] = kind
+
+    alias_candidates: dict[str, list[dict[str, Any]]] = {}
+    for _, props, shaped in records:
+        aliases = [props.get("color_name"), *(props.get("aliases") or [])]
+        for alias in aliases:
+            key = str(alias or "").strip().casefold()
+            if not key:
+                continue
+            bucket = alias_candidates.setdefault(key, [])
+            if not any(
+                item["semantic_node_id"] == shaped["semantic_node_id"] for item in bucket
+            ):
+                bucket.append(shaped)
+
+    for key, candidates in sorted(alias_candidates.items()):
+        existing = lookup.get(key)
+        identities = list(candidates)
+        if existing and not any(
+            item["semantic_node_id"] == existing["semantic_node_id"] for item in identities
+        ):
+            identities.append(existing)
+        identities.sort(key=lambda item: str(item["semantic_node_id"]))
+        unique_hexes = {str(item.get("hex") or "").upper() for item in identities}
+        if existing:
+            if len(unique_hexes) > 1:
+                ambiguities[key] = _lookup_ambiguity(
+                    key,
+                    identities,
+                    selected=existing,
+                    reason="exact-label-vs-canonical-name",
+                )
+            continue
+        if len(identities) == 1:
+            lookup[key] = identities[0]
+            exact_kinds[key] = "unique-alias"
+        else:
+            ambiguities[key] = _lookup_ambiguity(
+                key,
+                identities,
+                selected=None,
+                reason="non-unique-alias",
+            )
+
+    return {
+        "lookup": lookup,
+        "ambiguities": ambiguities,
+        "key_kinds": exact_kinds,
+    }
+
+
+def _lookup_ambiguity(
+    key: str,
+    identities: list[dict[str, Any]],
+    *,
+    selected: dict[str, Any] | None,
+    reason: str,
+) -> dict[str, Any]:
+    return {
+        "query": key,
+        "reason": reason,
+        "selected_semantic_node_id": (
+            selected.get("semantic_node_id") if selected else None
+        ),
+        "requires_qualified_label_or_id": True,
+        "candidates": [
+            {
+                "label": item.get("name"),
+                "hex": item.get("hex"),
+                "semantic_node_id": item.get("semantic_node_id"),
+            }
+            for item in identities
+        ],
+    }
 
 
 def build_ontology_supporting_colors(
@@ -383,15 +499,16 @@ def build_ontology_supporting_colors(
     strategy: dict[str, Any] | None = None,
     active_palette: dict[str, Any] | None = None,
     count: int = 8,
+    ontology: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     """Pick spectrum-diverse supporting colors from the ontology.
 
-    Replaces the markdown-expansion step for semantic-ontology palettes:
-    supporting colors (garment/domain material colors, state hints) come from
-    the same graph the active palette came from.
+    Supporting colors (garment/domain material colors, state hints) come from
+    the same Markdown-carried graph as the active palette.
     """
 
-    ontology = load_semantic_color_ontology()
+    if ontology is None:
+        ontology = load_semantic_color_ontology()
     strategy = strategy or {}
     search_profile = _build_search_profile(brand_profile=brand_profile, strategy=strategy)
     hue_pressure = _load_registry_hue_pressure()
@@ -448,7 +565,7 @@ def build_ontology_supporting_colors(
             "usage": keyword.get("summary"),
             "pairings": [],
             "semantic_node_id": keyword["id"],
-            "source_type": "semantic-color-ontology",
+            "source_type": keyword.get("source_type") or "semantic-os-synced-markdown",
         }
         for keyword in picked
     ]
@@ -694,7 +811,9 @@ def _compact_keyword_node(node: dict[str, Any]) -> dict[str, Any]:
         "category": props.get("category"),
         "mood_tags": props.get("mood_tags", []),
         "tone_axes": props.get("tone_axes", []),
-        "summary": props.get("summary"),
+        "curated_mood": props.get("curated_mood"),
+        "summary": props.get("curated_usage") or props.get("summary"),
+        "source_type": props.get("source_type") or "semantic-os-synced-markdown",
     }
 
 

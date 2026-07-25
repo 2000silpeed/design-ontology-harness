@@ -1,0 +1,28 @@
+{
+  "schema_version": "production-ui-runtime-check/v1",
+  "kind": "interaction",
+  "run_id": "fixture-desk-iteration-2-interaction-20260714-01",
+  "implementation_tree_sha256": "cf3e1b0d232bd80fc072a4c92d240f4ceeaf1cd448618fba86a9a5fc085fb1f6",
+  "checked_at": "2026-07-14T22:38:00+09:00",
+  "method": "Fresh Codex Desktop in-app Browser relay check of the current Fixture Desk primary workflow.",
+  "route_state_coverage": [
+    {"route": "/fixture-desk", "state": "default"}
+  ],
+  "assertions": [
+    {
+      "id": "match-row-updates-context-rail",
+      "passed": true,
+      "evidence": "The unique MEX–RSA row action changed data-selected-match-id to m01, left one selected row, and updated the rail title to M01 · A조."
+    },
+    {
+      "id": "team-search-filters-visible-rows",
+      "passed": true,
+      "evidence": "Filling the uniquely named team searchbox with 대한민국 produced exactly two visible rows, both containing 대한민국."
+    },
+    {
+      "id": "theme-toggle-updates-state-and-name",
+      "passed": true,
+      "evidence": "The unique theme action toggled light and dark and updated its accessible label to describe the next theme."
+    }
+  ]
+}

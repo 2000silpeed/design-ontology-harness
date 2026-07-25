@@ -226,24 +226,9 @@
       "label": "secondary-button"
     },
     {
-      "id": "component:ghost-button",
-      "type": "Component",
-      "label": "ghost-button"
-    },
-    {
       "id": "component:icon-button",
       "type": "Component",
       "label": "icon-button"
-    },
-    {
-      "id": "component:cta-button",
-      "type": "Component",
-      "label": "cta-button"
-    },
-    {
-      "id": "component:link-button",
-      "type": "Component",
-      "label": "link-button"
     },
     {
       "id": "component:hero-cta-group",
@@ -282,30 +267,6 @@
       "id": "state:copilot-artifact-error",
       "type": "ComponentState",
       "label": "copilot-artifact/error"
-    },
-    {
-      "id": "component:source-card",
-      "type": "Component",
-      "label": "source-card",
-      "meta": {
-        "advanced_component": true,
-        "usage_guidance": [
-          "AI output depends on external or internal source records",
-          "users need a repeatable citation preview component"
-        ],
-        "pairs_with": [
-          "citation-drawer",
-          "evidence-graph",
-          "inline-citation"
-        ],
-        "matched_signals": [
-          "document",
-          "mode-default",
-          "mode:conversation-copilot",
-          "mode:document-content",
-          "reference"
-        ]
-      }
     },
     {
       "id": "component:citation-drawer",
@@ -358,9 +319,24 @@
       "label": "data-display/empty"
     },
     {
+      "id": "state:data-display-loading",
+      "type": "ComponentState",
+      "label": "data-display/loading"
+    },
+    {
       "id": "component:data-table",
       "type": "Component",
       "label": "data-table"
+    },
+    {
+      "id": "component:list",
+      "type": "Component",
+      "label": "list"
+    },
+    {
+      "id": "component:metadata-list",
+      "type": "Component",
+      "label": "metadata-list"
     },
     {
       "id": "component:tag",
@@ -451,23 +427,44 @@
       }
     },
     {
-      "id": "component:decision-record-card",
+      "id": "component:evidence-graph",
       "type": "Component",
-      "label": "decision-record-card",
+      "label": "evidence-graph",
       "meta": {
         "advanced_component": true,
         "usage_guidance": [
-          "a reviewer or AI-assisted workflow reaches a durable decision",
-          "regulated teams need record ids and retention status"
+          "trust depends on seeing relationships between claims and sources",
+          "auditors need to trace why an answer or decision was made"
         ],
         "pairs_with": [
-          "audit-timeline",
-          "approval-rail",
-          "citation-drawer"
+          "citation-drawer",
+          "decision-record-card",
+          "policy-matrix"
         ],
         "matched_signals": [
-          "mode-default",
+          "graph",
           "mode:conversation-copilot"
+        ]
+      }
+    },
+    {
+      "id": "component:exception-queue",
+      "type": "Component",
+      "label": "exception-queue",
+      "meta": {
+        "advanced_component": true,
+        "usage_guidance": [
+          "multiple issues require triage, assignment, and resolution",
+          "reviewers need to batch handle exceptions"
+        ],
+        "pairs_with": [
+          "bulk-action-table",
+          "policy-matrix",
+          "approval-rail"
+        ],
+        "matched_signals": [
+          "mode:conversation-copilot",
+          "queue"
         ]
       }
     },
@@ -610,6 +607,11 @@
       "label": "feedback/danger"
     },
     {
+      "id": "state:feedback-loading",
+      "type": "ComponentState",
+      "label": "feedback/loading"
+    },
+    {
       "id": "component:filter-chip",
       "type": "Component",
       "label": "filter-chip"
@@ -633,6 +635,16 @@
       "id": "component:banner",
       "type": "Component",
       "label": "banner"
+    },
+    {
+      "id": "component:badge",
+      "type": "Component",
+      "label": "badge"
+    },
+    {
+      "id": "component:status-dot",
+      "type": "Component",
+      "label": "status-dot"
     },
     {
       "id": "component:status-badge",
@@ -673,6 +685,11 @@
       "label": "input/disabled"
     },
     {
+      "id": "state:input-selected",
+      "type": "ComponentState",
+      "label": "input/selected"
+    },
+    {
       "id": "component:text-field",
       "type": "Component",
       "label": "text-field"
@@ -698,9 +715,9 @@
       "label": "textarea"
     },
     {
-      "id": "component:search-field",
+      "id": "component:switch",
       "type": "Component",
-      "label": "search-field"
+      "label": "switch"
     },
     {
       "id": "component:segmented-control",
@@ -711,6 +728,11 @@
       "id": "component:chip",
       "type": "Component",
       "label": "chip"
+    },
+    {
+      "id": "component:search-field",
+      "type": "Component",
+      "label": "search-field"
     },
     {
       "id": "component:filter-panel",
@@ -774,14 +796,9 @@
       "label": "layout/default"
     },
     {
-      "id": "state:layout-resizing",
+      "id": "state:layout-responsive",
       "type": "ComponentState",
-      "label": "layout/resizing"
-    },
-    {
-      "id": "state:layout-collapsed",
-      "type": "ComponentState",
-      "label": "layout/collapsed"
+      "label": "layout/responsive"
     },
     {
       "id": "component:resizable-split-pane",
@@ -913,6 +930,11 @@
       "label": "navigation/collapsed"
     },
     {
+      "id": "component:pagination",
+      "type": "Component",
+      "label": "pagination"
+    },
+    {
       "id": "component:sidebar-nav",
       "type": "Component",
       "label": "sidebar-nav"
@@ -933,34 +955,19 @@
       "label": "workspace-switcher"
     },
     {
-      "id": "component:mobile-topbar",
+      "id": "component:breadcrumbs",
       "type": "Component",
-      "label": "mobile-topbar"
+      "label": "breadcrumbs"
     },
     {
-      "id": "component:mobile-tab-bar",
+      "id": "component:tabs",
       "type": "Component",
-      "label": "mobile-tab-bar"
-    },
-    {
-      "id": "component:back-button",
-      "type": "Component",
-      "label": "back-button"
-    },
-    {
-      "id": "component:section-tabs",
-      "type": "Component",
-      "label": "section-tabs"
+      "label": "tabs"
     },
     {
       "id": "component:wizard-layout",
       "type": "Component",
       "label": "wizard-layout"
-    },
-    {
-      "id": "component:pagination",
-      "type": "Component",
-      "label": "pagination"
     },
     {
       "id": "component:app-shell",
@@ -1159,14 +1166,19 @@
       "label": "overlay/open"
     },
     {
-      "id": "component:bottom-sheet",
+      "id": "component:dialog",
       "type": "Component",
-      "label": "bottom-sheet"
+      "label": "dialog"
     },
     {
-      "id": "component:modal-dialog",
+      "id": "component:popover",
       "type": "Component",
-      "label": "modal-dialog"
+      "label": "popover"
+    },
+    {
+      "id": "component:tooltip",
+      "type": "Component",
+      "label": "tooltip"
     },
     {
       "id": "component:tooltip-guide",
@@ -1253,9 +1265,9 @@
       "label": "forms"
     },
     {
-      "id": "primitive:baseline",
+      "id": "primitive:reference-baseline",
       "type": "ProductPrimitive",
-      "label": "baseline"
+      "label": "reference baseline"
     },
     {
       "id": "primitive:tags-and-labels",
@@ -1581,6 +1593,179 @@
       }
     },
     {
+      "id": "source:semantic-color-ontology",
+      "type": "SourceReference",
+      "label": "Semantic OS color ontology",
+      "meta": {
+        "repo": "semantic-os",
+        "path": "domains/color/ontology/build/graph.json",
+        "schema_version": "design-ontology-harness/semantic-color-context-v1",
+        "node_count": 137,
+        "edge_count": 487,
+        "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included."
+      }
+    },
+    {
+      "id": "semantic-color:periwinkle",
+      "type": "ColorToken",
+      "label": "Periwinkle",
+      "meta": {
+        "hex": "#8E9AF1",
+        "tier": "semantic-color-ontology",
+        "role": "primary",
+        "semantic_node_id": "color-keyword-periwinkle",
+        "spectrum": "violet",
+        "family": "pastel",
+        "mood_tags": [
+          "부드러움",
+          "몽환",
+          "순수함",
+          "세련된 차분함"
+        ],
+        "tone_axes": [
+          "mid_value",
+          "low_chroma",
+          "warm_bias",
+          "cool_bias",
+          "pastel"
+        ],
+        "source_pages": {
+          "swatch": 285,
+          "reading": 286,
+          "metrics": 287
+        }
+      }
+    },
+    {
+      "id": "semantic-color:living-coral",
+      "type": "ColorToken",
+      "label": "Living Coral",
+      "meta": {
+        "hex": "#FF6F61",
+        "tier": "semantic-color-ontology",
+        "role": "accent",
+        "semantic_node_id": "color-keyword-living-coral",
+        "spectrum": "orange",
+        "family": "pantone_trend",
+        "mood_tags": [
+          "생동감",
+          "따뜻함",
+          "낙관적"
+        ],
+        "tone_axes": [
+          "mid_value",
+          "mid_chroma",
+          "warm_bias"
+        ],
+        "source_pages": {
+          "swatch": 103,
+          "reading": 104,
+          "metrics": 105
+        }
+      }
+    },
+    {
+      "id": "semantic-color:buttercream",
+      "type": "ColorToken",
+      "label": "Buttercream",
+      "meta": {
+        "hex": "#F3E5AB",
+        "tier": "semantic-color-ontology",
+        "role": "surface_tint",
+        "semantic_node_id": "color-keyword-buttercream",
+        "spectrum": "yellow",
+        "family": "pastel",
+        "mood_tags": [
+          "부드러움",
+          "따뜻함",
+          "포근함",
+          "달콤함"
+        ],
+        "tone_axes": [
+          "high_value",
+          "low_chroma",
+          "warm_bias",
+          "pastel"
+        ],
+        "source_pages": {
+          "swatch": 149,
+          "reading": 150,
+          "metrics": 151
+        }
+      }
+    },
+    {
+      "id": "governance:semantic-color-guideline-rgb-cmyk-split-by-output-medium",
+      "type": "GovernanceRule",
+      "label": "RGB와 CMYK는 산출 매체 기준으로 분리한다",
+      "meta": {
+        "semantic_node_id": "guideline-rgb-cmyk-split-by-output-medium",
+        "summary": "디지털 산출물은 RGB/sRGB 기준, 인쇄 산출물은 CMYK/프로파일 기준으로 판단한다. 화면색을 인쇄색으로 그대로 기대하지 않는다.",
+        "prompt_do": [],
+        "prompt_avoid": []
+      }
+    },
+    {
+      "id": "governance:semantic-color-guideline-color-values-are-reference-not-absolute",
+      "type": "GovernanceRule",
+      "label": "색상 수치는 절댓값이 아니라 기준값이다",
+      "meta": {
+        "semantic_node_id": "guideline-color-values-are-reference-not-absolute",
+        "summary": "디스플레이와 출력 환경에 따라 색 차이가 생기므로 HEX/CMYK는 재현 기준점으로 쓰고, 최종 판단은 매체별 proof에서 확인한다.",
+        "prompt_do": [],
+        "prompt_avoid": []
+      }
+    },
+    {
+      "id": "governance:semantic-color-guideline-mood-tags-before-palette-expansion",
+      "type": "GovernanceRule",
+      "label": "팔레트 확장 전 mood tag를 먼저 잠근다",
+      "meta": {
+        "semantic_node_id": "guideline-mood-tags-before-palette-expansion",
+        "summary": "무드보드나 브랜드 컬러를 늘리기 전에 에너지, 안정, 깊이, 회복 같은 감정 태그를 먼저 고정하면 색상 후보가 흔들리지 않는다.",
+        "prompt_do": [],
+        "prompt_avoid": []
+      }
+    },
+    {
+      "id": "governance:semantic-color-guideline-no-palette-table-reconstruction",
+      "type": "GovernanceRule",
+      "label": "배색표를 재구성할 수 있는 수준의 pair 목록은 만들지 않는다",
+      "meta": {
+        "semantic_node_id": "guideline-no-palette-table-reconstruction",
+        "summary": "paid source의 조합표, 페이지 배열, 순서, 행/열 구조를 그대로 되살릴 수 있는 palette_pair edge 묶음은 온톨로지에 넣지 않는다.",
+        "prompt_do": [
+          "조합을 개별 source row가 아니라 역할, 대비, 무드, 매체 조건으로 요약한다",
+          "source page provenance는 유지하되 원본 순서와 테이블 구조는 재현하지 않는다",
+          "공개 산출물에는 후보 조합의 이유와 caveat를 자체 문장으로 설명한다"
+        ],
+        "prompt_avoid": [
+          "paid source의 조합표 전체를 edge 목록으로 옮기기",
+          "특정 page의 palette row를 같은 순서/구조로 재생성하기",
+          "사용자가 원문 없이도 조합표를 복원할 수 있는 덤프 만들기"
+        ]
+      }
+    },
+    {
+      "id": "governance:semantic-color-guideline-palette-pair-edges-require-transformative-brief",
+      "type": "GovernanceRule",
+      "label": "palette_pair edge는 변형된 brief와 함께만 추가한다",
+      "meta": {
+        "semantic_node_id": "guideline-palette-pair-edges-require-transformative-brief",
+        "summary": "두 색의 직접 pair edge는 브랜드/화면/인쇄/제품 같은 새로운 산출 맥락에서 역할, 대비, 위험, proof 조건이 함께 설명될 때만 추가한다.",
+        "prompt_do": [
+          "pair edge마다 output medium, color roles, contrast reason, caveat를 함께 기록한다",
+          "색상 조합을 \"추천\"보다 \"brief-specific candidate\"로 표시한다",
+          "같은 pair가 다른 맥락에서 다르게 작동할 수 있음을 남긴다"
+        ],
+        "prompt_avoid": [
+          "출처 조합을 이유 없이 adopted pair로 승격하기",
+          "모든 keyword에 대해 기계적으로 pair edge 만들기",
+          "CMYK/RGB proof 없이 인쇄 재현까지 보증하기"
+        ]
+      }
+    },
+    {
       "id": "font:pretendard",
       "type": "FontFamily",
       "label": "Pretendard",
@@ -1655,9 +1840,9 @@
       "label": "reference documentation"
     },
     {
-      "id": "pattern:layout-dashboard-cards",
+      "id": "pattern:layout-operational-overview",
       "type": "LayoutPattern",
-      "label": "dashboard cards"
+      "label": "operational overview"
     },
     {
       "id": "pattern:interaction-search-and-filter",
@@ -1750,6 +1935,16 @@
       }
     },
     {
+      "id": "benchmark:astryx",
+      "type": "BenchmarkSystem",
+      "label": "Astryx",
+      "meta": {
+        "url": "https://astryx.atmeta.com",
+        "category": "devtool",
+        "color_strategy": "themeable neutral base with ready-made brand theme packages"
+      }
+    },
+    {
       "id": "benchmark:linear",
       "type": "BenchmarkSystem",
       "label": "Linear",
@@ -1774,7 +1969,7 @@
       "type": "BenchmarkSystem",
       "label": "Shopify Polaris",
       "meta": {
-        "url": "https://polaris.shopify.com",
+        "url": "https://shopify.dev/docs/api/app-home/web-components",
         "category": "commerce",
         "color_strategy": "green accent with warm neutrals"
       }
@@ -1960,6 +2155,16 @@
       }
     },
     {
+      "id": "benchmark:aws-cloudscape",
+      "type": "BenchmarkSystem",
+      "label": "AWS Cloudscape",
+      "meta": {
+        "url": "https://cloudscape.design",
+        "category": "cloud-ops",
+        "color_strategy": "white and grayscale operational base with focused action/status color"
+      }
+    },
+    {
       "id": "benchmark:hashicorp-helios",
       "type": "BenchmarkSystem",
       "label": "HashiCorp Helios",
@@ -1967,6 +2172,56 @@
         "url": "https://helios.hashicorp.design",
         "category": "devtool",
         "color_strategy": "multi-product brand colors with shared semantic layer"
+      }
+    },
+    {
+      "id": "benchmark:zendesk-garden",
+      "type": "BenchmarkSystem",
+      "label": "Zendesk Garden",
+      "meta": {
+        "url": "https://garden.zendesk.com",
+        "category": "support",
+        "color_strategy": "support-product neutrals with explicit semantic feedback roles"
+      }
+    },
+    {
+      "id": "benchmark:contentful-forma-36",
+      "type": "BenchmarkSystem",
+      "label": "Contentful Forma 36",
+      "meta": {
+        "url": "https://f36.contentful.com",
+        "category": "content-platform",
+        "color_strategy": "clean content-platform neutrals with product status accents"
+      }
+    },
+    {
+      "id": "benchmark:nord-health",
+      "type": "BenchmarkSystem",
+      "label": "Nord Design System",
+      "meta": {
+        "url": "https://nordhealth.design",
+        "category": "healthcare",
+        "color_strategy": "clinical neutrals with restrained blue/green action and status colors"
+      }
+    },
+    {
+      "id": "benchmark:trimble-modus",
+      "type": "BenchmarkSystem",
+      "label": "Trimble Modus 2.0",
+      "meta": {
+        "url": "https://modus.trimble.com",
+        "category": "industrial-enterprise",
+        "color_strategy": "enterprise blue core with structured surfaces and semantic states"
+      }
+    },
+    {
+      "id": "benchmark:salesforce-slds2",
+      "type": "BenchmarkSystem",
+      "label": "Salesforce Lightning Design System 2",
+      "meta": {
+        "url": "https://www.salesforce.com/blog/experience-design-with-slds-2/",
+        "category": "enterprise",
+        "color_strategy": "composable enterprise theme layer with Cosmos visual refresh"
       }
     },
     {
@@ -2318,6 +2573,7 @@
           "banner"
         ],
         "replacement_order": [
+          "If the user/reviewer has declared a raster-only or no-SVG medium override, use approved PNG/WebP/JPEG icon/image assets and document the override.",
           "Use the project's existing icon library when one is already installed and stylistically compatible.",
           "Reuse existing local SVG/icon components when available.",
           "Create a simple local SVG file or SVG component when no suitable icon exists."
@@ -2347,6 +2603,7 @@
           "Store new SVG assets in the nearest existing icons/assets directory; create a minimal icons directory only when none exists.",
           "Do not replace user-generated emoji content, chat text, blog body, or emoji-picker data.",
           "Do not use emoji as a placeholder while searching for a proper icon.",
+          "Do not use SVG icons when a project-specific medium override says no SVG or requires real raster image files; use project-local PNG/WebP/JPEG icon assets instead.",
           "Do not hand-roll a UI icon sprite when a suitable icon library exists; if a local sprite is used, declare its source or approved custom grammar.",
           "Navigation, toolbar, status, and action icons must share one visual grammar across stroke width, corner style, optical size, and active/inactive treatment."
         ],
@@ -2700,6 +2957,8 @@
           "Path-only inline SVGs with generic map/sketch/illustration classes do not count as visual substance unless the visual is semantically anchored with labels, legend, title/desc, or data-subject landmarks.",
           "Do not invent rough hand-drawn scene illustrations inside implementation code as a substitute for product visuals; use image_gen, sourced/user-supplied assets, approved assets, or polished product schematics.",
           "Mockups must declare the real app representation for visual surfaces: map SDK/tile layer, generated or sourced media, chart/table, data visualization, or explicit loading/empty state.",
+          "Do not represent evidence maps, relation maps, or product data graphs as hand-positioned HTML nodes connected by rotated CSS lines. Use a real graph/chart library, SVG/canvas visualization with semantic labels and runtime data, or a ledger/table when the relationship is simple.",
+          "Do not fake workflow graphs by overlaying freehand SVG curves on separately positioned HTML nodes. Graph nodes and edges must share one coordinate system and expose node/edge ids, direction, labels, and runtime state.",
           "A media/photo runtime surface is not complete when it is only CSS gradients or texture patterns; it must bind an image/video asset or show an explicit empty/loading state.",
           "Operational dashboards, sports/data products, and tools may keep imagery secondary, but should still use domain visuals such as app icons, team/flag identity, venue thumbnails, product objects, or editorial context where they add credibility.",
           "Do not let images obscure Korean text or controls; define stable aspect ratios, object-fit/object-position, and mobile crop behavior.",
@@ -2794,6 +3053,36 @@
       }
     },
     {
+      "id": "failure-pattern:ad-hoc-node-link-placeholder-graph",
+      "type": "ImplementationFailurePattern",
+      "label": "ad-hoc-node-link-placeholder-graph",
+      "meta": {
+        "trigger": "A mockup draws an evidence map, relation map, or graph using absolutely positioned nodes and rotated CSS lines such as graph-node/graph-edge or trace-node/trace-line.",
+        "rule": "A hand-drawn node-link sketch is not a product-grade data visualization.",
+        "prevention": "Use a proven graph/chart library, a semantically labeled SVG/canvas visualization backed by real runtime data, or replace simple relationships with an evidence ledger/table.",
+        "technical_controls": [
+          "lint-implementation DS082",
+          "component_specs.md data visualization notes",
+          "visual QA screenshots"
+        ]
+      }
+    },
+    {
+      "id": "failure-pattern:freehand-svg-connector-graph",
+      "type": "ImplementationFailurePattern",
+      "label": "freehand-svg-connector-graph",
+      "meta": {
+        "trigger": "A workflow, relation, or evidence graph uses an SVG connector layer such as wires/connector-layer plus separately positioned HTML nodes, with no node/edge ids, direction labels, or shared graph coordinate system.",
+        "rule": "A graph surface must encode the relationship model, not just draw curves between boxes.",
+        "prevention": "Use a graph library, or author the graph as one semantic SVG/canvas surface with data-node-id, data-edge-id, data-from/data-to, arrowheads, edge labels, and runtime state. If the relationship is simple, use a table, timeline, or ledger.",
+        "technical_controls": [
+          "lint-implementation DS083",
+          "component_specs.md graph validity notes",
+          "visual QA screenshots"
+        ]
+      }
+    },
+    {
       "id": "failure-pattern:media-runtime-surface-without-asset",
       "type": "ImplementationFailurePattern",
       "label": "media-runtime-surface-without-asset",
@@ -2844,7 +3133,54 @@
       "label": "visual-asset-medium-selection",
       "meta": {
         "rule": "Visual asset slots must choose the medium that matches the subject and runtime role; narrative/content media needs high-fidelity raster or approved production artwork, not ad-hoc SVG sketches.",
+        "directive_overrides": [
+          {
+            "id": "user-raster-asset-directive",
+            "trigger_phrases": [
+              "SVG 만들지 말고",
+              "SVG 금지",
+              "실제 그림파일",
+              "실제 이미지 파일",
+              "검색해서 넣어",
+              "PNG",
+              "WebP",
+              "JPEG",
+              "래스터",
+              "비트맵"
+            ],
+            "priority": "highest",
+            "required_medium": "project-local raster image asset",
+            "allowed_formats": [
+              "png",
+              "webp",
+              "jpg",
+              "jpeg",
+              "avif"
+            ],
+            "denied_formats": [
+              "svg",
+              "inline svg",
+              "deterministic svg placeholder"
+            ],
+            "applies_to": [
+              "avatars",
+              "character portraits",
+              "content images",
+              "mockup visual assets",
+              "app icons",
+              "UI icons unless explicitly exempted"
+            ],
+            "documentation_required": [
+              "medium_decision",
+              "asset_path",
+              "acquisition_mode",
+              "source_or_prompt",
+              "verification that no .svg or inline <svg> remains"
+            ]
+          }
+        ],
         "decision_sequence": [
+          "First honor explicit user/reviewer medium directives. A no-SVG or raster-only directive overrides default identity/icon/vector preferences for the affected project or slot.",
           "Classify the slot before drawing: identity/icon, control glyph, diagram/data, factual real-world media, narrative/content media, or decorative support.",
           "If the slot's user expectation is rendered content art, product/place photography, story atmosphere, or inspectable media, use image_gen, user-supplied licensed imagery, sourced licensed imagery, or an already approved high-fidelity asset.",
           "Use deterministic SVG for app icons, logos, flags, UI glyphs, charts, diagrams, maps, schematics, and semantic product illustrations where vector geometry is the correct runtime representation.",
@@ -2900,9 +3236,28 @@
               "semantic_html_css"
             ],
             "deterministic_svg": "preferred when token-bound, accessible, and semantically anchored"
+          },
+          {
+            "id": "user-specified-raster-assets",
+            "examples": [
+              "AI avatar",
+              "chat character portrait",
+              "generated app visual",
+              "search/sourced image slot",
+              "raster-only UI icon set"
+            ],
+            "default_acquisition_modes": [
+              "image_gen",
+              "user_supplied",
+              "sourced",
+              "project_local_raster"
+            ],
+            "deterministic_svg": "denied whenever the user/reviewer says no SVG, real image file, raster-only, or asks to search/generate actual imagery"
           }
         ],
         "implementation_rules": [
+          "A user/reviewer sentence such as 'SVG 만들지 말고 실제 그림파일로 만들거나 검색해서 넣어' is a binding medium override, not a preference. Store it in governance/system_ontology/IMPLEMENTATION_CONTRACT and satisfy it before visual QA.",
+          "When a raster-only/no-SVG directive is active, do not create SVG avatars, inline SVG sprites, SVG favicons, SVG placeholder art, or SVG UI icons for the affected scope; create or source project-local PNG/WebP/JPEG assets instead.",
           "Comic, manga, and webtoon cover or panel-preview slots default to image_gen-generated raster, user-supplied artwork, or licensed/sourced artwork.",
           "A geometric SVG, rough path drawing, or low-information vector placeholder is not an acceptable final comic cover, manga panel, article cover, product photo, or story media asset.",
           "Do not substitute inline SVG scene art solely because it is faster to author; use the imagegen skill when synthetic art is appropriate and available.",
@@ -2934,6 +3289,23 @@
           "system_ontology.json GovernanceRule",
           "IMPLEMENTATION_CONTRACT.md",
           "lint-implementation DS079",
+          "visual QA screenshots"
+        ]
+      }
+    },
+    {
+      "id": "failure-pattern:user-raster-directive-svg-violation",
+      "type": "ImplementationFailurePattern",
+      "label": "user-raster-directive-svg-violation",
+      "meta": {
+        "trigger": "A project or slot declares no-SVG/raster-only/real-image-file requirements but implementation still contains .svg assets, inline <svg>, image/svg+xml favicons, or SVG icon sprites in the affected scope.",
+        "rule": "Explicit user/reviewer raster directives override default SVG icon and identity guidance.",
+        "prevention": "Replace SVG assets with project-local PNG/WebP/JPEG files generated, user-supplied, or license-verified from search; record medium_decision and verify the implementation has no .svg or inline <svg> references.",
+        "technical_controls": [
+          "system_spec.md Visual Asset Medium Selection",
+          "system_ontology.json GovernanceRule",
+          "IMPLEMENTATION_CONTRACT.md",
+          "lint-implementation DS081",
           "visual QA screenshots"
         ]
       }
@@ -2980,6 +3352,7 @@
           "Do not ship a plain initials tile such as WC, AI, DS, or App as the final app icon unless the brand system explicitly defines that lettermark.",
           "The app icon must use the brand palette, visual keywords, and product primitives as evidence for shape language.",
           "Use a deterministic SVG source for the primary app icon; generated raster imagery may support marketing visuals but must not replace the identity icon source.",
+          "If the user/reviewer explicitly forbids SVG or requires actual raster image files, the app icon identity source may be PNG/WebP/JPEG instead; record that medium override in the ontology and do not create an SVG fallback silently.",
           "Wire the app icon into favicon/link metadata and the visible app-shell brand mark when the implementation has one.",
           "Keep small-size legibility: the icon must remain recognizable at 32px and in a 44px navigation mark.",
           "The app icon must read as a finished identity mark, not a rough illustration, generic tile, emoji-like sticker, or low-confidence geometric placeholder."
@@ -3007,7 +3380,7 @@
         "favicon_path": null,
         "formats": [
           "favicon",
-          "svg source",
+          "source asset (SVG by default; PNG/WebP/JPEG when a no-SVG medium override is active)",
           "web app manifest icon when applicable"
         ],
         "targets": [
@@ -5226,22 +5599,7 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:ghost-button",
-      "target": "family:button"
-    },
-    {
-      "type": "member_of_family",
       "source": "component:icon-button",
-      "target": "family:button"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:cta-button",
-      "target": "family:button"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:link-button",
       "target": "family:button"
     },
     {
@@ -5276,11 +5634,6 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:source-card",
-      "target": "family:copilot-artifact"
-    },
-    {
-      "type": "member_of_family",
       "source": "component:citation-drawer",
       "target": "family:copilot-artifact"
     },
@@ -5305,8 +5658,23 @@
       "target": "state:data-display-empty"
     },
     {
+      "type": "has_state",
+      "source": "family:data-display",
+      "target": "state:data-display-loading"
+    },
+    {
       "type": "member_of_family",
       "source": "component:data-table",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:list",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:metadata-list",
       "target": "family:data-display"
     },
     {
@@ -5366,7 +5734,12 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:decision-record-card",
+      "source": "component:evidence-graph",
+      "target": "family:data-display"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:exception-queue",
       "target": "family:data-display"
     },
     {
@@ -5455,6 +5828,11 @@
       "target": "state:feedback-danger"
     },
     {
+      "type": "has_state",
+      "source": "family:feedback",
+      "target": "state:feedback-loading"
+    },
+    {
       "type": "member_of_family",
       "source": "component:filter-chip",
       "target": "family:feedback"
@@ -5477,6 +5855,16 @@
     {
       "type": "member_of_family",
       "source": "component:banner",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:badge",
+      "target": "family:feedback"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:status-dot",
       "target": "family:feedback"
     },
     {
@@ -5510,6 +5898,11 @@
       "target": "state:input-disabled"
     },
     {
+      "type": "has_state",
+      "source": "family:input",
+      "target": "state:input-selected"
+    },
+    {
       "type": "member_of_family",
       "source": "component:text-field",
       "target": "family:input"
@@ -5536,7 +5929,7 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:search-field",
+      "source": "component:switch",
       "target": "family:input"
     },
     {
@@ -5552,6 +5945,11 @@
     {
       "type": "member_of_family",
       "source": "component:filter-chip",
+      "target": "family:input"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:search-field",
       "target": "family:input"
     },
     {
@@ -5592,12 +5990,7 @@
     {
       "type": "has_state",
       "source": "family:layout",
-      "target": "state:layout-resizing"
-    },
-    {
-      "type": "has_state",
-      "source": "family:layout",
-      "target": "state:layout-collapsed"
+      "target": "state:layout-responsive"
     },
     {
       "type": "member_of_family",
@@ -5696,6 +6089,11 @@
     },
     {
       "type": "member_of_family",
+      "source": "component:pagination",
+      "target": "family:navigation"
+    },
+    {
+      "type": "member_of_family",
       "source": "component:sidebar-nav",
       "target": "family:navigation"
     },
@@ -5716,32 +6114,17 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:mobile-topbar",
+      "source": "component:breadcrumbs",
       "target": "family:navigation"
     },
     {
       "type": "member_of_family",
-      "source": "component:mobile-tab-bar",
-      "target": "family:navigation"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:back-button",
-      "target": "family:navigation"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:section-tabs",
+      "source": "component:tabs",
       "target": "family:navigation"
     },
     {
       "type": "member_of_family",
       "source": "component:wizard-layout",
-      "target": "family:navigation"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:pagination",
       "target": "family:navigation"
     },
     {
@@ -5802,11 +6185,6 @@
     {
       "type": "member_of_family",
       "source": "component:row-actions",
-      "target": "family:foundation"
-    },
-    {
-      "type": "member_of_family",
-      "source": "component:pagination",
       "target": "family:foundation"
     },
     {
@@ -5901,12 +6279,17 @@
     },
     {
       "type": "member_of_family",
-      "source": "component:bottom-sheet",
+      "source": "component:dialog",
       "target": "family:overlay"
     },
     {
       "type": "member_of_family",
-      "source": "component:modal-dialog",
+      "source": "component:popover",
+      "target": "family:overlay"
+    },
+    {
+      "type": "member_of_family",
+      "source": "component:tooltip",
       "target": "family:overlay"
     },
     {
@@ -6051,8 +6434,73 @@
     },
     {
       "type": "supports",
-      "source": "component:link-button",
-      "target": "primitive:baseline"
+      "source": "component:primary-button",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:secondary-button",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:icon-button",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:switch",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:segmented-control",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:breadcrumbs",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:tabs",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:badge",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:status-dot",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:dialog",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:popover",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:tooltip",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:list",
+      "target": "primitive:reference-baseline"
+    },
+    {
+      "type": "supports",
+      "source": "component:metadata-list",
+      "target": "primitive:reference-baseline"
     },
     {
       "type": "supports",
@@ -6096,13 +6544,13 @@
     },
     {
       "type": "supports",
-      "source": "component:pagination",
+      "source": "component:filter-chip",
       "target": "primitive:data-tables"
     },
     {
       "type": "supports",
-      "source": "component:filter-chip",
-      "target": "primitive:data-tables"
+      "source": "component:search-field",
+      "target": "primitive:search-and-filter"
     },
     {
       "type": "supports",
@@ -6366,11 +6814,6 @@
     },
     {
       "type": "supports",
-      "source": "component:source-card",
-      "target": "primitive:advanced-component-catalog"
-    },
-    {
-      "type": "supports",
       "source": "component:reviewer-assignment-picker",
       "target": "primitive:advanced-component-catalog"
     },
@@ -6416,7 +6859,12 @@
     },
     {
       "type": "supports",
-      "source": "component:decision-record-card",
+      "source": "component:evidence-graph",
+      "target": "primitive:advanced-component-catalog"
+    },
+    {
+      "type": "supports",
+      "source": "component:exception-queue",
       "target": "primitive:advanced-component-catalog"
     },
     {
@@ -6483,6 +6931,121 @@
       "type": "belongs_to_palette",
       "source": "color:pairing--d5a48e",
       "target": "palette:derived-pairing"
+    },
+    {
+      "type": "inspired_by",
+      "source": "semantic-color:periwinkle",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "inspired_by",
+      "source": "semantic-color:living-coral",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "inspired_by",
+      "source": "semantic-color:buttercream",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "inspired_by",
+      "source": "governance:semantic-color-guideline-rgb-cmyk-split-by-output-medium",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-rgb-cmyk-split-by-output-medium",
+      "target": "semantic-color:periwinkle"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-rgb-cmyk-split-by-output-medium",
+      "target": "semantic-color:living-coral"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-rgb-cmyk-split-by-output-medium",
+      "target": "semantic-color:buttercream"
+    },
+    {
+      "type": "inspired_by",
+      "source": "governance:semantic-color-guideline-color-values-are-reference-not-absolute",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-color-values-are-reference-not-absolute",
+      "target": "semantic-color:periwinkle"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-color-values-are-reference-not-absolute",
+      "target": "semantic-color:living-coral"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-color-values-are-reference-not-absolute",
+      "target": "semantic-color:buttercream"
+    },
+    {
+      "type": "inspired_by",
+      "source": "governance:semantic-color-guideline-mood-tags-before-palette-expansion",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-mood-tags-before-palette-expansion",
+      "target": "semantic-color:periwinkle"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-mood-tags-before-palette-expansion",
+      "target": "semantic-color:living-coral"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-mood-tags-before-palette-expansion",
+      "target": "semantic-color:buttercream"
+    },
+    {
+      "type": "inspired_by",
+      "source": "governance:semantic-color-guideline-no-palette-table-reconstruction",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-no-palette-table-reconstruction",
+      "target": "semantic-color:periwinkle"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-no-palette-table-reconstruction",
+      "target": "semantic-color:living-coral"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-no-palette-table-reconstruction",
+      "target": "semantic-color:buttercream"
+    },
+    {
+      "type": "inspired_by",
+      "source": "governance:semantic-color-guideline-palette-pair-edges-require-transformative-brief",
+      "target": "source:semantic-color-ontology"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-palette-pair-edges-require-transformative-brief",
+      "target": "semantic-color:periwinkle"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-palette-pair-edges-require-transformative-brief",
+      "target": "semantic-color:living-coral"
+    },
+    {
+      "type": "governs",
+      "source": "governance:semantic-color-guideline-palette-pair-edges-require-transformative-brief",
+      "target": "semantic-color:buttercream"
     },
     {
       "type": "composed_of",
@@ -6927,6 +7490,16 @@
     {
       "type": "composed_of",
       "source": "pattern:interaction-search-and-filter",
+      "target": "component:search-field"
+    },
+    {
+      "type": "implements",
+      "source": "component:search-field",
+      "target": "pattern:interaction-search-and-filter"
+    },
+    {
+      "type": "composed_of",
+      "source": "pattern:interaction-search-and-filter",
       "target": "component:search-results"
     },
     {
@@ -7247,15 +7820,7 @@
     {
       "type": "uses_token",
       "source": "component:data-table",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:data-table",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -7263,7 +7828,7 @@
     {
       "type": "uses_token",
       "source": "component:data-table",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7276,15 +7841,7 @@
     {
       "type": "uses_token",
       "source": "component:column-header",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:column-header",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -7292,7 +7849,7 @@
     {
       "type": "uses_token",
       "source": "component:column-header",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7334,15 +7891,7 @@
     {
       "type": "uses_token",
       "source": "component:row-actions",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:row-actions",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -7350,7 +7899,7 @@
     {
       "type": "uses_token",
       "source": "component:row-actions",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7363,9 +7912,17 @@
     {
       "type": "uses_token",
       "source": "component:pagination",
-      "target": "color:buttercream",
+      "target": "color:periwinkle",
       "meta": {
-        "slot": "background"
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:pagination",
+      "target": "color:living-coral",
+      "meta": {
+        "slot": "emphasis"
       }
     },
     {
@@ -7392,14 +7949,6 @@
     {
       "type": "uses_token",
       "source": "component:app-shell",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:app-shell",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7408,7 +7957,7 @@
     {
       "type": "uses_token",
       "source": "component:app-shell",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7432,14 +7981,6 @@
       "target": "color:living-coral",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:sidebar-nav",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -7482,14 +8023,6 @@
     {
       "type": "uses_token",
       "source": "component:topbar",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:topbar",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7522,14 +8055,6 @@
       "target": "color:living-coral",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:breadcrumb",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -7567,14 +8092,6 @@
       "target": "color:living-coral",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:workspace-switcher",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -7733,14 +8250,6 @@
     {
       "type": "uses_token",
       "source": "component:text-field",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:text-field",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7778,14 +8287,6 @@
     {
       "type": "uses_token",
       "source": "component:select",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:select",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7823,14 +8324,6 @@
     {
       "type": "uses_token",
       "source": "component:checkbox",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:checkbox",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7868,14 +8361,6 @@
     {
       "type": "uses_token",
       "source": "component:radio",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:radio",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7913,14 +8398,6 @@
     {
       "type": "uses_token",
       "source": "component:textarea",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:textarea",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7942,14 +8419,6 @@
     {
       "type": "uses_token",
       "source": "component:form-section",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:form-section",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -7958,7 +8427,7 @@
     {
       "type": "uses_token",
       "source": "component:form-section",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -7987,14 +8456,6 @@
     {
       "type": "uses_token",
       "source": "component:primary-button",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:primary-button",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8032,14 +8493,6 @@
     {
       "type": "uses_token",
       "source": "component:secondary-button",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:secondary-button",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8060,51 +8513,6 @@
     },
     {
       "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "color:periwinkle",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "color:living-coral",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:ghost-button",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:ghost-button",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
       "source": "component:icon-button",
       "target": "color:periwinkle",
       "meta": {
@@ -8117,14 +8525,6 @@
       "target": "color:living-coral",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:icon-button",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -8150,7 +8550,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:cta-button",
+      "source": "component:switch",
       "target": "color:periwinkle",
       "meta": {
         "slot": "surface"
@@ -8158,7 +8558,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:cta-button",
+      "source": "component:switch",
       "target": "color:living-coral",
       "meta": {
         "slot": "emphasis"
@@ -8166,15 +8566,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:cta-button",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:cta-button",
+      "source": "component:switch",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8182,7 +8574,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:cta-button",
+      "source": "component:switch",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -8190,322 +8582,7 @@
     },
     {
       "type": "uses_font",
-      "source": "component:cta-button",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-topbar",
-      "target": "color:periwinkle",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-topbar",
-      "target": "color:living-coral",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-topbar",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-topbar",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-topbar",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:mobile-topbar",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-tab-bar",
-      "target": "color:periwinkle",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-tab-bar",
-      "target": "color:living-coral",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-tab-bar",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-tab-bar",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mobile-tab-bar",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:mobile-tab-bar",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:back-button",
-      "target": "color:periwinkle",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:back-button",
-      "target": "color:living-coral",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:back-button",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:back-button",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:back-button",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:back-button",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-tabs",
-      "target": "color:periwinkle",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-tabs",
-      "target": "color:living-coral",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-tabs",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-tabs",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-tabs",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:section-tabs",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:bottom-sheet",
-      "target": "color:periwinkle",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:bottom-sheet",
-      "target": "color:living-coral",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:bottom-sheet",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:bottom-sheet",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:bottom-sheet",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:bottom-sheet",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:modal-dialog",
-      "target": "color:periwinkle",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:modal-dialog",
-      "target": "color:living-coral",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:modal-dialog",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:modal-dialog",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:modal-dialog",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:modal-dialog",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:search-field",
-      "target": "color:periwinkle",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:search-field",
-      "target": "color:living-coral",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:search-field",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:search-field",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:search-field",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:search-field",
+      "source": "component:switch",
       "target": "font:pretendard"
     },
     {
@@ -8522,14 +8599,6 @@
       "target": "color:living-coral",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:segmented-control",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -8555,7 +8624,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:link-button",
+      "source": "component:breadcrumbs",
       "target": "color:periwinkle",
       "meta": {
         "slot": "surface"
@@ -8563,7 +8632,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:link-button",
+      "source": "component:breadcrumbs",
       "target": "color:living-coral",
       "meta": {
         "slot": "emphasis"
@@ -8571,15 +8640,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:link-button",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:link-button",
+      "source": "component:breadcrumbs",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8587,7 +8648,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:link-button",
+      "source": "component:breadcrumbs",
       "target": "radius:md",
       "meta": {
         "slot": "radius"
@@ -8595,16 +8656,256 @@
     },
     {
       "type": "uses_font",
-      "source": "component:link-button",
+      "source": "component:breadcrumbs",
       "target": "font:pretendard"
     },
     {
       "type": "uses_token",
-      "source": "component:tag",
+      "source": "component:tabs",
+      "target": "color:periwinkle",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tabs",
+      "target": "color:living-coral",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tabs",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tabs",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:tabs",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:badge",
       "target": "color:buttercream",
       "meta": {
         "slot": "background"
       }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:badge",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:badge",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:badge",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-dot",
+      "target": "color:buttercream",
+      "meta": {
+        "slot": "background"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-dot",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:status-dot",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:status-dot",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:dialog",
+      "target": "color:periwinkle",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:dialog",
+      "target": "color:living-coral",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:dialog",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:dialog",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:dialog",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:popover",
+      "target": "color:periwinkle",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:popover",
+      "target": "color:living-coral",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:popover",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:popover",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:popover",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip",
+      "target": "color:periwinkle",
+      "meta": {
+        "slot": "surface"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip",
+      "target": "color:living-coral",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:tooltip",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:tooltip",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:list",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:list",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:list",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:metadata-list",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:metadata-list",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:metadata-list",
+      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8617,7 +8918,7 @@
     {
       "type": "uses_token",
       "source": "component:tag",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8670,14 +8971,6 @@
       "target": "color:living-coral",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:chip",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -8749,14 +9042,6 @@
     {
       "type": "uses_token",
       "source": "component:wizard-layout",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:wizard-layout",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8794,14 +9079,6 @@
     {
       "type": "uses_token",
       "source": "component:tooltip-guide",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:tooltip-guide",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8823,15 +9100,7 @@
     {
       "type": "uses_token",
       "source": "component:column-header",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:column-header",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8839,7 +9108,7 @@
     {
       "type": "uses_token",
       "source": "component:column-header",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8852,15 +9121,7 @@
     {
       "type": "uses_token",
       "source": "component:row-actions",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:row-actions",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -8868,7 +9129,7 @@
     {
       "type": "uses_token",
       "source": "component:row-actions",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -8876,51 +9137,6 @@
     {
       "type": "uses_font",
       "source": "component:row-actions",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pagination",
-      "target": "color:periwinkle",
-      "meta": {
-        "slot": "surface"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pagination",
-      "target": "color:living-coral",
-      "meta": {
-        "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pagination",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pagination",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pagination",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:pagination",
       "target": "font:pretendard"
     },
     {
@@ -8942,14 +9158,6 @@
     {
       "type": "uses_token",
       "source": "component:filter-chip",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:filter-chip",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -8970,11 +9178,40 @@
     },
     {
       "type": "uses_token",
-      "source": "component:search-results",
-      "target": "color:buttercream",
+      "source": "component:search-field",
+      "target": "color:periwinkle",
       "meta": {
-        "slot": "background"
+        "slot": "surface"
       }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "color:living-coral",
+      "meta": {
+        "slot": "emphasis"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "spacing:12",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:search-field",
+      "target": "radius:md",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:search-field",
+      "target": "font:pretendard"
     },
     {
       "type": "uses_token",
@@ -8987,7 +9224,7 @@
     {
       "type": "uses_token",
       "source": "component:search-results",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -9011,14 +9248,6 @@
       "target": "color:living-coral",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:filter-panel",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -9056,14 +9285,6 @@
       "target": "color:living-coral",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:autocomplete",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -9101,14 +9322,6 @@
       "target": "color:living-coral",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:app-shell",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -9146,14 +9359,6 @@
       "target": "color:living-coral",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:tab-bar",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -9307,14 +9512,6 @@
       "target": "color:living-coral",
       "meta": {
         "slot": "emphasis"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:hero-cta-group",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
       }
     },
     {
@@ -9399,14 +9596,6 @@
     {
       "type": "uses_token",
       "source": "component:masthead",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:masthead",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -9415,7 +9604,7 @@
     {
       "type": "uses_token",
       "source": "component:masthead",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -9428,14 +9617,6 @@
     {
       "type": "uses_token",
       "source": "component:issue-header",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:issue-header",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -9444,7 +9625,7 @@
     {
       "type": "uses_token",
       "source": "component:issue-header",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -9457,14 +9638,6 @@
     {
       "type": "uses_token",
       "source": "component:issue-number",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:issue-number",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -9473,7 +9646,7 @@
     {
       "type": "uses_token",
       "source": "component:issue-number",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -9486,14 +9659,6 @@
     {
       "type": "uses_token",
       "source": "component:cover-story",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:cover-story",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -9502,7 +9667,7 @@
     {
       "type": "uses_token",
       "source": "component:cover-story",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -9515,14 +9680,6 @@
     {
       "type": "uses_token",
       "source": "component:opening-spread",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:opening-spread",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -9531,7 +9688,7 @@
     {
       "type": "uses_token",
       "source": "component:opening-spread",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -9544,14 +9701,6 @@
     {
       "type": "uses_token",
       "source": "component:feature-article",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:feature-article",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -9560,7 +9709,7 @@
     {
       "type": "uses_token",
       "source": "component:feature-article",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -9573,15 +9722,7 @@
     {
       "type": "uses_token",
       "source": "component:kicker-eyebrow",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:kicker-eyebrow",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -9589,7 +9730,7 @@
     {
       "type": "uses_token",
       "source": "component:kicker-eyebrow",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -9602,14 +9743,6 @@
     {
       "type": "uses_token",
       "source": "component:pull-quote",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:pull-quote",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -9618,7 +9751,7 @@
     {
       "type": "uses_token",
       "source": "component:pull-quote",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -9631,14 +9764,6 @@
     {
       "type": "uses_token",
       "source": "component:drop-cap",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:drop-cap",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -9647,7 +9772,7 @@
     {
       "type": "uses_token",
       "source": "component:drop-cap",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -9660,14 +9785,6 @@
     {
       "type": "uses_token",
       "source": "component:section-break",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:section-break",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -9676,7 +9793,7 @@
     {
       "type": "uses_token",
       "source": "component:section-break",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -9689,14 +9806,6 @@
     {
       "type": "uses_token",
       "source": "component:article-gallery",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:article-gallery",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -9705,7 +9814,7 @@
     {
       "type": "uses_token",
       "source": "component:article-gallery",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -9908,14 +10017,6 @@
     {
       "type": "uses_token",
       "source": "component:radio-group",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:radio-group",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -9953,14 +10054,6 @@
     {
       "type": "uses_token",
       "source": "component:form-section",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:form-section",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -9998,14 +10091,6 @@
     {
       "type": "uses_token",
       "source": "component:form-actions",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:form-actions",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10027,14 +10112,6 @@
     {
       "type": "uses_token",
       "source": "component:comment-thread",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:comment-thread",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10043,7 +10120,7 @@
     {
       "type": "uses_token",
       "source": "component:comment-thread",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10072,14 +10149,6 @@
     {
       "type": "uses_token",
       "source": "component:comment-input",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:comment-input",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10117,14 +10186,6 @@
     {
       "type": "uses_token",
       "source": "component:mention-popup",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mention-popup",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10162,14 +10223,6 @@
     {
       "type": "uses_token",
       "source": "component:confirm-dialog",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:confirm-dialog",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10191,14 +10244,6 @@
     {
       "type": "uses_token",
       "source": "component:chat-message",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:chat-message",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10207,7 +10252,7 @@
     {
       "type": "uses_token",
       "source": "component:chat-message",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10236,14 +10281,6 @@
     {
       "type": "uses_token",
       "source": "component:chat-input",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:chat-input",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10265,14 +10302,6 @@
     {
       "type": "uses_token",
       "source": "component:chat-thread",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:chat-thread",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10281,7 +10310,7 @@
     {
       "type": "uses_token",
       "source": "component:chat-thread",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10294,14 +10323,6 @@
     {
       "type": "uses_token",
       "source": "component:article-body",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:article-body",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10310,7 +10331,7 @@
     {
       "type": "uses_token",
       "source": "component:article-body",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10323,15 +10344,7 @@
     {
       "type": "uses_token",
       "source": "component:table-of-contents",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:table-of-contents",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -10339,7 +10352,7 @@
     {
       "type": "uses_token",
       "source": "component:table-of-contents",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10352,14 +10365,6 @@
     {
       "type": "uses_token",
       "source": "component:heading-anchor",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:heading-anchor",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10368,7 +10373,7 @@
     {
       "type": "uses_token",
       "source": "component:heading-anchor",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10381,14 +10386,6 @@
     {
       "type": "uses_token",
       "source": "component:prose-block",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:prose-block",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10397,7 +10394,7 @@
     {
       "type": "uses_token",
       "source": "component:prose-block",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10410,15 +10407,7 @@
     {
       "type": "uses_token",
       "source": "component:reading-pane",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:reading-pane",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -10426,7 +10415,7 @@
     {
       "type": "uses_token",
       "source": "component:reading-pane",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10439,14 +10428,6 @@
     {
       "type": "uses_token",
       "source": "component:footnote",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:footnote",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10455,7 +10436,7 @@
     {
       "type": "uses_token",
       "source": "component:footnote",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10484,14 +10465,6 @@
     {
       "type": "uses_token",
       "source": "component:prev-next-pager",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:prev-next-pager",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10542,14 +10515,6 @@
     {
       "type": "uses_token",
       "source": "component:presence-indicator",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:presence-indicator",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10558,7 +10523,7 @@
     {
       "type": "uses_token",
       "source": "component:presence-indicator",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10587,14 +10552,6 @@
     {
       "type": "uses_token",
       "source": "component:notification-center",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:notification-center",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10616,14 +10573,6 @@
     {
       "type": "uses_token",
       "source": "component:notification-item",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:notification-item",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10632,7 +10581,7 @@
     {
       "type": "uses_token",
       "source": "component:notification-item",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10645,14 +10594,6 @@
     {
       "type": "uses_token",
       "source": "component:mention-highlight",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:mention-highlight",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10661,7 +10602,7 @@
     {
       "type": "uses_token",
       "source": "component:mention-highlight",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10674,15 +10615,7 @@
     {
       "type": "uses_token",
       "source": "component:redline-viewer",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:redline-viewer",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -10690,7 +10623,7 @@
     {
       "type": "uses_token",
       "source": "component:redline-viewer",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10698,35 +10631,6 @@
     {
       "type": "uses_font",
       "source": "component:redline-viewer",
-      "target": "font:pretendard"
-    },
-    {
-      "type": "uses_token",
-      "source": "component:source-card",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:source-card",
-      "target": "spacing:12",
-      "meta": {
-        "slot": "padding"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:source-card",
-      "target": "radius:md",
-      "meta": {
-        "slot": "radius"
-      }
-    },
-    {
-      "type": "uses_font",
-      "source": "component:source-card",
       "target": "font:pretendard"
     },
     {
@@ -10748,15 +10652,7 @@
     {
       "type": "uses_token",
       "source": "component:reviewer-assignment-picker",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:reviewer-assignment-picker",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -10764,7 +10660,7 @@
     {
       "type": "uses_token",
       "source": "component:reviewer-assignment-picker",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10777,15 +10673,7 @@
     {
       "type": "uses_token",
       "source": "component:approval-rail",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:approval-rail",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -10793,7 +10681,7 @@
     {
       "type": "uses_token",
       "source": "component:approval-rail",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10835,15 +10723,7 @@
     {
       "type": "uses_token",
       "source": "component:diff-viewer",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:diff-viewer",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -10851,7 +10731,7 @@
     {
       "type": "uses_token",
       "source": "component:diff-viewer",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10864,15 +10744,7 @@
     {
       "type": "uses_token",
       "source": "component:resizable-split-pane",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:resizable-split-pane",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -10880,7 +10752,7 @@
     {
       "type": "uses_token",
       "source": "component:resizable-split-pane",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10893,15 +10765,7 @@
     {
       "type": "uses_token",
       "source": "component:bulk-action-table",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:bulk-action-table",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -10909,7 +10773,7 @@
     {
       "type": "uses_token",
       "source": "component:bulk-action-table",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -10938,14 +10802,6 @@
     {
       "type": "uses_token",
       "source": "component:saved-view-bar",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:saved-view-bar",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -10967,15 +10823,7 @@
     {
       "type": "uses_token",
       "source": "component:audit-timeline",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:audit-timeline",
-      "target": "spacing:12",
+      "target": "spacing:8",
       "meta": {
         "slot": "padding"
       }
@@ -10983,7 +10831,7 @@
     {
       "type": "uses_token",
       "source": "component:audit-timeline",
-      "target": "radius:md",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
@@ -11012,14 +10860,6 @@
     {
       "type": "uses_token",
       "source": "component:command-palette",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:command-palette",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -11040,15 +10880,7 @@
     },
     {
       "type": "uses_token",
-      "source": "component:decision-record-card",
-      "target": "color:buttercream",
-      "meta": {
-        "slot": "background"
-      }
-    },
-    {
-      "type": "uses_token",
-      "source": "component:decision-record-card",
+      "source": "component:evidence-graph",
       "target": "spacing:12",
       "meta": {
         "slot": "padding"
@@ -11056,15 +10888,36 @@
     },
     {
       "type": "uses_token",
-      "source": "component:decision-record-card",
-      "target": "radius:md",
+      "source": "component:evidence-graph",
+      "target": "radius:none",
       "meta": {
         "slot": "radius"
       }
     },
     {
       "type": "uses_font",
-      "source": "component:decision-record-card",
+      "source": "component:evidence-graph",
+      "target": "font:pretendard"
+    },
+    {
+      "type": "uses_token",
+      "source": "component:exception-queue",
+      "target": "spacing:8",
+      "meta": {
+        "slot": "padding"
+      }
+    },
+    {
+      "type": "uses_token",
+      "source": "component:exception-queue",
+      "target": "radius:none",
+      "meta": {
+        "slot": "radius"
+      }
+    },
+    {
+      "type": "uses_font",
+      "source": "component:exception-queue",
       "target": "font:pretendard"
     },
     {
@@ -11437,7 +11290,23 @@
     {
       "type": "similar_to",
       "source": "benchmark:stripe",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
       "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:stripe",
+      "target": "benchmark:nord-health",
       "meta": {
         "jaccard": 0.5
       }
@@ -11613,9 +11482,57 @@
     {
       "type": "similar_to",
       "source": "benchmark:github-primer",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
       "target": "benchmark:hashicorp-helios",
       "meta": {
         "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:contentful-forma-36",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:github-primer",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 1.0
       }
     },
     {
@@ -11685,6 +11602,30 @@
     {
       "type": "similar_to",
       "source": "benchmark:atlassian",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:atlassian",
       "target": "benchmark:gitlab-pajamas",
       "meta": {
         "jaccard": 0.5
@@ -11732,6 +11673,14 @@
     },
     {
       "type": "similar_to",
+      "source": "benchmark:figma",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
       "source": "benchmark:slack",
       "target": "benchmark:twilio-paste",
       "meta": {
@@ -11750,6 +11699,30 @@
       "type": "similar_to",
       "source": "benchmark:slack",
       "target": "benchmark:microsoft-fluent",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:slack",
+      "target": "benchmark:salesforce-slds2",
       "meta": {
         "jaccard": 0.5
       }
@@ -11789,6 +11762,38 @@
     {
       "type": "similar_to",
       "source": "benchmark:material-design",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
+      "target": "benchmark:contentful-forma-36",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:material-design",
       "target": "benchmark:gitlab-pajamas",
       "meta": {
         "jaccard": 0.5
@@ -11821,6 +11826,14 @@
     {
       "type": "similar_to",
       "source": "benchmark:apple-hig",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:apple-hig",
       "target": "benchmark:hashicorp-helios",
       "meta": {
         "jaccard": 0.5
@@ -11846,6 +11859,14 @@
       "type": "similar_to",
       "source": "benchmark:uber",
       "target": "benchmark:adobe-spectrum",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:uber",
+      "target": "benchmark:trimble-modus",
       "meta": {
         "jaccard": 0.5
       }
@@ -11909,9 +11930,57 @@
     {
       "type": "similar_to",
       "source": "benchmark:twilio-paste",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
       "target": "benchmark:hashicorp-helios",
       "meta": {
         "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:contentful-forma-36",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:twilio-paste",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 1.0
       }
     },
     {
@@ -11957,9 +12026,41 @@
     {
       "type": "similar_to",
       "source": "benchmark:ibm-carbon",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
       "target": "benchmark:hashicorp-helios",
       "meta": {
         "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ibm-carbon",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
       }
     },
     {
@@ -11997,9 +12098,41 @@
     {
       "type": "similar_to",
       "source": "benchmark:ant-design",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
       "target": "benchmark:hashicorp-helios",
       "meta": {
         "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:ant-design",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
       }
     },
     {
@@ -12093,7 +12226,47 @@
     {
       "type": "similar_to",
       "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
       "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:adobe-spectrum",
+      "target": "benchmark:salesforce-slds2",
       "meta": {
         "jaccard": 0.5
       }
@@ -12125,9 +12298,57 @@
     {
       "type": "similar_to",
       "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:aws-cloudscape",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
       "target": "benchmark:hashicorp-helios",
       "meta": {
         "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:contentful-forma-36",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:microsoft-fluent",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 1.0
       }
     },
     {
@@ -12148,6 +12369,78 @@
     },
     {
       "type": "similar_to",
+      "source": "benchmark:aws-cloudscape",
+      "target": "benchmark:hashicorp-helios",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:aws-cloudscape",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:aws-cloudscape",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:aws-cloudscape",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:aws-cloudscape",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:aws-cloudscape",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:hashicorp-helios",
+      "target": "benchmark:zendesk-garden",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:hashicorp-helios",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:hashicorp-helios",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
       "source": "benchmark:hashicorp-helios",
       "target": "benchmark:gitlab-pajamas",
       "meta": {
@@ -12158,6 +12451,166 @@
       "type": "similar_to",
       "source": "benchmark:hashicorp-helios",
       "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:zendesk-garden",
+      "target": "benchmark:contentful-forma-36",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:zendesk-garden",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:zendesk-garden",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:zendesk-garden",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:zendesk-garden",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:zendesk-garden",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:contentful-forma-36",
+      "target": "benchmark:nord-health",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:contentful-forma-36",
+      "target": "benchmark:trimble-modus",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:contentful-forma-36",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:contentful-forma-36",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:contentful-forma-36",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:nord-health",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:nord-health",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:nord-health",
+      "target": "benchmark:wise",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:nord-health",
+      "target": "benchmark:cal-com",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:nord-health",
+      "target": "benchmark:toss",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:trimble-modus",
+      "target": "benchmark:salesforce-slds2",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:trimble-modus",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 0.5
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:salesforce-slds2",
+      "target": "benchmark:gitlab-pajamas",
+      "meta": {
+        "jaccard": 1.0
+      }
+    },
+    {
+      "type": "similar_to",
+      "source": "benchmark:salesforce-slds2",
+      "target": "benchmark:cal-com",
       "meta": {
         "jaccard": 0.5
       }
@@ -12369,11 +12822,6 @@
     {
       "type": "enforces",
       "source": "governance:commercial-product-realism",
-      "target": "pattern:layout-dashboard-cards"
-    },
-    {
-      "type": "enforces",
-      "source": "governance:commercial-product-realism",
       "target": "pattern:layout-data-tables"
     },
     {
@@ -12390,6 +12838,11 @@
       "type": "enforces",
       "source": "governance:commercial-product-realism",
       "target": "component:status-badge"
+    },
+    {
+      "type": "enforces",
+      "source": "governance:commercial-product-realism",
+      "target": "component:tabs"
     },
     {
       "type": "enforces",
@@ -12474,6 +12927,16 @@
     {
       "type": "prevents",
       "source": "governance:mockup-visual-substance",
+      "target": "failure-pattern:ad-hoc-node-link-placeholder-graph"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:mockup-visual-substance",
+      "target": "failure-pattern:freehand-svg-connector-graph"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:mockup-visual-substance",
       "target": "failure-pattern:media-runtime-surface-without-asset"
     },
     {
@@ -12495,6 +12958,11 @@
       "type": "prevents",
       "source": "governance:visual-asset-medium-selection",
       "target": "failure-pattern:wrong-medium-svg-for-narrative-media"
+    },
+    {
+      "type": "prevents",
+      "source": "governance:visual-asset-medium-selection",
+      "target": "failure-pattern:user-raster-directive-svg-violation"
     },
     {
       "type": "prevents",
@@ -13139,7 +13607,7 @@
     {
       "type": "intended_for",
       "source": "visual-asset:card-thumbnail",
-      "target": "component:decision-record-card"
+      "target": "component:breadcrumbs"
     },
     {
       "type": "intended_for",
@@ -13149,7 +13617,7 @@
     {
       "type": "intended_for",
       "source": "visual-asset:card-thumbnail",
-      "target": "component:source-card"
+      "target": "component:switch"
     },
     {
       "type": "intended_for",
@@ -13234,7 +13702,7 @@
     {
       "type": "intended_for",
       "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:decision-record-card"
+      "target": "component:breadcrumbs"
     },
     {
       "type": "intended_for",
@@ -13244,7 +13712,7 @@
     {
       "type": "intended_for",
       "source": "sourced-visual-asset:card-thumbnail-fallback",
-      "target": "component:source-card"
+      "target": "component:switch"
     },
     {
       "type": "intended_for",
@@ -13762,6 +14230,11 @@
       "target": "component:hero-trust-strip"
     },
     {
+      "type": "intended_for",
+      "source": "visual-asset:comic-panel-preview",
+      "target": "component:tabs"
+    },
+    {
       "type": "governs",
       "source": "governance:sourced-visual-asset-fallback-contract",
       "target": "sourced-visual-asset:comic-panel-preview-fallback"
@@ -13835,6 +14308,11 @@
       "type": "intended_for",
       "source": "sourced-visual-asset:comic-panel-preview-fallback",
       "target": "component:hero-trust-strip"
+    },
+    {
+      "type": "intended_for",
+      "source": "sourced-visual-asset:comic-panel-preview-fallback",
+      "target": "component:tabs"
     },
     {
       "type": "generated_with",
@@ -14168,26 +14646,27 @@
     }
   ],
   "stats": {
-    "node_count": 385,
-    "edge_count": 1474,
+    "node_count": 407,
+    "edge_count": 1504,
     "nodes_by_type": {
       "Brand": 1,
       "Principle": 4,
       "SpacingToken": 11,
       "RadiusToken": 6,
       "ComponentFamily": 14,
-      "ComponentState": 45,
-      "Component": 101,
+      "ComponentState": 47,
+      "Component": 102,
       "ProductPrimitive": 17,
       "ColorPalette": 4,
-      "ColorToken": 25,
+      "ColorToken": 28,
+      "SourceReference": 1,
+      "GovernanceRule": 16,
       "FontFamily": 2,
       "LayoutPattern": 11,
       "InteractionPattern": 6,
       "AccessibilityRule": 8,
-      "BenchmarkSystem": 35,
-      "GovernanceRule": 11,
-      "ImplementationFailurePattern": 39,
+      "BenchmarkSystem": 42,
+      "ImplementationFailurePattern": 42,
       "ColorMode": 2,
       "BrandIdentityAsset": 1,
       "DesignContextPack": 1,

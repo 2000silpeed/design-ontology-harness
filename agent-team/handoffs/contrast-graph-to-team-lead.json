@@ -1,0 +1,54 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "semantic-color-authority-improvement-2026-07-13-001",
+  "created_at": "2026-07-13T22:59:47+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "ontology-compiler",
+  "to_role": "team-lead",
+  "stage": "system",
+  "status": "ready",
+  "summary": "The automatic contrast-audit Paper and Ink baselines now resolve their HEX values from the typed Markdown runtime policy while preserving their graph identities and contrast edge semantics.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/color-policy-to-contrast-graph.json",
+      "sha256": "9fb99a17abcf6c15b7bab1116999df0799934b605faa2a5652a592743fc72e30"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "design_ontology_harness/graph_builders.py",
+      "sha256": "ed59f21ac000b21032d6978b8d9d6b1fa4beb0127c31f1639d124e2b1ab2d4ac"
+    },
+    {
+      "path": "tests/test_graph_builders.py",
+      "sha256": "b21c9bc5967fdc38b10b13a69ba93a17dfee81258958788cf13f84f25b71cae7"
+    }
+  ],
+  "changed_paths": [
+    "design_ontology_harness/graph_builders.py",
+    "tests/test_graph_builders.py",
+    "agent-team/handoffs/contrast-graph-to-team-lead.json"
+  ],
+  "decisions": [
+    "Resolve Paper from the runtime surface role and Ink from the runtime ink role at graph-build time.",
+    "Keep color:paper, color:ink, the Paper and Ink labels, baseline metadata roles, and contrast_pair edge direction unchanged.",
+    "Leave explicit project palette role HEX values untouched."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run pytest tests/test_graph_builders.py tests/test_semantic_color_upgrade.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "12 passed in 0.30s after the final documentation correction"
+    },
+    {
+      "command": "uv run ruff check design_ontology_harness/graph_builders.py tests/test_graph_builders.py",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "All checks passed after the final documentation correction."
+    }
+  ],
+  "blockers": [],
+  "risks": [],
+  "next_action": "Team Lead includes the contrast graph regression in the final semantic color authority audit."
+}

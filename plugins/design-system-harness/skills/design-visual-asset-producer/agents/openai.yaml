@@ -1,0 +1,4 @@
+interface:
+  display_name: "Visual Director / Asset Producer"
+  short_description: "Run the visual-asset-producer stage with evidence"
+  default_prompt: "Use $design-visual-asset-producer for the assigned team stage and return gate evidence."

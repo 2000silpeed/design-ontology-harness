@@ -1,0 +1,105 @@
+/*
+ * World Cup Hub runtime aliases and identity exceptions.
+ *
+ * `tokens.css` owns every application UI color in light and dark modes. Its
+ * values come from the checksum-verified runtime policy and Semantic OS graph
+ * embedded in `docs/color-reference.md`. This file may only alias those roles
+ * for product morphology; it must not replace them with local UI coordinates.
+ */
+
+:root {
+  /* Product morphology aliases. Every value resolves through generated roles. */
+  --ds-color-body-start: var(--ds-color-canvas);
+  --ds-color-body-mid: color-mix(in srgb, var(--ds-color-surface-muted) 72%, var(--ds-color-canvas));
+  --ds-color-body-end: color-mix(in srgb, var(--ds-color-surface-tint) 22%, var(--ds-color-canvas));
+  --ds-color-surface-soft: color-mix(in srgb, var(--ds-color-success) 8%, var(--ds-color-surface));
+  --ds-color-shell: var(--ds-color-surface);
+  --ds-color-topbar: var(--ds-color-surface-elevated);
+  --ds-color-panel: var(--ds-color-surface);
+  --ds-color-control: var(--ds-color-surface);
+  --ds-color-control-strong: var(--ds-color-surface-muted);
+  --ds-color-cell: var(--ds-color-surface);
+  --ds-color-primary-strong: color-mix(in srgb, var(--ds-color-primary) 82%, var(--ds-color-ink));
+  --ds-color-badge-ink: var(--ds-color-ink-inverse);
+  --ds-color-safe-ink: var(--ds-color-success);
+  --ds-color-danger-ink: var(--ds-color-danger);
+  --ds-color-brand-mark: var(--ds-color-ink);
+  --ds-color-shadow: color-mix(in srgb, var(--ds-color-ink) 16%, transparent);
+  --ds-color-shadow-soft: color-mix(in srgb, var(--ds-color-ink) 12%, transparent);
+  --ds-radius-xs: var(--ds-radius-sm);
+  --ds-radius-shell: var(--ds-radius-lg);
+
+  /*
+   * Identity-only exception namespace.
+   * Migration provenance: values are preserved byte-for-byte from the prior
+   * runtime-theme.css (SHA-256 d31417632caa93be77b4b7b96097dcfb6608191a9daf69110e9bb0945fec362b).
+   * They approximate national flag/team identity for the authored demo fixture
+   * set; they are not Semantic OS status colors or official crest assets.
+   * A flag is always paired with a team code/name, and these values must never
+   * be the sole signal for live, success, warning, danger, selection, or rank.
+   */
+  --identity-team-mex: #006847;
+  --identity-team-rsa: #007A4D;
+  --identity-team-kor: #C60C30;
+  --identity-team-cze: #11457E;
+  --identity-team-can: #D52B1E;
+  --identity-team-sui: #E00022;
+  --identity-team-usa: #3C3B6E;
+  --identity-team-par: #D52B1E;
+  --identity-team-bra: #009C3B;
+  --identity-team-mar: #C1272D;
+  --identity-team-ned: #F36C21;
+  --identity-team-jpn: #BC002D;
+  --identity-team-esp: #AA151B;
+  --identity-team-cpv: #003893;
+  --identity-team-fra: #0055A4;
+  --identity-team-sen: #00853F;
+  --identity-team-arg: #75AADB;
+  --identity-team-alg: #006233;
+  --identity-team-eng: #CE1124;
+  --identity-team-cro: #171796;
+  --identity-flag-paper: #FFFFFF;
+  --identity-flag-ink: #111111;
+  --identity-flag-red: #D52B1E;
+  --identity-flag-blue: #003893;
+  --identity-flag-navy: #00205B;
+  --identity-flag-green: #007A4D;
+  --identity-flag-yellow: #FFCD00;
+  --identity-flag-sky: #75AADB;
+  --identity-flag-orange: #F36C21;
+  --identity-flag-crimson: #C1272D;
+  --identity-flag-royal: #11457E;
+
+  /* Compatibility aliases consumed by the frozen implementation tree. */
+  --team-mex: var(--identity-team-mex);
+  --team-rsa: var(--identity-team-rsa);
+  --team-kor: var(--identity-team-kor);
+  --team-cze: var(--identity-team-cze);
+  --team-can: var(--identity-team-can);
+  --team-sui: var(--identity-team-sui);
+  --team-usa: var(--identity-team-usa);
+  --team-par: var(--identity-team-par);
+  --team-bra: var(--identity-team-bra);
+  --team-mar: var(--identity-team-mar);
+  --team-ned: var(--identity-team-ned);
+  --team-jpn: var(--identity-team-jpn);
+  --team-esp: var(--identity-team-esp);
+  --team-cpv: var(--identity-team-cpv);
+  --team-fra: var(--identity-team-fra);
+  --team-sen: var(--identity-team-sen);
+  --team-arg: var(--identity-team-arg);
+  --team-alg: var(--identity-team-alg);
+  --team-eng: var(--identity-team-eng);
+  --team-cro: var(--identity-team-cro);
+  --ds-color-flag-paper: var(--identity-flag-paper);
+  --ds-color-flag-ink: var(--identity-flag-ink);
+  --ds-color-flag-a: var(--identity-flag-red);
+  --ds-color-flag-b: var(--identity-flag-blue);
+  --ds-color-flag-c: var(--identity-flag-navy);
+  --ds-color-flag-d: var(--identity-flag-green);
+  --ds-color-flag-e: var(--identity-flag-yellow);
+  --ds-color-flag-f: var(--identity-flag-sky);
+  --ds-color-flag-g: var(--identity-flag-orange);
+  --ds-color-flag-h: var(--identity-flag-crimson);
+  --ds-color-flag-i: var(--identity-flag-royal);
+}

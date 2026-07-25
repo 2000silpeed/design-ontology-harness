@@ -563,14 +563,18 @@ function renderSchedule() {
   }
   elements.scheduleRows.innerHTML = rows.map((match) => {
     const prediction = predictionWithLocal(match);
+    const selected = state.selectedMatchId === match.id;
+    const homeTeam = getTeam(match.home);
+    const awayTeam = getTeam(match.away);
     const top = [
-      { key: "home", label: getTeam(match.home).name, value: prediction.home },
+      { key: "home", label: homeTeam.name, value: prediction.home },
       { key: "draw", label: "무승부", value: prediction.draw },
-      { key: "away", label: getTeam(match.away).name, value: prediction.away }
+      { key: "away", label: awayTeam.name, value: prediction.away }
     ].sort((a, b) => b.value - a.value)[0];
     const threadCount = allOpinions().filter((opinion) => opinion.matchId === match.id).length;
+    const selectionLabel = `${homeTeam.name} 대 ${awayTeam.name} 경기${selected ? ", 현재 선택됨" : " 선택"}`;
     return `
-      <tr class="schedule-row ${state.selectedMatchId === match.id ? "selected" : ""}" data-select-match="${match.id}">
+      <tr class="schedule-row ${selected ? "selected" : ""}">
         <td>
           <div class="time-cell">
             <strong>${formatKst(match.iso)}</strong>
@@ -578,16 +582,23 @@ function renderSchedule() {
           </div>
         </td>
         <td>
-          <div class="matchup">
-            <div class="teams">
+          <button
+            class="matchup schedule-match-button"
+            type="button"
+            data-select-match="${match.id}"
+            data-selection-surface="schedule"
+            aria-label="${escapeHtml(selectionLabel)}"
+            aria-pressed="${selected}"
+          >
+            <span class="teams">
               ${teamBadge(match.home)}
-              <span>${escapeHtml(getTeam(match.home).name)}</span>
+              <span>${escapeHtml(homeTeam.name)}</span>
               <span class="vs">vs</span>
               ${teamBadge(match.away)}
-              <span>${escapeHtml(getTeam(match.away).name)}</span>
-            </div>
-            <p class="match-note">${escapeHtml(match.note)}</p>
-          </div>
+              <span>${escapeHtml(awayTeam.name)}</span>
+            </span>
+            <span class="match-note">${escapeHtml(match.note)}</span>
+          </button>
         </td>
         <td><span class="group-pill">${match.group}</span></td>
         <td>
@@ -786,13 +797,22 @@ document.addEventListener("click", (event) => {
 
   const selectButton = event.target.closest("[data-select-match]");
   if (selectButton) {
-    state.selectedMatchId = selectButton.dataset.selectMatch;
+    const matchId = selectButton.dataset.selectMatch;
+    const selectionSurface = selectButton.dataset.selectionSurface;
+    state.selectedMatchId = matchId;
     renderTicker();
     renderSchedule();
     renderMatchDetail();
     renderInsightRail();
     renderPrediction();
     renderDiscussion();
+    if (selectionSurface) {
+      requestAnimationFrame(() => {
+        const replacement = [...document.querySelectorAll("[data-selection-surface]")]
+          .find((control) => control.dataset.selectionSurface === selectionSurface && control.dataset.selectMatch === matchId);
+        replacement?.focus({ preventScroll: true });
+      });
+    }
     return;
   }
 

@@ -1,0 +1,94 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-production-ui-improvement-2026-07-13-001",
+  "created_at": "2026-07-13T23:47:05+09:00",
+  "project": "world-cup-hub",
+  "from_role": "brief-author",
+  "to_role": "team-lead",
+  "stage": "concept",
+  "status": "ready",
+  "summary": "World Cup Hub now has an authored fixture-led application concept, a synchronized schedule-and-match-rail layout skeleton, and structural differentiation rules grounded only in the product brief, approved component scope, and Semantic OS authority. Profile validation now blocks system generation when an authored project omits, empties, or leaves scaffold placeholders in those concept fields.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/world-cup-hub-concept-team-lead-to-brief-author.json",
+      "sha256": "73019d73ec60385ebde8b5d8184b77e676864007e736952a18d0a837b322ff4a"
+    },
+    {
+      "path": "projects/world-cup-hub/spec.md",
+      "sha256": "8f958871bee5c8cb32289f71921af9bf54207b554071de4d43aa56df4207fe47"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/component-contracts.json",
+      "sha256": "4a39b2f4da3c6d32406453688e704a9fb091e09033fc93abf9f6cb774a4ce8f4"
+    },
+    {
+      "path": "docs/color-reference.md",
+      "sha256": "b715c0c9073613ac36c425a049f4c7197bd1534bd799047bba64eff3ba5d66fd"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/brand_profile.json",
+      "sha256": "c6603c493ff0e09d8d2382cbc813887e1071e955f116f27dc894a9af9aaf09f6"
+    },
+    {
+      "path": "design_ontology_harness/authoring.py",
+      "sha256": "645e69d59866ac3ecfc66f508d928b859e3ff3eccc12cfca10ed299028b23d21"
+    },
+    {
+      "path": "tests/test_application_concept.py",
+      "sha256": "caf63dcec987ef05925d53b9ab5ae9bacd3470f08d98deb27750e3d902d58639"
+    }
+  ],
+  "changed_paths": [
+    "projects/world-cup-hub/brand_profile.json",
+    "design_ontology_harness/authoring.py",
+    "tests/test_application_concept.py",
+    "agent-team/handoffs/world-cup-hub-concept-brief-author-to-team-lead.json"
+  ],
+  "decisions": [
+    "Make the fixture scan surface and synchronized selected-match rail the defining application composition; do not derive concept or layout from the existing UI.",
+    "Use selectedMatchId as the context spine across ticker, schedule, detail, prediction, result impact, and discussion surfaces.",
+    "Require provenance and verification state beside official fixtures, sample results, fan predictions, and model opinions.",
+    "Activate strict concept validation whenever a profile reserves an inline or external authored component scope, or begins adding any concept field.",
+    "Keep explicit compatibility for legacy profiles only when all concept fields and authored component decisions are absent."
+  ],
+  "gate_results": [
+    {
+      "command": "python -m json.tool projects/world-cup-hub/brand_profile.json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "The authored World Cup Hub profile is valid JSON."
+    },
+    {
+      "command": "uv run python -c 'import json; from pathlib import Path; from design_ontology_harness.authoring import validate_brand_profile; p=json.loads(Path(\"projects/world-cup-hub/brand_profile.json\").read_text()); r=validate_brand_profile(p); print(json.dumps(r, ensure_ascii=False)); raise SystemExit(0 if r[\"valid\"] else 1)'",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Profile validation returned valid=true, errors=[], warnings=[]."
+    },
+    {
+      "command": "uv run pytest tests/test_application_concept.py tests/test_component_specs.py tests/test_semantic_color_ontology.py tests/test_typography_guardrails.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "29 tests passed; coverage includes strict missing-field rejection, scaffold-placeholder rejection, generation stop, legacy compatibility, World Cup Hub acceptance, and downstream concept propagation."
+    },
+    {
+      "command": "uv run ruff check design_ontology_harness/authoring.py tests/test_application_concept.py",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Ruff reported All checks passed."
+    },
+    {
+      "command": "uv run pytest -q --disable-warnings",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "475 tests and 2 subtests passed in 29.77 seconds; 11 existing warnings were reported."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Existing blueprint, component, token, runtime-theme, implementation, and screenshot artifacts predate this concept and remain stale until their owning stages regenerate and reverify them.",
+    "Legacy profiles with no authored concept or component decision intentionally retain fallback synthesis; they do not qualify for the authored concept exit gate until migrated."
+  ],
+  "next_action": "Team Lead accepts the concept handoff, then dispatches the file-separated Token Curator and Component Contract Author work before allowing Ontology Compiler regeneration."
+}

@@ -1,0 +1,1891 @@
+{
+  "naming": {
+    "core": "{category}.{role}.{scale}",
+    "semantic": "{category}.{intent}.{state}",
+    "component": "{component}.{slot}.{property}",
+    "rule": "네이밍 패턴만 정의하고 구체적 토큰명은 실제 컴포넌트·역할에서 도출 — 임의 토큰명 생성 금지"
+  },
+  "layers": [
+    {
+      "name": "core",
+      "purpose": "브랜드에 종속되지 않는 수치와 원재료 토큰",
+      "categories": [
+        "color",
+        "spacing",
+        "radius",
+        "typography",
+        "motion",
+        "elevation"
+      ]
+    },
+    {
+      "name": "semantic",
+      "purpose": "역할 중심 토큰",
+      "categories": [
+        "surface",
+        "text",
+        "border",
+        "focus",
+        "feedback"
+      ]
+    },
+    {
+      "name": "component",
+      "purpose": "컴포넌트 슬롯별 적용 토큰",
+      "categories": [
+        "button",
+        "input",
+        "navigation",
+        "overlay",
+        "editor"
+      ]
+    }
+  ],
+  "categories": {
+    "color": {
+      "core_groups": [
+        "neutral",
+        "accent",
+        "success",
+        "warning",
+        "danger",
+        "info"
+      ],
+      "scale": [
+        0,
+        50,
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900,
+        1000
+      ],
+      "rules": [
+        "accent는 최대 1개의 주 계열로 시작",
+        "semantic feedback은 accent와 분리",
+        "text/surface 조합은 접근성 기준을 우선",
+        "hex 값은 color_reference·CSS 추출·브랜드 가이드에서만 가져오고 임의 생성 금지"
+      ],
+      "reference_palette": {
+        "source_title": "REFERENCE X Vol.1 - Color Reference",
+        "source_path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+        "preferred_families": [
+          "Deep Blues",
+          "Natural Blues",
+          "Pastel Yellows",
+          "Deep Greens",
+          "Standard Yellows",
+          "Pantone Trend Reds",
+          "Deep Oranges"
+        ],
+        "selection_mode": "manual",
+        "strategy": {
+          "mode": "brand-guided",
+          "candidate_count": 3,
+          "active_candidate": 1,
+          "temperature": "mixed",
+          "contrast": "balanced",
+          "diversity": "balanced",
+          "surface_style": "tinted",
+          "chrome_strategy": "chromatic",
+          "prefer_moods": [
+            "신뢰감",
+            "집중",
+            "차분함",
+            "고전적 권위",
+            "따뜻함"
+          ],
+          "avoid_moods": [
+            "네온",
+            "몽환적",
+            "유아적",
+            "장식적"
+          ]
+        },
+        "expansion": {
+          "enabled": true,
+          "supporting_color_count": 8,
+          "combination_count": 3,
+          "prefer_pairings": true,
+          "prefer_related_families": false
+        },
+        "selected_colors": [
+          {
+            "name": "Prussian Blue",
+            "family": "Deep Blues",
+            "hex": "#003153",
+            "mood": "저명도, 저채도, 녹색 기가 약하게 섞인 중성 쿨톤 / 고전, 예술, 집중, 권위, 깊이감",
+            "pairings": [
+              "#F5F3E7",
+              "#C69C59",
+              "#B8CBD0",
+              "#B35A28",
+              "#8A8E80",
+              "#D4A6A6"
+            ]
+          },
+          {
+            "name": "Ocean Blue",
+            "family": "Natural Blues",
+            "hex": "#4F97A3",
+            "mood": "중명도, 중채도, 매트한 청록색 계열 / 신뢰, 정화, 깊이감, 유연함, 안정감",
+            "pairings": [
+              "#F7F7F7",
+              "#E77A64",
+              "#D8C7A0",
+              "#60727B",
+              "#9FD6C2",
+              "#203A4A"
+            ]
+          },
+          {
+            "name": "Cornsilk",
+            "family": "Pastel Yellows",
+            "hex": "#FFF8DC",
+            "mood": "고명도, 저채도, 크리미한 옐로 베이스 계열의 톤 / 따뜻함, 부드러움, 내추럴함, 포근함",
+            "pairings": [
+              "#B89C7D",
+              "#B6C7D6",
+              "#BEE9AE",
+              "#D9B8A8",
+              "#7B8B55",
+              "#D49B7A"
+            ]
+          },
+          {
+            "name": "Hunter Green",
+            "family": "Natural Greens",
+            "hex": "#355E3B",
+            "mood": "저명도, 중고채도의 다크 그린 계열 / 중후함, 신뢰, 클래식, 깊이감, 균형감",
+            "pairings": [
+              "#EDE7D4",
+              "#C49A3A",
+              "#6B2E2E",
+              "#3A3A3A",
+              "#D4C3A1",
+              "#C4C29A"
+            ]
+          },
+          {
+            "name": "Goldenrod",
+            "family": "Standard Yellows",
+            "hex": "#DAA520",
+            "mood": "중명도, 중채도, 옐로 오렌지 계열 / 따뜻함, 안정감, 고급스러움, 빈티지 감성",
+            "pairings": [
+              "#F6F4E6",
+              "#6B705C",
+              "#8B5A2B",
+              "#7A9EAF",
+              "#3F3F3F",
+              "#5C1A1B"
+            ]
+          },
+          {
+            "name": "Marsala",
+            "family": "Pantone Trend Reds",
+            "hex": "#964F4C",
+            "mood": "적갈색 계열, 와인과 브라운 사이의 중후한 톤 / 성숙함, 안정감, 관능적, 가을/겨울, 클래식",
+            "pairings": [
+              "#D4AF37",
+              "#F5F5DC",
+              "#D9C2AD",
+              "#A39887",
+              "#B8860B",
+              "#9C9B7A"
+            ]
+          },
+          {
+            "name": "Rust",
+            "family": "Deep Oranges",
+            "hex": "#B7410E",
+            "mood": "저명도, 중채도, 오렌지와 브라운의 중간 영역 / 빈티지, 견고함, 따뜻한 노스탤지어, 공예적 감성",
+            "pairings": [
+              "#D8C4A5",
+              "#3B3B3B",
+              "#A7B29C",
+              "#F4EEE2",
+              "#354B68",
+              "#8C5230"
+            ]
+          }
+        ],
+        "palette_roles": {
+          "primary": {
+            "name": "Prussian Blue",
+            "family": "Deep Blues",
+            "hex": "#003153",
+            "mood": "저명도, 저채도, 녹색 기가 약하게 섞인 중성 쿨톤 / 고전, 예술, 집중, 권위, 깊이감",
+            "pairings": [
+              "#F5F3E7",
+              "#C69C59",
+              "#B8CBD0",
+              "#B35A28",
+              "#8A8E80",
+              "#D4A6A6"
+            ]
+          },
+          "accent": {
+            "name": "Rust",
+            "family": "Deep Oranges",
+            "hex": "#B7410E",
+            "mood": "저명도, 중채도, 오렌지와 브라운의 중간 영역 / 빈티지, 견고함, 따뜻한 노스탤지어, 공예적 감성",
+            "pairings": [
+              "#D8C4A5",
+              "#3B3B3B",
+              "#A7B29C",
+              "#F4EEE2",
+              "#354B68",
+              "#8C5230"
+            ]
+          },
+          "surface_tint": {
+            "name": "Cornsilk",
+            "family": "Pastel Yellows",
+            "hex": "#FFF8DC",
+            "mood": "고명도, 저채도, 크리미한 옐로 베이스 계열의 톤 / 따뜻함, 부드러움, 내추럴함, 포근함",
+            "pairings": [
+              "#B89C7D",
+              "#B6C7D6",
+              "#BEE9AE",
+              "#D9B8A8",
+              "#7B8B55",
+              "#D49B7A"
+            ]
+          },
+          "structural_support": {
+            "name": "Ocean Blue",
+            "family": "Natural Blues",
+            "hex": "#4F97A3",
+            "mood": "중명도, 중채도, 매트한 청록색 계열 / 신뢰, 정화, 깊이감, 유연함, 안정감",
+            "pairings": [
+              "#F7F7F7",
+              "#E77A64",
+              "#D8C7A0",
+              "#60727B",
+              "#9FD6C2",
+              "#203A4A"
+            ]
+          },
+          "proof_support": {
+            "name": "Hunter Green",
+            "family": "Natural Greens",
+            "hex": "#355E3B",
+            "mood": "저명도, 중고채도의 다크 그린 계열 / 중후함, 신뢰, 클래식, 깊이감, 균형감",
+            "pairings": [
+              "#EDE7D4",
+              "#C49A3A",
+              "#6B2E2E",
+              "#3A3A3A",
+              "#D4C3A1",
+              "#C4C29A"
+            ]
+          }
+        },
+        "active_palette": {
+          "candidate_id": null,
+          "selection_mode": "manual",
+          "roles": {
+            "primary": {
+              "name": "Prussian Blue",
+              "family": "Deep Blues",
+              "hex": "#003153",
+              "mood": "저명도, 저채도, 녹색 기가 약하게 섞인 중성 쿨톤 / 고전, 예술, 집중, 권위, 깊이감"
+            },
+            "accent": {
+              "name": "Rust",
+              "family": "Deep Oranges",
+              "hex": "#B7410E",
+              "mood": "저명도, 중채도, 오렌지와 브라운의 중간 영역 / 빈티지, 견고함, 따뜻한 노스탤지어, 공예적 감성"
+            },
+            "surface_tint": {
+              "name": "Cornsilk",
+              "family": "Pastel Yellows",
+              "hex": "#FFF8DC",
+              "mood": "고명도, 저채도, 크리미한 옐로 베이스 계열의 톤 / 따뜻함, 부드러움, 내추럴함, 포근함"
+            },
+            "structural_support": {
+              "name": "Ocean Blue",
+              "family": "Natural Blues",
+              "hex": "#4F97A3",
+              "mood": "중명도, 중채도, 매트한 청록색 계열 / 신뢰, 정화, 깊이감, 유연함, 안정감"
+            },
+            "proof_support": {
+              "name": "Hunter Green",
+              "family": "Natural Greens",
+              "hex": "#355E3B",
+              "mood": "저명도, 중고채도의 다크 그린 계열 / 중후함, 신뢰, 클래식, 깊이감, 균형감"
+            }
+          }
+        },
+        "palette_candidates": [
+          {
+            "id": "signature-1",
+            "label": "Signature",
+            "score": 61.19,
+            "rationale": [
+              "Ochre matches brand tone keywords.",
+              "Apricot matches brand tone keywords.",
+              "Wheat matches brand tone keywords."
+            ],
+            "strategy_snapshot": {
+              "temperature": "mixed",
+              "contrast": "balanced",
+              "diversity": "balanced",
+              "surface_style": "tinted"
+            },
+            "roles": {
+              "primary": {
+                "name": "Ochre",
+                "family": "Standard Oranges",
+                "hex": "#CC7722",
+                "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성"
+              },
+              "accent": {
+                "name": "Apricot",
+                "family": "Natural Oranges",
+                "hex": "#FFB27F",
+                "mood": "밝은 명도, 낮은 채도, 살짝 핑크빛이 도는 부드러운 오렌지 / 따뜻함, 부드러움, 친근함, 여유, 자연스러움"
+              },
+              "surface_tint": {
+                "name": "Wheat",
+                "family": "Natural Yellows",
+                "hex": "#F5DEB3",
+                "mood": "중명도, 저채도, 베이지 옐로 계열의 따뜻한 톤 / 따뜻함, 자연스러움, 부드러움, 안정감"
+              }
+            }
+          },
+          {
+            "id": "assertive-3",
+            "label": "Assertive",
+            "score": 59.93,
+            "rationale": [
+              "Navy Blue is inside preferred families.",
+              "Ochre matches brand tone keywords.",
+              "Apricot matches brand tone keywords."
+            ],
+            "strategy_snapshot": {
+              "temperature": "mixed",
+              "contrast": "vivid",
+              "diversity": "balanced",
+              "surface_style": "grounded"
+            },
+            "roles": {
+              "primary": {
+                "name": "Navy Blue",
+                "family": "Deep Blues",
+                "hex": "#000080",
+                "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함"
+              },
+              "accent": {
+                "name": "Ochre",
+                "family": "Standard Oranges",
+                "hex": "#CC7722",
+                "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성"
+              },
+              "surface_tint": {
+                "name": "Apricot",
+                "family": "Natural Oranges",
+                "hex": "#FFB27F",
+                "mood": "밝은 명도, 낮은 채도, 살짝 핑크빛이 도는 부드러운 오렌지 / 따뜻함, 부드러움, 친근함, 여유, 자연스러움"
+              }
+            }
+          }
+        ],
+        "expanded_palette": {
+          "search_strategy": {
+            "sources": [
+              "seed pairings",
+              "brand keywords",
+              "family tone",
+              "hue compatibility"
+            ],
+            "supporting_color_count": 8,
+            "combination_count": 3,
+            "seed_roles": {
+              "primary": {
+                "name": "Prussian Blue",
+                "hex": "#003153",
+                "family": "Deep Blues"
+              },
+              "accent": {
+                "name": "Rust",
+                "hex": "#B7410E",
+                "family": "Deep Oranges"
+              },
+              "surface_tint": {
+                "name": "Cornsilk",
+                "hex": "#FFF8DC",
+                "family": "Pastel Yellows"
+              },
+              "structural_support": {
+                "name": "Ocean Blue",
+                "hex": "#4F97A3",
+                "family": "Natural Blues"
+              },
+              "proof_support": {
+                "name": "Hunter Green",
+                "hex": "#355E3B",
+                "family": "Natural Greens"
+              }
+            },
+            "preferred_families": [
+              "Deep Blues",
+              "Natural Blues",
+              "Pastel Yellows",
+              "Deep Greens",
+              "Standard Yellows",
+              "Pantone Trend Reds",
+              "Deep Oranges"
+            ]
+          },
+          "supporting_colors": [
+            {
+              "name": "Apricot",
+              "family": "Natural Oranges",
+              "hex": "#FFB27F",
+              "mood": "밝은 명도, 낮은 채도, 살짝 핑크빛이 도는 부드러운 오렌지 / 따뜻함, 부드러움, 친근함, 여유, 자연스러움",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 16.25,
+              "search_reasons": [
+                "Apricot reinforces the brand mood signals."
+              ]
+            },
+            {
+              "name": "Wheat",
+              "family": "Natural Yellows",
+              "hex": "#F5DEB3",
+              "mood": "중명도, 저채도, 베이지 옐로 계열의 따뜻한 톤 / 따뜻함, 자연스러움, 부드러움, 안정감",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 16.25,
+              "search_reasons": [
+                "Wheat reinforces the brand mood signals."
+              ]
+            },
+            {
+              "name": "Terracotta",
+              "family": "Natural Reds",
+              "hex": "#E2725B",
+              "mood": "붉은 흙빛 계열, 오렌지 브라운이 섞인 따뜻한 중채 레드 / 안정감, 따뜻함, 자연스러움, 감성적",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 12.3,
+              "search_reasons": [
+                "Terracotta reinforces the brand mood signals."
+              ]
+            },
+            {
+              "name": "Sky Blue",
+              "family": "Natural Blues",
+              "hex": "#87CEEB",
+              "mood": "고명도, 중채도의 밝은 쿨톤 / 청량함, 평화, 유연함, 긍정, 맑음",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 11.75,
+              "search_reasons": [
+                "Sky Blue stays inside the preferred families.",
+                "Sky Blue reinforces the brand mood signals."
+              ]
+            },
+            {
+              "name": "Ochre",
+              "family": "Standard Oranges",
+              "hex": "#CC7722",
+              "mood": "중명도, 중채도, 흙기 섞인 따뜻한 오렌지 / 안정감, 내추럴, 신뢰감, 지속성",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 11.45,
+              "search_reasons": [
+                "Ochre reinforces the brand mood signals."
+              ]
+            },
+            {
+              "name": "Navy Blue",
+              "family": "Deep Blues",
+              "hex": "#000080",
+              "mood": "저명도, 중채도, 차가운 온도감이 강한 블루 계열 / 신뢰, 권위, 집중, 전문성, 절제된 우아함",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 11.15,
+              "search_reasons": [
+                "Navy Blue stays inside the preferred families.",
+                "Navy Blue reinforces the brand mood signals."
+              ]
+            },
+            {
+              "name": "Celadon",
+              "family": "Pastel Greens",
+              "hex": "#ACE1AF",
+              "mood": "중명도, 저채도의 그레이시 그린 계열 / 자연스러움, 절제, 고요, 전통미, 단아함",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 11.1,
+              "search_reasons": [
+                "Celadon reinforces the brand mood signals."
+              ]
+            },
+            {
+              "name": "Ocean Blue",
+              "family": "Natural Blues",
+              "hex": "#4F97A3",
+              "mood": "중명도, 중채도, 매트한 청록색 계열 / 신뢰, 정화, 깊이감, 유연함, 안정감",
+              "source_type": "reference-color",
+              "source_seed_names": [],
+              "search_score": 10.95,
+              "search_reasons": [
+                "Ocean Blue stays inside the preferred families.",
+                "Ocean Blue reinforces the brand mood signals."
+              ]
+            }
+          ],
+          "semantic_roles": {
+            "brand_primary": {
+              "name": "Prussian Blue",
+              "family": "Deep Blues",
+              "hex": "#003153",
+              "source_type": "semantic-os-synced-markdown"
+            },
+            "brand_accent": {
+              "name": "Rust",
+              "family": "Deep Oranges",
+              "hex": "#B7410E",
+              "source_type": "semantic-os-synced-markdown"
+            },
+            "surface_tint": {
+              "name": "Cornsilk",
+              "family": "Pastel Yellows",
+              "hex": "#FFF8DC",
+              "source_type": "semantic-os-synced-markdown"
+            },
+            "canvas": {
+              "name": "Canvas",
+              "family": "Runtime Role Policy",
+              "hex": "#F7F8FA",
+              "source_type": "runtime-role-default"
+            },
+            "surface": {
+              "name": "Surface",
+              "family": "Runtime Role Policy",
+              "hex": "#FFFFFF",
+              "source_type": "runtime-role-default"
+            },
+            "surface_muted": {
+              "name": "Surface Muted",
+              "family": "Runtime Role Policy",
+              "hex": "#EEF1F6",
+              "source_type": "runtime-role-default"
+            },
+            "surface_elevated": {
+              "name": "Surface",
+              "family": "Runtime Role Policy",
+              "hex": "#FFFFFF",
+              "source_type": "runtime-role-default"
+            },
+            "border": {
+              "name": "Border",
+              "family": "Runtime Role Policy",
+              "hex": "#D6DDE6",
+              "source_type": "runtime-role-default"
+            },
+            "border_strong": {
+              "name": "Border Strong",
+              "family": "Runtime Role Policy",
+              "hex": "#9AA6B2",
+              "source_type": "runtime-role-default"
+            },
+            "ink": {
+              "name": "Prussian Blue",
+              "family": "Deep Blues",
+              "hex": "#003153",
+              "source_type": "active-role:primary"
+            },
+            "ink_muted": {
+              "name": "Ink Muted",
+              "family": "Runtime Role Policy",
+              "hex": "#475569",
+              "source_type": "runtime-role-default"
+            },
+            "ink_subtle": {
+              "name": "Ink Subtle",
+              "family": "Runtime Role Policy",
+              "hex": "#64748B",
+              "source_type": "runtime-role-default"
+            },
+            "ink_inverse": {
+              "name": "Ink Inverse",
+              "family": "Runtime Role Policy",
+              "hex": "#FFFFFF",
+              "source_type": "runtime-role-default"
+            },
+            "primary_support": {
+              "name": "Sky Blue",
+              "family": "Natural Blues",
+              "hex": "#87CEEB",
+              "source_type": "reference-color"
+            },
+            "accent_support": {
+              "name": "Apricot",
+              "family": "Natural Oranges",
+              "hex": "#FFB27F",
+              "source_type": "reference-color"
+            },
+            "info": {
+              "name": "Ocean Blue",
+              "family": "Natural Blues",
+              "hex": "#4F97A3",
+              "source_type": "spec-status-contract"
+            },
+            "success": {
+              "name": "Hunter Green",
+              "family": "Natural Greens",
+              "hex": "#355E3B",
+              "source_type": "spec-status-contract"
+            },
+            "warning": {
+              "name": "Goldenrod",
+              "family": "Standard Yellows",
+              "hex": "#DAA520",
+              "source_type": "spec-status-contract"
+            },
+            "danger": {
+              "name": "Marsala",
+              "family": "Pantone Trend Reds",
+              "hex": "#964F4C",
+              "source_type": "spec-status-contract"
+            },
+            "link": {
+              "name": "Ocean Blue",
+              "family": "Natural Blues",
+              "hex": "#4F97A3",
+              "source_type": "spec-status-contract"
+            },
+            "link_hover": {
+              "name": "Link Hover",
+              "family": "Derived Runtime Role",
+              "hex": "#427E88",
+              "source_type": "derived-runtime-role"
+            }
+          },
+          "combination_lists": [
+            {
+              "id": "seed-core",
+              "label": "Seed Core",
+              "purpose": "기본 테마를 이루는 핵심 색",
+              "colors": [
+                {
+                  "role": "primary",
+                  "name": "Prussian Blue",
+                  "hex": "#003153",
+                  "family": "Deep Blues",
+                  "source_type": "semantic-os-synced-markdown"
+                },
+                {
+                  "role": "accent",
+                  "name": "Rust",
+                  "hex": "#B7410E",
+                  "family": "Deep Oranges",
+                  "source_type": "semantic-os-synced-markdown"
+                },
+                {
+                  "role": "surface_tint",
+                  "name": "Cornsilk",
+                  "hex": "#FFF8DC",
+                  "family": "Pastel Yellows",
+                  "source_type": "semantic-os-synced-markdown"
+                },
+                {
+                  "role": "structural_support",
+                  "name": "Ocean Blue",
+                  "hex": "#4F97A3",
+                  "family": "Natural Blues",
+                  "source_type": "semantic-os-synced-markdown"
+                },
+                {
+                  "role": "proof_support",
+                  "name": "Hunter Green",
+                  "hex": "#355E3B",
+                  "family": "Natural Greens",
+                  "source_type": "semantic-os-synced-markdown"
+                }
+              ]
+            },
+            {
+              "id": "surface-system",
+              "label": "Surface System",
+              "purpose": "배경, 패널, 텍스트, 보더에 쓰는 기본 조합",
+              "colors": [
+                {
+                  "role": "canvas",
+                  "name": "Canvas",
+                  "hex": "#F7F8FA",
+                  "family": "Runtime Role Policy",
+                  "source_type": "runtime-role-default"
+                },
+                {
+                  "role": "surface",
+                  "name": "Surface",
+                  "hex": "#FFFFFF",
+                  "family": "Runtime Role Policy",
+                  "source_type": "runtime-role-default"
+                },
+                {
+                  "role": "surface_tint",
+                  "name": "Cornsilk",
+                  "hex": "#FFF8DC",
+                  "family": "Pastel Yellows",
+                  "source_type": "semantic-os-synced-markdown"
+                },
+                {
+                  "role": "border",
+                  "name": "Border",
+                  "hex": "#D6DDE6",
+                  "family": "Runtime Role Policy",
+                  "source_type": "runtime-role-default"
+                },
+                {
+                  "role": "ink",
+                  "name": "Prussian Blue",
+                  "hex": "#003153",
+                  "family": "Deep Blues",
+                  "source_type": "active-role:primary"
+                },
+                {
+                  "role": "ink_muted",
+                  "name": "Ink Muted",
+                  "hex": "#475569",
+                  "family": "Runtime Role Policy",
+                  "source_type": "runtime-role-default"
+                }
+              ]
+            },
+            {
+              "id": "support-spectrum",
+              "label": "Support Spectrum",
+              "purpose": "보조 하이라이트, 차트, 2차 액션에 쓰는 확장 리스트",
+              "colors": [
+                {
+                  "role": "support",
+                  "name": "Apricot",
+                  "hex": "#FFB27F",
+                  "family": "Natural Oranges",
+                  "source_type": "reference-color"
+                },
+                {
+                  "role": "support",
+                  "name": "Wheat",
+                  "hex": "#F5DEB3",
+                  "family": "Natural Yellows",
+                  "source_type": "reference-color"
+                },
+                {
+                  "role": "support",
+                  "name": "Terracotta",
+                  "hex": "#E2725B",
+                  "family": "Natural Reds",
+                  "source_type": "reference-color"
+                },
+                {
+                  "role": "support",
+                  "name": "Sky Blue",
+                  "hex": "#87CEEB",
+                  "family": "Natural Blues",
+                  "source_type": "reference-color"
+                },
+                {
+                  "role": "support",
+                  "name": "Ochre",
+                  "hex": "#CC7722",
+                  "family": "Standard Oranges",
+                  "source_type": "reference-color"
+                },
+                {
+                  "role": "support",
+                  "name": "Navy Blue",
+                  "hex": "#000080",
+                  "family": "Deep Blues",
+                  "source_type": "reference-color"
+                }
+              ]
+            }
+          ]
+        },
+        "semantic_ontology": {
+          "schema_version": "design-ontology-harness/semantic-color-context-v1",
+          "source": {
+            "built_at": "2026-06-17T23:12:02.191192+00:00",
+            "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included.",
+            "path": "domains/color/ontology/build/graph.json",
+            "repo": "semantic-os",
+            "source_graph_sha256": "288b40d9cc03b552e802cf061dcd5a1dc193ad47f84e18d13d1b71160344c301",
+            "source_schema_version": "default-video-production-ontology-v1",
+            "transport": "docs/color-reference.md",
+            "authority": "semantic-os-synced-markdown",
+            "visible_color_card_count": 87,
+            "local_extension_count": 2,
+            "reference_path": "docs/color-reference.md"
+          },
+          "node_count": 361,
+          "edge_count": 1235,
+          "matched_keywords": [
+            {
+              "id": "color-keyword-prussian-blue",
+              "role": "primary",
+              "name": "Prussian Blue",
+              "hex": "#003153",
+              "spectrum": "blue",
+              "family": "deep",
+              "mood_tags": [
+                "고전",
+                "예술",
+                "집중",
+                "권위",
+                "깊이감"
+              ],
+              "tone_axes": [
+                "low_value",
+                "low_chroma",
+                "cool_bias"
+              ]
+            },
+            {
+              "id": "color-keyword-rust",
+              "role": "accent",
+              "name": "Rust",
+              "hex": "#B7410E",
+              "spectrum": "orange",
+              "family": "deep",
+              "mood_tags": [
+                "빈티지",
+                "견고함",
+                "따뜻한 노스탤지어",
+                "공예적 감성"
+              ],
+              "tone_axes": [
+                "low_value",
+                "mid_chroma",
+                "warm_bias",
+                "earth_or_wine_bias"
+              ]
+            },
+            {
+              "id": "color-keyword-cornsilk",
+              "role": "surface_tint",
+              "name": "Cornsilk",
+              "hex": "#FFF8DC",
+              "spectrum": "yellow",
+              "family": "pastel",
+              "mood_tags": [
+                "따뜻함",
+                "부드러움",
+                "내추럴함",
+                "포근함"
+              ],
+              "tone_axes": [
+                "high_value",
+                "low_chroma",
+                "warm_bias",
+                "pastel"
+              ]
+            },
+            {
+              "id": "color-keyword-ocean-blue",
+              "role": "structural_support",
+              "name": "Ocean Blue",
+              "hex": "#4F97A3",
+              "spectrum": "blue",
+              "family": "natural",
+              "mood_tags": [
+                "신뢰",
+                "정화",
+                "깊이감",
+                "유연함",
+                "안정감"
+              ],
+              "tone_axes": [
+                "mid_value",
+                "mid_chroma"
+              ]
+            },
+            {
+              "id": "color-keyword-hunter-green",
+              "role": "proof_support",
+              "name": "Hunter Green",
+              "hex": "#355E3B",
+              "spectrum": "green",
+              "family": "natural",
+              "mood_tags": [
+                "중후함",
+                "신뢰",
+                "클래식",
+                "깊이감",
+                "균형감"
+              ],
+              "tone_axes": [
+                "low_value",
+                "high_chroma",
+                "mid_chroma"
+              ]
+            }
+          ],
+          "recommended_keywords": [
+            {
+              "id": "color-keyword-chili-oil",
+              "name": "Chili Oil",
+              "hex": "#944537",
+              "spectrum": "orange",
+              "family": "pantone_trend",
+              "score": 24.5,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches 'orange'",
+                "matches '고급스러움'"
+              ]
+            },
+            {
+              "id": "color-keyword-apricot",
+              "name": "Apricot",
+              "hex": "#FFB27F",
+              "spectrum": "orange",
+              "family": "natural",
+              "score": 24.0,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches 'orange'",
+                "matches '자연스러움'"
+              ]
+            },
+            {
+              "id": "color-keyword-peach-puff",
+              "name": "Peach Puff",
+              "hex": "#FFDAB9",
+              "spectrum": "orange",
+              "family": "pastel",
+              "score": 23.5,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches 'pastel'",
+                "matches 'orange'"
+              ]
+            },
+            {
+              "id": "color-keyword-salmon",
+              "name": "Salmon",
+              "hex": "#FA8072",
+              "spectrum": "red",
+              "family": "pastel",
+              "score": 23.5,
+              "reasons": [
+                "matches 'pastel'",
+                "matches '자연스러움'",
+                "matches 'warm'"
+              ]
+            },
+            {
+              "id": "color-keyword-autumn-blaze",
+              "name": "Autumn Blaze",
+              "hex": "#D1933F",
+              "spectrum": "yellow",
+              "family": "pantone_trend",
+              "score": 22.5,
+              "reasons": [
+                "matches '자연스러움'",
+                "matches 'warm'",
+                "matches 'tags'"
+              ]
+            },
+            {
+              "id": "color-keyword-local-blanched-almond",
+              "name": "Blanched Almond",
+              "hex": "#FFEBCD",
+              "spectrum": "yellow",
+              "family": "local_extension",
+              "score": 22.5,
+              "reasons": [
+                "matches 'cornsilk'",
+                "matches 'pastel'",
+                "matches 'drawer'"
+              ]
+            },
+            {
+              "id": "color-keyword-wheat",
+              "name": "Wheat",
+              "hex": "#F5DEB3",
+              "spectrum": "yellow",
+              "family": "natural",
+              "score": 22.5,
+              "reasons": [
+                "matches 'low_chroma'",
+                "matches '자연스러움'",
+                "matches 'warm'"
+              ]
+            },
+            {
+              "id": "color-keyword-copper",
+              "name": "Copper",
+              "hex": "#B87333",
+              "spectrum": "orange",
+              "family": "deep",
+              "score": 22.0,
+              "reasons": [
+                "matches 'orange'",
+                "matches '고급스러움'",
+                "matches 'warm'"
+              ]
+            }
+          ],
+          "guidelines": [
+            {
+              "id": "guideline-rgb-cmyk-split-by-output-medium",
+              "label": "RGB와 CMYK는 산출 매체 기준으로 분리한다",
+              "summary": "디지털 산출물은 RGB/sRGB 기준, 인쇄 산출물은 CMYK/프로파일 기준으로 판단한다. 화면색을 인쇄색으로 그대로 기대하지 않는다."
+            },
+            {
+              "id": "guideline-color-values-are-reference-not-absolute",
+              "label": "색상 수치는 절댓값이 아니라 기준값이다",
+              "summary": "디스플레이와 출력 환경에 따라 색 차이가 생기므로 HEX/CMYK는 재현 기준점으로 쓰고, 최종 판단은 매체별 proof에서 확인한다."
+            },
+            {
+              "id": "guideline-mood-tags-before-palette-expansion",
+              "label": "팔레트 확장 전 mood tag를 먼저 잠근다",
+              "summary": "무드보드나 브랜드 컬러를 늘리기 전에 에너지, 안정, 깊이, 회복 같은 감정 태그를 먼저 고정하면 색상 후보가 흔들리지 않는다."
+            },
+            {
+              "id": "guideline-no-palette-table-reconstruction",
+              "label": "배색표를 재구성할 수 있는 수준의 pair 목록은 만들지 않는다",
+              "summary": "paid source의 조합표, 페이지 배열, 순서, 행/열 구조를 그대로 되살릴 수 있는 palette_pair edge 묶음은 온톨로지에 넣지 않는다."
+            },
+            {
+              "id": "guideline-palette-pair-edges-require-transformative-brief",
+              "label": "palette_pair edge는 변형된 brief와 함께만 추가한다",
+              "summary": "두 색의 직접 pair edge는 브랜드/화면/인쇄/제품 같은 새로운 산출 맥락에서 역할, 대비, 위험, proof 조건이 함께 설명될 때만 추가한다."
+            }
+          ],
+          "rules": [
+            "Treat RGB/HEX as digital reference values, not absolute reproduction guarantees.",
+            "Split RGB/sRGB and CMYK/print-profile decisions by output medium.",
+            "Choose mood tags and semantic roles before expanding support colors.",
+            "Do not reconstruct paid-source palette tables, page order, or row/column structures.",
+            "Publish palette candidates as role, contrast, caveat, and proof conditions."
+          ],
+          "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included."
+        },
+        "semantic_color_selection": {
+          "schema_version": "design-ontology-harness/semantic-color-selection-v1",
+          "selection_method": "semantic-os-markdown-search-per-run",
+          "matched_pattern": {
+            "id": "pattern-brief-palette-coy-mocha-warm-editorial",
+            "label": "COY 2025 모카 무스 warm editorial 웹 팔레트 후보",
+            "summary": "2025년 Pantone COY Mocha Mousse를 연도 무드 anchor로 두고, 책의 Copper/Terracotta/Cornsilk를 source row가 아니라 화면 역할과 대비 이유로 재배치한 연도 무드 기반 테스트 팔레트다. name-only extended keyword(Sandstone/Dune/Maple)는 텍스처/레퍼런스 검색 anchor로만 쓴다.",
+            "brief_question": "2025년 모카 무스 무드의 따뜻한 에디토리얼 포트폴리오 웹사이트를 만들되, 커피나 디저트 사진으로 고정하지 않고 색 사용 방식만 살린다.",
+            "output_medium": "digital_editorial_portfolio_website",
+            "role_model": "brief_specific_candidate_not_source_row"
+          },
+          "role_model": [
+            {
+              "role": "anchor_background",
+              "behavior": "warm mineral base, grounded comfort, year-mood anchor (Pantone COY 2025, screen-approximate hex)",
+              "keyword_evidence": "Mocha Mousse",
+              "source_pattern_role": "anchor_background: Mocha Mousse #A47864 — warm mineral base, grounded comfort, year-mood anchor (Pantone COY 2025, screen-approximate hex)"
+            },
+            {
+              "role": "depth_support",
+              "behavior": "metallic editorial depth for rules, frames, and section breaks",
+              "keyword_evidence": "Copper",
+              "source_pattern_role": "depth_support: Copper #B87333 — metallic editorial depth for rules, frames, and section breaks"
+            },
+            {
+              "role": "interface_surface",
+              "behavior": "warm interactive emphasis for links, tags, and hover states",
+              "keyword_evidence": "Terracotta",
+              "source_pattern_role": "interface_surface: Terracotta #E2725B — warm interactive emphasis for links, tags, and hover states"
+            },
+            {
+              "role": "highlight_air",
+              "behavior": "paper light field for reading surfaces and spacing breath",
+              "keyword_evidence": "Cornsilk",
+              "source_pattern_role": "highlight_air: Cornsilk #FFF8DC — paper light field for reading surfaces and spacing breath"
+            },
+            {
+              "role": "proof_accent",
+              "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+            }
+          ],
+          "active_palette": {
+            "id": "ontology-best-fit-1",
+            "label": "Best Fit",
+            "score": 105.43,
+            "rationale": [
+              "Mocha Mousse (Pantone COY 2025) supports anchor_background behavior.",
+              "Mocha Mousse (Pantone COY 2025) is direct ontology role evidence.",
+              "Blanched Almond supports depth_support behavior.",
+              "Olive Green supports interface_surface behavior.",
+              "Olive Green can hold repeated surfaces.",
+              "Cornsilk supports highlight_air behavior."
+            ],
+            "roles": {
+              "anchor_background": {
+                "name": "Mocha Mousse (Pantone COY 2025)",
+                "hex": "#A47864",
+                "spectrum": "orange",
+                "family": "pantone_trend",
+                "score": 33.5,
+                "reason": "Mocha Mousse (Pantone COY 2025) supports anchor_background behavior.",
+                "behavior": "warm mineral base, grounded comfort, year-mood anchor (Pantone COY 2025, screen-approximate hex)"
+              },
+              "depth_support": {
+                "name": "Blanched Almond",
+                "hex": "#FFEBCD",
+                "spectrum": "yellow",
+                "family": "local_extension",
+                "score": 19.25,
+                "reason": "Blanched Almond supports depth_support behavior.",
+                "behavior": "metallic editorial depth for rules, frames, and section breaks"
+              },
+              "interface_surface": {
+                "name": "Olive Green",
+                "hex": "#708238",
+                "spectrum": "green",
+                "family": "standard",
+                "score": 18.75,
+                "reason": "Olive Green supports interface_surface behavior.",
+                "behavior": "warm interactive emphasis for links, tags, and hover states"
+              },
+              "highlight_air": {
+                "name": "Cornsilk",
+                "hex": "#FFF8DC",
+                "spectrum": "yellow",
+                "family": "pastel",
+                "score": 19.15,
+                "reason": "Cornsilk supports highlight_air behavior.",
+                "behavior": "paper light field for reading surfaces and spacing breath"
+              },
+              "proof_accent": {
+                "name": "Greenery (Pantone COY 2017)",
+                "hex": "#88B04B",
+                "spectrum": "green",
+                "family": "pantone_trend",
+                "score": 14.78,
+                "reason": "Greenery (Pantone COY 2017) supports proof_accent behavior.",
+                "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+              }
+            }
+          },
+          "candidate_palettes": [
+            {
+              "id": "ontology-best-fit-1",
+              "label": "Best Fit",
+              "score": 105.43,
+              "rationale": [
+                "Mocha Mousse (Pantone COY 2025) supports anchor_background behavior.",
+                "Mocha Mousse (Pantone COY 2025) is direct ontology role evidence.",
+                "Blanched Almond supports depth_support behavior.",
+                "Olive Green supports interface_surface behavior.",
+                "Olive Green can hold repeated surfaces.",
+                "Cornsilk supports highlight_air behavior."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Mocha Mousse (Pantone COY 2025)",
+                  "hex": "#A47864",
+                  "spectrum": "orange",
+                  "family": "pantone_trend",
+                  "score": 33.5,
+                  "reason": "Mocha Mousse (Pantone COY 2025) supports anchor_background behavior.",
+                  "behavior": "warm mineral base, grounded comfort, year-mood anchor (Pantone COY 2025, screen-approximate hex)"
+                },
+                "depth_support": {
+                  "name": "Blanched Almond",
+                  "hex": "#FFEBCD",
+                  "spectrum": "yellow",
+                  "family": "local_extension",
+                  "score": 19.25,
+                  "reason": "Blanched Almond supports depth_support behavior.",
+                  "behavior": "metallic editorial depth for rules, frames, and section breaks"
+                },
+                "interface_surface": {
+                  "name": "Olive Green",
+                  "hex": "#708238",
+                  "spectrum": "green",
+                  "family": "standard",
+                  "score": 18.75,
+                  "reason": "Olive Green supports interface_surface behavior.",
+                  "behavior": "warm interactive emphasis for links, tags, and hover states"
+                },
+                "highlight_air": {
+                  "name": "Cornsilk",
+                  "hex": "#FFF8DC",
+                  "spectrum": "yellow",
+                  "family": "pastel",
+                  "score": 19.15,
+                  "reason": "Cornsilk supports highlight_air behavior.",
+                  "behavior": "paper light field for reading surfaces and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Greenery (Pantone COY 2017)",
+                  "hex": "#88B04B",
+                  "spectrum": "green",
+                  "family": "pantone_trend",
+                  "score": 14.78,
+                  "reason": "Greenery (Pantone COY 2017) supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            },
+            {
+              "id": "ontology-quiet-surface-2",
+              "label": "Quiet Surface",
+              "score": 73.33,
+              "rationale": [
+                "Greenery (Pantone COY 2017) supports anchor_background behavior.",
+                "Olive Green supports depth_support behavior.",
+                "Kelly Green supports interface_surface behavior.",
+                "Kelly Green can hold repeated surfaces.",
+                "Radiant Orchid (Pantone COY 2014) supports highlight_air behavior.",
+                "Blue Iris (Pantone COY 2008) supports proof_accent behavior."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Greenery (Pantone COY 2017)",
+                  "hex": "#88B04B",
+                  "spectrum": "green",
+                  "family": "pantone_trend",
+                  "score": 23.0,
+                  "reason": "Greenery (Pantone COY 2017) supports anchor_background behavior.",
+                  "behavior": "warm mineral base, grounded comfort, year-mood anchor (Pantone COY 2025, screen-approximate hex)"
+                },
+                "depth_support": {
+                  "name": "Olive Green",
+                  "hex": "#708238",
+                  "spectrum": "green",
+                  "family": "standard",
+                  "score": 15.7,
+                  "reason": "Olive Green supports depth_support behavior.",
+                  "behavior": "metallic editorial depth for rules, frames, and section breaks"
+                },
+                "interface_surface": {
+                  "name": "Kelly Green",
+                  "hex": "#4CBB17",
+                  "spectrum": "green",
+                  "family": "standard",
+                  "score": 13.4,
+                  "reason": "Kelly Green supports interface_surface behavior.",
+                  "behavior": "warm interactive emphasis for links, tags, and hover states"
+                },
+                "highlight_air": {
+                  "name": "Radiant Orchid (Pantone COY 2014)",
+                  "hex": "#B565A7",
+                  "spectrum": "violet",
+                  "family": "pantone_trend",
+                  "score": 11.0,
+                  "reason": "Radiant Orchid (Pantone COY 2014) supports highlight_air behavior.",
+                  "behavior": "paper light field for reading surfaces and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Blue Iris (Pantone COY 2008)",
+                  "hex": "#595CA1",
+                  "spectrum": "violet",
+                  "family": "pantone_trend",
+                  "score": 10.22,
+                  "reason": "Blue Iris (Pantone COY 2008) supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            },
+            {
+              "id": "ontology-clear-structure-3",
+              "label": "Clear Structure",
+              "score": 74.92,
+              "rationale": [
+                "Radiant Orchid (Pantone COY 2014) supports anchor_background behavior.",
+                "Byzantium supports depth_support behavior.",
+                "Byzantium has depth for structural roles.",
+                "Greenery (Pantone COY 2017) supports interface_surface behavior.",
+                "Grape Compote supports highlight_air behavior.",
+                "Grape Compote can hold repeated surfaces."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Radiant Orchid (Pantone COY 2014)",
+                  "hex": "#B565A7",
+                  "spectrum": "violet",
+                  "family": "pantone_trend",
+                  "score": 21.0,
+                  "reason": "Radiant Orchid (Pantone COY 2014) supports anchor_background behavior.",
+                  "behavior": "warm mineral base, grounded comfort, year-mood anchor (Pantone COY 2025, screen-approximate hex)"
+                },
+                "depth_support": {
+                  "name": "Byzantium",
+                  "hex": "#702963",
+                  "spectrum": "violet",
+                  "family": "deep",
+                  "score": 13.4,
+                  "reason": "Byzantium supports depth_support behavior.",
+                  "behavior": "metallic editorial depth for rules, frames, and section breaks"
+                },
+                "interface_surface": {
+                  "name": "Greenery (Pantone COY 2017)",
+                  "hex": "#88B04B",
+                  "spectrum": "green",
+                  "family": "pantone_trend",
+                  "score": 13.0,
+                  "reason": "Greenery (Pantone COY 2017) supports interface_surface behavior.",
+                  "behavior": "warm interactive emphasis for links, tags, and hover states"
+                },
+                "highlight_air": {
+                  "name": "Grape Compote",
+                  "hex": "#6B5876",
+                  "spectrum": "violet",
+                  "family": "pantone_trend",
+                  "score": 10.9,
+                  "reason": "Grape Compote supports highlight_air behavior.",
+                  "behavior": "paper light field for reading surfaces and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Blanched Almond",
+                  "hex": "#FFEBCD",
+                  "spectrum": "yellow",
+                  "family": "local_extension",
+                  "score": 16.62,
+                  "reason": "Blanched Almond supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            },
+            {
+              "id": "ontology-strong-signal-4",
+              "label": "Strong Signal",
+              "score": 88.22,
+              "rationale": [
+                "Cerulean (Pantone COY 2000) supports anchor_background behavior.",
+                "Byzantium supports depth_support behavior.",
+                "Byzantium has depth for structural roles.",
+                "Moss Green supports interface_surface behavior.",
+                "Moss Green can hold repeated surfaces.",
+                "Blanched Almond supports highlight_air behavior."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Cerulean (Pantone COY 2000)",
+                  "hex": "#9BB7D6",
+                  "spectrum": "blue",
+                  "family": "pantone_trend",
+                  "score": 21.3,
+                  "reason": "Cerulean (Pantone COY 2000) supports anchor_background behavior.",
+                  "behavior": "warm mineral base, grounded comfort, year-mood anchor (Pantone COY 2025, screen-approximate hex)"
+                },
+                "depth_support": {
+                  "name": "Byzantium",
+                  "hex": "#702963",
+                  "spectrum": "violet",
+                  "family": "deep",
+                  "score": 13.45,
+                  "reason": "Byzantium supports depth_support behavior.",
+                  "behavior": "metallic editorial depth for rules, frames, and section breaks"
+                },
+                "interface_surface": {
+                  "name": "Moss Green",
+                  "hex": "#8A9A5B",
+                  "spectrum": "green",
+                  "family": "natural",
+                  "score": 12.75,
+                  "reason": "Moss Green supports interface_surface behavior.",
+                  "behavior": "warm interactive emphasis for links, tags, and hover states"
+                },
+                "highlight_air": {
+                  "name": "Blanched Almond",
+                  "hex": "#FFEBCD",
+                  "spectrum": "yellow",
+                  "family": "local_extension",
+                  "score": 24.75,
+                  "reason": "Blanched Almond supports highlight_air behavior.",
+                  "behavior": "paper light field for reading surfaces and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Greenery (Pantone COY 2017)",
+                  "hex": "#88B04B",
+                  "spectrum": "green",
+                  "family": "pantone_trend",
+                  "score": 15.97,
+                  "reason": "Greenery (Pantone COY 2017) supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            },
+            {
+              "id": "ontology-cross-family-5",
+              "label": "Cross Family",
+              "score": 73.62,
+              "rationale": [
+                "Blanched Almond supports anchor_background behavior.",
+                "Radiant Orchid (Pantone COY 2014) supports depth_support behavior.",
+                "Olive Green supports interface_surface behavior.",
+                "Olive Green can hold repeated surfaces.",
+                "Greenery (Pantone COY 2017) supports highlight_air behavior.",
+                "Byzantium supports proof_accent behavior."
+              ],
+              "roles": {
+                "anchor_background": {
+                  "name": "Blanched Almond",
+                  "hex": "#FFEBCD",
+                  "spectrum": "yellow",
+                  "family": "local_extension",
+                  "score": 18.5,
+                  "reason": "Blanched Almond supports anchor_background behavior.",
+                  "behavior": "warm mineral base, grounded comfort, year-mood anchor (Pantone COY 2025, screen-approximate hex)"
+                },
+                "depth_support": {
+                  "name": "Radiant Orchid (Pantone COY 2014)",
+                  "hex": "#B565A7",
+                  "spectrum": "violet",
+                  "family": "pantone_trend",
+                  "score": 12.5,
+                  "reason": "Radiant Orchid (Pantone COY 2014) supports depth_support behavior.",
+                  "behavior": "metallic editorial depth for rules, frames, and section breaks"
+                },
+                "interface_surface": {
+                  "name": "Olive Green",
+                  "hex": "#708238",
+                  "spectrum": "green",
+                  "family": "standard",
+                  "score": 19.5,
+                  "reason": "Olive Green supports interface_surface behavior.",
+                  "behavior": "warm interactive emphasis for links, tags, and hover states"
+                },
+                "highlight_air": {
+                  "name": "Greenery (Pantone COY 2017)",
+                  "hex": "#88B04B",
+                  "spectrum": "green",
+                  "family": "pantone_trend",
+                  "score": 12.0,
+                  "reason": "Greenery (Pantone COY 2017) supports highlight_air behavior.",
+                  "behavior": "paper light field for reading surfaces and spacing breath"
+                },
+                "proof_accent": {
+                  "name": "Byzantium",
+                  "hex": "#702963",
+                  "spectrum": "violet",
+                  "family": "deep",
+                  "score": 11.12,
+                  "reason": "Byzantium supports proof_accent behavior.",
+                  "behavior": "limited contrast proof, tag, chart detail, or attention flash"
+                }
+              }
+            }
+          ],
+          "rules": [
+            "Search Semantic OS ColorPattern and ColorKeyword nodes for every app brief.",
+            "Do not ship pre-authored palette sets as fixed presets.",
+            "Use ColorPattern role language as a role model, not as a copied palette table.",
+            "Publish colors as role, reason, caveat, and proof conditions."
+          ]
+        },
+        "rules": [
+          "컬러 레퍼런스의 mood와 pairings를 semantic token 설계의 출발점으로 사용",
+          "chosen palette는 semantic roles로 번역하고 raw reference color를 그대로 남용하지 않기",
+          "앱 내용 기반 색상 선택은 미리 만든 팔레트 세트가 아니라 Semantic OS ontology 검색으로 매번 수행하기",
+          "seed color만 쓰지 말고 expanded palette에서 surface/text/border/support 역할까지 확장하기",
+          "surface/text/border 대비는 레퍼런스보다 접근성 기준을 우선"
+        ]
+      },
+      "visual_balance": {
+        "observed": false,
+        "temperature": "unknown",
+        "contrast_profile": "unknown",
+        "neutral_bias": "unknown"
+      }
+    },
+    "typography": {
+      "families": [
+        "brand",
+        "text",
+        "mono"
+      ],
+      "size_scale": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "2xl",
+        "3xl",
+        "4xl"
+      ],
+      "rules": [
+        "display는 마케팅/영웅 구역으로 제한",
+        "text는 제품 본문과 UI 라벨의 기본",
+        "mono는 데이터와 shortcut hint에 제한",
+        "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
+        "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
+        "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
+        "폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다.",
+        "Pretendard 같은 한글 display 헤딩은 line-height를 1.02 미만으로 낮추지 않는다.",
+        "한글 display 헤딩 tracking은 -0.02em ~ 0.01em 범위를 벗어나지 않는다."
+      ],
+      "recommended_fonts": {
+        "heading": "Pretendard",
+        "body": "Pretendard",
+        "mono": "Source Code Pro",
+        "korean": "Pretendard"
+      },
+      "heading_note": "한글 UI 서체의 사실상 표준. Apple SD Gothic Neo 기반이지만 더 정교함. 라틴은 Inter 계열.",
+      "body_note": "한글 UI 서체의 사실상 표준. Apple SD Gothic Neo 기반이지만 더 정교함. 라틴은 Inter 계열.",
+      "product_type": "editorial",
+      "pairing_source": "auto-scored",
+      "line_height_preset": "comfortable",
+      "strategy": [
+        "단일 서체(Pretendard)로 weight 대비 위계 — 일관성 우선",
+        "한글 서체: Pretendard — 라틴과 x-height/weight 조화",
+        "모노스페이스: Source Code Pro — 코드/데이터 영역 전용",
+        "calm 키워드 → comfortable spacing, 과한 weight 대비 지양"
+      ],
+      "loading": {
+        "fonts": [
+          {
+            "font": "Pretendard",
+            "weights": "400;500;600",
+            "priority": "preload"
+          },
+          {
+            "font": "Source Code Pro",
+            "weights": "400;500",
+            "priority": "lazy"
+          }
+        ],
+        "fallback_strategy": "system-ui → font swap",
+        "display": "swap",
+        "subset": "latin,korean",
+        "note": "본문 서체를 preload, 모노스페이스는 lazy load. font-display: swap으로 FOUT 최소화."
+      },
+      "korean_rationale": {
+        "primary_is_korean": true,
+        "font": "Pretendard",
+        "reason": "한글 UI 서체의 사실상 표준. 토스, 당근, 리디 등 국내 주요 서비스에서 사용. 자간이 자연스럽고 weight 전 구간에서 안정적.",
+        "glyph_width": "중간",
+        "small_size_limit": "13px까지 가독성 유지",
+        "best_for_kr": [
+          "UI 전반",
+          "대시보드",
+          "모바일 앱",
+          "장문 본문"
+        ],
+        "avoid_for_kr": [],
+        "latin_pair": "Inter (x-height/weight 일치)"
+      },
+      "pitfall_warnings": [],
+      "letter_spacing": {
+        "heading_tracking": {
+          "lg": "-0.01em",
+          "xl": "-0.01em",
+          "2xl": "-0.02em",
+          "3xl": "-0.02em"
+        },
+        "note": "큰 헤딩에 negative tracking 적용. 미적용 시 글자가 풀어진 느낌."
+      },
+      "script_guardrails": {
+        "primary_script": "korean",
+        "headline_font": {
+          "name": "Pretendard",
+          "line_height": "1.25-1.35",
+          "letter_spacing": "0em",
+          "note": "기본 자간/행간이 안정적이라 추가 보정 없이 바로 쓰기 좋다."
+        },
+        "body_font": {
+          "name": "Pretendard",
+          "line_height": "1.6-1.7",
+          "ui_label_line_height": "1.4-1.5",
+          "letter_spacing": "0em",
+          "note": "기본 자간/행간이 안정적이라 추가 보정 없이 바로 쓰기 좋다."
+        },
+        "wrap": {
+          "headline": {
+            "word_break": "keep-all",
+            "overflow_wrap": "normal",
+            "text_wrap": "balance"
+          },
+          "body": {
+            "word_break": "keep-all",
+            "overflow_wrap": "normal"
+          },
+          "avoid": [
+            "forced <br /> before breakpoint QA",
+            "English-first ch heuristics without real Korean copy review"
+          ]
+        },
+        "scale": {
+          "headline_start": "one-step-smaller",
+          "guidance": "한글 hero/section heading은 영문 시안보다 한 단계 작은 스케일에서 시작해 wrap을 확인한 뒤 확장한다."
+        },
+        "implementation_constraints": {
+          "headline_display": {
+            "line_height_min": "1.02",
+            "letter_spacing_min": "-0.02em",
+            "letter_spacing_max": "0.01em",
+            "recommended_line_height": "1.25-1.35",
+            "recommended_letter_spacing": "0em",
+            "forced_breaks_policy": "disallow-before-breakpoint-qa"
+          },
+          "ui_label": {
+            "serif_usage": "allow-with-review",
+            "body_line_height": "1.4-1.5"
+          }
+        },
+        "warnings": [],
+        "rules": [
+          "한글 카피는 `word-break: keep-all`과 `overflow-wrap: normal`을 기본값으로 두고, 주요 헤딩에서 지원되면 `text-wrap: balance`를 사용한다.",
+          "한글 헤딩에는 breakpoint 검증 전 강제 `<br />`를 넣지 않는다. 줄바꿈이 필요하면 먼저 컨테이너 폭과 type scale을 조정한다.",
+          "한글 화면은 영문 시안의 `ch` 기준이나 single-line slogan 가정에 맞추지 말고, 실제 한글 문장으로 wrap을 검증한다.",
+          "폭이 넓은 한글 또는 명조 헤딩은 영문 hero보다 한 단계 작은 display scale에서 시작하고, 줄바꿈이 안정적일 때만 키운다.",
+          "Pretendard 같은 한글 display 헤딩은 line-height를 1.02 미만으로 낮추지 않는다.",
+          "한글 display 헤딩 tracking은 -0.02em ~ 0.01em 범위를 벗어나지 않는다."
+        ]
+      },
+      "type_scale": {
+        "base_size": 16,
+        "scale_ratio": 1.333,
+        "sizes": {
+          "xs": 12,
+          "sm": 14,
+          "md": 16,
+          "lg": 21,
+          "xl": 28,
+          "2xl": 38,
+          "3xl": 50
+        },
+        "line_heights": {
+          "tight": 1.2,
+          "normal": 1.5,
+          "comfortable": 1.6,
+          "relaxed": 1.75
+        }
+      }
+    },
+    "spacing": {
+      "scale": [
+        0,
+        2,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        48,
+        64,
+        96
+      ],
+      "density_modes": [
+        "comfortable",
+        "compact"
+      ],
+      "layout_density": "balanced",
+      "visual_density_bias": "airy"
+    },
+    "layout": {
+      "breakpoints_px": [
+        320,
+        360,
+        390,
+        430,
+        768,
+        1024,
+        1440
+      ],
+      "skeleton": {
+        "composition": "split-review-workbench: 좌측 사실 목록(상태 태그 + 필터), 우측 선택 사실의 문장 편집 + 접이식 근거 패널이 첫 화면에서 공존",
+        "navigation_model": "sidebar",
+        "density": "balanced",
+        "primary_regions": [
+          {
+            "name": "Fact list",
+            "role": "추출된 사실의 업무 문장 목록과 상태 태그, 초기 필터는 선택 필요+충돌 확인",
+            "priority": "primary"
+          },
+          {
+            "name": "Fact detail and editor",
+            "role": "선택한 사실의 한 문장 요약과 대상/조건/결과/범위/유효기간 편집, 관계 후보 비교",
+            "priority": "primary"
+          },
+          {
+            "name": "Evidence panel",
+            "role": "원문 발췌·매칭 키·추론 규칙·수정 이력, 필요할 때만 여는 우측 패널",
+            "priority": "secondary"
+          },
+          {
+            "name": "Review action bar",
+            "role": "보류/제외/수정 저장/승인, 반영 범위·개수, 승인 불가 사유",
+            "priority": "primary"
+          }
+        ],
+        "first_screen_contract": [
+          "지식 초안 검토 화면은 사실 목록과 선택 사실 편집면을 첫 viewport에 함께 노출한다",
+          "홈은 통합 검색 입력과 '지식 추가' 주 버튼, 내가 확인할 항목 3종을 장식 요소보다 먼저 배치한다",
+          "승인 계열 버튼 옆에는 반영 범위와 개수가 항상 보인다",
+          "그래프 통계·노드 수·Pack 수는 첫 화면에 등장하지 않는다"
+        ],
+        "avoid_layouts": [
+          "generic hero plus card grid",
+          "uniform dashboard metric cards",
+          "graph canvas as the primary surface",
+          "nested cards as page sections"
+        ],
+        "signature_moves": [
+          "sentence-first fact row: 모든 지식 항목은 상태 태그가 붙은 한 문장으로 시작하고, 구조 필드는 그 아래에 종속된다",
+          "evidence side panel: 근거(원문 발췌, 매칭 키, 추론 규칙, 수정 이력)가 항상 한 제스처 거리에 있는 접이식 패널",
+          "translated-vocabulary chrome: 내부 기술 어휘는 UI 어디에도 없고, 고급 서랍(advanced drawer)에서만 원문 노출",
+          "scoped approval bar: 승인 행동에 반영 범위·개수·불가 사유가 상시 병기되는 하단 액션 바",
+          "그래프가 아니라 업무 문장이 1급 시민이다 — 모든 지식은 먼저 한 문장으로 보인다",
+          "내부 어휘(ontology/fragment/node/edge/SHACL)는 화면에서 번역되고, 원문은 고급 서랍에만 있다",
+          "승인 버튼은 항상 반영 범위와 개수를 옆에 달고, 불가 항목은 이유와 해결 행동을 보여준다",
+          "원문은 불변 근거로 보존되고, 사용자는 언제든 원문과 구조화 문장을 나란히 대조할 수 있다"
+        ],
+        "repetition_risks": [
+          "검토 화면이 표 중심 admin CRUD로 회귀",
+          "관계 후보를 숫자 점수 배지로만 표시",
+          "진행 상태를 스피너 하나로 축약",
+          "아카이브 감성을 위해 종이 질감·장식 테두리를 본문 위에 얹어 가독성 훼손",
+          "상태 색상을 텍스트·아이콘 없이 색만으로 구분"
+        ]
+      },
+      "container_rules": [
+        "모든 section/container는 box-sizing: border-box 기준으로 320px viewport에서 overflow-x 없이 맞아야 함",
+        "grid/flex children에는 필요한 경우 min-width: 0 또는 min-inline-size: 0을 명시",
+        "repeat(N, 1fr) 고정 grid는 모바일에서 1열 또는 minmax(0, 1fr) fallback을 제공",
+        "padded container 내부에서 width: 100vw 사용 금지"
+      ],
+      "control_rules": [
+        "Buttons, CTA groups, tabs, filter chips, and toolbar actions must not rely on fixed px widths or mobile-hostile min-width values.",
+        "Every button-like control needs max-inline-size: 100%; controls inside flex/grid parents need min-inline-size: 0 so labels can shrink or wrap.",
+        "Action rows must wrap or stack at narrow widths; two-button rows need a <=480px fallback before implementation is complete.",
+        "Long Korean CTA labels must be tested with real copy. Prefer wrapping/stacking over clipping, overflow hidden, or forcing white-space: nowrap.",
+        "Horizontal rails, tickers, score strips, and carousels must not reveal partially clipped text. Either size cards so visible items are complete, or use compact labels such as icon+code in the rail and move full names to the detailed surface.",
+        "Do not use width: 100vw inside padded containers; it commonly creates horizontal scroll. Use width: 100%, max-width: 100%, or a documented full-bleed pattern.",
+        "Never hide body overflow-x as the fix for a layout bug; remove the overflowing width/min-width instead."
+      ],
+      "viewport_pass_condition": "document.documentElement.scrollWidth <= window.innerWidth and all primary controls remain reachable without horizontal scrolling."
+    },
+    "radius": {
+      "scale": [
+        "none",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "pill"
+      ],
+      "rule": "라운딩은 브랜드 성격을 드러내지만 컴포넌트 계층별로 제한적으로 사용",
+      "visual_corner_bias": "medium"
+    },
+    "motion": {
+      "durations_ms": [
+        0,
+        80,
+        120,
+        180,
+        240,
+        320
+      ],
+      "easing_tokens": [
+        "standard",
+        "enter",
+        "exit",
+        "emphasized"
+      ],
+      "rule": "모션은 상태 설명용이며 과장된 장식 효과는 금지"
+    },
+    "elevation": {
+      "levels": [
+        "flat",
+        "raised",
+        "overlay",
+        "modal"
+      ],
+      "rule": "그림자보다 layer 의미가 먼저 드러나야 함",
+      "visual_surface_bias": "tinted"
+    }
+  },
+  "brand_alignment": {
+    "visual_keywords": [
+      "prussian blue archive authority",
+      "cornsilk warm paper surfaces flattened for reading",
+      "ocean blue trust accents for focus and links",
+      "hunter green success, goldenrod warning, marsala failure",
+      "rust as rare editorial emphasis only",
+      "sentence-first fact rows with status tags",
+      "split review workbench with evidence panel",
+      "long-form korean text at comfortable measure",
+      "serif display for knowledge sentences, sans for controls",
+      "quiet rules and generous whitespace instead of card walls"
+    ],
+    "interaction_keywords": [
+      "describe knowledge in free sentences with optional help frames",
+      "watch a five-stage sentence-based analysis progress",
+      "triage extracted facts by needs-choice and conflict first",
+      "compare relation candidates as business sentences with reasons",
+      "edit a fact under its one-sentence summary",
+      "approve with visible scope and count, blocked with visible reason",
+      "return to the source text at any time without losing edits",
+      "propose a company-specific term without ontology vocabulary",
+      "connect two search results and send to review",
+      "retry failed intake without duplicating jobs"
+    ],
+    "system_name": "EKOS Knowledge Intake Design System",
+    "application_concept": {
+      "primary_job": "현업 사용자가 문서나 업무 설명을 넣고, 시스템이 이해한 사실 초안을 고친 뒤, 근거를 확인해 승인까지 끝낸다",
+      "domain_objects": [
+        "지식 초안 (추출된 사실)",
+        "원문 (문서·화면·코드 발췌)",
+        "근거 (원문 위치·매칭 키·추론 규칙·수정 이력)",
+        "관계 후보 (업무 문장으로 번역된 연결)",
+        "새 개념 제안",
+        "승인 이력과 지식 상태"
+      ],
+      "operating_mode": "review",
+      "success_moment": "검토 가능한 사실이 반영 범위·개수와 함께 승인되고, 지식 상세에서 원문·근거·승인자가 한 화면에 보인다",
+      "differentiation": [
+        "그래프가 아니라 업무 문장이 1급 시민이다 — 모든 지식은 먼저 한 문장으로 보인다",
+        "내부 어휘(ontology/fragment/node/edge/SHACL)는 화면에서 번역되고, 원문은 고급 서랍에만 있다",
+        "승인 버튼은 항상 반영 범위와 개수를 옆에 달고, 불가 항목은 이유와 해결 행동을 보여준다",
+        "원문은 불변 근거로 보존되고, 사용자는 언제든 원문과 구조화 문장을 나란히 대조할 수 있다"
+      ]
+    },
+    "differentiation_strategy": {
+      "must_feel_different_from": [
+        "generic SaaS dashboard",
+        "graph database admin console (Neo4j-style)",
+        "developer ontology editor (Protégé-style)",
+        "template card wall"
+      ],
+      "signature_moves": [
+        "sentence-first fact row: 모든 지식 항목은 상태 태그가 붙은 한 문장으로 시작하고, 구조 필드는 그 아래에 종속된다",
+        "evidence side panel: 근거(원문 발췌, 매칭 키, 추론 규칙, 수정 이력)가 항상 한 제스처 거리에 있는 접이식 패널",
+        "translated-vocabulary chrome: 내부 기술 어휘는 UI 어디에도 없고, 고급 서랍(advanced drawer)에서만 원문 노출",
+        "scoped approval bar: 승인 행동에 반영 범위·개수·불가 사유가 상시 병기되는 하단 액션 바",
+        "그래프가 아니라 업무 문장이 1급 시민이다 — 모든 지식은 먼저 한 문장으로 보인다",
+        "내부 어휘(ontology/fragment/node/edge/SHACL)는 화면에서 번역되고, 원문은 고급 서랍에만 있다",
+        "승인 버튼은 항상 반영 범위와 개수를 옆에 달고, 불가 항목은 이유와 해결 행동을 보여준다",
+        "원문은 불변 근거로 보존되고, 사용자는 언제든 원문과 구조화 문장을 나란히 대조할 수 있다"
+      ],
+      "repetition_risks": [
+        "검토 화면이 표 중심 admin CRUD로 회귀",
+        "관계 후보를 숫자 점수 배지로만 표시",
+        "진행 상태를 스피너 하나로 축약",
+        "아카이브 감성을 위해 종이 질감·장식 테두리를 본문 위에 얹어 가독성 훼손",
+        "상태 색상을 텍스트·아이콘 없이 색만으로 구분"
+      ],
+      "anti_convergence_rule": "If two generated products share the same first-screen composition, navigation model, component hierarchy, and density, the skeleton is under-specified."
+    },
+    "visual_reference_hints": {
+      "density_bias": "airy",
+      "surface_style": "tinted",
+      "corner_style": "medium",
+      "typography_mood": "editorial",
+      "top_layout_cue": "data-review-surface"
+    }
+  }
+}

@@ -20,6 +20,9 @@
 }
 
 body {
+  /* 한글 줄바꿈 계약(DS106). 없으면 한글이 어절 중간에서 잘린다. */
+  word-break: keep-all;
+  overflow-wrap: normal;
   margin: 0;
   min-height: 100vh;
   background:
@@ -286,7 +289,7 @@ button {
   color: rgba(17, 19, 24, 0.72);
   font-size: 13px;
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.6;
 }
 
 .room-state {
@@ -425,7 +428,7 @@ button {
   overflow: hidden;
   color: var(--muted);
   font-size: 13px;
-  line-height: 1.35;
+  line-height: 1.6;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -718,7 +721,7 @@ button {
   margin: 0;
   font-size: 13px;
   font-weight: 750;
-  line-height: 1.4;
+  line-height: 1.6;
 }
 
 .dots {
@@ -838,7 +841,7 @@ button {
   color: var(--muted);
   font-size: 12px;
   font-weight: 700;
-  line-height: 1.36;
+  line-height: 1.6;
 }
 
 .agent-card span {
@@ -897,7 +900,7 @@ button {
   color: var(--muted);
   font-size: 13px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.6;
 }
 
 .memory-card {

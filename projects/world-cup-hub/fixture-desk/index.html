@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="정적 데모 스냅샷으로 월드컵 경기 일정을 탐색하는 Fixture Desk 목업"
+    />
+    <title>World Cup Hub — Fixture Desk</title>
+    <link rel="stylesheet" href="./design-system/tokens.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a
+      class="skip-link"
+      href="#fixture-workspace"
+      data-component-id="app-shell"
+      data-component-part="skip-link"
+      data-component-state="dashboard"
+    >
+      경기 일정으로 건너뛰기
+    </a>
+
+    <div
+      class="fixture-desk"
+      data-component-id="app-shell"
+      data-component-part="primary-workspace"
+      data-component-state="dashboard"
+      data-product-surface="fixture-first-tournament-workspace"
+      data-model="fixture-selection-prediction-community"
+      data-source="fifa-schedule-seed-and-static-demo-data"
+      data-state="pre-tournament-demo"
+    >
+      <header class="masthead" data-component-part="top-navigation-slot">
+        <div
+          class="wordmark"
+          data-component-id="top-navigation"
+          data-component-part="brand-block"
+          data-component-state="dashboard-active"
+        >
+          <span class="wordmark-kicker">FIXTURE / 26</span>
+          <span class="wordmark-name">World Cup Hub</span>
+          <span class="wordmark-note">정적 데모 스냅샷</span>
+        </div>
+
+        <nav class="section-nav" aria-label="주요 섹션" data-component-part="section-action-list">
+          <button type="button" data-section="dashboard" aria-current="page">개요</button>
+          <button type="button" data-section="schedule">일정</button>
+          <button type="button" data-section="results">결과</button>
+          <button type="button" data-section="predictions">예측</button>
+          <button type="button" data-section="community">의견</button>
+          <span class="active-indicator" data-component-part="active-indicator" aria-hidden="true"></span>
+        </nav>
+
+        <button
+          id="themeToggle"
+          class="theme-toggle"
+          type="button"
+          data-component-id="theme-toggle"
+          data-component-part="button-container"
+          data-component-state="light-active"
+          aria-label="다크 테마로 전환"
+        >
+          <span class="sr-only" data-component-part="next-theme-icon" aria-hidden="true"></span>
+          <span data-component-part="next-theme-label">다크 테마</span>
+          <span class="focus-ring" data-component-part="visible-focus-ring" aria-hidden="true"></span>
+        </button>
+        <span class="theme-slot-marker" data-component-part="theme-action" aria-hidden="true"></span>
+      </header>
+
+      <div
+        data-component-id="app-shell"
+        data-component-part="status-slot"
+        data-component-state="dashboard"
+      >
+        <section
+          id="dashboard"
+          class="status-strip"
+          aria-labelledby="statusHeading"
+          data-component-id="status-strip"
+          data-component-part="competition-label"
+          data-component-state="pre-tournament-demo"
+        >
+        <div class="status-copy">
+          <p class="eyebrow" data-component-part="competition-label">FIFA WORLD CUP 2026 / FIXTURE DESK</p>
+          <h1 id="statusHeading" data-component-part="operational-heading">월드컵 일정 운영 데스크</h1>
+          <button id="ledgerJump" class="source-note" type="button" data-component-part="source-note">
+            정적 데모 · FIFA 공개 일정 참조 · 2026-05-16 KST
+          </button>
+        </div>
+
+        <div class="metric-line" data-component-part="metric-group" aria-label="대회 요약">
+          <article
+            class="compact-metric"
+            data-component-id="metric-tile"
+            data-component-part="metric-icon"
+            data-component-state="resolved"
+          >
+            <span data-component-part="metric-label">대한민국 첫 경기</span>
+            <strong data-component-part="metric-value" id="koreaMetric">6월 12일</strong>
+            <small data-component-part="qualifier-optional">체코전 · 과달라하라</small>
+          </article>
+          <article class="compact-metric" data-component-id="metric-tile" data-component-part="metric-icon" data-component-state="resolved">
+            <span data-component-part="metric-label">표시 중인 일정</span>
+            <strong data-component-part="metric-value" id="visibleFixtureCount">8</strong>
+            <small data-component-part="qualifier-optional">정적 fixture 샘플</small>
+          </article>
+          <article class="compact-metric" data-component-id="metric-tile" data-component-part="metric-icon" data-component-state="resolved">
+            <span data-component-part="metric-label">선택된 경기</span>
+            <strong data-component-part="metric-value" id="selectedFixtureMetric">M02</strong>
+            <small data-component-part="qualifier-optional">한 개의 match context</small>
+          </article>
+          <canvas id="fixtureDensityChart" class="micro-chart" width="164" height="42" aria-label="현재 필터 기준 예정 경기의 날짜별 분포" aria-describedby="fixtureDensitySummary"></canvas>
+          <p id="fixtureDensitySummary" class="sr-only"></p>
+          <canvas id="groupSpreadChart" class="micro-chart" width="164" height="42" aria-label="현재 필터 기준 예정 경기의 조별 분포" aria-describedby="groupSpreadSummary"></canvas>
+          <p id="groupSpreadSummary" class="sr-only"></p>
+        </div>
+        </section>
+      </div>
+
+      <section
+        class="fixture-brief"
+        aria-label="선택 경기 문맥 전환"
+        data-component-id="match-ticker"
+        data-component-part="ticker-viewport"
+        data-component-state="all-filter"
+        data-product-surface="fixture-selection-strip"
+        data-model="match-ticker-selected-match-id"
+        data-source="static-demo-fixtures"
+        data-state="all-filter"
+      >
+        <div class="ticker-filter" data-component-part="filter-tablist" role="group" aria-label="경기 묶음">
+          <span class="ticker-label" aria-hidden="true">MATCH SPINE</span>
+          <button type="button" data-ticker-filter="all" aria-pressed="true">전체</button>
+          <button type="button" data-ticker-filter="korea" aria-pressed="false">대한민국</button>
+          <button type="button" data-ticker-filter="spotlight" aria-pressed="false">주목 경기</button>
+          <button type="button" data-ticker-filter="opening" aria-pressed="false">개막 주</button>
+        </div>
+        <div id="tickerItems" class="ticker-items"></div>
+        <span class="selection-line" data-component-part="selection-indicator" aria-hidden="true"></span>
+      </section>
+
+      <div class="desk-layout">
+        <main id="fixture-workspace" class="fixture-workspace" tabindex="-1">
+          <section
+            id="schedule"
+            class="schedule-sheet"
+            aria-labelledby="scheduleHeading"
+            data-component-id="schedule-table"
+            data-component-part="caption"
+            data-component-state="scheduled"
+            data-product-surface="fixture-scan-table"
+            data-model="filterable-fixture-list"
+            data-source="fifa-schedule-seed-static-demo"
+            data-state="scheduled-selected"
+          >
+            <div class="sheet-heading">
+              <div>
+                <p class="eyebrow">FIXTURE SCAN</p>
+                <h2 id="scheduleHeading">경기 일정</h2>
+              </div>
+              <button id="sortKickoff" class="quiet-action" type="button">킥오프 순서 <span id="sortDirection">오름차순</span></button>
+            </div>
+
+            <div class="filter-bank">
+              <nav
+                id="dateRail"
+                class="date-rail"
+                aria-label="날짜 필터"
+                data-component-id="date-rail"
+                data-component-part="date-action-list"
+                data-component-state="all-dates"
+              >
+                <button type="button" data-date="all" data-component-part="all-dates-action" aria-pressed="true">전체 날짜</button>
+              </nav>
+
+              <div id="groupFilters" class="group-filter-row" role="group" aria-label="조 필터"></div>
+
+              <form
+                id="searchForm"
+                class="team-search"
+                data-component-id="team-search-field"
+                data-component-part="visible-label"
+                data-component-state="empty"
+              >
+                <label for="teamSearch" data-component-part="visible-label">팀 · 도시 · 조 검색</label>
+                <span class="sr-only" data-component-part="search-icon" aria-hidden="true"></span>
+                <input
+                  id="teamSearch"
+                  type="search"
+                  autocomplete="off"
+                  placeholder="대한민국, 토론토, A조"
+                  data-component-part="search-input"
+                  aria-describedby="searchCount"
+                />
+                <button id="clearSearch" type="button" data-component-part="clear-action" hidden>초기화</button>
+                <output id="searchCount" data-component-part="result-count-status" aria-live="polite">8개 경기</output>
+              </form>
+
+              <div class="status-filter" role="group" aria-label="경기 상태">
+                <button type="button" data-status-filter="all" aria-pressed="true">전체</button>
+                <button type="button" data-status-filter="scheduled" aria-pressed="false">예정</button>
+                <button type="button" data-status-filter="sample-result" aria-pressed="false">샘플 결과</button>
+                <button id="favoriteOnly" type="button" aria-pressed="false">관심 팀</button>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">정적 데모 월드컵 경기 일정</caption>
+                <thead data-component-part="column-headers">
+                  <tr>
+                    <th scope="col">킥오프</th>
+                    <th scope="col">대진</th>
+                    <th scope="col">조</th>
+                    <th scope="col">경기장</th>
+                    <th scope="col">팬 예상</th>
+                    <th scope="col">의견</th>
+                    <th scope="col"><span class="sr-only">선택</span></th>
+                  </tr>
+                </thead>
+                <tbody id="scheduleRows"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="results" class="result-and-standings" aria-label="결과와 조별 흐름">
+            <div id="resultSummary"></div>
+            <div id="standings"></div>
+          </section>
+
+          <section id="sources" class="provenance-zone" aria-label="출처와 시각 자산 상태">
+            <div id="sourceLedger"></div>
+            <div id="visualContext"></div>
+          </section>
+        </main>
+
+        <aside class="context-rail" aria-label="선택 경기 문맥" data-component-part="secondary-rail-slot">
+          <div id="matchDetail"></div>
+          <div id="predictionPanel"></div>
+          <div id="discussionThread"></div>
+          <div id="opinionComposer"></div>
+        </aside>
+      </div>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

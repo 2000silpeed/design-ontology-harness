@@ -84,6 +84,92 @@
     "color-blind safe result and prediction states",
     "Korean text legibility at dense table sizes"
   ],
+  "application_concept": {
+    "primary_job": "팬이 여러 사이트를 오가지 않고 다음 경기와 조별 흐름을 파악한 뒤, 한 경기를 골라 예측과 의견까지 이어가게 한다.",
+    "domain_objects": [
+      "Tournament",
+      "Match",
+      "Team",
+      "GroupStanding",
+      "PredictionAggregate",
+      "Opinion",
+      "SourceNote"
+    ],
+    "operating_mode": "fixture-monitoring-and-fan-participation",
+    "success_moment": "사용자가 10초 안에 대한민국의 다음 경기와 킥오프 시간을 찾고, 같은 경기 ID로 일정 행·상세·예측·의견이 함께 갱신된 상태를 확인한다.",
+    "differentiation": [
+      "첫 화면을 홍보용 히어나 KPI 카드가 아니라 날짜·조 필터와 실제 경기 일정표로 시작한다.",
+      "경기 선택을 일정, 상세, 팬 예측, 의견 스레드를 묶는 하나의 문맥 전환으로 사용한다.",
+      "공식 일정, 샘플 결과, 팬·모델 예측의 출처와 검증 상태를 같은 작업 흐름 안에서 구분한다."
+    ]
+  },
+  "layout_skeleton": {
+    "composition": "fixture-led-command-desk-with-synchronized-match-rail",
+    "navigation_model": "tournament-section-tabs-with-sticky-fixture-filters",
+    "density": "dense",
+    "primary_regions": [
+      {
+        "name": "Tournament operations header",
+        "role": "대회 상태, 데이터 모드, 갱신 시각과 핵심 섹션 이동을 한 줄에서 확인한다.",
+        "priority": "supporting"
+      },
+      {
+        "name": "Fixture scan surface",
+        "role": "날짜·조·팀·상태 필터와 일정표를 사용해 관심 경기를 빠르게 찾는다.",
+        "priority": "primary"
+      },
+      {
+        "name": "Synchronized match rail",
+        "role": "선택한 경기의 상세, 팬 예측, 조별 영향과 의견 스레드를 같은 경기 문맥으로 유지한다.",
+        "priority": "primary"
+      },
+      {
+        "name": "Standings and result ledger",
+        "role": "확정 결과와 조별 순위 변화를 출처가 보이는 표와 요약으로 연결한다.",
+        "priority": "secondary"
+      },
+      {
+        "name": "Source and moderation ledger",
+        "role": "공식·샘플 데이터와 팬 콘텐츠의 출처, 검증, 신고 상태를 분명히 기록한다.",
+        "priority": "supporting"
+      }
+    ],
+    "first_screen_contract": [
+      "대회 상태 strip에 데모·공식 여부, 데이터 출처와 KST 갱신 시각을 숨김없이 표시한다.",
+      "대한민국의 다음 경기, 상대, 로컬 킥오프 시간을 첫 viewport에서 10초 안에 찾을 수 있게 한다.",
+      "날짜·조·팀·상태 필터와 실제 일정 행을 장식 이미지나 요약 카드보다 먼저 조작할 수 있게 한다.",
+      "선택 경기의 상세와 팬 예측 상태를 일정표 옆 또는 바로 이어지는 영역에 함께 노출한다."
+    ],
+    "avoid_layouts": [
+      "generic hero plus card grid",
+      "uniform dashboard metric cards",
+      "betting odds board",
+      "one card per fixture when a comparison table is required",
+      "nested cards used as page sections",
+      "cinematic stadium imagery before the fixture workflow"
+    ]
+  },
+  "design_differentiation": {
+    "must_feel_different_from": [
+      "generic SaaS dashboard",
+      "sportsbook or betting interface",
+      "sports news homepage",
+      "tournament marketing landing page"
+    ],
+    "signature_moves": [
+      "하나의 selectedMatchId가 경기 ticker, 일정 행, 상세 rail, 예측 패널과 의견 스레드를 동시에 전환하는 match-context spine을 만든다.",
+      "조밀한 일정표와 편집형 경기 rail을 비대칭으로 나란히 두어 빠른 스캔과 깊은 확인을 한 화면에서 오가게 한다.",
+      "공식 일정·샘플 결과·팬 예측·모델 의견마다 source, updatedAt, verification state를 가까운 위치에 붙인다.",
+      "경기 전·진행·종료 상태에 따라 같은 자리의 핵심 행동이 예측하기, 의견 남기기, 결과 보기로 바뀐다."
+    ],
+    "repetition_risks": [
+      "four equal metric cards dominating the first viewport",
+      "oversized trophy or stadium hero art",
+      "every module using the same radius, tint and padding",
+      "fixture data fragmented into decorative cards",
+      "prediction visuals resembling odds, stake or payout controls"
+    ]
+  },
   "product_primitives": [
     "app shell",
     "top navigation",
@@ -114,6 +200,7 @@
     "modal dialog",
     "data source footnote"
   ],
+  "component_decision_path": "design-system/component-contracts.json",
   "reference_preferences": {
     "prioritize_sources_containing": [
       "components",
@@ -215,11 +302,28 @@
       "prefer_pairings": true,
       "prefer_related_families": true
     },
+    "runtime_authority": {
+      "mode": "semantic-os-markdown",
+      "light_roles": "typed-runtime-role-policy",
+      "dark_roles": "typed-dark-derivation-with-wcag-contrast-floor",
+      "local_ui_hex": "forbidden"
+    },
+    "identity_color_exception": {
+      "namespace": "--identity-*",
+      "scope": [
+        "national team identity",
+        "flag construction"
+      ],
+      "provenance": "Preserved from runtime-theme.css SHA-256 d31417632caa93be77b4b7b96097dcfb6608191a9daf69110e9bb0945fec362b pending official flag-spec review.",
+      "status_semantics": "forbidden",
+      "redundant_cue": "Every identity color must be paired with a team code or localized team name."
+    },
     "notes": [
       "Classic Blue and Prussian Blue anchor the broadcast-grade data surface.",
       "Emerald Green is reserved for pitch, active schedule, and positive probability signals.",
       "Amber marks trophy, host, and attention states without turning the UI into a yellow theme.",
-      "Crimson is used for knockout urgency, live alerts, and negative result deltas."
+      "Crimson is used for knockout urgency, live alerts, and negative result deltas.",
+      "All general UI light/dark coordinates are emitted from the checksum-verified policy in docs/color-reference.md; runtime-theme.css contains semantic aliases and identity-only exceptions."
     ]
   },
   "font_system": {

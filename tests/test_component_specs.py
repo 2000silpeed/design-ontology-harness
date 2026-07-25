@@ -324,6 +324,27 @@ class ComponentSpecsVisualAdaptationTests(unittest.TestCase):
         self.assertEqual(rejected_names, {"product-grid"})
         self.assertEqual(inventory["component_decision"]["component_count"], 4)
 
+        specs_data = generate_component_specs(
+            brand_profile=brand_profile,
+            blueprint=blueprint,
+            component_list=inventory["components"],
+            documents=[],
+        )
+        specs_by_name = {spec["name"]: spec for spec in specs_data["specs"]}
+        self.assertEqual(specs_by_name["daily-brief"]["anatomy"]["states"], ["default", "adjusting"])
+        self.assertEqual(specs_by_name["signal-spine"]["anatomy"]["states"], ["default", "active"])
+        self.assertEqual(specs_by_name["look-board"]["anatomy"]["states"], ["default", "selected"])
+        self.assertEqual(specs_by_name["shop-sheet"]["anatomy"]["states"], ["collapsed", "expanded"])
+        self.assertEqual(specs_by_name["signal-spine"]["state_model"]["domain_states"], ["default", "active"])
+        self.assertEqual(specs_by_name["look-board"]["supports_primitive"], "single look board")
+        self.assertEqual(specs_by_name["shop-sheet"]["contract_provenance"], "llm-authored")
+        for spec in specs_data["specs"]:
+            for value in spec["tokens"].values():
+                self.assertNotIn("var(--color-", str(value))
+                self.assertNotIn("var(--space-", str(value))
+                self.assertNotIn("var(--font-", str(value))
+                self.assertNotIn("var(--radius-", str(value))
+
     def test_product_specific_primitives_keep_baseline_as_coverage_only(self) -> None:
         brand_profile = {
             "brand_name": "ThreadSense",

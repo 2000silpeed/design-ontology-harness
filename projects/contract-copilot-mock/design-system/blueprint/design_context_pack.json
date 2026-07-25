@@ -1,44 +1,12 @@
 {
   "schema_version": "design-context-pack/v1",
-  "activation_state": "grounded",
+  "activation_state": "planned",
   "purpose": "Unify local screenshots, curated exports, corpus providers, and search assists into ontology-safe design research context.",
   "artifact_outputs": [
     "build/visuals/design_context_pack.json",
     "build/system/blueprint/design_context_pack.json"
   ],
   "providers": [
-    {
-      "provider_id": "lazyweb",
-      "kind": "lazyweb",
-      "label": "Lazyweb MCP real-app corpus",
-      "status": "active",
-      "access_mode": "mcp",
-      "truth_role": "real app morphology evidence from Lazyweb MCP searches",
-      "allowed_outputs": [
-        "component morphology",
-        "layout density",
-        "panel/card proportions",
-        "hierarchy rhythm",
-        "interaction affordance patterns",
-        "flow pattern labels"
-      ],
-      "denied_outputs": [
-        "color palette",
-        "palette composition",
-        "typography scale",
-        "domain information architecture",
-        "product copy",
-        "redistributable imagery unless explicitly licensed"
-      ],
-      "config": {
-        "provider_id": "lazyweb",
-        "status": "active",
-        "access_mode": "mcp",
-        "truth_role": "real app morphology evidence from Lazyweb MCP searches",
-        "kind": "lazyweb",
-        "enabled": true
-      }
-    },
     {
       "provider_id": "pinterest",
       "kind": "pinterest",
@@ -66,188 +34,41 @@
         "capture_mode": "manual-save",
         "capture_dir": "references/visual/pinterest-assisted"
       }
+    },
+    {
+      "provider_id": "lazyweb",
+      "kind": "lazyweb",
+      "label": "Lazyweb MCP real-app corpus",
+      "status": "suggested",
+      "access_mode": "mcp-or-manual-export",
+      "truth_role": "real app flow and screen corpus provider",
+      "allowed_outputs": [
+        "component morphology",
+        "layout density",
+        "panel/card proportions",
+        "hierarchy rhythm",
+        "interaction affordance patterns",
+        "flow pattern labels"
+      ],
+      "denied_outputs": [
+        "color palette",
+        "palette composition",
+        "typography scale",
+        "domain information architecture",
+        "product copy",
+        "redistributable imagery unless explicitly licensed"
+      ],
+      "config": {
+        "activation_hint": "Connect Lazyweb MCP or export selected screens into visual_reference.sources.",
+        "recommended_for": [
+          "real app screens",
+          "flow search",
+          "competitive morphology"
+        ]
+      }
     }
   ],
   "context_cards": [
-    {
-      "context_id": "source-01",
-      "kind": "external-reference",
-      "label": "Remote contractor compliance dashboard",
-      "provider_id": "lazyweb",
-      "status": "selected",
-      "provenance_level": "observed",
-      "source_path": null,
-      "source_url": "https://remote.com/global-hr/contractor-of-record",
-      "flows": [
-        "dashboard"
-      ],
-      "morphology": [
-        "card-stack"
-      ],
-      "absorbed_traits": [
-        "kind=lazyweb",
-        "status=unsupported-url",
-        "tag=compliance",
-        "tag=dashboard",
-        "tag=approval",
-        "tag=overview",
-        "flow=dashboard",
-        "morphology=card-stack"
-      ],
-      "must_not_absorb": [
-        "color palette",
-        "palette composition",
-        "typography scale",
-        "domain information architecture",
-        "product copy",
-        "redistributable imagery unless explicitly licensed"
-      ]
-    },
-    {
-      "context_id": "source-02",
-      "kind": "external-reference",
-      "label": "Complydo compliance autopilot dashboard",
-      "provider_id": "lazyweb",
-      "status": "selected",
-      "provenance_level": "observed",
-      "source_path": null,
-      "source_url": "https://www.complydo.io/",
-      "flows": [
-        "dashboard",
-        "navigation"
-      ],
-      "morphology": [
-        "split-pane"
-      ],
-      "absorbed_traits": [
-        "kind=lazyweb",
-        "status=unsupported-url",
-        "tag=compliance",
-        "tag=dashboard",
-        "tag=risk",
-        "tag=assessment",
-        "flow=dashboard",
-        "flow=navigation",
-        "morphology=split-pane"
-      ],
-      "must_not_absorb": [
-        "color palette",
-        "palette composition",
-        "typography scale",
-        "domain information architecture",
-        "product copy",
-        "redistributable imagery unless explicitly licensed"
-      ]
-    },
-    {
-      "context_id": "source-03",
-      "kind": "external-reference",
-      "label": "Appcues onboarding checklist and analytics",
-      "provider_id": "lazyweb",
-      "status": "selected",
-      "provenance_level": "observed",
-      "source_path": null,
-      "source_url": "https://www.appcues.com/use-case/onboarding",
-      "flows": [
-        "dashboard",
-        "onboarding"
-      ],
-      "morphology": [
-        "general-interface-composition"
-      ],
-      "absorbed_traits": [
-        "kind=lazyweb",
-        "status=unsupported-url",
-        "tag=onboarding",
-        "tag=checklist",
-        "tag=progress",
-        "tag=analytics",
-        "flow=dashboard",
-        "flow=onboarding",
-        "morphology=general-interface-composition"
-      ],
-      "must_not_absorb": [
-        "color palette",
-        "palette composition",
-        "typography scale",
-        "domain information architecture",
-        "product copy",
-        "redistributable imagery unless explicitly licensed"
-      ]
-    },
-    {
-      "context_id": "source-04",
-      "kind": "external-reference",
-      "label": "Userpilot product onboarding modules",
-      "provider_id": "lazyweb",
-      "status": "selected",
-      "provenance_level": "observed",
-      "source_path": null,
-      "source_url": "https://userpilot.com/product/user-engagement/",
-      "flows": [
-        "onboarding"
-      ],
-      "morphology": [
-        "card-stack"
-      ],
-      "absorbed_traits": [
-        "kind=lazyweb",
-        "status=unsupported-url",
-        "tag=onboarding",
-        "tag=resource",
-        "tag=center",
-        "tag=task",
-        "flow=onboarding",
-        "morphology=card-stack"
-      ],
-      "must_not_absorb": [
-        "color palette",
-        "palette composition",
-        "typography scale",
-        "domain information architecture",
-        "product copy",
-        "redistributable imagery unless explicitly licensed"
-      ]
-    },
-    {
-      "context_id": "source-05",
-      "kind": "external-reference",
-      "label": "DuckDuckGo legal help center index",
-      "provider_id": "lazyweb",
-      "status": "selected",
-      "provenance_level": "observed",
-      "source_path": null,
-      "source_url": "https://duckduckgo.com/duckduckgo-help-pages/r-legal",
-      "flows": [
-        "data-review",
-        "document",
-        "navigation"
-      ],
-      "morphology": [
-        "dense-table",
-        "split-pane"
-      ],
-      "absorbed_traits": [
-        "kind=lazyweb",
-        "status=unsupported-url",
-        "tag=policy",
-        "tag=document",
-        "tag=sidebar",
-        "tag=index",
-        "flow=data-review",
-        "flow=document",
-        "flow=navigation",
-        "morphology=dense-table"
-      ],
-      "must_not_absorb": [
-        "color palette",
-        "palette composition",
-        "typography scale",
-        "domain information architecture",
-        "product copy",
-        "redistributable imagery unless explicitly licensed"
-      ]
-    },
     {
       "context_id": "research-query-01",
       "kind": "research-query",
@@ -392,141 +213,9 @@
         "product copy",
         "redistributable imagery unless explicitly licensed"
       ]
-    },
-    {
-      "context_id": "research-query-06",
-      "kind": "research-query",
-      "label": "enterprise compliance dashboard review workflow",
-      "provider_id": "lazyweb",
-      "status": "research-needed",
-      "provenance_level": "planned",
-      "source_path": null,
-      "source_url": null,
-      "flows": [
-        "dashboard",
-        "data-review"
-      ],
-      "morphology": [
-        "general-interface-composition"
-      ],
-      "absorbed_traits": [
-        "Use as search intent only until real screenshots are selected.",
-        "intent=general",
-        "primitive=unknown"
-      ],
-      "must_not_absorb": [
-        "color palette",
-        "palette composition",
-        "typography scale",
-        "domain information architecture",
-        "product copy",
-        "redistributable imagery unless explicitly licensed"
-      ]
-    },
-    {
-      "context_id": "research-query-07",
-      "kind": "research-query",
-      "label": "enterprise onboarding checklist approval workflow dashboard",
-      "provider_id": "lazyweb",
-      "status": "research-needed",
-      "provenance_level": "planned",
-      "source_path": null,
-      "source_url": null,
-      "flows": [
-        "dashboard",
-        "onboarding"
-      ],
-      "morphology": [
-        "general-interface-composition"
-      ],
-      "absorbed_traits": [
-        "Use as search intent only until real screenshots are selected.",
-        "intent=general",
-        "primitive=unknown"
-      ],
-      "must_not_absorb": [
-        "color palette",
-        "palette composition",
-        "typography scale",
-        "domain information architecture",
-        "product copy",
-        "redistributable imagery unless explicitly licensed"
-      ]
-    },
-    {
-      "context_id": "research-query-08",
-      "kind": "research-query",
-      "label": "document review policy citations sidebar",
-      "provider_id": "lazyweb",
-      "status": "research-needed",
-      "provenance_level": "planned",
-      "source_path": null,
-      "source_url": null,
-      "flows": [
-        "data-review",
-        "document",
-        "navigation"
-      ],
-      "morphology": [
-        "dense-table",
-        "split-pane"
-      ],
-      "absorbed_traits": [
-        "Use as search intent only until real screenshots are selected.",
-        "intent=general",
-        "primitive=unknown"
-      ],
-      "must_not_absorb": [
-        "color palette",
-        "palette composition",
-        "typography scale",
-        "domain information architecture",
-        "product copy",
-        "redistributable imagery unless explicitly licensed"
-      ]
     }
   ],
   "flow_index": [
-    {
-      "flow": "dashboard",
-      "context_count": 5,
-      "providers": [
-        "lazyweb"
-      ],
-      "status": "covered"
-    },
-    {
-      "flow": "navigation",
-      "context_count": 4,
-      "providers": [
-        "lazyweb"
-      ],
-      "status": "covered"
-    },
-    {
-      "flow": "data-review",
-      "context_count": 3,
-      "providers": [
-        "lazyweb"
-      ],
-      "status": "covered"
-    },
-    {
-      "flow": "onboarding",
-      "context_count": 3,
-      "providers": [
-        "lazyweb"
-      ],
-      "status": "covered"
-    },
-    {
-      "flow": "document",
-      "context_count": 2,
-      "providers": [
-        "lazyweb"
-      ],
-      "status": "covered"
-    },
     {
       "flow": "general-product-ui",
       "context_count": 2,
@@ -544,48 +233,43 @@
       "status": "covered"
     },
     {
+      "flow": "navigation",
+      "context_count": 1,
+      "providers": [
+        "lazyweb"
+      ],
+      "status": "covered"
+    },
+    {
       "flow": "settings",
       "context_count": 1,
       "providers": [
         "lazyweb"
       ],
       "status": "covered"
+    },
+    {
+      "flow": "data-review",
+      "context_count": 0,
+      "providers": [],
+      "status": "gap"
+    },
+    {
+      "flow": "document",
+      "context_count": 0,
+      "providers": [],
+      "status": "gap"
     }
   ],
   "component_morphology_index": [
     {
       "morphology": "general-interface-composition",
-      "context_count": 8,
+      "context_count": 5,
       "examples": [
-        "source-03",
         "research-query-01",
         "research-query-02",
-        "research-query-03"
-      ]
-    },
-    {
-      "morphology": "split-pane",
-      "context_count": 3,
-      "examples": [
-        "source-02",
-        "source-05",
-        "research-query-08"
-      ]
-    },
-    {
-      "morphology": "card-stack",
-      "context_count": 2,
-      "examples": [
-        "source-01",
-        "source-04"
-      ]
-    },
-    {
-      "morphology": "dense-table",
-      "context_count": 2,
-      "examples": [
-        "source-05",
-        "research-query-08"
+        "research-query-03",
+        "research-query-04"
       ]
     }
   ],
@@ -615,5 +299,28 @@
     ],
     "rule": "Reference context is research input only; it never overrides product IA, tokens, component specs, or governance."
   },
-  "research_gaps": []
+  "research_gaps": [
+    {
+      "id": "no-observed-screens",
+      "severity": "high",
+      "detail": "No selected local screenshots are available; visual signals are query/planning-only.",
+      "recommended_action": "Capture or export 3-8 representative screens before treating morphology guidance as grounded."
+    },
+    {
+      "id": "real-app-corpus-provider-not-connected",
+      "severity": "medium",
+      "detail": "A real-app corpus provider is only suggested, not connected.",
+      "recommended_action": "Connect Lazyweb MCP or export selected Lazyweb screens into visual_reference.sources with provenance."
+    },
+    {
+      "id": "flow-coverage-gaps",
+      "severity": "medium",
+      "detail": "Some product flows are not covered by selected reference screens.",
+      "flows": [
+        "data-review",
+        "document"
+      ],
+      "recommended_action": "Search corpus/provider screens by these flows before mock generation."
+    }
+  ]
 }

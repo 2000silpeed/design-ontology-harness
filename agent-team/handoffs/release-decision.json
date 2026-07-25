@@ -1,0 +1,79 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "agent-team-bootstrap-2026-07-13-001",
+  "created_at": "2026-07-13T21:50:03+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "release-governor",
+  "to_role": "team-lead",
+  "stage": "release",
+  "status": "ready",
+  "summary": "PASS: the Codex and Claude Code shared agent team is installable, role-complete, evidence-gated, and documented for use.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/team-bootstrap-to-release.json",
+      "sha256": "642d9319cd8dbdb7a3e51ed11e296b9632dbf5e1a966c7ebf7ce87b25f076caa"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "194d5ff134b5824ab505a629949b0cf10eefbe3d5d609dd02a505970099536db"
+    },
+    {
+      "path": "agent-team/agent-team.json",
+      "sha256": "2911dc3703a6d1dc607519d828f1da7e3fb2313cb2c7491a1d2c9c27e72f6875"
+    },
+    {
+      "path": "agent-team/TEAM_RUNBOOK.md",
+      "sha256": "3ddf657341fdca96bd0967f7e817ee531789e7431398878280bf0598242edddb"
+    },
+    {
+      "path": "plugins/design-system-harness/.codex-plugin/plugin.json",
+      "sha256": "423cfadb57ecf38b41453661fbbc3f898b5afce30691998585f48ac3ed10ee37"
+    },
+    {
+      "path": ".claude/agents/design-team-lead.md",
+      "sha256": "0a50f7a65d067cc70804c5d02cdffcd1571033185068dfbf614f4a245776b2a4"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/release-decision.json"
+  ],
+  "decisions": [
+    "Approve the nine-role core team and three conditional specialists for Codex and Claude Code use.",
+    "Keep the sole writer-parallel exception limited to file-separated token and component authoring.",
+    "Keep Claude image generation truthful by handing prompt packets to Codex image_gen when no equivalent tool exists.",
+    "Treat validate-agent-team and the hashed handoff ledger as required operational checks."
+  ],
+  "gate_results": [
+    {
+      "command": "release-governor independent read-only audit",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "PASS with no remaining release blockers after two audit-and-fix cycles; role parity, stage order, ownership, Semantic OS color authority, imagegen handoff, README commands, and handoff rejection cases were checked."
+    },
+    {
+      "command": "uv run pytest -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "431 passed, 10 warnings, 2 subtests passed."
+    },
+    {
+      "command": "uv run design-ontology validate-agent-team --target-repo . --artifact-dir agent-team --targets codex,claude --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Shared contract, all adapters, workflow paths, handoff schema, and hashed handoff records validated with errors=[]."
+    },
+    {
+      "command": "isolated Codex marketplace and plugin installation",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "design-system-harness@local-plugins version 0.2.0 installed and enabled in a temporary CODEX_HOME."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Claude Code 2.1.207 agent discovery was structurally validated without starting a paid model session."
+  ],
+  "next_action": "Use the README quick start to scaffold the same team into an implementation repository and begin with its Team Lead."
+}

@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import hashlib
+import json
 import subprocess
 import sys
 from pathlib import Path
+
+from PIL import Image
 
 from design_ontology_harness.adapters import load_preset_bundle
 from design_ontology_harness.adapters.base import implementation_contract
@@ -21,6 +25,102 @@ from design_ontology_harness.synthesis import (
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+
+
+def _write_visual_asset_manifest(tmp_path: Path, *, status: str = "integrated") -> Path:
+    generation_run_id = "019e2de5-941b-7971-98e3-6ed84372f36b"
+    candidate_id = "ig_05e8553d24da513b016a07d77edabc8191bf7569ff5368de06"
+    asset_path = tmp_path / "assets" / "hero.png"
+    asset_path.parent.mkdir(parents=True, exist_ok=True)
+    Image.new("RGB", (1600, 900), "#315c4b").save(asset_path)
+    original_path = (
+        tmp_path
+        / ".codex"
+        / "generated_images"
+        / generation_run_id
+        / f"{candidate_id}.png"
+    )
+    original_path.parent.mkdir(parents=True, exist_ok=True)
+    Image.new("RGB", (1600, 900), "#315c4b").save(original_path)
+    manifest_path = tmp_path / "public" / "generated" / "design-system" / "manifest.json"
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    prompt_slot = {
+        "id": "visual-asset:hero",
+        "slot": "hero-image",
+        "label": "Evidence hero",
+        "intended_for": ["component:evidence-hero"],
+        "aspect_ratios": ["16:9"],
+        "candidate_count": 2,
+        "prompt": "Credible evidence review scene",
+        "review_criteria": ["domain subject is clear"],
+    }
+    prompt_packet = {
+        "schema_version": "design-ontology.visual-prompt-packet.v1",
+        "project": "fieldnote",
+        "brand": "Fieldnote",
+        "slots": [prompt_slot],
+    }
+    packet_path = manifest_path.parent / "imagegen-prompt-packet.json"
+    packet_path.write_text(json.dumps(prompt_packet), encoding="utf-8")
+    packet_sha = hashlib.sha256(packet_path.read_bytes()).hexdigest()
+    slot_sha = hashlib.sha256(
+        json.dumps(
+            prompt_slot,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+    inventory_path = tmp_path / "build" / "system" / "blueprint" / "component_inventory.json"
+    specs_path = tmp_path / "build" / "system" / "components" / "component_specs.json"
+    inventory_path.parent.mkdir(parents=True, exist_ok=True)
+    specs_path.parent.mkdir(parents=True, exist_ok=True)
+    inventory_path.write_text(json.dumps({"components": [{"name": "evidence-hero"}]}), encoding="utf-8")
+    specs_path.write_text(
+        json.dumps({"specs": [{"name": "evidence-hero", "contract_status": "complete"}]}),
+        encoding="utf-8",
+    )
+    manifest_path.write_text(json.dumps({
+        "schema_version": "visual-asset-manifest/v2",
+        "project": "fieldnote",
+        "brand": "Fieldnote",
+        "generator": {"id": "image-model:codex-imagegen", "api_fallback": "disabled"},
+        "source_session": {"id": generation_run_id, "default_directory": str(original_path.parent), "preserve_originals": True},
+        "prompt_packet": "imagegen-prompt-packet.json",
+        "prompt_packet_sha256": packet_sha,
+        "assets": [{
+            "id": "visual-asset:hero",
+            "label": "Evidence hero",
+            "slot": "hero-image",
+            "status": status,
+            "asset_path": "assets/hero.png",
+            "original_png_path": str(original_path),
+            "original_sha256": hashlib.sha256(original_path.read_bytes()).hexdigest(),
+            "format": "png",
+            "dimensions": {"width": 1600, "height": 900, "aspect_ratio": "16:9"},
+            "size_kb": round(asset_path.stat().st_size / 1024, 2),
+            "sha256": hashlib.sha256(asset_path.read_bytes()).hexdigest(),
+            "intended_for": ["component:evidence-hero"],
+            "alt_text": "현장 증거 검토 장면",
+            "prompt_summary": "Credible evidence review scene",
+            "selection_reason": "도메인 정보가 가장 선명한 후보",
+            "reviewed_criteria": ["domain subject is clear"],
+            "review_criteria": ["domain subject is clear"],
+            "review_gate_version": "visual-asset-review/v1",
+            "generation_provenance_version": "visual-asset-generation-provenance/v1",
+            "generator": "image-model:codex-imagegen",
+            "generation_run_id": generation_run_id,
+            "candidate_id": candidate_id,
+            "prompt_packet_slot_id": "visual-asset:hero",
+            "prompt_packet_sha256": packet_sha,
+            "prompt_slot_sha256": slot_sha,
+            "runtime_integration": {
+                "gate": "implementation-reference/v1",
+                "references": [{"path": "index.html", "line": 1, "kind": "img"}],
+            },
+        }],
+    }), encoding="utf-8")
+    return manifest_path
 
 
 def test_token_bound_css_passes(tmp_path: Path):
@@ -946,6 +1046,72 @@ def test_allows_explicit_pending_media_tile_without_asset(tmp_path: Path):
     codes = {issue.code for issue in report.issues}
 
     assert "DS078" not in codes
+
+
+def test_runtime_raster_passes_when_file_and_integrated_manifest_match(tmp_path: Path):
+    _write_visual_asset_manifest(tmp_path)
+    (tmp_path / "index.html").write_text(
+        '<main><img src="./assets/hero.png" alt="현장 증거 검토 장면" /></main>',
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not ({"DS087", "DS088", "DS089"} & codes)
+
+
+def test_runtime_raster_fails_when_missing_or_not_integrated(tmp_path: Path):
+    _write_visual_asset_manifest(tmp_path, status="accepted")
+    (tmp_path / "index.html").write_text(
+        '<main><img src="./assets/hero.png" alt="현장 증거 검토 장면" />'
+        '<img src="./assets/missing.png" alt="누락 이미지" /></main>',
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    asset_issues = [issue for issue in report.issues if issue.code == "DS088"]
+
+    assert len(asset_issues) == 2
+    assert any("not registered" in issue.message for issue in asset_issues)
+    assert any("does not resolve" in issue.message for issue in asset_issues)
+
+
+def test_runtime_raster_fails_for_invalid_manifest_and_unused_integration(tmp_path: Path):
+    manifest_path = _write_visual_asset_manifest(tmp_path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["assets"][0]["sha256"] = "tampered"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    (tmp_path / "index.html").write_text("<main>텍스트 전용 화면</main>", encoding="utf-8")
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS087" in codes
+
+    manifest["assets"][0]["sha256"] = hashlib.sha256((tmp_path / "assets" / "hero.png").read_bytes()).hexdigest()
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    report = lint_implementation(tmp_path)
+    assert "DS088" in {issue.code for issue in report.issues}
+
+
+def test_runtime_raster_rejects_hotlinks_agent_paths_and_empty_alt(tmp_path: Path):
+    _write_visual_asset_manifest(tmp_path)
+    (tmp_path / "index.html").write_text(
+        """
+        <main>
+          <img src="./assets/hero.png" alt="" />
+          <img src="https://images.example/remote.png" alt="원격 이미지" />
+          <img src="$CODEX_HOME/generated_images/session/source.png" alt="로컬 원본" />
+        </main>
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    unsafe = [issue for issue in report.issues if issue.code == "DS089"]
+
+    assert len(unsafe) == 3
 
 
 def test_flags_generic_initials_brand_mark_without_app_icon(tmp_path: Path):

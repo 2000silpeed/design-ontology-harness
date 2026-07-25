@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-import json
 import hashlib
+import json
+import math
 import re
 from copy import deepcopy
 from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -20,6 +22,7 @@ AESTHETIC_ONTOLOGY_RELATIVE_PATH = Path("blueprint") / "aesthetic_ontology.json"
 AESTHETIC_CANDIDATE_TEMPLATE_RELATIVE_PATH = Path("aesthetic") / "candidate_template.json"
 AESTHETIC_LOOP_POLICY_RELATIVE_PATH = Path("aesthetic") / "loop_policy.json"
 AESTHETIC_LATEST_REPORT_RELATIVE_PATH = Path("aesthetic") / "latest_loop_report.json"
+PRODUCTION_UI_REVIEW_ARTIFACT_SCHEMA_VERSION = "production-ui-review-artifact/v1"
 
 
 DEFAULT_DIMENSIONS = [
@@ -261,6 +264,7 @@ class MetricScore:
     raw_value: float | None
     score: float
     present: bool
+    evidence_sources: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -307,6 +311,9 @@ class AestheticEvaluation:
     coverage_ratio: float
     dimension_scores: list[DimensionScore]
     missing_metrics: list[str]
+    unsubstantiated_metrics: list[str]
+    evidence_sources: list[str]
+    gate_failures: list[str]
     actions: list[AestheticAction]
 
     def to_dict(self) -> dict[str, Any]:
@@ -321,6 +328,143 @@ def load_json(path: Path) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise ValueError(f"JSON root must be an object: {path}")
     return data
+
+
+def apply_aesthetic_review(
+    candidate: dict[str, Any],
+    review_artifact: dict[str, Any],
+    *,
+    review_artifact_path: Path,
+    reviewer: str | None = None,
+    model: str | None = None,
+    method: str | None = None,
+    candidate_path: Path | None = None,
+) -> dict[str, Any]:
+    """Turn an automated screenshot candidate and a review artifact into two real iterations."""
+
+    existing_iterations = candidate.get("iterations")
+    if isinstance(existing_iterations, list) and any(isinstance(item, dict) for item in existing_iterations):
+        raise ValueError("Base aesthetic candidate must not already contain measured iterations.")
+
+    metrics = candidate.get("metrics")
+    if not isinstance(metrics, dict) or not metrics:
+        raise ValueError("Base aesthetic candidate must contain a non-empty metrics object.")
+
+    if review_artifact.get("schema_version") != PRODUCTION_UI_REVIEW_ARTIFACT_SCHEMA_VERSION:
+        raise ValueError(
+            "Review artifact schema_version must be "
+            f"{PRODUCTION_UI_REVIEW_ARTIFACT_SCHEMA_VERSION}."
+        )
+
+    artifact_path = review_artifact_path.resolve()
+    artifact_payload = load_json(artifact_path)
+    if artifact_payload != review_artifact:
+        raise ValueError("Review artifact payload does not match the artifact file used as evidence.")
+
+    reviewer = _required_review_text(
+        reviewer or review_artifact.get("reviewer"),
+        "reviewer",
+    )
+    model = _required_review_text(model or review_artifact.get("model"), "model")
+    method = _required_review_text(method or review_artifact.get("method"), "method")
+    findings = _validate_review_findings(review_artifact.get("metric_findings"), metrics, candidate)
+
+    candidate_hashes = _candidate_screenshot_hashes(candidate, candidate_path=candidate_path)
+    artifact_hashes = _review_artifact_screenshot_hashes(review_artifact)
+    if artifact_hashes != candidate_hashes:
+        missing = sorted(candidate_hashes - artifact_hashes)
+        unexpected = sorted(artifact_hashes - candidate_hashes)
+        details: list[str] = []
+        if missing:
+            details.append(f"missing={missing}")
+        if unexpected:
+            details.append(f"unexpected={unexpected}")
+        raise ValueError(
+            "Review artifact screenshot SHA set must exactly match the base candidate screenshots"
+            + (f" ({'; '.join(details)})." if details else ".")
+        )
+
+    artifact_sha256 = _sha256_file(artifact_path)
+    artifact_reference = {
+        "schema_version": PRODUCTION_UI_REVIEW_ARTIFACT_SCHEMA_VERSION,
+        "path": str(artifact_path),
+        "sha256": artifact_sha256,
+        "screenshot_sha256": sorted(candidate_hashes),
+    }
+    run_id = _required_review_text(
+        str(review_artifact.get("run_id") or f"review-{artifact_sha256[:12]}"),
+        "run_id",
+    )
+    reviewed_at = _reviewed_at(review_artifact.get("reviewed_at"))
+    review_run = {
+        "run_id": run_id,
+        "source": "multimodal-review",
+        "reviewer": reviewer,
+        "model": model,
+        "method": method,
+        "reviewed_at": reviewed_at,
+        "screenshot_sha256": sorted(candidate_hashes),
+        "artifact": {
+            "path": str(artifact_path),
+            "sha256": artifact_sha256,
+        },
+    }
+    review_protocol = _upsert_production_review(
+        candidate.get("measurement_protocol"),
+        review_run,
+    )
+
+    base_iteration = deepcopy(candidate)
+    base_iteration.pop("iterations", None)
+    base_iteration.setdefault("iteration_id", "iteration-1")
+
+    reviewed_iteration = deepcopy(base_iteration)
+    reviewed_iteration["iteration_id"] = "iteration-2"
+    reviewed_metrics = deepcopy(metrics)
+    reviewed_evidence = deepcopy(reviewed_iteration.get("metric_evidence") or {})
+    if not isinstance(reviewed_evidence, dict):
+        raise ValueError("Base aesthetic candidate metric_evidence must be an object when present.")
+
+    for metric_id, finding in findings.items():
+        reviewed_metrics[metric_id] = finding["score"]
+        raw_entries = reviewed_evidence.get(metric_id)
+        if raw_entries is None:
+            evidence_entries: list[dict[str, Any]] = []
+        elif isinstance(raw_entries, dict):
+            evidence_entries = [deepcopy(raw_entries)]
+        elif isinstance(raw_entries, list) and all(isinstance(item, dict) for item in raw_entries):
+            evidence_entries = deepcopy(raw_entries)
+        else:
+            raise ValueError(f"metric_evidence.{metric_id} must be an object or a list of objects.")
+        evidence_entries.append(
+            {
+                "source": "multimodal-review",
+                "reviewer": reviewer,
+                "model": model,
+                "method": method,
+                "artifact": str(artifact_path),
+                "artifact_sha256": artifact_sha256,
+                "screenshot_sha256": sorted(candidate_hashes),
+                "note": finding["note"],
+            }
+        )
+        reviewed_evidence[metric_id] = evidence_entries
+
+    reviewed_iteration["metrics"] = reviewed_metrics
+    reviewed_iteration["metric_evidence"] = reviewed_evidence
+    reviewed_iteration["measurement_protocol"] = deepcopy(review_protocol)
+    reviewed_iteration["applied_review"] = {
+        "reviewer": reviewer,
+        "model": model,
+        "method": method,
+        "artifact": artifact_reference,
+    }
+
+    merged = deepcopy(candidate)
+    merged["iterations"] = [base_iteration, reviewed_iteration]
+    merged["review_artifacts"] = [artifact_reference]
+    merged["measurement_protocol"] = review_protocol
+    return merged
 
 
 def build_aesthetic_ontology(
@@ -347,9 +491,36 @@ def build_aesthetic_ontology(
     brand_profile = brand_profile or {}
     brand_contract = build_brand_aesthetic_contract(brand_profile)
     if brand_contract["dimensions"]:
-        ontology.setdefault("dimensions", [])
+        dimensions = ontology.setdefault("dimensions", [])
         ontology.setdefault("metrics", {})
-        ontology["dimensions"].extend(deepcopy(brand_contract["dimensions"]))
+        # Project artifacts already contain the brand-owned dimensions.  The
+        # CLI subsequently reloads that artifact as ``custom_ontology`` and
+        # passes the brand profile again, so a blind ``extend`` double-counts
+        # the same dimensions and can inflate the release score.  Upsert the
+        # reserved dimensions by id and collapse any stale duplicates instead.
+        merged_dimensions: list[dict[str, Any]] = []
+        dimension_positions: dict[str, int] = {}
+        for raw_dimension in dimensions:
+            if not isinstance(raw_dimension, dict):
+                continue
+            dimension = deepcopy(raw_dimension)
+            dimension_id = str(dimension.get("id") or "").strip()
+            if dimension_id and dimension_id in dimension_positions:
+                merged_dimensions[dimension_positions[dimension_id]] = dimension
+                continue
+            if dimension_id:
+                dimension_positions[dimension_id] = len(merged_dimensions)
+            merged_dimensions.append(dimension)
+        for raw_dimension in brand_contract["dimensions"]:
+            dimension = deepcopy(raw_dimension)
+            dimension_id = str(dimension.get("id") or "").strip()
+            if dimension_id and dimension_id in dimension_positions:
+                merged_dimensions[dimension_positions[dimension_id]] = dimension
+            else:
+                if dimension_id:
+                    dimension_positions[dimension_id] = len(merged_dimensions)
+                merged_dimensions.append(dimension)
+        ontology["dimensions"] = merged_dimensions
         ontology["metrics"].update(deepcopy(brand_contract["metrics"]))
     ontology.setdefault("schema_version", ONTOLOGY_SCHEMA_VERSION)
     ontology["context"] = {
@@ -561,6 +732,7 @@ def build_candidate_template(
             "evidence_rule": "Attach screenshot paths, reviewer notes, or automated checks before treating scores as final.",
         },
         "metrics": {metric_id: None for metric_id in metric_ids},
+        "metric_evidence": {metric_id: [] for metric_id in metric_ids},
         "metric_guidance": {
             metric_id: {
                 "label": (metrics_catalog.get(metric_id) or {}).get("label", metric_id),
@@ -584,6 +756,9 @@ def build_loop_policy(
             "ready_to_execute_requires": [
                 f"overall_score >= {threshold}",
                 f"every_dimension_score >= {min_dimension_score}",
+                "metric_coverage == 1.0",
+                "every metric has automated, human, or multimodal-review evidence",
+                "dimension score overrides are absent",
             ],
             "threshold": threshold,
             "min_dimension_score": min_dimension_score,
@@ -653,6 +828,8 @@ def evaluate_candidate(
     present_metric_count = 0
     expected_metric_count = 0
     missing_metrics: list[str] = []
+    unsubstantiated_metrics: list[str] = []
+    evidence_sources: set[str] = set()
 
     for raw_dimension in ontology.get("dimensions", []):
         dimension = dict(raw_dimension)
@@ -672,6 +849,7 @@ def evaluate_candidate(
             present = raw_value is not None
             metric_score = _normalize_score(raw_value, score_scale) if present else 0.0
             label = str((metric_catalog.get(metric_id) or {}).get("label") or metric_id)
+            sources = _metric_evidence_sources(candidate, metric_id) if present else set()
             metric_scores.append(
                 MetricScore(
                     metric_id=metric_id,
@@ -679,11 +857,16 @@ def evaluate_candidate(
                     raw_value=raw_value,
                     score=metric_score,
                     present=present,
+                    evidence_sources=sorted(sources),
                 )
             )
             if present:
                 present_metric_count += 1
                 present_scores.append(metric_score)
+                if sources:
+                    evidence_sources.update(sources)
+                else:
+                    unsubstantiated_metrics.append(metric_id)
             else:
                 dimension_missing.append(metric_id)
                 missing_metrics.append(metric_id)
@@ -712,7 +895,14 @@ def evaluate_candidate(
     final_score = weighted_score / total_weight if total_weight else 0.0
     coverage_ratio = present_metric_count / expected_metric_count if expected_metric_count else 1.0
     weak_dimensions = [dimension for dimension in dimension_scores if dimension.score < min_dimension_score]
-    passed = final_score >= threshold and not weak_dimensions
+    gate_failures: list[str] = []
+    if coverage_ratio < 1.0:
+        gate_failures.append(f"metric coverage is {coverage_ratio:.4f}; all ontology metrics are required")
+    if unsubstantiated_metrics:
+        gate_failures.append(f"{len(unsubstantiated_metrics)} metrics lack structured evidence")
+    if dimension_overrides:
+        gate_failures.append("dimension score overrides are diagnostic only and cannot open the execution gate")
+    passed = final_score >= threshold and not weak_dimensions and not gate_failures
     status = "passed" if passed else "needs_revision"
     actions = recommend_actions(
         dimension_scores,
@@ -733,6 +923,9 @@ def evaluate_candidate(
         coverage_ratio=round(coverage_ratio, 4),
         dimension_scores=dimension_scores,
         missing_metrics=missing_metrics,
+        unsubstantiated_metrics=unsubstantiated_metrics,
+        evidence_sources=sorted(evidence_sources),
+        gate_failures=gate_failures,
         actions=actions,
     )
 
@@ -820,6 +1013,9 @@ def run_self_improvement_loop(
         else:
             break
         current_candidate.setdefault("design_id", design_id)
+        for inherited_key in ("metric_evidence", "measurement_protocol", "source_screenshots"):
+            if inherited_key in candidate_payload:
+                current_candidate.setdefault(inherited_key, deepcopy(candidate_payload[inherited_key]))
         evaluation = evaluate_candidate(
             current_candidate,
             ontology,
@@ -847,6 +1043,8 @@ def run_self_improvement_loop(
         "min_dimension_score": min_dimension_score,
         "max_iterations": max_iterations,
         "auto_apply_estimates": auto_apply_estimates,
+        "source_screenshots": list(working_candidate.get("source_screenshots") or []),
+        "measurement_protocol": deepcopy(working_candidate.get("measurement_protocol") or {}),
         "passed": passed,
         "ready_to_execute": passed,
         "status": status,
@@ -854,11 +1052,13 @@ def run_self_improvement_loop(
             "state": "open" if passed else "blocked",
             "reason": (
                 f"{final_evaluation.iteration_id} scored {final_evaluation.score_100:.2f}, "
-                f"meeting threshold {threshold * 100:.2f}."
+                f"meeting threshold {threshold * 100:.2f} with complete evidenced metric coverage."
                 if passed
                 else (
                     f"{final_evaluation.iteration_id} scored {final_evaluation.score_100:.2f}; "
-                    f"requires {threshold * 100:.2f} and every dimension >= {min_dimension_score * 100:.2f}."
+                    f"requires {threshold * 100:.2f}, every dimension >= {min_dimension_score * 100:.2f}, "
+                    "complete metric coverage, and structured evidence for every metric. "
+                    + ("; ".join(final_evaluation.gate_failures) if final_evaluation.gate_failures else "")
                 )
             ),
         },
@@ -891,6 +1091,8 @@ def build_next_iteration_brief(evaluation: AestheticEvaluation) -> dict[str, Any
             f"Overall aesthetic score >= {evaluation.threshold * 100:.2f}.",
             f"Every dimension score >= {evaluation.min_dimension_score * 100:.2f}.",
             "Re-run the aesthetic loop after the revised candidate is measured.",
+            "Provide automated, human, or multimodal-review evidence for every metric.",
+            "Do not use dimension score overrides to open the execution gate.",
         ],
     }
 
@@ -930,6 +1132,166 @@ def _candidate_iterations(candidate_payload: dict[str, Any]) -> list[dict[str, A
     return [item for item in iterations if isinstance(item, dict)]
 
 
+def _required_review_text(value: Any, field_name: str) -> str:
+    normalized = re.sub(r"\s+", " ", str(value)).strip()
+    if not normalized:
+        raise ValueError(f"Review {field_name} must be a non-empty string.")
+    return normalized
+
+
+def _reviewed_at(value: Any) -> str:
+    if value is None:
+        return datetime.now(timezone.utc).isoformat()
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError("Review reviewed_at must be an ISO-8601 timestamp with a timezone.")
+    normalized = value.strip()
+    try:
+        parsed = datetime.fromisoformat(normalized.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise ValueError(
+            "Review reviewed_at must be an ISO-8601 timestamp with a timezone."
+        ) from exc
+    if parsed.tzinfo is None:
+        raise ValueError("Review reviewed_at must be an ISO-8601 timestamp with a timezone.")
+    return normalized
+
+
+def _upsert_production_review(protocol: Any, review_run: dict[str, Any]) -> dict[str, Any]:
+    if protocol is None:
+        updated: dict[str, Any] = {}
+    elif isinstance(protocol, dict):
+        updated = deepcopy(protocol)
+    else:
+        raise ValueError("Base aesthetic candidate measurement_protocol must be an object.")
+
+    raw_production_review = updated.get("production_review")
+    if raw_production_review is None:
+        production_review: dict[str, Any] = {}
+    elif isinstance(raw_production_review, dict):
+        production_review = deepcopy(raw_production_review)
+    else:
+        raise ValueError("measurement_protocol.production_review must be an object.")
+
+    raw_runs = production_review.get("review_runs")
+    if raw_runs is None:
+        review_runs: list[dict[str, Any]] = []
+    elif isinstance(raw_runs, list) and all(isinstance(item, dict) for item in raw_runs):
+        review_runs = deepcopy(raw_runs)
+    else:
+        raise ValueError("measurement_protocol.production_review.review_runs must be a list of objects.")
+
+    run_id = review_run["run_id"]
+    for index, existing in enumerate(review_runs):
+        if existing.get("run_id") == run_id:
+            review_runs[index] = {**existing, **deepcopy(review_run)}
+            break
+    else:
+        review_runs.append(deepcopy(review_run))
+
+    production_review["schema_version"] = "production-ui-review/v1"
+    production_review["review_runs"] = review_runs
+    updated["production_review"] = production_review
+    return updated
+
+
+def _validate_review_findings(
+    raw_findings: Any,
+    metrics: dict[str, Any],
+    candidate: dict[str, Any],
+) -> dict[str, dict[str, Any]]:
+    if not isinstance(raw_findings, dict) or not raw_findings:
+        raise ValueError("Review artifact metric_findings must be a non-empty object.")
+
+    score_scale = _score_scale(candidate)
+    findings: dict[str, dict[str, Any]] = {}
+    for raw_metric_id, raw_finding in raw_findings.items():
+        metric_id = str(raw_metric_id)
+        if metric_id not in metrics:
+            raise ValueError(f"Review artifact references unknown candidate metric: {metric_id}.")
+        if not isinstance(raw_finding, dict):
+            raise ValueError(f"metric_findings.{metric_id} must be an object.")
+        score = _as_number(raw_finding.get("score"))
+        if score is None or not math.isfinite(score) or score < 0 or score > score_scale:
+            raise ValueError(
+                f"metric_findings.{metric_id}.score must be numeric within 0..{score_scale:g}."
+            )
+        note = raw_finding.get("note")
+        if not isinstance(note, str) or not note.strip():
+            raise ValueError(f"metric_findings.{metric_id}.note must be a non-empty string.")
+        findings[metric_id] = {
+            "score": score,
+            "note": re.sub(r"\s+", " ", note).strip(),
+        }
+    return findings
+
+
+def _candidate_screenshot_hashes(
+    candidate: dict[str, Any],
+    *,
+    candidate_path: Path | None,
+) -> set[str]:
+    feature_report = candidate.get("automated_feature_report")
+    if isinstance(feature_report, dict):
+        screenshots = feature_report.get("screenshots")
+        if isinstance(screenshots, list) and screenshots:
+            hashes: set[str] = set()
+            for index, screenshot in enumerate(screenshots):
+                if not isinstance(screenshot, dict):
+                    raise ValueError(
+                        f"automated_feature_report.screenshots[{index}] must be an object."
+                    )
+                hashes.add(
+                    _normalize_sha256(
+                        screenshot.get("sha256"),
+                        f"automated_feature_report.screenshots[{index}].sha256",
+                    )
+                )
+            return hashes
+
+    source_screenshots = candidate.get("source_screenshots")
+    if not isinstance(source_screenshots, list) or not source_screenshots:
+        raise ValueError(
+            "Base candidate needs automated_feature_report.screenshots hashes or source_screenshots files."
+        )
+    base_dir = candidate_path.resolve().parent if candidate_path else Path.cwd()
+    hashes: set[str] = set()
+    for index, raw_path in enumerate(source_screenshots):
+        if not isinstance(raw_path, str) or not raw_path.strip():
+            raise ValueError(f"source_screenshots[{index}] must be a non-empty path string.")
+        screenshot_path = Path(raw_path).expanduser()
+        if not screenshot_path.is_absolute():
+            screenshot_path = base_dir / screenshot_path
+        if not screenshot_path.is_file():
+            raise ValueError(f"Source screenshot does not exist: {screenshot_path.resolve()}.")
+        hashes.add(_sha256_file(screenshot_path.resolve()))
+    return hashes
+
+
+def _review_artifact_screenshot_hashes(review_artifact: dict[str, Any]) -> set[str]:
+    raw_hashes = review_artifact.get("screenshot_sha256")
+    if not isinstance(raw_hashes, list) or not raw_hashes:
+        raise ValueError("Review artifact screenshot_sha256 must be a non-empty list.")
+    return {
+        _normalize_sha256(value, f"screenshot_sha256[{index}]")
+        for index, value in enumerate(raw_hashes)
+    }
+
+
+def _normalize_sha256(value: Any, field_name: str) -> str:
+    normalized = str(value or "").strip().lower()
+    if not re.fullmatch(r"[0-9a-f]{64}", normalized):
+        raise ValueError(f"{field_name} must be a 64-character SHA-256 digest.")
+    return normalized
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def _candidate_metrics(candidate: dict[str, Any]) -> dict[str, Any]:
     for key in ("metrics", "scores", "metric_scores"):
         value = candidate.get(key)
@@ -944,6 +1306,27 @@ def _candidate_dimension_scores(candidate: dict[str, Any]) -> dict[str, Any]:
         if isinstance(value, dict):
             return value
     return {}
+
+
+def _metric_evidence_sources(candidate: dict[str, Any], metric_id: str) -> set[str]:
+    evidence_map = candidate.get("metric_evidence")
+    if not isinstance(evidence_map, dict):
+        return set()
+    raw_entries = evidence_map.get(metric_id)
+    if isinstance(raw_entries, dict):
+        entries = [raw_entries]
+    elif isinstance(raw_entries, list):
+        entries = [entry for entry in raw_entries if isinstance(entry, dict)]
+    else:
+        return set()
+    allowed_sources = {"automated", "human", "multimodal-review"}
+    sources: set[str] = set()
+    for entry in entries:
+        source = str(entry.get("source") or "")
+        has_detail = any(entry.get(key) for key in ("note", "artifact", "artifacts", "method", "reviewer"))
+        if source in allowed_sources and has_detail:
+            sources.add(source)
+    return sources
 
 
 def _score_scale(candidate: dict[str, Any]) -> float:
@@ -983,6 +1366,7 @@ def _as_number(value: Any) -> float | None:
 def _apply_estimated_actions(candidate: dict[str, Any], actions: list[AestheticAction]) -> dict[str, Any]:
     revised = deepcopy(candidate)
     metrics = dict(_candidate_metrics(revised))
+    metric_evidence = dict(revised.get("metric_evidence") or {})
     score_scale = _score_scale(revised)
     for action in actions:
         current = _as_number(metrics.get(action.metric_id))
@@ -991,7 +1375,12 @@ def _apply_estimated_actions(candidate: dict[str, Any], actions: list[AestheticA
         current_normalized = _normalize_score(current, score_scale)
         next_normalized = min(current_normalized + action.expected_lift, 1.0)
         metrics[action.metric_id] = round(next_normalized * score_scale, 4)
+        metric_evidence[action.metric_id] = [{
+            "source": "estimate",
+            "method": "expected lift only; re-measurement required",
+        }]
     revised["metrics"] = metrics
+    revised["metric_evidence"] = metric_evidence
     revised["iteration_id"] = f"{candidate.get('iteration_id', 'estimated')}-estimated"
     revised["estimated_from_actions"] = [action.action_id for action in actions]
     return revised

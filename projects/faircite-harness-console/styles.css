@@ -471,7 +471,7 @@ main {
 .privacy-banner p,
 .privacy-banner a {
   font-size: 0.78rem;
-  line-height: 1.45;
+  line-height: var(--ds-leading-body);
 }
 
 .privacy-banner a {
@@ -900,7 +900,7 @@ textarea {
 .source-record span,
 .source-record p {
   color: var(--ds-color-ink-muted);
-  line-height: 1.55;
+  line-height: var(--ds-leading-body);
 }
 
 .answer-summary strong {
@@ -967,7 +967,7 @@ textarea {
 
 .notice-row p {
   color: var(--ds-color-ink-muted);
-  line-height: 1.45;
+  line-height: var(--ds-leading-body);
 }
 
 .stepper,
@@ -1009,7 +1009,7 @@ textarea {
 .pattern-tile small,
 .perspective-tile p {
   color: var(--ds-color-ink-muted);
-  line-height: 1.45;
+  line-height: var(--ds-leading-body);
 }
 
 .pattern-grid {

@@ -1,0 +1,10 @@
+{
+  "valid": true,
+  "errors": [],
+  "warnings": [
+    "color_reference.selected_colors canonical name is ambiguous: 'Marsala'; selected exact identity color-keyword-marsala. Use a full label or Semantic ID to choose another identity. Candidates: Marsala (color-keyword-marsala, #964F4C), Marsala (Pantone COY 2015) (color-keyword-pantone-coy-2015-marsala, #955251)",
+    "[pitfall#3-rebrand] Prussian Blue vs Ocean Blue (blue): lightness diff 31, saturation diff 65 — possible rebrand remnant",
+    "[pitfall#3-rebrand] Cornsilk vs Goldenrod (yellow): lightness diff 44, saturation diff 26 — possible rebrand remnant",
+    "visual_reference.sources is empty"
+  ]
+}

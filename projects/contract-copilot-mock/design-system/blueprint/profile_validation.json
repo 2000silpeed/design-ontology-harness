@@ -2,6 +2,7 @@
   "valid": true,
   "errors": [],
   "warnings": [
-    "[pitfall#3-rebrand] Classic Blue vs Misty Blue (blue): lightness diff 53, saturation diff 22 — possible rebrand remnant"
+    "[pitfall#3-rebrand] Classic Blue vs Misty Blue (blue): lightness diff 53, saturation diff 22 — possible rebrand remnant",
+    "visual_reference.sources is empty"
   ]
 }

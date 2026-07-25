@@ -1,0 +1,201 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-production-ui-improvement-2026-07-13-001",
+  "created_at": "2026-07-14T00:52:17+09:00",
+  "project": "world-cup-hub",
+  "from_role": "ontology-compiler",
+  "to_role": "team-lead",
+  "stage": "system",
+  "status": "needs-work",
+  "summary": "World Cup Hub system synthesis and token emission completed from the accepted fixture-led concept, checksum-current Semantic OS Markdown policy, and 19 authored component contracts. Strict component validation now reports 19 authored contracts, 28 primitive reconciliation records, three approved waivers, and no unresolved component token references; all 127 authored token references resolve through current --ds-* variables and complete light/dark semantic role sets. The existing visual-asset-manifest/v2 remains integrated and provenance-valid. One downstream visual prompt defect remains: the preserved hero-image prompt still describes a first-viewport landing hero and the planned card-thumbnail remains generic, which conflicts with the accepted fixture-led avoid_layouts. Fixing that safely requires changing the prompt-slot inference/generation contract and migrating the reviewed integrated asset provenance, so no generated prompt or manifest was hand-edited in this compiler stage.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/world-cup-hub-system-team-lead-to-ontology-compiler.json",
+      "sha256": "26a9b754a142a20f1ae073663399d1698f7908d0e1576b2af1f6bb133ab744f9"
+    },
+    {
+      "path": "agent-team/handoffs/world-cup-hub-concept-brief-author-to-team-lead.json",
+      "sha256": "6d93adbafd2ff84ca3c54491fdba3e8c8ed2655d075aaacdf50c807d778c8a2d"
+    },
+    {
+      "path": "agent-team/handoffs/world-cup-hub-tokens-token-curator-to-team-lead.json",
+      "sha256": "6bf54fe9a1c73d3b2721ff5344f58948a77678feb33783b29abd7ea9b8f9219a"
+    },
+    {
+      "path": "agent-team/handoffs/world-cup-hub-components-component-author-to-team-lead.json",
+      "sha256": "a7be5357b91b99cf4e02542d861eed0eeb227bf8c8ee73a0a0eb1bc83a276a99"
+    },
+    {
+      "path": "projects/world-cup-hub/brand_profile.json",
+      "sha256": "78358cef596cd3be39205adb2c8ed6e007f8d79d0cad02a525ac8caf4d255abd"
+    },
+    {
+      "path": "projects/world-cup-hub/spec.md",
+      "sha256": "8f958871bee5c8cb32289f71921af9bf54207b554071de4d43aa56df4207fe47"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/component-contracts.json",
+      "sha256": "3211e4a1c27fe1d08aba22c070b968649627b1c7ffcc1cc32c7a0598bc007af4"
+    },
+    {
+      "path": "docs/color-reference.md",
+      "sha256": "9bdf641a69d3c97089a543f8838610b2204493680921aa09877a062a652e97ca"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/references/selected-direction.md",
+      "sha256": "5521562402bc77e4b93b7928958f8a3a840d74560105c969828f16ab9593343d"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/references/selected-direction-03-fixture-compass.png",
+      "sha256": "8c01aaa55b553fc507fe8248a6285de2ca9e3dcaac256478e1d7b993bde9a0db"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/manifest.json",
+      "sha256": "a5cbf6f2d89dc77dfa02f8620937ff3e8be2a5488b1f448aa1cf21b5538c8db2"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/build/project_summary.json",
+      "sha256": "d4087d5ce49f101474f25c3b0f545c8d3fbf132f07c25ccf2568965c90faaffa"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/design_system_blueprint.json",
+      "sha256": "358c4b30ce8372ac191b5a55e24fa15730e5dec12d5934bcce5fe517ff5ca39e"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/system_ontology.json",
+      "sha256": "a1270373ed97b0639c1f4c2abcf560aba2ccca5d901507a1b5c830b306f035b4"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/token_schema.json",
+      "sha256": "e0c4d2338b8af22613a79b6ddfa3f60c177e8f35fc5d7557c52326a5dd1743a3"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/component_inventory.json",
+      "sha256": "c579610ce7c105c2dca30b192fedbcc35c5eebc592ec11de5afc2b662b05d179"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/profile_validation.json",
+      "sha256": "8cb7ac56afe2fd372968dc95e2d1987958994d651a68fe42ee98fff8dcd786f2"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/system_spec.md",
+      "sha256": "94c0ade37d1f5e811061bd6be71b602a07aa52d7a34ca44753292d5af333cfe0"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/components/component_specs.json",
+      "sha256": "5c600370cd449f51c399388b6f738d3e08bd8ae045d99ef173abc48a23cf4b4e"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/components/component_specs.md",
+      "sha256": "a6c33070b7ae7af30e147d2ab734933af64a54c0a88d25903ae7e7f20239e1d6"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/components/component_contract_validation.json",
+      "sha256": "169f16c6023fcaa64597ca8d2124c3f320f33a04c3c7b0985fceb9ddaaffb020"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/tokens.css",
+      "sha256": "2a243d08c28fb722aa21d2be67a5cc2623571c10c49acaebf75baf6cf740274e"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/imagegen-prompt-packet.json",
+      "sha256": "577745db9adda241a95266e61ea076602077604d75736a45371a5ce903d59cab"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/imagegen-prompts.md",
+      "sha256": "bf4a30e8f66d6859d53ad677aed4fea6535128710f68c980427ffd6c05cc5d41"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/manifest.json",
+      "sha256": "a5cbf6f2d89dc77dfa02f8620937ff3e8be2a5488b1f448aa1cf21b5538c8db2"
+    }
+  ],
+  "changed_paths": [
+    "projects/world-cup-hub/build/project_summary.json",
+    "projects/world-cup-hub/build/system/**",
+    "projects/world-cup-hub/design-system/tokens.css",
+    "agent-team/handoffs/world-cup-hub-system-ontology-compiler-to-team-lead.json"
+  ],
+  "decisions": [
+    "Compile only from the accepted fixture-led command desk concept and retain its synchronized match rail, first-screen contract, and explicit rejection of generic hero/card-grid layouts.",
+    "Treat the checksum-current runtime policy embedded in docs/color-reference.md as the only application semantic color authority; keep the approved identity-only raw-color exception separate.",
+    "Accept the generated component system only when all 19 token maps retain token_provenance=authored-input, all 28 primitive reconciliation decisions and three approved waivers survive, and every authored token reference resolves to a current --ds-* variable.",
+    "Preserve the visual-asset-manifest/v2 integrated Codex asset, generation run, candidate, original file, prompt packet and slot hashes, and runtime integration evidence without hand-editing provenance.",
+    "Do not rewrite the prompt packet merely to rename generic slots: changing packet or slot content would invalidate the reviewed integrated asset's exact prompt hashes unless the prompt generator and provenance migration are updated together.",
+    "Record the generic hero/card-thumbnail prompt conflict as a failed product-alignment gate rather than incorrectly reporting the visual prompt stage ready."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run design-ontology run-project --project-dir projects/world-cup-hub --kb-dir kb/default && uv run design-ontology emit-tokens --project-dir projects/world-cup-hub",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "System synthesis generated 19 component specs with needs-authoring=0 and 81 declared tokens; token emission completed. Forbidden authored, runtime-theme, UI, component-runtime, production-verifier, and browser-evidence file hashes remained byte-identical before and after compiler execution."
+    },
+    {
+      "command": "uv run design-ontology validate-component-contracts --project-dir projects/world-cup-hub --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "ok=true, errors=[], warnings=[], component_count=19, authored_contract_count=19, needs_authoring_count=0, declared_token_count=81, primitive_reconciliation_count=28, primitive_waiver_count=3. Additional audit found 127 authored var(--ds-*) references resolving to 26 current generated variables."
+    },
+    {
+      "command": "uv run design-ontology sync-semantic-colors --source ../semantic-os/domains/color/ontology/build/graph.json --color-reference-output docs/color-reference.md --ontology-output design_ontology_harness/resources/semantic_color_ontology.json --check --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "changed=false; 358 nodes, 1227 edges, 290 keywords and 113 HEX keywords. The runtime policy remained valid at sha256 e9d0203534ef57e0097dd28a776f5370ff592cd64274262a98730761a808a27c, and tokens.css contains all 19 audited semantic runtime roles in both light and dark modes."
+    },
+    {
+      "command": "uv run design-ontology validate-image-assets --project-dir projects/world-cup-hub --require-integrated --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "ok=true with three manifest records and one integrated Codex image asset; no packet, slot, generation-run, candidate, original PNG, workspace, or runtime integration provenance errors."
+    },
+    {
+      "command": "fixture-led visual prompt alignment audit",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "imagegen-prompt-packet.json still includes visual-asset:hero-image with purpose 'First-viewport visual signal for landing, product, or editorial hero sections' plus a generic card-thumbnail. This conflicts with layout_skeleton.avoid_layouts ('generic hero plus card grid', 'cinematic stadium imagery before the fixture workflow') and does not encode product-specific fixture, match-context, and source-ledger slots. Safe correction requires prompt-slot inference/generator changes plus an explicit migration of the integrated asset's prompt_packet_sha256 and prompt_slot_sha256 provenance."
+    },
+    {
+      "command": "uv run pytest tests/test_component_contracts.py tests/test_component_specs.py tests/test_component_decision_loader.py tests/test_runtime_color_authority.py tests/test_semantic_color_markdown.py tests/test_visual_asset_prompts.py tests/test_visual_asset_registry.py tests/test_visual_asset_ontology.py tests/test_graph_builders.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "91 focused compiler, authored contract, Semantic OS runtime color, prompt, graph, and visual asset provenance tests passed in 2.44 seconds."
+    },
+    {
+      "command": "uv run pytest -q --disable-warnings",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "498 tests and two subtests passed with 11 warnings in 39.28 seconds."
+    },
+    {
+      "command": "uv run ruff check design_ontology_harness/synthesis.py design_ontology_harness/graph_builders.py design_ontology_harness/component_specs.py design_ontology_harness/token_emitter.py design_ontology_harness/visual_asset_prompts.py design_ontology_harness/visual_asset_registry.py tests/test_component_contracts.py tests/test_component_specs.py tests/test_runtime_color_authority.py tests/test_visual_asset_prompts.py tests/test_visual_asset_registry.py tests/test_visual_asset_ontology.py && git diff --check",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Ruff reported no issues and git found no whitespace errors."
+    },
+    {
+      "command": "uv run pytest tests/test_agent_team.py tests/test_agent_packs.py -q && uv run design-ontology validate-agent-team --target-repo . --artifact-dir agent-team --targets codex,claude --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "23 tests and two subtests passed; the shared nine-role team contract, generated Codex/Claude packs, and current handoff artifact hashes validated with errors=[]."
+    },
+    {
+      "command": "direct validate_handoff_payload for agent-team/handoffs/world-cup-hub-system-ontology-compiler-to-team-lead.json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "The final ontology-compiler handoff passed schema, role transition, artifact existence, and SHA-256 validation with []."
+    }
+  ],
+  "blockers": [
+    "The visual prompt contract is not aligned with the accepted fixture-led product concept. Product-specific slot inference and reviewed integrated-asset provenance migration are outside a generated-output-only compiler correction, so the visual prompt stage remains needs-work."
+  ],
+  "risks": [
+    "run-project is not byte-deterministic for design_system_blueprint.json because equally scored Semantic OS candidate reason ordering can change between runs, even though the selected concept, generated ontology, component specs, and tokens remain semantically stable. The current output hash is frozen in this handoff; do not rerun generation without refreshing the handoff.",
+    "The integrated hero image remains provenance-valid and runtime-integrated, but its historical first-viewport hero prompt must not be interpreted as permission to override the fixture-first screen contract.",
+    "Profile validation retains non-blocking warnings for a possible rebrand-remnant color candidate and empty advisory visual_reference sources; the selected-direction reference remains advisory and cannot define palette, typography, IA, copy, or assets.",
+    "This compiler stage did not modify the application UI or browser evidence and does not establish production readiness."
+  ],
+  "next_action": "Team Lead assigns the visual prompt generator owner to replace generic hero/card-thumbnail inference with fixture-led product slots and migrate the existing integrated asset's exact visual-asset-manifest/v2 prompt provenance without losing generation-run, candidate, original-file, or runtime-integration evidence; then rerun build-image-prompts, validate-image-assets --require-integrated, and the compiler completion audit."
+}

@@ -1,0 +1,127 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-production-ui-improvement-2026-07-13-001",
+  "created_at": "2026-07-14T00:08:48+09:00",
+  "project": "world-cup-hub",
+  "from_role": "token-curator",
+  "to_role": "team-lead",
+  "stage": "tokens-and-components",
+  "status": "ready",
+  "summary": "The checksum-verified typed policy in docs/color-reference.md now owns every light and dark application semantic color. Emission preserves selected palette coordinates in brand-* roles, applies declared WCAG contrast floors to runtime roles, and runtime-theme.css contains only semantic aliases plus provenance-scoped team and flag identity exceptions.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/world-cup-hub-tokens-team-lead-to-token-curator.json",
+      "sha256": "a1c2e92a948a8b32d703b4b7f24d40cedcc1eb50bd8c8618bee11fcbeb1877f2"
+    },
+    {
+      "path": "agent-team/handoffs/world-cup-hub-concept-brief-author-to-team-lead.json",
+      "sha256": "6d93adbafd2ff84ca3c54491fdba3e8c8ed2655d075aaacdf50c807d778c8a2d"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/tokens.css",
+      "sha256": "f8e4bbcc458350fab7f8072e8fd7eae35a4d967de8f442e567d8ea11148c1c0c"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "docs/color-reference.md",
+      "sha256": "9bdf641a69d3c97089a543f8838610b2204493680921aa09877a062a652e97ca"
+    },
+    {
+      "path": "projects/world-cup-hub/brand_profile.json",
+      "sha256": "78358cef596cd3be39205adb2c8ed6e007f8d79d0cad02a525ac8caf4d255abd"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/runtime-theme.css",
+      "sha256": "9d866f641dcc9bcfbf0f9e0932a2a6903d6187db8c973c18e7c7d3d045f6298f"
+    },
+    {
+      "path": "design_ontology_harness/adapters/base.py",
+      "sha256": "f1887fad694961d7983d9a20ffd7063b47783cc9243a5ebc0ceae7e3376733a9"
+    },
+    {
+      "path": "design_ontology_harness/semantic_color_markdown.py",
+      "sha256": "d499ffc1f0e3820f54c8b81161c29b0743e76579ffb7122e6a2804c188933e39"
+    },
+    {
+      "path": "design_ontology_harness/token_emitter.py",
+      "sha256": "f3da495dab934aafd4e742fc106cfdf04bed655d7a5882e97684dae097d85eeb"
+    },
+    {
+      "path": "tests/test_runtime_color_authority.py",
+      "sha256": "c9f6056e75ca1c93388e6ceecb102fd2332da82c1c6d64aa051816789514cfcf"
+    },
+    {
+      "path": "tests/test_style_fingerprint.py",
+      "sha256": "9325493e6ff55b0dfc8b24daa2d3620aa3ffeea0c60331e22a9cc92b47b27109"
+    }
+  ],
+  "changed_paths": [
+    "docs/color-reference.md",
+    "projects/world-cup-hub/brand_profile.json",
+    "projects/world-cup-hub/design-system/runtime-theme.css",
+    "design_ontology_harness/adapters/base.py",
+    "design_ontology_harness/semantic_color_markdown.py",
+    "design_ontology_harness/token_emitter.py",
+    "tests/test_runtime_color_authority.py",
+    "tests/test_style_fingerprint.py",
+    "agent-team/handoffs/world-cup-hub-tokens-token-curator-to-team-lead.json"
+  ],
+  "decisions": [
+    "The typed runtime policy embedded in docs/color-reference.md is the sole authority for complete light and dark semantic role coordinates and contrast requirements.",
+    "Selected project palette coordinates remain byte-exact under generated --ds-color-brand-* roles; semantic runtime roles may move toward the declared ink role only as far as needed to meet the WCAG floor.",
+    "The emitter records the runtime policy schema and checksum and emits complete :root and html[data-theme=dark] semantic role sets.",
+    "runtime-theme.css may define product morphology aliases only through generated semantic roles. Raw HEX is limited to --identity-team-* and --identity-flag-* with explicit provenance, redundant text cues, and a ban on status meaning.",
+    "Generated projects/world-cup-hub/design-system/tokens.css was deliberately left untouched for the Ontology Compiler stage."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run design-ontology sync-semantic-colors --source ../semantic-os/domains/color/ontology/build/graph.json --color-reference-output docs/color-reference.md --ontology-output design_ontology_harness/resources/semantic_color_ontology.json --check --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "changed=false; 358 nodes, 1227 edges, 290 keywords, 113 HEX keywords; runtime policy valid at sha256 e9d0203534ef57e0097dd28a776f5370ff592cd64274262a98730761a808a27c."
+    },
+    {
+      "command": "uv run pytest tests/test_runtime_color_authority.py tests/test_semantic_color_markdown.py tests/test_semantic_color_ontology.py tests/test_semantic_color_upgrade.py tests/test_style_fingerprint.py tests/test_adapter_raw_css.py tests/test_adapter_nextjs_shadcn.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "99 tests passed, including checksum validation, identity-namespace enforcement, complete light/dark role emission, and contrast-floor regression coverage."
+    },
+    {
+      "command": "temporary emit_project_tokens contrast audit for projects/world-cup-hub",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "All declared chromatic/background pairs passed 4.5:1. Minimum light ratio was warning/surface 4.557; minimum dark ratio was danger/ink-inverse 4.522. Neutral ink pairs also passed in both modes."
+    },
+    {
+      "command": "uv run design-ontology lint-implementation --target-repo projects/world-cup-hub --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "app.js, index.html, and styles.css passed with no implementation token-binding issues."
+    },
+    {
+      "command": "uv run pytest -q --disable-warnings",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "492 tests passed, 2 subtests passed, with 11 warnings in 32.36 seconds."
+    },
+    {
+      "command": "uv run ruff check design_ontology_harness/adapters/base.py design_ontology_harness/semantic_color_markdown.py design_ontology_harness/token_emitter.py tests/test_runtime_color_authority.py tests/test_style_fingerprint.py && git diff --check",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Ruff reported no issues and git found no whitespace errors."
+    },
+    {
+      "command": "uv run pytest tests/test_agent_team.py tests/test_agent_packs.py -q && uv run design-ontology validate-agent-team --target-repo . --artifact-dir agent-team --targets codex,claude --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "23 tests and 2 subtests passed; the shared nine-role Codex/Claude team contract and latest artifact hashes validated with no errors."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "The checked-in generated tokens.css still reflects the pre-curation compiler output by design; light/dark policy changes will not reach the visible application until Ontology Compiler regenerates it.",
+    "Identity exception values are approximate demo fixtures preserved from the previous runtime theme and still require official flag-spec or licensed crest review before they can be treated as authoritative national identity assets."
+  ],
+  "next_action": "Team Lead waits for the parallel Component Contract Author handoff, then dispatches Ontology Compiler to rerun project synthesis and emit-tokens before strict component, implementation, and production verification gates."
+}

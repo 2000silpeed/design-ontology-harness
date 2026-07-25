@@ -784,6 +784,27 @@ KEYWORD_PRINCIPLES = {
 
 def load_brand_profile(path: Path) -> dict:
     profile = json.loads(path.read_text(encoding="utf-8"))
+    component_decision_path = profile.get("component_decision_path")
+    if component_decision_path:
+        if profile.get("component_decision"):
+            raise ValueError(
+                "brand_profile must use either component_decision or "
+                "component_decision_path, not both"
+            )
+        project_root = path.parent.resolve()
+        decision_path = (project_root / str(component_decision_path)).resolve()
+        if not decision_path.is_relative_to(project_root):
+            raise ValueError("component_decision_path must stay inside the project directory")
+        if decision_path.suffix.lower() != ".json":
+            raise ValueError("component_decision_path must point to a JSON file")
+        decision_document = json.loads(decision_path.read_text(encoding="utf-8"))
+        if not isinstance(decision_document, dict):
+            raise ValueError("component decision document must be a JSON object")
+        decision = decision_document.get("component_decision", decision_document)
+        if not isinstance(decision, dict):
+            raise ValueError("component decision document must contain an object")
+        profile["component_decision"] = decision
+        profile["_component_decision_source"] = decision_path.relative_to(project_root).as_posix()
     reference_config = profile.get("color_reference")
     if reference_config:
         resolved_reference, issues = resolve_color_reference(reference_config, path.parent, profile)
@@ -810,9 +831,15 @@ def load_brand_profile(path: Path) -> dict:
             resolved_visual_reference if resolved_visual_reference else {},
         )
 
-    generated_visual_asset_manifests = discover_generated_visual_asset_manifests(path.parent)
+    generated_visual_asset_manifest_issues: list[str] = []
+    generated_visual_asset_manifests = discover_generated_visual_asset_manifests(
+        path.parent,
+        issues=generated_visual_asset_manifest_issues,
+    )
     if generated_visual_asset_manifests:
         profile["_generated_visual_asset_manifests"] = generated_visual_asset_manifests
+    if generated_visual_asset_manifest_issues:
+        profile["_generated_visual_asset_manifest_issues"] = generated_visual_asset_manifest_issues
 
     identity_assets = discover_brand_identity_assets(path.parent, profile)
     if identity_assets:
@@ -869,8 +896,14 @@ def discover_brand_identity_assets(project_dir: Path, profile: dict | None = Non
     return assets
 
 
-def discover_generated_visual_asset_manifests(project_dir: Path) -> list[dict]:
+def discover_generated_visual_asset_manifests(
+    project_dir: Path,
+    *,
+    issues: list[str] | None = None,
+) -> list[dict]:
     """Load project-local generated or sourced visual asset manifests for ontology promotion."""
+    from .visual_asset_registry import validate_visual_asset_manifest
+
     manifests: list[dict] = []
     seen_paths: set[Path] = set()
 
@@ -881,12 +914,27 @@ def discover_generated_visual_asset_manifests(project_dir: Path) -> list[dict]:
         seen_paths.add(manifest_path)
         try:
             raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as exc:
+            if issues is not None:
+                issues.append(f"{relative_path}: invalid JSON: {exc}")
             continue
         if not isinstance(raw_manifest, dict):
+            if issues is not None:
+                issues.append(f"{relative_path}: manifest root must be an object")
             continue
-        assets = raw_manifest.get("assets")
-        if not isinstance(assets, list) or not assets:
+        validation = validate_visual_asset_manifest(manifest_path, project_dir=project_dir)
+        if not validation["ok"]:
+            if issues is not None:
+                issues.extend(f"{relative_path}: {error}" for error in validation["errors"])
+            continue
+        assets = [
+            asset
+            for asset in raw_manifest.get("assets", [])
+            if isinstance(asset, dict)
+            and asset.get("status") == "integrated"
+            and asset.get("asset_path")
+        ]
+        if not assets:
             continue
 
         manifests.append({
@@ -897,7 +945,7 @@ def discover_generated_visual_asset_manifests(project_dir: Path) -> list[dict]:
             "brand": raw_manifest.get("brand"),
             "generator": raw_manifest.get("generator") or {},
             "source_session": raw_manifest.get("source_session") or {},
-            "assets": [asset for asset in assets if isinstance(asset, dict)],
+            "assets": assets,
         })
 
     return manifests

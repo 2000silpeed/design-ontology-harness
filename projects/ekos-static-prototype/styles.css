@@ -18,12 +18,15 @@ html {
 }
 
 body {
+  /* 한글 줄바꿈 계약(DS106). 없으면 한글이 어절 중간에서 잘린다. */
+  word-break: var(--ds-wrap-word-break);
+  overflow-wrap: var(--ds-wrap-overflow);
   min-height: 100%;
   margin: 0;
   background: var(--ds-color-canvas);
   color: var(--ds-color-ink);
   font-family: var(--ds-font-body, "Pretendard", "Inter", system-ui, sans-serif);
-  line-height: 1.5;
+  line-height: var(--ds-leading-body);
 }
 
 button,
@@ -601,7 +604,7 @@ textarea {
 .status-summary-card strong {
   color: var(--ds-color-ink);
   font-size: 17px;
-  line-height: 1.35;
+  line-height: var(--ds-leading-body);
 }
 
 .status-summary-card.wide {

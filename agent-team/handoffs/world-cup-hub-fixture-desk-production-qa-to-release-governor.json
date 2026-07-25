@@ -1,0 +1,59 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "fixture-desk-release-audit-2026-07-14-001",
+  "created_at": "2026-07-13T21:06:22Z",
+  "project": "world-cup-hub",
+  "from_role": "production-qa",
+  "to_role": "release-governor",
+  "stage": "release",
+  "status": "ready",
+  "summary": "Fixture Desk source remains frozen at runtime tree d36cdadee63719b6ab54c3da02e4cf1bfa0ffefe1fb4e83de19b0357067fb839. A fresh Codex in-app Browser session binds the four current light/dark desktop/mobile screenshots, seven raw browser observations, and all 19 component-runtime records. The complete production verifier passed once; request an independent read-only release audit before making any readiness claim.",
+  "input_artifacts": [
+    {
+      "path": "projects/world-cup-hub/build/system/production/fixture-desk/screenshots.json",
+      "sha256": "6694bc8a2c596bbeaada6f457ae6f4bd0dfeabb99d2b86a630872df3a2680c97"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/production/component-runtime-manifest.json",
+      "sha256": "5290dbf97319d9b858eda1e36ba6628bd9ff1ab60fbe662868ceb001c0b9aed2"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/build/system/production/fixture-desk/browser-evidence-bundle.json",
+      "sha256": "44c00e1ed046e293253f620e5c241403456f0c297ba2bfad62db3933b8a45c6d"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/production/fixture-desk/aesthetic/latest_loop_report.json",
+      "sha256": "cf29c03306a7106d8b2d146e44b50af0e39b743a6ad4e3d882f338c3d0a7e6e4"
+    }
+  ],
+  "changed_paths": [
+    "projects/world-cup-hub/fixture-desk/build/system/production/runtime/interaction.json",
+    "projects/world-cup-hub/fixture-desk/build/system/production/runtime/overflow.json",
+    "projects/world-cup-hub/fixture-desk/build/system/production/runtime/accessibility.json",
+    "projects/world-cup-hub/fixture-desk/build/system/production/reviews/multimodal-review.json",
+    "projects/world-cup-hub/build/system/production/fixture-desk/browser-evidence-bundle.json",
+    "projects/world-cup-hub/build/system/production/fixture-desk/browser-observations/",
+    "projects/world-cup-hub/build/system/production/fixture-desk/aesthetic/"
+  ],
+  "decisions": [
+    "Semantic OS remains the sole color authority; no browser evidence introduces raw palette values.",
+    "The legacy World Cup Hub implementation and evidence remain outside this release target.",
+    "The browser evidence session records genuine IAB interactions for the date filter, prediction selection, moderation consent, theme control, responsive overflow, and focus semantics."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run design-ontology verify-production-ui --project-dir projects/world-cup-hub --target-repo projects/world-cup-hub/fixture-desk --screenshot-manifest projects/world-cup-hub/build/system/production/fixture-desk/screenshots.json --aesthetic-report projects/world-cup-hub/build/system/production/fixture-desk/aesthetic/latest_loop_report.json --browser-evidence-bundle projects/world-cup-hub/build/system/production/fixture-desk/browser-evidence-bundle.json --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "All seven production gates passed: contracts, runtime conformance, implementation lint, screenshot evidence, browser evidence, aesthetic review, and style divergence."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "The worktree is intentionally dirty, so readiness must remain bound to the recorded runtime content tree rather than Git HEAD alone.",
+    "Any change to Fixture Desk source invalidates its screenshots, runtime checks, browser bundle, and release decision."
+  ],
+  "next_action": "Release Governor independently reruns the complete production verifier in read-only mode and records a release decision without altering source or evidence."
+}

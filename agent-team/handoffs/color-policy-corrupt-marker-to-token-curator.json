@@ -1,0 +1,57 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "semantic-color-authority-improvement-2026-07-13-001",
+  "created_at": "2026-07-13T23:11:54+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "team-lead",
+  "to_role": "token-curator",
+  "stage": "tokens-and-components",
+  "status": "needs-work",
+  "summary": "Close the custom-reference fail-open path where a present runtime-policy marker with a malformed checksum token is mistaken for an absent policy and silently inherits the package default.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/semantic-color-token-curator-to-team-lead.json",
+      "sha256": "d29bb0309997f95e84170e1429f878539da9f8ffdeb72b92ba490dc90e8212e7"
+    },
+    {
+      "path": "design_ontology_harness/semantic_color_markdown.py",
+      "sha256": "a26986d3feba6db513a4b18433bc5180c817aee0bea40f30941257f545504a68"
+    },
+    {
+      "path": "tests/test_semantic_color_markdown.py",
+      "sha256": "09e49aa7890591a236921d734ed90890dc59bb52b318e17c2f5dfbb7b552ac78"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "design_ontology_harness/semantic_color_markdown.py",
+      "sha256": "a26986d3feba6db513a4b18433bc5180c817aee0bea40f30941257f545504a68"
+    },
+    {
+      "path": "tests/test_semantic_color_markdown.py",
+      "sha256": "09e49aa7890591a236921d734ed90890dc59bb52b318e17c2f5dfbb7b552ac78"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/color-policy-corrupt-marker-to-token-curator.json"
+  ],
+  "decisions": [
+    "Detect policy-block presence by its namespace marker, independently of whether the checksum token satisfies the strict parser regex.",
+    "Permit package-default inheritance only when no runtime-policy namespace marker is present at all.",
+    "Keep exact checksum and payload parsing in extract_runtime_color_policy as the authority for present blocks."
+  ],
+  "gate_results": [
+    {
+      "command": "independent malformed-marker custom reference audit",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "Replacing the first checksum character f with non-hex g made RUNTIME_POLICY_BEGIN_RE miss the present block, and load_runtime_color_policy(custom) silently returned inheritance.mode=package-default instead of raising."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "A broad substring check must not treat unrelated prose as a policy block; use the exact runtime-policy namespace marker prefix.",
+    "Default documents and truly policy-free custom card references must retain their current behavior."
+  ],
+  "next_action": "Token Curator fixes marker-presence detection, adds malformed checksum token tests for custom references, reruns color/full gates, and publishes a new completion handoff."
+}

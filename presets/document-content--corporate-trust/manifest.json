@@ -1,0 +1,37 @@
+{
+  "id": "document-content--corporate-trust",
+  "schema_version": "1.0.0",
+  "preset_api_version": "1.0.0",
+  "generated_by_harness_version": "0.2.0",
+  "preview_version": "1.0.0",
+  "adapter_compatibility": {
+    "nextjs-tailwind-shadcn": ">=0.1.0 <1.0.0",
+    "raw-css-variables": ">=0.1.0 <1.0.0",
+    "vite-tailwind": ">=0.1.0 <1.0.0"
+  },
+  "source_project": "ekos-knowledge-intake",
+  "content_hash": "sha256:d7e150d80b6a939b300571684fa9b44e17570e6533c9481ef0208facb8b504d9",
+  "app_mode": "document-content",
+  "brand_tone": "corporate-trust",
+  "color_modes": [
+    "light",
+    "dark"
+  ],
+  "default_color_mode": "light",
+  "tags": [
+    "knowledge-intake",
+    "review",
+    "evidence",
+    "ko",
+    "ekos",
+    "archive"
+  ],
+  "locale_pairings": {},
+  "owner": "2000silpeed",
+  "tier": "P3",
+  "generated_at": "2026-07-14T13:40:38Z",
+  "component_contract_version": "component-contract/v1",
+  "component_contract_count": 24,
+  "component_contract_needs_authoring": 0,
+  "description": "EKOS Knowledge Intake — 온톨로지 어휘를 번역한 업무 문장 중심의 지식 등록·검토 워크벤치 (Prussian/Ocean/Cornsilk 아카이브 톤)"
+}

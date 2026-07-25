@@ -1,0 +1,59 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-production-ui-improvement-2026-07-13-001",
+  "created_at": "2026-07-13T23:50:47+09:00",
+  "project": "world-cup-hub",
+  "from_role": "team-lead",
+  "to_role": "component-author",
+  "stage": "tokens-and-components",
+  "status": "needs-work",
+  "summary": "The 19 authored component contracts are structurally detailed but omit authored token bindings, allowing the compiler to inject repeated family defaults and hiding whether the 28 scoped product primitives are implemented or intentionally waived. Make component styling and scope reconciliation explicit for the fixture-led command desk concept.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/world-cup-hub-concept-brief-author-to-team-lead.json",
+      "sha256": "6d93adbafd2ff84ca3c54491fdba3e8c8ed2655d075aaacdf50c807d778c8a2d"
+    },
+    {
+      "path": "projects/world-cup-hub/brand_profile.json",
+      "sha256": "c6603c493ff0e09d8d2382cbc813887e1071e955f116f27dc894a9af9aaf09f6"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/components/component_specs.json",
+      "sha256": "0aee1079892688076faabaf2afd43c37e5988641f8e09b37970f028774f4c0cb"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/design-system/component-contracts.json",
+      "sha256": "4a39b2f4da3c6d32406453688e704a9fb091e09033fc93abf9f6cb774a4ce8f4"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/world-cup-hub-components-team-lead-to-component-author.json"
+  ],
+  "decisions": [
+    "Every authored component owns a product-specific token map; compiler family defaults are fallback compatibility, not authored completion evidence.",
+    "Reconcile every product primitive to a component, anatomy part, or explicit rejection/waiver so scope coverage is machine-verifiable.",
+    "Tailor navigation, schedule, synchronized match rail, prediction, results, moderation, and provenance contracts to the fixture-led concept instead of multiplying generic cards."
+  ],
+  "gate_results": [
+    {
+      "command": "jq -e 'all(.component_decision.core_components[]; has(\"tokens\") and (.tokens | type == \"object\") and (.tokens | length > 0))' projects/world-cup-hub/design-system/component-contracts.json",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "All 19 authored components currently omit tokens; the stale generated specs pass only because generic family templates are injected later."
+    },
+    {
+      "command": "uv run design-ontology validate-component-contracts --input projects/world-cup-hub/build/system/components/component_specs.json --strict",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "The generated artifact reports 19 valid components and 81 token declarations, demonstrating that current validation does not distinguish authored bindings from injected defaults."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Overloading every component with every token would be no better than generic family defaults; each binding must correspond to anatomy and state behavior.",
+    "Product primitives may be satisfied by anatomy rather than standalone components, so reconciliation must support explicit mappings and waivers without component inflation."
+  ],
+  "next_action": "Component Author adds tailored token maps to all authored contracts, records complete primitive coverage or waivers, strengthens authored-input validation and tests where needed, and returns a ready handoff before Ontology Compiler regeneration."
+}

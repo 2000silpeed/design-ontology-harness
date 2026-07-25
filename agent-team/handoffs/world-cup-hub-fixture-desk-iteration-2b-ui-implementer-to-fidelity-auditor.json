@@ -1,0 +1,66 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-reference-fidelity-20260714-iteration-2b",
+  "created_at": "2026-07-14T22:31:34+09:00",
+  "project": "world-cup-hub",
+  "from_role": "ui-implementer",
+  "to_role": "reference-fidelity-auditor",
+  "stage": "fidelity",
+  "status": "ready",
+  "summary": "Iteration 2b keeps the asymmetric fixture workspace and selected-match rail, then closes the 641–900px overflow defect by translating filters into compact horizontal rails and containing table overflow. The final runtime tree is frozen at cf3e1b0d232bd80fc072a4c92d240f4ceeaf1cd448618fba86a9a5fc085fb1f6 for paired fidelity review.",
+  "input_artifacts": [
+    {
+      "path": "projects/world-cup-hub/build/system/production/reference-fidelity/latest_loop_report.json",
+      "sha256": "9a818aba3e1694c7d303955694fc29474084a40aae46abcde015f94938c88dfc"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/fixture-desk/index.html",
+      "sha256": "e33cd0bcec9a54aac861703e08029d2caa574d7fb65d8b688f7cc230e42f5239"
+    },
+    {
+      "path": "projects/world-cup-hub/fixture-desk/styles.css",
+      "sha256": "f82da75c4ca4dceefa3425bf7fbef73c7860ea1497a1696ce498e64aac9291d3"
+    },
+    {
+      "path": "projects/world-cup-hub/fixture-desk/app.js",
+      "sha256": "b4c7a5f259e67c99ba46e5517af4a76f5dfde7ea9ecd7aa346e48044ac027a55"
+    }
+  ],
+  "changed_paths": [
+    "projects/world-cup-hub/fixture-desk/styles.css"
+  ],
+  "decisions": [
+    "The 641–900px schedule flow now stacks filters above the table instead of forcing a 168px plus 640px page-width combination.",
+    "Horizontal scrolling is confined to compact filter rails and the table wrapper, with no page-level overflow.",
+    "The 360px heading rule no longer enlarges the operational title.",
+    "Semantic OS tokens and the shared selection state across schedule, rail, prediction, and opinion remain authoritative."
+  ],
+  "gate_results": [
+    {
+      "command": "node --check projects/world-cup-hub/fixture-desk/app.js",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "JavaScript syntax validation completed without output or errors after the responsive correction."
+    },
+    {
+      "command": "uv run design-ontology lint-implementation --target-repo projects/world-cup-hub/fixture-desk --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Implementation lint inspected the runtime sources with zero issues."
+    },
+    {
+      "command": "uv run design-ontology check-style-divergence --project-dir projects/world-cup-hub/fixture-desk",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Style divergence verdict remained OK with closest registered-project similarity 0.41."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "The previous iteration-2 handoff and all earlier screenshot, browser, aesthetic, component-runtime, and fidelity evidence are stale against runtime tree cf3e1b0d232bd80fc072a4c92d240f4ceeaf1cd448618fba86a9a5fc085fb1f6.",
+    "Only screenshot evidence registered in build/system/production/fixture-desk-iteration-2/screenshots.json may be used for the iteration-2b fidelity decision."
+  ],
+  "next_action": "Reference Fidelity Auditor compares the approved Fixture Compass direction with the four current light/dark desktop/mobile screenshots and appends a schema-valid iteration-2 review."
+}

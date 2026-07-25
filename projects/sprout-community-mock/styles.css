@@ -604,7 +604,7 @@ svg {
   color: var(--color-muted);
   font-size: 0.82rem;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.6;
 }
 
 .composer-head p.success {
@@ -751,7 +751,7 @@ svg {
   color: var(--color-muted);
   font-size: 0.88rem;
   font-weight: 700;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .comment-preview strong {
@@ -846,7 +846,7 @@ svg {
   color: var(--color-muted);
   font-size: 0.86rem;
   font-weight: 750;
-  line-height: 1.45;
+  line-height: 1.6;
 }
 
 .promise-list svg {
@@ -920,7 +920,7 @@ svg {
 .art-card p {
   color: var(--color-muted);
   font-weight: 700;
-  line-height: 1.58;
+  line-height: 1.6;
   word-break: keep-all;
 }
 

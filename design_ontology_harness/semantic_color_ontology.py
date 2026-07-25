@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import json
 import re
-from functools import lru_cache
-from importlib.resources import files
+from pathlib import Path
 from typing import Any
+
+from .semantic_color_markdown import load_ontology_from_color_reference
 
 
 TEXT_TOKEN_RE = re.compile(r"[A-Za-z가-힣0-9]+")
@@ -41,12 +41,11 @@ DEFAULT_PATTERN_IDS = [
 ]
 
 
-@lru_cache(maxsize=1)
-def load_semantic_color_ontology() -> dict[str, Any]:
-    """Load the compact color ontology imported from semantic-os."""
+def load_semantic_color_ontology(reference_path: Path | None = None) -> dict[str, Any]:
+    """Load the Semantic OS ontology from the synchronized Markdown authority."""
 
-    path = files("design_ontology_harness").joinpath("resources/semantic_color_ontology.json")
-    return json.loads(path.read_text(encoding="utf-8"))
+    ontology, _ = load_ontology_from_color_reference(reference_path)
+    return ontology
 
 
 def build_semantic_color_context(
@@ -55,8 +54,10 @@ def build_semantic_color_context(
     active_palette: dict,
     brand_profile: dict,
     strategy: dict | None = None,
+    ontology: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    ontology = load_semantic_color_ontology()
+    if ontology is None:
+        ontology = load_semantic_color_ontology()
     nodes = ontology.get("nodes", [])
     node_by_id = {node["id"]: node for node in nodes}
     keyword_nodes = [node for node in nodes if node.get("type") == "ColorKeyword"]
@@ -115,10 +116,14 @@ def build_semantic_color_context(
 
 
 def _match_active_palette_keywords(keyword_nodes: list[dict], active_palette: dict) -> list[dict[str, Any]]:
-    by_name = {
-        _normalize_key(node.get("properties", {}).get("label", "")): node
-        for node in keyword_nodes
-    }
+    by_name: dict[str, dict] = {}
+    for node in keyword_nodes:
+        props = node.get("properties", {})
+        label = props.get("label", "")
+        if label:
+            by_name[_normalize_key(label)] = node
+        for alias in props.get("aliases", []) or []:
+            by_name.setdefault(_normalize_key(alias), node)
     by_hex = {
         str(node.get("properties", {}).get("rgb_hex", "")).upper(): node
         for node in keyword_nodes
@@ -242,7 +247,7 @@ def _compact_keyword_node(
         "category": props.get("category"),
         "mood_tags": props.get("mood_tags", []),
         "tone_axes": props.get("tone_axes", []),
-        "summary": props.get("summary"),
+        "summary": props.get("curated_usage") or props.get("summary"),
         "source_pages": {
             "swatch": props.get("swatch_page_pdf"),
             "reading": props.get("reference_reading_page_pdf"),

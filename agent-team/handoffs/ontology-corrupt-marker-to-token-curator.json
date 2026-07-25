@@ -1,0 +1,57 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "semantic-color-authority-improvement-2026-07-13-001",
+  "created_at": "2026-07-13T23:16:05+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "team-lead",
+  "to_role": "token-curator",
+  "stage": "tokens-and-components",
+  "status": "needs-work",
+  "summary": "Close the equivalent fail-open path for a present Semantic OS ontology block whose begin checksum token is malformed and currently gets mistaken for an absent graph.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/semantic-color-corrupt-marker-token-curator-to-team-lead.json",
+      "sha256": "8dcfdfa72e75772104df54c794a60ec3d756a8d06bb96616e43f7f3c718ceb8a"
+    },
+    {
+      "path": "design_ontology_harness/semantic_color_markdown.py",
+      "sha256": "4ffc856a49fa8bfdf5841ee9939b116d430ed76734aaecea7fd87ba4373607c3"
+    },
+    {
+      "path": "tests/test_semantic_color_markdown.py",
+      "sha256": "979599f6d3f522849a0848573635c07def318a25a5c350bca2af833ee011c7c9"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "design_ontology_harness/semantic_color_markdown.py",
+      "sha256": "4ffc856a49fa8bfdf5841ee9939b116d430ed76734aaecea7fd87ba4373607c3"
+    },
+    {
+      "path": "tests/test_semantic_color_markdown.py",
+      "sha256": "979599f6d3f522849a0848573635c07def318a25a5c350bca2af833ee011c7c9"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/ontology-corrupt-marker-to-token-curator.json"
+  ],
+  "decisions": [
+    "Apply namespace-presence fail-closed detection to the embedded Semantic OS ontology block, not only the runtime policy block.",
+    "Allow a truly ontology-free custom card document to keep its existing local-card fallback.",
+    "Validate partial begin/end/typed-fence sentinels and malformed checksum tokens before returning ontology=None."
+  ],
+  "gate_results": [
+    {
+      "command": "independent malformed embedded-ontology marker audit",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "A non-hex first checksum character made BEGIN_RE miss the present Semantic OS block; parse_color_reference_text returned semantic_ontology=None and the default loader silently rebuilt an 88-node/174-edge local graph from visible cards."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Custom card-only documents without an embedded graph are supported and must not be rejected when no ontology namespace sentinel exists.",
+    "The generated COY catalog is derived evidence; malformed catalog markers should at minimum be detected by sync, and may share the namespace guard if this can be added without changing the 87-card parser contract."
+  ],
+  "next_action": "Token Curator adds ontology namespace guards and regression tests, assesses the generated catalog marker for the same class, reruns all gates, and publishes a new superseding completion handoff."
+}

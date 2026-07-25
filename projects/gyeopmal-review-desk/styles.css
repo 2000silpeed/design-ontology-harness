@@ -1,0 +1,586 @@
+/* Gyeopmal Review Desk — docs/UI_BASE_RULES.md의 DS100~DS107 참조 구현.
+   색·서체·라운딩·간격 값은 design-system/tokens.css의 var(--ds-*)만 소비한다. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--ds-color-canvas);
+  color: var(--ds-color-ink);
+  font-family: var(--ds-font-body);
+  font-size: var(--ds-text-md);
+
+  /* DS100 — 본문 행간은 토큰이 정한다. 한글 프로젝트에서 이 토큰은 1.6이다.
+     DS105 — 한글 본문 자간은 0 이하. 토큰이 0em으로 고정한다.
+     DS106 — keep-all + overflow-wrap normal이 없으면 한글이 어절 중간에서 잘린다.
+     DS107 — 읽는 텍스트는 좌측 정렬. */
+  line-height: var(--ds-leading-body);
+  letter-spacing: var(--ds-tracking-body);
+  word-break: var(--ds-wrap-word-break);
+  overflow-wrap: var(--ds-wrap-overflow);
+  text-align: left;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-height: 100vh;
+  max-inline-size: 100%;
+}
+
+/* ── 상단 바 ── */
+
+.desk-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-space-4);
+  padding: var(--ds-space-4) var(--ds-space-6);
+  border-bottom: 1px solid var(--ds-color-border);
+  background: var(--ds-color-surface);
+}
+
+.brandmark {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  min-inline-size: 0;
+  margin-inline-end: auto;
+  color: var(--ds-color-ink);
+  text-decoration: none;
+}
+
+.brandmark-icon {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+}
+
+.brandmark-text {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.brandmark-name {
+  font-size: var(--ds-text-lg);
+  font-weight: 700;
+  line-height: var(--ds-leading-tight);
+}
+
+.brandmark-batch {
+  color: var(--ds-color-ink-muted);
+  font-size: var(--ds-text-xs);
+}
+
+/* DS102 — 컨트롤 경계는 자기 채움색 대비 3:1을 넘어야 한다.
+   런타임 색 정책의 비텍스트 하한이 --ds-color-border-strong을 3:1 위로 유지하므로
+   폼 필드와 버튼 경계는 이 역할에 묶는다. --ds-color-border(1.37:1)는 장식용
+   구분선 전용이다. 컨트롤 경계에 쓰면 식별 단서가 되지 못한다. */
+.segment-search,
+.translator-filter,
+.status-picker,
+.theme-toggle,
+.note-editor,
+.action-secondary {
+  border: 1px solid var(--ds-color-border-strong);
+  border-radius: var(--ds-radius-sm);
+  background: var(--ds-color-surface);
+  color: var(--ds-color-ink);
+}
+
+.segment-search {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  flex: 1 1 220px;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  padding-inline: var(--ds-space-4);
+  block-size: 40px;
+}
+
+.control-icon {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  color: var(--ds-color-ink-muted);
+}
+
+.segment-search-input {
+  min-inline-size: 0;
+  flex: 1 1 auto;
+  border: 0;
+  background: transparent;
+  color: var(--ds-color-ink);
+  font-family: inherit;
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-tight);
+}
+
+.segment-search-input::placeholder {
+  color: var(--ds-color-ink-muted);
+}
+
+.translator-filter,
+.status-picker {
+  display: flex;
+  align-items: center;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  padding-inline: var(--ds-space-3);
+  block-size: 40px;
+}
+
+.translator-select,
+.status-select {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--ds-color-ink);
+  font-family: inherit;
+  font-size: var(--ds-text-sm);
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  block-size: 40px;
+  padding-inline: var(--ds-space-4);
+  font-family: inherit;
+  font-size: var(--ds-text-sm);
+  cursor: pointer;
+}
+
+/* ── 배치 진행 레일 ── */
+
+.batch-rail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--ds-space-6);
+  padding: var(--ds-space-5) var(--ds-space-6);
+  border-bottom: 1px solid var(--ds-color-border);
+  background: var(--ds-color-surface);
+}
+
+.batch-rail-head {
+  flex: 1 1 240px;
+  min-inline-size: 0;
+}
+
+.batch-rail-title {
+  margin: 0;
+
+  /* DS093 — 화면에 display 층위가 하나는 있어야 한다.
+     DS100의 대상이 아니므로 헤딩은 tight 행간을 쓴다. */
+  font-size: var(--ds-text-2xl);
+  font-weight: 700;
+  line-height: var(--ds-leading-tight);
+}
+
+.batch-rail-count {
+  margin: var(--ds-space-2) 0 0;
+  color: var(--ds-color-ink-muted);
+  font-size: var(--ds-text-sm);
+}
+
+.batch-progress-visual {
+  flex: 1 1 320px;
+  min-inline-size: 0;
+  margin: 0;
+}
+
+/* SVG 안의 텍스트는 뷰박스와 함께 확대된다. 폭을 묶지 않으면 차트 라벨이
+   본문보다 커져서 위계가 뒤집힌다. 뷰박스 대비 1.2배 안쪽으로 제한한다. */
+.batch-progress-chart,
+.glossary-chart {
+  display: block;
+  inline-size: 100%;
+  height: auto;
+}
+
+.batch-progress-chart {
+  max-inline-size: 560px;
+}
+
+.glossary-chart {
+  max-inline-size: 360px;
+}
+
+.chart-label {
+  fill: var(--ds-color-ink);
+  font-family: var(--ds-font-body);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.chart-axis {
+  fill: var(--ds-color-ink-muted);
+  font-family: var(--ds-font-mono);
+  font-size: 9px;
+}
+
+.batch-progress-caption,
+.glossary-caption {
+  margin: var(--ds-space-3) 0 0;
+  color: var(--ds-color-ink-muted);
+  font-size: var(--ds-text-sm);
+}
+
+/* ── 본문 2단 ── */
+
+.desk-body {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 5fr);
+  gap: 1px;
+  background: var(--ds-color-border);
+  min-inline-size: 0;
+}
+
+/* ── 구간 원장 ── */
+
+.segment-ledger {
+  min-inline-size: 0;
+  padding: var(--ds-space-5) var(--ds-space-6);
+  background: var(--ds-color-surface);
+}
+
+.ledger-title {
+  margin: 0;
+  font-size: var(--ds-text-lg);
+  font-weight: 700;
+  line-height: var(--ds-leading-tight);
+}
+
+.ledger-hint {
+  margin: var(--ds-space-2) 0 var(--ds-space-5);
+  color: var(--ds-color-ink-muted);
+  font-size: var(--ds-text-sm);
+}
+
+.ledger-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 행/표 계열은 radius 0을 쓴다. 라운딩은 컨트롤과 읽기 판에만 준다. */
+.ledger-row {
+  border-top: 1px solid var(--ds-color-border);
+  border-radius: var(--ds-radius-none);
+}
+
+.ledger-row:last-child {
+  border-bottom: 1px solid var(--ds-color-border);
+}
+
+.ledger-row-button {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--ds-space-2) var(--ds-space-4);
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  padding: var(--ds-space-4) var(--ds-space-2);
+  border: 0;
+  border-radius: var(--ds-radius-none);
+  background: transparent;
+  color: var(--ds-color-ink);
+  font-family: inherit;
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-body);
+  text-align: left;
+  cursor: pointer;
+}
+
+.ledger-row[data-state="reviewing"] .ledger-row-button {
+  background: var(--ds-color-surface-muted);
+}
+
+.segment-id {
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-xs);
+}
+
+.segment-preview {
+  grid-column: 1 / -1;
+  min-inline-size: 0;
+  color: var(--ds-color-ink);
+}
+
+.segment-meta {
+  grid-column: 1 / -1;
+  color: var(--ds-color-ink-muted);
+  font-size: var(--ds-text-xs);
+}
+
+/* DS103 — 상태는 색만으로 구분하지 않는다. 두 겹으로 보장한다.
+   1) 점 옆에 항상 글자 라벨이 붙는다.
+   2) 점 자체도 채움·테두리·모양이 상태별로 다르다. 흑백 인쇄에서도 구분된다. */
+.segment-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  white-space: nowrap;
+  color: var(--ds-color-ink);
+  font-size: var(--ds-text-xs);
+  font-weight: 700;
+}
+
+.status-dot {
+  inline-size: 9px;
+  block-size: 9px;
+  border-radius: var(--ds-radius-pill);
+}
+
+.status-dot[data-status="pass"] {
+  background: var(--ds-color-success);
+}
+
+.status-dot[data-status="revise"] {
+  border: 2px solid var(--ds-color-warning);
+  background: transparent;
+}
+
+.status-dot[data-status="rework"] {
+  border-radius: var(--ds-radius-none);
+  background: var(--ds-color-danger);
+  transform: rotate(45deg);
+}
+
+.status-dot[data-status="pending"] {
+  border: 2px dotted var(--ds-color-ink-muted);
+  background: transparent;
+}
+
+/* ── 대조 읽기 판 ── */
+
+.reading-pane {
+  min-inline-size: 0;
+  padding: var(--ds-space-5) var(--ds-space-6);
+  background: var(--ds-color-surface);
+}
+
+.reading-pane-head {
+  padding-bottom: var(--ds-space-4);
+  border-bottom: 1px solid var(--ds-color-border);
+}
+
+/* DS105 예외 — uppercase는 한글에 아무 효과가 없는 선언이므로,
+   그것이 붙어 있다는 것 자체가 라틴 전용 슬롯이라는 뜻이다.
+   그 자리에서는 넓은 자간이 라틴 조판 관례로 유효하다. */
+.pane-eyebrow {
+  margin: 0;
+  color: var(--ds-color-ink-muted);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.reading-pane-title {
+  margin: var(--ds-space-2) 0 0;
+  font-size: var(--ds-text-2xl);
+  font-weight: 700;
+  line-height: var(--ds-leading-tight);
+}
+
+.reading-pane-meta {
+  margin: var(--ds-space-2) 0 0;
+  color: var(--ds-color-ink-muted);
+  font-size: var(--ds-text-sm);
+}
+
+.bitext {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--ds-space-6);
+  padding: var(--ds-space-5) 0;
+  min-inline-size: 0;
+}
+
+.bitext-column {
+  min-inline-size: 0;
+}
+
+.bitext-label {
+  margin: 0 0 var(--ds-space-3);
+  color: var(--ds-color-ink-muted);
+  font-size: var(--ds-text-xs);
+  font-weight: 700;
+  line-height: var(--ds-leading-tight);
+}
+
+/* 원문과 번역문은 같은 행간 격자에 놓인다. 두 언어의 조판이 어긋나면
+   대조 자체가 불가능해진다. 라틴 원문도 한글과 같은 leading-body를 쓴다. */
+.source-text,
+.target-text {
+  margin: 0;
+  color: var(--ds-color-ink);
+  background: var(--ds-color-surface);
+  font-size: var(--ds-text-md);
+  line-height: var(--ds-leading-body);
+  text-align: left;
+}
+
+.source-text {
+  /* 라틴 본문은 자간을 건드리지 않는다. */
+  letter-spacing: normal;
+  word-break: normal;
+}
+
+.target-text {
+  letter-spacing: var(--ds-tracking-body);
+  word-break: var(--ds-wrap-word-break);
+  overflow-wrap: var(--ds-wrap-overflow);
+}
+
+/* ── 용어집 대조 ── */
+
+.glossary-check {
+  padding: var(--ds-space-5) 0;
+  border-top: 1px solid var(--ds-color-border);
+}
+
+.glossary-title,
+.reviewer-note-title {
+  margin: 0 0 var(--ds-space-4);
+  font-size: var(--ds-text-sm);
+  font-weight: 700;
+  line-height: var(--ds-leading-tight);
+}
+
+.glossary-figure {
+  margin: 0;
+  min-inline-size: 0;
+}
+
+/* ── 검수 의견 ── */
+
+.reviewer-note {
+  padding-top: var(--ds-space-5);
+  border-top: 1px solid var(--ds-color-border);
+}
+
+.reviewer-note-body {
+  margin: 0 0 var(--ds-space-5);
+  padding: var(--ds-space-4);
+  border-radius: var(--ds-radius-md);
+  color: var(--ds-color-ink);
+  background: var(--ds-color-surface-muted);
+  font-size: var(--ds-text-md);
+  line-height: var(--ds-leading-body);
+  letter-spacing: var(--ds-tracking-body);
+  word-break: var(--ds-wrap-word-break);
+  overflow-wrap: var(--ds-wrap-overflow);
+  text-align: left;
+}
+
+.note-editor-label {
+  display: block;
+  margin-bottom: var(--ds-space-2);
+  color: var(--ds-color-ink-muted);
+  font-size: var(--ds-text-xs);
+  font-weight: 700;
+}
+
+.note-editor {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  padding: var(--ds-space-4);
+  font-family: inherit;
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-body);
+  letter-spacing: var(--ds-tracking-body);
+  word-break: var(--ds-wrap-word-break);
+  overflow-wrap: var(--ds-wrap-overflow);
+  resize: vertical;
+}
+
+.note-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-space-3);
+  margin-top: var(--ds-space-4);
+}
+
+.action-primary,
+.action-secondary {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  block-size: 44px;
+  padding-inline: var(--ds-space-5);
+  border-radius: var(--ds-radius-sm);
+  font-family: inherit;
+  font-size: var(--ds-text-sm);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* 채움형 컨트롤. 테두리 토큰이 배경과 같으므로 식별 단서는 페이지 배경 대비 채움색이다. */
+.action-primary {
+  border: 1px solid var(--ds-color-primary);
+  background: var(--ds-color-primary);
+  color: var(--ds-color-ink-inverse);
+}
+
+/* ── 좁은 화면 ── */
+
+@media (max-width: 900px) {
+  .desk-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bitext {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--ds-space-5);
+  }
+}
+
+@media (max-width: 480px) {
+  .desk-topbar,
+  .batch-rail,
+  .segment-ledger,
+  .reading-pane {
+    padding-inline: var(--ds-space-4);
+  }
+
+  .note-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .action-primary,
+  .action-secondary {
+    inline-size: 100%;
+  }
+}

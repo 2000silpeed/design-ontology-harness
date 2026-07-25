@@ -85,11 +85,18 @@ uv run design-ontology init \
 }
 ```
 
-> **`palette_roles` 주의**: `primary` / `accent` / `surface_tint` 에 쓰는 이름은 반드시
-> `docs/color-reference.md` 의 `### <Color Name>` 섹션에 등록된 이름과 **정확히 일치** 해야 합니다
-> (case-insensitive). 존재하지 않는 이름을 쓰면 경고 없이 `preferred_families` 기반 유사 팔레트로
-> 폴백되어 의도치 않은 HEX 가 선택될 수 있습니다. 등록된 이름 목록은 `grep "^### " docs/color-reference.md`
-> 으로 확인하고, 새 색상을 도입하려면 해당 파일에 `### <Name>` 섹션을 추가한 PR 로 먼저 제안하세요.
+> **`palette_roles` 주의**: `primary` / `accent` / `surface_tint`의 이름은
+> `docs/color-reference.md`의 보이는 `### <Color Name>` 카드와 내장 Semantic OS
+> `ColorKeyword`를 합친 이름 공간에서 해석됩니다. 오타나 없는 이름은 해석에
+> 실패하거나 의도하지 않은 후보로 이어질 수 있습니다. 보이는 카드는
+> `grep "^### " docs/color-reference.md`로 확인하고, 임베디드 graph의 동기화 상태는
+> `uv run design-ontology sync-semantic-colors --source <graph.json> --check`로 검사하세요.
+
+> 공용 색을 추가하려면 Semantic OS graph에 `ColorKeyword`를 먼저 반영한 뒤
+> `sync-semantic-colors`를 실행합니다. 프로젝트에서만 쓰는 색은 출처와 사용
+> 범위를 기록한 Markdown-only 로컬 확장 카드로 추가할 수 있습니다. 로컬
+> 확장을 Semantic OS 유래 색으로 표시하거나 `semantic-color-ontology+json`
+> fenced block을 손으로 수정하지 마세요.
 
 > **`visual_reference.query` 주의**: scaffold 기본값은 `["editorial dashboard", "premium app UI"]`
 > 예시여서 본인 프리셋 톤과 다를 수 있습니다. 실제 브랜드의 영감 키워드로 교체하세요.
@@ -444,7 +451,7 @@ in the `app_mode × brand_tone` matrix (§4) and presets grounded in **public re
 
 ### 5-step workflow (summary)
 1. `uv run design-ontology init --project-dir projects/<your-project> --brand-name "..." --product-summary "..." --kb-dir kb/default` (pass `--kb-dir kb/default` here, or again on the Step 3 command, to avoid the `No kb_dir configured` error).
-2. Fill in `brand_profile.json` (color_reference + `palette_roles` using names from `docs/color-reference.md` + font_system + **`seeds` array with ≥3 public URLs**) + write `spec.md`. Drop a `locale_pairings.json` next to them if the preset claims Korean support. **Important**: `palette_roles.primary/accent/surface_tint` must reference named entries in `docs/color-reference.md` — unknown names silently fall back to nearest family color and can surprise you with HEX overlap.
+2. Fill in `brand_profile.json` (color_reference + `palette_roles` using names resolved by `docs/color-reference.md` + font_system + **`seeds` array with ≥3 public URLs**) + write `spec.md`. Drop a `locale_pairings.json` next to them if the preset claims Korean support. The Markdown is the sole runtime color authority: it combines the preserved visible cards with a checksum-verified embedded Semantic OS graph. Run `sync-semantic-colors --source <graph.json> --check` before submitting. Add shared colors upstream to Semantic OS and resync; keep project-only colors as clearly sourced Markdown-only local extensions, never as hand-edited graph entries.
 3. `uv run design-ontology run-project --project-dir projects/<your-project> --kb-dir kb/default` → synthesizes blueprint under `build/system/`
 4. `uv run design-ontology build-preset --project ... --preset-id <app_mode>--<brand_tone> --owner @handle --tier P3 --locale-pairings projects/<your-project>/locale_pairings.json` (skip `--locale-pairings` only if the preset is English-only). Then manually add a matching entry to `presets/matrix.json` — matcher ignores presets that are not in the matrix.
 4.5. `uv run design-ontology build-sources --preset-id <your-id> --force` → auto-generates `presets/<id>/sources.json` from `brand_profile.seeds` + `visual_reference.source_references` + markdown links in `spec.md`; dedup + domain-based `kind` inference (`design-system` / `visual-reference` / `brand-guide` / `reference-docs` / `article` fallback). Warns if seeds < 3.

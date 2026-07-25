@@ -552,6 +552,30 @@
       "tier": "P2"
     },
     {
+      "id": "document-content--corporate-trust",
+      "app_mode": "document-content",
+      "brand_tone": "corporate-trust",
+      "color_modes": [
+        "light",
+        "dark"
+      ],
+      "default_color_mode": "light",
+      "tags": [
+        "knowledge-intake",
+        "review",
+        "evidence",
+        "ko",
+        "ekos",
+        "archive"
+      ],
+      "description": "EKOS Knowledge Intake — 온톨로지 어휘를 번역한 업무 문장 중심의 지식 등록·검토 워크벤치 (Prussian/Ocean/Cornsilk 아카이브 톤)",
+      "source_project": "ekos-knowledge-intake",
+      "owner": "2000silpeed",
+      "preview_path": "presets/document-content--corporate-trust/preview.md",
+      "locale_pairings": {},
+      "tier": "P3"
+    },
+    {
       "id": "document-content--editorial-warm",
       "app_mode": "document-content",
       "brand_tone": "editorial-warm",

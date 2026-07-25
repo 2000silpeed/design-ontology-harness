@@ -14,6 +14,7 @@
 - 이미지 레퍼런스를 색상/서체/IA의 진실 소스로 쓰지 않도록 권한 경계를 기록한다.
 - `system_spec.md`, `token_schema.json`, `component_inventory.json`, `component_specs.md`, `system_ontology.json`을 생성한다.
 - 생성된 시스템을 preset으로 승격하고, 구현 레포에 `STYLE.md`, `DESIGN.md`, CSS variables, 구현 계약서를 설치한다.
+- 합성된 이미지 슬롯을 Codex/GPT 자체 이미지 생성 기능에서 바로 쓸 수 있는 프롬프트 패킷과 검수 게이트, 자산 매니페스트 초안으로 변환한다.
 - 구현 결과를 lint, screenshot QA, visual comparison으로 점검한다.
 
 ## 최근 확장 요약
@@ -113,7 +114,144 @@ uv run design-ontology init-agent-pack \
   --targets codex,claude
 ```
 
+## Codex + Claude Code 에이전트 팀 빠른 시작
+
+`init-agent-pack`은 단순히 스킬 파일만 복사하지 않습니다. 두 런타임이 함께 읽는
+`design-system/agent-team.json`, 운영 절차를 설명하는 `TEAM_RUNBOOK.md`, 역할별 Claude
+하위 에이전트, Codex 오케스트레이터 스킬, 단계 간 인수인계 스키마를 한 번에 만듭니다.
+
+```bash
+# 1. 구현할 앱 저장소에 공용 팀 설치
+uv run design-ontology init-agent-pack \
+  --target-repo ../my-app \
+  --artifact-dir design-system \
+  --targets codex,claude
+
+# 2. 두 런타임의 파일과 역할 구성이 같은지 검증
+uv run design-ontology validate-agent-team \
+  --target-repo ../my-app \
+  --artifact-dir design-system \
+  --targets codex,claude
+```
+
+설치 후에는 사용하는 런타임에 맞춰 팀 리드만 호출합니다. 팀 리드가 현재 산출물을
+보고 다음에 필요한 한 역할만 배정합니다.
+
+### Codex에서 시작
+
+```bash
+cd ../my-app
+codex plugin marketplace add .
+codex plugin add design-system-harness --marketplace local-plugins
+codex 'Use $design-ontology-team-orchestrator to inspect the project and run the next required stage.'
+```
+
+Codex Desktop에서는 같은 요청에 `$design-ontology-team-orchestrator`를 명시하면 됩니다.
+하위 에이전트의 읽기 전용 조사만 자유롭게 병렬화합니다. 쓰기 작업의 유일한 병렬 예외는
+아래에서 설명하는 Token Curator와 Component Contract Author 조합입니다.
+
+### Claude Code에서 시작
+
+```bash
+cd ../my-app
+claude --agent design-team-lead
+```
+
+첫 요청은 `design-system/agent-team.json을 읽고 다음 미완료 단계를 진행해`로 시작합니다.
+Claude Code는 `.claude/agents/`에 생성된 역할을 팀원이 필요할 때 호출합니다.
+
+### 에이전트별 역할
+
+| 에이전트 | 언제 쓰나 | 단독 소유 범위 | 다음 단계로 넘기는 기준 |
+|---|---|---|---|
+| **Team Lead / Orchestrator** | 시작·재개·실패 복구 때 항상 먼저 | 단계 선택, 역할 배정, handoff 기록 | 가장 이른 미완료 단계와 담당자가 명확함 |
+| **Product Brief Author** | 새 제품이거나 화면이 자꾸 비슷하게 나올 때 | `application_concept`, `layout_skeleton`, `design_differentiation`, 제품 primitive와 component scope | 실제 사용자 일·도메인 객체·첫 화면 계약이 구체적이고 `component_decision_path`가 예약됨 |
+| **Token & Color Curator** | 팔레트·서체·테마를 정할 때 | `brand_profile.json`의 `color_reference`·`font_system`, runtime theme | `docs/color-reference.md`에 이관된 Semantic OS graph가 checksum 검증을 통과하고 모든 색상 역할이 그 Markdown에서 해석됨 |
+| **Component Contract Author** | 구현 전 도메인 컴포넌트를 정의할 때 | 별도 `design-system/component-contracts.json`의 anatomy, 상태, variants/props, events, data, 반응형·접근성 계약 | JSON이 유효하고 모든 필드가 저작되어 합성 후 strict 검증에 넘길 수 있음 |
+| **Ontology Compiler** | 입력 저작이 끝난 뒤 시스템을 생성할 때 | `run-project`, blueprint, spec, emitted tokens, component artifacts | 토큰을 재생성한 뒤 `validate-component-contracts`가 `needs-authoring` 없이 통과 |
+| **Visual Director / Asset Producer** | 목업 탐색이나 실제 이미지 에셋이 필요할 때 | 온톨로지 기반 목업, ImageGen 프롬프트, 후보 검수, asset manifest·provenance | 필요한 이미지가 `accepted` 상태이고 prompt/source, alt, hash가 기록됨 |
+| **UI Implementer** | 시스템·컴포넌트·선택 목업이 확정된 뒤 | 실제 앱 코드, 이미지 연결·승격, 상호작용, 반응형, light/dark | 필요한 이미지가 `integrated` 상태이고 구현 lint와 스타일 발산 게이트가 통과 |
+| **Approved-Reference Fidelity Auditor** | 구현을 동결한 직후, QA에 넘기기 전 | 승인 시안과 현재 화면의 composition·morphology·density·hierarchy·task visibility·context linkage 쌍대 비교 | 승인 기준·레퍼런스·runtime tree·스크린샷 SHA가 묶이고 모든 critical invariant가 통과 |
+| **Visual & Runtime QA Auditor** | 구현 freeze 뒤 | 브라우저 캡처, interaction/overflow/accessibility, aesthetic review | 현재 runtime tree에 맞는 desktop/mobile × light/dark 증거가 완성됨 |
+| **Release Governor** | 마지막 한 번만 | 요구사항별 완료 감사와 release decision | `verify-production-ui`가 현재 구현을 대상으로 통과 |
+
+Codex에서는 각 역할이 `$design-brief-author`, `$design-token-curator`,
+`$design-component-author`, `$design-ontology-compiler`, `$design-visual-asset-producer`,
+`$design-ui-implementer`, `$design-reference-fidelity-auditor`, `$design-production-qa`,
+`$design-release-governor` 스킬로 생성됩니다.
+Claude Code에서는 동일한 역할 ID가 `.claude/agents/design-*.md`로 생성됩니다. 이름은 달라도
+읽는 `agent-team.json`, 파일 소유권, 인수인계 스키마, 종료 게이트는 같습니다.
+
+세 역할은 상시 파이프라인 밖의 조건부 전문가입니다.
+
+| 조건부 전문가 | 호출 조건 | 작업 후 돌아가는 역할 |
+|---|---|---|
+| **Reference Inspector** | URL·스크린샷에서 조형·밀도·상호작용 힌트만 추출할 때 | Brief Author 또는 UI Implementer |
+| **UI Refactor** | 기존 레이아웃과 기능은 유지하고 토큰·컴포넌트 계약만 적용할 때 | UI Implementer |
+| **UI Rebuild** | 사용자가 구조 재설계를 명시적으로 승인했고 concept/component gate가 끝났을 때 | UI Implementer |
+
+Codex에서는 `$design-system-reference-inspect`, `$design-system-refactor`,
+`$design-system-rebuild`로 부릅니다. Claude Code에서는 같은 이름의
+`.claude/agents/design-system-*.md` 역할을 사용합니다.
+
+Token Curator와 Component Contract Author는 서로 다른 파일을 소유할 때만 병렬로 실행합니다.
+Brief Author가 `component_decision_path`를 먼저 예약하면 Token Curator는 `brand_profile.json`의
+색상·서체 영역을, Component Contract Author는 외부 계약 파일을 맡습니다. 이 둘을 제외한
+쓰기 역할은 순서대로 실행합니다. Visual Asset Producer가 자산 작업을 끝낸 뒤 UI Implementer가
+시작합니다. 구현을 동결하면 Approved-Reference Fidelity Auditor가 승인 시안과 현재 화면을 먼저
+비교하고, 통과한 경우에만 Production QA로 넘깁니다. 실패하면 승인 기준은 그대로 둔 채 수정
+브리프와 함께 UI Implementer로 돌아갑니다. 같은 화면에 점수만 다시 매긴 반복은 인정하지 않습니다.
+
+이미지 생성이 필요한 작업은 Codex의 `image_gen`을 우선 사용합니다. Claude Code에서 팀을
+시작했는데 동등한 이미지 도구가 없다면 Visual Asset Producer가 프롬프트 패킷과 검수 기준을
+인수인계 파일로 남기고 Codex 역할에 생성을 넘깁니다. 실제 이미지가 없는데 자산 게이트를 통과한
+것처럼 기록하지 않습니다.
+
+모든 단계 전환은 `design-system/handoffs/`에 기록합니다. handoff에는 run ID와 시각,
+입력·출력 경로와 SHA-256, 바뀐 경로, 결정 사항, 실행한 gate 명령과 exit code, 통과·실패
+근거, 남은 위험, 다음 행동이 들어갑니다.
+세션 대화만으로 인수인계하지 않습니다.
+
+### 최종 출고 순서
+
+```bash
+uv run design-ontology validate-component-contracts --project-dir projects/<name>
+uv run design-ontology emit-tokens --project-dir projects/<name>
+uv run design-ontology lint-implementation --target-repo ../my-app
+uv run design-ontology check-style-divergence --project-dir ../my-app --register-on-pass
+uv run design-ontology reference-fidelity-loop \
+  --project-dir projects/<name> \
+  --target-repo ../my-app \
+  --review-artifact projects/<name>/build/system/production/reference-fidelity/review-01.json
+uv run design-ontology verify-production-ui \
+  --project-dir projects/<name> \
+  --target-repo ../my-app \
+  --browser-evidence-bundle projects/<name>/build/system/production/browser-evidence-bundle.json
+```
+
+앞 단계가 실패하면 담당 역할로 되돌아갑니다. Release Governor는 실패한 gate를 생략하거나
+완료 기준을 줄일 수 없습니다.
+
 생성되는 Codex plugin에는 `design-system-concept-author`가 들어갑니다. 이 skill은 `run-project` 전에 LLM이 직접 `application_concept`, `layout_skeleton`, `design_differentiation`을 쓰도록 강제합니다.
+
+같은 단계에서 `component_decision.core_components`도 저작해야 합니다. 컴포넌트 이름과 family만 정하는 것으로는 부족합니다. 각 도메인 컴포넌트에 anatomy, 실제 업무 상태, variants/props, interaction과 상태 전이, data contract, 접근성, 반응형 동작, content rules를 기록해야 합니다. `run-project`는 이 계약을 `component-contract/v1`로 보존하고, family 기본 상태가 저작된 도메인 상태를 덮어쓰지 못하게 합니다.
+
+계약이 길어지면 `brand_profile.json`에 인라인으로 넣지 않고 프로젝트 안의 JSON으로 분리할 수 있습니다.
+
+```json
+{
+  "component_decision_path": "design-system/component-contracts.json"
+}
+```
+
+경로는 `brand_profile.json`이 있는 프로젝트 디렉터리를 기준으로 해석합니다. 파일에는 `component_decision` 객체를 감싸서 넣거나 그 객체 자체를 저장할 수 있습니다. 프로젝트 밖 경로와 JSON 이외의 파일은 거부되며, `component_decision`과 `component_decision_path`를 동시에 쓸 수 없습니다.
+
+```bash
+uv run design-ontology validate-component-contracts \
+  --project-dir projects/my-app
+```
+
+이 게이트는 `needs-authoring` 컴포넌트, 소실된 도메인 상태, 비어 있는 구조화 계약, 구형 `var(--color-*)` 참조, 실제 `tokens.css`에 없는 토큰을 실패 처리합니다. `run-project`는 `design-system/tokens.css`와 `build/system/components/component_contract_validation.json`도 함께 생성합니다. 조사 단계에서만 미완성 계약을 허용하려면 `--allow-needs-authoring`을 명시해야 하며, 애플리케이션 구현 전에는 strict 검증을 통과해야 합니다.
 
 ## 시각 반복 방지: 토큰 바인딩과 스타일 발산 게이트
 
@@ -124,7 +262,7 @@ blueprint가 프로젝트마다 다른 팔레트를 만들어도 구현 단계�
 
 | 장치 | 명령 | 역할 |
 |---|---|---|
-| 토큰 방출 | `emit-tokens --project-dir` | blueprint의 active palette·font_system·radius를 `design-system/tokens.css`(`--ds-*`)로 방출. 구현 CSS의 유일한 시각 진실 소스 |
+| 토큰 방출 | `emit-tokens --project-dir` | blueprint의 active palette·font_system·radius를 재생성 가능한 `design-system/tokens.css`(`--ds-*`)로 방출 |
 | 토큰 바인딩 린트 | `lint-implementation --target-repo` | 구현 CSS의 하드코딩 색/폰트/라운딩을 실패 처리 |
 | 스타일 지문 등록 | `fingerprint-style --project-dir` | 최종 HTML/CSS에서 surface tone, accent hue, 폰트 페어링, serif accent를 추출해 `registry/style_fingerprints.json`에 기록 |
 | 발산 게이트 | `check-style-divergence --project-dir` | 최근 프로젝트 지문과의 유사도, 알려진 수렴 attractor 일치 시 실패 |
@@ -142,7 +280,10 @@ flowchart TB
         CSS["공식 CSS / token 파일"] --> KB
         SPEC["spec.md / PRD"] --> SYNTH["Synthesis Engine"]
         BRAND["brand_profile.json"] --> SYNTH
-        COLOR["color_reference.md"] --> SYNTH
+        SEMANTIC["Semantic OS color graph"] --> COLORSYNC["sync-semantic-colors"]
+        COLORSYNC --> COLOR["docs/color-reference.md<br/>visible cards + verified embedded graph"]
+        COLORSYNC -. deprecated transport .-> COLORGRAPH["packaged ontology JSON"]
+        COLOR --> SYNTH
         FONT["font reference DB"] --> SYNTH
         IMAGES["local images / screenshots / Figma export"] --> VISUAL["Visual Reference Analysis"]
         OMNI["Omnigen vault index.sqlite"] --> SELECT["curate-omnigen-references"]
@@ -183,7 +324,7 @@ flowchart TB
 | `spec.md`, PRD | 제품 기능, 화면, 사용자 흐름 | 가장 높음 |
 | `brand_profile.json` | 브랜드 정체성, 금지어, 플랫폼, 접근성 목표 | 가장 높음 |
 | 공식 KB | 컴포넌트 구조, 상태, 접근성, 디자인 토큰 근거 | 높음 |
-| `color_reference.md` | 팔레트 후보와 semantic color 검색 근거 | 높음 |
+| Semantic OS graph가 내장된 `docs/color-reference.md` | 자동·수동·supporting color의 swatch, 관계, 패턴, 정책 | 높음 |
 | font reference DB | 브랜드/제품 유형에 맞는 서체 후보 | 높음 |
 | 로컬 이미지, screenshots, Omnigen | 밀도, 표면감, 컴포넌트 형태, 레이아웃 리듬 | 보조 |
 | Pinterest/Lazyweb/Figma provider | 검색 후보, 비교 조사, export된 화면 맥락 | 보조 |
@@ -203,6 +344,32 @@ flowchart TB
 - typography scale 결정
 - 제품 IA 결정
 - product copy 복사
+
+## Semantic OS 색상 동기화
+
+색상의 단일 런타임 기준은 `docs/color-reference.md`입니다. 동기화 명령은 기존 87개 색상 카드를 한 글자도 바꾸지 않고, Semantic OS color graph에서 로컬 경로와 원문 복원 가능 데이터를 제거한 뒤 Markdown 마지막의 `semantic-color-ontology+json` fenced block에 저장합니다. 런타임은 블록의 checksum을 확인한 후 보이는 카드와 내장 graph를 메모리에서 하나로 합칩니다.
+
+```bash
+uv run design-ontology sync-semantic-colors \
+  --source ../semantic-os/domains/color/ontology/build/graph.json \
+  --color-reference-output docs/color-reference.md \
+  --ontology-output design_ontology_harness/resources/semantic_color_ontology.json
+
+uv run design-ontology sync-semantic-colors \
+  --source ../semantic-os/domains/color/ontology/build/graph.json \
+  --color-reference-output docs/color-reference.md \
+  --ontology-output design_ontology_harness/resources/semantic_color_ontology.json \
+  --check \
+  --json
+```
+
+첫 번째 명령은 Markdown의 보이는 카드를 보존하면서 내장 graph block과 checksum을 갱신합니다. `--ontology-output`은 기존 사용자와 외부 운반 경로를 위한 호환 JSON을 함께 만듭니다. 두 번째 명령은 파일을 쓰지 않고 source graph, embedded block, checksum의 drift를 검사하므로 CI에서 사용합니다.
+
+런타임은 보이는 카드의 이름, family, HEX, CMYK, mood, usage와 내장 graph의 `ColorKeyword`, `ColorPattern`, 관계, 정책을 함께 읽습니다. 자동 후보, 수동 `palette_roles`, supporting color 선택 모두 이 하나의 Markdown에서 해결됩니다. `color_reference.path`를 생략해도 wheel에 포함된 기본 Markdown을 읽으며, 패키징 ontology JSON을 런타임 fallback으로 사용하지 않습니다.
+
+Semantic OS에 없는 보이는 카드도 출처와 사용 범위가 명시된 Markdown-only 로컬 확장으로 합칩됩니다. 이 색을 Semantic OS 유래로 위장하거나 fenced block을 손으로 고치지 않습니다.
+
+`run-project`와 `emit-tokens`는 Semantic OS Markdown에서 확정한 역할을 `design-system/tokens.css`로 다시 생성합니다. 이 파일을 제품별 보정 저장소로 쓰면 다음 실행에서 변경이 사라집니다. 제품에 고유한 light/dark surface 매핑이나 팀·상태 식별 토큰이 필요하면 `design-system/runtime-theme.css` 같은 프로젝트 로컬 확장 파일을 만들고, HTML에서 `tokens.css` 다음에 로드합니다. 구현 CSS는 두 파일이 제공하는 `--ds-*` 변수를 소비하고, 로컬 확장도 `lint-implementation` 검사를 통과해야 합니다.
 - 외부 이미지를 재배포 가능한 에셋처럼 취급
 - 상표, 아이콘, 인물, 사진을 라이선스 없이 구현물에 복사
 
@@ -211,6 +378,96 @@ flowchart TB
 ## 이미지 에셋 기반 추출
 
 이미지 레이어는 “예쁜 분위기 참고”가 아니라, 산출물에 남는 구조화된 research layer입니다.
+
+합성이 끝난 뒤에는 온톨로지의 `GeneratedVisualAsset` 슬롯을 실행 가능한 이미지 제작 패킷으로 바꿀 수 있습니다.
+
+```bash
+uv run design-ontology build-image-prompts \
+  --project-dir projects/my-app \
+  --candidates-per-slot 3
+```
+
+기본 출력 위치는 `public/generated/design-system/`입니다. `imagegen-prompt-packet.json`에는 업종 맥락, 팔레트, 레퍼런스에서 추출한 밀도·표면 처리, 금지 방향, 반응형 구도, 후보 검수 기준이 담깁니다. `imagegen-prompts.md`는 Codex/GPT 이미지 생성 작업에 바로 넘길 수 있는 형태이며, `manifest.json`은 채택한 이미지의 경로·해시·대상 컴포넌트·대체 텍스트를 기록하기 위한 초안입니다. 만화·웹툰처럼 특정 업종에서만 필요한 슬롯은 프로젝트 도메인이 맞을 때만 방출합니다.
+
+이미지 생성 결과를 검토해 채택했다면 슬롯 ID에 등록합니다. 이 명령은 원본을 런타임 경로로 직접 참조하지 않고 워크스페이스로 복사하며, 실제 파일에서 포맷·크기·비율·용량·SHA-256을 계산합니다.
+
+```bash
+uv run design-ontology register-image-asset \
+  --project-dir projects/my-app \
+  --asset-id visual-asset:hero-image \
+  --source /path/to/generated/hero.png \
+  --alt-text "제품의 핵심 작업 장면" \
+  --selection-reason "도메인 실체와 모바일 크롭이 가장 명확한 후보" \
+  --reviewed-criterion "domain subject is immediately recognizable" \
+  --reviewed-criterion "visual language matches the design tokens and component surfaces" \
+  --reviewed-criterion "asset adds product meaning rather than atmosphere alone" \
+  --reviewed-criterion "crop works at every declared aspect ratio" \
+  --reviewed-criterion "no accidental text, logos, anatomy defects, or misleading product state" \
+  --session-id imagegen-session-id
+
+uv run design-ontology promote-image-asset \
+  --project-dir projects/my-app \
+  --asset-id visual-asset:hero-image
+
+uv run design-ontology validate-image-assets \
+  --project-dir projects/my-app \
+  --require-integrated
+```
+
+등록 직후 상태는 `accepted`입니다. 파일과 메타데이터 검수뿐 아니라 후보 선택 사유와 실제로 통과한 검수 항목을 기록해야 합니다. 애플리케이션 코드에서 `intended_for` 컴포넌트에 연결한 뒤 `promote-image-asset`을 실행해야 `integrated`가 됩니다. 프롬프트를 다시 생성해도 `accepted`나 `integrated` 레코드는 덮어쓰지 않습니다. 검증 명령은 누락 필드, 워크스페이스 밖 경로, 파일 변조, 해시·포맷·크기·비율 불일치, 대상 컴포넌트 없는 통합 상태를 실패 처리합니다.
+
+## 프로덕션 UI 출고 게이트
+
+개별 린트 하나만 통과했다고 화면이 완성된 것은 아닙니다. 최종 구현은 같은 route와 state를 light/dark × mobile/desktop으로 캡처하고, 각 이미지에 구현 revision과 해시를 기록해야 합니다. v3 스크린샷 매니페스트는 Git HEAD뿐 아니라 실제 런타임 HTML/CSS/JS, 연결된 manifest·아이콘·폰트·이미지의 정렬된 content tree SHA-256을 함께 고정합니다. 마지막 런타임 파일보다 오래된 캡처는 기록 단계부터 거부하므로, 토큰이나 에셋을 다시 생성했다면 네 화면을 모두 다시 캡처해야 합니다.
+
+```bash
+uv run design-ontology record-screenshot-evidence \
+  --project-dir projects/my-app \
+  --target-repo projects/my-app \
+  --screenshot screenshots/review-light-mobile.png \
+  --route /review \
+  --state evidence-selected \
+  --theme light \
+  --implementation-sha <git-sha>
+```
+
+네 조합을 모두 기록한 뒤 먼저 픽셀 기반 candidate를 만들고, Codex/GPT 멀티모달 리뷰 결과를 해시가 고정된 두 번째 반복으로 합칩니다.
+
+```bash
+uv run design-ontology score-screenshot \
+  --project-dir projects/my-app \
+  --screenshot screenshots/review-light-mobile.png \
+  --screenshot screenshots/review-dark-mobile.png \
+  --screenshot screenshots/review-light-desktop.png \
+  --screenshot screenshots/review-dark-desktop.png \
+  --output projects/my-app/build/system/aesthetic/candidate.json
+
+uv run design-ontology apply-aesthetic-review \
+  --candidate projects/my-app/build/system/aesthetic/candidate.json \
+  --review-artifact projects/my-app/build/system/production/reviews/multimodal-review.json \
+  --output projects/my-app/build/system/aesthetic/reviewed-candidate.json \
+  --reviewer codex-visual-qa \
+  --model gpt-5-codex \
+  --method "Structured four-viewport multimodal review"
+
+uv run design-ontology aesthetic-loop \
+  --project-dir projects/my-app \
+  --candidate projects/my-app/build/system/aesthetic/reviewed-candidate.json \
+  --output projects/my-app/build/system/aesthetic/latest_loop_report.json
+```
+
+`production-ui-review-artifact/v1`은 스크린샷 매니페스트의 SHA-256 전체와 선택된 모든 metric의 점수·구체적인 관찰을 담아야 합니다. `apply-aesthetic-review`는 artifact 파일 자체의 SHA-256까지 candidate에 기록하고, 알 수 없는 metric, 스크린샷 해시 불일치, 허용 범위를 벗어난 점수를 거부합니다. 픽셀 휴리스틱만으로는 업종 적합성을 판정할 수 없으므로 `domain_fit`, `task_focus`, `product_primitive:*` 같은 의미 지표에는 이 멀티모달 근거가 필요합니다.
+
+출고 전에는 Production QA가 Codex Desktop의 `browser:browser`로 실제 IAB 세션을 실행합니다. screenshot·DOM·state·console·interaction·overflow·accessibility와 component-runtime 관찰을 `production-browser-observation/v1` 원시 artifact로 저장하고, `production-browser-evidence-bundle/v1`에서 같은 session ID와 현재 runtime tree SHA-256에 연결합니다. 사람이 작성한 `passed: true` 중심의 `production-ui-runtime-check/v1`은 구형 호환 자료일 뿐 프로덕션 브라우저 증거로는 거부합니다. 스크린샷 파일은 정확한 Git HEAD, runtime content tree, 픽셀 크기, 시각 정보 신호, SHA-256이 맞아야 하며 light/dark × mobile/desktop 구성이 같은 route/state에서 대칭이어야 합니다. 근거 없는 점수, 일부 metric만 채운 후보, 중복·빈 스크린샷, 변경된 runtime tree, 다른 IAB session의 관찰, 해시가 달라진 artifact는 실행 게이트를 열지 못합니다. 로컬로 고정할 수 없는 원격 JS/CSS/폰트·에셋 참조도 content tree가 검증할 수 없으므로 strict 기록에서 거부됩니다. 자세한 형식은 [Browser Evidence Bundle](docs/BROWSER_EVIDENCE_BUNDLE.md)을 참고하세요.
+
+```bash
+uv run design-ontology verify-production-ui \
+  --project-dir projects/my-app \
+  --target-repo projects/my-app \
+  --browser-evidence-bundle projects/my-app/build/system/production/browser-evidence-bundle.json
+```
+
+이 명령은 component contract, 실제 방출 토큰, implementation lint, 이미지 매니페스트, 동일 revision의 스크린샷 세트, 해시가 고정된 멀티모달·runtime 근거, 심미성 보고서, style divergence를 하나의 blocking 판정으로 묶습니다. 크기가 다른 before/after 이미지는 변화 증거로 자동 통과하지 않고 비교 불가로 실패합니다.
 
 ### 1. Omnigen vault 선별
 
@@ -585,15 +842,15 @@ design-system/
 | 레이어 | 담당 모듈 | 결과 |
 |---|---|---|
 | 설계서 분석 | `spec_analyzer.py`, `component_specs.py` | 필요한 화면, 컴포넌트, 상태, product primitive |
-| 색상 결정 | `color_reference.py`, `semantic_color_selector.py` | brand-guided palette, semantic roles, contrast pairs |
+| 색상 결정 | `color_reference.py`, `semantic_color_selector.py` | Markdown에 내장된 graph·swatch, brand-guided palette, semantic roles, contrast pairs |
 | 서체 결정 | `font_reference.py` | heading/body/UI/mono pairing, locale pairing |
 | CSS 근거 | `css_pipeline.py`, `typo_extractor.py` | 공식 시스템의 변수, 브랜드 컬러, typography evidence |
 | 컴포넌트 전략 | `advanced_components.py`, `component_specs.py` | component inventory, anatomy, states, token binding |
 | 온톨로지 | `graph_schema.py`, `graph_builders.py` | token, component, pattern, asset, governance 관계 |
 | 스타일 캡슐 | `style_capsule.py`, `agent_packs.py` | 구현 에이전트가 먼저 읽는 `STYLE.md`, `DESIGN.md` |
-| 품질 게이트 | `implementation_linter.py`, `aesthetic_loop.py`, `visual_evidence.py` | token 위반, visual diff, aesthetic score 점검 |
+| 품질 게이트 | `implementation_linter.py`, `aesthetic_loop.py`, `reference_fidelity.py`, `visual_evidence.py` | token 위반, 단독 미감, 승인 시안 충실도, browser evidence 점검 |
 
-색상은 매번 semantic color ontology와 브랜드 키워드를 함께 검색해서 고릅니다. 미리 정해 둔 palette preset을 그대로 끼우는 방식이 아니라, 제품 맥락과 `color_reference` 근거를 결합합니다.
+색상은 매번 제품 맥락과 브랜드 키워드로 `docs/color-reference.md`에 내장된 관계·패턴을 검색하고, 실제 색 값도 같은 파일에서 가져옵니다. 미리 정한 palette preset을 그대로 끼우지 않고 자동·수동·supporting 선택 모두 하나의 권한을 따릅니다.
 
 서체는 제품 유형, 톤, 플랫폼, locale을 보고 고릅니다. 한국어 구현에는 locale pairing이 중요하므로, preset 설치 시 `--locale ko`를 함께 쓰는 흐름을 권장합니다.
 
@@ -703,6 +960,7 @@ http://127.0.0.1:8765/projects/omnigen-crm-demo/demo-report.html
 | `select-visual-references` | 범용 reference pack에서 프로젝트별 레퍼런스 선별 |
 | `export-reference-gallery` | Pack과 selection manifest를 HTML 갤러리로 검수 |
 | `extract-css` | CSS에서 토큰, 브랜드 컬러, typography 후보 추출 |
+| `sync-semantic-colors` | 기존 색상 카드를 보존하며 Semantic OS graph block·checksum·호환 JSON을 동기화·검증 |
 | `build-components` | spec, KB, brand profile 기반 컴포넌트 상세 스펙 생성 |
 | `benchmark` | 브랜드 키워드와 맞는 참고 디자인 시스템 추천 |
 | `build-preset` | 프로젝트 산출물을 `presets/<id>/`로 승격 |
@@ -714,6 +972,10 @@ http://127.0.0.1:8765/projects/omnigen-crm-demo/demo-report.html
 | `compare-visuals` | before/after screenshot 변화량 검증 |
 | `aesthetic-loop` | 디자인 후보의 aesthetic score 평가와 개선 action 생성 |
 | `score-screenshot` | screenshot에서 aesthetic-loop 후보 metrics 생성 |
+| `apply-aesthetic-review` | 해시가 고정된 멀티모달 리뷰를 candidate의 실제 두 번째 반복으로 병합 |
+| `record-screenshot-evidence` | 동일 revision의 route/state/theme/viewport 스크린샷 증거 기록 |
+| `reference-fidelity-loop` | 승인 시안과 현재 스크린샷을 해시로 묶어 허용된 조형 지표만 비교하고, 실패 시 수정 브리프 생성 |
+| `verify-production-ui` | component·token·asset·visual 증거와 동일 IAB session/runtime tree에 묶인 browser evidence bundle을 검증해 출고 가능 여부 판정 |
 | `init-agent-pack` | 구현 레포용 agent instruction pack 생성 |
 | `customize-preset` | 기존 preset을 프로젝트로 복사해 재합성 준비 |
 | `rebuild-all-presets` | matrix 기반 전체 preset 재생성 |
@@ -745,7 +1007,8 @@ design_ontology_harness/
   crawler.py                   공식 문서 수집
   kb.py                        KB 로드/저장
   css_pipeline.py              CSS token extraction
-  color_reference.py           semantic color selection
+  color_reference.py           Markdown card/embedded graph resolution
+  semantic_color_selector.py   embedded graph search and role selection
   font_reference.py            font pairing
   visual_reference.py          local image reference analysis
   omnigen_references.py        Omnigen vault selection/sync
@@ -763,6 +1026,7 @@ design_ontology_harness/
   preset_installer.py          preset -> implementation repo install
   implementation_linter.py     implementation contract lint
   aesthetic_loop.py            aesthetic scoring loop
+  reference_fidelity.py        approved-reference paired review gate
   agent_packs.py               agent instructions
 ```
 
@@ -774,7 +1038,9 @@ design_ontology_harness/
 - [docs/PINTEREST_ASSISTED_WORKFLOW.md](./docs/PINTEREST_ASSISTED_WORKFLOW.md)
 - [docs/VISUAL_REFERENCE_VALIDATION_REPORT.md](./docs/VISUAL_REFERENCE_VALIDATION_REPORT.md)
 - [docs/AESTHETIC_SELF_IMPROVEMENT_LOOP.md](./docs/AESTHETIC_SELF_IMPROVEMENT_LOOP.md)
+- [docs/REFERENCE_FIDELITY_LOOP.md](./docs/REFERENCE_FIDELITY_LOOP.md)
 - [docs/IMPLEMENTATION_WORKFLOW.md](./docs/IMPLEMENTATION_WORKFLOW.md)
+- [docs/UI_BASE_RULES.md](./docs/UI_BASE_RULES.md)
 - [docs/CONTRIBUTING_PRESETS.md](./docs/CONTRIBUTING_PRESETS.md)
 - [docs/PLUGIN_LOCAL_DEV.md](./docs/PLUGIN_LOCAL_DEV.md)
 

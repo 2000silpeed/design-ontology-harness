@@ -8,7 +8,9 @@
 
 - 이 저장소의 본체는 GitHub에서 clone해서 쓰는 하네스 코어입니다.
 - Codex / Claude Code integration은 선택적 부가 레이어입니다.
-- 즉 이 repo는 "Claude plugin product"라기보다 "plugin-friendly harness"에 가깝습니다.
+- 두 런타임은 `design-system/agent-team.json` 하나에서 역할, 파일 소유권, 인수인계,
+  종료 게이트를 함께 읽습니다.
+- 각 역할과 시작 명령은 [README의 에이전트 팀 빠른 시작](../README.md#codex--claude-code-에이전트-팀-빠른-시작)을 기준으로 합니다.
 
 ## AI 도구로 보는 방식
 
@@ -44,10 +46,13 @@ AI 도구로 사용할 때의 역할은 세 가지로 나뉩니다.
 생성 위치:
 
 - `plugins/design-system-harness/.codex-plugin/plugin.json`
+- `plugins/design-system-harness/skills/design-ontology-team-orchestrator/SKILL.md`
+- `plugins/design-system-harness/skills/design-{brief-author,token-curator,component-author,ontology-compiler,visual-asset-producer,ui-implementer,production-qa,release-governor}/`
 - `plugins/design-system-harness/skills/design-system-architect/SKILL.md`
 - `plugins/design-system-harness/skills/design-system-implementer/SKILL.md`
 - `plugins/design-system-harness/skills/design-system-visual-assets/SKILL.md`
 - `plugins/design-system-harness/skills/design-system-reference-inspect/SKILL.md`
+- `plugins/design-system-harness/skills/design-system-{refactor,rebuild}/SKILL.md`
 - `.agents/plugins/marketplace.json`
 
 용도:
@@ -61,12 +66,15 @@ AI 도구로 사용할 때의 역할은 세 가지로 나뉩니다.
 
 생성 위치:
 
+- `.claude/skills/design-ontology-team-orchestrator/SKILL.md`
 - `.claude/skills/design-system-architect/SKILL.md`
 - `.claude/skills/design-system-implement/SKILL.md`
+- `.claude/skills/design-system-visual-assets/SKILL.md`
 - `.claude/skills/design-system-reference-inspect/SKILL.md`
-- `.claude/agents/design-system-architect.md`
-- `.claude/agents/design-system-implementer.md`
+- `.claude/agents/design-team-lead.md`
+- `.claude/agents/design-{brief-author,token-curator,component-author,ontology-compiler,visual-asset-producer,ui-implementer,production-qa,release-governor}.md`
 - `.claude/agents/design-system-reference-inspect.md`
+- `.claude/agents/design-system-{refactor,rebuild}.md`
 
 용도:
 
@@ -86,6 +94,11 @@ References:
 
 ```bash
 uv run design-ontology init-agent-pack \
+  --target-repo /path/to/implementation-repo \
+  --artifact-dir design-system \
+  --targets codex,claude
+
+uv run design-ontology validate-agent-team \
   --target-repo /path/to/implementation-repo \
   --artifact-dir design-system \
   --targets codex,claude
@@ -135,7 +148,7 @@ If you are syncing manually, copy them from a harness project/preset output:
 
 ## Agent Operating Loop
 
-Codex나 Claude Code가 이 하네스를 AI 도구로 사용할 때는 아래 루프를 따릅니다.
+Codex나 Claude Code가 이 하네스를 AI 도구로 사용할 때는 Team Lead부터 시작해 아래 루프를 따릅니다.
 
 1. **Preflight**: `IMPLEMENTATION_CONTRACT.md`, `STYLE.md`, `DESIGN.md`,
    `token_schema.json`, `component_specs.md`, `system_ontology.json`을 먼저 읽습니다.
@@ -158,7 +171,8 @@ Codex나 Claude Code가 이 하네스를 AI 도구로 사용할 때는 아래 �
    사용합니다. 사이트, 앱, 랜딩, 제품, 장소, 콘텐츠, 게임 목업은 이미지 없는
    카드/그라디언트만으로 완료하지 않고 도메인 실체를 보여주는 visual asset을
    적극적으로 배치합니다. 버튼 glyph, 상태 마커, 앱 아이콘은 이미지 생성 대상이
-   아니라 SVG나 아이콘 라이브러리 대상입니다.
+   아니라 SVG나 아이콘 라이브러리 대상입니다. Claude Code에 동등한 이미지 도구가
+   없으면 프롬프트 패킷과 검수 기준을 Codex Visual Asset Producer에게 넘깁니다.
 8. **Mode parity**: 명시적으로 한 모드만 요구하지 않는 한 light mode와 dark mode를
    같은 semantic token 역할로 함께 구현하고 캡처합니다.
 9. **Verification**: `lint-implementation`을 실행하고, 브라우저 캡처로 desktop,
@@ -252,6 +266,8 @@ Provider tier:
 - 저작권 캐릭터, 실제 브랜드, 실제 인물, 권리가 불분명한 장소는 사용하지 않습니다.
 - 이미지 생성 도구가 없거나 실패하면 생성했다고 말하지 않습니다. sourced fallback을 쓰거나 `imagegen-prompts.md` 프롬프트 팩만 남깁니다. 그래도 API fallback은 호출하지 않습니다.
 - sourced fallback은 hotlink하지 않습니다. 반드시 프로젝트 정적 에셋으로 복사한 뒤 workspace-relative path를 참조합니다.
+- 제품 콘셉트가 바뀌어 기존 생성 슬롯을 퇴역시킬 때는 승인 자산의 프롬프트 해시를 덮어쓰지 않습니다. 이전 패킷 원문을 `prompt-contract-history/`에 보관하고, manifest의 `prompt_contract_migrations`에 이전·현재 계약과 아카이브 해시를 연결합니다.
+- `active_generation: false`인 legacy 슬롯은 새 후보를 등록할 수 없습니다. 현재 구현에 남아 있는 이유와 범위는 `legacy-supporting-asset`으로만 기록합니다.
 
 Manifest contract:
 

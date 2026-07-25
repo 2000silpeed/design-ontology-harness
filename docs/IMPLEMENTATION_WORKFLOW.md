@@ -58,10 +58,21 @@ uv run design-ontology init \
 - 플랫폼
 - 접근성 기준
 - 핵심 product primitive
+- 컴포넌트별 anatomy, 상태, props/events, data contract, 반응형·접근성 계약
 - 선택적으로 curated color reference 경로와 palette role
 - 선택적으로 `visual_reference.sources`에 로컬 스크린샷 / 레퍼런스 이미지
 
 를 작성합니다.
+
+컴포넌트 계약이 길면 프로젝트 안의 별도 JSON으로 분리합니다.
+
+```json
+{
+  "component_decision_path": "design-system/component-contracts.json"
+}
+```
+
+외부 파일은 `component_decision` 객체를 감싸거나 그 객체 자체를 담을 수 있습니다. 이 경로는 프로젝트 상대 경로이며 JSON 파일만 허용합니다. 프로젝트 밖으로 벗어나는 경로와 인라인 `component_decision`을 함께 선언한 설정은 실패합니다.
 
 ### 4. 시각 레퍼런스 준비 (선택)
 
@@ -138,6 +149,7 @@ uv run design-ontology emit-tokens --project-dir projects/my-app
 # -> projects/my-app/design-system/tokens.css (--ds-color-*, --ds-color-brand-*, --ds-font-*, --ds-radius-*, --ds-space-*)
 
 # 2. 구현: HTML에서 tokens.css를 링크하고 구현 CSS는 var(--ds-*)만 사용
+# 제품별 surface/theme 매핑이 필요하면 runtime-theme.css를 tokens.css 다음에 링크
 
 # 3. 토큰 바인딩 강제 (하드코딩 hex/font-family/radius가 있으면 실패)
 uv run design-ontology lint-implementation --target-repo projects/my-app
@@ -161,6 +173,55 @@ bucket, 폰트 페어링, serif accent, radius 프로파일)을 추출해
 
 게이트를 통과한 산출물은 `--register-on-pass` 또는 `fingerprint-style`로 레지스트리에
 등록해, 다음 프로젝트가 같은 look으로 회귀하지 못하게 한다.
+
+`tokens.css`는 Semantic OS graph가 내장된 Markdown을 바탕으로 `run-project` 또는
+`emit-tokens` 때마다 다시 만들어지는 파일입니다. 제품별 light/dark surface와 고유 식별
+토큰은 `design-system/runtime-theme.css` 같은 별도 파일에 두고 `tokens.css` 다음에
+로드합니다. 이렇게 하면 생성 토큰을 갱신해도 제품별 테마 계약이 남습니다. 로컬 확장도
+`lint-implementation` 대상이며, 실제 화면 CSS는 생성 토큰과 확장 토큰만 소비합니다.
+
+### 5.6. 프로덕션 증거와 출고 판정 (필수)
+
+같은 route/state를 light/dark × mobile/desktop으로 캡처해
+`record-screenshot-evidence`로 기록합니다. v3 매니페스트는 실제 Git HEAD와 함께 런타임
+HTML/CSS/JS 및 연결된 manifest·아이콘·폰트·이미지의 content tree SHA-256을 기록합니다.
+스크린샷 크기, 시각 정보 신호, SHA-256도 다시 계산하며, 최신 런타임 파일보다 오래된
+캡처는 거부합니다. 토큰·테마·에셋을 건드린 뒤에는 기존 매니페스트에 메타데이터만
+다시 붙이지 말고 네 화면을 재캡처합니다.
+
+`score-screenshot`으로 만든 candidate에는 `apply-aesthetic-review`로
+`production-ui-review-artifact/v1` 멀티모달 리뷰를 병합합니다. 리뷰에는 매니페스트의
+모든 스크린샷 SHA와 선택된 모든 metric의 점수·관찰이 있어야 합니다. 프로덕션 브라우저
+증거는 별도의 `production-browser-evidence-bundle/v1`에 기록합니다. Production QA가 Codex
+Desktop의 `browser:browser`로 실제 IAB 세션을 실행하고, screenshot·DOM·state·console·
+interaction·overflow·accessibility 및 component-runtime 관찰을 같은 session ID와 현재
+runtime tree SHA에 연결해야 합니다. 각 원시 관찰은 `production-browser-observation/v1` JSON과
+SHA-256으로 보존합니다. 사람이 쓴 `passed: true` 중심의 `production-ui-runtime-check/v1`은
+구형 호환 자료일 뿐이며 프로덕션 브라우저 증거로는 거부합니다. 전체 계약과 예시는
+[Browser Evidence Bundle](BROWSER_EVIDENCE_BUNDLE.md)에 있습니다.
+
+```bash
+uv run design-ontology apply-aesthetic-review \
+  --candidate projects/my-app/build/system/aesthetic/candidate.json \
+  --review-artifact projects/my-app/build/system/production/reviews/multimodal-review.json \
+  --output projects/my-app/build/system/aesthetic/reviewed-candidate.json \
+  --reviewer codex-visual-qa \
+  --model gpt-5-codex \
+  --method "Structured light/dark mobile/desktop review"
+
+uv run design-ontology aesthetic-loop \
+  --project-dir projects/my-app \
+  --candidate projects/my-app/build/system/aesthetic/reviewed-candidate.json
+
+uv run design-ontology verify-production-ui \
+  --project-dir projects/my-app \
+  --target-repo projects/my-app \
+  --browser-evidence-bundle projects/my-app/build/system/production/browser-evidence-bundle.json
+```
+
+`verify-production-ui`는 빈·중복 스크린샷, route/state/theme/viewport 비대칭, review 또는
+browser artifact 해시 불일치, IAB producer/session 또는 runtime tree 불일치, 불완전한 metric
+근거, 실제 브라우저 observation 실패를 모두 blocking 오류로 처리합니다.
 
 ### 6. 프리셋 승격과 Style Capsule 생성
 
@@ -288,33 +349,45 @@ uv run design-ontology lint-implementation --target-repo /path/to/implementation
 4. 제품 특화 primitive
 5. 문서화와 테스트
 
-## Semantic OS 컬러 온톨로지가 1차 컬러 소스
+## `color-reference.md`가 단일 컬러 소스
 
-컬러 파이프라인의 기본 진실 소스는 semantic-os에서 가져온 패키징 온톨로지
-(`design_ontology_harness/resources/semantic_color_ontology.json`)입니다.
-markdown 색상 문서(`color_reference.path`)는 이제 **완전히 선택 사항**이며,
-지정해도 무드/패밀리 참고 증거로만 쓰입니다.
+컬러 파이프라인의 단일 런타임 기준은 `docs/color-reference.md`입니다. 이 파일은 사람이 읽는 87개 색상 카드와 기계가 읽는 Semantic OS graph를 함께 담습니다. 보이는 카드는 동기화 전후에도 바이트 단위로 보존되고, 로컬 경로·원문 복원 가능 데이터를 제거한 전체 graph는 문서 마지막의 `semantic-color-ontology+json` fenced block에 저장됩니다.
 
-- **스냅샷 동기화**: `uv run python scripts/sync-semantic-color-ontology.py` —
-  로컬 semantic-os의 `domains/color/ontology/build/graph.json`을 추상화 계약
-  (로컬 경로 제거, 원문 테이블 미포함)을 검증하며 패키지 리소스로 갱신.
-- **레지스트리 인지 hue 감점**: 후보 키워드 스코어링이
-  `registry/style_fingerprints.json`의 최근 accent hue 사용 횟수를 읽어
-  반복 hue를 감점하고, 기본 후보의 액센트가 4회 이상 반복된 hue면
-  신선한 hue 후보를 기본으로 재정렬합니다
-  (`semantic_color_selection.registry_hue_pressure`, `hue_pressure_reordered`에 기록).
-- **수동 역할명**: `palette_roles`의 색 이름은 markdown 없이도 온톨로지
-  키워드 라벨로 해석됩니다 (예: `"primary": "Royal Purple"`).
-- **supporting 확장**: semantic-ontology 팔레트의 supporting color도 md가 아니라
-  온톨로지에서 스펙트럼 라운드로빈으로 뽑습니다.
+런타임은 embedded block의 checksum을 먼저 확인한 뒤 보이는 카드와 graph의 `ColorKeyword`를 메모리에서 합칩합니다. 자동 palette candidate, 수동 `palette_roles`, supporting color 선택은 모두 이 합쳐진 데이터를 사용합니다. `color_reference.path`를 생략하면 wheel에 포함된 기본 Markdown을 읽습니다.
 
-주의: 온톨로지 스냅샷을 갱신하면 supporting color 구성(이름)이 달라질 수 있습니다.
-이미 방출된 프로젝트의 tokens.css를 다시 `emit-tokens`로 갱신할 때는 구현 CSS가
-참조하는 `--ds-color-support-*` 이름이 유지되는지 확인하세요.
+`design_ontology_harness/resources/semantic_color_ontology.json`은 기존 사용자와 외부 운반 경로를 위해 남겨 둔 호환 산출물입니다. 런타임은 이 JSON을 진실 소스나 fallback으로 사용하지 않습니다.
 
-## Optional Curated Color Input
+### Semantic OS graph 동기화
 
-색상 방향이 이미 별도 문서로 정리되어 있다면 `brand_profile.json`의 `color_reference`로 연결할 수 있습니다.
+```bash
+uv run design-ontology sync-semantic-colors \
+  --source ../semantic-os/domains/color/ontology/build/graph.json \
+  --color-reference-output docs/color-reference.md \
+  --ontology-output design_ontology_harness/resources/semantic_color_ontology.json
+
+uv run design-ontology sync-semantic-colors \
+  --source ../semantic-os/domains/color/ontology/build/graph.json \
+  --color-reference-output docs/color-reference.md \
+  --ontology-output design_ontology_harness/resources/semantic_color_ontology.json \
+  --check \
+  --json
+```
+
+기본 실행은 보이는 색상 카드를 수정하지 않고 embedded graph block과 checksum만 갱신합니다. `--ontology-output`은 호환 JSON도 함께 갱신합니다. `--check`는 파일을 쓰지 않고 source graph, fenced block, checksum이 같은 snapshot인지 확인하며, `--json`은 CI에서 읽을 수 있는 결과를 출력합니다.
+
+Semantic OS에 없는 색은 보이는 카드의 Markdown-only 로컬 확장으로 유지할 수 있습니다. 출처와 사용 범위를 명시하고 Semantic OS 유래 색으로 표시하지 마세요. 동기화 명령은 이 카드를 지우지 않으며, 런타임은 내장 graph의 색과 함께 명시적 확장으로 합칩합니다.
+
+- **레지스트리 인지 hue 감점**: 후보 키워드 스코어링은 `registry/style_fingerprints.json`의 최근 accent hue 사용 횟수를 읽어 반복 hue를 감점합니다. 재정렬 결과는 `semantic_color_selection.registry_hue_pressure`, `hue_pressure_reordered`에 남습니다.
+- **수동 역할명**: `palette_roles`의 이름은 보이는 카드와 내장 `ColorKeyword`를 합친 이름 공간에서 해석합니다.
+- **supporting 확장**: spectrum, family, mood, 반복 hue 조건은 같은 Markdown에 내장된 graph에서 찾고, 최종 색 값도 같은 파일에서 확정합니다.
+
+주의: graph snapshot을 갱신하면 supporting color 구성이나 이름이 달라질 수 있습니다. 이미 방출된 프로젝트의 `tokens.css`를 다시 `emit-tokens`로 갱신할 때는 구현 CSS가 참조하는 `--ds-color-support-*` 이름이 유지되는지 확인하세요.
+
+생성된 `tokens.css`는 직접 수정하지 않습니다. 제품별 light/dark surface 매핑과 프로젝트 고유 토큰은 `design-system/runtime-theme.css` 같은 로컬 확장 파일에 두고, `tokens.css` 다음에 로드합니다. 이 파일은 재생성 대상이 아니므로 Semantic OS snapshot이나 토큰을 갱신해도 보존됩니다.
+
+## 프로젝트별 color reference 설정
+
+`brand_profile.json`의 `color_reference.path`는 일반적으로 `docs/color-reference.md`를 가리킵니다. 다른 문서를 지정하려면 같은 visible-card + checksum-verified graph block 계약을 지켜야 합니다.
 
 예:
 
@@ -347,14 +420,14 @@ markdown 색상 문서(`color_reference.path`)는 이제 **완전히 선택 사�
 이 값이 있으면 하네스는:
 
 - `brand_profile.json`과 `spec.md`에서 앱 주제, 작업 표면, 컴포넌트 신호를 모으고
-- Semantic OS color ontology의 `ColorPattern` / `ColorKeyword`를 매번 검색해 palette candidate를 만들고
-- markdown 색상 문서가 있으면 mood/usage/preferred family를 가중치 증거로 반영하고
+- Markdown에 내장된 `ColorPattern`·관계·정책을 검색해 palette candidate 구조를 만들고
+- 보이는 카드와 `ColorKeyword`를 합친 swatch, mood, usage, preferred family로 실제 후보 색을 확정하고
 - active palette를 semantic role 힌트와 함께 고정하고
 - seed color pairings와 관련 family를 추가 검색해 support / neutral / state color를 확장하고
-- Semantic OS color ontology에서 spectrum / family / mood_tags / tone_axes와 팔레트 추상화 guardrail을 붙이고
+- 내장 graph에서 spectrum / family / mood_tags / tone_axes와 팔레트 추상화 guardrail을 붙이고
 - `system_spec.md`와 `token_schema.json`에 색상 기준으로 기록합니다.
 
-중요: 자동 모드에서는 미리 만든 팔레트 세트를 그대로 사용하지 않습니다. 매 실행마다 앱 내용으로 온톨로지를 검색하고, 후보 팔레트는 `selection_method=ontology-search-per-run`으로 기록되어야 합니다.
+중요: 자동 모드에서는 미리 만든 팔레트 세트를 그대로 사용하지 않습니다. 매 실행마다 앱 내용으로 내장 graph를 검색하고, 후보 팔레트에는 `selection_method=semantic-os-markdown-search-per-run`과 Markdown 출처가 모두 남아야 합니다.
 
 특정 팔레트를 직접 고정하고 싶으면 `selected_colors`와 `palette_roles`를 추가하면 됩니다. 그 경우 selection mode는 `manual`로 기록됩니다.
 `preferred_families`는 hard filter가 아니라 우선순위 bias로 동작하므로, 자동 모드에서도 다른 family 후보가 대안으로 남을 수 있습니다.

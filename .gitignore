@@ -11,3 +11,13 @@ build/
 projects/*/build/
 kb/
 tmp/
+
+# 의존성과 도구 캐시. 없으면 프로젝트 하나의 node_modules만 127MB가 커밋 후보로 올라온다.
+node_modules/
+.npm-cache/
+.playwright-cli/
+.playwright-mcp/
+.lazyweb/
+
+# 렌더 출력물. 소스에서 다시 만든다.
+**/remotion-sample/out/

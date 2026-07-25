@@ -1,0 +1,30 @@
+{
+  "schema_version": "production-ui-runtime-check/v1",
+  "kind": "overflow",
+  "run_id": "fixture-desk-iteration-2-overflow-20260714-01",
+  "implementation_tree_sha256": "cf3e1b0d232bd80fc072a4c92d240f4ceeaf1cd448618fba86a9a5fc085fb1f6",
+  "checked_at": "2026-07-14T22:38:00+09:00",
+  "method": "Current in-app Browser layout inspection at the exact production screenshot viewports, plus the 795px breakpoint.",
+  "viewport_coverage": [
+    {"width": 382, "height": 687},
+    {"width": 1432, "height": 724}
+  ],
+  "max_horizontal_overflow_px": 0,
+  "assertions": [
+    {
+      "id": "desktop-page-has-no-horizontal-overflow",
+      "passed": true,
+      "evidence": "The 1432px desktop capture fits the page viewport; dense schedule content remains inside its table and rail grid."
+    },
+    {
+      "id": "mobile-page-has-no-horizontal-overflow",
+      "passed": true,
+      "evidence": "At 382px the page overflow measurement was 0px; navigation and filter rows use contained horizontal scrollers."
+    },
+    {
+      "id": "tablet-breakpoint-reflows-schedule",
+      "passed": true,
+      "evidence": "At 795px page overflow remained 0px and the schedule sheet switched to its single-flow layout."
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-production-ui-improvement-2026-07-13-001",
+  "created_at": "2026-07-14T00:30:13+09:00",
+  "project": "world-cup-hub",
+  "from_role": "component-author",
+  "to_role": "team-lead",
+  "stage": "tokens-and-components",
+  "status": "ready",
+  "summary": "All 19 authored World Cup Hub components now own product-specific token bindings that target declared anatomy and states, and all 28 product primitives resolve exactly to an authored component, an anatomy part, or one of three approved scope/accessibility waivers. The fixture-led navigation, schedule scan, selectedMatchId rail, prediction persistence, item-level moderation, and provenance contracts were clarified without adding generic components. Authored specs no longer receive compiler family token defaults, and strict validation records authored token provenance plus primitive reconciliation.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/world-cup-hub-components-team-lead-to-component-author.json",
+      "sha256": "e9552085ad2a13a92b3d605f07db2b223b9c8639e8bb175e4e2e0e78c5c80ea3"
+    },
+    {
+      "path": "agent-team/handoffs/world-cup-hub-tokens-token-curator-to-team-lead.json",
+      "sha256": "6bf54fe9a1c73d3b2721ff5344f58948a77678feb33783b29abd7ea9b8f9219a"
+    },
+    {
+      "path": "projects/world-cup-hub/brand_profile.json",
+      "sha256": "78358cef596cd3be39205adb2c8ed6e007f8d79d0cad02a525ac8caf4d255abd"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/tokens.css",
+      "sha256": "f8e4bbcc458350fab7f8072e8fd7eae35a4d967de8f442e567d8ea11148c1c0c"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/components/component_specs.json",
+      "sha256": "0aee1079892688076faabaf2afd43c37e5988641f8e09b37970f028774f4c0cb"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/design-system/component-contracts.json",
+      "sha256": "3211e4a1c27fe1d08aba22c070b968649627b1c7ffcc1cc32c7a0598bc007af4"
+    },
+    {
+      "path": "design_ontology_harness/authoring.py",
+      "sha256": "528f5fac3265b2b59214f780b83fae9f47007c8243fa415537c4c7be889a6fc0"
+    },
+    {
+      "path": "design_ontology_harness/component_specs.py",
+      "sha256": "5de0f8837a740c00700c4fb9752477e20a7e89f2e04896a737ce153384928320"
+    },
+    {
+      "path": "design_ontology_harness/component_contracts.py",
+      "sha256": "1b879a34a3ce84caac326a7ecb1f04a5c10921285ab80de41ddddbf1dda2c2ff"
+    },
+    {
+      "path": "schemas/brand_profile.schema.json",
+      "sha256": "fcc39e76d05991284558bb25907de94b2187dae800b258102d16f4d0aae1c3c1"
+    },
+    {
+      "path": "tests/test_component_contracts.py",
+      "sha256": "218f0044dde3f6235a39393be5baa7e59b8d57f020ccdbe2dd3eaf4dfde47585"
+    }
+  ],
+  "changed_paths": [
+    "projects/world-cup-hub/design-system/component-contracts.json",
+    "design_ontology_harness/authoring.py",
+    "design_ontology_harness/component_specs.py",
+    "design_ontology_harness/component_contracts.py",
+    "schemas/brand_profile.schema.json",
+    "tests/test_component_contracts.py",
+    "agent-team/handoffs/world-cup-hub-components-component-author-to-team-lead.json"
+  ],
+  "decisions": [
+    "Every llm-authored component must provide a non-empty tokens map with at least one declared anatomy target and one declared state target; values must reference emitted --ds-* tokens.",
+    "The component compiler uses authored token input exclusively for llm-authored contracts and labels it token_provenance=authored-input. Generated family defaults remain available only to non-authored baseline components.",
+    "The 28 product primitives are reconciled by exact source name. Component and anatomy mappings must target authored contracts and real parts; waivers require kind, replacement components, decision source, and approved status.",
+    "Match card is represented by match-ticker.match-ticker-item rather than a standalone card wall. Confidence badge, poll option, news note, and favorite selector are authored anatomy extensions instead of new components.",
+    "Bracket preview is deferred from the fixture-led group-stage release in favor of standings and result summaries. Toast and modal dialog are replaced by persistent inline status and contextual rail/ledger surfaces.",
+    "Top navigation uses ordinary landmark links with aria-current, while date/group/team/status controls remain fixture filters. selectedMatchId is the shared context key across ticker, schedule, detail, prediction, result, discussion, and composer.",
+    "Prediction persistence now models saving, saved, save-error rollback, confidence provenance, and rounded probability totals. Moderation states are explicitly scoped to opinion items, and provenance keeps data mode, verification, freshness, update time, and timezone as separate axes."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run pytest tests/test_component_contracts.py tests/test_component_specs.py tests/test_component_decision_loader.py tests/test_application_concept.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "29 tests passed. The World Cup source compiled in memory to 19 complete authored contracts, 28 exact primitive reconciliation records, three approved waivers, and authored-input token provenance on every contract."
+    },
+    {
+      "command": "uv run pytest -q --ignore=tests/test_agent_team.py",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "480 tests passed with 11 unrelated deprecation warnings. The first agent-team collection attempt briefly encountered a concurrent edit indentation error; the owning process completed that edit and the later dedicated agent-team test passed."
+    },
+    {
+      "command": "uv run pytest tests/test_agent_team.py tests/test_agent_packs.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "23 tests and two subtests passed after the concurrent tests/test_agent_team.py edit stabilized."
+    },
+    {
+      "command": "uv run ruff check design_ontology_harness/authoring.py design_ontology_harness/component_specs.py design_ontology_harness/component_contracts.py tests/test_component_contracts.py && git diff --check",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Ruff reported no issues and the worktree diff contained no whitespace errors."
+    },
+    {
+      "command": "uv run python -c 'import json; from pathlib import Path; from design_ontology_harness.agent_team import validate_handoff_payload; p=Path(\"agent-team/handoffs/world-cup-hub-components-component-author-to-team-lead.json\"); assert validate_handoff_payload(json.loads(p.read_text()), target_repo=Path(\".\")) == []'",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "The component-author completion handoff passed direct payload, transition, artifact existence, and SHA-256 validation."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "The checked-in strict component gate remains red until Ontology Compiler regenerates projects/world-cup-hub/build/system/components/component_specs.json; that artifact still contains the pre-change family defaults and no authored-input provenance.",
+    "Repository-wide validate-agent-team still reports unrelated concurrent owners' stale artifact hashes. This handoff supersedes the component-scope paths, while the remaining paths require later handoffs from their owners.",
+    "The approved bracket-preview waiver is specific to the fixture-led group-stage release and must be reopened when knockout bracket exploration enters product scope.",
+    "Authored maps reference the current emitted --ds-* names. Ontology Compiler must rerun emitted-token resolution after token regeneration and may not substitute raw values or family defaults.",
+    "No application UI, runtime-theme.css, component_runtime.py, production_verifier.py, or generated system artifact was modified in this component-author stage."
+  ],
+  "next_action": "Team Lead accepts this ready component handoff, dispatches Ontology Compiler to regenerate the World Cup system from the current brand profile, token-curator completion, and authored component contracts, then reruns strict component and repository handoff gates before implementation or release claims."
+}

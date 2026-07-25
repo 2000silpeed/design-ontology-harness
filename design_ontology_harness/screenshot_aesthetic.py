@@ -71,6 +71,15 @@ def score_screenshots(
             ),
         },
         "metrics": metrics,
+        "metric_evidence": {
+            metric_id: [{
+                "source": "automated",
+                "method": "automated screenshot heuristic v1",
+                "artifacts": [str(path) for path in screenshot_paths],
+                "note": notes.get(metric_id),
+            }]
+            for metric_id in metrics
+        },
         "automated_metric_notes": notes,
         "automated_feature_report": {
             "aggregate": aggregate,

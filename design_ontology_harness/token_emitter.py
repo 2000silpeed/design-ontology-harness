@@ -24,7 +24,18 @@ from .adapters.base import (
     PresetBundle,
     _ensure_base_roles,
     _extract_semantic_roles,
+    apply_light_contrast_floor,
     css_var_declarations,
+    derive_dark_tokens,
+)
+from .implementation_linter import (
+    BODY_LINE_HEIGHT_FLOOR,
+    BODY_LINE_HEIGHT_FLOOR_HANGUL,
+)
+from .semantic_color_markdown import (
+    load_runtime_color_policy,
+    payload_sha256,
+    runtime_role_values,
 )
 
 SANS_FALLBACK = 'system-ui, -apple-system, "Segoe UI", sans-serif'
@@ -42,6 +53,75 @@ def _slug(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
 
 
+def _number(value: float) -> str:
+    return f"{value:g}"
+
+
+def _range_low(value: object) -> float | None:
+    """`"1.6-1.7"` 같은 범위 문자열에서 하한을 읽는다."""
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    if not isinstance(value, str):
+        return None
+    match = re.search(r"-?\d+(?:\.\d+)?", value)
+    return float(match.group(0)) if match else None
+
+
+def _korean_body_tracking(value: object) -> str:
+    """한글 본문 자간. 양수는 어절 덩어리를 풀어버리므로 0으로 막는다."""
+    amount = _range_low(value)
+    if amount is None or amount > 0:
+        return "0em"
+    return f"{_number(amount)}em"
+
+
+def reading_rhythm_declarations(
+    font_system: dict,
+    *,
+    korean_locale: bool = False,
+) -> list[str]:
+    """본문 조판 기본값.
+
+    행간 하한은 `lint-implementation`의 DS100과 같은 상수를 쓴다. 생성기가 게이트보다
+    낮은 값을 내보내면 자기 산출물이 자기 린트에 걸린다. 한글 프로젝트는 서체별
+    `script_guardrails`에서 행간·자간·줄바꿈 계약을 그대로 가져온다.
+
+    `korean_locale`은 preset 설치처럼 로케일이 명시된 경로용이다. preset bundle의
+    `font_system`에는 `needs_korean`이 없어서, 한글 프로젝트인데도 줄바꿈 계약이
+    빠진 토큰이 나가는 일이 생긴다.
+    """
+    type_scale = font_system.get("type_scale") or {}
+    line_heights = type_scale.get("line_heights") or {}
+    guardrails = font_system.get("script_guardrails") or {}
+    korean = korean_locale or (bool(font_system.get("needs_korean")) and bool(guardrails))
+    body_font = guardrails.get("body_font") or {}
+
+    if korean:
+        floor = BODY_LINE_HEIGHT_FLOOR_HANGUL
+        authored = _range_low(body_font.get("line_height"))
+    else:
+        floor = BODY_LINE_HEIGHT_FLOOR
+        authored = _range_low(line_heights.get("normal"))
+    body_leading = max(authored or 0.0, floor)
+
+    lines = [
+        f"  --ds-leading-tight: {line_heights.get('tight', 1.2)};",
+        f"  --ds-leading-body: {_number(body_leading)};",
+        f"  --ds-leading-relaxed: {line_heights.get('relaxed', 1.65)};",
+    ]
+    if not korean:
+        lines.append("  --ds-tracking-body: normal;")
+        return lines
+
+    wrap = (guardrails.get("wrap") or {}).get("body") or {}
+    lines.append(f"  --ds-tracking-body: {_korean_body_tracking(body_font.get('letter_spacing'))};")
+    lines.append(f"  --ds-wrap-word-break: {wrap.get('word_break', 'keep-all')};")
+    lines.append(f"  --ds-wrap-overflow: {wrap.get('overflow_wrap', 'normal')};")
+    return lines
+
+
 def _read_json(path: Path) -> dict:
     if not path.exists():
         return {}
@@ -53,8 +133,8 @@ def _hex_saturation_lightness(value: str) -> tuple[float, float]:
 
     raw = value.lstrip("#")
     r, g, b = (int(raw[i : i + 2], 16) / 255.0 for i in (0, 2, 4))
-    _, l, s = colorsys.rgb_to_hls(r, g, b)
-    return s, l
+    _, lightness, saturation = colorsys.rgb_to_hls(r, g, b)
+    return saturation, lightness
 
 
 def _brand_role_overrides(active_roles: dict) -> dict[str, str]:
@@ -72,8 +152,8 @@ def _brand_role_overrides(active_roles: dict) -> dict[str, str]:
         hex_value = entry.get("hex") if isinstance(entry, dict) else entry
         if not (isinstance(hex_value, str) and hex_value.startswith("#") and len(hex_value) == 7):
             continue
-        s, l = _hex_saturation_lightness(hex_value)
-        colored.append((role.lower(), hex_value.upper(), s, l))
+        saturation, lightness = _hex_saturation_lightness(hex_value)
+        colored.append((role.lower(), hex_value.upper(), saturation, lightness))
 
     # achromatic-photographic chrome strategy: role names are exact
     chrome_map = {
@@ -90,13 +170,13 @@ def _brand_role_overrides(active_roles: dict) -> dict[str, str]:
                 named.setdefault(token, hex_value)
         return named
 
-    for role, hex_value, _, l in colored:
+    for role, hex_value, _, lightness in colored:
         if "primary" in role or "anchor" in role:
             named.setdefault("primary", hex_value)
         elif "accent" in role:
             named.setdefault("accent", hex_value)
         elif "background" in role or "canvas" in role:
-            if l >= 0.6:
+            if lightness >= 0.6:
                 named.setdefault("canvas", hex_value)
         elif "border" in role:
             named.setdefault("border", hex_value)
@@ -168,21 +248,42 @@ def emit_project_tokens(
             semantic_tokens.setdefault(role, hex_value)
     if chrome_active:
         # 무채색 크롬에서 파생되는 나머지 역할도 정렬
-        ink = semantic_tokens.get("ink", "#141414")
-        semantic_tokens.setdefault("ink-subtle", semantic_tokens.get("ink-muted", "#737373"))
-        semantic_tokens["ink-inverse"] = "#FFFFFF"
-        semantic_tokens["surface-elevated"] = semantic_tokens.get("surface", "#FFFFFF")
-        semantic_tokens["surface-muted"] = "#F5F5F5"
-        semantic_tokens["surface-tint"] = "#F0F0F0"
-        semantic_tokens["border-strong"] = "#C9C9C9"
+        runtime_defaults = runtime_role_values()
+        ink = semantic_tokens.get("ink", runtime_defaults["ink"])
+        semantic_tokens.setdefault(
+            "ink-subtle", semantic_tokens.get("ink-muted", runtime_defaults["ink-subtle"])
+        )
+        semantic_tokens["ink-inverse"] = runtime_defaults["ink-inverse"]
+        semantic_tokens["surface-elevated"] = semantic_tokens.get(
+            "surface", runtime_defaults["surface-elevated"]
+        )
+        semantic_tokens["surface-muted"] = runtime_defaults["surface-muted"]
+        semantic_tokens["surface-tint"] = runtime_defaults["surface-tint"]
+        semantic_tokens["border-strong"] = runtime_defaults["border-strong"]
         semantic_tokens["link"] = ink
-    semantic_tokens = _ensure_base_roles(semantic_tokens)
+    semantic_tokens = apply_light_contrast_floor(_ensure_base_roles(semantic_tokens))
+    explicit_dark = (
+        bundle.blueprint.get("color_reference", {})
+        .get("expanded_palette", {})
+        .get("dark_semantic_roles")
+    ) or {}
+    dark_semantic_tokens = derive_dark_tokens(
+        semantic_tokens,
+        explicit_dark=explicit_dark,
+    )
+    runtime_policy = load_runtime_color_policy()
 
     lines: list[str] = []
     lines.append(f"/* project: {project_dir.name} — generated by design-ontology emit-tokens */")
     lines.append("/* 이 파일이 색/서체/라운딩의 단일 진실 소스입니다. 구현 CSS는 var(--ds-*)만 사용하세요. */")
+    lines.append(
+        "/* runtime-color-policy: "
+        f"{runtime_policy['schema_version']} sha256={payload_sha256(runtime_policy)} */"
+    )
     lines.append("")
     lines.append(":root {")
+    lines.append("  color-scheme: light;")
+    lines.append("")
 
     lines.append("  /* semantic roles */")
     lines.extend(css_var_declarations(semantic_tokens))
@@ -220,16 +321,29 @@ def emit_project_tokens(
     mono_stack = _font_stack(font_system.get("mono"), fallback=MONO_FALLBACK)
     lines.append("")
     lines.append("  /* typography (blueprint font_system) */")
-    if display_stack:
-        lines.append(f"  --ds-font-display: {display_stack};")
-    if heading_stack:
-        lines.append(f"  --ds-font-heading: {heading_stack};")
-    if body_stack:
-        lines.append(f"  --ds-font-body: {body_stack};")
-    if korean_stack:
-        lines.append(f"  --ds-font-ko: {korean_stack};")
-    if mono_stack:
-        lines.append(f"  --ds-font-mono: {mono_stack};")
+    lines.append(f"  --ds-font-display: {display_stack or heading_stack or SERIF_FALLBACK};")
+    lines.append(f"  --ds-font-heading: {heading_stack or body_stack or SANS_FALLBACK};")
+    lines.append(f"  --ds-font-body: {body_stack or SANS_FALLBACK};")
+    lines.append(f"  --ds-font-ko: {korean_stack or body_stack or SANS_FALLBACK};")
+    lines.append(f"  --ds-font-mono: {mono_stack or MONO_FALLBACK};")
+    default_type_sizes = {
+        "xs": "0.75rem",
+        "sm": "0.875rem",
+        "md": "1rem",
+        "lg": "1.125rem",
+        "2xl": "1.5rem",
+        "3xl": "1.875rem",
+        "4xl": "2.25rem",
+    }
+    type_scale = font_system.get("type_scale") or {}
+    authored_sizes = type_scale.get("sizes") or {}
+    lines.append("  /* type scale */")
+    for key, fallback in default_type_sizes.items():
+        value = authored_sizes.get(key, fallback)
+        css_value = f"{value}px" if isinstance(value, (int, float)) else str(value)
+        lines.append(f"  --ds-text-{key}: {css_value};")
+    lines.append("  /* reading rhythm */")
+    lines.extend(reading_rhythm_declarations(font_system))
 
     radius = categories.get("radius") or {}
     bias = radius.get("visual_corner_bias") or "medium"
@@ -247,7 +361,33 @@ def emit_project_tokens(
         lines.append("  /* spacing scale */")
         for index, value in enumerate(spacing_scale):
             lines.append(f"  --ds-space-{index}: {value}px;")
+    lines.append("")
+    lines.append("  /* pixel-addressable component spacing aliases */")
+    spacing_aliases = {4, 8, 12, 16, 20, 24, 32, 48, 64, 96}
+    spacing_aliases.update(
+        int(value)
+        for value in spacing_scale
+        if isinstance(value, (int, float)) and float(value).is_integer()
+    )
+    for value in sorted(spacing_aliases):
+        lines.append(f"  --ds-space-px-{value}: {value}px;")
 
+    lines.extend([
+        "",
+        "  /* component motion contract */",
+        "  --ds-duration-120: 120ms;",
+        "  --ds-duration-180: 180ms;",
+        "  --ds-ease-standard: cubic-bezier(0.2, 0, 0, 1);",
+        "  --ds-elevation-lg: 0 18px 48px color-mix(in srgb, var(--ds-color-ink) 16%, transparent);",
+    ])
+
+    lines.append("}")
+    lines.append("")
+    lines.append('html[data-theme="dark"] {')
+    lines.append("  color-scheme: dark;")
+    lines.append("")
+    lines.append("  /* semantic roles derived by the typed runtime color policy */")
+    lines.extend(css_var_declarations(dark_semantic_tokens))
     lines.append("}")
 
     body = "\n".join(lines)

@@ -29,6 +29,9 @@ design-ontology = "design_ontology_harness.cli:main"
 [tool.hatch.build.targets.wheel]
 packages = ["design_ontology_harness"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"docs/color-reference.md" = "design_ontology_harness/resources/color-reference.md"
+
 [tool.hatch.build.targets.sdist]
 include = [
   "design_ontology_harness",

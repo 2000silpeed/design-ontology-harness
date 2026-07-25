@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 from .advanced_components import get_advanced_component
@@ -642,11 +643,65 @@ def generate_component_specs(
     specs: list[dict] = []
     for comp in component_list:
         family = comp["family"]
+        is_authored = comp.get("decision_layer") == "llm-authored-core" or comp.get("source") == "llm-authored-component-decision"
         advanced = get_advanced_component(comp["name"])
         archetype_key = _infer_slot_archetype(comp["name"])
         archetype = SLOT_ARCHETYPES.get(archetype_key) if archetype_key else None
-        family_anatomy = COMPONENT_ANATOMY.get(family) or COMPONENT_ANATOMY.get("data-display", {})
+        family_anatomy = COMPONENT_ANATOMY.get(family) or COMPONENT_ANATOMY.get("surface", {})
         source = advanced or archetype or family_anatomy
+
+        source_anatomy = source.get("anatomy", {}) if isinstance(source.get("anatomy"), dict) else source
+        source_parts = list(source_anatomy.get("parts", []))
+        source_states = list(source_anatomy.get("states", []))
+        authored_parts = _authored_anatomy_parts(comp.get("anatomy"))
+        declared_state_model = comp.get("state_model") if isinstance(comp.get("state_model"), dict) else {}
+        authored_states = _dedupe_values([
+            *_string_values(comp.get("states")),
+            *_string_values(declared_state_model.get("domain_states")),
+        ])
+        final_parts = authored_parts or (
+            [f"{comp['name']}-root", "primary-content", "state-indicator(optional)", "action-slot(optional)"]
+            if is_authored
+            else source_parts
+        )
+        final_states = authored_states or source_states
+        accessibility = _dedupe_values([
+            *source.get("accessibility", []),
+            *_string_values(comp.get("accessibility_notes")),
+        ])
+        authored_token_input = comp.get("tokens")
+        if is_authored:
+            token_bindings = {
+                str(slot): _normalise_token_value(value)
+                for slot, value in authored_token_input.items()
+            } if isinstance(authored_token_input, dict) else {}
+            token_provenance = (
+                "authored-input" if token_bindings else "missing-authored-input"
+            )
+        else:
+            token_bindings = _build_token_bindings(comp["name"], family, source)
+            token_provenance = "generated-family-default"
+        if not is_authored and isinstance(comp.get("token_notes"), dict):
+            token_bindings.update({
+                str(slot): _normalise_token_value(value)
+                for slot, value in comp["token_notes"].items()
+            })
+        interaction_contract = comp.get("interaction") or comp.get("interactions") or _default_interaction_contract(final_states)
+        data_contract = comp.get("data_contract") or _default_data_contract(comp, family)
+        content_rules = _string_values(comp.get("content_rules"))
+        dos_and_donts = comp.get("dos_and_donts") if isinstance(comp.get("dos_and_donts"), dict) else {}
+        contract_issues = _component_contract_issues(
+            comp,
+            is_authored=is_authored,
+            domain_states=authored_states,
+            interaction=interaction_contract,
+            data_contract=data_contract,
+            content_rules=content_rules,
+            dos_and_donts=dos_and_donts,
+            anatomy_parts=final_parts,
+            token_bindings=authored_token_input,
+            token_provenance=token_provenance,
+        )
 
         kb_evidence = _find_kb_evidence(comp["name"], family, documents)
 
@@ -657,15 +712,41 @@ def generate_component_specs(
             "advanced_component": bool(advanced),
             "role": comp.get("role", ""),
             "source_pattern": comp.get("source", ""),
+            "contract_version": "component-contract/v1",
+            "contract_status": "needs-authoring" if contract_issues else "complete",
+            "contract_issues": contract_issues,
+            "contract_provenance": "llm-authored" if is_authored else ("advanced-catalog" if advanced else "generated-baseline"),
+            "supports_primitive": comp.get("supports_primitive"),
+            "decision_reason": comp.get("decision_reason", ""),
             "usage_guidance": (advanced or {}).get("use_when", comp.get("usage_guidance", [])),
             "avoid_when": (advanced or {}).get("avoid_when", comp.get("avoid_when", [])),
             "pairs_with": (advanced or {}).get("pairs_with", comp.get("pairs_with", [])),
             "anatomy": {
-                "parts": (source.get("anatomy", {}) if isinstance(source.get("anatomy"), dict) else source).get("parts", []),
-                "states": (source.get("anatomy", {}) if isinstance(source.get("anatomy"), dict) else source).get("states", []),
+                "parts": final_parts,
+                "states": final_states,
             },
-            "tokens": _build_token_bindings(comp["name"], family, source),
-            "accessibility": source.get("accessibility", []),
+            "state_model": {
+                "domain_states": authored_states,
+                "interaction_states": [] if authored_states else source_states,
+                "all_states": final_states,
+                "source": "declared" if authored_states else "generated",
+            },
+            "variants": comp.get("variants") or {
+                "axes": [],
+                "default": final_states[0] if final_states else "default",
+                "constraints": ["Only variants declared by this contract may be implemented."],
+            },
+            "props": comp.get("props") or _default_component_props(final_states, comp.get("supports_primitive")),
+            "interaction": interaction_contract,
+            "data_contract": data_contract,
+            "responsive": comp.get("responsive") or comp.get("responsive_rules") or _default_responsive_contract(responsive_guidance),
+            "content_rules": content_rules,
+            "dos_and_donts": dos_and_donts,
+            "token_notes": comp.get("token_notes") or [],
+            "tokens": token_bindings,
+            "token_provenance": token_provenance,
+            "accessibility": accessibility,
+            "context_contract": comp.get("context_contract") or {},
             "brand_adaptation": _build_adaptation_notes(
                 comp["name"], family, brand_keywords, anti_keywords, adaptations, anti_rules
             ),
@@ -686,6 +767,14 @@ def generate_component_specs(
         }
         specs.append(spec)
 
+    component_decision = (
+        brand_profile.get("component_decision")
+        if isinstance(brand_profile.get("component_decision"), dict)
+        else {}
+    )
+    authored_scope = any(
+        spec.get("contract_provenance") == "llm-authored" for spec in specs
+    )
     return {
         "brand": brand_name,
         "total_components": len(specs),
@@ -696,6 +785,21 @@ def generate_component_specs(
         "visual_guidance": visual_guidance,
         "typography_guidance": typography_guidance,
         "responsive_guidance": responsive_guidance,
+        "product_primitives": _string_values(brand_profile.get("product_primitives")),
+        "primitive_reconciliation_version": (
+            component_decision.get("primitive_reconciliation_version")
+            if authored_scope
+            else None
+        ),
+        "primitive_reconciliation": (
+            [
+                dict(entry)
+                for entry in component_decision.get("primitive_reconciliation", [])
+                if isinstance(entry, dict)
+            ]
+            if authored_scope
+            else []
+        ),
         "specs": specs,
     }
 
@@ -715,7 +819,7 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
     md_lines.append("2. **컴포넌트를 직접 구현한다** — 아래 각 컴포넌트의 anatomy(구조), states(상태), 토큰 바인딩, 접근성 규칙을 그대로 따라 완전하게 구현한다. '임시', 'TODO', '플레이스홀더' 같은 반쪽 구현을 남기지 않는다.")
     md_lines.append("3. **라이브러리 기본 스타일 금지** — 라이브러리 컴포넌트를 그대로 import해서 쓰지 않는다. 반드시 디자인 토큰(--color-*, --space-*, --radius-*, --font-*)으로 스타일을 명시적으로 바인딩한다.")
     md_lines.append("4. **접근성은 옵션이 아니다** — 각 컴포넌트의 '접근성' 섹션에 정의된 role, aria-*, label, focus 관리 규칙을 전부 적용한다.")
-    md_lines.append("5. **hex 값 하드코딩 금지** — 색상은 반드시 semantic token을 경유한다 (예: `color: var(--color-ink)` not `color: #2C2C2C`).")
+    md_lines.append("5. **hex 값 하드코딩 금지** — 색상은 반드시 semantic token을 경유한다 (예: `color: var(--ds-color-ink)` not `color: #2C2C2C`).")
     md_lines.append("6. **모바일 overflow 금지** — 버튼, CTA, 탭, 필터칩, 툴바 액션은 320px viewport에서 화면 밖으로 나가면 안 된다. fixed/min-width px 값으로 폭을 고정하지 말고 wrap/stack fallback을 제공한다.")
     md_lines.append("")
 
@@ -796,6 +900,17 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
         md_lines.append(f"## {spec['family']} / {spec['name']}\n")
         role = spec.get("role") or "—"
         md_lines.append(f"**역할**: {role}\n")
+        md_lines.append(
+            f"**Component contract**: `{spec.get('contract_version', 'n/a')}` / "
+            f"`{spec.get('contract_status', 'n/a')}` / provenance `{spec.get('contract_provenance', 'n/a')}`\n"
+        )
+        if spec.get("supports_primitive"):
+            md_lines.append(f"**Domain primitive**: {spec['supports_primitive']}\n")
+        if spec.get("contract_issues"):
+            md_lines.append("**Authoring gaps**:")
+            for issue in spec["contract_issues"]:
+                md_lines.append(f"- {issue}")
+            md_lines.append("")
 
         if spec.get("source_pattern"):
             md_lines.append(f"**탐지 출처**: {spec['source_pattern']}\n")
@@ -827,6 +942,16 @@ def write_component_specs(output_dir: Path, specs_data: dict) -> None:
         for state in spec["anatomy"]["states"]:
             desc = _state_description(state, spec["family"])
             md_lines.append(f"| `{state}` | {desc} |")
+        md_lines.append("")
+
+        md_lines.append("### 구조화된 구현 계약\n")
+        md_lines.append(f"- Props: `{spec.get('props', {})}`")
+        md_lines.append(f"- Variants: `{spec.get('variants', {})}`")
+        md_lines.append(f"- Interaction: `{spec.get('interaction', {})}`")
+        md_lines.append(f"- Data: `{spec.get('data_contract', {})}`")
+        md_lines.append(f"- Responsive: `{spec.get('responsive', {})}`")
+        if spec.get("content_rules"):
+            md_lines.append("- Content rules: " + "; ".join(spec["content_rules"]))
         md_lines.append("")
 
         md_lines.append("### 토큰 바인딩\n")
@@ -985,6 +1110,21 @@ def _collect_reference_observations(design_context_pack: dict) -> list[dict]:
     return observations[:12]
 
 
+TOKEN_ALIASES = {
+    "--color-brand-primary": "--ds-color-primary",
+    "--color-brand-accent": "--ds-color-accent",
+    "--color-text": "--ds-color-ink",
+    "--color-text-inverse": "--ds-color-ink-inverse",
+    "--color-text-muted": "--ds-color-ink-muted",
+    "--color-text-subtle": "--ds-color-ink-subtle",
+    "--color-link-hover": "--ds-color-link",
+}
+LEGACY_TOKEN_RE = re.compile(
+    r"--(?:color|space|radius|font|text|leading|duration|ease|elevation)-[a-z0-9-]+",
+    re.IGNORECASE,
+)
+
+
 def _build_token_bindings(name: str, family: str, source: dict) -> dict[str, str]:
     """Return the token bindings for a component.
 
@@ -998,8 +1138,195 @@ def _build_token_bindings(name: str, family: str, source: dict) -> dict[str, str
         if not isinstance(pattern, str):
             result[slot] = pattern
             continue
-        result[slot] = pattern.replace("{component}", name).replace("{severity}", "info")
+        value = pattern.replace("{component}", name).replace("{severity}", "info")
+        result[slot] = _normalise_token_value(value)
     return result
+
+
+def _normalise_token_value(value):
+    if not isinstance(value, str):
+        return value
+
+    def replace(match: re.Match) -> str:
+        token = match.group(0).lower()
+        if token in TOKEN_ALIASES:
+            return TOKEN_ALIASES[token]
+        if token.startswith("--space-"):
+            return "--ds-space-px-" + token.removeprefix("--space-")
+        return "--ds-" + token.removeprefix("--")
+
+    return LEGACY_TOKEN_RE.sub(replace, value)
+
+
+def _string_values(value) -> list[str]:
+    if isinstance(value, str):
+        return [value] if value.strip() else []
+    if isinstance(value, list):
+        return [str(item).strip() for item in value if str(item).strip()]
+    return []
+
+
+def _dedupe_values(values: list[str]) -> list[str]:
+    return list(dict.fromkeys(value for value in values if value))
+
+
+def _authored_anatomy_parts(value) -> list[str]:
+    if isinstance(value, dict):
+        return _string_values(value.get("parts"))
+    return _string_values(value)
+
+
+def _authored_contract_issues(component: dict) -> list[str]:
+    required = {
+        str(item).strip().lower().replace("_", " ")
+        for item in component.get("must_document", [])
+        if str(item).strip()
+    }
+    checks = {
+        "anatomy": bool(_authored_anatomy_parts(component.get("anatomy"))),
+        "states": bool(_string_values(component.get("states"))),
+        "content rules": bool(_string_values(component.get("content_rules"))),
+        "accessibility": bool(_string_values(component.get("accessibility_notes"))),
+        "dos and donts": bool(component.get("dos_and_donts")),
+    }
+    return [f"missing authored {field}" for field, complete in checks.items() if field in required and not complete]
+
+
+def _authored_token_binding_issues(
+    value,
+    *,
+    anatomy_parts: list[str],
+    states: list[str],
+) -> list[str]:
+    if not isinstance(value, dict) or not value:
+        return ["missing authored token bindings"]
+    issues: list[str] = []
+    known_parts = set(anatomy_parts)
+    known_states = set(states)
+    targeted_parts: set[str] = set()
+    targeted_states: set[str] = set()
+    for slot, token_value in value.items():
+        if not isinstance(slot, str):
+            issues.append("authored token slot names must be strings")
+            continue
+        segments = slot.split(".")
+        if len(segments) < 3 or segments[0] not in {"component", "part", "state"}:
+            issues.append(f"authored token slot has invalid target: {slot}")
+            continue
+        scope, target = segments[0], segments[1]
+        if scope == "part":
+            targeted_parts.add(target)
+            if target not in known_parts:
+                issues.append(f"authored token slot targets unknown anatomy part: {slot}")
+        elif scope == "state":
+            targeted_states.add(target)
+            if target not in known_states:
+                issues.append(f"authored token slot targets unknown state: {slot}")
+        if not isinstance(token_value, str) or re.search(
+            r"var\(\s*--ds-[a-zA-Z0-9-]+", token_value
+        ) is None:
+            issues.append(f"authored token slot lacks an emitted --ds-* reference: {slot}")
+    if not targeted_parts:
+        issues.append("authored tokens do not target anatomy")
+    if not targeted_states:
+        issues.append("authored tokens do not target states")
+    return _dedupe_values(issues)
+
+
+def _component_contract_issues(
+    component: dict,
+    *,
+    is_authored: bool,
+    domain_states: list[str],
+    interaction: dict,
+    data_contract: dict,
+    content_rules: list[str],
+    dos_and_donts: dict,
+    anatomy_parts: list[str],
+    token_bindings,
+    token_provenance: str,
+) -> list[str]:
+    """Return authoring gaps that prevent a production-ready contract.
+
+    Family anatomy and interaction-state defaults are useful implementation
+    scaffolding, but they are not evidence that a component models the product
+    domain.  A complete contract must carry its own domain states, events,
+    required data, content rules, and both positive and negative guidance.
+    """
+
+    issues = _authored_contract_issues(component) if is_authored else []
+    if is_authored:
+        issues.extend(
+            _authored_token_binding_issues(
+                token_bindings,
+                anatomy_parts=anatomy_parts,
+                states=domain_states,
+            )
+        )
+        if token_provenance != "authored-input":
+            issues.append("authored token provenance is not authored-input")
+    interaction = interaction if isinstance(interaction, dict) else {}
+    data_contract = data_contract if isinstance(data_contract, dict) else {}
+    dos_and_donts = dos_and_donts if isinstance(dos_and_donts, dict) else {}
+    substantive_checks = {
+        "missing domain states": bool(domain_states),
+        "missing interaction events": bool(_string_values(interaction.get("events"))),
+        "missing required data fields": bool(_string_values(data_contract.get("required_fields"))),
+        "missing content rules": bool(content_rules),
+        "missing dos guidance": bool(_string_values(dos_and_donts.get("do"))),
+        "missing donts guidance": bool(_string_values(dos_and_donts.get("dont"))),
+    }
+    issues.extend(message for message, complete in substantive_checks.items() if not complete)
+    return _dedupe_values(issues)
+
+
+def _default_component_props(states: list[str], supports_primitive) -> dict:
+    props = {
+        "state": {
+            "type": "enum",
+            "values": states or ["default"],
+            "required": False,
+            "default": states[0] if states else "default",
+        }
+    }
+    if supports_primitive:
+        props["data"] = {
+            "type": "domain-object",
+            "object": str(supports_primitive),
+            "required": True,
+        }
+    return props
+
+
+def _default_interaction_contract(states: list[str]) -> dict:
+    return {
+        "events": [],
+        "state_transitions": [],
+        "focus_behavior": "Preserve visible focus and logical DOM order.",
+        "state_coverage": states or ["default"],
+    }
+
+
+def _default_data_contract(component: dict, family: str) -> dict:
+    domain_object = component.get("supports_primitive") or component.get("role") or component.get("name")
+    return {
+        "domain_object": domain_object,
+        "required_fields": [],
+        "provenance_required": family in {"data-display", "content", "editorial"},
+        "empty_state_required": family in {"data-display", "content", "editorial"},
+    }
+
+
+def _default_responsive_contract(responsive_guidance: dict | None) -> dict:
+    guidance = responsive_guidance or {}
+    return {
+        "required_widths_px": guidance.get("required_widths_px") or [320, 360, 390, 430],
+        "control_rules": guidance.get("control_rules") or [
+            "No horizontal viewport overflow.",
+            "Primary actions remain visible and reachable.",
+        ],
+        "container_behavior": "wrap, stack, or reflow without hiding product state",
+    }
 
 
 def _build_adaptation_notes(
@@ -1471,7 +1798,7 @@ def _build_implementation_notes(
         notes.append("빈 상태(empty-state)와 에러 상태를 반드시 처리")
     elif family == "marketing":
         notes.append("섹션에 <h2 id=\"...\">과 aria-labelledby 필수")
-        notes.append("CSS 변수(var(--color-*))를 그대로 쓰고 hex 하드코딩 금지")
+        notes.append("CSS 변수(var(--ds-*))를 그대로 쓰고 hex 하드코딩 금지")
         notes.append("다크 모드는 globals.css의 prefers-color-scheme 블록에 위임")
 
     if typography_guidance and typography_guidance.get("primary_script") == "korean":

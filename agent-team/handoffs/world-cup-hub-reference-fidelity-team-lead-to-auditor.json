@@ -1,0 +1,116 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-reference-fidelity-20260714",
+  "created_at": "2026-07-14T21:39:00+09:00",
+  "project": "world-cup-hub",
+  "from_role": "team-lead",
+  "to_role": "reference-fidelity-auditor",
+  "stage": "fidelity",
+  "status": "ready",
+  "summary": "최초 시안과 구현의 차이를 독립적으로 차단하기 위해 core Fidelity Auditor와 전용 stage를 추가했다. 승인된 Fixture Compass 방향은 조형 범위만 계약으로 고정했고, Semantic OS 색상·서체·IA·카피·로고·에셋 유사도는 비교에서 제외했다.",
+  "input_artifacts": [
+    {
+      "path": "projects/world-cup-hub/fixture-desk/screenshots/production/fixture-desk-light-desktop.png",
+      "sha256": "7b2fb85207bcc3037b3410fd059ef7f66e57621f2d307f1eec78dc0cb81c7fee"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "agent-team/agent-team.json",
+      "sha256": "87a0779a779b70453bc09d7bca3f88c62fbd382dc9a07716d04fc9460c8205c7"
+    },
+    {
+      "path": "agent-team/TEAM_RUNBOOK.md",
+      "sha256": "b377384f95ce7a0f07e39ca6a0fbfe3b2e8d802eb008fca900219c24607d5427"
+    },
+    {
+      "path": "agent-team/handoffs/handoff.schema.json",
+      "sha256": "0030a4e23145fa4c3e0707170595d118cd7d3083d3f9beb580660e2d478c7320"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/reference-fidelity-contract.json",
+      "sha256": "ffc5da9dfc9319c9d0726b754690f74dc3395206f64979c2a89a1ff594bade07"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "4e4fbf6b6ca32ac5ceb70f2d37b20a3f4204e2f060f1ac92f13061d83fbcc7f5"
+    },
+    {
+      "path": "README.md",
+      "sha256": "31e177df759c23778f91e90ff7e8318a84e0fda0a80d5d5ab42064f573c95dc8"
+    },
+    {
+      "path": "design_ontology_harness/agent_team.py",
+      "sha256": "5d9f3454ac7835bb2a3f7904fd28f35b30a12f5dfee8c75d03589feeb29806f4"
+    },
+    {
+      "path": "design_ontology_harness/cli.py",
+      "sha256": "ea5c2b9ceff01119d327bc8cb16e170ee343bf8f314c746d6b95b546bde395a4"
+    },
+    {
+      "path": "design_ontology_harness/production_verifier.py",
+      "sha256": "d3533a0dd5d263878ee4b6d61bc72a6b78d86bbe17321100043a3bc7e162804d"
+    },
+    {
+      "path": "design_ontology_harness/reference_fidelity.py",
+      "sha256": "b1860fa876b2081e7bbe34506d4b8bf1888875324a2b1a250cc0a8312baaa0d4"
+    },
+    {
+      "path": "plugins/design-system-harness/skills/design-production-qa/SKILL.md",
+      "sha256": "21bc57e4b290e3defe161afd24046ea4876bf2e520196edaaf0b7c3a54bfafd9"
+    },
+    {
+      "path": "tests/test_agent_team.py",
+      "sha256": "8b5a0ba353ea05798e10f16b2c224f1c4ba0695ee54ad759bac72df727423116"
+    },
+    {
+      "path": "tests/test_reference_fidelity.py",
+      "sha256": "625af2844e01d01e9150cf99779b8fa9a55a2657ad48081ddbd02f0776bcb419"
+    },
+    {
+      "path": "tests/test_production_verifier.py",
+      "sha256": "4ef5339d5370188c5b453804e38fed145cd8447f3d0f2031e703e35eec8db4d1"
+    },
+    {
+      "path": "docs/REFERENCE_FIDELITY_LOOP.md",
+      "sha256": "ac8826a5b89b117652adc188c2bf5a94ccbd0c3d782cf0da68321450d9c1d56b"
+    }
+  ],
+  "changed_paths": [
+    "design_ontology_harness/reference_fidelity.py",
+    "design_ontology_harness/production_verifier.py",
+    "design_ontology_harness/cli.py",
+    "design_ontology_harness/agent_team.py",
+    "agent-team/agent-team.json",
+    "agent-team/TEAM_RUNBOOK.md",
+    "agent-team/handoffs/handoff.schema.json",
+    "plugins/design-system-harness/skills/design-reference-fidelity-auditor/",
+    ".claude/agents/design-reference-fidelity-auditor.md",
+    "projects/world-cup-hub/design-system/reference-fidelity-contract.json"
+  ],
+  "decisions": [
+    "Reference Inspector는 구현 전 advisory 조사자로 유지하고, 구현 후 승인 책임은 별도 core Fidelity Auditor가 맡는다.",
+    "UI Implementer에서 Production QA로 직접 넘어가는 전환을 제거하고 fidelity stage를 필수 경로로 둔다.",
+    "승인 이미지는 composition, morphology, density, hierarchy, task visibility, responsive translation, contextual linkage에만 권한을 가진다.",
+    "같은 스크린샷 SHA 묶음에 점수만 다시 매긴 반복은 거부한다."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run pytest tests/test_agent_team.py tests/test_agent_packs.py tests/test_reference_fidelity.py tests/test_production_verifier.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "44 tests and 2 subtests passed; paired-review hashing, prohibited scopes, fresh runtime/screenshot iteration, missing-contract fail-closed behavior, and agent transition rules were covered."
+    },
+    {
+      "command": "validate_reference_fidelity_contract(projects/world-cup-hub/design-system/reference-fidelity-contract.json)",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "The authored contract resolved its brief and two approved reference hashes with eight allowed metrics and no validation errors."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "현재 Fixture Desk는 새 gate를 아직 통과하지 않았으므로 이전 release decision은 더 이상 유효하지 않다."
+  ],
+  "next_action": "Fidelity Auditor가 승인 시안과 현재 네 개 스크린샷을 쌍대 비교하고, 실패하면 해시가 고정된 수정 브리프를 UI Implementer에게 반환한다."
+}

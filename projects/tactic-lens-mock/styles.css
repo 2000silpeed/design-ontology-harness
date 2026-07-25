@@ -940,7 +940,7 @@ select {
   align-items: start;
   color: var(--color-muted);
   font-size: 0.8rem;
-  line-height: 1.45;
+  line-height: 1.6;
 }
 
 .log-list li span {
@@ -1213,7 +1213,7 @@ select {
 .condition-row span,
 .report-card p {
   color: var(--color-muted);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .condition-row strong {

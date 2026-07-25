@@ -1,6 +1,6 @@
 import unittest
 
-from design_ontology_harness.spec_analyzer import analyze_spec
+from design_ontology_harness.spec_analyzer import analyze_spec, build_component_list
 
 
 class SpecAnalyzerTests(unittest.TestCase):
@@ -43,6 +43,30 @@ class SpecAnalyzerTests(unittest.TestCase):
         self.assertNotIn("comments and discussion", patterns)
         self.assertNotIn("pricing and plans", patterns)
         self.assertNotIn("dashboard cards", patterns)
+
+    def test_explicit_component_inventory_is_authoritative(self) -> None:
+        spec_text = """
+        # Tournament product
+
+        ## 주요 컴포넌트
+        - **schedule-table**: 킥오프, 팀, 조, 경기장, 상태를 표시한다.
+        - **prediction-panel**: 팬의 승무패 선택과 집계를 보여준다.
+        - `discussion-thread`: 경기별 의견과 신고 상태를 보여준다.
+
+        ## 비범위
+        실시간 중계 영상은 제공하지 않으며 운영자가 콘텐츠를 작성하는
+        리치 텍스트 에디터도 만들지 않는다.
+        """
+
+        detected = analyze_spec(spec_text)
+        component_list = build_component_list(detected)
+
+        self.assertEqual(
+            [component["name"] for component in component_list],
+            ["schedule-table", "prediction-panel", "discussion-thread"],
+        )
+        self.assertTrue(detected[0]["authoritative"])
+        self.assertEqual(component_list[0]["decision_layer"], "spec-explicit")
 
 
 if __name__ == "__main__":

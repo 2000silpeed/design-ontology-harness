@@ -1,0 +1,57 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "semantic-color-authority-improvement-2026-07-13-001",
+  "created_at": "2026-07-13T22:51:37+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "team-lead",
+  "to_role": "ontology-compiler",
+  "stage": "system",
+  "status": "needs-work",
+  "summary": "Make repository-level handoff validation preserve immutable historical evidence while checking the current SHA only for the latest handoff that mentions each artifact path.",
+  "input_artifacts": [
+    {
+      "path": "design_ontology_harness/agent_team.py",
+      "sha256": "d0092df08f2f31d788c752513f281f42a3865fbd11ff88b5bf16f91e659579a0"
+    },
+    {
+      "path": "tests/test_agent_team.py",
+      "sha256": "6d91ec1b7dda9da67496d767404e8ffb140359516bf34806c09ffdb2cd795fab"
+    },
+    {
+      "path": "agent-team/handoffs/handoff.schema.json",
+      "sha256": "7eeda650de063029ff5f35d08a2bbbb55d538f2d2cd8c5acf4033a7497740d3d"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "design_ontology_harness/agent_team.py",
+      "sha256": "d0092df08f2f31d788c752513f281f42a3865fbd11ff88b5bf16f91e659579a0"
+    },
+    {
+      "path": "tests/test_agent_team.py",
+      "sha256": "6d91ec1b7dda9da67496d767404e8ffb140359516bf34806c09ffdb2cd795fab"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/color-authority-to-handoff-validator.json"
+  ],
+  "decisions": [
+    "Keep direct validate_handoff_payload calls strict against the current target repository.",
+    "At directory validation time, check current content only for the chronologically latest handoff per artifact path, regardless of run_id.",
+    "Continue schema and digest-format validation for superseded handoff records so historical evidence remains auditable."
+  ],
+  "gate_results": [
+    {
+      "command": "read-only handoff validator audit",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "Every historical artifact digest is currently compared to the mutable worktree, so a legitimate later handoff makes an earlier record fail validation."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Selecting latest records only by run_id would still fail when a later run updates the same artifact.",
+    "Ties must be deterministic and separate artifact paths must retain independent latest-record checks."
+  ],
+  "next_action": "Ontology Compiler updates only agent_team.py and its tests, covers same-run and cross-run supersession plus direct strict validation, then returns a schema-valid completion handoff."
+}

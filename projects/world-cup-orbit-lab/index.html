@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>World Cup Orbit — Watch Compass</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet" />
+    <link rel="stylesheet" href="design-system/tokens.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="masthead">
+        <a class="brand" href="#top" aria-label="World Cup Orbit home"><span class="brand-dot"></span><span>WORLD CUP<br /><i>ORBIT</i></span></a>
+        <nav class="stage-rail" aria-label="Tournament stage">
+          <button data-stage="Group Stage"><b>•••</b><span>Group Stage<small>48 teams</small></span></button>
+          <button data-stage="Round of 32"><b>○</b><span>Round of 32<small>32 teams</small></span></button>
+          <button class="selected" data-stage="Round of 16"><b>◉</b><span>Round of 16<small>16 teams</small></span></button>
+          <button data-stage="Quarter-finals"><b>○</b><span>Quarter-finals<small>8 teams</small></span></button>
+          <button data-stage="Semi-finals"><b>○</b><span>Semi-finals<small>4 teams</small></span></button>
+          <button data-stage="Final"><b>○</b><span>Final<small>2 teams</small></span></button>
+        </nav>
+        <div class="header-actions"><button class="icon-button" aria-label="Language"><span class="material-symbols-outlined">language</span> EN</button><button class="icon-button" aria-label="Open menu"><span class="material-symbols-outlined">menu</span></button></div>
+      </header>
+
+      <section class="compass-grid" id="top">
+        <aside class="fixture-compass" aria-label="Fixture compass">
+          <div class="section-heading"><span class="material-symbols-outlined">explore</span><div><strong>FIXTURE COMPASS</strong><small>Navigate the tournament</small></div></div>
+          <div class="stage-index" aria-label="Stage progress"><span>Quarter-finals <b>8</b></span><span class="active">Round of 16 <b>16</b></span><span>Round of 32 <b>32</b></span><span>Group Stage <b>48</b></span></div>
+          <div class="orbit-area" style="background-image:url('assets/orbit-canvas.png')">
+            <button class="orbit-match mini a" data-match="Brazil vs South Korea">BRA<br /><small>KOR</small></button>
+            <button class="orbit-match mini b" data-match="France vs Switzerland">FRA<br /><small>SUI</small></button>
+            <button class="orbit-match mini c" data-match="Netherlands vs USA">NED<br /><small>USA</small></button>
+            <button class="orbit-match mini d" data-match="Mexico vs Denmark">MEX<br /><small>DEN</small></button>
+            <button class="orbit-match selected-match" data-match="Japan vs Morocco"><span>ROUND OF 16</span><strong>JPN <i>vs</i> MAR</strong><small>Sat, Jul 18<br />03:00 KST</small></button>
+          </div>
+          <button class="filter-button"><span class="material-symbols-outlined">tune</span><span><b>FILTER & VIEW</b><small>Region, quality, time</small></span><span class="material-symbols-outlined">chevron_right</span></button>
+        </aside>
+
+        <section class="match-brief" aria-live="polite">
+          <div class="field-texture"></div>
+          <div class="brief-inner">
+            <p class="eyebrow"><span></span> FEATURED FIXTURE</p>
+            <h1 id="match-name">Japan v Morocco</h1>
+            <div class="kickoff"><span class="material-symbols-outlined">calendar_month</span><b>Sat, Jul 18</b><span>·</span><span class="material-symbols-outlined">schedule</span><b>03:00 KST</b></div>
+            <p class="venue">Saitama Stadium <i></i> Saitama, Japan</p>
+            <div class="rule"></div>
+            <p class="stakes-title">⚑ &nbsp; THE STAKES</p>
+            <p class="stakes">The winner advances to the Quarter-final to face Mexico or Denmark.</p>
+            <section class="path-card" aria-label="Tournament consequence"><b>THE PATH AHEAD</b><div><span>WINNER<br /><strong>JPN / MAR</strong></span><i>→</i><span>QUARTER-FINAL<br /><strong>MEX <em>vs</em> DEN</strong></span></div></section>
+          </div>
+          <button class="intel-button"><span class="material-symbols-outlined">description</span><span><b>MATCH INTEL</b><small>Form, key players, head-to-head</small></span><span class="material-symbols-outlined">chevron_right</span></button>
+        </section>
+
+        <aside class="watch-circle" aria-label="Watch circle">
+          <div class="section-heading"><span class="material-symbols-outlined">group</span><div><strong>WATCH CIRCLE</strong><small>Coordinate your watch</small></div><b class="watching-count">12<small>Watching</small></b></div>
+          <h2><span class="material-symbols-outlined">schedule</span> LOCAL TIMES</h2>
+          <div class="time-list"><button data-zone="Seoul" class="active-time"><b>Seoul <small>KST</small></b><span class="material-symbols-outlined">light_mode</span><strong>03:00</strong></button><button data-zone="London"><b>London <small>BST</small></b><span class="material-symbols-outlined">cloud</span><strong>19:00</strong></button><button data-zone="New York"><b>New York <small>EDT</small></b><span class="material-symbols-outlined">dark_mode</span><strong>14:00</strong></button></div>
+          <h2>FRIENDS WATCHING <small>· 12</small></h2>
+          <img class="avatar-strip" src="assets/watch-circle-avatars.png" alt="A diverse group of football fans in the watch circle" />
+          <h2>GROUP MESSAGE</h2>
+          <div class="message"><b>Jun</b><small>2h ago</small><p>Let’s go Japan!<br />Meeting up at Jun’s place.</p></div>
+          <button class="follow-button" aria-pressed="false"><span class="material-symbols-outlined">notifications</span><span><b>FOLLOW MATCH</b><small>Get reminders and key updates</small></span><i></i></button>
+          <button class="calendar-button"><span class="material-symbols-outlined">calendar_add_on</span> ADD TO CALENDAR <span class="material-symbols-outlined">chevron_right</span></button>
+        </aside>
+      </section>
+      <footer class="local-status"><span class="material-symbols-outlined">schedule</span><b>LOCAL TIME STATUS</b><span>This match kicks off in your local time</span><strong><span class="material-symbols-outlined">orbit</span> SAT, JUL 18 · 03:00 KST <span class="material-symbols-outlined">light_mode</span></strong><span>That’s in 2 days and 14 hours</span><button><span class="material-symbols-outlined">settings</span> Adjust my time zone</button></footer>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

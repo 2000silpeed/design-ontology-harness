@@ -8,6 +8,94 @@ from pathlib import Path
 from .component_reference_baseline import core_baseline_components
 
 
+_EXPLICIT_COMPONENT_HEADINGS = {
+    "주요 컴포넌트",
+    "핵심 컴포넌트",
+    "컴포넌트 인벤토리",
+    "components",
+    "core components",
+    "component inventory",
+}
+
+
+def _explicit_component_family(name: str) -> str:
+    """Classify a product-authored component name without importing authoring.py.
+
+    `authoring.py` owns the complete classifier, but importing it here would create
+    a cycle.  This small classifier is intentionally conservative; the inventory
+    builder can refine the family later.
+    """
+
+    low = name.lower()
+    if any(token in low for token in ("shell", "nav", "rail", "filter", "tab")):
+        return "navigation"
+    if any(token in low for token in ("search", "composer", "input", "select", "picker")):
+        return "input"
+    if any(token in low for token in ("badge", "status", "confidence", "toast", "empty")):
+        return "feedback"
+    if any(token in low for token in ("table", "score", "metric", "probability", "summary", "thread", "card", "footnote")):
+        return "data-display"
+    if any(token in low for token in ("dialog", "drawer", "modal", "popover")):
+        return "overlay"
+    return "surface"
+
+
+def extract_explicit_components(spec_text: str) -> list[dict]:
+    """Extract the component inventory an author explicitly wrote in Markdown.
+
+    An explicit inventory is stronger product evidence than keyword matches.  The
+    parser accepts the common ``- **component-id**: role`` and backtick variants
+    and stops at the next peer heading.
+    """
+
+    lines = spec_text.splitlines()
+    in_section = False
+    heading_level = 0
+    components: list[dict] = []
+    seen: set[str] = set()
+
+    for line in lines:
+        heading = re.match(r"^\s*(#{1,6})\s+(.+?)\s*$", line)
+        if heading:
+            level = len(heading.group(1))
+            title = re.sub(r"[`*_]", "", heading.group(2)).strip().lower()
+            if title in _EXPLICIT_COMPONENT_HEADINGS:
+                in_section = True
+                heading_level = level
+                continue
+            if in_section and level <= heading_level:
+                break
+            continue
+
+        if not in_section:
+            continue
+
+        match = re.match(
+            r"^\s*[-*+]\s+(?:\*\*|`)?([a-z][a-z0-9]*(?:[-_][a-z0-9]+)+)(?:\*\*|`)?\s*(?::|—|–|-)?\s*(.*?)\s*$",
+            line,
+            flags=re.IGNORECASE,
+        )
+        if not match:
+            continue
+        name = match.group(1).lower().replace("_", "-")
+        if name in seen:
+            continue
+        role = re.sub(r"\*\*|`", "", match.group(2)).strip()
+        components.append(
+            {
+                "name": name,
+                "family": _explicit_component_family(name),
+                "role": role,
+                "supports_primitive": role or name,
+                "source": "explicit-component-inventory",
+                "decision_layer": "spec-explicit",
+            }
+        )
+        seen.add(name)
+
+    return components
+
+
 UI_PATTERNS: dict[str, dict] = {
     "workspace navigation": {
         "terms": [
@@ -960,6 +1048,19 @@ def analyze_spec(spec_text: str) -> list[dict]:
     text_lower = spec_text.lower()
     detected: list[dict] = []
 
+    explicit_components = extract_explicit_components(spec_text)
+    if explicit_components:
+        detected.append(
+            {
+                "pattern": "explicit component inventory",
+                "confidence": 1000 + len(explicit_components),
+                "matched_terms": [component["name"] for component in explicit_components],
+                "description": "기획서 작성자가 명시한 제품 컴포넌트 인벤토리",
+                "components": explicit_components,
+                "authoritative": True,
+            }
+        )
+
     for pattern_name, config in UI_PATTERNS.items():
         matches: list[str] = []
         for term in config["terms"]:
@@ -987,6 +1088,18 @@ def analyze_spec_file(spec_path: Path) -> list[dict]:
 
 
 def build_component_list(detected_patterns: list[dict]) -> list[dict]:
+    explicit = next(
+        (
+            pattern
+            for pattern in detected_patterns
+            if pattern.get("pattern") == "explicit component inventory"
+            and pattern.get("components")
+        ),
+        None,
+    )
+    if explicit:
+        return [dict(component) for component in explicit["components"]]
+
     seen: set[str] = set()
     components: list[dict] = []
 

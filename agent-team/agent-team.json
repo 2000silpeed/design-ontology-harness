@@ -1,0 +1,398 @@
+{
+  "schema_version": "design-ontology-agent-team/v1",
+  "artifact_dir": "agent-team",
+  "mission": "Turn a product brief into an ontology-grounded, production-verifiable UI without letting reference imagery or a single model silently become the source of truth.",
+  "dispatch_policy": {
+    "default": "stage-owner-only",
+    "max_parallel_specialists": 2,
+    "rules": [
+      "The team lead owns sequencing and handoffs; it does not duplicate specialist work.",
+      "Dispatch only the role that owns the next missing artifact or failed gate.",
+      "Only read-only research and the file-separated token/component authoring pair may run in parallel.",
+      "Never let two writing agents edit the same file set concurrently.",
+      "Visual asset production must finish before UI implementation starts.",
+      "Approved-reference fidelity review starts only after the implementation tree is frozen.",
+      "Production QA starts only after the approved-reference fidelity gate passes.",
+      "A later role may reject a handoff, but it must cite a concrete missing artifact or failed command."
+    ]
+  },
+  "roles": [
+    {
+      "id": "team-lead",
+      "title": "Team Lead / Orchestrator",
+      "owns": [
+        "stage selection",
+        "work assignment",
+        "handoff ledger",
+        "scope control"
+      ],
+      "writes": [
+        "agent-team/handoffs/*.json"
+      ],
+      "must_not": [
+        "invent design decisions owned by specialists",
+        "declare release readiness"
+      ],
+      "exit_when": "The next owner has one schema-valid handoff with reproducible gate evidence."
+    },
+    {
+      "id": "brief-author",
+      "title": "Product Brief Author",
+      "owns": [
+        "application concept",
+        "layout skeleton",
+        "product primitives",
+        "component scope"
+      ],
+      "writes": [
+        "projects/*/spec.md",
+        "projects/*/brand_profile.json"
+      ],
+      "must_not": [
+        "choose a preset as a substitute for product structure",
+        "author detailed component contracts",
+        "implement UI code"
+      ],
+      "workflow_skills": {
+        "codex": "design-system-concept-author",
+        "claude": "design-system-concept-author"
+      },
+      "exit_when": "application_concept, layout_skeleton, design_differentiation, and a concrete component scope exist; component_decision_path reserves the external contract file."
+    },
+    {
+      "id": "token-curator",
+      "title": "Token & Color Curator",
+      "owns": [
+        "Semantic OS Markdown color authority",
+        "brand_profile color_reference and font_system",
+        "palette strategy",
+        "emitted token integrity"
+      ],
+      "writes": [
+        "projects/*/brand_profile.json color_reference/font_system",
+        "projects/*/design-system/runtime-theme.css"
+      ],
+      "must_not": [
+        "edit generated tokens.css by hand",
+        "edit the component contract file",
+        "sample authoritative colors from advisory screenshots",
+        "hand-edit the embedded Semantic OS graph in docs/color-reference.md"
+      ],
+      "workflow_skills": {
+        "codex": "design-system-architect",
+        "claude": "design-system-architect"
+      },
+      "required_commands": [
+        "uv run design-ontology sync-semantic-colors --source <semantic-os-graph.json> --color-reference-output docs/color-reference.md --check --json"
+      ],
+      "exit_when": "docs/color-reference.md contains the current checksum-verified Semantic OS graph, the selected semantic roles resolve from that Markdown, and color_reference/font_system inputs are complete."
+    },
+    {
+      "id": "component-author",
+      "title": "Component Contract Author",
+      "owns": [
+        "component inventory decision",
+        "anatomy",
+        "states",
+        "interaction/data/accessibility contracts"
+      ],
+      "writes": [
+        "projects/*/design-system/component-contracts.json"
+      ],
+      "must_not": [
+        "accept family defaults as domain contracts",
+        "edit brand_profile.json while Token Curator is running",
+        "implement UI code"
+      ],
+      "workflow_skills": {
+        "codex": "design-system-concept-author",
+        "claude": "design-system-concept-author"
+      },
+      "required_commands": [
+        "python -m json.tool <project>/design-system/component-contracts.json"
+      ],
+      "exit_when": "The external JSON parses and every scoped domain component has authored anatomy, states, variants, props, interaction, data, responsive, content, token, and accessibility fields. The Ontology Compiler owns the generated strict gate."
+    },
+    {
+      "id": "ontology-compiler",
+      "title": "Ontology Compiler",
+      "owns": [
+        "run-project synthesis",
+        "blueprint",
+        "generated token and component artifacts"
+      ],
+      "writes": [
+        "agent-team/**",
+        "projects/*/build/system/**",
+        "projects/*/design-system/tokens.css"
+      ],
+      "must_not": [
+        "rewrite authored source decisions",
+        "continue after strict profile or component validation fails"
+      ],
+      "workflow_skills": {
+        "codex": "design-system-architect",
+        "claude": "design-system-architect"
+      },
+      "required_commands": [
+        "uv run design-ontology run-project --project-dir <project> --kb-dir <kb-dir>",
+        "uv run design-ontology emit-tokens --project-dir <project>",
+        "uv run design-ontology validate-component-contracts --project-dir <project> --json"
+      ],
+      "exit_when": "The generated profile report is valid, emitted tokens are reproducible, and strict component validation passes."
+    },
+    {
+      "id": "visual-asset-producer",
+      "title": "Visual Director / Asset Producer",
+      "owns": [
+        "ontology-derived mockups",
+        "image prompts",
+        "visual asset review",
+        "asset manifest"
+      ],
+      "writes": [
+        "assets/**",
+        "public/generated/design-system/**",
+        "projects/*/assets/**",
+        "projects/*/design-system/reference-fidelity-contract.json"
+      ],
+      "must_not": [
+        "copy reference UI",
+        "hotlink assets",
+        "bypass asset review and provenance"
+      ],
+      "workflow_skills": {
+        "codex": "design-system-visual-assets",
+        "claude": "design-system-visual-assets"
+      },
+      "required_commands": [
+        "uv run design-ontology build-image-prompts --project-dir <project> --candidates-per-slot 3",
+        "uv run design-ontology register-image-asset <reviewed-candidate-args>",
+        "uv run design-ontology validate-image-assets --project-dir <project> --json"
+      ],
+      "exit_when": "The chosen mockup direction is ontology-derived, and each required raster asset is accepted and traceable. When a direction is approved, its allowed preserve invariants and prohibited similarity scopes are frozen in reference-fidelity-contract.json. Codex image_gen is preferred when generation is needed; runtime integration belongs to UI Implementer."
+    },
+    {
+      "id": "ui-implementer",
+      "title": "UI Implementer",
+      "owns": [
+        "responsive application code",
+        "token binding",
+        "component behavior",
+        "theme parity"
+      ],
+      "writes": [
+        "src/**",
+        "app/**",
+        "components/**",
+        "styles/**",
+        "public/**"
+      ],
+      "must_not": [
+        "change ontology inputs to hide implementation drift",
+        "claim production readiness"
+      ],
+      "workflow_skills": {
+        "codex": "design-system-implementer",
+        "claude": "design-system-implement"
+      },
+      "required_commands": [
+        "uv run design-ontology promote-image-asset <wired-asset-args>",
+        "uv run design-ontology validate-image-assets --project-dir <project> --require-integrated --json",
+        "uv run design-ontology lint-implementation --target-repo <implementation-repo> --json",
+        "uv run design-ontology check-style-divergence --project-dir <implementation-repo>"
+      ],
+      "exit_when": "Core interactions work, required assets are wired and integrated, and implementation lint plus style-divergence checks pass."
+    },
+    {
+      "id": "reference-fidelity-auditor",
+      "title": "Approved-Reference Fidelity Auditor",
+      "owns": [
+        "paired approved-reference review",
+        "composition and morphology fidelity",
+        "density and hierarchy fidelity",
+        "context linkage fidelity",
+        "correction brief"
+      ],
+      "writes": [
+        "projects/*/screenshots/reference-fidelity/**",
+        "projects/*/build/system/production/reference-fidelity/**"
+      ],
+      "must_not": [
+        "edit implementation code",
+        "edit the approved fidelity contract or reference",
+        "sample palette or typography from advisory references",
+        "score information architecture, product copy, logos, or redistributable assets by similarity",
+        "reuse a runtime tree or screenshot SHA set for a claimed correction iteration",
+        "claim production readiness"
+      ],
+      "required_commands": [
+        "uv run design-ontology reference-fidelity-loop --project-dir <project> --target-repo <implementation-repo> --review-artifact <paired-review.json>"
+      ],
+      "exit_when": "A paired multimodal review binds the unchanged approved contract/reference SHA, current runtime-tree SHA, and fresh screenshot SHA set; every critical invariant passes. A failed review returns an exact correction brief to the UI Implementer without changing the contract."
+    },
+    {
+      "id": "production-qa",
+      "title": "Visual & Runtime QA Auditor",
+      "owns": [
+        "browser evidence",
+        "interaction checks",
+        "accessibility checks",
+        "aesthetic review"
+      ],
+      "writes": [
+        "projects/*/screenshots/production/**",
+        "projects/*/build/system/production/screenshots.json",
+        "projects/*/build/system/production/aesthetic/**",
+        "projects/*/build/system/production/browser-observations/**",
+        "projects/*/build/system/production/browser-evidence-bundle.json",
+        "projects/*/build/system/production/component-runtime/**",
+        "projects/*/design-qa.md"
+      ],
+      "must_not": [
+        "approve from code inspection alone",
+        "reuse stale screenshots after runtime changes"
+      ],
+      "required_commands": [
+        "uv run design-ontology record-screenshot-evidence <args>",
+        "uv run design-ontology apply-aesthetic-review <args>"
+      ],
+      "exit_when": "Fresh desktop/mobile and light/dark evidence matches the frozen runtime tree, and one versioned Codex Desktop browser evidence bundle binds screenshots, DOM/state/console, interaction, overflow, accessibility, and component-runtime observations to the same in-app Browser session."
+    },
+    {
+      "id": "release-governor",
+      "title": "Release Governor",
+      "owns": [
+        "completion audit",
+        "gate verification",
+        "release decision"
+      ],
+      "writes": [
+        "agent-team/handoffs/release-decision.json"
+      ],
+      "must_not": [
+        "fix implementation while auditing",
+        "waive a required gate without user approval"
+      ],
+      "required_commands": [
+        "uv run design-ontology verify-production-ui --project-dir <project> --target-repo <implementation-repo> --json"
+      ],
+      "exit_when": "Every requested outcome is evidenced and verify-production-ui passes against current files."
+    }
+  ],
+  "conditional_specialists": [
+    {
+      "id": "reference-inspector",
+      "use_when": "A website or screenshot reference must be translated into advisory morphology without copying it.",
+      "returns_to": "brief-author or ui-implementer"
+    },
+    {
+      "id": "ui-refactor",
+      "use_when": "An existing UI must adopt tokens and contracts without changing its layout or behavior.",
+      "returns_to": "ui-implementer"
+    },
+    {
+      "id": "ui-rebuild",
+      "use_when": "The user explicitly approved a structural rebuild after concept and component gates passed.",
+      "returns_to": "ui-implementer"
+    }
+  ],
+  "stages": [
+    {
+      "id": "concept",
+      "owner": "brief-author",
+      "required_outputs": [
+        "brand_profile.json with application_concept, layout_skeleton, design_differentiation, component scope, and component_decision_path"
+      ],
+      "exit_gate": "The concept fields and component scope are concrete; component_decision_path reserves a separate contract file."
+    },
+    {
+      "id": "tokens-and-components",
+      "owner": "team-lead",
+      "parallel_owners": [
+        "token-curator",
+        "component-author"
+      ],
+      "required_outputs": [
+        "color/font decisions resolved from docs/color-reference.md",
+        "fully authored design-system/component-contracts.json"
+      ],
+      "exit_gate": "Semantic OS Markdown authority is current and every scoped component input is fully authored for compiler validation."
+    },
+    {
+      "id": "system",
+      "owner": "ontology-compiler",
+      "required_outputs": [
+        "system_spec.md",
+        "token_schema.json",
+        "component_inventory.json",
+        "component_specs.json",
+        "tokens.css"
+      ],
+      "exit_gate": "run-project and emit-tokens complete, then validate-component-contracts passes without --allow-needs-authoring."
+    },
+    {
+      "id": "visual",
+      "owner": "visual-asset-producer",
+      "required_outputs": [
+        "selected visual target when building a new UI",
+        "reviewed and registered assets when imagery is required"
+      ],
+      "exit_gate": "Every required raster candidate is accepted and traceable to its prompt or licensed source; an approved direction has a hashed reference-fidelity contract; if Claude lacks an image tool, its prompt packet is handed to Codex image_gen instead of faking completion."
+    },
+    {
+      "id": "implementation",
+      "owner": "ui-implementer",
+      "required_outputs": [
+        "responsive implementation",
+        "working core interactions",
+        "accepted assets wired and promoted to integrated",
+        "light/dark parity unless explicitly scoped otherwise"
+      ],
+      "exit_gate": "Integrated asset validation, lint-implementation, and check-style-divergence pass."
+    },
+    {
+      "id": "fidelity",
+      "owner": "reference-fidelity-auditor",
+      "required_outputs": [
+        "hashed approved-reference fidelity contract",
+        "paired multimodal review bound to the current runtime tree and screenshot SHA set",
+        "correction brief for every failed invariant"
+      ],
+      "exit_gate": "reference-fidelity-loop passes every critical composition, morphology, density, hierarchy, task-visibility, and context-linkage invariant without scoring prohibited palette, type, IA, copy, logo, or asset similarity."
+    },
+    {
+      "id": "qa",
+      "owner": "production-qa",
+      "required_outputs": [
+        "matching route/state screenshots",
+        "runtime checks",
+        "multimodal aesthetic review"
+      ],
+      "exit_gate": "Current implementation tree has fresh desktop/mobile and light/dark evidence."
+    },
+    {
+      "id": "release",
+      "owner": "release-governor",
+      "required_outputs": [
+        "release-decision.json"
+      ],
+      "exit_gate": "verify-production-ui passes for the actual target repository."
+    }
+  ],
+  "handoff": {
+    "directory": "agent-team/handoffs",
+    "schema": "agent-team/handoffs/handoff.schema.json",
+    "rule": "No stage changes owner without a written handoff containing current gate evidence."
+  },
+  "runtime_adapters": {
+    "codex": {
+      "orchestrator_skill": "$design-ontology-team-orchestrator",
+      "specialist_surface": "plugin skills plus Codex sub-agents when parallel work is useful"
+    },
+    "claude": {
+      "orchestrator_agent": "design-team-lead",
+      "specialist_surface": ".claude/agents/*.md and .claude/skills/*/SKILL.md"
+    }
+  }
+}

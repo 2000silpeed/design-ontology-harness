@@ -1,0 +1,122 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "agent-team-bootstrap-2026-07-13-001",
+  "created_at": "2026-07-13T21:48:09+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "team-lead",
+  "to_role": "release-governor",
+  "stage": "release",
+  "status": "ready",
+  "summary": "The shared Codex and Claude Code team contract, runtime adapters, README guide, and evidence validator are ready for an independent release audit.",
+  "input_artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "194d5ff134b5824ab505a629949b0cf10eefbe3d5d609dd02a505970099536db"
+    },
+    {
+      "path": "design_ontology_harness/agent_team.py",
+      "sha256": "d0092df08f2f31d788c752513f281f42a3865fbd11ff88b5bf16f91e659579a0"
+    },
+    {
+      "path": "design_ontology_harness/agent_packs.py",
+      "sha256": "e354b870249458171054fe75e052fe6f642ddd158ccc24bc55d70b70b6389b0b"
+    },
+    {
+      "path": "design_ontology_harness/cli.py",
+      "sha256": "32a3171229616f546cce8d2ae4c14933cd32a857a262421ac4e45aff29d0de83"
+    },
+    {
+      "path": "skills/design-ontology-team-orchestrator/SKILL.md",
+      "sha256": "ee5d40f93a39bca8716d78f184345d8a671fc61595375ec872cc465f6177f85b"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "agent-team/agent-team.json",
+      "sha256": "2911dc3703a6d1dc607519d828f1da7e3fb2313cb2c7491a1d2c9c27e72f6875"
+    },
+    {
+      "path": "agent-team/TEAM_RUNBOOK.md",
+      "sha256": "3ddf657341fdca96bd0967f7e817ee531789e7431398878280bf0598242edddb"
+    },
+    {
+      "path": "agent-team/handoffs/handoff.schema.json",
+      "sha256": "7eeda650de063029ff5f35d08a2bbbb55d538f2d2cd8c5acf4033a7497740d3d"
+    },
+    {
+      "path": "plugins/design-system-harness/.codex-plugin/plugin.json",
+      "sha256": "423cfadb57ecf38b41453661fbbc3f898b5afce30691998585f48ac3ed10ee37"
+    },
+    {
+      "path": ".claude/agents/design-team-lead.md",
+      "sha256": "0a50f7a65d067cc70804c5d02cdffcd1571033185068dfbf614f4a245776b2a4"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "fbe1ab840e30a67780b4819863ecbd1a8ef5df57a874ac652b5e0364fd7a1d89"
+    },
+    {
+      "path": "CLAUDE.md",
+      "sha256": "2553d4f871d1da9300bfbf416dee40346ec81268962e7010407eedfd77a14f00"
+    }
+  ],
+  "changed_paths": [
+    "README.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "design_ontology_harness/agent_team.py",
+    "design_ontology_harness/agent_packs.py",
+    "design_ontology_harness/cli.py",
+    "agent-team/",
+    ".claude/agents/",
+    ".claude/skills/",
+    "plugins/design-system-harness/",
+    "skills/design-ontology-team-orchestrator/",
+    "tests/test_agent_team.py",
+    "tests/test_agent_packs.py"
+  ],
+  "decisions": [
+    "Use one neutral nine-role contract to render both Codex and Claude Code adapters.",
+    "Allow parallel writes only for Token Curator and Component Contract Author after file ownership is separated.",
+    "Use the checksum-verified Semantic OS graph embedded in docs/color-reference.md as color authority.",
+    "Stop visual production at accepted assets; UI Implementer owns runtime wiring and promotion to integrated.",
+    "Require SHA-256 artifact evidence, gate exit codes, and valid role-stage transitions for every handoff."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run pytest -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "431 passed, 10 warnings, 2 subtests passed in 22.61s"
+    },
+    {
+      "command": "uv run design-ontology validate-agent-team --target-repo . --artifact-dir agent-team --targets codex,claude --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "ok=true, schema_version=design-ontology-agent-team/v1, role_count=9, errors=[]"
+    },
+    {
+      "command": "python3 plugin-creator/scripts/validate_plugin.py plugins/design-system-harness && quick_validate.py <orchestrator-and-nine-codex-skills>",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Plugin validation passed; source orchestrator and nine generated Codex skills reported Skill is valid."
+    },
+    {
+      "command": "CODEX_HOME=<temporary> codex plugin marketplace add . --json && codex plugin add design-system-harness --marketplace local-plugins --json && codex plugin list --json",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "design-system-harness@local-plugins version 0.2.0 installed=true and enabled=true in an isolated CODEX_HOME."
+    },
+    {
+      "command": "claude --version && claude --help | rg -n -- '--agent|--agents'",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Claude Code 2.1.207 is installed and exposes both --agent and --agents; generated project-local agent files passed validate-agent-team structural checks."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Claude Code adapters were structurally validated without starting a paid model session."
+  ],
+  "next_action": "Release Governor independently audits the current files, reruns the team validator, and records the final release decision."
+}

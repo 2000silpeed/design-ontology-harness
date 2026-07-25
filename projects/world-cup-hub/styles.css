@@ -906,11 +906,7 @@ th:last-child {
   width: 130px;
 }
 
-.schedule-row {
-  cursor: pointer;
-}
-
-.schedule-row:hover,
+.schedule-row:focus-within,
 .schedule-row.selected {
   background: var(--active-bg);
 }
@@ -934,6 +930,21 @@ th:last-child {
 .matchup {
   display: grid;
   gap: 8px;
+}
+
+.schedule-match-button {
+  width: 100%;
+  min-height: 44px;
+  padding: 6px 8px;
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-sm);
+  background: transparent;
+  text-align: left;
+}
+
+.schedule-match-button:hover {
+  border-color: var(--active-border);
+  background: var(--active-bg);
 }
 
 .teams {
@@ -1360,7 +1371,7 @@ th:last-child {
   align-items: start;
   color: var(--color-muted);
   font-size: 0.86rem;
-  line-height: 1.5;
+  line-height: var(--ds-leading-body);
   word-break: keep-all;
 }
 
@@ -1411,7 +1422,7 @@ th:last-child {
 .insight-item li {
   color: var(--color-muted);
   font-size: 0.82rem;
-  line-height: 1.48;
+  line-height: var(--ds-leading-body);
   word-break: keep-all;
 }
 
@@ -1508,7 +1519,7 @@ th:last-child {
 .opinion-card p {
   color: var(--color-muted);
   font-size: 0.86rem;
-  line-height: 1.55;
+  line-height: var(--ds-leading-body);
   word-break: keep-all;
 }
 

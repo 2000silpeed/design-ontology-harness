@@ -6,13 +6,13 @@
   "harness_version": "0.2.0",
   "color_mode": "light",
   "locale": "ko",
-  "installed_at": "2026-07-07T22:53:02Z",
-  "content_hash": "sha256:29d6e3cf3e6585d4308f39be642884f1a9a00bd21b2bdd984b0d508324dfe085",
+  "installed_at": "2026-07-25T04:47:02Z",
+  "content_hash": "sha256:6179861c279d33e2eb4e7045997353ed33a544cd5370dbcdc653f075ff6065e9",
   "proposed_files": [],
   "counts": {
-    "created": 26,
-    "merged": 0,
-    "overwritten": 0,
+    "created": 0,
+    "merged": 1,
+    "overwritten": 25,
     "proposed": 0,
     "skipped": 0
   }

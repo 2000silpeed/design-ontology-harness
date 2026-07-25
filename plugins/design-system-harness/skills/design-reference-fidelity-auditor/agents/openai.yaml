@@ -1,0 +1,4 @@
+interface:
+  display_name: "Approved-Reference Fidelity Auditor"
+  short_description: "Run the reference-fidelity-auditor stage with evidence"
+  default_prompt: "Use $design-reference-fidelity-auditor for the assigned team stage and return gate evidence."

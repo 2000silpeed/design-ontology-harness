@@ -446,7 +446,7 @@ svg {
 .privacy-banner p,
 .privacy-banner a {
   font-size: 0.78rem;
-  line-height: 1.45;
+  line-height: 1.6;
 }
 
 .privacy-banner a {
@@ -761,7 +761,7 @@ textarea {
 .notice-box p {
   color: var(--ink-muted);
   font-size: 0.84rem;
-  line-height: 1.45;
+  line-height: 1.6;
 }
 
 .calculation-steps {
@@ -883,7 +883,7 @@ textarea {
 
 .dual-card p {
   color: var(--ink-muted);
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 .evidence-graphic {
@@ -1055,7 +1055,7 @@ textarea {
 .answer-card p {
   color: var(--ink);
   font-size: 0.88rem;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 .source-stack {
@@ -1101,7 +1101,7 @@ textarea {
 .source-card p {
   color: var(--ink-muted);
   font-size: 0.82rem;
-  line-height: 1.48;
+  line-height: 1.6;
 }
 
 .source-card footer {

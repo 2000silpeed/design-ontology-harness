@@ -44,6 +44,19 @@ def test_compare_visuals_passes_when_pixel_delta_exceeds_threshold(tmp_path: Pat
     assert report.change_ratio == 0.5
 
 
+def test_compare_visuals_rejects_different_viewport_dimensions(tmp_path: Path):
+    before = tmp_path / "before.png"
+    after = tmp_path / "after.png"
+    Image.new("RGBA", (1280, 720), (255, 255, 255, 255)).save(before)
+    Image.new("RGBA", (390, 844), (0, 0, 0, 255)).save(after)
+
+    report = compare_visuals(before, after)
+
+    assert not report.ok
+    assert report.change_ratio == 0.0
+    assert "not comparable" in report.reason
+
+
 def test_cli_compare_visuals_exits_nonzero_for_identical_screenshots(tmp_path: Path):
     before = tmp_path / "before.png"
     after = tmp_path / "after.png"

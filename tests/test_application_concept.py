@@ -1,7 +1,34 @@
 import json
+from pathlib import Path
 
-from design_ontology_harness.authoring import build_token_schema
+import pytest
+
+from design_ontology_harness.authoring import (
+    build_token_schema,
+    generate_system_pack,
+    validate_brand_profile,
+)
 from design_ontology_harness.scaffold import scaffold_project
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _legacy_profile() -> dict:
+    return {
+        "brand_name": "Legacy App",
+        "system_name": "Legacy App System",
+        "product_summary": "A legacy profile that predates authored concept fields.",
+        "audiences": ["Operators"],
+        "brand_keywords": ["clear", "reliable", "focused"],
+        "anti_keywords": ["generic"],
+        "tone_of_voice": ["direct"],
+        "visual_keywords": ["structured"],
+        "interaction_keywords": ["inspectable"],
+        "platforms": ["web"],
+        "accessibility_targets": ["WCAG 2.2 AA"],
+        "product_primitives": ["shell", "table", "detail panel"],
+    }
 
 
 def test_scaffold_prompts_for_application_concept_and_layout_skeleton(tmp_path) -> None:
@@ -63,3 +90,60 @@ def test_layout_skeleton_flows_into_token_schema() -> None:
     assert skeleton["navigation_model"] == "task-rail"
     assert skeleton["signature_moves"] == ["Queue and claim detail remain co-present."]
     assert schema["brand_alignment"]["application_concept"]["operating_mode"] == "review"
+
+
+def test_legacy_profile_without_authored_scope_keeps_compatibility() -> None:
+    report = validate_brand_profile(_legacy_profile())
+
+    assert report["valid"] is True
+    assert report["errors"] == []
+
+
+def test_authored_component_scope_requires_all_concept_fields() -> None:
+    profile = _legacy_profile()
+    profile["component_decision_path"] = "design-system/component-contracts.json"
+
+    report = validate_brand_profile(profile)
+
+    assert report["valid"] is False
+    assert report["errors"] == [
+        "Missing required concept key: application_concept",
+        "Missing required concept key: layout_skeleton",
+        "Missing required concept key: design_differentiation",
+    ]
+
+
+def test_system_generation_stops_at_failed_concept_gate(tmp_path) -> None:
+    profile = _legacy_profile()
+    profile["component_decision_path"] = "design-system/component-contracts.json"
+
+    with pytest.raises(ValueError, match="Missing required concept key: application_concept"):
+        generate_system_pack(tmp_path / "build", profile, {}, [], [])
+
+
+def test_strict_concept_gate_rejects_unedited_scaffold_placeholders(tmp_path) -> None:
+    project_dir = tmp_path / "placeholder-app"
+    scaffold_project(project_dir, brand_name="Placeholder App")
+    profile = json.loads((project_dir / "brand_profile.json").read_text(encoding="utf-8"))
+    profile["component_decision_path"] = "design-system/component-contracts.json"
+
+    report = validate_brand_profile(profile)
+
+    assert report["valid"] is False
+    assert any("application_concept.primary_job" in error for error in report["errors"])
+    assert any("layout_skeleton.composition" in error for error in report["errors"])
+    assert any("design_differentiation.signature_moves" in error for error in report["errors"])
+    assert all("scaffold placeholder" in error for error in report["errors"])
+
+
+def test_world_cup_hub_profile_passes_authored_concept_gate() -> None:
+    profile = json.loads(
+        (REPO_ROOT / "projects" / "world-cup-hub" / "brand_profile.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    report = validate_brand_profile(profile)
+
+    assert report["valid"] is True
+    assert report["errors"] == []

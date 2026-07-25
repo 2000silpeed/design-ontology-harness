@@ -1,0 +1,59 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "component-runtime-conformance-2026-07-13-001",
+  "created_at": "2026-07-13T23:41:47+09:00",
+  "project": "design-ontology-harness",
+  "from_role": "team-lead",
+  "to_role": "component-author",
+  "stage": "tokens-and-components",
+  "status": "needs-work",
+  "summary": "Strict component contracts and implementation lint currently pass independently, allowing production verification to approve an implementation that does not realize declared component anatomy, states, interactions, or responsive scenarios. Add a machine-verifiable runtime conformance contract and make production verification block on it.",
+  "input_artifacts": [
+    {
+      "path": "design_ontology_harness/component_contracts.py",
+      "sha256": "a98301e075a5bc717dbcc65aee8c7fa3655b3802dd033f5de70334b71845f8ca"
+    },
+    {
+      "path": "design_ontology_harness/implementation_linter.py",
+      "sha256": "62cef76963b7ce69a0e93d3041494bdfd617372733a629b7d8af8804b34e8ef7"
+    },
+    {
+      "path": "tests/test_production_verifier.py",
+      "sha256": "7a71b6b9b230054fa58f20eb699f9b134244cbdda5f282e23f219aebb01a1bf5"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "design_ontology_harness/production_verifier.py",
+      "sha256": "d687c0cb439e69b21e729f46681b08eba55b88fa0f5072fc1a0f7e50ba4df588"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/component-runtime-conformance-team-lead-to-component-author.json"
+  ],
+  "decisions": [
+    "Treat component-to-runtime correspondence as a blocking production property, not an inference from independent green gates.",
+    "Use explicit component IDs, source or DOM markers, and declared state/scenario evidence rather than attempting to infer full contract coverage from arbitrary class names.",
+    "Keep the verifier fail-closed for projects that claim production readiness while preserving a deliberate compatibility path for legacy fixtures that do not make that claim."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run pytest tests/test_component_contracts.py tests/test_implementation_linter.py tests/test_production_verifier.py -q",
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": "Existing contract, lint, and verifier tests pass independently; the audit fixture demonstrates that this green set does not prove runtime contract realization."
+    },
+    {
+      "command": "test -f design_ontology_harness/component_runtime.py",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "No runtime component conformance module or equivalent explicit implementation-to-contract validator exists."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "Overly heuristic source scanning would create false confidence; conformance must be backed by explicit runtime evidence.",
+    "A new unconditional requirement can break historical fixtures, so migration and versioning need to be explicit and tested."
+  ],
+  "next_action": "Component Author implements and tests a versioned component runtime manifest/conformance validator, integrates it as a blocking verify-production-ui gate, documents the authoring contract, and returns a schema-valid handoff with current artifact hashes."
+}

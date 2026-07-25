@@ -1,0 +1,89 @@
+{
+  "schema_version": "design-ontology-handoff/v1",
+  "run_id": "world-cup-hub-production-ui-improvement-2026-07-13-001",
+  "created_at": "2026-07-14T00:32:42+09:00",
+  "project": "world-cup-hub",
+  "from_role": "team-lead",
+  "to_role": "ontology-compiler",
+  "stage": "system",
+  "status": "needs-work",
+  "summary": "The current World Cup Hub system outputs predate the accepted fixture-led application concept, the sole-authority Semantic OS runtime color policy, and the 19 authored component contracts with exact primitive reconciliation. Regenerate the system and emitted tokens from those current sources, preserve the verified visual-asset provenance manifest, and prove that authored token maps survive compilation without generic family fallback.",
+  "input_artifacts": [
+    {
+      "path": "agent-team/handoffs/world-cup-hub-concept-brief-author-to-team-lead.json",
+      "sha256": "6d93adbafd2ff84ca3c54491fdba3e8c8ed2655d075aaacdf50c807d778c8a2d"
+    },
+    {
+      "path": "agent-team/handoffs/world-cup-hub-tokens-token-curator-to-team-lead.json",
+      "sha256": "6bf54fe9a1c73d3b2721ff5344f58948a77678feb33783b29abd7ea9b8f9219a"
+    },
+    {
+      "path": "agent-team/handoffs/world-cup-hub-components-component-author-to-team-lead.json",
+      "sha256": "a7be5357b91b99cf4e02542d861eed0eeb227bf8c8ee73a0a0eb1bc83a276a99"
+    },
+    {
+      "path": "projects/world-cup-hub/brand_profile.json",
+      "sha256": "78358cef596cd3be39205adb2c8ed6e007f8d79d0cad02a525ac8caf4d255abd"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/component-contracts.json",
+      "sha256": "3211e4a1c27fe1d08aba22c070b968649627b1c7ffcc1cc32c7a0598bc007af4"
+    },
+    {
+      "path": "docs/color-reference.md",
+      "sha256": "9bdf641a69d3c97089a543f8838610b2204493680921aa09877a062a652e97ca"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/manifest.json",
+      "sha256": "a5cbf6f2d89dc77dfa02f8620937ff3e8be2a5488b1f448aa1cf21b5538c8db2"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/design_system_blueprint.json",
+      "sha256": "93cdb7ee4839cc58deca5cc368c777fd1a8d60a47021670b331cd2f19f645eb3"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/blueprint/system_ontology.json",
+      "sha256": "d9ae4879b0f01be7218351a917b10667c4d3b33957f168f0e5921d729de5cdac"
+    },
+    {
+      "path": "projects/world-cup-hub/build/system/components/component_specs.json",
+      "sha256": "0aee1079892688076faabaf2afd43c37e5988641f8e09b37970f028774f4c0cb"
+    },
+    {
+      "path": "projects/world-cup-hub/design-system/tokens.css",
+      "sha256": "f8e4bbcc458350fab7f8072e8fd7eae35a4d967de8f442e567d8ea11148c1c0c"
+    },
+    {
+      "path": "projects/world-cup-hub/public/generated/design-system/imagegen-prompt-packet.json",
+      "sha256": "577745db9adda241a95266e61ea076602077604d75736a45371a5ce903d59cab"
+    }
+  ],
+  "changed_paths": [
+    "agent-team/handoffs/world-cup-hub-system-team-lead-to-ontology-compiler.json"
+  ],
+  "decisions": [
+    "Compile only from the accepted fixture-led concept; the previous hero, KPI wall, and generic card-grid composition are not valid fallbacks.",
+    "Treat docs/color-reference.md runtime policy as the sole semantic UI color authority and preserve the identity-only raw-color exception namespace.",
+    "All 19 authored component token maps must be emitted with token_provenance=authored-input and resolve exclusively to current --ds-* variables.",
+    "The 28 primitive reconciliation records and three approved waivers must remain exact after generation.",
+    "Preserve the existing visual-asset-manifest/v2 integrated asset and its verified Codex image-generation provenance while refreshing prompt contracts.",
+    "Regenerate system artifacts and tokens before any UI implementation or production-readiness claim."
+  ],
+  "gate_results": [
+    {
+      "command": "uv run design-ontology validate-component-contracts --project-dir projects/world-cup-hub",
+      "status": "failed",
+      "exit_code": 1,
+      "evidence": "The checked-in generated component_specs.json still contains pre-change generic family token maps and lacks authored-input provenance; in-memory compilation of the accepted source contracts passed 19/19 components and 28/28 primitive reconciliation records."
+    }
+  ],
+  "blockers": [],
+  "risks": [
+    "run-project rewrites generated system artifacts; the compiler must not modify authored brand, component-contract, runtime-theme, or application implementation files.",
+    "Prompt regeneration must not downgrade the accepted integrated visual asset or replace its generation-run and candidate provenance with arbitrary strings.",
+    "The current output hashes in this dispatch intentionally identify stale artifacts and must be superseded by the compiler completion handoff."
+  ],
+  "next_action": "Ontology Compiler runs run-project and emit-tokens from the current accepted sources, rebuilds image prompt artifacts without losing manifest v2 provenance, validates component contracts and image assets, and returns a schema-valid completion handoff with current hashes."
+}
