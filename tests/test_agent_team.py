@@ -359,20 +359,81 @@ class AgentTeamTests(unittest.TestCase):
             )
             first.write_text('{"version": 2}\n', encoding="utf-8")
 
+            # 기본 검증은 시점 해시를 현재 파일과 대조하지 않는다. 대조하면 잘못된
+            # 기록과 오래된 기록을 구분하지 못하고, 한 번 언급된 파일을 수정할 때마다
+            # 원장이 레포 잠금장치가 된다.
+            self.assertTrue(validate_agent_team(root)["ok"], validate_agent_team(root)["errors"])
+
+            fresh = validate_agent_team(root, check_artifact_freshness=True)
+            self.assertFalse(fresh["ok"])
+            self.assertTrue(
+                any(
+                    "no longer matches first-artifact.json" in error
+                    for error in fresh["errors"]
+                ),
+                fresh["errors"],
+            )
+            self.assertFalse(
+                any("second-artifact.json" in error for error in fresh["errors"]),
+                fresh["errors"],
+            )
+            self.assertTrue(
+                all("invalid handoff" not in error for error in fresh["errors"]),
+                "오래된 기록을 형식 오류로 보고하면 안 된다: " + str(fresh["errors"]),
+            )
+
+    def test_missing_handoff_artifact_is_always_reported(self) -> None:
+        """파일이 사라진 것은 오래된 기록이 아니라 깨진 기록이다."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            scaffold_agent_pack(root, targets=["codex", "claude"])
+            artifact = root / "vanishing-artifact.json"
+            artifact.write_text('{"version": 1}\n', encoding="utf-8")
+            _write_handoff(
+                root,
+                "01-only.json",
+                _handoff_payload(
+                    run_id="run-one",
+                    created_at="2026-07-13T12:00:00+09:00",
+                    artifact_path="vanishing-artifact.json",
+                    output_digest=_digest(artifact),
+                ),
+            )
+            artifact.unlink()
+
             report = validate_agent_team(root)
 
             self.assertFalse(report["ok"])
             self.assertTrue(
-                any(
-                    "sha256 does not match current file: first-artifact.json" in error
-                    for error in report["errors"]
+                any("does not exist: vanishing-artifact.json" in e for e in report["errors"]),
+                report["errors"],
+            )
+
+    def test_freshness_check_is_opt_in_and_names_the_remedy(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            scaffold_agent_pack(root, targets=["codex", "claude"])
+            artifact = root / "system-artifact.json"
+            artifact.write_text('{"version": 1}\n', encoding="utf-8")
+            _write_handoff(
+                root,
+                "01-only.json",
+                _handoff_payload(
+                    run_id="run-one",
+                    created_at="2026-07-13T12:00:00+09:00",
+                    artifact_path="system-artifact.json",
+                    output_digest=_digest(artifact),
                 ),
-                report["errors"],
             )
-            self.assertFalse(
-                any("second-artifact.json" in error for error in report["errors"]),
-                report["errors"],
-            )
+            artifact.write_text('{"version": 2}\n', encoding="utf-8")
+
+            self.assertTrue(validate_agent_team(root)["ok"])
+
+            fresh = validate_agent_team(root, check_artifact_freshness=True)
+            self.assertFalse(fresh["ok"])
+            stale = [e for e in fresh["errors"] if "stale handoff artifact" in e]
+            self.assertTrue(stale, fresh["errors"])
+            self.assertIn("re-issue the handoff", stale[0])
 
     def test_directory_validation_breaks_timestamp_ties_by_path_then_artifact_order(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

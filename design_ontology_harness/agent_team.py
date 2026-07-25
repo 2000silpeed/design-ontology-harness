@@ -773,7 +773,24 @@ def _handoff_created_at_order(payload: dict[str, Any]) -> datetime:
     return parsed_created_at.astimezone(timezone.utc)
 
 
-def _validate_handoff_directory(target_repo: Path, handoff_dir: Path) -> list[str]:
+def _validate_handoff_directory(
+    target_repo: Path,
+    handoff_dir: Path,
+    *,
+    check_artifact_freshness: bool = False,
+) -> list[str]:
+    """원장의 형식과 완결성을 검증한다.
+
+    `sha256`은 인수인계 시점의 artifact 상태를 기록한 값이다. 기본 검증은 그것을
+    현재 파일과 대조하지 않는다. 대조하면 잘못된 기록과 오래된 기록을 구분하지 못하고,
+    한 번이라도 언급된 파일을 수정할 때마다 게이트가 영구히 빨간불이 되어 원장이
+    감사 기록이 아니라 레포 잠금장치로 작동한다. 시점 해시는 그 자체가 감사 가치다 —
+    당시 artifact가 무엇이었는지 되짚을 수 있다.
+
+    현재 상태와의 대조가 필요한 순간은 팀 리드가 다음 단계를 배정할 때다. 넘기려는
+    artifact가 기록과 같은 상태인지 확인해야 하므로, 그때 `check_artifact_freshness`로
+    명시적으로 켠다.
+    """
     errors: list[str] = []
     repo_root = target_repo.resolve()
     latest_artifacts: dict[
@@ -842,18 +859,30 @@ def _validate_handoff_directory(target_repo: Path, handoff_dir: Path) -> list[st
                 f"invalid handoff {relative_handoff}: "
                 f"{field}[{index}].path does not exist: {canonical_path}"
             )
-        elif isinstance(digest, str) and re.fullmatch(r"[a-f0-9]{64}", digest):
+        elif (
+            check_artifact_freshness
+            and isinstance(digest, str)
+            and re.fullmatch(r"[a-f0-9]{64}", digest)
+        ):
             current_digest = sha256(artifact_path.read_bytes()).hexdigest()
             if current_digest != digest:
                 errors.append(
-                    f"invalid handoff {relative_handoff}: "
-                    f"{field}[{index}].sha256 does not match current file: {canonical_path}"
+                    f"stale handoff artifact {relative_handoff}: "
+                    f"{field}[{index}].sha256 no longer matches {canonical_path}. "
+                    "The record is not malformed, only out of date: re-issue the handoff "
+                    "before dispatching work that depends on this artifact."
                 )
 
     return errors
 
 
-def validate_agent_team(target_repo: Path, artifact_dir: str = "design-system", targets: list[str] | None = None) -> dict[str, Any]:
+def validate_agent_team(
+    target_repo: Path,
+    artifact_dir: str = "design-system",
+    targets: list[str] | None = None,
+    *,
+    check_artifact_freshness: bool = False,
+) -> dict[str, Any]:
     targets = targets or ["codex", "claude"]
     errors: list[str] = []
     expected_contract = team_contract(artifact_dir)
@@ -1026,7 +1055,13 @@ def validate_agent_team(target_repo: Path, artifact_dir: str = "design-system", 
 
     handoff_dir = target_repo / artifact_dir / "handoffs"
     if handoff_dir.is_dir():
-        errors.extend(_validate_handoff_directory(target_repo, handoff_dir))
+        errors.extend(
+            _validate_handoff_directory(
+                target_repo,
+                handoff_dir,
+                check_artifact_freshness=check_artifact_freshness,
+            )
+        )
 
     return {
         "ok": not errors,

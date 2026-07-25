@@ -152,6 +152,16 @@ def build_parser() -> argparse.ArgumentParser:
     agent_team_validate_parser.add_argument("--target-repo", required=True, help="Implementation repository path")
     agent_team_validate_parser.add_argument("--artifact-dir", default="design-system", help="Shared design-system artifact directory")
     agent_team_validate_parser.add_argument("--targets", default="codex,claude", help="Comma-separated runtimes to validate")
+    agent_team_validate_parser.add_argument(
+        "--check-artifact-freshness",
+        action="store_true",
+        help=(
+            "Also compare each handoff's recorded artifact sha256 against the current file. "
+            "Off by default: the digests record state at handoff time, so comparing them to "
+            "today's files turns every later edit into a permanent failure. Turn this on when "
+            "dispatching a stage, to confirm the artifacts being handed over are still current."
+        ),
+    )
     agent_team_validate_parser.add_argument("--json", action="store_true", help="Emit JSON output")
 
     seed_parser = subparsers.add_parser("extract-seed", help="Only extract references")
@@ -2636,6 +2646,7 @@ def main() -> None:
             target_repo=Path(args.target_repo),
             artifact_dir=args.artifact_dir,
             targets=[item.strip() for item in args.targets.split(",") if item.strip()],
+            check_artifact_freshness=args.check_artifact_freshness,
         )
         if args.json:
             print(json.dumps(result, ensure_ascii=False, indent=2))

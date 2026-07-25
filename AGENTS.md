@@ -8,6 +8,7 @@
 - Token Curator and Component Contract Author may run in parallel only when they own separate files. The Brief Author must reserve `component_decision_path` first.
 - Never run overlapping write agents on the same files.
 - Record owner changes under `agent-team/handoffs/` with `handoff.schema.json`.
+- A handoff's artifact `sha256` records state at handoff time. `validate-agent-team` checks the ledger's shape, not whether those files have since changed. Before dispatching a stage, add `--check-artifact-freshness` to confirm the artifacts you are handing over still match the record; re-issue the handoff if they do not.
 
 ## Source-of-truth order
 

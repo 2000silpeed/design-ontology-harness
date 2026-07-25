@@ -8,6 +8,10 @@ This repository uses one shared team contract for Codex and Claude Code. The mod
 2. Ask the team lead to identify the first missing stage output.
 3. Dispatch only that stage owner.
 4. Save every stage transition under `agent-team/handoffs/` using `handoff.schema.json`.
+   The recorded `sha256` values are provenance: they say what each artifact was when it changed
+   hands. Validation does not compare them to the current files, because a record that has aged
+   is not a record that is wrong. When you dispatch, run the validator with
+   `--check-artifact-freshness` to confirm what you are handing over is still what the ledger says.
 5. Stop on a failed gate. Never route around it by changing the success criteria.
 
 ## Runtime entry points
