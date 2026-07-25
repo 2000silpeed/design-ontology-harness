@@ -1929,6 +1929,7 @@ def _lint_base_ui_rules(
 
         issues.extend(_lint_justified_text(rel_path, text))
 
+    issues.extend(_lint_font_loading(normalized, tokens, target=target, artifact_dir=artifact_dir))
     issues.extend(_lint_color_only_state(state_blocks, normalized))
     issues.extend(_lint_typeface_budget(normalized, project_korean, tokens))
     issues.extend(_lint_korean_wrap(normalized, korean_paths, tokens))
@@ -2201,6 +2202,90 @@ def _lint_typeface_budget(
             )
         )
     return issues
+
+
+def _lint_font_loading(
+    normalized: dict[str, str],
+    tokens: dict[str, dict[str, str]],
+    *,
+    target: Path,
+    artifact_dir: str,
+) -> list[ImplementationIssue]:
+    """DS108 — 선언된 서체에 실제 로딩 경로가 있는가.
+
+    온톨로지가 서체를 고르고 토큰이 스택을 선언해도, 로딩이 없으면 화면은 조용히
+    system-ui로 떨어진다. 서체 결정 전체가 무효가 되는데 아무 신호도 나지 않는다.
+
+    `fonts.css`가 존재하는 것만으로는 부족하다. 마크업이 그것을 링크해야 로드된다.
+    """
+    from .font_reference import GENERIC_FONT_FAMILIES
+
+    combined = "\n".join(normalized.values())
+    used_tokens = {token.lower() for token in FONT_TOKEN_USAGE_RE.findall(combined)}
+    if not used_tokens:
+        return []
+
+    families: dict[str, str] = {}
+    for token in sorted(used_tokens):
+        family = _token_font_family(tokens["light"], token)
+        if family == token or family in GENERIC_FONT_FAMILIES:
+            continue
+        families.setdefault(family, token)
+    if not families:
+        return []
+
+    loading_text = combined
+    fonts_css = target / artifact_dir / "fonts.css"
+    if fonts_css.is_file() and re.search(r"href\s*=\s*['\"][^'\"]*fonts\.css", combined, re.IGNORECASE):
+        try:
+            loading_text += "\n" + fonts_css.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            pass
+
+    issues: list[ImplementationIssue] = []
+    report_path = _first_report_path(normalized)
+    for family, token in sorted(families.items()):
+        if _family_has_loading(loading_text, family):
+            continue
+        issues.append(
+            _issue(
+                "DS108",
+                report_path,
+                1,
+                1,
+                f"Declared typeface has no loading path, so the surface silently falls back to a system "
+                f"font and the font decision is void; link {artifact_dir}/fonts.css or add an @font-face "
+                "for it. A family with no verified distribution URL must be replaced with a loadable one.",
+                f"{token} -> {family}",
+            )
+        )
+    return issues
+
+
+def _family_has_loading(text: str, family: str) -> bool:
+    """`@font-face` 선언이나 웹폰트 URL에 이 서체가 등장하는가.
+
+    Google Fonts, jsdelivr, 자체 호스팅을 모두 인정한다. 특정 제공자만 인식하면
+    다른 경로로 제대로 로드하는 구현을 오탐으로 잡는다.
+    """
+    if re.search(
+        r"@font-face\b[^}]*font-family\s*:\s*['\"]?" + re.escape(family) + r"['\"]?",
+        text,
+        re.IGNORECASE | re.DOTALL,
+    ):
+        return True
+
+    # URL 안의 서체 이름은 제공자마다 공백 처리가 다르다: `Noto+Serif+KR`,
+    # `spoqa-han-sans`, `SUIT-Variable`, `PretendardVariable`.
+    compact = re.sub(r"[^a-z0-9]", "", family.lower())
+    if not compact:
+        return False
+    loose = r"[^a-z0-9]*".join(re.escape(ch) for ch in compact)
+    for match in re.finditer(r"https?://[^\s\"')]+", text, re.IGNORECASE):
+        url_compact = re.sub(r"[^a-z0-9]", "", match.group(0).lower())
+        if compact in url_compact:
+            return True
+    return bool(re.search(r"url\([^)]*" + loose, text, re.IGNORECASE))
 
 
 def _surface_groups(normalized: dict[str, str]) -> list[tuple[str, str]]:

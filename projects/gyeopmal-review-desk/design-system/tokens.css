@@ -45,10 +45,10 @@
   --ds-color-support-peach-puff: #FFDAB9;
 
   /* typography (blueprint font_system) */
-  --ds-font-display: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ds-font-heading: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ds-font-body: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ds-font-ko: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-display: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-heading: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-body: "Pretendard", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-ko: "Pretendard", system-ui, -apple-system, "Segoe UI", sans-serif;
   --ds-font-mono: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, monospace;
   /* type scale */
   --ds-text-xs: 12px;

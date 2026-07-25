@@ -9,23 +9,23 @@
   /* semantic roles */
   --ds-color-accent: #7D773B;
   --ds-color-border: #D6DDE6;
-  --ds-color-border-strong: #818C9A;
+  --ds-color-border-strong: #888B8E;
   --ds-color-canvas: #F7F8FA;
-  --ds-color-danger: #B91C1C;
-  --ds-color-info: #2F6FEB;
+  --ds-color-danger: #EE0203;
+  --ds-color-info: #5F4B8B;
   --ds-color-ink: #0F172A;
   --ds-color-ink-inverse: #FFFFFF;
-  --ds-color-ink-muted: #475569;
-  --ds-color-ink-subtle: #64748B;
+  --ds-color-ink-muted: #5F4B8B;
+  --ds-color-ink-subtle: #939597;
   --ds-color-link: #EE0203;
   --ds-color-link-hover: #2563EB;
   --ds-color-primary: #EE0203;
-  --ds-color-success: #15803D;
+  --ds-color-success: #6B7D37;
   --ds-color-surface: #FFFFFF;
   --ds-color-surface-elevated: #FFFFFF;
   --ds-color-surface-muted: #EEF1F6;
   --ds-color-surface-tint: #E0E7FF;
-  --ds-color-warning: #B45309;
+  --ds-color-warning: #787665;
 
   /* project palette roles (blueprint active palette) */
   --ds-color-brand-attention-flash: #F5DF4D;
@@ -46,9 +46,9 @@
 
   /* typography (blueprint font_system) */
   --ds-font-display: "Playfair Display", ui-serif, Georgia, serif;
-  --ds-font-heading: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ds-font-body: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ds-font-ko: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-heading: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-ko: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --ds-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   /* type scale */
   --ds-text-xs: 12px;
@@ -112,22 +112,22 @@ html[data-theme="dark"] {
   /* semantic roles derived by the typed runtime color policy */
   --ds-color-accent: #BFB555;
   --ds-color-border: #2D3239;
-  --ds-color-border-strong: #666B73;
+  --ds-color-border-strong: #696A6C;
   --ds-color-canvas: #0D0F11;
-  --ds-color-danger: #E44D4D;
-  --ds-color-info: #7DA5F2;
+  --ds-color-danger: #FE4E4F;
+  --ds-color-info: #8E73CA;
   --ds-color-ink: #EEEFF2;
   --ds-color-ink-inverse: #1A1A1A;
-  --ds-color-ink-muted: #AFB6C0;
-  --ds-color-ink-subtle: #818C9C;
+  --ds-color-ink-muted: #B4AFC0;
+  --ds-color-ink-subtle: #8D8F91;
   --ds-color-link: #FE4E4F;
   --ds-color-link-hover: #799FF3;
   --ds-color-primary: #FE4E4F;
-  --ds-color-success: #22CF63;
+  --ds-color-success: #A2BD52;
   --ds-color-surface: #171717;
   --ds-color-surface-elevated: #1C1C1C;
   --ds-color-surface-muted: #1D2025;
   --ds-color-surface-tint: #31343F;
-  --ds-color-warning: #F47E25;
+  --ds-color-warning: #C9BF70;
 }
 /* design-ontology:END */

@@ -110,12 +110,27 @@ def test_negative_korean_tracking_is_preserved(tmp_path: Path):
     assert "--ds-tracking-body: -0.01em;" in css
 
 
+def test_emit_writes_font_loading_for_the_chosen_families(tmp_path: Path):
+    """토큰이 서체를 선언하면 로딩도 함께 방출돼야 한다.
+
+    선언만 있고 로딩이 없으면 화면은 조용히 system-ui로 떨어지고 서체 결정이 무효가 된다.
+    """
+    project = _write_project(tmp_path, _korean_font_system())
+    emit_project_tokens(project)
+    fonts_css = (project / "design-system" / "fonts.css").read_text(encoding="utf-8")
+    assert "@font-face" in fonts_css
+    assert 'font-family: "Pretendard"' in fonts_css
+    assert (project / "design-system" / "fonts" / "fetch-webfonts.mjs").is_file()
+
+
 def test_emitted_tokens_satisfy_the_base_rules(tmp_path: Path):
-    """생성기가 내보낸 토큰만 소비하는 구현은 DS100~DS107을 통과해야 한다."""
+    """생성기가 내보낸 토큰만 소비하는 구현은 DS100~DS108을 통과해야 한다."""
     project = _write_project(tmp_path, _korean_font_system())
     emit_project_tokens(project)
     (project / "index.html").write_text(
-        "<html><head><link rel='stylesheet' href='styles.css'></head><body>"
+        "<html><head>"
+        "<link rel='stylesheet' href='design-system/fonts.css'>"
+        "<link rel='stylesheet' href='styles.css'></head><body>"
         "<main class='app-shell'><p class='description'>"
         "구단 순위와 경기 일정을 한 화면에서 확인하고 관심 팀의 다음 경기를 놓치지 않도록 돕는 화면입니다."
         "</p></main></body></html>",

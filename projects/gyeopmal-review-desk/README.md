@@ -28,6 +28,7 @@ uv run design-ontology lint-implementation --target-repo projects/gyeopmal-revie
 | `DS105` | 한글 읽기 슬롯은 `var(--ds-tracking-body)`(0em). `.pane-eyebrow`만 uppercase + 0.08em으로 라틴 예외를 보여준다 |
 | `DS106` | `word-break: var(--ds-wrap-word-break)` + `overflow-wrap: var(--ds-wrap-overflow)` |
 | `DS107` | 읽는 텍스트에 `text-align: left` 명시 |
+| `DS108` | `design-system/fonts.css`를 링크한다. Pretendard는 자체 호스팅, Source Code Pro는 Google Fonts |
 
 ## 증거
 
@@ -42,12 +43,18 @@ uv run design-ontology lint-implementation --target-repo projects/gyeopmal-revie
 > headless Chrome의 `--window-size`를 좁게 주면 창 최소 폭으로 클램핑된 뒤 PNG만 잘려서
 > 오버플로처럼 보인다. 좁은 폭 증거는 같은 출처의 iframe을 정확한 폭으로 띄워 측정·캡처했다.
 
-## 원격 참조를 쓰지 않는다
+## 서체 로딩
 
-폰트 CDN을 링크하지 않는다. 참조 화면은 오프라인에서 렌더되어야 하고, 고정할 수 없는 원격
-참조는 production 증거의 content tree가 검증하지 못한다. 서체는 `tokens.css`의 `--ds-font-*`
-스택이 정하고 웹폰트가 없으면 `system-ui`로 떨어진다. 이 화면이 증명하는 것은 특정 서체가
-아니라 조판 계약이므로 폴백에서도 성립한다.
+선언만 있고 로딩이 없으면 화면은 조용히 `system-ui`로 떨어지고 서체 결정이 무효가 된다.
+`design-system/fonts.css`가 그 로딩을 담당하고 `index.html`이 링크한다.
+
+```bash
+node design-system/fonts/fetch-webfonts.mjs   # Pretendard woff2를 내려받는다
+```
+
+Pretendard는 자체 호스팅이라 오프라인에서도 렌더된다. Source Code Pro는 Google Fonts
+`@import`이므로 원격 참조다. production 증거의 content tree를 엄격히 고정해야 하면 그 서체도
+자체 호스팅으로 옮겨야 한다. 폰트 바이너리는 커밋하지 않는다.
 
 ## 재생성
 

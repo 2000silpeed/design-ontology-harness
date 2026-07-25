@@ -21,3 +21,9 @@ node_modules/
 
 # 렌더 출력물. 소스에서 다시 만든다.
 **/remotion-sample/out/
+
+# 폰트 바이너리는 커밋하지 않는다. fetch-webfonts.mjs 로 내려받는다.
+**/design-system/fonts/*.woff2
+**/design-system/fonts/*.woff
+**/design-system/fonts/*.ttf
+**/design-system/fonts/*.otf

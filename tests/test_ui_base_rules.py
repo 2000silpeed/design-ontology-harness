@@ -695,6 +695,86 @@ def test_ds107_allows_left_align(tmp_path: Path):
     assert "DS107" not in _codes(report)
 
 
+# ── DS108: 서체 로딩 ──
+
+
+def _write_font_ui(tmp_path: Path, head_extra: str = "", css: str = "") -> Path:
+    _write_tokens(tmp_path, extra_light='  --ds-font-body: "Pretendard", system-ui, sans-serif;')
+    (tmp_path / "index.html").write_text(
+        f"<html><head>{head_extra}<link rel='stylesheet' href='styles.css'></head>"
+        "<body><main class='app-shell'></main></body></html>",
+        encoding="utf-8",
+    )
+    (tmp_path / "styles.css").write_text(
+        css or "body { font-family: var(--ds-font-body); }", encoding="utf-8"
+    )
+    return tmp_path
+
+
+def test_ds108_flags_a_declared_family_with_no_loading(tmp_path: Path):
+    """선언만 있고 로딩이 없으면 화면은 조용히 system-ui로 떨어진다."""
+    _write_font_ui(tmp_path)
+    report = lint_implementation(tmp_path)
+    assert "DS108" in _codes(report)
+
+
+def test_ds108_accepts_an_inline_font_face(tmp_path: Path):
+    _write_font_ui(
+        tmp_path,
+        css="@font-face { font-family: 'Pretendard'; src: url('./p.woff2'); }\n"
+        "body { font-family: var(--ds-font-body); }",
+    )
+    report = lint_implementation(tmp_path)
+    assert "DS108" not in _codes(report)
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700",
+        "https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css",
+    ],
+)
+def test_ds108_accepts_any_verified_cdn_provider(tmp_path: Path, url: str):
+    """제공자를 하나만 인식하면 다른 경로로 제대로 로드하는 구현을 오탐으로 잡는다."""
+    _write_font_ui(tmp_path, head_extra=f"<link rel='stylesheet' href='{url}'>")
+    report = lint_implementation(tmp_path)
+    assert "DS108" not in _codes(report)
+
+
+def test_ds108_requires_fonts_css_to_be_linked(tmp_path: Path):
+    """fonts.css가 존재하는 것만으로는 로드되지 않는다. 마크업이 링크해야 한다."""
+    project = _write_font_ui(tmp_path)
+    (project / "design-system" / "fonts.css").write_text(
+        "@font-face { font-family: \"Pretendard\"; src: url('./fonts/p.woff2'); }",
+        encoding="utf-8",
+    )
+    assert "DS108" in _codes(lint_implementation(project))
+
+    html = project / "index.html"
+    html.write_text(
+        html.read_text(encoding="utf-8").replace(
+            "<head>", "<head><link rel='stylesheet' href='./design-system/fonts.css'>"
+        ),
+        encoding="utf-8",
+    )
+    assert "DS108" not in _codes(lint_implementation(project))
+
+
+def test_ds108_ignores_system_font_stacks(tmp_path: Path):
+    _write_tokens(tmp_path, extra_light="  --ds-font-body: system-ui, sans-serif;")
+    (tmp_path / "index.html").write_text(
+        "<html><head><link rel='stylesheet' href='styles.css'></head>"
+        "<body><main class='app-shell'></main></body></html>",
+        encoding="utf-8",
+    )
+    (tmp_path / "styles.css").write_text(
+        "body { font-family: var(--ds-font-body); }", encoding="utf-8"
+    )
+    report = lint_implementation(tmp_path)
+    assert "DS108" not in _codes(report)
+
+
 # ── 회귀: 규칙이 없는 표면은 조용해야 한다 ──
 
 

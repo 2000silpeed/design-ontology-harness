@@ -1111,14 +1111,24 @@ def _score_fonts(
 
 
 def _pick_best(scores: dict[str, float], exclude: dict | None = None) -> dict | None:
+    """점수 1위를 고르되, 로드할 수 없는 서체는 뒤로 미룬다.
+
+    배포 경로가 없는 서체를 고르면 화면은 system-ui로 떨어지고 서체 결정 전체가
+    무효가 된다. 점수가 조금 낮아도 실제로 렌더되는 서체가 낫다. 로드 가능한 후보가
+    하나도 없으면 원래대로 1위를 돌려주고, `lint-implementation`의 DS108이 드러낸다.
+    """
     if not scores:
         return None
     exclude_name = exclude["name"] if exclude else None
     sorted_fonts = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-    for name, score in sorted_fonts:
-        if name != exclude_name:
+    candidates = [name for name, _ in sorted_fonts if name != exclude_name]
+    if not candidates:
+        return _get_font(sorted_fonts[0][0])
+    for name in candidates:
+        recipe = webfont_recipe(name)
+        if recipe and recipe["kind"] != "manual":
             return _get_font(name)
-    return _get_font(sorted_fonts[0][0]) if sorted_fonts else None
+    return _get_font(candidates[0])
 
 
 def _should_contrast(brand_keywords: list[str]) -> bool:
@@ -1668,4 +1678,119 @@ def _heading_tracking_recommendation(type_scale: dict, brand_keywords: list[str]
     return {
         "heading_tracking": tracking,
         "note": "큰 헤딩에 negative tracking 적용. 미적용 시 글자가 풀어진 느낌.",
+    }
+
+
+# ──────────────────────────────────────────────
+# 웹폰트 로딩 레시피
+# ──────────────────────────────────────────────
+#
+# 온톨로지가 서체를 고르고 토큰이 스택을 선언해도, 그 서체가 실제로 로드되는지는
+# 아무도 보장하지 않았다. 선언만 있고 로딩이 없으면 화면은 조용히 system-ui로
+# 떨어지고, 서체 결정 전체가 무효가 된다.
+#
+# 레시피는 `source`에서 유도한다. 별도 필드로 26개 항목에 URL을 적어두면 `source`와
+# 어긋날 수 있다. URL을 확인하지 못한 서체는 레시피를 만들지 않는다. 추측한 URL은
+# 조용히 실패해서 지금 고치려는 문제를 그대로 반복한다.
+
+# 확인된 self-host 소스만 적는다. 여기 없는 서체는 수동 설정 대상으로 드러낸다.
+_VERIFIED_SELF_HOST: dict[str, dict[str, str]] = {
+    "Pretendard": {
+        "woff2_url": (
+            "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9"
+            "/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2"
+        ),
+        "file": "PretendardVariable.woff2",
+        "weight_range": "45 920",
+    },
+}
+
+# CSS 한 장으로 @font-face를 제공하는 확인된 배포 경로. 이 레포가 실제로 사용 중인
+# URL만 적는다. 확인하지 않은 경로를 넣으면 조용히 실패해서 문제를 되돌린다.
+_VERIFIED_CDN_CSS: dict[str, str] = {
+    "SUIT": "https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css",
+    "Wanted Sans": (
+        "https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3"
+        "/packages/wanted-sans/fonts/webfonts/static/complete/WantedSans.css"
+    ),
+}
+
+GENERIC_FONT_FAMILIES = {
+    "system-ui",
+    "-apple-system",
+    "blinkmacsystemfont",
+    "segoe ui",
+    "ui-serif",
+    "ui-sans-serif",
+    "ui-monospace",
+    "ui-rounded",
+    "sfmono-regular",
+    "menlo",
+    "monaco",
+    "consolas",
+    "georgia",
+    "times new roman",
+    "arial",
+    "helvetica",
+    "helvetica neue",
+    "roboto",
+    "serif",
+    "sans-serif",
+    "monospace",
+    "cursive",
+    "fantasy",
+    "emoji",
+    "math",
+    "inherit",
+    "initial",
+    "unset",
+}
+
+
+def webfont_recipe(font_name: str) -> dict | None:
+    """서체 이름 → 로딩 레시피. 확인된 경로가 없으면 None."""
+    if not font_name:
+        return None
+    if font_name.strip().lower() in GENERIC_FONT_FAMILIES:
+        return {"kind": "generic", "family": font_name}
+
+    entry = next((item for item in FONT_DB if item.get("name") == font_name), None)
+    if entry is None:
+        return None
+
+    verified = _VERIFIED_SELF_HOST.get(font_name)
+    if verified:
+        return {
+            "kind": "self-host",
+            "family": font_name,
+            "source": entry.get("source"),
+            **verified,
+        }
+
+    cdn_css = _VERIFIED_CDN_CSS.get(font_name)
+    if cdn_css:
+        return {
+            "kind": "cdn-css",
+            "family": font_name,
+            "source": entry.get("source"),
+            "css_url": cdn_css,
+        }
+
+    if entry.get("source") == "Google Fonts":
+        return {
+            "kind": "google-fonts",
+            "family": font_name,
+            "source": entry.get("source"),
+            # 두 개의 고정 굵기만 받는다. DS092가 중간 굵기 혼용을 막는 것과 같은 기준이다.
+            "css_url": (
+                "https://fonts.googleapis.com/css2?family="
+                f"{font_name.replace(' ', '+')}:wght@400;700&display=swap"
+            ),
+        }
+
+    # source는 알지만 배포 경로를 확인하지 못한 경우.
+    return {
+        "kind": "manual",
+        "family": font_name,
+        "source": entry.get("source"),
     }

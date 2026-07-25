@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Gyeopmal — 번역 검수 대기열</title>
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
-    <!-- 원격 폰트 CDN을 링크하지 않는다. 참조 화면은 오프라인에서 렌더되어야 하고,
-         고정할 수 없는 원격 참조는 production 증거의 content tree가 검증하지 못한다.
-         서체는 tokens.css의 --ds-font-* 스택이 정하고, 웹폰트가 없는 환경에서는
-         스택의 system-ui로 떨어진다. 이 화면이 증명하는 것은 특정 서체가 아니라
-         행간·자간·줄바꿈 계약이므로 폴백에서도 그대로 성립한다. -->
+    <!-- fonts.css는 생성 산출물이다. 토큰이 선언한 서체를 실제로 로드한다. 이걸 링크하지
+         않으면 화면은 조용히 system-ui로 떨어지고 서체 결정이 무효가 된다(DS108).
+         Pretendard는 design-system/fonts/ 에 자체 호스팅한다:
+             node design-system/fonts/fetch-webfonts.mjs
+         Google Fonts 계열은 원격 @import이므로, production 증거의 content tree를
+         엄격히 고정해야 하면 그 서체도 자체 호스팅으로 옮겨야 한다. -->
     <link rel="stylesheet" href="./design-system/tokens.css" />
+    <link rel="stylesheet" href="./design-system/fonts.css" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
