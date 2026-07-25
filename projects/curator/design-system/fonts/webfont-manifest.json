@@ -1,0 +1,31 @@
+{
+  "kind": "design-ontology.webfont-manifest.v1",
+  "project": "curator",
+  "families": [
+    {
+      "kind": "google-fonts",
+      "family": "EB Garamond",
+      "source": "Google Fonts",
+      "css_url": "https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&display=swap"
+    },
+    {
+      "kind": "google-fonts",
+      "family": "Inter",
+      "source": "Google Fonts",
+      "css_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+    },
+    {
+      "kind": "self-host",
+      "family": "Pretendard",
+      "source": "GitHub (cactus/pretendard)",
+      "woff2_url": "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2",
+      "weight_range": "45 920"
+    },
+    {
+      "kind": "google-fonts",
+      "family": "JetBrains Mono",
+      "source": "Google Fonts",
+      "css_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+    }
+  ]
+}

@@ -52,9 +52,12 @@ uv run design-ontology lint-implementation --target-repo projects/gyeopmal-revie
 node design-system/fonts/fetch-webfonts.mjs   # Pretendard woff2를 내려받는다
 ```
 
-Pretendard는 자체 호스팅이라 오프라인에서도 렌더된다. Source Code Pro는 Google Fonts
-`@import`이므로 원격 참조다. production 증거의 content tree를 엄격히 고정해야 하면 그 서체도
-자체 호스팅으로 옮겨야 한다. 폰트 바이너리는 커밋하지 않는다.
+서체 3종(Pretendard·Inter·Source Code Pro) 전부 자체 호스팅이다. 원격 참조가 하나도 없다.
+`fonts.googleapis.com`·`fonts.gstatic.com`·`cdn.jsdelivr.net`을 모두 차단하고 렌더한 결과가
+평소 렌더와 픽셀 단위로 동일한 것으로 확인했다.
+
+폰트 바이너리와 `fonts/local.css`는 커밋하지 않으므로, clone 직후에는 위 명령을 먼저 실행해야
+한다. 실행 전에는 `DS108`이 그 사실을 알려준다.
 
 ## 재생성
 

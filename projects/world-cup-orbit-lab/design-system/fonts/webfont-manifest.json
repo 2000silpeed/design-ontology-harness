@@ -1,0 +1,18 @@
+{
+  "kind": "design-ontology.webfont-manifest.v1",
+  "project": "world-cup-orbit-lab",
+  "families": [
+    {
+      "kind": "google-fonts",
+      "family": "Playfair Display",
+      "source": "Google Fonts",
+      "css_url": "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"
+    },
+    {
+      "kind": "google-fonts",
+      "family": "DM Sans",
+      "source": "Google Fonts",
+      "css_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap"
+    }
+  ]
+}

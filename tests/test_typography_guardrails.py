@@ -180,5 +180,70 @@ class TypographyGuardrailTests(unittest.TestCase):
         self.assertIn("line-height below the artifact safety minimum", skill_text)
 
 
+class FontLoadabilityTests(unittest.TestCase):
+    """자동 선택은 로드할 수 있는 서체만 고른다.
+
+    배포 경로가 없는 서체를 고르면 화면은 조용히 system-ui로 떨어지고 서체 결정
+    자체가 무효가 된다. 점수를 매길 대상이 아니라 후보에서 빼야 한다.
+    """
+
+    def test_unloadable_fonts_are_not_selectable(self) -> None:
+        from design_ontology_harness.font_reference import (
+            FONT_DB,
+            is_loadable_font,
+            selectable_fonts,
+        )
+
+        pool = {font["name"] for font in selectable_fonts()}
+        self.assertTrue(pool)
+        for name in pool:
+            self.assertTrue(is_loadable_font(name), f"{name} 로딩 경로 없음")
+        excluded = {font["name"] for font in FONT_DB} - pool
+        for name in excluded:
+            self.assertFalse(is_loadable_font(name))
+
+    def test_every_resolved_slot_is_loadable(self) -> None:
+        """여러 브랜드 성격으로 돌려도 선택 결과가 항상 로드 가능해야 한다.
+
+        점수 경로 말고도 korean_pair 체인과 PROVEN_PAIRINGS가 서체를 끌어온다.
+        그 경로가 후보 필터를 우회하면 로드 불가 서체가 다시 들어온다.
+        """
+        from design_ontology_harness.font_reference import is_loadable_font, resolve_font_system
+
+        keyword_sets = [
+            ["calm", "editorial", "precise"],
+            ["playful", "warm", "friendly"],
+            ["precise", "operational", "exacting"],
+            ["luxury", "fashion", "elegant"],
+            ["technical", "minimal", "clear"],
+        ]
+        for keywords in keyword_sets:
+            for summary in ("한국어 번역 검수 대기열", "An English-only analytics console"):
+                profile = {
+                    "brand_name": "Probe",
+                    "system_name": "Probe System",
+                    "product_summary": summary,
+                    "audiences": ["a"],
+                    "brand_keywords": keywords,
+                    "anti_keywords": ["generic"],
+                    "tone_of_voice": ["clear"],
+                    "visual_keywords": ["clean"],
+                    "interaction_keywords": ["steady"],
+                    "platforms": ["web"],
+                    "accessibility_targets": ["WCAG 2.2 AA"],
+                    "product_primitives": ["dashboard cards"],
+                }
+                resolved = resolve_font_system(profile)
+                for slot in ("display", "heading", "body", "korean", "mono"):
+                    entry = resolved.get(slot)
+                    if not isinstance(entry, dict) or not entry.get("name"):
+                        continue
+                    with self.subTest(keywords=keywords, summary=summary[:12], slot=slot):
+                        self.assertTrue(
+                            is_loadable_font(entry["name"]),
+                            f"{slot}={entry['name']} 는 로드 경로가 없다",
+                        )
+
+
 if __name__ == "__main__":
     unittest.main()

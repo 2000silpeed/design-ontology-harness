@@ -7,48 +7,48 @@
   color-scheme: light;
 
   /* semantic roles */
-  --ds-color-accent: #00837F;
+  --ds-color-accent: #4F7942;
   --ds-color-border: #D6DDE6;
-  --ds-color-border-strong: #768DA1;
+  --ds-color-border-strong: #818C9A;
   --ds-color-canvas: #F7F8FA;
-  --ds-color-danger: #8B2252;
-  --ds-color-info: #000080;
-  --ds-color-ink: #003153;
+  --ds-color-danger: #EE0203;
+  --ds-color-info: #804AA8;
+  --ds-color-ink: #0F172A;
   --ds-color-ink-inverse: #FFFFFF;
-  --ds-color-ink-muted: #4B5563;
-  --ds-color-ink-subtle: #6B7280;
-  --ds-color-link: #27503D;
+  --ds-color-ink-muted: #4F7942;
+  --ds-color-ink-subtle: #8A9A5B;
+  --ds-color-link: #38871D;
   --ds-color-link-hover: #2563EB;
-  --ds-color-primary: #27503D;
-  --ds-color-success: #006A4E;
+  --ds-color-primary: #38871D;
+  --ds-color-success: #38871D;
   --ds-color-surface: #FFFFFF;
   --ds-color-surface-elevated: #FFFFFF;
   --ds-color-surface-muted: #EEF1F6;
   --ds-color-surface-tint: #E0E7FF;
-  --ds-color-warning: #A3692C;
+  --ds-color-warning: #79783A;
 
   /* project palette roles (blueprint active palette) */
-  --ds-color-brand-anchor-surface: #27503D;
-  --ds-color-brand-calm-border: #76C1B1;
-  --ds-color-brand-fresh-accent: #00A591;
-  --ds-color-brand-quiet-background: #ACE1AF;
-  --ds-color-brand-structural-support: #006A4E;
+  --ds-color-brand-action-signal: #88B04B;
+  --ds-color-brand-anchor-surface: #4CBB17;
+  --ds-color-brand-proof-accent: #4F7942;
+  --ds-color-brand-reading-field: #708238;
+  --ds-color-brand-structural-support: #804AA8;
 
   /* supporting colors */
-  --ds-color-support-navy-blue: #000080;
-  --ds-color-support-ochre: #CC7722;
-  --ds-color-support-sky-blue: #87CEEB;
-  --ds-color-support-classic-blue: #0F4C81;
-  --ds-color-support-forest-green: #27503D;
+  --ds-color-support-moss-green: #8A9A5B;
+  --ds-color-support-grape-compote: #6B5876;
+  --ds-color-support-aubergine: #614051;
   --ds-color-support-cerulean: #2A52BE;
-  --ds-color-support-ocean-blue: #4F97A3;
-  --ds-color-support-prussian-blue: #003153;
+  --ds-color-support-azure-blue: #007FFF;
+  --ds-color-support-emerald-green: #50C878;
+  --ds-color-support-lemon-yellow: #FFF44F;
+  --ds-color-support-pure-red: #FF0000;
 
   /* typography (blueprint font_system) */
-  --ds-font-display: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ds-font-heading: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ds-font-body: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ds-font-ko: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-display: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-heading: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-body: "Wanted Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-ko: "Wanted Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --ds-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   /* type scale */
   --ds-text-xs: 12px;
@@ -112,24 +112,24 @@ html[data-theme="dark"] {
   color-scheme: dark;
 
   /* semantic roles derived by the typed runtime color policy */
-  --ds-color-accent: #00DFD8;
+  --ds-color-accent: #70BF57;
   --ds-color-border: #2D3239;
-  --ds-color-border-strong: #646B72;
+  --ds-color-border-strong: #666B73;
   --ds-color-canvas: #0D0F11;
-  --ds-color-danger: #D4558F;
-  --ds-color-info: #7576E7;
-  --ds-color-ink: #EEF0F2;
+  --ds-color-danger: #FE4E4F;
+  --ds-color-info: #AD7FCF;
+  --ds-color-ink: #EEEFF2;
   --ds-color-ink-inverse: #1A1A1A;
-  --ds-color-ink-muted: #AFB6C0;
-  --ds-color-ink-subtle: #858B99;
-  --ds-color-link: #3B9B6F;
+  --ds-color-ink-muted: #B3C0AF;
+  --ds-color-ink-subtle: #959C81;
+  --ds-color-link: #58D22E;
   --ds-color-link-hover: #799FF3;
-  --ds-color-primary: #3B9B6F;
-  --ds-color-success: #00D69E;
+  --ds-color-primary: #58D22E;
+  --ds-color-success: #58D22E;
   --ds-color-surface: #171717;
   --ds-color-surface-elevated: #1C1C1C;
   --ds-color-surface-muted: #1D2025;
   --ds-color-surface-tint: #31343F;
-  --ds-color-warning: #D29759;
+  --ds-color-warning: #BDBC52;
 }
 /* design-ontology:END */

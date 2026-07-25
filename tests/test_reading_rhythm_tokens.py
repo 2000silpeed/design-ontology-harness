@@ -110,23 +110,8 @@ def test_negative_korean_tracking_is_preserved(tmp_path: Path):
     assert "--ds-tracking-body: -0.01em;" in css
 
 
-def test_emit_writes_font_loading_for_the_chosen_families(tmp_path: Path):
-    """토큰이 서체를 선언하면 로딩도 함께 방출돼야 한다.
-
-    선언만 있고 로딩이 없으면 화면은 조용히 system-ui로 떨어지고 서체 결정이 무효가 된다.
-    """
-    project = _write_project(tmp_path, _korean_font_system())
-    emit_project_tokens(project)
-    fonts_css = (project / "design-system" / "fonts.css").read_text(encoding="utf-8")
-    assert "@font-face" in fonts_css
-    assert 'font-family: "Pretendard"' in fonts_css
-    assert (project / "design-system" / "fonts" / "fetch-webfonts.mjs").is_file()
-
-
-def test_emitted_tokens_satisfy_the_base_rules(tmp_path: Path):
-    """생성기가 내보낸 토큰만 소비하는 구현은 DS100~DS108을 통과해야 한다."""
-    project = _write_project(tmp_path, _korean_font_system())
-    emit_project_tokens(project)
+def _write_reference_surface(project: Path) -> None:
+    """토큰만 소비하는 최소 한글 표면."""
     (project / "index.html").write_text(
         "<html><head>"
         "<link rel='stylesheet' href='design-system/fonts.css'>"
@@ -151,6 +136,69 @@ def test_emitted_tokens_satisfy_the_base_rules(tmp_path: Path):
         """,
         encoding="utf-8",
     )
+
+
+def _simulate_completed_fetch(project: Path, family: str) -> None:
+    """내려받기 스크립트가 만들어낼 `fonts/local.css`를 흉내 낸다.
+
+    테스트는 네트워크를 쓰지 않는다. 스크립트가 제공자 CSS에서 해석해 쓰는 것과 같은
+    형태의 로컬 @font-face만 있으면 로딩 사슬 검증에는 충분하다.
+    """
+    local = project / "design-system" / "fonts" / "local.css"
+    local.parent.mkdir(parents=True, exist_ok=True)
+    local.write_text(
+        f'@font-face {{ font-family: "{family}"; '
+        'src: url(./x.woff2) format("woff2"); }\n',
+        encoding="utf-8",
+    )
+
+
+def test_emit_writes_font_loading_for_the_chosen_families(tmp_path: Path):
+    """토큰이 서체를 선언하면 로딩 경로도 함께 방출돼야 한다.
+
+    선언만 있고 로딩이 없으면 화면은 조용히 system-ui로 떨어지고 서체 결정이 무효가 된다.
+    """
+    project = _write_project(tmp_path, _korean_font_system())
+    emit_project_tokens(project)
+
+    fonts_css = (project / "design-system" / "fonts.css").read_text(encoding="utf-8")
+    assert '@import url("./fonts/local.css");' in fonts_css
+
+    manifest = json.loads(
+        (project / "design-system" / "fonts" / "webfont-manifest.json").read_text(encoding="utf-8")
+    )
+    pretendard = next(f for f in manifest["families"] if f["family"] == "Pretendard")
+    assert pretendard["woff2_url"].endswith(".woff2")
+    assert (project / "design-system" / "fonts" / "fetch-webfonts.mjs").is_file()
+
+
+def test_font_loading_gate_tracks_the_fetch_lifecycle(tmp_path: Path):
+    """내려받기 전에는 DS108이 걸리고, 끝나면 풀린다.
+
+    폰트 바이너리와 local.css는 커밋하지 않으므로 clone 직후는 로딩이 없는 상태다.
+    그 사실이 조용히 넘어가면 화면이 폴백으로 렌더되는 걸 아무도 모른다.
+    """
+    project = _write_project(tmp_path, _korean_font_system())
+    emit_project_tokens(project)
+    _write_reference_surface(project)
+
+    before = lint_implementation(project)
+    ds108 = [i for i in before.issues if i.code == "DS108"]
+    assert ds108, "내려받기 전인데 DS108이 걸리지 않았다"
+    assert "fetch-webfonts.mjs" in ds108[0].message
+
+    _simulate_completed_fetch(project, "Pretendard")
+    after = lint_implementation(project)
+    assert [i for i in after.issues if i.code == "DS108"] == []
+
+
+def test_emitted_tokens_satisfy_the_base_rules(tmp_path: Path):
+    """생성기가 내보낸 토큰만 소비하는 구현은 DS100~DS108을 통과해야 한다."""
+    project = _write_project(tmp_path, _korean_font_system())
+    emit_project_tokens(project)
+    _write_reference_surface(project)
+    _simulate_completed_fetch(project, "Pretendard")
+
     report = lint_implementation(project)
     base_rule_issues = [issue for issue in report.issues if issue.code.startswith("DS1")]
     assert base_rule_issues == []

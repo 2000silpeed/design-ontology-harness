@@ -1,6 +1,6 @@
 # UI Base Rules
 
-이 문서는 하네스가 구현물에 기본으로 요구하는 가독성 하한을 정의한다. 토큰 바인딩은 값의 출처를 증명할 뿐이고, 바인딩된 값이 실제로 읽히는지는 따로 판정해야 한다. 그 판정을 `lint-implementation`의 `DS100`~`DS107`이 맡는다.
+이 문서는 하네스가 구현물에 기본으로 요구하는 가독성 하한을 정의한다. 토큰 바인딩은 값의 출처를 증명할 뿐이고, 바인딩된 값이 실제로 읽히는지는 따로 판정해야 한다. 그 판정을 `lint-implementation`의 `DS100`~`DS108`이 맡는다.
 
 기준선은 Adham Dannaway의 [UI design tips](https://www.adhamdannaway.com/blog/ui-design/ui-design-tips) 16개 항목이다. 그중 라틴 조판 전제에 기대는 항목은 그대로 옮기지 않고 한글 기준으로 치환했다.
 
@@ -60,15 +60,29 @@
 
 토큰이 서체를 선언하는 것만으로는 아무것도 보장되지 않는다. 로딩이 없으면 화면은 조용히 `system-ui`로 떨어지고, 온톨로지의 서체 결정 전체가 무효가 된다. 아무 신호도 나지 않기 때문에 가장 알아채기 어려운 실패다.
 
-`emit-tokens`가 `design-system/fonts.css`를 함께 방출한다.
+`emit-tokens`가 `design-system/fonts.css`와 내려받기 스크립트를 함께 방출한다. **모든 서체는 자체 호스팅한다.** 원격 참조가 남으면 오프라인에서 렌더되지 않고 production 증거의 content tree도 검증할 수 없다.
 
-- 확인된 woff2 URL이 있는 서체는 `@font-face`로 자체 호스팅한다. `design-system/fonts/fetch-webfonts.mjs`로 내려받고 바이너리는 커밋하지 않는다.
-- Google Fonts와 확인된 CDN CSS 배포는 `@import`로 받는다.
-- 배포 경로를 확인하지 못한 서체는 주석 표시만 남긴다. 추측한 URL은 조용히 실패해서 같은 문제를 반복한다.
+```bash
+node design-system/fonts/fetch-webfonts.mjs
+```
+
+woff2 URL을 하드코딩하지 않는다. 스크립트가 제공자 CSS를 받아서 그 안의 실제 URL을 해석하고, `unicode-range` 서브셋 구조를 보존한 채 로컬 경로로 다시 써서 `fonts/local.css`를 만든다. 서브셋을 임의로 줄이면 한글 커버리지가 깨진다. 예를 들어 Noto Serif KR은 한글 서브셋만 100개가 넘는다.
+
+- 확인된 woff2 URL(Pretendard) → 그대로 내려받아 `@font-face` 생성
+- Google Fonts 21종, 확인된 CDN CSS(SUIT·Wanted Sans) → 제공자 CSS를 미러링
+- 배포 경로를 확인하지 못한 서체 → 주석 표시만. 추측한 URL은 조용히 실패해서 같은 문제를 반복한다.
+
+폰트 바이너리와 `fonts/local.css`는 커밋하지 않는다. 그래서 clone 직후에는 로딩이 없는 상태이고, `DS108`이 실행할 명령을 알려준다.
 
 `DS108`은 `fonts.css`의 존재가 아니라 **마크업이 그것을 링크했는지**를 본다. 파일만 있고 링크가 없으면 로드되지 않는다.
 
-서체 선택 단계에도 같은 제약이 들어간다. `_pick_best`는 로드 가능한 후보를 점수 1위보다 앞세운다. 렌더되지 않는 서체를 고르면 점수가 무슨 의미든 결과가 없다.
+### 로드할 수 없는 서체는 고르지 않는다
+
+로딩을 갖추는 것과 별개로, 자동 선택 자체가 배포 경로 없는 서체를 후보에서 뺀다. 렌더되지 않는 서체를 고르는 것은 서체를 고르지 않은 것과 같으므로 점수를 매길 대상이 아니다.
+
+`selectable_fonts()`가 후보 풀이고, `_score_fonts`와 display 후보가 그것을 쓴다. 풀만 걸러도 부족해서 체이닝 경로도 같이 막는다 — `korean_pair`, `PROVEN_PAIRINGS`, 한글 스크립트 서체 선택이 각자 서체 이름으로 다시 조회하기 때문이다. 현재 26종 중 2종(Spoqa Han Sans Neo, KoPubWorldBatang)이 제외돼 있고, URL을 확인해 `webfont_recipe`에 등록하면 즉시 후보로 돌아온다.
+
+`brand_profile.font_system`으로 사람이 직접 지정한 서체는 이 필터를 거치지 않는다. 명시적 선택은 존중하고, 로딩이 없으면 `DS108`이 알려준다. 그래서 `DS108`은 자동 선택이 정리된 뒤에도 손으로 쓴 구현을 위한 안전망으로 남는다.
 
 ## 한글 표면 판정
 
@@ -121,3 +135,4 @@ uv run design-ontology lint-implementation --target-repo <implementation-repo>
 - `DS102`가 나오면 경계선 두께를 키우지 말고 `--ds-color-border-strong`으로 바꾼다. 정책이 그 역할을 3:1 위로 유지하므로 구현에서 색을 새로 만들 필요가 없다. 토큰을 다시 방출하지 않은 프로젝트라면 `emit-tokens`를 먼저 돌린다.
 - `DS103`이 나오면 색을 더 진하게 만들지 말고 형태나 글자를 추가한다.
 - `DS105`, `DS106`이 나오면 개별 블록을 고치는 대신 본문 슬롯이 `--ds-tracking-body`와 `--ds-wrap-*`를 소비하는지 확인한다.
+- `DS108`이 나오면 대개 내려받기 스크립트를 아직 실행하지 않은 것이다. 메시지가 실행할 명령을 적어준다. 배포 경로가 없는 서체라면 로드 가능한 서체로 교체한다 — 렌더되지 않는 서체를 고른 것은 서체를 고르지 않은 것과 같다.

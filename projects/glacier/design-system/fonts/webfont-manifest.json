@@ -1,0 +1,24 @@
+{
+  "kind": "design-ontology.webfont-manifest.v1",
+  "project": "glacier",
+  "families": [
+    {
+      "kind": "google-fonts",
+      "family": "Inter",
+      "source": "Google Fonts",
+      "css_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+    },
+    {
+      "kind": "cdn-css",
+      "family": "Wanted Sans",
+      "source": "GitHub (wanteddev)",
+      "css_url": "https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/static/complete/WantedSans.css"
+    },
+    {
+      "kind": "google-fonts",
+      "family": "JetBrains Mono",
+      "source": "Google Fonts",
+      "css_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+    }
+  ]
+}

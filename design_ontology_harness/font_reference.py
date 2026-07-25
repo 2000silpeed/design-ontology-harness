@@ -929,7 +929,7 @@ def _pick_display_font(
         return None
     serif_candidates = [
         font
-        for font in FONT_DB
+        for font in selectable_fonts()
         if str(font.get("family", "")).startswith("serif")
     ]
     if not serif_candidates:
@@ -1037,7 +1037,7 @@ def _score_fonts(
     else:
         target_families = set(product_config.get("body", ["humanist-sans"]))
 
-    for font in FONT_DB:
+    for font in selectable_fonts():
         score = 0.0
         family = font["family"]
 
@@ -1111,24 +1111,14 @@ def _score_fonts(
 
 
 def _pick_best(scores: dict[str, float], exclude: dict | None = None) -> dict | None:
-    """점수 1위를 고르되, 로드할 수 없는 서체는 뒤로 미룬다.
-
-    배포 경로가 없는 서체를 고르면 화면은 system-ui로 떨어지고 서체 결정 전체가
-    무효가 된다. 점수가 조금 낮아도 실제로 렌더되는 서체가 낫다. 로드 가능한 후보가
-    하나도 없으면 원래대로 1위를 돌려주고, `lint-implementation`의 DS108이 드러낸다.
-    """
     if not scores:
         return None
     exclude_name = exclude["name"] if exclude else None
     sorted_fonts = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-    candidates = [name for name, _ in sorted_fonts if name != exclude_name]
-    if not candidates:
-        return _get_font(sorted_fonts[0][0])
-    for name in candidates:
-        recipe = webfont_recipe(name)
-        if recipe and recipe["kind"] != "manual":
+    for name, _score in sorted_fonts:
+        if name != exclude_name:
             return _get_font(name)
-    return _get_font(candidates[0])
+    return _get_font(sorted_fonts[0][0]) if sorted_fonts else None
 
 
 def _should_contrast(brand_keywords: list[str]) -> bool:
@@ -1142,6 +1132,27 @@ def _get_font(name: str) -> dict | None:
     return None
 
 
+def is_loadable_font(name: str | None) -> bool:
+    """이 서체를 실제로 로드할 방법이 있는가."""
+    if not name:
+        return False
+    recipe = webfont_recipe(name)
+    return bool(recipe) and recipe["kind"] not in ("manual",)
+
+
+def selectable_fonts() -> list[dict]:
+    """자동 선택이 고를 수 있는 후보 풀.
+
+    배포 경로가 없는 서체는 후보에서 제외한다. 고르면 화면이 조용히 system-ui로
+    떨어져서 서체 결정 자체가 무효가 되므로, 점수를 매길 대상이 아니다. 제외된
+    서체는 URL을 확인해 `webfont_recipe`에 등록하면 즉시 다시 후보가 된다.
+
+    `brand_profile.font_system`으로 사람이 직접 지정한 서체는 이 필터를 거치지
+    않는다. 명시적 선택은 존중하고, 로딩이 없으면 DS108이 알려준다.
+    """
+    return [font for font in FONT_DB if is_loadable_font(font.get("name"))]
+
+
 def _find_proven_pairing(heading: dict | None, body: dict | None, needs_korean: bool) -> dict | None:
     if not heading or not body:
         return None
@@ -1151,6 +1162,9 @@ def _find_proven_pairing(heading: dict | None, body: dict | None, needs_korean: 
         if h_match and b_match:
             return pairing
         if h_match:
+            # 검증된 페어링이라도 본문 서체를 로드할 수 없으면 쓸 수 없다.
+            if not is_loadable_font(pairing["body"]):
+                continue
             candidate_body = _get_font(pairing["body"])
             if candidate_body:
                 if needs_korean and "(KR)" in pairing.get("context", ""):
@@ -1178,15 +1192,17 @@ def _pick_korean_font(
             or "serif" in (heading or {}).get("family", "")
         )
     )
-    if prefer_heading_pair:
+    # 페어링으로 끌어오는 서체도 로드 가능해야 한다. 후보 풀만 걸러도
+    # korean_pair 체인이 배포 경로 없는 서체를 다시 들여올 수 있다.
+    if prefer_heading_pair and is_loadable_font(heading["korean_pair"]):
         paired = _get_font(heading["korean_pair"])
         if paired:
             return paired
-    if body and body.get("korean_native"):
+    if body and body.get("korean_native") and is_loadable_font(body.get("name")):
         return body
-    if body and body.get("korean_pair"):
+    if body and is_loadable_font(body.get("korean_pair")):
         return _get_font(body["korean_pair"])
-    if heading and heading.get("korean_pair"):
+    if heading and is_loadable_font(heading.get("korean_pair")):
         return _get_font(heading["korean_pair"])
     return _get_font("Pretendard")
 
@@ -1461,13 +1477,13 @@ def _pick_korean_script_font(
     korean: dict | None,
     fallback: dict | None = None,
 ) -> dict | None:
-    if preferred and preferred.get("korean_native"):
+    if preferred and preferred.get("korean_native") and is_loadable_font(preferred.get("name")):
         return preferred
-    if preferred and preferred.get("korean_pair"):
+    if preferred and is_loadable_font(preferred.get("korean_pair")):
         paired = _get_font(preferred["korean_pair"])
         if paired and paired.get("korean_native"):
             return paired
-    if korean and korean.get("korean_native"):
+    if korean and korean.get("korean_native") and is_loadable_font(korean.get("name")):
         return korean
     return preferred or korean or fallback
 

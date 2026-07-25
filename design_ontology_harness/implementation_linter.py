@@ -2237,10 +2237,21 @@ def _lint_font_loading(
     loading_text = combined
     fonts_css = target / artifact_dir / "fonts.css"
     if fonts_css.is_file() and re.search(r"href\s*=\s*['\"][^'\"]*fonts\.css", combined, re.IGNORECASE):
-        try:
-            loading_text += "\n" + fonts_css.read_text(encoding="utf-8")
-        except (OSError, UnicodeDecodeError):
-            pass
+        loading_text += "\n" + _read_css_with_local_imports(fonts_css)
+
+    # 자체 호스팅 CSS는 생성물이라 커밋되지 않는다. manifest가 있으면 할 일은
+    # "@font-face를 쓰라"가 아니라 "내려받기 스크립트를 실행하라"다.
+    manifest = target / artifact_dir / "fonts" / "webfont-manifest.json"
+    if manifest.is_file():
+        remedy = (
+            f"run `node {artifact_dir}/fonts/fetch-webfonts.mjs` to download the webfonts "
+            f"and generate {artifact_dir}/fonts/local.css"
+        )
+    else:
+        remedy = (
+            f"link {artifact_dir}/fonts.css or add an @font-face for it; a family with no "
+            "verified distribution URL must be replaced with a loadable one"
+        )
 
     issues: list[ImplementationIssue] = []
     report_path = _first_report_path(normalized)
@@ -2253,13 +2264,34 @@ def _lint_font_loading(
                 report_path,
                 1,
                 1,
-                f"Declared typeface has no loading path, so the surface silently falls back to a system "
-                f"font and the font decision is void; link {artifact_dir}/fonts.css or add an @font-face "
-                "for it. A family with no verified distribution URL must be replaced with a loadable one.",
+                "Declared typeface has no loading path, so the surface silently falls back to a system "
+                f"font and the font decision is void; {remedy}.",
                 f"{token} -> {family}",
             )
         )
     return issues
+
+
+def _read_css_with_local_imports(path: Path, depth: int = 3) -> str:
+    """CSS를 읽고 로컬 `@import` 대상까지 이어 붙인다.
+
+    자체 호스팅 경로는 `fonts.css` → `fonts/local.css` 사슬로 이어진다. 사슬을 따르지
+    않으면 실제로 로드되는 서체를 못 본다. 반대로 `local.css`가 아직 없으면
+    (fetch 스크립트 미실행) 로딩이 없는 것이 맞으므로 DS108이 그대로 걸린다.
+    """
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return ""
+    if depth <= 0:
+        return text
+    for href in re.findall(r"@import\s+url\(\s*['\"]?([^'\")]+)['\"]?\s*\)", text, re.IGNORECASE):
+        if href.startswith(("http://", "https://", "//", "data:")):
+            continue
+        resolved = (path.parent / href).resolve()
+        if resolved.is_file():
+            text += "\n" + _read_css_with_local_imports(resolved, depth - 1)
+    return text
 
 
 def _family_has_loading(text: str, family: str) -> bool:

@@ -3,16 +3,18 @@
 /* 서체 로딩. 토큰이 선언한 서체가 실제로 렌더되도록 보장하는 파일입니다. */
 /* tokens.css 다음에 링크하세요. */
 
-/* Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap");
+/* 웹폰트는 자체 호스팅합니다. 원격 참조가 남으면 오프라인에서 렌더되지 않고
+   production 증거의 content tree도 검증할 수 없습니다.
 
-/* self-host — fonts/fetch-webfonts.mjs 로 내려받습니다. */
-@font-face {
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 45 920;
-  font-display: swap;
-  src: url("./fonts/PretendardVariable.woff2") format("woff2-variations");
-}
+   내려받기:  node design-system/fonts/fetch-webfonts.mjs
+
+   스크립트가 제공자 CSS에서 woff2 URL을 해석해 fonts/ 에 저장하고
+   unicode-range 서브셋까지 보존한 fonts/local.css 를 만듭니다.
+   local.css 가 없으면 아무 서체도 로드되지 않습니다(DS108). */
+@import url("./fonts/local.css");
+
+/* 대상 서체 */
+/* - "Noto Serif KR" (google-fonts) */
+/* - "Playfair Display" (google-fonts) */
+/* - "Pretendard" (self-host) */
 /* design-ontology:END */

@@ -7,48 +7,48 @@
   color-scheme: light;
 
   /* semantic roles */
-  --ds-color-accent: #C45403;
+  --ds-color-accent: #6A7E39;
   --ds-color-border: #D6DDE6;
-  --ds-color-border-strong: #768DA1;
+  --ds-color-border-strong: #7A8D9E;
   --ds-color-canvas: #F7F8FA;
-  --ds-color-danger: #AC6259;
-  --ds-color-info: #417C9C;
+  --ds-color-danger: #003153;
+  --ds-color-info: #0F4C81;
   --ds-color-ink: #003153;
   --ds-color-ink-inverse: #FFFFFF;
-  --ds-color-ink-muted: #4B5563;
-  --ds-color-ink-subtle: #6B7280;
+  --ds-color-ink-muted: #614051;
+  --ds-color-ink-subtle: #8A9A5B;
   --ds-color-link: #000080;
   --ds-color-link-hover: #2563EB;
   --ds-color-primary: #000080;
-  --ds-color-success: #27503D;
+  --ds-color-success: #6A7E39;
   --ds-color-surface: #FFFFFF;
   --ds-color-surface-elevated: #FFFFFF;
   --ds-color-surface-muted: #EEF1F6;
   --ds-color-surface-tint: #E0E7FF;
-  --ds-color-warning: #A3692C;
+  --ds-color-warning: #000080;
 
   /* project palette roles (blueprint active palette) */
   --ds-color-brand-anchor-background: #000080;
   --ds-color-brand-depth-support: #003153;
   --ds-color-brand-highlight-air: #D6EAF8;
   --ds-color-brand-interface-surface: #0F4C81;
-  --ds-color-brand-proof-accent: #CC5500;
+  --ds-color-brand-proof-accent: #708238;
 
   /* supporting colors */
-  --ds-color-support-ochre: #CC7722;
-  --ds-color-support-navy-blue: #000080;
-  --ds-color-support-classic-blue: #0F4C81;
-  --ds-color-support-forest-green: #27503D;
-  --ds-color-support-sky-blue: #87CEEB;
-  --ds-color-support-wheat: #F5DEB3;
-  --ds-color-support-ocean-blue: #4F97A3;
-  --ds-color-support-terracotta: #E2725B;
+  --ds-color-support-aubergine: #614051;
+  --ds-color-support-byzantium: #702963;
+  --ds-color-support-moss-green: #8A9A5B;
+  --ds-color-support-misty-blue: #B5C7EB;
+  --ds-color-support-fern-green: #4F7942;
+  --ds-color-support-azure-blue: #007FFF;
+  --ds-color-support-blanched-almond: #FFEBCD;
+  --ds-color-support-autumn-blaze: #D1933F;
 
   /* typography (blueprint font_system) */
-  --ds-font-display: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ds-font-heading: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ds-font-body: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ds-font-ko: "Spoqa Han Sans Neo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-display: "Pretendard", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-heading: "Pretendard", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-body: "Pretendard", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-font-ko: "Pretendard", system-ui, -apple-system, "Segoe UI", sans-serif;
   --ds-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   /* type scale */
   --ds-text-xs: 11px;
@@ -112,24 +112,24 @@ html[data-theme="dark"] {
   color-scheme: dark;
 
   /* semantic roles derived by the typed runtime color policy */
-  --ds-color-accent: #FC8027;
+  --ds-color-accent: #A0BE54;
   --ds-color-border: #2D3239;
   --ds-color-border-strong: #646B72;
   --ds-color-canvas: #0D0F11;
-  --ds-color-danger: #D4958D;
-  --ds-color-info: #70AAC9;
+  --ds-color-danger: #1387D8;
+  --ds-color-info: #2C86D6;
   --ds-color-ink: #EEF0F2;
   --ds-color-ink-inverse: #1A1A1A;
-  --ds-color-ink-muted: #AFB6C0;
-  --ds-color-ink-subtle: #858B99;
+  --ds-color-ink-muted: #C0AFB8;
+  --ds-color-ink-subtle: #959C81;
   --ds-color-link: #7576E7;
   --ds-color-link-hover: #799FF3;
   --ds-color-primary: #7576E7;
-  --ds-color-success: #3B9B6F;
+  --ds-color-success: #A0BE54;
   --ds-color-surface: #171717;
   --ds-color-surface-elevated: #1C1C1C;
   --ds-color-surface-muted: #1D2025;
   --ds-color-surface-tint: #31343F;
-  --ds-color-warning: #D29759;
+  --ds-color-warning: #7576E7;
 }
 /* design-ontology:END */
