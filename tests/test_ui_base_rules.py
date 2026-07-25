@@ -775,6 +775,60 @@ def test_ds108_ignores_system_font_stacks(tmp_path: Path):
     assert "DS108" not in _codes(report)
 
 
+# ── 중첩 artifact 디렉터리 ──
+
+
+def test_nested_artifact_dirs_are_not_linted(tmp_path: Path):
+    """루트가 아닌 생성 디렉터리도 구현이 아니다.
+
+    생성 토큰 파일에는 관리 블록과 원시 hex가 들어 있는 게 정상이다. 구현으로
+    린트하면 그 파일이 자기 역할 때문에 규칙에 걸린다.
+    """
+    _write_tokens(tmp_path)
+    mock = tmp_path / "second-mockup"
+    (mock / "design-system").mkdir(parents=True)
+    _write_tokens(mock)
+    (mock / "index.html").write_text(
+        "<html><body><main class='app-shell'></main></body></html>", encoding="utf-8"
+    )
+    report = lint_implementation(tmp_path)
+    assert not [f for f in report.checked_files if "design-system" in f]
+
+
+def test_contrast_uses_the_nearest_token_file(tmp_path: Path):
+    """중첩 목업은 자기 tokens.css로 판정해야 한다.
+
+    루트 것만 읽으면 다른 팔레트로 대비비를 계산해서 조용히 틀린 답이 나온다.
+    """
+    _write_tokens(tmp_path)  # 루트: border-strong = #475569 (통과)
+    mock = tmp_path / "second-mockup"
+    mock.mkdir()
+    _write_tokens(mock, extra_light="  --ds-color-border-strong: #E4E4E4;")
+    (mock / "index.html").write_text(
+        "<html><head><link rel='stylesheet' href='styles.css'></head>"
+        "<body><main class='app-shell'></main></body></html>",
+        encoding="utf-8",
+    )
+    control = (
+        ".search-input { background: var(--ds-color-surface);"
+        " border: 1px solid var(--ds-color-border-strong); }"
+    )
+    (mock / "styles.css").write_text(control, encoding="utf-8")
+    (tmp_path / "index.html").write_text(
+        "<html><head><link rel='stylesheet' href='root.css'></head>"
+        "<body><main class='app-shell'></main></body></html>",
+        encoding="utf-8",
+    )
+    (tmp_path / "root.css").write_text(control, encoding="utf-8")
+
+    report = lint_implementation(tmp_path)
+    ds102 = [i for i in report.issues if i.code == "DS102"]
+    paths = {i.path for i in ds102}
+    assert paths == {"second-mockup/styles.css"}, (
+        "중첩 목업의 낡은 토큰만 걸려야 한다: " + str(sorted(paths))
+    )
+
+
 # ── 회귀: 규칙이 없는 표면은 조용해야 한다 ──
 
 

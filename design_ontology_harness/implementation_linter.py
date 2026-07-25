@@ -842,8 +842,14 @@ def _iter_candidate_files(
 def _is_excluded(rel_parts: tuple[str, ...], artifact_parts: tuple[str, ...]) -> bool:
     if not rel_parts:
         return True
-    if artifact_parts and rel_parts[: len(artifact_parts)] == artifact_parts:
-        return True
+    # artifact 디렉터리는 깊이와 무관하게 제외한다. 루트에서만 걸러내면 목업이 여러 개인
+    # 프로젝트의 중첩 `design-system/`이 구현으로 린트되고, 생성 토큰 파일이 자기 규칙에
+    # 걸린다(관리 블록·원시 hex는 그 파일의 역할이다).
+    if artifact_parts:
+        span = len(artifact_parts)
+        for index in range(len(rel_parts) - span + 1):
+            if rel_parts[index : index + span] == artifact_parts:
+                return True
     return any(part in DEFAULT_EXCLUDED_DIRS for part in rel_parts)
 
 
@@ -1897,7 +1903,6 @@ def _lint_base_ui_rules(
     if not file_texts:
         return []
 
-    tokens = _load_ds_token_values(target, artifact_dir)
     normalized = {
         rel_path: _normalize_for_base_rules(raw_text)
         for rel_path, raw_text in sorted(file_texts.items())
@@ -1907,10 +1912,12 @@ def _lint_base_ui_rules(
     korean_paths = [rel for rel, text in normalized.items() if _is_korean_surface(text)]
     project_korean = bool(korean_paths)
 
+    resolver = _ArtifactResolver(target, artifact_dir)
     issues: list[ImplementationIssue] = []
     state_blocks: list[tuple[str, str, str, int]] = []
 
     for rel_path, text in normalized.items():
+        tokens = resolver.tokens_for(rel_path)
         for selector, body, body_offset in _iter_css_blocks(text):
             state_blocks.append((rel_path, selector, body, _line_of(text, body_offset)))
             issues.extend(
@@ -1929,11 +1936,60 @@ def _lint_base_ui_rules(
 
         issues.extend(_lint_justified_text(rel_path, text))
 
-    issues.extend(_lint_font_loading(normalized, tokens, target=target, artifact_dir=artifact_dir))
+    issues.extend(_lint_font_loading(normalized, resolver))
     issues.extend(_lint_color_only_state(state_blocks, normalized))
-    issues.extend(_lint_typeface_budget(normalized, project_korean, tokens))
-    issues.extend(_lint_korean_wrap(normalized, korean_paths, tokens))
+    issues.extend(_lint_typeface_budget(normalized, project_korean, resolver))
+    issues.extend(_lint_korean_wrap(normalized, korean_paths, resolver))
     return issues
+
+
+class _ArtifactResolver:
+    """구현 파일마다 자기에게 적용되는 artifact 디렉터리를 찾는다.
+
+    한 프로젝트에 목업이 여러 개면 각자 자기 `design-system/`을 갖는다.
+    루트 것만 읽으면 다른 팔레트로 대비비를 판정해서 조용히 틀린 답이 나온다.
+    실제로 `fixture-desk`가 낡은 `border-strong`(2.19:1)을 쓰는데 루트의 갱신된
+    값으로 통과 처리되고 있었다.
+    """
+
+    def __init__(self, target: Path, artifact_dir: str) -> None:
+        self._target = target
+        self._artifact_parts = tuple(part for part in artifact_dir.split("/") if part)
+        self._artifact_dir = artifact_dir
+        self._tokens: dict[Path, dict[str, dict[str, str]]] = {}
+
+    def artifact_dir_for(self, rel_path: str) -> Path:
+        """파일에서 위로 올라가며 `tokens.css`가 실재하는 artifact 디렉터리를 찾는다.
+
+        디렉터리 이름만 보고 멈추면 안 된다. 스펙 문서만 들어 있고 토큰은 없는
+        `design-system/`이 실제로 존재하고, 거기서 멈추면 토큰이 하나도 안 잡혀서
+        토큰 바인딩이 전부 미해석으로 처리된다.
+        """
+        for current in self._ancestors(rel_path):
+            candidate = current.joinpath(*self._artifact_parts)
+            if (candidate / "tokens.css").is_file():
+                return candidate
+        return self._target.joinpath(*self._artifact_parts)
+
+    def _ancestors(self, rel_path: str) -> list[Path]:
+        current = (self._target / rel_path).parent
+        chain = [current]
+        while current != self._target and self._target in current.parents:
+            current = current.parent
+            chain.append(current)
+        return chain
+
+    def tokens_for(self, rel_path: str) -> dict[str, dict[str, str]]:
+        artifact = self.artifact_dir_for(rel_path)
+        cached = self._tokens.get(artifact)
+        if cached is None:
+            cached = _load_ds_token_values_from(artifact / "tokens.css")
+            self._tokens[artifact] = cached
+        return cached
+
+    @property
+    def label(self) -> str:
+        return self._artifact_dir
 
 
 def _lint_reading_rhythm(
@@ -2170,7 +2226,7 @@ def _indicator_carries_label(markup: str, base_selector: str) -> bool:
 def _lint_typeface_budget(
     normalized: dict[str, str],
     project_korean: bool,
-    tokens: dict[str, dict[str, str]],
+    resolver: "_ArtifactResolver",
 ) -> list[ImplementationIssue]:
     """DS104 — 한 화면에서 쓰는 텍스트 서체 수.
 
@@ -2183,6 +2239,7 @@ def _lint_typeface_budget(
     """
     issues: list[ImplementationIssue] = []
     for report_path, group_text in _surface_groups(normalized):
+        tokens = resolver.tokens_for(report_path)
         used = {token.lower() for token in FONT_TOKEN_USAGE_RE.findall(group_text)}
         used.discard("--ds-font-mono")
         if project_korean:
@@ -2206,10 +2263,7 @@ def _lint_typeface_budget(
 
 def _lint_font_loading(
     normalized: dict[str, str],
-    tokens: dict[str, dict[str, str]],
-    *,
-    target: Path,
-    artifact_dir: str,
+    resolver: "_ArtifactResolver",
 ) -> list[ImplementationIssue]:
     """DS108 — 선언된 서체에 실제 로딩 경로가 있는가.
 
@@ -2221,6 +2275,10 @@ def _lint_font_loading(
     from .font_reference import GENERIC_FONT_FAMILIES
 
     combined = "\n".join(normalized.values())
+    report_path = _first_report_path(normalized)
+    tokens = resolver.tokens_for(report_path)
+    artifact = resolver.artifact_dir_for(report_path)
+    artifact_dir = resolver.label
     used_tokens = {token.lower() for token in FONT_TOKEN_USAGE_RE.findall(combined)}
     if not used_tokens:
         return []
@@ -2235,13 +2293,13 @@ def _lint_font_loading(
         return []
 
     loading_text = combined
-    fonts_css = target / artifact_dir / "fonts.css"
+    fonts_css = artifact / "fonts.css"
     if fonts_css.is_file() and re.search(r"href\s*=\s*['\"][^'\"]*fonts\.css", combined, re.IGNORECASE):
         loading_text += "\n" + _read_css_with_local_imports(fonts_css)
 
     # 자체 호스팅 CSS는 생성물이라 커밋되지 않는다. manifest가 있으면 할 일은
     # "@font-face를 쓰라"가 아니라 "내려받기 스크립트를 실행하라"다.
-    manifest = target / artifact_dir / "fonts" / "webfont-manifest.json"
+    manifest = artifact / "fonts" / "webfont-manifest.json"
     if manifest.is_file():
         remedy = (
             f"run `node {artifact_dir}/fonts/fetch-webfonts.mjs` to download the webfonts "
@@ -2254,7 +2312,6 @@ def _lint_font_loading(
         )
 
     issues: list[ImplementationIssue] = []
-    report_path = _first_report_path(normalized)
     for family, token in sorted(families.items()):
         if _family_has_loading(loading_text, family):
             continue
@@ -2356,7 +2413,7 @@ def _token_font_family(token_values: dict[str, str], token: str) -> str:
 def _lint_korean_wrap(
     normalized: dict[str, str],
     korean_paths: list[str],
-    tokens: dict[str, dict[str, str]],
+    resolver: "_ArtifactResolver",
 ) -> list[ImplementationIssue]:
     """DS106 — 한글 줄바꿈 계약.
 
@@ -2367,6 +2424,7 @@ def _lint_korean_wrap(
     if not korean_paths:
         return []
     combined = "\n".join(normalized.values())
+    tokens = resolver.tokens_for(korean_paths[0])
     for match in WORD_BREAK_DECL_RE.finditer(combined):
         if _resolve_keyword(match.group("value"), tokens["light"]) == "keep-all":
             return []
@@ -2639,8 +2697,11 @@ def _relative_luminance(rgb: tuple[int, int, int]) -> float:
 
 def _load_ds_token_values(target: Path, artifact_dir: str) -> dict[str, dict[str, str]]:
     """Read the installed tokens.css so lint can judge the resolved values."""
+    return _load_ds_token_values_from(target / artifact_dir / "tokens.css")
+
+
+def _load_ds_token_values_from(tokens_path: Path) -> dict[str, dict[str, str]]:
     empty: dict[str, dict[str, str]] = {"light": {}, "dark": {}}
-    tokens_path = target / artifact_dir / "tokens.css"
     if not tokens_path.is_file():
         return empty
     try:
