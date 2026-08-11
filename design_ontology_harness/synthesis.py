@@ -10,6 +10,7 @@ from .color_reference import resolve_color_reference, resolve_semantic_color_ref
 from .css_pipeline import load_css_extraction
 from .font_reference import resolve_font_system
 from .graph_builders import VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS
+from .interaction_resolver import resolve_interaction_patterns
 from .models import DocumentRecord, ReferenceLink
 from .reference_context import build_design_context_pack
 from .utils import ensure_dir, write_json
@@ -976,6 +977,25 @@ def build_blueprint(
         application_concept,
         layout_skeleton,
     )
+    component_decision = brand_profile.get("component_decision") or {}
+    core_components = component_decision.get("core_components") or []
+    component_states = {
+        str(component.get("name")): list(component.get("states") or [])
+        for component in core_components
+        if isinstance(component, dict) and component.get("name")
+    }
+    interaction_selection = resolve_interaction_patterns(
+        product_intent=str(
+            application_concept.get("primary_job")
+            or brand_profile.get("product_summary")
+            or "general product interaction"
+        ),
+        component_states=component_states,
+        accessibility_targets=brand_profile.get("accessibility_targets", []),
+        motion_budget=int(brand_profile.get("motion_budget", 2) or 2),
+        density=str(layout_skeleton.get("density") or "balanced"),
+        variation_seed=brand_profile.get("interaction_variation_seed"),
+    )
 
     blueprint = {
         "brand_name": brand_profile.get("brand_name", "Unnamed Brand"),
@@ -1016,6 +1036,7 @@ def build_blueprint(
             layout_skeleton=layout_skeleton,
             differentiation_strategy=differentiation_strategy,
         ),
+        "interaction_selection": interaction_selection,
         "color_reference": brand_profile.get("_resolved_color_reference"),
         "visual_reference": brand_profile.get("_resolved_visual_reference"),
         "visual_reference_issues": brand_profile.get("_visual_reference_issues", []),
@@ -1096,6 +1117,7 @@ def build_blueprint(
         write_json(blueprint_dir / "visual_reference_report.json", blueprint["visual_reference"])
     if blueprint.get("design_context_pack"):
         write_json(blueprint_dir / "design_context_pack.json", blueprint["design_context_pack"])
+    write_json(blueprint_dir / "interaction_selection.json", interaction_selection)
     save_benchmark_report(output_dir, brand_profile)
     write_json(blueprint_dir / "design_system_blueprint.json", blueprint)
     generate_system_pack(output_dir, brand_profile, blueprint, references, documents)

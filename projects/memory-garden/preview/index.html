@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="garden-shell">
+  <main class="garden-shell" data-system="memory-garden" data-contract-version="component-contract/v1">
     <header class="garden-header">
       <div class="brand-mark"><span class="mark-orbit" aria-hidden="true"></span><span>MEMORY GARDEN</span></div>
       <div class="header-meta"><span>첫 번째 계절</span><button class="quiet-button" type="button">새 기록 심기</button></div>
@@ -17,10 +17,10 @@
     <section class="season-intro" aria-labelledby="season-title">
       <div>
         <p class="kicker">SEASON 01 · 2026.06 — 2026.08</p>
-        <h1 id="season-title">아직 이름 붙이지 않은<br /><em>변화의 계절</em></h1>
+        <h1 id="season-title">아직 이름 붙이지 않은 <em>변화의 계절</em></h1>
         <p class="intro-copy">생각은 결론이 되기 전에 머무는 시간이 필요하다.<br />이번 계절에 심어둔 것들을 천천히 돌아본다.</p>
       </div>
-      <div class="season-lens" aria-label="현재 계절 정보">
+      <div class="season-lens" data-component="season-lens" data-state="current" aria-label="현재 계절 정보">
         <span class="lens-label">지금 돌보는 중</span>
         <strong>4개의 기록</strong>
         <span>돌아볼 약속 1개</span>
@@ -28,23 +28,23 @@
     </section>
 
     <div class="garden-layout">
-      <section class="timeline-panel" aria-labelledby="timeline-title">
+      <section class="timeline-panel" data-component="living-timeline" data-state="focused" aria-labelledby="timeline-title">
         <div class="panel-heading">
           <div><p class="kicker">LIVING TIMELINE</p><h2 id="timeline-title">시간의 흔적</h2></div>
           <button class="text-button" type="button">계절 바꾸기 <span aria-hidden="true">↗</span></button>
         </div>
         <ol class="timeline">
-          <li class="timeline-entry seed-entry">
+          <li class="timeline-entry seed-entry" data-component="memory-seed-composer" data-state="saved">
             <time datetime="2026-07-28">07.28</time>
             <div class="node node-seed" aria-hidden="true"></div>
             <article class="entry-body">
               <p class="entry-kind">MEMORY SEED · 심은 생각</p>
               <h3>속도를 늦추면 보이는 일이 있다</h3>
               <p>빠르게 답을 내리는 것보다, 질문이 어디에서 왔는지 오래 바라보기.</p>
-              <div class="entry-footer"><span class="care-label"><i></i> tending</span><button class="inline-link" type="button">맥락 열기</button></div>
+              <div class="entry-footer"><span class="care-label"><i></i> tending</span><button class="inline-link" data-component="context-drawer" data-state="open" type="button">맥락 열기</button></div>
             </article>
           </li>
-          <li class="timeline-entry decision-entry">
+          <li class="timeline-entry decision-entry" data-component="decision-stone-editor" data-state="committed">
             <time datetime="2026-07-19">07.19</time>
             <div class="node node-stone" aria-hidden="true"></div>
             <article class="entry-body">
@@ -62,7 +62,7 @@
         </ol>
       </section>
 
-      <aside class="care-panel" aria-labelledby="care-title">
+      <aside class="care-panel" data-component="return-ritual-prompt" data-state="due" aria-labelledby="care-title">
         <p class="kicker">RETURN RITUAL</p>
         <h2 id="care-title">다시 돌아볼 약속</h2>
         <p class="ritual-date">2026년 8월 12일</p>
@@ -73,5 +73,14 @@
     </div>
     <footer class="garden-footer"><span>기록은 판단하지 않고 맥락을 보존합니다.</span><span>⌘ K · 정원 찾기</span></footer>
   </main>
+  <script>
+    fetch('../build/system/blueprint/interaction_selection.json')
+      .then((response) => response.json())
+      .then((selection) => {
+        const ids = (selection.selected || []).map((item) => item.id).join(' ');
+        document.querySelector('[data-system="memory-garden"]')?.setAttribute('data-interaction', ids);
+      })
+      .catch(() => document.querySelector('[data-system="memory-garden"]')?.setAttribute('data-interaction', ''));
+  </script>
 </body>
 </html>
