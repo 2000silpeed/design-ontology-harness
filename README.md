@@ -232,6 +232,68 @@ uv run design-ontology verify-production-ui \
 앞 단계가 실패하면 담당 역할로 되돌아갑니다. Release Governor는 실패한 gate를 생략하거나
 완료 기준을 줄일 수 없습니다.
 
+### 통합 구현 감사
+
+여러 결정론적 검사를 한 번에 실행해야 할 때는 `audit-implementation`을 사용합니다.
+기존 `lint-implementation`, 스타일 발산, strict component contract 검사를 다시 구현하지
+않고 하나의 JSON/텍스트 보고서로 묶습니다.
+
+```bash
+uv run design-ontology audit-implementation \
+  --target-repo ../my-app \
+  --project-dir projects/my-app \
+  --json
+```
+
+`--project-dir`를 생략하면 target repo에서 component artifact를 찾고, 없으면 contract
+check를 `skipped`로 기록합니다. 릴리스 파이프라인에서 계약 산출물을 반드시 요구하려면
+`--require-contracts`를 추가합니다. style fingerprint 등록은 기본적으로 읽기 전용이며,
+모든 required check가 통과한 뒤 등록하려면 `--register-on-pass`를 명시합니다. 기본 비교
+registry는 현재 작업 디렉터리의 `registry/style_fingerprints.json`이므로 외부 구현 레포를
+감사해도 하네스의 cross-project memory를 그대로 사용합니다. enabled gate가 실행 중
+오류를 내면 `skipped`로 숨기지 않고 audit를 실패 처리합니다. 여러 저장소가 `frontend`처럼
+같은 디렉터리명을 쓴다면 `--project-id <stable-id>`로 registry identity를 고정합니다.
+
+JSON 보고서는 기존 check별 raw finding에 더해 severity 순서의 `punch_list`, 입력 파일과
+config/registry SHA-256을 묶은 `provenance`, 그리고 코드만으로 판정할 수 없어 aesthetic,
+browser, component-runtime, reference-fidelity 단계로 넘긴 `manual_review_coverage`를
+포함합니다. 이 명령은 정적 구현 감사이며 production readiness를 선언하지 않습니다.
+최종 판정은 계속 `verify-production-ui`가 담당합니다.
+소스는 gate가 실제 읽은 SHA-256과 사후 파일을 대조하고, 토큰·폰트·manifest 같은 보조
+입력은 실행 전후 해시를 대조하므로 감사 도중 입력이 바뀌면 성공 보고서를 만들지 않습니다.
+
+의도적인 implementation-lint 예외는 구현 레포의 `.design-ontology/audit.json`에 파일
+범위·DS rule code·사유를 함께 기록합니다. 예외된 raw finding도 보고서의
+`suppressed_issues`에 남고, 한 번도 매칭되지 않은 규칙은 `unused_ignore_rules` 경고로
+표시됩니다. unreadable source, audit integrity, style divergence, component contract gate는
+suppression 대상이 아닙니다.
+
+```json
+{
+  "schema_version": "design-ontology.audit-config/v1",
+  "ignore_rules": [
+    {
+      "code": "DS001",
+      "paths": ["src/legacy/**"],
+      "reason": "Vendor stylesheet is being migrated in a tracked task.",
+      "owner": "design-platform",
+      "ticket": "DESIGN-241",
+      "expires_on": "2026-12-31"
+    }
+  ]
+}
+```
+
+config가 없으면 suppression 없이 strict하게 동작합니다. config와 report는 각각
+`design-ontology.audit-config/v1`, `design-ontology.audit-report/v1` schema를 사용합니다.
+config가 존재하는데 schema,
+path glob, 사유가 잘못되거나 만료되면 audit 자체가 실패하므로 예외가 조용히 넓어지지
+않습니다. rule code는 exact match만 허용합니다. path glob에서 `*`는 한 경로 segment만,
+`**`는 재귀 segment를 뜻합니다. 모든 suppression path는 `src/…`처럼 literal top-level
+segment로 시작해야 하며 repository 전체 glob, 절대 경로, `..` 범위는 거부합니다.
+Hallmark에서 참고한 구조 감사·보고 원칙과 채택/비채택 경계는
+[Hallmark reference study](docs/HALLMARK_REFERENCE_STUDY.md)에 기록했습니다.
+
 생성되는 Codex plugin에는 `design-system-concept-author`가 들어갑니다. 이 skill은 `run-project` 전에 LLM이 직접 `application_concept`, `layout_skeleton`, `design_differentiation`을 쓰도록 강제합니다.
 
 같은 단계에서 `component_decision.core_components`도 저작해야 합니다. 컴포넌트 이름과 family만 정하는 것으로는 부족합니다. 각 도메인 컴포넌트에 anatomy, 실제 업무 상태, variants/props, interaction과 상태 전이, data contract, 접근성, 반응형 동작, content rules를 기록해야 합니다. `run-project`는 이 계약을 `component-contract/v1`로 보존하고, family 기본 상태가 저작된 도메인 상태를 덮어쓰지 못하게 합니다.
@@ -969,6 +1031,7 @@ http://127.0.0.1:8765/projects/omnigen-crm-demo/demo-report.html
 | `validate-presets` | preset 구조와 버전 계약 검증 |
 | `lint-previews` | preset preview 문서 규칙 검사 |
 | `lint-implementation` | 구현 레포에서 token binding, 금지 패턴 검사 |
+| `audit-implementation` | 구현 lint·style divergence·component contract를 하나의 CI 감사와 provenance report로 실행 |
 | `compare-visuals` | before/after screenshot 변화량 검증 |
 | `aesthetic-loop` | 디자인 후보의 aesthetic score 평가와 개선 action 생성 |
 | `score-screenshot` | screenshot에서 aesthetic-loop 후보 metrics 생성 |

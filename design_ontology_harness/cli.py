@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+import sys
 from copy import deepcopy
 from pathlib import Path
 
@@ -491,6 +492,70 @@ def build_parser() -> argparse.ArgumentParser:
         help="Installed artifact directory to exclude from implementation linting",
     )
     lint_impl_parser.add_argument("--json", action="store_true", help="Emit JSON report")
+
+    audit_impl_parser = subparsers.add_parser(
+        "audit-implementation",
+        help="Run implementation lint, style divergence, and component-contract gates as one audit",
+    )
+    audit_impl_parser.add_argument("--target-repo", required=True, help="Implementation repository path")
+    audit_impl_parser.add_argument(
+        "--project-dir",
+        default=None,
+        help="Harness project directory for component contracts (default: target repo)",
+    )
+    audit_impl_parser.add_argument(
+        "--project-id",
+        default=None,
+        help="Stable cross-project registry identity (default: target directory name)",
+    )
+    audit_impl_parser.add_argument(
+        "--artifact-dir",
+        default="design-system",
+        help="Installed artifact directory to exclude from implementation linting",
+    )
+    audit_impl_parser.add_argument(
+        "--config",
+        default=None,
+        help="Optional tracked audit config (default: <target>/.design-ontology/audit.json)",
+    )
+    audit_impl_parser.add_argument(
+        "--registry",
+        default=None,
+        help="Cross-project style registry (default: registry/style_fingerprints.json from cwd)",
+    )
+    audit_impl_parser.add_argument(
+        "--threshold",
+        type=float,
+        default=None,
+        help="Style similarity fail threshold (default: 0.62)",
+    )
+    audit_impl_parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Number of recent style fingerprints to compare (default: 10)",
+    )
+    audit_impl_parser.add_argument(
+        "--skip-divergence",
+        action="store_true",
+        help="Skip the style-divergence gate",
+    )
+    audit_impl_parser.add_argument(
+        "--skip-contracts",
+        action="store_true",
+        help="Skip the component-contract gate",
+    )
+    audit_impl_parser.add_argument(
+        "--require-contracts",
+        action="store_true",
+        help="Fail when component contract artifacts are not present",
+    )
+    audit_impl_parser.add_argument(
+        "--register-on-pass",
+        action="store_true",
+        help="Register the style fingerprint only after every required audit check passes",
+    )
+    audit_impl_parser.add_argument("--json", action="store_true", help="Emit JSON report")
 
     emit_tokens_parser = subparsers.add_parser(
         "emit-tokens",
@@ -1088,6 +1153,46 @@ def main() -> None:
             raise SystemExit(1)
         return
 
+    if args.command == "audit-implementation":
+        from .design_audit import (
+            AuditConfigError,
+            format_audit_error_json,
+            format_audit_json,
+            format_audit_report,
+            run_design_audit,
+        )
+        from .style_fingerprint import DEFAULT_COMPARE_LIMIT, DEFAULT_SIMILARITY_THRESHOLD
+
+        try:
+            report = run_design_audit(
+                Path(args.target_repo),
+                project_dir=Path(args.project_dir) if args.project_dir else None,
+                project_id=args.project_id,
+                artifact_dir=args.artifact_dir,
+                config_path=Path(args.config) if args.config else None,
+                registry_path=Path(args.registry) if args.registry else None,
+                threshold=(
+                    args.threshold
+                    if args.threshold is not None
+                    else DEFAULT_SIMILARITY_THRESHOLD
+                ),
+                limit=args.limit if args.limit is not None else DEFAULT_COMPARE_LIMIT,
+                include_divergence=not args.skip_divergence,
+                include_contracts=not args.skip_contracts,
+                require_contracts=args.require_contracts,
+                register_on_pass=args.register_on_pass,
+            )
+        except (AuditConfigError, OSError, RuntimeError, TypeError, ValueError) as exc:
+            if args.json:
+                print(format_audit_error_json(exc))
+            else:
+                print(f"Design audit could not run: {exc}", file=sys.stderr)
+            raise SystemExit(2) from exc
+        print(format_audit_json(report) if args.json else format_audit_report(report))
+        if not report.ok:
+            raise SystemExit(1)
+        return
+
     if args.command == "emit-tokens":
         from .token_emitter import emit_project_tokens
 
@@ -1131,9 +1236,9 @@ def main() -> None:
         from .style_fingerprint import (
             DEFAULT_COMPARE_LIMIT,
             DEFAULT_SIMILARITY_THRESHOLD,
+            check_and_register_fingerprint,
             check_style_divergence,
             format_divergence_report,
-            register_fingerprint,
         )
         from .style_fingerprint import StyleFingerprint as _StyleFingerprint
 
@@ -1144,9 +1249,16 @@ def main() -> None:
             limit=args.limit if args.limit is not None else DEFAULT_COMPARE_LIMIT,
         )
         if report["verdict"] == "ok" and args.register_on_pass:
-            register_fingerprint(
-                Path(args.registry),
-                _StyleFingerprint(**report["fingerprint"]),
+            report, _ = check_and_register_fingerprint(
+                Path(args.project_dir),
+                registry_path=Path(args.registry),
+                fingerprint=_StyleFingerprint(**report["fingerprint"]),
+                threshold=(
+                    args.threshold
+                    if args.threshold is not None
+                    else DEFAULT_SIMILARITY_THRESHOLD
+                ),
+                limit=args.limit if args.limit is not None else DEFAULT_COMPARE_LIMIT,
                 note="registered on divergence pass",
             )
         print(_json.dumps(report, ensure_ascii=False, indent=2) if args.json else format_divergence_report(report))

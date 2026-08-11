@@ -1,9 +1,14 @@
+import json
 import re
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+
+import pytest
 
 from design_ontology_harness.adapters.base import _contrast_ratio
 from design_ontology_harness.style_fingerprint import (
     StyleFingerprint,
+    check_and_register_fingerprint,
     check_style_divergence,
     compare_fingerprints,
     detect_attractors,
@@ -186,7 +191,7 @@ def test_tsx_structure_clone_fails_even_when_palette_and_fonts_change(tmp_path):
 
     report = check_style_divergence(second, registry_path=registry_path)
 
-    assert "App.tsx" in report["fingerprint"]["source_files"]
+    assert "src/App.tsx" in report["fingerprint"]["source_files"]
     assert len(report["fingerprint"]["composition_markers"]) >= 4
     assert report["verdict"] == "fail"
     assert report["too_similar_to"][0]["structural_similarity"] == 1.0
@@ -201,6 +206,128 @@ def test_registry_upserts_by_project(tmp_path):
     entries = [e for e in registry["entries"] if e["project"] == "x"]
     assert len(entries) == 1
     assert entries[0]["fingerprint"]["surface_tone"] == "neutral-light"
+
+
+def test_registry_rejects_wrong_schema(tmp_path):
+    registry_path = tmp_path / "registry.json"
+    registry_path.write_text(
+        json.dumps({"schema_version": "wrong/v1", "entries": []}),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="schema_version"):
+        load_registry(registry_path)
+
+
+def test_registry_rejects_incomplete_fingerprint_and_duplicate_project(tmp_path):
+    registry_path = tmp_path / "registry.json"
+    registry_path.write_text(
+        json.dumps(
+            {
+                "schema_version": "style-fingerprint-registry/v1",
+                "entries": [
+                    {
+                        "project": "incomplete",
+                        "fingerprint": {"schema_version": "style-fingerprint/v1"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="fingerprint.project"):
+        load_registry(registry_path)
+
+    fingerprint = StyleFingerprint(project="duplicate").to_dict()
+    registry_path.write_text(
+        json.dumps(
+            {
+                "schema_version": "style-fingerprint-registry/v1",
+                "entries": [
+                    {"project": "duplicate", "fingerprint": fingerprint},
+                    {"project": "duplicate", "fingerprint": fingerprint},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="duplicates"):
+        load_registry(registry_path)
+
+
+def test_registry_registration_serializes_concurrent_writers(tmp_path):
+    registry_path = tmp_path / "registry.json"
+
+    def register(index: int) -> None:
+        register_fingerprint(
+            registry_path,
+            StyleFingerprint(project=f"project-{index}", surface_tone="neutral-light"),
+        )
+
+    with ThreadPoolExecutor(max_workers=6) as executor:
+        list(executor.map(register, range(12)))
+
+    registry = load_registry(registry_path)
+    assert {entry["project"] for entry in registry["entries"]} == {
+        f"project-{index}" for index in range(12)
+    }
+
+
+def test_atomic_check_and_register_prevents_concurrent_clone_admission(tmp_path):
+    registry_path = tmp_path / "registry.json"
+
+    def candidate(project: str) -> StyleFingerprint:
+        return StyleFingerprint(
+            project=project,
+            surface_tone="dark",
+            accent_hue_buckets=["orange"],
+            font_families=["Example Sans"],
+            radius_values_px=[4.0, 8.0],
+            separation_style="split-panel",
+            composition_markers=["header", "sidebar", "table", "toolbar"],
+        )
+
+    def admit(project: str):
+        return check_and_register_fingerprint(
+            tmp_path,
+            registry_path=registry_path,
+            fingerprint=candidate(project),
+        )
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        results = list(executor.map(admit, ["clone-a", "clone-b"]))
+
+    assert sum(entry is not None for _, entry in results) == 1
+    assert len(load_registry(registry_path)["entries"]) == 1
+
+
+def test_fingerprint_fails_when_a_selected_source_is_unreadable(tmp_path):
+    project = _write_project(tmp_path, "unreadable", COOL_TOOL_CSS)
+    unreadable = project / "bad.css"
+    unreadable.write_bytes(b"\xff\xfe\x00")
+
+    with pytest.raises(ValueError, match="bad.css"):
+        extract_style_fingerprint(project)
+
+
+def test_fingerprint_rejects_source_symlink_outside_project(tmp_path):
+    outside = tmp_path / "outside.css"
+    outside.write_text(COOL_TOOL_CSS, encoding="utf-8")
+    project = tmp_path / "project"
+    project.mkdir()
+    (project / "link.css").symlink_to(outside)
+
+    with pytest.raises(ValueError, match="resolves outside"):
+        extract_style_fingerprint(project)
+
+
+def test_fingerprint_binds_the_source_bytes(tmp_path):
+    project = _write_project(tmp_path, "bound-source", COOL_TOOL_CSS)
+
+    fingerprint = extract_style_fingerprint(project)
+
+    assert fingerprint.source_snapshot_sha256 is not None
+    assert len(fingerprint.source_snapshot_sha256) == 64
 
 
 def test_emit_project_tokens_binds_blueprint_palette(tmp_path):

@@ -8,6 +8,7 @@ application code should bind back to `--ds-*` variables.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -38,6 +39,18 @@ UI_MARKUP_EXTENSIONS = {
     ".vue",
     ".svelte",
 }
+
+STYLESHEET_EXTENSIONS = (".css", ".scss", ".sass", ".less")
+IMPLEMENTATION_LINT_RULESET_VERSION = "design-ontology.implementation-lint/v2"
+EMBEDDED_STYLE_BLOCK_RE = re.compile(
+    r"<style\b[^>]*>(?P<body>.*?)</style\s*>",
+    re.IGNORECASE | re.DOTALL,
+)
+UI_RUNTIME_MARKUP_RE = re.compile(
+    r"<(?:html|body|main|header|footer|nav|section|article|aside|div|span|p|h[1-6]|"
+    r"button|input|select|textarea|form|table|ul|ol|li|img|picture|video|canvas|svg|"
+    r"template|[A-Z][A-Za-z0-9_.]*)\b"
+)
 
 DEFAULT_EXCLUDED_DIRS = {
     ".git",
@@ -129,6 +142,39 @@ FONT_SIZE_DECL_RE = re.compile(
 )
 PLACEHOLDER_COPY_RE = re.compile(
     r"(?:\blorem\b|\bipsum\b|\uD56D\uBAA9\s*\d|\bItem\s+\d\b|\uC5EC\uAE30\uC5D0\s*(?:\uB0B4\uC6A9|\uD14D\uC2A4\uD2B8)|\uC0D8\uD50C\s*\uD14D\uC2A4\uD2B8|placeholder\s+text)",
+    re.IGNORECASE,
+)
+TRANSITION_ALL_RE = re.compile(
+    r"(?<![-$@\w])(?:-webkit-)?transition(?:-property)?\s*:\s*"
+    r"(?:all\b|[^;]*,\s*all\b)",
+    re.IGNORECASE,
+)
+TAILWIND_TRANSITION_ALL_CLASS_RE = re.compile(
+    r"\bclass(?:Name)?\s*=\s*['\"][^'\"]*"
+    r"(?<![-\w])transition-all(?![-\w])[^'\"]*['\"]",
+    re.IGNORECASE | re.DOTALL,
+)
+LAYOUT_TRANSITION_RE = re.compile(
+    r"(?<![-$@\w])(?:-webkit-)?transition(?:-property)?\s*:\s*[^;]*"
+    r"(?:^|[\s,])(?:min-|max-)?(?:width|height|inline-size|block-size)\b|"
+    r"(?<![-$@\w])(?:-webkit-)?transition(?:-property)?\s*:\s*[^;]*"
+    r"(?:^|[\s,])(?:top|right|bottom|left|inset(?:-[a-z-]+)?|"
+    r"margin(?:-[a-z-]+)?|padding(?:-[a-z-]+)?)\b",
+    re.IGNORECASE,
+)
+CSS_ANIMATION_DECL_RE = re.compile(
+    r"(?<![-$@\w])(?:-webkit-)?animation(?:-name)?\s*:\s*"
+    r"(?!\s*none\b)[^;}{]+",
+    re.IGNORECASE,
+)
+REDUCED_MOTION_RE = re.compile(
+    r"@media\s*\([^)]*prefers-reduced-motion\s*:\s*reduce[^)]*\)",
+    re.IGNORECASE,
+)
+REDUCED_ANIMATION_DECL_RE = re.compile(
+    r"(?<![-$@\w])(?:-webkit-)?animation(?:-name)?\s*:\s*none\b|"
+    r"(?<![-$@\w])(?:-webkit-)?animation-duration\s*:\s*"
+    r"(?:0(?:\.0+)?|0?\.0*1)m?s\b",
     re.IGNORECASE,
 )
 CSS_PAINTED_GRIDFIELD_RE = re.compile(
@@ -507,7 +553,10 @@ class ImplementationIssue:
 class ImplementationLintReport:
     target_repo: str
     artifact_dir: str
+    ruleset_version: str = IMPLEMENTATION_LINT_RULESET_VERSION
     checked_files: list[str] = field(default_factory=list)
+    substantive_files: list[str] = field(default_factory=list)
+    input_evidence: list[dict[str, object]] = field(default_factory=list)
     issues: list[ImplementationIssue] = field(default_factory=list)
 
     @property
@@ -518,7 +567,10 @@ class ImplementationLintReport:
         return {
             "target_repo": self.target_repo,
             "artifact_dir": self.artifact_dir,
+            "ruleset_version": self.ruleset_version,
             "checked_files": self.checked_files,
+            "substantive_files": self.substantive_files,
+            "input_evidence": self.input_evidence,
             "ok": self.ok,
             "issues": [issue.to_dict() for issue in self.issues],
         }
@@ -540,14 +592,48 @@ def lint_implementation(
 
     for path in _iter_candidate_files(target, artifact_dir=artifact_dir, extensions=extensions):
         rel = path.relative_to(target).as_posix()
-        report.checked_files.append(rel)
-        try:
-            text = path.read_text(encoding="utf-8")
-        except UnicodeDecodeError:
+        resolved = path.resolve()
+        if not resolved.is_relative_to(target):
+            report.issues.append(
+                _issue(
+                    "DS000",
+                    rel,
+                    1,
+                    1,
+                    "Implementation source resolves outside the target repository; external symlink inputs are not auditable.",
+                    str(resolved),
+                )
+            )
             continue
+        try:
+            raw = resolved.read_bytes()
+            text = raw.decode("utf-8")
+        except (OSError, UnicodeDecodeError) as exc:
+            report.issues.append(
+                _issue(
+                    "DS000",
+                    rel,
+                    1,
+                    1,
+                    "Implementation source could not be read; the audit cannot silently omit it.",
+                    str(exc),
+                )
+            )
+            continue
+        report.checked_files.append(rel)
+        report.input_evidence.append(
+            {
+                "path": rel,
+                "sha256": hashlib.sha256(raw).hexdigest(),
+                "size_bytes": len(raw),
+            }
+        )
+        if _is_substantive_implementation_source(text, path.suffix.lower()):
+            report.substantive_files.append(rel)
         file_texts[rel] = text
         report.issues.extend(_lint_text(text, rel))
 
+    report.issues.extend(_lint_motion_rules(file_texts))
     report.issues.extend(
         _lint_project_composition(
             file_texts,
@@ -564,6 +650,8 @@ def lint_implementation(
         )
     )
     report.checked_files.sort()
+    report.substantive_files.sort()
+    report.input_evidence.sort(key=lambda item: str(item["path"]))
     report.issues.sort(key=lambda issue: (issue.path, issue.line, issue.column, issue.code))
     return report
 
@@ -800,7 +888,8 @@ def _resolve_runtime_image_path(target: Path, source_file: str, raw_src: str) ->
 def format_report(report: ImplementationLintReport) -> str:
     header = (
         f"Implementation lint: {'OK' if report.ok else 'FAIL'} "
-        f"({len(report.checked_files)} files checked, {len(report.issues)} issues)"
+        f"({len(report.checked_files)} files checked, {len(report.issues)} issues; "
+        f"ruleset={report.ruleset_version})"
     )
     if report.ok:
         return header
@@ -981,7 +1070,6 @@ def _lint_text(text: str, rel_path: str) -> list[ImplementationIssue]:
 
         issues.extend(_lint_responsive_overflow(line, selector_for_line, rel_path, line_no, raw_line))
         issues.extend(_lint_emoji_ui(line, selector_for_line, rel_path, line_no, raw_line))
-
         current_selector = _next_selector_context(line, selector_for_line, current_selector)
 
     issues.extend(_lint_color_mode_parity(text, rel_path))
@@ -1269,9 +1357,12 @@ def _lint_llm_default_tells(
     """
 
     issues: list[ImplementationIssue] = []
-    css_text = "\n".join(
-        text for rel, text in file_texts.items() if rel.lower().endswith(".css")
-    )
+    stylesheet_texts = [
+        (rel, _mask_stylesheet_comments(text))
+        for rel, text in sorted(file_texts.items())
+        if rel.lower().endswith(STYLESHEET_EXTENSIONS)
+    ]
+    css_text = "\n".join(text for _, text in stylesheet_texts)
 
     # DS091 — radius monoculture: 모든 요소에 같은 라운딩 토큰 하나만 바르는 습관
     radius_usages = [
@@ -1379,6 +1470,244 @@ def _lint_llm_default_tells(
         )
 
     return issues
+
+
+def _lint_motion_rules(
+    file_texts: dict[str, str],
+) -> list[ImplementationIssue]:
+    """Catch high-confidence motion violations in authored CSS regions."""
+
+    issues: list[ImplementationIssue] = []
+    scan_texts = {
+        rel: _motion_css_regions(rel, raw_text)
+        for rel, raw_text in sorted(file_texts.items())
+    }
+    has_global_fallback = any(
+        _has_universal_reduced_animation_fallback(text)
+        for text in scan_texts.values()
+    )
+    reduced_motion_selectors = {
+        selector
+        for text in scan_texts.values()
+        for selectors, _ in _fallback_rules(text)
+        for selector in selectors
+    }
+    for rel, raw_text in sorted(file_texts.items()):
+        text = scan_texts[rel]
+        if Path(rel).suffix.lower() in UI_MARKUP_EXTENSIONS:
+            component_text = _mask_stylesheet_comments(raw_text)
+            for utility in TAILWIND_TRANSITION_ALL_CLASS_RE.finditer(component_text):
+                issues.append(
+                    _motion_issue(
+                        "DS109",
+                        rel,
+                        raw_text,
+                        utility,
+                        "Unbounded transition utility animates incidental property changes; list the intended properties explicitly.",
+                    )
+                )
+        for unbounded in TRANSITION_ALL_RE.finditer(text):
+            issues.append(
+                _motion_issue(
+                    "DS109",
+                    rel,
+                    raw_text,
+                    unbounded,
+                    "Unbounded transition animates incidental property changes; list the intended properties explicitly.",
+                )
+            )
+        for layout in LAYOUT_TRANSITION_RE.finditer(text):
+            issues.append(
+                _motion_issue(
+                    "DS110",
+                    rel,
+                    raw_text,
+                    layout,
+                    "Layout property is transitioned and can trigger reflow; animate transform or opacity while keeping geometry stable.",
+                )
+            )
+        for animation in CSS_ANIMATION_DECL_RE.finditer(text):
+            animated_selectors = _selector_for_declaration(text, animation)
+            if (
+                has_global_fallback
+                or bool(animated_selectors & reduced_motion_selectors)
+                or _has_correlated_reduced_animation_fallback(text, animation)
+            ):
+                continue
+            issues.append(
+                _motion_issue(
+                    "DS111",
+                    rel,
+                    raw_text,
+                    animation,
+                    "CSS animation has no selector-matched prefers-reduced-motion fallback; remove spatial motion or reduce it to an immediate or short opacity change for users who request less motion.",
+                )
+            )
+    return issues
+
+
+def _motion_issue(
+    code: str,
+    rel_path: str,
+    raw_text: str,
+    match: re.Match[str],
+    message: str,
+) -> ImplementationIssue:
+    line_no = raw_text[: match.start()].count("\n") + 1
+    line_start = raw_text.rfind("\n", 0, match.start()) + 1
+    line_end = raw_text.find("\n", match.start())
+    if line_end == -1:
+        line_end = len(raw_text)
+    return _issue(
+        code,
+        rel_path,
+        line_no,
+        match.start() - line_start + 1,
+        message,
+        raw_text[line_start:line_end],
+    )
+
+
+def _motion_css_regions(rel_path: str, raw_text: str) -> str:
+    """Keep CSS files or embedded ``<style>`` bodies while preserving offsets."""
+
+    masked = _mask_stylesheet_comments(raw_text)
+    if rel_path.lower().endswith(STYLESHEET_EXTENSIONS):
+        return masked
+    if Path(rel_path).suffix.lower() not in UI_MARKUP_EXTENSIONS:
+        return "".join(char if char in {"\n", "\r"} else " " for char in masked)
+    css_only = [char if char in {"\n", "\r"} else " " for char in masked]
+    for style_block in EMBEDDED_STYLE_BLOCK_RE.finditer(masked):
+        start, end = style_block.span("body")
+        css_only[start:end] = masked[start:end]
+    return "".join(css_only)
+
+
+def _reduced_motion_blocks(text: str) -> list[str]:
+    blocks: list[str] = []
+
+    for marker in REDUCED_MOTION_RE.finditer(text):
+        open_brace = text.find("{", marker.end())
+        if open_brace == -1:
+            continue
+        depth = 0
+        for index in range(open_brace, len(text)):
+            if text[index] == "{":
+                depth += 1
+            elif text[index] == "}":
+                depth -= 1
+                if depth == 0:
+                    blocks.append(text[open_brace + 1 : index])
+                    break
+    return blocks
+
+
+def _selector_tokens(selector: str) -> set[str]:
+    tokens: set[str] = set()
+    for item in selector.split(","):
+        normalized = re.sub(r"::?[a-z-]+(?:\([^)]*\))?", "", item, flags=re.IGNORECASE)
+        normalized = re.sub(r"\s+", " ", normalized).strip()
+        if normalized:
+            tokens.add(normalized)
+    return tokens
+
+
+def _selector_for_declaration(text: str, declaration: re.Match[str]) -> set[str]:
+    for rule in CSS_RULE_BLOCK_RE.finditer(text):
+        if rule.start("body") <= declaration.start() < rule.end("body"):
+            return _selector_tokens(rule.group("selector"))
+    return set()
+
+
+def _fallback_rules(text: str) -> list[tuple[set[str], str]]:
+    rules: list[tuple[set[str], str]] = []
+    for block in _reduced_motion_blocks(text):
+        for rule in CSS_RULE_BLOCK_RE.finditer(block):
+            body = rule.group("body")
+            if REDUCED_ANIMATION_DECL_RE.search(body):
+                rules.append((_selector_tokens(rule.group("selector")), body))
+    return rules
+
+
+def _has_universal_reduced_animation_fallback(text: str) -> bool:
+    return any(
+        "*" in selectors
+        for selectors, _ in _fallback_rules(text)
+    )
+
+
+def _has_correlated_reduced_animation_fallback(
+    text: str,
+    animation: re.Match[str],
+) -> bool:
+    animated_selectors = _selector_for_declaration(text, animation)
+    if not animated_selectors:
+        return False
+    for fallback_selectors, _ in _fallback_rules(text):
+        if animated_selectors & fallback_selectors:
+            return True
+        if "*" in fallback_selectors:
+            return True
+    return False
+
+
+def _mask_stylesheet_comments(text: str) -> str:
+    """Replace stylesheet comments with spaces while preserving source offsets."""
+
+    masked = list(text)
+    index = 0
+    quote: str | None = None
+    while index < len(text):
+        char = text[index]
+        if quote is not None:
+            if char == "\\":
+                index += 2
+                continue
+            if char == quote:
+                quote = None
+            index += 1
+            continue
+        if char in {'"', "'"}:
+            quote = char
+            index += 1
+            continue
+        if text.startswith("/*", index):
+            end = text.find("*/", index + 2)
+            stop = len(text) if end == -1 else end + 2
+            for offset in range(index, stop):
+                if masked[offset] not in {"\n", "\r"}:
+                    masked[offset] = " "
+            index = stop
+            continue
+        if text.startswith("<!--", index):
+            end = text.find("-->", index + 4)
+            stop = len(text) if end == -1 else end + 3
+            for offset in range(index, stop):
+                if masked[offset] not in {"\n", "\r"}:
+                    masked[offset] = " "
+            index = stop
+            continue
+        if text.startswith("//", index) and (index == 0 or text[index - 1] != ":"):
+            end = text.find("\n", index + 2)
+            stop = len(text) if end == -1 else end
+            for offset in range(index, stop):
+                if masked[offset] != "\r":
+                    masked[offset] = " "
+            index = stop
+            continue
+        index += 1
+    return "".join(masked)
+
+
+def _is_substantive_implementation_source(text: str, suffix: str) -> bool:
+    masked = _mask_stylesheet_comments(text)
+    if suffix in STYLESHEET_EXTENSIONS:
+        return bool(masked.strip())
+    if suffix not in UI_MARKUP_EXTENSIONS:
+        return False
+    if UI_RUNTIME_MARKUP_RE.search(masked):
+        return True
+    return any(match.group("body").strip() for match in EMBEDDED_STYLE_BLOCK_RE.finditer(masked))
 
 
 def _find_media_tiles_without_assets(text: str) -> list[str]:
@@ -2295,7 +2624,10 @@ def _lint_font_loading(
     loading_text = combined
     fonts_css = artifact / "fonts.css"
     if fonts_css.is_file() and re.search(r"href\s*=\s*['\"][^'\"]*fonts\.css", combined, re.IGNORECASE):
-        loading_text += "\n" + _read_css_with_local_imports(fonts_css)
+        loading_text += "\n" + _read_css_with_local_imports(
+            fonts_css,
+            containment_root=artifact,
+        )
 
     # 자체 호스팅 CSS는 생성물이라 커밋되지 않는다. manifest가 있으면 할 일은
     # "@font-face를 쓰라"가 아니라 "내려받기 스크립트를 실행하라"다.
@@ -2329,15 +2661,29 @@ def _lint_font_loading(
     return issues
 
 
-def _read_css_with_local_imports(path: Path, depth: int = 3) -> str:
+def _read_css_with_local_imports(
+    path: Path,
+    depth: int = 3,
+    *,
+    containment_root: Path | None = None,
+    visited: set[Path] | None = None,
+) -> str:
     """CSS를 읽고 로컬 `@import` 대상까지 이어 붙인다.
 
     자체 호스팅 경로는 `fonts.css` → `fonts/local.css` 사슬로 이어진다. 사슬을 따르지
     않으면 실제로 로드되는 서체를 못 본다. 반대로 `local.css`가 아직 없으면
     (fetch 스크립트 미실행) 로딩이 없는 것이 맞으므로 DS108이 그대로 걸린다.
     """
+    root = (containment_root or path.parent).resolve()
+    resolved_path = path.resolve()
+    if not resolved_path.is_relative_to(root):
+        return ""
+    seen = visited if visited is not None else set()
+    if resolved_path in seen:
+        return ""
+    seen.add(resolved_path)
     try:
-        text = path.read_text(encoding="utf-8")
+        text = resolved_path.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError):
         return ""
     if depth <= 0:
@@ -2345,9 +2691,14 @@ def _read_css_with_local_imports(path: Path, depth: int = 3) -> str:
     for href in re.findall(r"@import\s+url\(\s*['\"]?([^'\")]+)['\"]?\s*\)", text, re.IGNORECASE):
         if href.startswith(("http://", "https://", "//", "data:")):
             continue
-        resolved = (path.parent / href).resolve()
-        if resolved.is_file():
-            text += "\n" + _read_css_with_local_imports(resolved, depth - 1)
+        resolved = (resolved_path.parent / href).resolve()
+        if resolved.is_relative_to(root) and resolved.is_file():
+            text += "\n" + _read_css_with_local_imports(
+                resolved,
+                depth - 1,
+                containment_root=root,
+                visited=seen,
+            )
     return text
 
 

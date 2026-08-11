@@ -186,6 +186,301 @@ def test_ds096_ignores_inline_thread_spine(tmp_path: Path):
     assert "DS096" not in _codes(report)
 
 
+def test_ds109_flags_transition_all_css_and_utility(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        ".button { transition: all 180ms ease; }",
+        html="<main class='app-mockup'><button class='transition-all'>Save</button></main>",
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS109" in _codes(report)
+
+
+def test_ds109_allows_explicit_transition_properties(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        ".button { transition: color 180ms ease, transform 180ms ease; }",
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS109" not in _codes(report)
+
+
+def test_ds109_ignores_similarly_named_custom_property(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        ":root { --transition-all: color 180ms ease; --transition: all 180ms ease; }",
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS109" not in _codes(report)
+
+
+def test_ds110_flags_layout_property_transition(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        ".drawer { transition: width 220ms ease, margin-left 220ms ease; }",
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS110" in _codes(report)
+
+
+def test_ds110_flags_multiline_layout_property_transition(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        """
+        .drawer {
+          transition:
+            inline-size 220ms ease,
+            opacity 180ms ease;
+        }
+        """,
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS110" in _codes(report)
+
+
+def test_ds110_allows_compositor_property_transition(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        ".drawer { transition: transform 220ms ease, opacity 180ms ease; }",
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS110" not in _codes(report)
+
+
+def test_ds110_ignores_custom_property_and_flags_logical_layout_property(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        """
+        :root { --transition: width 220ms ease; }
+        .drawer { transition: inline-size 220ms ease; }
+        """,
+    )
+
+    report = lint_implementation(tmp_path)
+
+    ds110 = [issue for issue in report.issues if issue.code == "DS110"]
+    assert len(ds110) == 1
+    assert ".drawer" in ds110[0].snippet
+
+
+def test_ds111_flags_animation_without_reduced_motion_fallback(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        """
+        .loader { animation: spin 600ms linear infinite; }
+        @keyframes spin { to { transform: rotate(1turn); } }
+        """,
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS111" in _codes(report)
+    issue = next(issue for issue in report.issues if issue.code == "DS111")
+    assert issue.path == "styles.css"
+    assert issue.line == 2
+    assert issue.column == 19
+
+
+def test_ds111_ignores_similarly_named_custom_property(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        ":root { --animation: spin 600ms linear infinite; }",
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS111" not in _codes(report)
+
+
+def test_ds111_allows_explicit_animation_none_reset(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        ".loader, .reset { animation: none; animation-name: none; }",
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS111" not in _codes(report)
+
+
+def test_ds111_ignores_commented_animation(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        "/* .loader { animation: spin 600ms linear infinite; } */",
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS111" not in _codes(report)
+
+
+def test_ds111_rejects_empty_reduced_motion_query(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        """
+        .loader { animation: spin 600ms linear infinite; }
+        @media (prefers-reduced-motion: reduce) { .loader { color: inherit; } }
+        """,
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS111" in _codes(report)
+
+
+def test_ds111_rejects_unrelated_reduced_motion_reset(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        """
+        .loader { animation: spin 600ms linear infinite; }
+        @media (prefers-reduced-motion: reduce) {
+          .decorative { animation: none; }
+        }
+        """,
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS111" in _codes(report)
+
+
+def test_ds111_does_not_treat_descendant_wildcard_as_universal_reset(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        """
+        .loader { animation: spin 600ms linear infinite; }
+        @media (prefers-reduced-motion: reduce) {
+          * .decorative { animation: none; }
+        }
+        """,
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS111" in _codes(report)
+
+
+def test_ds111_runs_for_css_only_packages(tmp_path: Path):
+    (tmp_path / "motion.css").write_text(
+        ".loader { animation: spin 600ms linear infinite; }",
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS111" in _codes(report)
+
+
+def test_ds111_runs_inside_vue_style_blocks(tmp_path: Path):
+    (tmp_path / "App.vue").write_text(
+        "<template><main /></template><style>.loader { animation: spin 600ms infinite; }</style>",
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS111" in _codes(report)
+
+
+def test_ds111_accepts_short_duration_reduced_motion_fallback(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        """
+        .loader { animation: spin 600ms linear infinite; }
+        @media (prefers-reduced-motion: reduce) {
+          .loader { animation-duration: 0.01ms; }
+        }
+        """,
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS111" not in _codes(report)
+
+
+def test_ds111_accepts_cross_file_universal_reduced_motion_fallback(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        ".loader { animation: spin 600ms linear infinite; }",
+    )
+    (tmp_path / "accessibility.css").write_text(
+        """
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after { animation-name: none !important; }
+        }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS111" not in _codes(report)
+
+
+def test_ds111_accepts_cross_file_selector_matched_fallback(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        ".loader { animation: spin 600ms linear infinite; }",
+    )
+    (tmp_path / "accessibility.css").write_text(
+        """
+        @media (prefers-reduced-motion: reduce) {
+          .loader { animation: none; }
+        }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS111" not in _codes(report)
+
+
+def test_motion_rules_ignore_ordinary_component_strings_and_none_style(tmp_path: Path):
+    (tmp_path / "App.tsx").write_text(
+        """
+        const docs = 'transition: all 200ms';
+        export function App() {
+          return <main style={{ animation: 'none' }}>Ready</main>;
+        }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert not _codes(report) & {"DS109", "DS110", "DS111"}
+
+
+def test_ds111_allows_animation_with_reduced_motion_fallback(tmp_path: Path):
+    _write_ui(
+        tmp_path,
+        """
+        .loader { animation: spin 600ms linear infinite; }
+        @keyframes spin { to { transform: rotate(1turn); } }
+        @media (prefers-reduced-motion: reduce) {
+          .loader { animation: none; }
+        }
+        """,
+    )
+
+    report = lint_implementation(tmp_path)
+
+    assert "DS111" not in _codes(report)
+
+
 def test_realistic_surface_passes_all_tells(tmp_path: Path):
     _write_ui(
         tmp_path,

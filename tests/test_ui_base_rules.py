@@ -761,6 +761,28 @@ def test_ds108_requires_fonts_css_to_be_linked(tmp_path: Path):
     assert "DS108" not in _codes(lint_implementation(project))
 
 
+def test_ds108_does_not_follow_font_imports_outside_artifact_dir(tmp_path: Path):
+    project = _write_font_ui(tmp_path)
+    outside = tmp_path.parent / "external-font.css"
+    outside.write_text(
+        "@font-face { font-family: 'Pretendard'; src: url('./p.woff2'); }",
+        encoding="utf-8",
+    )
+    (project / "design-system" / "fonts.css").write_text(
+        "@import url('../../external-font.css');",
+        encoding="utf-8",
+    )
+    html = project / "index.html"
+    html.write_text(
+        html.read_text(encoding="utf-8").replace(
+            "<head>", "<head><link rel='stylesheet' href='./design-system/fonts.css'>"
+        ),
+        encoding="utf-8",
+    )
+
+    assert "DS108" in _codes(lint_implementation(project))
+
+
 def test_ds108_ignores_system_font_stacks(tmp_path: Path):
     _write_tokens(tmp_path, extra_light="  --ds-font-body: system-ui, sans-serif;")
     (tmp_path / "index.html").write_text(

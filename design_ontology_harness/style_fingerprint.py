@@ -21,13 +21,26 @@ blueprint tokens were already diverse, the repetition happens in CSS.
 from __future__ import annotations
 
 import colorsys
+import hashlib
+import json
+import os
 import re
+import tempfile
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
-from .utils import write_json
+try:
+    import fcntl
+except ImportError:  # pragma: no cover - Windows uses msvcrt below.
+    fcntl = None
+
+try:
+    import msvcrt
+except ImportError:  # pragma: no cover - POSIX uses fcntl.
+    msvcrt = None
 
 FINGERPRINT_SCHEMA_VERSION = "style-fingerprint/v1"
 REGISTRY_SCHEMA_VERSION = "style-fingerprint-registry/v1"
@@ -126,6 +139,7 @@ class StyleFingerprint:
     project: str
     schema_version: str = FINGERPRINT_SCHEMA_VERSION
     source_files: list[str] = field(default_factory=list)
+    source_snapshot_sha256: str | None = None
     surface_tone: str = "unknown"
     surface_hexes: list[str] = field(default_factory=list)
     accent_hue_buckets: list[str] = field(default_factory=list)
@@ -381,9 +395,15 @@ def extract_style_fingerprint(
     *,
     project_name: str | None = None,
     source_files: list[Path] | None = None,
+    read_evidence: dict[str, dict[str, Any]] | None = None,
 ) -> StyleFingerprint:
     project_dir = project_dir.resolve()
-    files = source_files or _collect_source_files(project_dir)
+    files = (
+        list(source_files)
+        if source_files is not None
+        else _collect_source_files(project_dir)
+    )
+    files = sorted(files, key=lambda path: path.as_posix())
     if not files:
         raise FileNotFoundError(
             f"No HTML/CSS implementation files found under {project_dir}. "
@@ -391,11 +411,32 @@ def extract_style_fingerprint(
         )
 
     texts: dict[str, str] = {}
+    source_records: list[dict[str, Any]] = []
     for path in files:
+        resolved = path.resolve()
+        if not resolved.is_relative_to(project_dir):
+            raise ValueError(
+                f"Style fingerprint source resolves outside {project_dir}: {path} -> {resolved}"
+            )
         try:
-            texts[path.relative_to(project_dir).as_posix()] = path.read_text(encoding="utf-8")
-        except (OSError, UnicodeDecodeError):
-            continue
+            relative = path.relative_to(project_dir).as_posix()
+        except ValueError as exc:
+            raise ValueError(
+                f"Style fingerprint source must stay inside {project_dir}: {path}"
+            ) from exc
+        try:
+            raw = resolved.read_bytes()
+            texts[relative] = raw.decode("utf-8")
+        except (OSError, UnicodeDecodeError) as exc:
+            raise ValueError(f"Style fingerprint source is unreadable: {relative}: {exc}") from exc
+        record = {
+            "path": relative,
+            "sha256": hashlib.sha256(raw).hexdigest(),
+            "size_bytes": len(raw),
+        }
+        source_records.append(record)
+        if read_evidence is not None:
+            read_evidence[relative] = dict(record)
 
     combined = "\n".join(texts.values())
     custom_props: dict[str, str] = {}
@@ -466,7 +507,15 @@ def extract_style_fingerprint(
     )
     return StyleFingerprint(
         project=project_name or project_dir.name,
-        source_files=[path.name for path in files],
+        source_files=sorted(texts),
+        source_snapshot_sha256=hashlib.sha256(
+            json.dumps(
+                source_records,
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+        ).hexdigest(),
         surface_tone=surface_tone,
         surface_hexes=surface_hexes,
         accent_hue_buckets=accent_buckets,
@@ -492,12 +541,89 @@ def default_registry_path(repo_root: Path) -> Path:
 def load_registry(registry_path: Path) -> dict[str, Any]:
     if not registry_path.exists():
         return {"schema_version": REGISTRY_SCHEMA_VERSION, "entries": []}
-    import json
-
     data = json.loads(registry_path.read_text(encoding="utf-8"))
-    data.setdefault("schema_version", REGISTRY_SCHEMA_VERSION)
-    data.setdefault("entries", [])
+    if not isinstance(data, dict):
+        raise ValueError(f"Style fingerprint registry must be a JSON object: {registry_path}")
+    if data.get("schema_version") != REGISTRY_SCHEMA_VERSION:
+        raise ValueError(
+            f"Style fingerprint registry schema_version must be {REGISTRY_SCHEMA_VERSION}: "
+            f"{registry_path}"
+        )
+    entries = data.get("entries")
+    if not isinstance(entries, list):
+        raise ValueError(f"Style fingerprint registry entries must be a list: {registry_path}")
+    seen_projects: set[str] = set()
+    for index, entry in enumerate(entries):
+        prefix = f"registry entries[{index}]"
+        if not isinstance(entry, dict):
+            raise ValueError(f"{prefix} must be an object")
+        if not isinstance(entry.get("project"), str) or not entry["project"].strip():
+            raise ValueError(f"{prefix}.project must be a non-empty string")
+        project = entry["project"].strip()
+        if project in seen_projects:
+            raise ValueError(f"{prefix}.project duplicates an earlier registry entry: {project}")
+        seen_projects.add(project)
+        fingerprint = entry.get("fingerprint")
+        if not isinstance(fingerprint, dict):
+            raise ValueError(f"{prefix}.fingerprint must be an object")
+        if fingerprint.get("schema_version") != FINGERPRINT_SCHEMA_VERSION:
+            raise ValueError(
+                f"{prefix}.fingerprint.schema_version must be {FINGERPRINT_SCHEMA_VERSION}"
+            )
+        _validate_registry_fingerprint(fingerprint, project=project, prefix=prefix)
     return data
+
+
+def _validate_registry_fingerprint(
+    fingerprint: dict[str, Any],
+    *,
+    project: str,
+    prefix: str,
+) -> None:
+    """Validate the comparison-bearing v1 fields without requiring newer additions."""
+
+    string_fields = ("project", "surface_tone", "separation_style")
+    string_list_fields = (
+        "source_files",
+        "surface_hexes",
+        "accent_hue_buckets",
+        "accent_hexes",
+        "font_families",
+    )
+    for field_name in string_fields:
+        value = fingerprint.get(field_name)
+        if not isinstance(value, str) or not value.strip():
+            raise ValueError(f"{prefix}.fingerprint.{field_name} must be a non-empty string")
+    if fingerprint["project"].strip() != project:
+        raise ValueError(f"{prefix}.fingerprint.project must match the registry project")
+    for field_name in string_list_fields:
+        value = fingerprint.get(field_name)
+        if not isinstance(value, list) or any(not isinstance(item, str) for item in value):
+            raise ValueError(f"{prefix}.fingerprint.{field_name} must be a string list")
+    for field_name in ("serif_accent", "uses_pill_shapes"):
+        if not isinstance(fingerprint.get(field_name), bool):
+            raise ValueError(f"{prefix}.fingerprint.{field_name} must be boolean")
+    radius_values = fingerprint.get("radius_values_px")
+    if not isinstance(radius_values, list) or any(
+        isinstance(item, bool) or not isinstance(item, (int, float))
+        for item in radius_values
+    ):
+        raise ValueError(f"{prefix}.fingerprint.radius_values_px must be a number list")
+    color_count = fingerprint.get("color_count")
+    if isinstance(color_count, bool) or not isinstance(color_count, int) or color_count < 0:
+        raise ValueError(f"{prefix}.fingerprint.color_count must be a non-negative integer")
+    composition_markers = fingerprint.get("composition_markers")
+    if composition_markers is not None and (
+        not isinstance(composition_markers, list)
+        or any(not isinstance(item, str) for item in composition_markers)
+    ):
+        raise ValueError(f"{prefix}.fingerprint.composition_markers must be a string list")
+    source_snapshot = fingerprint.get("source_snapshot_sha256")
+    if source_snapshot is not None and (
+        not isinstance(source_snapshot, str)
+        or not re.fullmatch(r"[a-f0-9]{64}", source_snapshot)
+    ):
+        raise ValueError(f"{prefix}.fingerprint.source_snapshot_sha256 must be a lowercase sha256")
 
 
 def register_fingerprint(
@@ -506,7 +632,20 @@ def register_fingerprint(
     *,
     note: str | None = None,
 ) -> dict[str, Any]:
-    registry = load_registry(registry_path)
+    registry_path.parent.mkdir(parents=True, exist_ok=True)
+    with _registry_lock(registry_path):
+        registry = load_registry(registry_path)
+        entry = _upsert_registry_fingerprint(registry, fingerprint, note=note)
+        _write_registry_atomic(registry_path, registry)
+    return entry
+
+
+def _upsert_registry_fingerprint(
+    registry: dict[str, Any],
+    fingerprint: StyleFingerprint,
+    *,
+    note: str | None,
+) -> dict[str, Any]:
     entries = registry["entries"]
     entry = {
         "project": fingerprint.project,
@@ -516,9 +655,64 @@ def register_fingerprint(
     }
     entries[:] = [item for item in entries if item.get("project") != fingerprint.project]
     entries.append(entry)
-    registry_path.parent.mkdir(parents=True, exist_ok=True)
-    write_json(registry_path, registry)
     return entry
+
+
+@contextmanager
+def _registry_lock(registry_path: Path) -> Iterator[None]:
+    """Serialize shared registry read-modify-write operations across supported OSes."""
+
+    lock_path = registry_path.with_name(f".{registry_path.name}.lock")
+    with lock_path.open("a+", encoding="utf-8") as lock_handle:
+        if fcntl is not None:
+            fcntl.flock(lock_handle.fileno(), fcntl.LOCK_EX)
+        elif msvcrt is not None:  # pragma: no cover - exercised on Windows.
+            lock_handle.seek(0, os.SEEK_END)
+            if lock_handle.tell() == 0:
+                lock_handle.write("\0")
+                lock_handle.flush()
+            lock_handle.seek(0)
+            msvcrt.locking(lock_handle.fileno(), msvcrt.LK_LOCK, 1)
+        try:
+            yield
+        finally:
+            if fcntl is not None:
+                fcntl.flock(lock_handle.fileno(), fcntl.LOCK_UN)
+            elif msvcrt is not None:  # pragma: no cover - exercised on Windows.
+                lock_handle.seek(0)
+                msvcrt.locking(lock_handle.fileno(), msvcrt.LK_UNLCK, 1)
+
+
+def _write_registry_atomic(registry_path: Path, registry: dict[str, Any]) -> None:
+    """Durably replace a validated registry without exposing a partial JSON file."""
+
+    descriptor, temporary_name = tempfile.mkstemp(
+        dir=registry_path.parent,
+        prefix=f".{registry_path.name}.",
+        suffix=".tmp",
+    )
+    temporary_path = Path(temporary_name)
+    try:
+        existing_mode = (
+            registry_path.stat().st_mode & 0o777 if registry_path.exists() else 0o644
+        )
+        os.fchmod(descriptor, existing_mode)
+        with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+            json.dump(registry, handle, ensure_ascii=False, indent=2)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary_path, registry_path)
+        try:
+            directory_descriptor = os.open(registry_path.parent, os.O_RDONLY)
+            try:
+                os.fsync(directory_descriptor)
+            finally:
+                os.close(directory_descriptor)
+        except OSError:
+            pass
+    finally:
+        temporary_path.unlink(missing_ok=True)
 
 
 # ---------------------------------------------------------------------------
@@ -734,6 +928,23 @@ def check_style_divergence(
     fingerprint = fingerprint or extract_style_fingerprint(project_dir)
     serif_sanctioned = _blueprint_sanctions_serif(Path(project_dir))
     registry = load_registry(registry_path)
+    return _check_style_divergence_against_registry(
+        fingerprint,
+        registry=registry,
+        threshold=threshold,
+        limit=limit,
+        serif_sanctioned=serif_sanctioned,
+    )
+
+
+def _check_style_divergence_against_registry(
+    fingerprint: StyleFingerprint,
+    *,
+    registry: dict[str, Any],
+    threshold: float,
+    limit: int,
+    serif_sanctioned: bool,
+) -> dict[str, Any]:
     entries = [
         entry
         for entry in registry.get("entries", [])
@@ -781,6 +992,14 @@ def check_style_divergence(
         "project": fingerprint.project,
         "verdict": verdict,
         "threshold": threshold,
+        "registry_snapshot_sha256": hashlib.sha256(
+            json.dumps(
+                registry,
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+        ).hexdigest(),
         "serif_sanctioned_by_blueprint": serif_sanctioned,
         "fingerprint": fingerprint.to_dict(),
         "attractor_matches": attractors,
@@ -791,6 +1010,35 @@ def check_style_divergence(
     if verdict == "fail":
         report["suggestions"] = _divergence_suggestions(fingerprint, recent)
     return report
+
+
+def check_and_register_fingerprint(
+    project_dir: Path,
+    *,
+    registry_path: Path,
+    fingerprint: StyleFingerprint,
+    threshold: float = DEFAULT_SIMILARITY_THRESHOLD,
+    limit: int = DEFAULT_COMPARE_LIMIT,
+    note: str | None = None,
+) -> tuple[dict[str, Any], dict[str, Any] | None]:
+    """Recheck divergence and register under one shared-registry lock."""
+
+    registry_path.parent.mkdir(parents=True, exist_ok=True)
+    serif_sanctioned = _blueprint_sanctions_serif(Path(project_dir))
+    with _registry_lock(registry_path):
+        registry = load_registry(registry_path)
+        report = _check_style_divergence_against_registry(
+            fingerprint,
+            registry=registry,
+            threshold=threshold,
+            limit=limit,
+            serif_sanctioned=serif_sanctioned,
+        )
+        if report.get("verdict") != "ok":
+            return report, None
+        entry = _upsert_registry_fingerprint(registry, fingerprint, note=note)
+        _write_registry_atomic(registry_path, registry)
+    return report, entry
 
 
 def format_divergence_report(report: dict[str, Any]) -> str:
