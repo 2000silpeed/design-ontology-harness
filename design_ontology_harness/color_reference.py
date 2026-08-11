@@ -1274,20 +1274,32 @@ def _build_semantic_roles(active_palette: dict, supporting_colors: list[dict]) -
     if surface_tint:
         semantic_roles["surface_tint"] = surface_tint
 
-    semantic_roles["canvas"] = _choose_palette_entry(
-        pool,
-        min_lightness=94,
-        max_saturation=18,
-        prefer_source_types={"pairing-reference", "pairing-swatch"},
-    ) or _runtime_policy_role("canvas")
-    # Surface should be near-white, NOT the branded surface_tint. Previously the
-    # fallback returned surface_tint which produced Sky Blue as surface in Glacier.
-    semantic_roles["surface"] = _choose_palette_entry(
-        pool,
-        min_lightness=95,
-        max_saturation=10,
-        prefer_source_types={"pairing-reference", "pairing-swatch"},
-    ) or _runtime_policy_role("surface")
+    # A project-authored surface role is authoritative. Only infer from the
+    # palette pool when the project did not declare one.
+    authored_surface = active_roles.get("surface")
+    authored_secondary = active_roles.get("secondary")
+    if authored_surface:
+        semantic_roles["canvas"] = authored_surface
+        semantic_roles["surface"] = authored_surface
+        semantic_roles["surface_elevated"] = authored_surface
+    if authored_secondary and "surface_tint" not in semantic_roles:
+        semantic_roles["surface_tint"] = authored_secondary
+
+    if "canvas" not in semantic_roles:
+        semantic_roles["canvas"] = _choose_palette_entry(
+            pool,
+            min_lightness=94,
+            max_saturation=18,
+            prefer_source_types={"pairing-reference", "pairing-swatch"},
+        ) or _runtime_policy_role("canvas")
+    # Surface should be near-white when no authored surface role exists.
+    if "surface" not in semantic_roles:
+        semantic_roles["surface"] = _choose_palette_entry(
+            pool,
+            min_lightness=95,
+            max_saturation=10,
+            prefer_source_types={"pairing-reference", "pairing-swatch"},
+        ) or _runtime_policy_role("surface")
     semantic_roles["surface_muted"] = _choose_palette_entry(
         pool,
         min_lightness=88,

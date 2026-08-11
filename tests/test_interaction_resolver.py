@@ -1,4 +1,4 @@
-from design_ontology_harness.interaction_resolver import resolve_interaction_patterns
+from design_ontology_harness.interaction_resolver import resolve_design_language, resolve_interaction_patterns
 
 
 COMPONENT_STATES = {
@@ -40,6 +40,31 @@ def test_same_seed_is_reproducible_but_different_seeds_can_vary():
 
     assert first["selected"] == repeat["selected"]
     assert first["selected"] != other["selected"]
+
+
+def test_design_language_is_axis_wise_and_reproducible():
+    kwargs = {
+        "visual_keywords": ["seasonal field notes", "soft mineral surfaces"],
+        "interaction_keywords": ["contextual return", "time-aware transitions"],
+        "composition": "timeline-ledger",
+        "density": "spacious",
+        "variation_seed": 3,
+    }
+    first = resolve_design_language(**kwargs)
+    repeat = resolve_design_language(**kwargs)
+    assert first == repeat
+    assert set(first["selected"]) == {"composition", "surface", "typography"}
+    assert first["selected"]["composition"]["id"] == "timeline-field"
+
+
+def test_async_progress_does_not_match_due_state():
+    result = resolve_interaction_patterns(
+        product_intent="return",
+        component_states={"return-ritual-prompt": ["due"]},
+        motion_budget=2,
+        variation_seed=1,
+    )
+    assert all(item["id"] != "async-care-progress" for item in result["selected"])
 
 
 def test_motion_budget_and_component_state_are_hard_constraints():

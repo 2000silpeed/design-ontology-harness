@@ -157,12 +157,12 @@
       "Muted lichen greens",
       "Warm paper neutrals"
     ],
-    "selected_colors": ["#102A2B", "#5C4B73", "#8BA889", "#E8DFC9"],
+    "selected_colors": ["Deep Dusk", "Mineral Violet", "Lichen Green", "Warm Paper"],
     "palette_roles": {
-      "primary": "#102A2B",
-      "secondary": "#5C4B73",
-      "accent": "#8BA889",
-      "surface": "#E8DFC9"
+      "primary": "Deep Dusk",
+      "secondary": "Mineral Violet",
+      "accent": "Lichen Green",
+      "surface": "Warm Paper"
     },
     "palette_strategy": {
       "mode": "brand-guided",

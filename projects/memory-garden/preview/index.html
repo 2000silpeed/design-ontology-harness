@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="garden-shell" data-system="memory-garden" data-contract-version="component-contract/v1">
+  <main class="garden-shell" data-system="memory-garden" data-contract-version="component-contract/v1" data-design-composition="timeline-field" data-design-surface="mineral-canvas" data-design-typography="editorial-ko">
     <header class="garden-header">
       <div class="brand-mark"><span class="mark-orbit" aria-hidden="true"></span><span>MEMORY GARDEN</span></div>
       <div class="header-meta"><span>첫 번째 계절</span><button class="quiet-button" type="button">새 기록 심기</button></div>
@@ -74,13 +74,23 @@
     <footer class="garden-footer"><span>기록은 판단하지 않고 맥락을 보존합니다.</span><span>⌘ K · 정원 찾기</span></footer>
   </main>
   <script>
+    const shell = document.querySelector('[data-system="memory-garden"]');
     fetch('../build/system/blueprint/interaction_selection.json')
       .then((response) => response.json())
       .then((selection) => {
         const ids = (selection.selected || []).map((item) => item.id).join(' ');
-        document.querySelector('[data-system="memory-garden"]')?.setAttribute('data-interaction', ids);
+        shell?.setAttribute('data-interaction', ids);
       })
-      .catch(() => document.querySelector('[data-system="memory-garden"]')?.setAttribute('data-interaction', ''));
+      .catch(() => shell?.setAttribute('data-interaction', ''));
+    fetch('../build/system/blueprint/design_language_selection.json')
+      .then((response) => response.json())
+      .then((selection) => {
+        const selected = selection.selected || {};
+        for (const [axis, value] of Object.entries(selected)) {
+          const attr = { composition: 'data-design-composition', surface: 'data-design-surface', typography: 'data-design-typography' }[axis];
+          if (attr && value?.id) shell?.setAttribute(attr, value.id);
+        }
+      });
   </script>
 </body>
 </html>

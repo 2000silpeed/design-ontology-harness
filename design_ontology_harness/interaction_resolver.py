@@ -70,7 +70,7 @@ CANDIDATES: tuple[InteractionCandidate, ...] = (
         "async-care-progress",
         ("memory-seed-composer", "return-ritual-prompt"),
         ("save", "capture", "return"),
-        ("saving", "loading", "due"),
+        ("saving", "loading"),
         1,
         "static-status",
         "Use explicit progress semantics when a record is being saved or prepared.",
@@ -152,6 +152,8 @@ def resolve_interaction_patterns(
     }
 
 
+
+
 def _serialize(item: dict[str, Any]) -> dict[str, Any]:
     candidate: InteractionCandidate = item["candidate"]
     return {
@@ -163,6 +165,55 @@ def _serialize(item: dict[str, Any]) -> dict[str, Any]:
         "reduced_motion": candidate.reduced_motion,
         "rationale": candidate.rationale,
         "advisory_reference": candidate.advisory_reference,
+    }
+
+
+def resolve_design_language(
+    *,
+    visual_keywords: Sequence[str] = (),
+    interaction_keywords: Sequence[str] = (),
+    composition: str = "",
+    density: str = "balanced",
+    variation_seed: int | None = None,
+) -> dict[str, Any]:
+    """Choose independent composition, surface, and typography directions."""
+    words = {str(item).lower() for item in [*visual_keywords, *interaction_keywords, composition]}
+    axes = {
+        "composition": (
+            ("timeline-field", {"timeline", "temporal", "seasonal", "chronology"}, "A continuous field keeps chronology primary."),
+            ("annotated-ledger", {"annotation", "field notes", "honest"}, "Annotations keep context attached to each record."),
+            ("seasonal-archive", {"seasonal", "archive", "return"}, "Seasonal framing makes return a change of context."),
+        ),
+        "surface": (
+            ("paper-strata", {"paper", "field notes", "quiet"}, "Layered reading surfaces support reflective content."),
+            ("mineral-canvas", {"mineral", "deep dusk", "topographic"}, "Mineral contrast separates memory states without card walls."),
+            ("ink-trace", {"ink", "annotation", "honest"}, "Ink-like marks preserve the feeling of authored traces."),
+        ),
+        "typography": (
+            ("field-note", {"field notes", "observant", "specific"}, "A readable note rhythm keeps context ahead of display drama."),
+            ("editorial-ko", {"editorial", "temporal", "quietly vivid"}, "Editorial Korean hierarchy supports long-form reflection."),
+            ("quiet-sans", {"calm", "accessible", "screen-reader"}, "A restrained sans system protects scanability and access."),
+        ),
+    }
+    rng = random.Random(variation_seed) if variation_seed is not None else random.SystemRandom()
+    selected: dict[str, dict[str, Any]] = {}
+    for axis, options in axes.items():
+        ranked = []
+        for option_id, signals, rationale in options:
+            score = len(signals & words)
+            if axis == "composition" and density == "spacious":
+                score += 1 if option_id != "annotated-ledger" else 0
+            ranked.append((score, option_id, rationale))
+        top_score = max(item[0] for item in ranked)
+        finalists = [item for item in ranked if item[0] == top_score]
+        selected_score, option_id, rationale = rng.choice(finalists)
+        selected[axis] = {"id": option_id, "score": selected_score, "rationale": rationale}
+    return {
+        "schema_version": "design-language-selection/v1",
+        "selection_mode": "axis-wise-contextual-variation",
+        "variation_seed": variation_seed,
+        "selected": selected,
+        "constraints": {"density": density, "source_policy": "product-profile-first"},
     }
 
 

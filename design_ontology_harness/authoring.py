@@ -986,7 +986,18 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
             "baseline_coverage_components": baseline_coverage_components,
             "rejected_components": rejected_components,
             "candidate_component_archetypes": candidate_archetypes,
-            "reference_baseline": reference_baseline_summary(),
+            "reference_baseline": (
+                reference_baseline_summary()
+                if brand_profile.get(
+                    "allow_reference_baseline",
+                    not bool(brand_profile.get("product_primitives") or brand_profile.get("_spec_components") or brand_profile.get("component_decision")),
+                )
+                else {
+                    "systems": [],
+                    "absorption_policy": {"rule": "No external component baseline is authoritative for this project."},
+                    "contextual_not_baseline": {},
+                }
+            ),
             "advanced_component_catalog": catalog_entries(),
             "advanced_recommendations": [],
         }
@@ -1204,7 +1215,18 @@ def build_component_inventory(brand_profile: dict, blueprint: dict) -> dict:
         "baseline_coverage_components": baseline_coverage_components,
         "rejected_components": rejected_components,
         "candidate_component_archetypes": candidate_archetypes,
-        "reference_baseline": reference_baseline_summary(),
+        "reference_baseline": (
+            reference_baseline_summary()
+            if brand_profile.get(
+                    "allow_reference_baseline",
+                    not bool(brand_profile.get("product_primitives") or brand_profile.get("_spec_components") or brand_profile.get("component_decision")),
+                )
+            else {
+                "systems": [],
+                "absorption_policy": {"rule": "No external component baseline is authoritative for this project."},
+                "contextual_not_baseline": {},
+            }
+        ),
         "advanced_component_catalog": catalog_entries(),
         "advanced_recommendations": accepted_advanced_recommendations,
     }

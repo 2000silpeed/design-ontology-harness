@@ -10,7 +10,7 @@ from .color_reference import resolve_color_reference, resolve_semantic_color_ref
 from .css_pipeline import load_css_extraction
 from .font_reference import resolve_font_system
 from .graph_builders import VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS
-from .interaction_resolver import resolve_interaction_patterns
+from .interaction_resolver import resolve_design_language, resolve_interaction_patterns
 from .models import DocumentRecord, ReferenceLink
 from .reference_context import build_design_context_pack
 from .utils import ensure_dir, write_json
@@ -821,7 +821,7 @@ def load_brand_profile(path: Path) -> dict:
         profile["_resolved_font_system"] = resolve_font_system(profile)
 
     visual_config = profile.get("visual_reference")
-    if visual_config:
+    if visual_config and str(visual_config.get("mode", "")).strip().lower() != "none":
         resolved_visual_reference, issues = resolve_visual_reference(visual_config, path.parent, profile)
         if resolved_visual_reference:
             profile["_resolved_visual_reference"] = resolved_visual_reference
@@ -996,6 +996,13 @@ def build_blueprint(
         density=str(layout_skeleton.get("density") or "balanced"),
         variation_seed=brand_profile.get("interaction_variation_seed"),
     )
+    design_language_selection = resolve_design_language(
+        visual_keywords=brand_profile.get("visual_keywords", []),
+        interaction_keywords=brand_profile.get("interaction_keywords", []),
+        composition=str(layout_skeleton.get("composition") or ""),
+        density=str(layout_skeleton.get("density") or "balanced"),
+        variation_seed=brand_profile.get("design_variation_seed"),
+    )
 
     blueprint = {
         "brand_name": brand_profile.get("brand_name", "Unnamed Brand"),
@@ -1037,6 +1044,7 @@ def build_blueprint(
             differentiation_strategy=differentiation_strategy,
         ),
         "interaction_selection": interaction_selection,
+        "design_language_selection": design_language_selection,
         "color_reference": brand_profile.get("_resolved_color_reference"),
         "visual_reference": brand_profile.get("_resolved_visual_reference"),
         "visual_reference_issues": brand_profile.get("_visual_reference_issues", []),
@@ -1118,6 +1126,7 @@ def build_blueprint(
     if blueprint.get("design_context_pack"):
         write_json(blueprint_dir / "design_context_pack.json", blueprint["design_context_pack"])
     write_json(blueprint_dir / "interaction_selection.json", interaction_selection)
+    write_json(blueprint_dir / "design_language_selection.json", design_language_selection)
     save_benchmark_report(output_dir, brand_profile)
     write_json(blueprint_dir / "design_system_blueprint.json", blueprint)
     generate_system_pack(output_dir, brand_profile, blueprint, references, documents)
@@ -1385,9 +1394,9 @@ def _build_component_strategy(
         "layout_skeleton": layout_skeleton,
         "differentiation_strategy": differentiation_strategy,
         "reference_component_base": {
-            "primary": ["Astryx", "Vercel Geist"],
-            "rule": "Use the shared Astryx/Geist baseline as taxonomy evidence, then add product-specific components only when primitives require them.",
-            "prune_policy": "Mobile-only chrome, CTA-only variants, and duplicate names stay contextual instead of baseline.",
+            "primary": [],
+            "rule": "No external component baseline is authoritative. Use the product's authored component contracts and domain primitives.",
+            "prune_policy": "Do not introduce a generic library baseline unless the project explicitly opts in.",
         },
         "rules": [
             "primitive 단위로 책임을 먼저 정의하고 컴포넌트는 그 위에 매핑",
