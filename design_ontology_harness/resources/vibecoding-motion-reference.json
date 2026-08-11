@@ -1,0 +1,157 @@
+{
+  "$schema": "../../schemas/motion-reference-pack.schema.json",
+  "schema_version": "motion-reference-pack/v1",
+  "pack_id": "vibecoding-motion",
+  "status": "draft",
+  "sources": [
+    {
+      "id": "source:originkit",
+      "label": "Originkit",
+      "canonical_url": null,
+      "provenance": "user-supplied",
+      "license_status": "unverified",
+      "notes": "User-described collection of previewable web animation patterns. Confirm canonical URL and license before code reuse."
+    },
+    {
+      "id": "source:border-beam",
+      "label": "Border Beam",
+      "canonical_url": null,
+      "provenance": "user-supplied",
+      "license_status": "unverified",
+      "notes": "User-described animated luminous border patterns. Treat as morphology inspiration until source and license are verified."
+    },
+    {
+      "id": "source:motionsites",
+      "label": "Motionsites",
+      "canonical_url": null,
+      "provenance": "user-supplied",
+      "license_status": "unverified",
+      "notes": "User-described AI website prompt and visual reference library. Do not treat examples as redistributable assets."
+    },
+    {
+      "id": "source:dotmatrix",
+      "label": "Dotmatrix",
+      "canonical_url": null,
+      "provenance": "user-supplied",
+      "license_status": "unverified",
+      "notes": "User-described dot-array loading animation collection. Use the abstract loading vocabulary, not copied implementation code."
+    },
+    {
+      "id": "source:vibehub",
+      "label": "VibeHub",
+      "canonical_url": null,
+      "provenance": "user-supplied",
+      "license_status": "unverified",
+      "notes": "User-described visual vocabulary reference. Terms remain advisory until canonical source inspection."
+    }
+  ],
+  "patterns": [
+    {
+      "id": "interaction:result-reveal",
+      "label": "Purposeful result reveal",
+      "ontology_type": "InteractionPattern",
+      "source_ids": ["source:originkit", "source:motionsites"],
+      "component_states": ["state:content-enter", "state:result-ready"],
+      "motion": { "duration_ms": 180, "easing": "enter", "reduced_motion": "opacity-only" },
+      "guardrails": [
+        "Use only when new content becomes available.",
+        "Do not animate layout-critical geometry or delay access to content.",
+        "Preserve the product's information hierarchy and copy."
+      ]
+    },
+    {
+      "id": "interaction:attention-border",
+      "label": "State-bound attention border",
+      "ontology_type": "InteractionPattern",
+      "source_ids": ["source:border-beam"],
+      "component_states": ["state:attention-required", "state:selected"],
+      "motion": { "duration_ms": 180, "easing": "standard", "reduced_motion": "static" },
+      "guardrails": [
+        "Never apply the animated border to every card by default.",
+        "Use semantic accent tokens only; no hard-coded effect colors.",
+        "Focus visibility must remain stronger and independent from decoration."
+      ]
+    },
+    {
+      "id": "interaction:dot-progress",
+      "label": "Dot-array async progress",
+      "ontology_type": "InteractionPattern",
+      "source_ids": ["source:dotmatrix"],
+      "component_states": ["state:loading", "state:agent-working", "state:data-refreshing"],
+      "motion": { "duration_ms": 180, "easing": "standard", "reduced_motion": "static" },
+      "guardrails": [
+        "Keep a persistent text status and expose it through role=status or aria-live.",
+        "Do not use animation as the sole progress signal.",
+        "Use a static dot arrangement when reduced motion is requested."
+      ]
+    },
+    {
+      "id": "interaction:prompt-vocabulary",
+      "label": "Named interaction vocabulary",
+      "ontology_type": "InteractionPattern",
+      "source_ids": ["source:vibehub"],
+      "component_states": ["state:default", "state:hover", "state:active", "state:focus-visible"],
+      "motion": { "duration_ms": 120, "easing": "standard", "reduced_motion": "skip" },
+      "guardrails": [
+        "Use terms to describe intent, state, and token binding to an AI.",
+        "Do not replace domain concepts or component contracts with marketing language.",
+        "Record the chosen term alongside the implementation evidence."
+      ]
+    },
+    {
+      "id": "interaction:showcase-morphology",
+      "label": "Showcase composition reference",
+      "ontology_type": "InteractionPattern",
+      "source_ids": ["source:motionsites", "source:originkit"],
+      "component_states": ["state:landing-preview", "state:showcase-active"],
+      "motion": { "duration_ms": 240, "easing": "emphasized", "reduced_motion": "opacity-only" },
+      "guardrails": [
+        "Apply to landing or showcase surfaces, not dense operational workspaces by default.",
+        "Reference morphology may not override product IA, palette, typography, or copy.",
+        "Use locally authored primitives instead of copying third-party code or assets."
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "a11y:motion-reduce",
+      "label": "Reduced motion fallback",
+      "ontology_type": "AccessibilityRule",
+      "applies_to": ["all patterns"],
+      "severity": "required",
+      "statement": "Every non-essential motion pattern must define a static, opacity-only, or skipped reduced-motion behavior."
+    },
+    {
+      "id": "a11y:status-text",
+      "label": "Text status accompanies async motion",
+      "ontology_type": "AccessibilityRule",
+      "applies_to": ["interaction:dot-progress"],
+      "severity": "required",
+      "statement": "Loading and working animations cannot be the only indicator; a persistent accessible text status is required."
+    },
+    {
+      "id": "governance:reference-is-advisory",
+      "label": "Reference does not override product truth",
+      "ontology_type": "GovernanceRule",
+      "applies_to": ["all patterns"],
+      "severity": "required",
+      "statement": "External visual references may inform morphology and affordance, but product brief, semantic tokens, component contracts, accessibility, and implementation rules remain authoritative."
+    },
+    {
+      "id": "governance:license-before-reuse",
+      "label": "Verify source before implementation reuse",
+      "ontology_type": "GovernanceRule",
+      "applies_to": ["all sources"],
+      "severity": "required",
+      "statement": "A preview or description is not permission to copy code, assets, prompts, or proprietary source structure; canonical URL and license must be verified first."
+    },
+    {
+      "id": "governance:low-noise-dashboard",
+      "label": "Dashboard motion stays low-noise",
+      "ontology_type": "GovernanceRule",
+      "applies_to": ["dashboard--minimal-tech", "interaction:attention-border", "interaction:dot-progress"],
+      "severity": "required",
+      "statement": "Operational dashboards use motion to explain state changes, not as persistent decorative atmosphere."
+    }
+  ]
+}

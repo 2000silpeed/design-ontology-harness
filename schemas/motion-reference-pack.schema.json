@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/design-ontology-harness/motion-reference-pack.schema.json",
+  "title": "Motion Reference Pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "pack_id", "status", "sources", "patterns", "rules"],
+  "properties": {
+    "schema_version": { "const": "motion-reference-pack/v1" },
+    "pack_id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "status": { "enum": ["draft", "reviewed", "stable"] },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "canonical_url", "provenance", "license_status"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^source:[a-z0-9-]+$" },
+          "label": { "type": "string", "minLength": 1 },
+          "canonical_url": { "type": ["string", "null"], "format": "uri" },
+          "provenance": { "enum": ["user-supplied", "inspected", "verified"] },
+          "license_status": { "enum": ["unverified", "reference-only", "verified"] },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "patterns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "ontology_type", "source_ids", "component_states", "motion", "guardrails"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^interaction:[a-z0-9-]+$" },
+          "label": { "type": "string", "minLength": 1 },
+          "ontology_type": { "const": "InteractionPattern" },
+          "source_ids": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^source:[a-z0-9-]+$" } },
+          "component_states": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^state:[a-z0-9-]+$" } },
+          "motion": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["duration_ms", "easing", "reduced_motion"],
+            "properties": {
+              "duration_ms": { "type": "integer", "minimum": 0, "maximum": 320 },
+              "easing": { "enum": ["standard", "enter", "exit", "emphasized"] },
+              "reduced_motion": { "enum": ["static", "opacity-only", "skip"] }
+            }
+          },
+          "guardrails": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "ontology_type", "applies_to", "severity", "statement"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^a11y:|^governance:" },
+          "label": { "type": "string", "minLength": 1 },
+          "ontology_type": { "enum": ["AccessibilityRule", "GovernanceRule"] },
+          "applies_to": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "severity": { "enum": ["required", "recommended", "advisory"] },
+          "statement": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

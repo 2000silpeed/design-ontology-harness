@@ -13,6 +13,7 @@
 - 로컬 이미지, 스크린샷, Omnigen vault 이미지에서 visual motif와 layout cue를 추출한다.
 - 이미지 레퍼런스를 색상/서체/IA의 진실 소스로 쓰지 않도록 권한 경계를 기록한다.
 - `system_spec.md`, `token_schema.json`, `component_inventory.json`, `component_specs.md`, `system_ontology.json`을 생성한다.
+- VibeCoding용 외부 모션 레퍼런스를 `InteractionPattern`과 접근성/거버넌스 규칙으로 추상화해 검증 가능한 reference pack으로 보존한다.
 - 생성된 시스템을 preset으로 승격하고, 구현 레포에 `STYLE.md`, `DESIGN.md`, CSS variables, 구현 계약서를 설치한다.
 - 합성된 이미지 슬롯을 Codex/GPT 자체 이미지 생성 기능에서 바로 쓸 수 있는 프롬프트 패킷과 검수 게이트, 자산 매니페스트 초안으로 변환한다.
 - 구현 결과를 lint, screenshot QA, visual comparison으로 점검한다.

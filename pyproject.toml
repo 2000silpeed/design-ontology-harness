@@ -31,6 +31,7 @@ packages = ["design_ontology_harness"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "docs/color-reference.md" = "design_ontology_harness/resources/color-reference.md"
+"design_ontology_harness/resources/vibecoding-motion-reference.json" = "design_ontology_harness/resources/vibecoding-motion-reference.json"
 
 [tool.hatch.build.targets.sdist]
 include = [
