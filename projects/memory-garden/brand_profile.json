@@ -1,0 +1,234 @@
+{
+  "brand_name": "Memory Garden",
+  "system_name": "Memory Garden System",
+  "product_summary": "개인의 생각과 결정을 시간축으로 심고, 돌보고, 다시 읽는 기억 정원",
+  "audiences": [
+    "장기 프로젝트를 혼자 이끄는 사람",
+    "창작과 생활의 결정을 함께 기록하는 사람",
+    "지난 판단의 맥락을 잊고 싶지 않은 사람"
+  ],
+  "brand_keywords": [
+    "cultivated",
+    "quietly vivid",
+    "temporal",
+    "honest"
+  ],
+  "anti_keywords": [
+    "generic productivity",
+    "notification-heavy",
+    "instant gratification",
+    "dashboard-like"
+  ],
+  "tone_of_voice": [
+    "observant",
+    "gentle",
+    "specific",
+    "non-judgmental"
+  ],
+  "visual_keywords": [
+    "seasonal field notes",
+    "topographic traces",
+    "soft mineral surfaces",
+    "ink annotations",
+    "deep dusk with living accents"
+  ],
+  "interaction_keywords": [
+    "slow reveal",
+    "contextual return",
+    "quiet confirmation",
+    "reversible care",
+    "time-aware transitions"
+  ],
+  "platforms": [
+    "web",
+    "ios"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "reduced motion",
+    "screen-reader readable chronology"
+  ],
+  "application_concept": {
+    "primary_job": "생각과 결정을 당시의 감정·조건·다음 약속과 함께 시간축에 심어, 나중에 맥락을 잃지 않고 다시 돌본다",
+    "domain_objects": [
+      "Memory Seed: 한 순간의 생각이나 관찰",
+      "Decision Stone: 실제로 내린 결정과 그 이유",
+      "Season: 프로젝트나 삶의 한 시기",
+      "Return Ritual: 미래의 내가 다시 확인할 약속",
+      "Garden Thread: 서로 다른 기록을 연결하는 장기 주제"
+    ],
+    "operating_mode": "exploration",
+    "success_moment": "사용자가 과거 기록을 단순 검색 결과가 아니라 당시의 맥락과 현재의 질문이 이어지는 하나의 시간 풍경으로 이해한다",
+    "differentiation": [
+      "기록을 리스트가 아니라 성장 흔적과 계절의 층으로 보여준다",
+      "결정은 할 일 완료가 아니라 이유와 이후 결과를 함께 보존한다",
+      "회고를 알림이 아니라 사용자가 선택한 Return Ritual로 다룬다"
+    ]
+  },
+  "layout_skeleton": {
+    "composition": "timeline-ledger",
+    "navigation_model": "local-tabs",
+    "density": "spacious",
+    "primary_regions": [
+      {
+        "name": "Living timeline",
+        "role": "시간축을 따라 Memory Seed와 Decision Stone이 놓이는 주 작업면",
+        "priority": "primary"
+      },
+      {
+        "name": "Season lens",
+        "role": "현재 보고 있는 시기의 분위기·주제·미완료 Return Ritual을 조정",
+        "priority": "secondary"
+      },
+      {
+        "name": "Context drawer",
+        "role": "선택한 기록의 당시 조건과 연결된 Garden Thread를 보여줌",
+        "priority": "secondary"
+      }
+    ],
+    "first_screen_contract": [
+      "현재 계절의 이름과 기간이 보여야 한다",
+      "시간축에 최소 세 개의 실제 기록 상태가 보여야 한다",
+      "새 Memory Seed와 Decision Stone을 만드는 진입점이 보여야 한다",
+      "다음 Return Ritual이 있다면 이유와 예정 시점을 함께 보여야 한다"
+    ],
+    "avoid_layouts": [
+      "generic hero plus card grid",
+      "uniform dashboard metric cards",
+      "infinite feed with engagement counters",
+      "sidebar-first enterprise workspace",
+      "calendar clone as the primary surface"
+    ]
+  },
+  "design_differentiation": {
+    "must_feel_different_from": [
+      "generic SaaS dashboard",
+      "task-management inbox",
+      "social timeline",
+      "calendar and journal hybrids"
+    ],
+    "signature_moves": [
+      "시간축의 중심선을 따라 기록이 씨앗·돌·실마리 형태로 배치된다",
+      "현재 계절은 화면의 상태를 바꾸는 렌즈이지 단순 필터가 아니다",
+      "기록을 열면 내용보다 먼저 당시의 조건과 나중의 질문이 나타난다",
+      "완료 대신 돌봄 상태를 사용한다: planted, tending, dormant, returned"
+    ],
+    "repetition_risks": [
+      "same three-column cards",
+      "metric dashboards disguised as reflection",
+      "generic calendar heatmap",
+      "decorative botanical illustration without semantic meaning",
+      "gamified streaks or productivity scores"
+    ]
+  },
+  "component_decision_path": "design-system/component-contracts.json",
+  "product_primitives": [
+    "living timeline",
+    "memory seed composer",
+    "decision stone editor",
+    "season lens",
+    "return ritual prompt",
+    "garden thread map",
+    "context drawer",
+    "care state marker"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "temporal interfaces",
+      "editorial annotation",
+      "mapping and wayfinding",
+      "accessible chronology",
+      "calm data visualization"
+    ],
+    "avoid_sources_containing": [
+      "generic SaaS dashboards",
+      "productivity streaks",
+      "decorative garden illustrations",
+      "card-wall templates",
+      "copyable competitor UI"
+    ]
+  },
+  "seeds": [],
+  "color_reference": {
+    "path": "local-only/new-concept-color-reference.md",
+    "preferred_families": [
+      "Deep blue-greens",
+      "Mineral violets",
+      "Muted lichen greens",
+      "Warm paper neutrals"
+    ],
+    "selected_colors": ["#102A2B", "#5C4B73", "#8BA889", "#E8DFC9"],
+    "palette_roles": {
+      "primary": "#102A2B",
+      "secondary": "#5C4B73",
+      "accent": "#8BA889",
+      "surface": "#E8DFC9"
+    },
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "cool-warm balance",
+      "contrast": "deep anchor with luminous semantic accents",
+      "diversity": "restrained",
+      "surface_style": "layered matte",
+      "prefer_moods": [
+        "깊이",
+        "돌봄",
+        "시간감"
+      ],
+      "avoid_moods": [
+        "사무적임",
+        "장난스러움",
+        "과도한 자연주의"
+      ]
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 10,
+      "combination_count": 4,
+      "prefer_pairings": true,
+      "prefer_related_families": false
+    },
+    "notes": [
+      "팔레트는 식물 색을 직접 흉내 내기보다 시간과 상태를 구분하는 역할에서 시작한다",
+      "semantic accent는 care state와 chronology focus에만 사용한다",
+      "표면은 종이·돌·어두운 토양의 질감을 암시하되 이미지 장식으로 대체하지 않는다"
+    ]
+  },
+  "visual_reference": {
+    "mode": "none",
+    "query": [],
+    "sources": [],
+    "preferred_count": 0,
+    "weights": {
+      "layout": 0.4,
+      "component_shape": 0.2,
+      "color_balance": 0.15,
+      "typography_mood": 0.15,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "disabled-for-new-concept-pass",
+    "must_include": [],
+    "avoid_patterns": [
+      "reusing prior project screenshots",
+      "reusing prior preset tokens",
+      "reusing prior reference-pack morphology"
+    ],
+    "notes": [
+      "이 첫 컨셉 패스에서는 외부 시각 레퍼런스를 입력하지 않는다",
+      "새로운 정보구조와 상태 모델을 먼저 검증한 뒤 필요할 때 별도 레퍼런스를 수집한다"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 0,
+      "max_selected_per_query": 0,
+      "preferred_sources": [],
+      "notes": [
+        "신규 컨셉의 첫 구조 검증이 끝날 때까지 비활성화"
+      ]
+    }
+  }
+}

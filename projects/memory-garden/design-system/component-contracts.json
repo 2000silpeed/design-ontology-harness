@@ -1,0 +1,685 @@
+{
+  "component_decision": {
+    "mode": "from-scratch-authored",
+    "rationale": "Memory Garden is a temporal care workspace, so its core components are authored around seasons, memory states, and return rituals rather than dashboard families.",
+    "coverage_families": [
+      "foundation",
+      "timeline",
+      "editor",
+      "navigation",
+      "feedback"
+    ],
+    "primitive_reconciliation_version": "product-primitive-reconciliation/v1",
+    "primitive_reconciliation": [
+      {
+        "primitive": "living timeline",
+        "resolution": "component",
+        "component": "living-timeline",
+        "reason": "The timeline is the primary work surface."
+      },
+      {
+        "primitive": "memory seed composer",
+        "resolution": "component",
+        "component": "memory-seed-composer",
+        "reason": "A seed needs a distinct capture flow from a decision."
+      },
+      {
+        "primitive": "decision stone editor",
+        "resolution": "component",
+        "component": "decision-stone-editor",
+        "reason": "Decisions preserve reasons and consequences."
+      },
+      {
+        "primitive": "season lens",
+        "resolution": "component",
+        "component": "season-lens",
+        "reason": "A season changes the temporal context of the screen."
+      },
+      {
+        "primitive": "return ritual prompt",
+        "resolution": "component",
+        "component": "return-ritual-prompt",
+        "reason": "Revisiting is an explicit care action, not a notification."
+      },
+      {
+        "primitive": "garden thread map",
+        "resolution": "anatomy",
+        "component": "living-timeline",
+        "anatomy_parts": [
+          "record-node",
+          "thread-links"
+        ],
+        "reason": "Threads are revealed from a focused record on the timeline."
+      },
+      {
+        "primitive": "context drawer",
+        "resolution": "component",
+        "component": "context-drawer",
+        "reason": "Context opens beside a record without losing chronology."
+      },
+      {
+        "primitive": "care state marker",
+        "resolution": "anatomy",
+        "component": "living-timeline",
+        "anatomy_parts": [
+          "record-node",
+          "care-state-label"
+        ],
+        "reason": "Care state is a semantic part of each timeline record."
+      }
+    ],
+    "core_components": [
+      {
+        "name": "living-timeline",
+        "family": "timeline",
+        "role": "Primary chronological surface for Memory Seeds and Decision Stones.",
+        "supports_primitive": "living timeline",
+        "decision_reason": "The product is organized by temporal return, not by folders or metrics.",
+        "anatomy": [
+          "season-header",
+          "timeline-spine",
+          "record-node",
+          "date-marker",
+          "thread-links",
+          "care-state-label"
+        ],
+        "states": [
+          "default",
+          "empty",
+          "filtered",
+          "focused"
+        ],
+        "variants": {
+          "default": "day",
+          "axes": [
+            "scale",
+            "orientation"
+          ],
+          "constraints": [
+            "Only declared scale values are valid: ['day', 'season']",
+            "Only declared orientation values are valid: ['vertical']"
+          ]
+        },
+        "props": {
+          "records": "array",
+          "season": "object"
+        },
+        "interaction": {
+          "events": [
+            "focus-record",
+            "change-season"
+          ],
+          "state_transitions": [
+            "default→focused",
+            "empty→default"
+          ],
+          "focus_behavior": "Preserve chronological DOM order.",
+          "state_coverage": [
+            "default",
+            "empty",
+            "filtered",
+            "focused"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "MemoryRecord",
+          "required_fields": [
+            "id",
+            "created_at",
+            "care_state",
+            "kind"
+          ],
+          "empty_state_required": true,
+          "provenance_required": true
+        },
+        "responsive": {
+          "required_widths_px": [
+            320,
+            390,
+            768,
+            1440
+          ],
+          "behavior": "Collapse side context below the timeline on narrow screens.",
+          "control_rules": [
+            "Controls must wrap or stack below 480px.",
+            "Chronology and state labels remain readable at every required width."
+          ],
+          "container_behavior": "wrap, stack, or reflow without hiding product state"
+        },
+        "content_rules": [
+          "Show dates as readable labels and machine-readable time.",
+          "Never use position alone to encode state."
+        ],
+        "dos_and_donts": {
+          "do": [
+            "Keep the temporal spine legible."
+          ],
+          "dont": [
+            "Do not turn records into a metric card wall."
+          ]
+        },
+        "tokens": {
+          "component.living-timeline.surface": "var(--ds-color-surface)",
+          "part.timeline-spine.border": "var(--ds-color-border)",
+          "state.focused.indicator": "var(--ds-color-primary)"
+        },
+        "accessibility": [
+          "Use an ordered list when chronology is the task.",
+          "Focused records need a visible non-color indicator."
+        ],
+        "accessibility_notes": [
+          "Use an ordered list when chronology is the task.",
+          "Focused records need a visible non-color indicator."
+        ]
+      },
+      {
+        "name": "memory-seed-composer",
+        "family": "editor",
+        "role": "Captures a thought with its moment and immediate context.",
+        "supports_primitive": "memory seed composer",
+        "decision_reason": "A thought is planted quickly but remains richer than a one-line inbox item.",
+        "anatomy": [
+          "prompt",
+          "body-field",
+          "context-field",
+          "plant-action"
+        ],
+        "states": [
+          "default",
+          "editing",
+          "saved",
+          "validation-error"
+        ],
+        "variants": {
+          "default": "inline",
+          "axes": [
+            "mode"
+          ],
+          "constraints": [
+            "Only declared mode values are valid: ['inline', 'expanded']"
+          ]
+        },
+        "props": {
+          "value": "object",
+          "onSave": "function"
+        },
+        "interaction": {
+          "events": [
+            "edit",
+            "save",
+            "cancel"
+          ],
+          "state_transitions": [
+            "default→editing",
+            "editing→saved",
+            "editing→validation-error"
+          ],
+          "focus_behavior": "Move focus to the first invalid field or saved record.",
+          "state_coverage": [
+            "default",
+            "editing",
+            "saved",
+            "validation-error"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "MemorySeed",
+          "required_fields": [
+            "body",
+            "captured_at"
+          ],
+          "empty_state_required": false,
+          "provenance_required": true
+        },
+        "responsive": {
+          "required_widths_px": [
+            320,
+            390,
+            768
+          ],
+          "behavior": "Use full-width fields and stacked actions below 480px.",
+          "control_rules": [
+            "Controls must wrap or stack below 480px.",
+            "Chronology and state labels remain readable at every required width."
+          ],
+          "container_behavior": "wrap, stack, or reflow without hiding product state"
+        },
+        "content_rules": [
+          "Prompt for context without demanding mood scores.",
+          "Saved confirmation names the record, not a generic success."
+        ],
+        "dos_and_donts": {
+          "do": [
+            "Keep capture calm and reversible."
+          ],
+          "dont": [
+            "Do not add streaks or productivity scoring."
+          ]
+        },
+        "tokens": {
+          "component.memory-seed-composer.surface": "var(--ds-color-surface)",
+          "part.plant-action.background": "var(--ds-color-primary)",
+          "state.saved.confirmation": "var(--ds-color-primary)"
+        },
+        "accessibility": [
+          "Every field has a visible label.",
+          "Save result is announced in a status region."
+        ],
+        "accessibility_notes": [
+          "Every field has a visible label.",
+          "Save result is announced in a status region."
+        ]
+      },
+      {
+        "name": "decision-stone-editor",
+        "family": "editor",
+        "role": "Records a decision, its reason, and a future check-in.",
+        "supports_primitive": "decision stone editor",
+        "decision_reason": "Decisions need consequences and a return point, not only completion.",
+        "anatomy": [
+          "decision-title",
+          "reason-field",
+          "constraint-field",
+          "return-date",
+          "commit-action"
+        ],
+        "states": [
+          "default",
+          "editing",
+          "committed",
+          "reopened"
+        ],
+        "variants": {
+          "default": "ordinary",
+          "axes": [
+            "importance"
+          ],
+          "constraints": [
+            "Only declared importance values are valid: ['ordinary', 'load-bearing']"
+          ]
+        },
+        "props": {
+          "decision": "object",
+          "onCommit": "function"
+        },
+        "interaction": {
+          "events": [
+            "edit",
+            "commit",
+            "reopen"
+          ],
+          "state_transitions": [
+            "default→editing",
+            "editing→committed",
+            "committed→reopened"
+          ],
+          "focus_behavior": "Return focus to the decision title after reopen.",
+          "state_coverage": [
+            "default",
+            "editing",
+            "committed",
+            "reopened"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "DecisionStone",
+          "required_fields": [
+            "statement",
+            "reason",
+            "decided_at"
+          ],
+          "empty_state_required": false,
+          "provenance_required": true
+        },
+        "responsive": {
+          "required_widths_px": [
+            320,
+            390,
+            768
+          ],
+          "behavior": "Stack reason and return fields on narrow screens.",
+          "control_rules": [
+            "Controls must wrap or stack below 480px.",
+            "Chronology and state labels remain readable at every required width."
+          ],
+          "container_behavior": "wrap, stack, or reflow without hiding product state"
+        },
+        "content_rules": [
+          "Use specific reasons and conditions.",
+          "Never label a decision as a score."
+        ],
+        "dos_and_donts": {
+          "do": [
+            "Make future review visible."
+          ],
+          "dont": [
+            "Do not hide consequences behind a tooltip."
+          ]
+        },
+        "tokens": {
+          "component.decision-stone-editor.surface": "var(--ds-color-surface)",
+          "state.committed.border": "var(--ds-color-primary)",
+          "part.commit-action.border": "var(--ds-color-primary)"
+        },
+        "accessibility": [
+          "Commit and reopen actions have explicit names.",
+          "State is conveyed in text and icon shape, not color alone."
+        ],
+        "accessibility_notes": [
+          "Commit and reopen actions have explicit names.",
+          "State is conveyed in text and icon shape, not color alone."
+        ]
+      },
+      {
+        "name": "season-lens",
+        "family": "navigation",
+        "role": "Changes the temporal frame without deleting or hiding records.",
+        "supports_primitive": "season lens",
+        "decision_reason": "Seasons are meaningful periods, not generic filter tabs.",
+        "anatomy": [
+          "season-name",
+          "date-range",
+          "previous-control",
+          "next-control"
+        ],
+        "states": [
+          "current",
+          "past",
+          "future"
+        ],
+        "variants": {
+          "default": "compact",
+          "axes": [
+            "display"
+          ],
+          "constraints": [
+            "Only declared display values are valid: ['compact', 'expanded']"
+          ]
+        },
+        "props": {
+          "season": "object",
+          "onChange": "function"
+        },
+        "interaction": {
+          "events": [
+            "previous",
+            "next",
+            "open-season"
+          ],
+          "state_transitions": [
+            "past→current",
+            "current→future"
+          ],
+          "focus_behavior": "Keep focus on the season control after change.",
+          "state_coverage": [
+            "current",
+            "past",
+            "future"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "Season",
+          "required_fields": [
+            "name",
+            "start",
+            "end"
+          ],
+          "empty_state_required": true,
+          "provenance_required": false
+        },
+        "responsive": {
+          "required_widths_px": [
+            320,
+            390,
+            768
+          ],
+          "behavior": "Controls wrap with the season name.",
+          "control_rules": [
+            "Controls must wrap or stack below 480px.",
+            "Chronology and state labels remain readable at every required width."
+          ],
+          "container_behavior": "wrap, stack, or reflow without hiding product state"
+        },
+        "content_rules": [
+          "Always show the date range.",
+          "Do not use relative labels without an absolute date."
+        ],
+        "dos_and_donts": {
+          "do": [
+            "Keep the current season anchored."
+          ],
+          "dont": [
+            "Do not turn seasons into productivity periods."
+          ]
+        },
+        "tokens": {
+          "component.season-lens.border": "var(--ds-color-border)",
+          "state.current.accent": "var(--ds-color-primary)",
+          "part.season-name.color": "var(--ds-color-ink)"
+        },
+        "accessibility": [
+          "Previous/next controls expose the destination season.",
+          "Current season is marked with text."
+        ],
+        "accessibility_notes": [
+          "Previous/next controls expose the destination season.",
+          "Current season is marked with text."
+        ]
+      },
+      {
+        "name": "return-ritual-prompt",
+        "family": "feedback",
+        "role": "Invites a chosen future revisit with its reason and date.",
+        "supports_primitive": "return ritual prompt",
+        "decision_reason": "A revisit is user-chosen care, not an intrusive notification.",
+        "anatomy": [
+          "ritual-reason",
+          "due-date",
+          "accept-action",
+          "snooze-action"
+        ],
+        "states": [
+          "upcoming",
+          "due",
+          "completed",
+          "snoozed"
+        ],
+        "variants": {
+          "default": "quiet",
+          "axes": [
+            "emphasis"
+          ],
+          "constraints": [
+            "Only declared emphasis values are valid: ['quiet', 'focused']"
+          ]
+        },
+        "props": {
+          "ritual": "object",
+          "onComplete": "function"
+        },
+        "interaction": {
+          "events": [
+            "complete",
+            "snooze",
+            "open-record"
+          ],
+          "state_transitions": [
+            "upcoming→due",
+            "due→completed",
+            "due→snoozed"
+          ],
+          "focus_behavior": "Announce completion without stealing focus.",
+          "state_coverage": [
+            "upcoming",
+            "due",
+            "completed",
+            "snoozed"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "ReturnRitual",
+          "required_fields": [
+            "reason",
+            "scheduled_for",
+            "record_id"
+          ],
+          "empty_state_required": true,
+          "provenance_required": false
+        },
+        "responsive": {
+          "required_widths_px": [
+            320,
+            390,
+            768
+          ],
+          "behavior": "Actions stack below 480px.",
+          "control_rules": [
+            "Controls must wrap or stack below 480px.",
+            "Chronology and state labels remain readable at every required width."
+          ],
+          "container_behavior": "wrap, stack, or reflow without hiding product state"
+        },
+        "content_rules": [
+          "Show why the revisit matters.",
+          "Do not use alarm language for a quiet ritual."
+        ],
+        "dos_and_donts": {
+          "do": [
+            "Keep the prompt reversible."
+          ],
+          "dont": [
+            "Do not create urgency loops."
+          ]
+        },
+        "tokens": {
+          "component.return-ritual-prompt.surface": "var(--ds-color-surface)",
+          "state.due.border": "var(--ds-color-primary)",
+          "part.ritual-reason.color": "var(--ds-color-ink)"
+        },
+        "accessibility": [
+          "Due state has a status label.",
+          "Snooze action exposes the new date."
+        ],
+        "accessibility_notes": [
+          "Due state has a status label.",
+          "Snooze action exposes the new date."
+        ]
+      },
+      {
+        "name": "context-drawer",
+        "family": "overlay",
+        "role": "Shows the conditions and connected threads for a focused record.",
+        "supports_primitive": "context drawer",
+        "decision_reason": "Context should deepen a record without replacing the timeline.",
+        "anatomy": [
+          "drawer-title",
+          "condition-list",
+          "thread-links",
+          "close-action"
+        ],
+        "states": [
+          "closed",
+          "open",
+          "loading",
+          "empty"
+        ],
+        "variants": {
+          "default": "side",
+          "axes": [
+            "placement"
+          ],
+          "constraints": [
+            "Only declared placement values are valid: ['side', 'bottom']"
+          ]
+        },
+        "props": {
+          "record": "object",
+          "open": "boolean"
+        },
+        "interaction": {
+          "events": [
+            "open",
+            "close",
+            "follow-thread"
+          ],
+          "state_transitions": [
+            "closed→open",
+            "open→closed"
+          ],
+          "focus_behavior": "Trap focus while open and return focus to the originating record.",
+          "state_coverage": [
+            "closed",
+            "open",
+            "loading",
+            "empty"
+          ]
+        },
+        "data_contract": {
+          "domain_object": "RecordContext",
+          "required_fields": [
+            "record_id",
+            "conditions",
+            "threads"
+          ],
+          "empty_state_required": true,
+          "provenance_required": false
+        },
+        "responsive": {
+          "required_widths_px": [
+            320,
+            390,
+            768
+          ],
+          "behavior": "Use bottom placement below 600px.",
+          "control_rules": [
+            "Controls must wrap or stack below 480px.",
+            "Chronology and state labels remain readable at every required width."
+          ],
+          "container_behavior": "wrap, stack, or reflow without hiding product state"
+        },
+        "content_rules": [
+          "Context labels include when they were captured.",
+          "Do not imply causality without evidence."
+        ],
+        "dos_and_donts": {
+          "do": [
+            "Keep chronology visible behind the context."
+          ],
+          "dont": [
+            "Do not make the drawer a second dashboard."
+          ]
+        },
+        "tokens": {
+          "component.context-drawer.surface": "var(--ds-color-surface-elevated)",
+          "part.close-action.icon": "var(--ds-color-ink)",
+          "state.open.overlay": "var(--ds-color-surface-elevated)"
+        },
+        "accessibility": [
+          "Dialog labeling and escape close are required.",
+          "Focus return is deterministic."
+        ],
+        "accessibility_notes": [
+          "Dialog labeling and escape close are required.",
+          "Focus return is deterministic."
+        ]
+      }
+    ],
+    "rejected_components": [
+      {
+        "name": "metric-card-grid",
+        "family": "data-display",
+        "reason": "Conflicts with the temporal care model and anti-dashboard boundary."
+      },
+      {
+        "name": "streak-counter",
+        "family": "feedback",
+        "reason": "Introduces productivity pressure instead of context."
+      },
+      {
+        "name": "calendar-heatmap",
+        "family": "data-display",
+        "reason": "Would reduce lived chronology to activity frequency."
+      }
+    ]
+  }
+}

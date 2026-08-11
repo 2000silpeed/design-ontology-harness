@@ -426,10 +426,9 @@ def emit_project_tokens(
         semantic_tokens["border-strong"] = runtime_defaults["border-strong"]
         semantic_tokens["link"] = ink
     semantic_tokens = apply_light_contrast_floor(_ensure_base_roles(semantic_tokens))
+    color_reference = bundle.blueprint.get("color_reference") or {}
     explicit_dark = (
-        bundle.blueprint.get("color_reference", {})
-        .get("expanded_palette", {})
-        .get("dark_semantic_roles")
+        (color_reference.get("expanded_palette") or {}).get("dark_semantic_roles")
     ) or {}
     dark_semantic_tokens = derive_dark_tokens(
         semantic_tokens,

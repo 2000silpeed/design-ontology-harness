@@ -147,7 +147,7 @@ def build_color_layer(
                 meta={"hex": role_data.get("hex", ""), "tier": "semantic", "role": role_name},
             ))
 
-    expanded = color_ref.get("expanded_palette", {})
+    expanded = color_ref.get("expanded_palette") or {}
     for role_name, role_data in expanded.get("semantic_roles", {}).items():
         if isinstance(role_data, dict):
             name = role_data.get("name", role_name)
