@@ -1,0 +1,31 @@
+/* Effects are state communication. No effect is active by default. */
+[data-effect="focus"] { position: relative; }
+[data-effect="focus"]::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border: 1px solid color-mix(in srgb, var(--ds-color-primary) 58%, transparent);
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+}
+[data-state="focused"][data-effect="focus"]::after,
+[data-state="attention"][data-effect="focus"]::after { opacity: 1; animation: focus-breathe 2.8s ease-in-out infinite; }
+[data-effect="reveal"] { opacity: 0; transform: translateY(4px); }
+[data-state="open"][data-effect="reveal"],
+[data-state="returned"][data-effect="reveal"] { opacity: 1; transform: none; transition: opacity 180ms ease, transform 180ms ease; }
+[data-effect="saving"]::after {
+  content: "저장 중";
+  margin-left: var(--ds-space-3);
+  color: var(--ds-color-info);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-xs);
+}
+[data-effect="due"] { border-left-color: var(--ds-color-warning) !important; }
+[data-effect="returned"] { border-left-color: var(--ds-color-accent) !important; }
+@keyframes focus-breathe { 0%, 100% { transform: scale(1); opacity: .45; } 50% { transform: scale(1.012); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  [data-state="focused"][data-effect="focus"]::after,
+  [data-state="attention"][data-effect="focus"]::after { animation: none; }
+  [data-effect="reveal"] { opacity: 1; transform: none; }
+}

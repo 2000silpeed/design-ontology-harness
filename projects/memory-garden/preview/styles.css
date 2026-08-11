@@ -135,3 +135,11 @@ h1 em { color: var(--ds-color-primary); font-style: normal; }
   [data-design-composition="seasonal-archive"] .season-lens,
   [data-design-composition="annotated-ledger"] .season-lens { justify-self: start; width: 100%; }
 }
+
+.sheet-header { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--ds-space-5); }
+.sheet-header h2 { margin: 0 0 var(--ds-space-6); font: 500 var(--ds-text-3xl)/1.15 var(--ds-font-heading); }
+.sheet-lede { margin: var(--ds-space-7) 0; color: var(--ds-color-ink-muted); font-size: var(--ds-text-lg); line-height: var(--ds-leading-relaxed); }
+.context-list { display: grid; gap: var(--ds-space-6); margin: 0; }
+.context-list div { padding-top: var(--ds-space-4); border-top: 1px solid var(--ds-color-border); }
+.context-list dt { margin-bottom: var(--ds-space-2); color: var(--ds-color-primary); font-family: var(--ds-font-mono); font-size: var(--ds-text-xs); }
+.context-list dd { margin: 0; color: var(--ds-color-ink); font-size: var(--ds-text-sm); line-height: var(--ds-leading-body); }

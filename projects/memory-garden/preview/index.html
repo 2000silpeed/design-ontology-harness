@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Memory Garden — 첫 계절</title>
   <link rel="stylesheet" href="../design-system/tokens.css" />
+  <link rel="stylesheet" href="primitives.css" />
+  <link rel="stylesheet" href="effects.css" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="garden-shell" data-system="memory-garden" data-contract-version="component-contract/v1" data-design-composition="timeline-field" data-design-surface="mineral-canvas" data-design-typography="editorial-ko">
     <header class="garden-header">
       <div class="brand-mark"><span class="mark-orbit" aria-hidden="true"></span><span>MEMORY GARDEN</span></div>
-      <div class="header-meta"><span>첫 번째 계절</span><button class="quiet-button" type="button">새 기록 심기</button></div>
+      <div class="header-meta"><span>첫 번째 계절</span><button class="quiet-button ui-button" data-variant="primary" data-action="plant-seed" type="button">새 기록 심기</button></div>
     </header>
 
     <section class="season-intro" aria-labelledby="season-title">
@@ -28,30 +30,30 @@
     </section>
 
     <div class="garden-layout">
-      <section class="timeline-panel" data-component="living-timeline" data-state="focused" aria-labelledby="timeline-title">
+      <section class="timeline-panel" data-component="living-timeline" data-state="focused" data-effect="focus" aria-labelledby="timeline-title">
         <div class="panel-heading">
           <div><p class="kicker">LIVING TIMELINE</p><h2 id="timeline-title">시간의 흔적</h2></div>
           <button class="text-button" type="button">계절 바꾸기 <span aria-hidden="true">↗</span></button>
         </div>
         <ol class="timeline">
-          <li class="timeline-entry seed-entry" data-component="memory-seed-composer" data-state="saved">
+          <li class="timeline-entry seed-entry" data-component="memory-seed-composer" data-state="saved" data-effect="focus">
             <time datetime="2026-07-28">07.28</time>
             <div class="node node-seed" aria-hidden="true"></div>
             <article class="entry-body">
               <p class="entry-kind">MEMORY SEED · 심은 생각</p>
               <h3>속도를 늦추면 보이는 일이 있다</h3>
               <p>빠르게 답을 내리는 것보다, 질문이 어디에서 왔는지 오래 바라보기.</p>
-              <div class="entry-footer"><span class="care-label"><i></i> tending</span><button class="inline-link" data-component="context-drawer" data-state="open" type="button">맥락 열기</button></div>
+              <div class="entry-footer"><span class="care-label"><i></i> tending</span><button class="inline-link" data-component="context-drawer" data-state="open" data-action="open-context" type="button">맥락 열기</button></div>
             </article>
           </li>
-          <li class="timeline-entry decision-entry" data-component="decision-stone-editor" data-state="committed">
+          <li class="timeline-entry decision-entry" data-component="decision-stone-editor" data-state="committed" data-effect="focus">
             <time datetime="2026-07-19">07.19</time>
             <div class="node node-stone" aria-hidden="true"></div>
             <article class="entry-body">
               <p class="entry-kind">DECISION STONE · 남긴 결정</p>
               <h3>이번 달에는 완성보다 관찰을 택한다</h3>
               <p>결과를 서두르지 않고, 매주 한 번 지금의 선택이 무엇을 바꾸는지 기록한다.</p>
-              <div class="entry-footer"><span class="care-label"><i></i> returned</span><button class="inline-link" type="button">이유 다시 보기</button></div>
+              <div class="entry-footer"><span class="care-label"><i></i> returned</span><button class="inline-link" data-action="return-decision" type="button">이유 다시 보기</button></div>
             </article>
           </li>
           <li class="timeline-entry seed-entry quiet-entry">
@@ -67,10 +69,24 @@
         <h2 id="care-title">다시 돌아볼 약속</h2>
         <p class="ritual-date">2026년 8월 12일</p>
         <p class="ritual-copy">“관찰을 택한다”는 결정이 실제로 어떤 하루를 만들었는지, 한 달 뒤의 내가 답한다.</p>
-        <button class="ritual-button" type="button">이 기록으로 돌아가기 <span aria-hidden="true">→</span></button>
+        <button class="ritual-button" data-action="return-ritual" type="button">이 기록으로 돌아가기 <span aria-hidden="true">→</span></button>
         <div class="thread-note"><span class="thread-line" aria-hidden="true"></span><div><p class="kicker">GARDEN THREAD</p><strong>속도와 주의 깊음</strong><p>이 계절의 3개 기록이 이어져 있다.</p></div></div>
       </aside>
     </div>
+    <div class="ui-sheet-backdrop" data-sheet-backdrop data-open="false"></div>
+    <aside class="ui-sheet" data-context-sheet data-open="false" aria-labelledby="context-title" aria-hidden="true">
+      <div class="sheet-header">
+        <div><p class="kicker">CONTEXT DRAWER</p><h2 id="context-title">당시의 조건</h2></div>
+        <button class="ui-button" data-action="close-context" type="button">닫기</button>
+      </div>
+      <div class="ui-separator"></div>
+      <p class="sheet-lede">속도를 늦추기로 한 날, 이 기록은 무엇을 보존하려고 했을까.</p>
+      <dl class="context-list">
+        <div><dt>당시의 질문</dt><dd>빠른 답보다 오래 볼 수 있는 질문인가?</dd></div>
+        <div><dt>연결된 결정</dt><dd>이번 달에는 완성보다 관찰을 택한다.</dd></div>
+        <div><dt>다음에 확인할 것</dt><dd>관찰이 실제 하루의 속도를 바꾸었는가.</dd></div>
+      </dl>
+    </aside>
     <footer class="garden-footer"><span>기록은 판단하지 않고 맥락을 보존합니다.</span><span>⌘ K · 정원 찾기</span></footer>
   </main>
   <script>
@@ -91,6 +107,40 @@
           if (attr && value?.id) shell?.setAttribute(attr, value.id);
         }
       });
+
+    const sheet = document.querySelector('[data-context-sheet]');
+    const backdrop = document.querySelector('[data-sheet-backdrop]');
+    const openSheet = () => {
+      sheet?.setAttribute('data-open', 'true');
+      sheet?.setAttribute('aria-hidden', 'false');
+      backdrop?.setAttribute('data-open', 'true');
+    };
+    const closeSheet = () => {
+      sheet?.setAttribute('data-open', 'false');
+      sheet?.setAttribute('aria-hidden', 'true');
+      backdrop?.setAttribute('data-open', 'false');
+    };
+    document.querySelectorAll('[data-action="open-context"]').forEach((button) => button.addEventListener('click', openSheet));
+    document.querySelectorAll('[data-action="close-context"]').forEach((button) => button.addEventListener('click', closeSheet));
+    backdrop?.addEventListener('click', closeSheet);
+    document.querySelector('[data-action="return-ritual"]')?.addEventListener('click', (event) => {
+      const panel = event.currentTarget.closest('[data-component="return-ritual-prompt"]');
+      panel?.setAttribute('data-state', 'returned');
+      panel?.setAttribute('data-effect', 'returned');
+      event.currentTarget.innerHTML = '돌아온 기록 · 다시 심기 <span aria-hidden="true">↗</span>';
+    });
+    document.querySelector('[data-action="plant-seed"]')?.addEventListener('click', (event) => {
+      const button = event.currentTarget;
+      button.dataset.state = 'saving';
+      button.textContent = '심는 중';
+      window.setTimeout(() => {
+        button.dataset.state = 'saved';
+        button.textContent = '기록 심기 완료';
+      }, 700);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeSheet();
+    });
   </script>
 </body>
 </html>
