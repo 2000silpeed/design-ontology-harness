@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko" data-theme="light" data-motion="full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orbit Motion Fixture</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">DESIGN ONTOLOGY HARNESS / MOTION FIXTURE</p>
+          <h1>검토 작업공간</h1>
+        </div>
+        <button class="theme-toggle" type="button" aria-label="테마 전환">다크 모드</button>
+      </header>
+
+      <section class="workspace" aria-labelledby="workspace-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">LIVE REVIEW QUEUE</p>
+            <h2 id="workspace-title">검토 상태와 모션 규칙</h2>
+          </div>
+          <span class="status-chip">3개 대기</span>
+        </div>
+
+        <div class="grid">
+          <article class="card attention-card">
+            <div class="card-header">
+              <div>
+                <p class="eyebrow">ATTENTION REQUIRED</p>
+                <h3>출처 연결을 확인하세요</h3>
+              </div>
+              <span class="signal" aria-hidden="true"></span>
+            </div>
+            <p class="muted">선택된 항목은 원문 출처가 하나 부족합니다. 검토를 완료하기 전에 연결 상태를 확인하세요.</p>
+            <div class="card-actions">
+              <button class="primary" type="button">출처 확인</button>
+              <button class="secondary" type="button">나중에</button>
+            </div>
+          </article>
+
+          <article class="card loading-card" aria-live="polite">
+            <div class="card-header">
+              <div>
+                <p class="eyebrow">ASYNC STATE</p>
+                <h3>온톨로지 컨텍스트 준비 중</h3>
+              </div>
+              <div class="dot-loader" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+            <p class="muted">검색된 근거를 검토 화면에 연결하고 있습니다.</p>
+            <div class="progress-track" aria-hidden="true"><span></span></div>
+            <p class="status-text" role="status">잠시만 기다려 주세요 · 접근 가능한 상태 텍스트 유지</p>
+          </article>
+
+          <article class="card compact-card">
+            <p class="eyebrow">MOTION CONTRACT</p>
+            <h3>저소음 모션</h3>
+            <dl>
+              <div><dt>duration</dt><dd>120–180ms</dd></div>
+              <div><dt>easing</dt><dd>standard / enter</dd></div>
+              <div><dt>reduced motion</dt><dd>static fallback</dd></div>
+            </dl>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer-note">Reference morphology is advisory. Product tokens, component contracts, and accessibility rules remain authoritative.</footer>
+    </main>
+    <script>
+      const root = document.documentElement;
+      const params = new URLSearchParams(location.search);
+      if (params.get("theme") === "dark") root.dataset.theme = "dark";
+      if (params.get("motion") === "reduced") root.dataset.motion = "reduced";
+      document.querySelector(".theme-toggle").addEventListener("click", () => {
+        root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+      });
+    </script>
+  </body>
+</html>

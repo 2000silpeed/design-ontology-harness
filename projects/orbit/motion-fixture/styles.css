@@ -1,0 +1,108 @@
+:root {
+  color-scheme: light;
+  --canvas: #f7f8fa;
+  --surface: #ffffff;
+  --surface-muted: #eef1f6;
+  --ink: #111111;
+  --muted: #5d6875;
+  --border: #d6dde6;
+  --border-strong: #aeb9c7;
+  --primary: #27503d;
+  --accent: #00a591;
+  --accent-soft: #d9f2ed;
+  --danger: #a33a42;
+  --shadow: 0 12px 28px rgb(17 17 17 / 8%);
+  --duration-fast: 120ms;
+  --duration-standard: 180ms;
+  --duration-enter: 240ms;
+  --ease-standard: cubic-bezier(.2, .7, .2, 1);
+  --ease-enter: cubic-bezier(.16, 1, .3, 1);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: #101513;
+  --surface: #17211d;
+  --surface-muted: #1e2b26;
+  --ink: #f0f5f1;
+  --muted: #b0beb6;
+  --border: #35443d;
+  --border-strong: #64766c;
+  --primary: #8bd2b3;
+  --accent: #47d5bb;
+  --accent-soft: #163c35;
+  --danger: #ef9ca3;
+  --shadow: 0 12px 28px rgb(0 0 0 / 25%);
+}
+
+* { box-sizing: border-box; }
+html { min-height: 100%; background: var(--canvas); }
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  color: var(--ink);
+  background: var(--canvas);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+}
+button { font: inherit; }
+button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.shell { width: min(100% - 32px, 1120px); margin: 0 auto; padding: 28px 0 36px; }
+.topbar, .section-heading, .card-header, .card-actions { display: flex; align-items: center; }
+.topbar, .section-heading { justify-content: space-between; gap: 20px; }
+.topbar { padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+.eyebrow { margin: 0 0 8px; color: var(--muted); font: 700 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: 0; font-size: clamp(24px, 4vw, 38px); letter-spacing: -.03em; }
+h2 { margin-bottom: 0; font-size: clamp(20px, 3vw, 28px); letter-spacing: -.02em; }
+h3 { margin-bottom: 8px; font-size: 17px; line-height: 1.35; }
+.theme-toggle, .status-chip, .primary, .secondary { border-radius: 8px; }
+.theme-toggle { min-height: 40px; padding: 0 14px; border: 1px solid var(--border-strong); color: var(--ink); background: var(--surface); cursor: pointer; }
+.workspace { padding-top: 28px; }
+.status-chip { padding: 7px 10px; border: 1px solid var(--border); color: var(--primary); background: var(--accent-soft); font-size: 12px; font-weight: 800; white-space: nowrap; }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; margin-top: 20px; }
+.card { min-width: 0; padding: 22px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); }
+.attention-card, .loading-card { grid-column: span 5; }
+.compact-card { grid-column: span 2; }
+.card-header { align-items: flex-start; justify-content: space-between; gap: 16px; }
+.muted { min-height: 62px; margin-bottom: 20px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.signal { width: 12px; height: 12px; flex: 0 0 auto; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); animation: signal-pulse var(--duration-enter) var(--ease-standard) infinite alternate; }
+.attention-card { border-color: var(--accent); animation: attention-border var(--duration-standard) var(--ease-standard) both; }
+.attention-card:hover { border-color: var(--primary); }
+.card-actions { gap: 8px; }
+.primary, .secondary { min-height: 44px; flex: 1; padding: 0 12px; font-weight: 800; cursor: pointer; transition: background var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard); }
+.primary { border: 1px solid var(--primary); color: #fff; background: var(--primary); }
+.secondary { border: 1px solid var(--border-strong); color: var(--ink); background: var(--surface); }
+.primary:hover, .secondary:hover { border-color: var(--accent); }
+.dot-loader { display: grid; grid-template-columns: repeat(4, 6px); gap: 5px; padding: 8px; border-radius: 50%; background: var(--surface-muted); }
+.dot-loader span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: .3; animation: dot-wave 1.2s var(--ease-standard) infinite; }
+.dot-loader span:nth-child(2), .dot-loader span:nth-child(6), .dot-loader span:nth-child(10) { animation-delay: 100ms; }
+.dot-loader span:nth-child(3), .dot-loader span:nth-child(7), .dot-loader span:nth-child(11) { animation-delay: 200ms; }
+.dot-loader span:nth-child(4), .dot-loader span:nth-child(8), .dot-loader span:nth-child(12) { animation-delay: 300ms; }
+.progress-track { height: 5px; overflow: hidden; margin: 4px 0 10px; border-radius: 99px; background: var(--surface-muted); }
+.progress-track span { display: block; width: 42%; height: 100%; border-radius: inherit; background: var(--accent); animation: progress-sweep 1.6s var(--ease-standard) infinite; }
+.status-text { margin: 0; color: var(--muted); font-size: 12px; }
+dl { display: grid; gap: 10px; margin: 20px 0 0; }
+dl div { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 8px; font-size: 12px; }
+dt { color: var(--muted); }
+dd { margin: 0; color: var(--ink); font-weight: 800; text-align: right; }
+.footer-note { margin-top: 20px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+@keyframes dot-wave { 0%, 100% { opacity: .3; transform: scale(.8); } 50% { opacity: 1; transform: scale(1); } }
+@keyframes progress-sweep { from { transform: translateX(-120%); } to { transform: translateX(260%); } }
+@keyframes signal-pulse { from { opacity: .45; } to { opacity: 1; } }
+@keyframes attention-border { from { border-color: var(--border); } to { border-color: var(--accent); } }
+:root[data-motion="reduced"] * { animation: none !important; transition: none !important; }
+:root[data-motion="reduced"] .dot-loader span { opacity: .75; }
+@media (max-width: 760px) {
+  .shell { width: min(100% - 24px, 520px); padding-top: 18px; }
+  .topbar { align-items: flex-start; }
+  .grid { grid-template-columns: 1fr; }
+  .attention-card, .loading-card, .compact-card { grid-column: auto; }
+  .compact-card { order: 3; }
+}
+@media (max-width: 420px) {
+  .section-heading { align-items: flex-start; flex-direction: column; }
+  .status-chip { align-self: flex-start; }
+  .card { padding: 18px; }
+  .card-actions { align-items: stretch; flex-direction: column; }
+}
