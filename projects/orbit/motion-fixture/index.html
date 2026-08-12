@@ -1,9 +1,12 @@
 <!doctype html>
-<html lang="ko" data-theme="light" data-motion="full">
+<html lang="ko" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Orbit Motion Fixture</title>
+    <link rel="stylesheet" href="../design-system/tokens.css" />
+    <link rel="stylesheet" href="../design-system/fonts.css" />
+    <link rel="stylesheet" href="interactions.css" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -20,64 +23,124 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">LIVE REVIEW QUEUE</p>
-            <h2 id="workspace-title">검토 상태와 모션 규칙</h2>
+            <h2 id="workspace-title">선택된 인터랙션 계약</h2>
           </div>
-          <span class="status-chip">3개 대기</span>
+          <span class="status-chip" data-interaction="attention-border" data-state="attention">3개 대기</span>
         </div>
 
-        <div class="grid">
-          <article class="card attention-card">
+        <nav class="range-tabs" aria-label="기간 선택">
+          <button class="tab" type="button" data-interaction="context-crossfade" data-state="current" aria-current="true">오늘</button>
+          <button class="tab" type="button" data-interaction="context-crossfade">이번 주</button>
+          <button class="tab" type="button" data-interaction="context-crossfade">이번 달</button>
+        </nav>
+
+        <div class="grid" data-interaction="immediate-swap">
+          <article class="card" data-interaction="attention-border" data-state="attention">
             <div class="card-header">
               <div>
                 <p class="eyebrow">ATTENTION REQUIRED</p>
                 <h3>출처 연결을 확인하세요</h3>
               </div>
-              <span class="signal" aria-hidden="true"></span>
+              <svg class="icon icon-attention" viewBox="0 0 20 20" role="img" aria-label="주의 필요">
+                <circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5" />
+                <path d="M10 5.75v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                <circle cx="10" cy="13.75" r="0.9" fill="currentColor" />
+              </svg>
             </div>
             <p class="muted">선택된 항목은 원문 출처가 하나 부족합니다. 검토를 완료하기 전에 연결 상태를 확인하세요.</p>
+            <figure class="signal-trend">
+              <svg class="trend-visual" viewBox="0 0 240 56" role="img"
+                   data-visual="review-backlog" aria-labelledby="trend-title trend-desc">
+                <title id="trend-title">최근 7일 검토 대기 추이</title>
+                <desc id="trend-desc">2, 3, 5, 4, 6, 5, 3건. 5일째 6건으로 최고치를 찍고 내려왔다.</desc>
+                <polyline
+                  points="8,44 46,38 84,22 122,29 160,12 198,20 232,36"
+                  fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <circle cx="160" cy="12" r="3.5" fill="currentColor" />
+              </svg>
+              <figcaption>최근 7일 검토 대기 추이 · 최고 6건</figcaption>
+            </figure>
             <div class="card-actions">
               <button class="primary" type="button">출처 확인</button>
               <button class="secondary" type="button">나중에</button>
             </div>
           </article>
 
-          <article class="card loading-card" aria-live="polite">
+          <article class="card">
             <div class="card-header">
               <div>
                 <p class="eyebrow">ASYNC STATE</p>
                 <h3>온톨로지 컨텍스트 준비 중</h3>
               </div>
-              <div class="dot-loader" aria-hidden="true">
-                <span></span><span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span><span></span>
-              </div>
+              <svg class="icon icon-sync" viewBox="0 0 20 20" role="img" aria-label="동기화 중">
+                <path d="M16.5 10a6.5 6.5 0 1 1-1.9-4.6" fill="none" stroke="currentColor"
+                      stroke-width="1.5" stroke-linecap="round" />
+                <path d="M16.5 3.5v3.2h-3.2" fill="none" stroke="currentColor"
+                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
             </div>
-            <p class="muted">검색된 근거를 검토 화면에 연결하고 있습니다.</p>
-            <div class="progress-track" aria-hidden="true"><span></span></div>
-            <p class="status-text" role="status">잠시만 기다려 주세요 · 접근 가능한 상태 텍스트 유지</p>
+            <p class="status-text" role="status">근거 12건 중 7건을 검토 화면에 연결했습니다.</p>
+            <figure class="link-progress">
+              <svg class="progress-visual" viewBox="0 0 240 40" role="img"
+                   data-visual="source-link-progress" aria-labelledby="link-title link-desc">
+                <title id="link-title">출처 연결 진행 상황</title>
+                <desc id="link-desc">12건 중 7건 연결 완료, 3건 대기, 2건 확인 필요.</desc>
+                <rect x="0" y="14" width="140" height="12" rx="6" fill="currentColor" />
+                <rect x="146" y="14" width="60" height="12" rx="6" fill="currentColor" opacity=".38" />
+                <rect x="212" y="14" width="28" height="12" rx="6" fill="currentColor" opacity=".16" />
+              </svg>
+              <figcaption>연결 7 · 대기 3 · 확인 필요 2</figcaption>
+            </figure>
+            <div class="skeleton-stack" aria-hidden="true">
+              <span class="skeleton skeleton-line" data-interaction="skeleton-placeholder"></span>
+              <span class="skeleton skeleton-line skeleton-short" data-interaction="skeleton-placeholder"></span>
+              <span class="skeleton skeleton-block" data-interaction="skeleton-placeholder"></span>
+            </div>
           </article>
 
-          <article class="card compact-card">
-            <p class="eyebrow">MOTION CONTRACT</p>
-            <h3>저소음 모션</h3>
-            <dl>
-              <div><dt>duration</dt><dd>120–180ms</dd></div>
-              <div><dt>easing</dt><dd>standard / enter</dd></div>
-              <div><dt>reduced motion</dt><dd>static fallback</dd></div>
-            </dl>
-          </article>
         </div>
+
+        <section class="contract-rail" aria-labelledby="contract-title">
+          <div class="rail-heading">
+            <p class="eyebrow">MOTION CONTRACT</p>
+            <h3 id="contract-title">이 화면이 고른 것</h3>
+          </div>
+          <table class="contract-table">
+            <caption>밀집한 운영 화면이라 진입 모션은 비용으로 판정됐습니다.</caption>
+            <thead>
+              <tr><th scope="col">축</th><th scope="col">패턴</th><th scope="col">모션</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">enter</th><td>immediate-swap</td><td>없음</td></tr>
+              <tr><th scope="row">emphasis</th><td>attention-border</td><td>180ms · standard</td></tr>
+              <tr><th scope="row">progress</th><td>skeleton-placeholder</td><td>loop · medium</td></tr>
+              <tr><th scope="row">transition</th><td>context-crossfade</td><td>180ms · standard</td></tr>
+            </tbody>
+          </table>
+        </section>
       </section>
 
-      <footer class="footer-note">Reference morphology is advisory. Product tokens, component contracts, and accessibility rules remain authoritative.</footer>
+      <footer class="footer-note">
+        모션 값은 <code>interactions.css</code>가 소유합니다. 이 파일은 레이아웃만 담당하고,
+        선택을 바꾸면 계약이 다시 생성됩니다.
+      </footer>
     </main>
     <script>
       const root = document.documentElement;
-      const params = new URLSearchParams(location.search);
-      if (params.get("theme") === "dark") root.dataset.theme = "dark";
-      if (params.get("motion") === "reduced") root.dataset.motion = "reduced";
+      if (new URLSearchParams(location.search).get("theme") === "dark") root.dataset.theme = "dark";
       document.querySelector(".theme-toggle").addEventListener("click", () => {
         root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+      });
+      document.querySelectorAll(".range-tabs .tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".range-tabs .tab").forEach((other) => {
+            other.removeAttribute("data-state");
+            other.removeAttribute("aria-current");
+          });
+          tab.setAttribute("data-state", "current");
+          tab.setAttribute("aria-current", "true");
+        });
       });
     </script>
   </body>

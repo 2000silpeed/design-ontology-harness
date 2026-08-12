@@ -106,8 +106,14 @@ def test_emitter_uses_typed_policy_for_complete_light_and_dark_roles(tmp_path) -
     assert f"sha256={payload_sha256(policy)}" in css
     assert set(runtime_values) <= set(light)
     assert set(runtime_values) <= set(dark)
-    assert light["ink-muted"] == runtime_values["ink-muted"]
-    assert light["ink-subtle"] == runtime_values["ink-subtle"]
+    # The policy owns the role set and the inverse ink. Everything else may be
+    # chosen from the project palette, and neutrals with no palette candidate
+    # are derived from the brand hue rather than dropped to one shared grey —
+    # they still have to clear the contrast floors asserted below.
+    assert light["ink-inverse"] == runtime_values["ink-inverse"]
+    assert light["ink-muted"] != runtime_values["ink-muted"], (
+        "neutrals must not fall back to the stock grey when a brand hue exists"
+    )
     assert light["primary"] == "#0F4C81"
     assert light["brand-accent"] == "#50C878"
     assert light["accent"] != light["brand-accent"]

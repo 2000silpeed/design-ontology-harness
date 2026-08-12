@@ -1029,7 +1029,7 @@
 - **배색**: `#E5D9CC` `#D8A7B1` `#3E3E3E` `#A2A08F` `#B3ABB7` `#F3F1EE`
 - **출처**: [6]
 
-<!-- semantic-os-color-catalog:begin sha256=62dafefbd3a981d8e34564bec44f9de02111e84bec78e20b87b7ba458f46e7ef -->
+<!-- semantic-os-color-catalog:begin sha256=4041facc76b5557979f38a27688d349378caece64d143eb409fc78890a9903b9 -->
 <details>
 <summary>Pantone Color of the Year identity index — 29 nodes</summary>
 
@@ -1070,16 +1070,16 @@
 </details>
 <!-- semantic-os-color-catalog:end -->
 
-<!-- semantic-os-color-ontology:begin sha256=62dafefbd3a981d8e34564bec44f9de02111e84bec78e20b87b7ba458f46e7ef -->
+<!-- semantic-os-color-ontology:begin sha256=4041facc76b5557979f38a27688d349378caece64d143eb409fc78890a9903b9 -->
 <details>
-<summary>Semantic OS 컬러 온톨로지 스냅샷 — 358 nodes, 1227 edges, 290 keywords (113 with HEX)</summary>
+<summary>Semantic OS 컬러 온톨로지 스냅샷 — 380 nodes, 1266 edges, 308 keywords (131 with HEX)</summary>
 
 이 블록은 `sync-semantic-colors`가 생성합니다. 직접 수정하지 마세요.
-원본: `semantic-os/domains/color/ontology/build/graph.json` · built_at: `2026-06-17T23:12:02.191192+00:00` · sha256: `62dafefbd3a981d8e34564bec44f9de02111e84bec78e20b87b7ba458f46e7ef`
+원본: `semantic-os/domains/color/ontology/build/graph.json` · built_at: `2026-08-12T14:03:22.155766+00:00` · sha256: `4041facc76b5557979f38a27688d349378caece64d143eb409fc78890a9903b9`
 
 ```semantic-color-ontology+json
 {
- "edge_count": 1227,
+ "edge_count": 1266,
  "edges": [
   {
    "from": {
@@ -14577,9 +14577,438 @@
     "id": "guideline-anchor-color-is-not-flat-fill",
     "space": "concept"
    }
+  },
+  {
+   "from": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "policy-ui-neutral-ramp-temperature-follows-brand",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "policy-ui-neutral-ramp-contrast-before-taste",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-warm-paper",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-warm-paper",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-warm-veil",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-warm-veil",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-warm-line",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-warm-line",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-warm-edge",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-warm-edge",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-warm-muted",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-warm-muted",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-warm-ink",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-warm-ink",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-cool-paper",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-cool-paper",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-cool-veil",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-cool-veil",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-cool-line",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-cool-line",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-cool-edge",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-cool-edge",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-cool-muted",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-cool-muted",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-cool-ink",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-cool-ink",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-true-paper",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-true-paper",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-true-veil",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-true-veil",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-true-line",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-true-line",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-true-edge",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-true-edge",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-true-muted",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-true-muted",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-true-ink",
+    "space": "concept"
+   },
+   "relation": "belongs_to_topic",
+   "to": {
+    "id": "topic-color-ui-neutral-ramp",
+    "space": "concept"
+   }
+  },
+  {
+   "from": {
+    "id": "color-keyword-ui-neutral-true-ink",
+    "space": "concept"
+   },
+   "relation": "cites",
+   "to": {
+    "id": "ref-ui-neutral-ramp-contrast-derived",
+    "space": "resource"
+   }
   }
  ],
- "node_count": 358,
+ "node_count": 380,
  "nodes": [
   {
    "id": "ref-pantone-coy-announcements",
@@ -27558,15 +27987,616 @@
    },
    "space": "concept",
    "type": "ColorPattern"
+  },
+  {
+   "id": "ref-ui-neutral-ramp-contrast-derived",
+   "properties": {
+    "copyright_handling": "REFERENCE X나 Pantone 같은 유료/외부 출처의 색이 아니다. 대비 기준을 만족하는 명도 계단을 직접 계산한 값이며 복제 대상이 아니다.",
+    "derivation": "WCAG 2.2 대비 요구(본문 4.5:1, 비텍스트 UI 3:1)와 화면 표면 역할에서 계산으로 도출.",
+    "ingested_at": "2026-08-12",
+    "label": "UI Neutral Ramp — 대비 기준에서 도출한 화면 중성 계단",
+    "source_format": "derived_specification",
+    "status": "cataloged",
+    "summary": "브랜드 색 아카이브는 채도 있는 색을 다루지만 화면은 배경·경계·글자를 담당할 저채도 계단을 따로 필요로 한다. 이 레퍼런스는 그 빈자리를 채운다."
+   },
+   "space": "resource",
+   "type": "ColorReference"
+  },
+  {
+   "id": "topic-color-ui-neutral-ramp",
+   "properties": {
+    "core_question": "브랜드 색과 별개로, 화면 표면과 텍스트를 지탱하는 중성색을 어떤 온도와 명도 계단으로 고를 것인가.",
+    "label": "UI Neutral Ramp — 화면의 배경·경계·글자를 담당하는 중성 계단",
+    "not_a_rule": true,
+    "status": "cataloged"
+   },
+   "space": "concept",
+   "type": "ColorTopic"
+  },
+  {
+   "id": "policy-ui-neutral-ramp-temperature-follows-brand",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ]
+    },
+    "label": "중성색의 온도는 브랜드를 따라간다",
+    "not_a_rule": false,
+    "reason": "모든 제품이 같은 회색 배경에 같은 잉크를 쓰면 생성물 티가 난다. 중성색은 면적이 가장 넓어서 화면의 인상을 실제로 결정한다.",
+    "statement": "화면 전체를 덮는 중성색은 브랜드와 무관한 기본 회색이 아니라, 브랜드 색조에 맞춘 온도(warm/cool/true)를 고른다.",
+    "status": "cataloged"
+   },
+   "space": "concept",
+   "type": "ColorPolicy"
+  },
+  {
+   "id": "policy-ui-neutral-ramp-contrast-before-taste",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ]
+    },
+    "label": "중성 계단은 취향보다 대비를 먼저 만족한다",
+    "not_a_rule": false,
+    "reason": "보정으로 구제해야 하는 계단은 팔레트가 바뀔 때마다 다시 어긋난다. 계단 자체가 기준을 넘으면 조합이 바뀌어도 안전하다.",
+    "statement": "muted·ink 단계는 자기 배경에서 4.5:1, edge 단계는 3:1을 자체로 넘긴다. 사후 보정에 기대지 않는다.",
+    "status": "cataloged"
+   },
+   "space": "concept",
+   "type": "ColorPolicy"
+  },
+  {
+   "id": "color-keyword-ui-neutral-warm-paper",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "Warm Paper",
+    "family": "ui_neutral.warm",
+    "hex_basis": "contrast-derived screen value",
+    "label": "Warm Paper (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "paper",
+    "rgb_hex": "#F8F6F5",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "따뜻한 기미가 도는 화면 바탕. 종이 느낌의 읽기 표면이나 공예·에디토리얼 성격의 제품에서 가장 넓은 면적을 담당한다.",
+    "ui_role": "canvas"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-warm-veil",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "Warm Veil",
+    "family": "ui_neutral.warm",
+    "hex_basis": "contrast-derived screen value",
+    "label": "Warm Veil (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "veil",
+    "rgb_hex": "#EDEBE8",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "바탕보다 한 단 눌린 표면. 입력 필드 배경, 비활성 영역, 표의 교차 행처럼 물러나야 하는 면에 쓴다.",
+    "ui_role": "surface-muted"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-warm-line",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "Warm Line",
+    "family": "ui_neutral.warm",
+    "hex_basis": "contrast-derived screen value",
+    "label": "Warm Line (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "line",
+    "rgb_hex": "#DCD7D1",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "영역을 나누는 장식선. 구분이 목적이지 강조가 아니므로 대비를 낮게 유지한다.",
+    "ui_role": "border"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-warm-edge",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "Warm Edge",
+    "family": "ui_neutral.warm",
+    "hex_basis": "contrast-derived screen value",
+    "label": "Warm Edge (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "edge",
+    "rgb_hex": "#988C7E",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "버튼과 입력창의 경계. WCAG 1.4.11이 요구하는 비텍스트 3:1을 자체로 넘기므로 컨트롤 테두리에 바로 쓸 수 있다.",
+    "ui_role": "border-strong"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-warm-muted",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "Warm Muted",
+    "family": "ui_neutral.warm",
+    "hex_basis": "contrast-derived screen value",
+    "label": "Warm Muted (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "muted",
+    "rgb_hex": "#726658",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "보조 텍스트. 캡션, 메타 정보, 설명문에 쓰며 본문 대비 4.5:1을 넘긴다.",
+    "ui_role": "ink-muted"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-warm-ink",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "Warm Ink",
+    "family": "ui_neutral.warm",
+    "hex_basis": "contrast-derived screen value",
+    "label": "Warm Ink (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "ink",
+    "rgb_hex": "#2C2721",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "본문 글자. 순검정보다 부드러워 긴 글에서 눈이 덜 피로하고, 따뜻한 바탕과 색조가 맞는다.",
+    "ui_role": "ink"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-cool-paper",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "Cool Paper",
+    "family": "ui_neutral.cool",
+    "hex_basis": "contrast-derived screen value",
+    "label": "Cool Paper (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "paper",
+    "rgb_hex": "#F5F6F7",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "푸른 기미가 도는 화면 바탕. 도구·운영 화면이나 기술 제품에서 화면을 차분하게 눌러준다.",
+    "ui_role": "canvas"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-cool-veil",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "Cool Veil",
+    "family": "ui_neutral.cool",
+    "hex_basis": "contrast-derived screen value",
+    "label": "Cool Veil (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "veil",
+    "rgb_hex": "#E8EAED",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "바탕보다 한 단 눌린 차가운 표면. 밀집한 데이터 화면에서 행과 패널을 구분한다.",
+    "ui_role": "surface-muted"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-cool-line",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "Cool Line",
+    "family": "ui_neutral.cool",
+    "hex_basis": "contrast-derived screen value",
+    "label": "Cool Line (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "line",
+    "rgb_hex": "#D2D5DB",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "차가운 구분선. 표와 목록이 많은 화면에서 격자를 만들되 시선을 끌지 않는다.",
+    "ui_role": "border"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-cool-edge",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "Cool Edge",
+    "family": "ui_neutral.cool",
+    "hex_basis": "contrast-derived screen value",
+    "label": "Cool Edge (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "edge",
+    "rgb_hex": "#818895",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "차가운 컨트롤 경계. 비텍스트 3:1을 자체로 넘기므로 버튼·입력창 테두리에 바로 쓴다.",
+    "ui_role": "border-strong"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-cool-muted",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "Cool Muted",
+    "family": "ui_neutral.cool",
+    "hex_basis": "contrast-derived screen value",
+    "label": "Cool Muted (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "muted",
+    "rgb_hex": "#5A6270",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "차가운 보조 텍스트. 상태 라벨과 메타 정보에 쓰며 본문 대비를 넘긴다.",
+    "ui_role": "ink-muted"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-cool-ink",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "Cool Ink",
+    "family": "ui_neutral.cool",
+    "hex_basis": "contrast-derived screen value",
+    "label": "Cool Ink (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "ink",
+    "rgb_hex": "#21252B",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "차가운 본문 글자. 도구 화면의 조밀한 텍스트에서 또렷하되 검게 눌리지 않는다.",
+    "ui_role": "ink"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-true-paper",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "True Paper",
+    "family": "ui_neutral.true",
+    "hex_basis": "contrast-derived screen value",
+    "label": "True Paper (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "paper",
+    "rgb_hex": "#F6F6F6",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "색조 없는 바탕. 이미지나 제품 사진이 색을 담당해서 화면 크롬은 물러나야 할 때 고른다.",
+    "ui_role": "canvas"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-true-veil",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "True Veil",
+    "family": "ui_neutral.true",
+    "hex_basis": "contrast-derived screen value",
+    "label": "True Veil (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "veil",
+    "rgb_hex": "#EBEBEB",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "색조 없는 눌린 표면. 콘텐츠가 색을 책임지는 화면에서 배경 단계만 만든다.",
+    "ui_role": "surface-muted"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-true-line",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "True Line",
+    "family": "ui_neutral.true",
+    "hex_basis": "contrast-derived screen value",
+    "label": "True Line (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "line",
+    "rgb_hex": "#D6D6D6",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "색조 없는 구분선. 어떤 브랜드 색과도 충돌하지 않는다.",
+    "ui_role": "border"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-true-edge",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "True Edge",
+    "family": "ui_neutral.true",
+    "hex_basis": "contrast-derived screen value",
+    "label": "True Edge (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "edge",
+    "rgb_hex": "#8B8B8B",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "색조 없는 컨트롤 경계. 비텍스트 3:1을 넘기며 어떤 배경 온도에도 붙는다.",
+    "ui_role": "border-strong"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-true-muted",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "True Muted",
+    "family": "ui_neutral.true",
+    "hex_basis": "contrast-derived screen value",
+    "label": "True Muted (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "muted",
+    "rgb_hex": "#656565",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "색조 없는 보조 텍스트. 브랜드 색이 강할 때 텍스트가 경쟁하지 않게 한다.",
+    "ui_role": "ink-muted"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
+  },
+  {
+   "id": "color-keyword-ui-neutral-true-ink",
+   "properties": {
+    "applies_when": {
+     "medium": [
+      "digital",
+      "any"
+     ],
+     "spectrum": [
+      "neutral",
+      "any"
+     ]
+    },
+    "category": "UI Neutral Ramp",
+    "color_name": "True Ink",
+    "family": "ui_neutral.true",
+    "hex_basis": "contrast-derived screen value",
+    "label": "True Ink (UI neutral)",
+    "not_a_rule": true,
+    "ramp_step": "ink",
+    "rgb_hex": "#262626",
+    "source_reference_id": "ref-ui-neutral-ramp-contrast-derived",
+    "spectrum": "neutral",
+    "status": "cataloged",
+    "summary": "색조 없는 본문 글자. 순검정의 눈부심 없이 최대 대비에 가깝다.",
+    "ui_role": "ink"
+   },
+   "space": "concept",
+   "type": "ColorKeyword"
   }
  ],
  "schema_version": "design-ontology-harness/semantic-color-ontology-compact-v1",
  "source": {
-  "built_at": "2026-06-17T23:12:02.191192+00:00",
+  "built_at": "2026-08-12T14:03:22.155766+00:00",
   "copyright_handling": "Imported as abstracted color ontology nodes; no raw OCR, page images, or reconstructable source tables are included.",
   "path": "domains/color/ontology/build/graph.json",
   "repo": "semantic-os",
-  "source_graph_sha256": "288b40d9cc03b552e802cf061dcd5a1dc193ad47f84e18d13d1b71160344c301",
+  "source_graph_sha256": "871f35eb6dd835996ece07e0748e06026db75d5e0cb8d45f7c2ba33ed398ca9e",
   "source_schema_version": "default-video-production-ontology-v1",
   "transport": "docs/color-reference.md"
  }

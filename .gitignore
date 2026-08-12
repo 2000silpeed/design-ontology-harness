@@ -29,3 +29,5 @@ node_modules/
 **/design-system/fonts/*.woff
 **/design-system/fonts/*.ttf
 **/design-system/fonts/*.otf
+.gstack/
+registry/.*.lock

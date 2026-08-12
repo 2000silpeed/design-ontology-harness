@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import colorsys
 import re
 from typing import Any
 
@@ -569,6 +570,88 @@ def build_ontology_supporting_colors(
         }
         for keyword in picked
     ]
+
+
+#: Neutral roles need low-chroma colours across the lightness range. The
+#: ontology carries plenty of them (off-whites, warm greys, near-blacks), but
+#: the supporting-colour search is driven by brand terms and rarely surfaces
+#: any, which is how neutrals ended up falling back to a fixed grey table.
+_NEUTRAL_MAX_SATURATION = 0.22
+
+
+def build_ontology_neutral_candidates(
+    *,
+    anchor_hex: str | None = None,
+    ontology: dict[str, Any] | None = None,
+    count: int = 18,
+) -> list[dict[str, Any]]:
+    """Return low-chroma ontology colours, closest brand hue first.
+
+    These join the palette pool so neutral roles resolve to a named ontology
+    colour with provenance instead of a hard-coded grey. Ordering by hue
+    distance means a green brand gets the ontology's green-leaning greys rather
+    than whatever neutral happens to sort first.
+    """
+
+    if ontology is None:
+        ontology = load_semantic_color_ontology()
+
+    anchor_hue = _hue_of(anchor_hex) if anchor_hex else None
+
+    scored: list[tuple[float, float, dict[str, Any]]] = []
+    for node in ontology.get("nodes", []):
+        if node.get("type") != "ColorKeyword":
+            continue
+        keyword = _compact_keyword_node(node)
+        measured = _hls_of(keyword.get("hex"))
+        if measured is None:
+            continue
+        hue, _lightness, saturation = measured
+        if saturation > _NEUTRAL_MAX_SATURATION:
+            continue
+        # Distance from the brand hue. Achromatic colours are neutral to every
+        # brand, so they sort mid-pack rather than first or last.
+        if anchor_hue is None or saturation < 0.04:
+            distance = 0.25
+        else:
+            raw = abs(hue - anchor_hue) % 1.0
+            distance = min(raw, 1.0 - raw)
+        scored.append((distance, -saturation, keyword))
+
+    scored.sort(key=lambda item: (item[0], item[1], item[2].get("name") or ""))
+
+    return [
+        {
+            "name": keyword["name"],
+            "family": keyword.get("category") or keyword.get("family"),
+            "hex": keyword["hex"],
+            "mood": ", ".join(keyword.get("mood_tags") or []) or keyword.get("summary"),
+            "usage": keyword.get("summary"),
+            "pairings": [],
+            "semantic_node_id": keyword["id"],
+            "source_type": keyword.get("source_type") or "semantic-os-synced-markdown",
+        }
+        for _, _, keyword in scored[:count]
+    ]
+
+
+def _hls_of(hex_value: Any) -> tuple[float, float, float] | None:
+    if not (isinstance(hex_value, str) and len(hex_value) == 7 and hex_value.startswith("#")):
+        return None
+    try:
+        r, g, b = (int(hex_value[i : i + 2], 16) / 255.0 for i in (1, 3, 5))
+    except ValueError:
+        return None
+    hue, lightness, saturation = colorsys.rgb_to_hls(r, g, b)
+    return hue, lightness, saturation
+
+
+def _hue_of(hex_value: str) -> float | None:
+    measured = _hls_of(hex_value)
+    if measured is None:
+        return None
+    hue, _, saturation = measured
+    return hue if saturation > 0.04 else None
 
 
 def _candidate_accent_bucket(candidate: dict[str, Any]) -> str | None:

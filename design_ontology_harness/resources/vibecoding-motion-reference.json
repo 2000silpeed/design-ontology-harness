@@ -2,47 +2,47 @@
   "$schema": "../../schemas/motion-reference-pack.schema.json",
   "schema_version": "motion-reference-pack/v1",
   "pack_id": "vibecoding-motion",
-  "status": "draft",
+  "status": "reviewed",
   "sources": [
     {
       "id": "source:originkit",
       "label": "Originkit",
-      "canonical_url": null,
-      "provenance": "user-supplied",
-      "license_status": "unverified",
-      "notes": "User-described collection of previewable web animation patterns. Confirm canonical URL and license before code reuse."
+      "canonical_url": "https://www.originkit.dev",
+      "provenance": "inspected",
+      "license_status": "reference-only",
+      "notes": "Free library of ~50 previewable animated components for Framer/React, with copy-ready code behind a free API key. URL confirmed by the user; no explicit licence text was read, so this stays reference-only — take morphology, not code."
     },
     {
       "id": "source:border-beam",
-      "label": "Border Beam",
-      "canonical_url": null,
-      "provenance": "user-supplied",
-      "license_status": "unverified",
-      "notes": "User-described animated luminous border patterns. Treat as morphology inspiration until source and license are verified."
+      "label": "Magic UI (Border Beam)",
+      "canonical_url": "https://magicui.design",
+      "provenance": "inspected",
+      "license_status": "verified",
+      "notes": "Border Beam is one component in Magic UI, an MIT-licensed copy-paste animation library (github.com/magicuidesign/magicui). The user pointed at https://magicui.design/docs/components/globe, so the source is the library rather than a standalone border package. MIT permits reuse, but this pack still stores affordance and state binding rather than copied component code."
     },
     {
       "id": "source:motionsites",
-      "label": "Motionsites",
-      "canonical_url": null,
-      "provenance": "user-supplied",
-      "license_status": "unverified",
-      "notes": "User-described AI website prompt and visual reference library. Do not treat examples as redistributable assets."
+      "label": "MotionSites",
+      "canonical_url": "https://motionsites.ai",
+      "provenance": "inspected",
+      "license_status": "reference-only",
+      "notes": "PAID freemium product selling hero-section prompts for Lovable/Bolt/Cursor/Claude. Prompt text is the product being sold — never copy prompts, prompt fragments, or preview media into this repository. Only the interaction morphology may be abstracted."
     },
     {
       "id": "source:dotmatrix",
-      "label": "Dotmatrix",
-      "canonical_url": null,
-      "provenance": "user-supplied",
-      "license_status": "unverified",
-      "notes": "User-described dot-array loading animation collection. Use the abstract loading vocabulary, not copied implementation code."
+      "label": "Dot Matrix",
+      "canonical_url": "https://dotmatrix.zzzzshawn.cloud",
+      "provenance": "inspected",
+      "license_status": "reference-only",
+      "notes": "Self-described 55+ free and open-source dot-array loaders (spiral, wave, orbit, sweep, pulse families) with a playground. URL confirmed by the user; the specific licence was not read, so use the abstract loading vocabulary rather than copied SVG or CSS."
     },
     {
       "id": "source:vibehub",
       "label": "VibeHub",
-      "canonical_url": null,
-      "provenance": "user-supplied",
-      "license_status": "unverified",
-      "notes": "User-described visual vocabulary reference. Terms remain advisory until canonical source inspection."
+      "canonical_url": "https://vibe-hub.org",
+      "provenance": "inspected",
+      "license_status": "reference-only",
+      "notes": "Visual glossary for vibe coding: frontend, backend, tech stack, AI, Git, and design terms shown through interfaces and real use cases. Confirmed by the user. Supplies naming vocabulary only — terms describe intent and state, they do not replace component contracts."
     }
   ],
   "patterns": [
@@ -50,6 +50,9 @@
       "id": "interaction:result-reveal",
       "label": "Purposeful result reveal",
       "ontology_type": "InteractionPattern",
+      "axis": "enter",
+      "applies_to_roles": ["list-surface", "detail-panel", "status-region"],
+      "intents": ["review", "understand", "compare", "search"],
       "source_ids": ["source:originkit", "source:motionsites"],
       "component_states": ["state:content-enter", "state:result-ready"],
       "motion": { "duration_ms": 180, "easing": "enter", "reduced_motion": "opacity-only" },
@@ -63,6 +66,9 @@
       "id": "interaction:attention-border",
       "label": "State-bound attention border",
       "ontology_type": "InteractionPattern",
+      "axis": "emphasis",
+      "applies_to_roles": ["selection-target", "status-region"],
+      "intents": ["decide", "review", "care", "approve"],
       "source_ids": ["source:border-beam"],
       "component_states": ["state:attention-required", "state:selected"],
       "motion": { "duration_ms": 180, "easing": "standard", "reduced_motion": "static" },
@@ -76,9 +82,12 @@
       "id": "interaction:dot-progress",
       "label": "Dot-array async progress",
       "ontology_type": "InteractionPattern",
+      "axis": "progress",
+      "applies_to_roles": ["async-action", "status-region"],
+      "intents": ["save", "capture", "generate", "sync", "search"],
       "source_ids": ["source:dotmatrix"],
       "component_states": ["state:loading", "state:agent-working", "state:data-refreshing"],
-      "motion": { "duration_ms": 180, "easing": "standard", "reduced_motion": "static" },
+      "motion": { "kind": "loop", "duration_ms": 1200, "easing": "standard", "reduced_motion": "static" },
       "guardrails": [
         "Keep a persistent text status and expose it through role=status or aria-live.",
         "Do not use animation as the sole progress signal.",
@@ -89,6 +98,9 @@
       "id": "interaction:prompt-vocabulary",
       "label": "Named interaction vocabulary",
       "ontology_type": "InteractionPattern",
+      "axis": null,
+      "applies_to_roles": [],
+      "intents": [],
       "source_ids": ["source:vibehub"],
       "component_states": ["state:default", "state:hover", "state:active", "state:focus-visible"],
       "motion": { "duration_ms": 120, "easing": "standard", "reduced_motion": "skip" },
@@ -102,6 +114,9 @@
       "id": "interaction:showcase-morphology",
       "label": "Showcase composition reference",
       "ontology_type": "InteractionPattern",
+      "axis": "transition",
+      "applies_to_roles": ["showcase-surface"],
+      "intents": ["present", "introduce", "persuade", "orient"],
       "source_ids": ["source:motionsites", "source:originkit"],
       "component_states": ["state:landing-preview", "state:showcase-active"],
       "motion": { "duration_ms": 240, "easing": "emphasized", "reduced_motion": "opacity-only" },

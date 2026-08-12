@@ -167,6 +167,29 @@ CSS_ANIMATION_DECL_RE = re.compile(
     r"(?!\s*none\b)[^;}{]+",
     re.IGNORECASE,
 )
+MOTION_VALUE_DECL_RE = re.compile(
+    r"(?<![-$@\w])(?:-webkit-)?(?P<prop>transition|animation)"
+    r"(?P<sub>-duration|-delay|-timing-function)?\s*:\s*(?P<value>[^;{}]+)",
+    re.IGNORECASE,
+)
+DURATION_LITERAL_RE = re.compile(
+    r"(?<![\w.-])(?P<value>\d+(?:\.\d+)?)(?P<unit>ms|s)(?![\w-])",
+    re.IGNORECASE,
+)
+EASING_LITERAL_RE = re.compile(
+    r"(?<![-\w])(?:cubic-bezier\([^)]*\)|steps\([^)]*\)|ease-in-out|ease-in|ease-out"
+    r"|ease|linear|step-start|step-end)(?![-\w])",
+    re.IGNORECASE,
+)
+INFINITE_RE = re.compile(r"(?<![-\w])infinite(?![-\w])", re.IGNORECASE)
+VAR_REFERENCE_RE = re.compile(r"var\(\s*(?P<name>--[\w-]+)\s*(?:,[^()]*)?\)")
+INTERACTION_SELECTOR_RE = re.compile(r'\[data-interaction~=\s*"([a-z0-9-]+)"\s*\]', re.IGNORECASE)
+INTERACTION_ATTRIBUTE_RE = re.compile(
+    r"\bdata-interaction\s*=\s*['\"](?P<value>[^'\"]*)['\"]",
+    re.IGNORECASE,
+)
+DS_DURATION_TOKEN_RE = re.compile(r"var\(\s*--ds-duration-[a-z0-9]+", re.IGNORECASE)
+DS_LOOP_TOKEN_RE = re.compile(r"var\(\s*--ds-loop-[a-z0-9]+", re.IGNORECASE)
 REDUCED_MOTION_RE = re.compile(
     r"@media\s*\([^)]*prefers-reduced-motion\s*:\s*reduce[^)]*\)",
     re.IGNORECASE,
@@ -634,6 +657,7 @@ def lint_implementation(
         report.issues.extend(_lint_text(text, rel))
 
     report.issues.extend(_lint_motion_rules(file_texts))
+    report.issues.extend(_lint_interaction_contract(target, artifact_dir, file_texts))
     report.issues.extend(
         _lint_project_composition(
             file_texts,
@@ -1543,7 +1567,223 @@ def _lint_motion_rules(
                     "CSS animation has no selector-matched prefers-reduced-motion fallback; remove spatial motion or reduce it to an immediate or short opacity change for users who request less motion.",
                 )
             )
+        issues.extend(_lint_motion_token_binding(rel, raw_text, text))
     return issues
+
+
+def _lint_motion_token_binding(
+    rel: str,
+    raw_text: str,
+    text: str,
+) -> list[ImplementationIssue]:
+    """Require motion values to bind to the emitted motion system.
+
+    Durations and easing are design-system decisions in exactly the way colour
+    and type are. Left as literals they drift per file, which is how every
+    mockup ended up on the same two hard-coded durations while the token scale
+    went unused.
+    """
+
+    issues: list[ImplementationIssue] = []
+    reduced_spans = _reduced_motion_spans(text)
+    custom_properties = {
+        match.group("name"): match.group("value").strip()
+        for match in CUSTOM_PROPERTY_RE.finditer(text)
+    }
+
+    for decl in MOTION_VALUE_DECL_RE.finditer(text):
+        # Reduced-motion blocks legitimately zero motion out with literals such
+        # as `transition-duration: .01ms !important`.
+        if any(start <= decl.start() <= end for start, end in reduced_spans):
+            continue
+
+        value = decl.group("value")
+        sub = (decl.group("sub") or "").lower()
+        offset = decl.start("value")
+        # A local alias is only legitimate while it terminates in a --ds-* token.
+        # Resolving it catches the private motion scales that mockups grow when
+        # the design system does not offer the values they need.
+        resolved = _resolve_motion_value(value, custom_properties)
+
+        if sub in {"", "-duration", "-delay"}:
+            reported = False
+            for literal in DURATION_LITERAL_RE.finditer(value):
+                if float(literal.group("value")) == 0:
+                    continue
+                reported = True
+                issues.append(
+                    _motion_issue_at(
+                        "DS112",
+                        rel,
+                        raw_text,
+                        offset + literal.start(),
+                        "Hard-coded duration; bind motion through var(--ds-duration-*) "
+                        "for transitions or var(--ds-loop-*) for loading loops.",
+                    )
+                )
+            if not reported and _has_nonzero_duration(resolved):
+                issues.append(
+                    _motion_issue_at(
+                        "DS112",
+                        rel,
+                        raw_text,
+                        offset,
+                        "Duration resolves to a literal through a local custom property; "
+                        "alias var(--ds-duration-*) or var(--ds-loop-*) instead of "
+                        "redefining a private motion scale.",
+                    )
+                )
+
+        if sub in {"", "-timing-function"}:
+            reported = False
+            for literal in EASING_LITERAL_RE.finditer(value):
+                reported = True
+                issues.append(
+                    _motion_issue_at(
+                        "DS113",
+                        rel,
+                        raw_text,
+                        offset + literal.start(),
+                        "Hard-coded easing; use var(--ds-ease-standard|enter|exit|emphasized).",
+                    )
+                )
+            if not reported and EASING_LITERAL_RE.search(resolved):
+                issues.append(
+                    _motion_issue_at(
+                        "DS113",
+                        rel,
+                        raw_text,
+                        offset,
+                        "Easing resolves to a literal through a local custom property; "
+                        "alias var(--ds-ease-*) instead of redefining easing.",
+                    )
+                )
+
+        if (
+            decl.group("prop").lower() == "animation"
+            and INFINITE_RE.search(value)
+            and not DS_LOOP_TOKEN_RE.search(resolved)
+        ):
+            issues.append(
+                _motion_issue_at(
+                    "DS114",
+                    rel,
+                    raw_text,
+                    offset,
+                    "Infinite animation does not spend the loop budget; a loop must use "
+                    "var(--ds-loop-*) and be reserved for loading or progress, not decoration.",
+                )
+            )
+
+    return issues
+
+
+def _resolve_motion_value(
+    value: str,
+    custom_properties: dict[str, str],
+    depth: int = 0,
+) -> str:
+    """Expand local ``var()`` aliases, treating ``--ds-*`` tokens as terminal."""
+
+    if depth >= 4:
+        return value
+
+    def _substitute(match: re.Match[str]) -> str:
+        name = match.group("name")
+        if name.startswith("--ds-"):
+            return match.group(0)
+        replacement = custom_properties.get(name)
+        if replacement is None:
+            return match.group(0)
+        return _resolve_motion_value(replacement, custom_properties, depth + 1)
+
+    return VAR_REFERENCE_RE.sub(_substitute, value)
+
+
+def _has_nonzero_duration(value: str) -> bool:
+    return any(
+        float(match.group("value")) != 0 for match in DURATION_LITERAL_RE.finditer(value)
+    )
+
+
+def _lint_interaction_contract(
+    target: Path,
+    artifact_dir: str,
+    file_texts: dict[str, str],
+) -> list[ImplementationIssue]:
+    """Hold the implementation to the interaction patterns that were selected.
+
+    Selection is only real if the screen changes when it changes. These two
+    rules make the selected set and the built markup the same set.
+    """
+
+    contract_path = target / artifact_dir / "interactions.css"
+    if not contract_path.is_file():
+        return []
+    try:
+        contract_text = contract_path.read_text(encoding="utf-8")
+    except OSError:
+        return []
+
+    declared = set(INTERACTION_SELECTOR_RE.findall(contract_text))
+    if not declared:
+        return []
+
+    issues: list[ImplementationIssue] = []
+    used: set[str] = set()
+    for rel, raw_text in sorted(file_texts.items()):
+        if Path(rel).suffix.lower() not in UI_MARKUP_EXTENSIONS:
+            continue
+        for match in INTERACTION_ATTRIBUTE_RE.finditer(raw_text):
+            slugs = match.group("value").split()
+            used.update(slugs)
+            for slug in slugs:
+                if slug not in declared:
+                    issues.append(
+                        _motion_issue_at(
+                            "DS116",
+                            rel,
+                            raw_text,
+                            match.start(),
+                            f"'{slug}' is not a selected interaction pattern; "
+                            "implement only what design-system/interactions.css declares.",
+                        )
+                    )
+
+    for slug in sorted(declared - used):
+        issues.append(
+            _issue(
+                "DS115",
+                f"{artifact_dir}/interactions.css",
+                1,
+                1,
+                f"Selected interaction pattern '{slug}' is never applied in the markup; "
+                "either use it or re-run selection so the contract matches the build.",
+                f'[data-interaction~="{slug}"]',
+            )
+        )
+
+    return issues
+
+
+def _reduced_motion_spans(text: str) -> list[tuple[int, int]]:
+    """Character spans of every ``prefers-reduced-motion: reduce`` block body."""
+
+    spans: list[tuple[int, int]] = []
+    for marker in REDUCED_MOTION_RE.finditer(text):
+        open_brace = text.find("{", marker.end())
+        if open_brace == -1:
+            continue
+        depth = 0
+        for index in range(open_brace, len(text)):
+            if text[index] == "{":
+                depth += 1
+            elif text[index] == "}":
+                depth -= 1
+                if depth == 0:
+                    spans.append((open_brace, index))
+                    break
+    return spans
 
 
 def _motion_issue(
@@ -1563,6 +1803,29 @@ def _motion_issue(
         rel_path,
         line_no,
         match.start() - line_start + 1,
+        message,
+        raw_text[line_start:line_end],
+    )
+
+
+def _motion_issue_at(
+    code: str,
+    rel_path: str,
+    raw_text: str,
+    offset: int,
+    message: str,
+) -> ImplementationIssue:
+    """Same as :func:`_motion_issue` for callers that carry an offset, not a match."""
+    line_no = raw_text[:offset].count("\n") + 1
+    line_start = raw_text.rfind("\n", 0, offset) + 1
+    line_end = raw_text.find("\n", offset)
+    if line_end == -1:
+        line_end = len(raw_text)
+    return _issue(
+        code,
+        rel_path,
+        line_no,
+        offset - line_start + 1,
         message,
         raw_text[line_start:line_end],
     )

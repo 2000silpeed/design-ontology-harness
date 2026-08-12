@@ -11,6 +11,10 @@ from PIL import Image, ImageFilter
 
 from .aesthetic_loop import DEFAULT_METRICS, build_brand_aesthetic_contract
 
+#: Neutral placeholder for metrics a still frame cannot honestly observe,
+#: on the same 1-10 scale the other screenshot metrics use.
+UNSCORABLE_FROM_STILL = 5.0
+
 
 @dataclass(frozen=True)
 class ScreenshotFeatures:
@@ -205,6 +209,18 @@ def _score_metrics(aggregate: dict[str, Any], brand_profile: dict[str, Any]) -> 
         "distinctiveness": _round_score((memorability_score * 0.56) + (asset_score * 0.24) + (palette_score * 0.20)),
         "reference_transformation": _round_score((structure_score * 0.40) + (anti_keyword_score * 0.32) + (palette_score * 0.28)),
         "memorability": _round_score(memorability_score),
+        # A screenshot is the still state, so it measures exactly one motion
+        # metric honestly: whether the hierarchy survives with motion removed.
+        "static_completeness": _round_score(
+            (structure_score * 0.42) + (contrast_score * 0.34) + (density_score * 0.24)
+        ),
+        # The rest are properties of behaviour over time. Scoring them from a
+        # still frame would manufacture evidence, so they are held neutral until
+        # the implementation lint or a human review supplies a real reading.
+        "causality": UNSCORABLE_FROM_STILL,
+        "hierarchy": UNSCORABLE_FROM_STILL,
+        "no_decoration_loop": UNSCORABLE_FROM_STILL,
+        "reduced_coverage": UNSCORABLE_FROM_STILL,
     }
 
     notes = {
@@ -218,6 +234,15 @@ def _score_metrics(aggregate: dict[str, Any], brand_profile: dict[str, Any]) -> 
             f"Brand contract metric from {spec.get('source')}; automated score uses screenshot proxies "
             "and should be confirmed with semantic review."
         )
+    for metric_id in ("causality", "hierarchy", "no_decoration_loop", "reduced_coverage"):
+        notes[metric_id] = (
+            "Not observable in a still frame; held neutral. Confirm with lint-implementation "
+            "(DS111-DS116) and a human pass on the running surface."
+        )
+    notes["static_completeness"] = (
+        "Screenshot is the motion-off state, so this reading is direct: it reflects whether "
+        "hierarchy holds without animation."
+    )
     notes["token_binding"] = "Screenshot proxy only; confirm with lint-implementation for code-level token binding."
     notes["keyword_alignment"] = "Pixel proxy plus brand keyword matching; semantic review is still recommended."
     notes["domain_fit"] = "Pixel proxy for structured product surface and visual asset evidence; does not identify domain objects semantically."

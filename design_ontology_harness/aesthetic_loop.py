@@ -29,7 +29,7 @@ DEFAULT_DIMENSIONS = [
     {
         "id": "visual_harmony",
         "label": "Visual harmony",
-        "weight": 0.24,
+        "weight": 0.22,
         "description": "How coherently color, type, spacing, and composition work together.",
         "metrics": [
             "color_harmony",
@@ -41,7 +41,7 @@ DEFAULT_DIMENSIONS = [
     {
         "id": "clarity",
         "label": "Clarity",
-        "weight": 0.20,
+        "weight": 0.18,
         "description": "How quickly the intended hierarchy, action, and information structure can be read.",
         "metrics": [
             "hierarchy_clarity",
@@ -53,7 +53,7 @@ DEFAULT_DIMENSIONS = [
     {
         "id": "brand_fit",
         "label": "Brand fit",
-        "weight": 0.18,
+        "weight": 0.16,
         "description": "How well the candidate expresses the intended brand posture and avoids anti-keywords.",
         "metrics": [
             "keyword_alignment",
@@ -65,7 +65,7 @@ DEFAULT_DIMENSIONS = [
     {
         "id": "emotional_appeal",
         "label": "Emotional appeal",
-        "weight": 0.14,
+        "weight": 0.12,
         "description": "How desirable, confident, and affectively appropriate the surface feels.",
         "metrics": [
             "desirability",
@@ -76,7 +76,7 @@ DEFAULT_DIMENSIONS = [
     {
         "id": "craft_quality",
         "label": "Craft quality",
-        "weight": 0.14,
+        "weight": 0.13,
         "description": "How polished and implementation-ready the candidate is across fit, tokens, and affordances.",
         "metrics": [
             "responsive_fit",
@@ -89,12 +89,29 @@ DEFAULT_DIMENSIONS = [
     {
         "id": "novelty",
         "label": "Novelty",
-        "weight": 0.10,
+        "weight": 0.09,
         "description": "How distinctive the design is without breaking its product and brand constraints.",
         "metrics": [
             "distinctiveness",
             "reference_transformation",
             "memorability",
+        ],
+    },
+    {
+        "id": "interaction_quality",
+        "label": "Interaction quality",
+        "weight": 0.10,
+        "description": (
+            "Whether motion explains state changes. These are the axes that separate a "
+            "commercial surface from a generated one: movement that is caused, ranked, "
+            "and removable without losing the hierarchy."
+        ),
+        "metrics": [
+            "causality",
+            "hierarchy",
+            "static_completeness",
+            "no_decoration_loop",
+            "reduced_coverage",
         ],
     },
 ]
@@ -214,6 +231,31 @@ DEFAULT_METRICS = {
     "memorability": {
         "label": "Memorability",
         "improvement": "Create a recognizable signature in the first viewport through layout, identity asset, or product-native visual.",
+        "expected_lift": 0.06,
+    },
+    "causality": {
+        "label": "Motion causality",
+        "improvement": "Bind every movement to a state change the user caused or needs to notice; delete motion that only signals liveliness.",
+        "expected_lift": 0.08,
+    },
+    "hierarchy": {
+        "label": "Motion hierarchy",
+        "improvement": "Keep one primary movement per surface and demote the rest to micro-response; equal motion everywhere reads as generated.",
+        "expected_lift": 0.07,
+    },
+    "static_completeness": {
+        "label": "Static completeness",
+        "improvement": "Turn all motion off and fix the hierarchy that disappears; motion must not be carrying a weak layout.",
+        "expected_lift": 0.09,
+    },
+    "no_decoration_loop": {
+        "label": "No decorative loop",
+        "improvement": "Remove infinite animation that is not reporting loading or progress, and return the transition budget to state feedback.",
+        "expected_lift": 0.07,
+    },
+    "reduced_coverage": {
+        "label": "Reduced-motion coverage",
+        "improvement": "Give every animated selector a matching reduced-motion fallback that matches the pattern's declared strategy.",
         "expected_lift": 0.06,
     },
 }

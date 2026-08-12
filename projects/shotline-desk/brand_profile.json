@@ -1,0 +1,381 @@
+{
+  "brand_name": "Shotline",
+  "system_name": "Shotline Desk System",
+  "product_summary": "영상 제작 샷별 생성 시도와 QA·승인 상태를 한 화면에서 추적하는 운영 데스크",
+  "audiences": [
+    "연출/감독",
+    "제작 PD",
+    "후반 QA 담당"
+  ],
+  "brand_keywords": [
+    "precise",
+    "operational",
+    "trustworthy"
+  ],
+  "anti_keywords": [
+    "playful",
+    "decorative",
+    "startup-gradient",
+    "hero-marketing"
+  ],
+  "tone_of_voice": [
+    "담백한",
+    "사실 위주",
+    "판단을 미루지 않는"
+  ],
+  "visual_keywords": [
+    "ledger",
+    "instrument panel",
+    "technical neutral",
+    "ink on light"
+  ],
+  "interaction_keywords": [
+    "low-noise motion",
+    "state-first",
+    "keyboard shortcuts"
+  ],
+  "platforms": [
+    "desktop-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "reduced motion",
+    "keyboard-first operation"
+  ],
+  "application_concept": {
+    "primary_job": "샷마다 어떤 생성 시도가 있었고 무엇이 QA를 통과했는지 확인하고 승인 여부를 결정한다",
+    "domain_objects": [
+      "Shot",
+      "GenerationAttempt",
+      "QAVerdict",
+      "Approval",
+      "Episode"
+    ],
+    "operating_mode": "review",
+    "success_moment": "승인 대기 샷이 0이 되고 각 승인에 근거가 붙어 있다",
+    "differentiation": [
+      "시도를 결과 하나로 덮지 않고 순서와 실패 사유까지 남긴다",
+      "승인은 버튼이 아니라 근거가 붙은 상태 전이로 다룬다",
+      "QA 판정과 승인 권한을 같은 화면에서 분리해 보여준다"
+    ]
+  },
+  "layout_skeleton": {
+    "composition": "split-workbench",
+    "navigation_model": "sidebar",
+    "density": "dense",
+    "primary_regions": [
+      {
+        "name": "Shot list rail",
+        "role": "에피소드의 샷을 상태와 함께 훑는 좌측 레일",
+        "priority": "primary"
+      },
+      {
+        "name": "Attempt detail",
+        "role": "선택한 샷의 생성 시도 이력과 최신 결과물",
+        "priority": "primary"
+      },
+      {
+        "name": "QA and approval panel",
+        "role": "판정 근거와 승인 차단 사유를 붙여 결정을 받는 면",
+        "priority": "secondary"
+      }
+    ],
+    "first_screen_contract": [
+      "승인 대기 중인 샷 수가 보여야 한다",
+      "선택한 샷의 시도가 몇 번이었고 마지막이 언제인지 보여야 한다",
+      "QA 판정이 통과인지 보류인지 근거와 함께 보여야 한다",
+      "승인이 막혀 있다면 무엇 때문인지 보여야 한다"
+    ],
+    "avoid_layouts": [
+      "generic hero plus card grid",
+      "uniform dashboard metric cards",
+      "kanban board clone",
+      "media gallery wall without state"
+    ]
+  },
+  "design_differentiation": {
+    "must_avoid": [
+      "카드 벽",
+      "장식용 그라디언트",
+      "상태를 색으로만 구분"
+    ],
+    "must_show": [
+      "시도 이력의 순서",
+      "QA 판정 근거",
+      "승인 차단 사유"
+    ],
+    "must_feel_different_from": [
+      "프로젝트 관리 SaaS 대시보드",
+      "미디어 갤러리",
+      "일반 승인 워크플로 툴"
+    ],
+    "signature_moves": [
+      "샷 하나에 시도 이력이 세로로 누적되는 원장 형태",
+      "QA 판정을 색이 아니라 문장과 대비로 구분",
+      "승인 차단 사유를 버튼 옆에 상시 노출"
+    ],
+    "repetition_risks": [
+      "카드 격자로 수렴",
+      "상태를 배지 색으로만 표현",
+      "빈 공간을 지표 타일로 채우기"
+    ]
+  },
+  "product_primitives": [
+    "shot row",
+    "generation attempt card",
+    "QA verdict panel",
+    "approval action",
+    "status ledger"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility"
+    ],
+    "avoid_sources_containing": [
+      "brand-only"
+    ]
+  },
+  "seeds": [],
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "balanced",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "flat",
+      "prefer_moods": [],
+      "avoid_moods": []
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 8,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "docs/color-reference.md is the synchronized Semantic OS color authority",
+      "preferred_families를 브랜드 방향에 맞춰 채우세요",
+      "prefer_moods / avoid_moods로 mood 기반 팔레트 선택 가능"
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [],
+    "sources": [],
+    "preferred_count": 12,
+    "weights": {
+      "layout": 0.3,
+      "component_shape": 0.25,
+      "color_balance": 0.2,
+      "typography_mood": 0.15,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [],
+    "avoid_patterns": [],
+    "notes": [
+      "로컬에 저장한 레퍼런스 이미지나 스크린샷 경로를 sources에 추가하세요",
+      "generate-visual-queries 결과를 검토한 뒤 query를 확정하세요",
+      "현재 단계에서는 Pinterest URL을 직접 수집하지 않고 로컬 파일 기준으로 분석합니다"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "Pinterest는 query 생성과 후보 수집 보조에만 사용합니다",
+        "최종 분석 입력은 항상 visual_reference.sources 의 로컬 파일로 고정합니다"
+      ]
+    }
+  },
+  "component_decision": {
+    "mode": "explicit",
+    "core_components": [
+      {
+        "name": "shot-list-rail",
+        "family": "list",
+        "role": "에피소드 샷을 상태와 함께 훑는 주 목록",
+        "supports_primitive": "shot row",
+        "decision_reason": "샷 탐색이 이 화면의 시작점이다.",
+        "anatomy": [
+          "rail-header",
+          "shot-row",
+          "state-marker",
+          "attempt-count"
+        ],
+        "states": [
+          "default",
+          "filtered",
+          "selected",
+          "loading"
+        ],
+        "tokens": {
+          "component.shot-list-rail.surface": "var(--ds-color-surface)",
+          "part.shot-row.border": "var(--ds-color-border)",
+          "state.selected.indicator": "var(--ds-color-primary)"
+        }
+      },
+      {
+        "name": "attempt-detail-panel",
+        "family": "detail",
+        "role": "선택한 샷의 시도 이력과 최신 결과",
+        "supports_primitive": "generation attempt card",
+        "decision_reason": "시도는 하나가 아니라 순서를 가진 이력이다.",
+        "anatomy": [
+          "panel-header",
+          "attempt-entry",
+          "result-preview",
+          "failure-reason"
+        ],
+        "states": [
+          "default",
+          "open",
+          "loading",
+          "empty"
+        ],
+        "tokens": {
+          "component.attempt-detail-panel.surface": "var(--ds-color-surface)",
+          "part.attempt-entry.border": "var(--ds-color-border)",
+          "state.loading.placeholder": "var(--ds-color-surface-muted)"
+        }
+      },
+      {
+        "name": "qa-verdict-card",
+        "family": "status",
+        "role": "QA 판정과 근거를 붙여 보여주는 면",
+        "supports_primitive": "QA verdict panel",
+        "decision_reason": "판정은 통과 여부보다 근거가 중요하다.",
+        "anatomy": [
+          "verdict-label",
+          "evidence-list",
+          "reviewer-note"
+        ],
+        "states": [
+          "default",
+          "attention-required",
+          "selected"
+        ],
+        "tokens": {
+          "component.qa-verdict-card.surface": "var(--ds-color-surface)",
+          "part.verdict-label.text": "var(--ds-color-ink)",
+          "state.attention-required.border": "var(--ds-color-border-strong)"
+        }
+      },
+      {
+        "name": "approval-action",
+        "family": "action",
+        "role": "승인과 차단 사유를 함께 다루는 액션",
+        "supports_primitive": "approval action",
+        "decision_reason": "승인 버튼만 있으면 왜 막혔는지 사라진다.",
+        "anatomy": [
+          "primary-button",
+          "blocker-note",
+          "secondary-action"
+        ],
+        "states": [
+          "default",
+          "processing",
+          "blocked"
+        ],
+        "tokens": {
+          "component.approval-action.surface": "var(--ds-color-primary)",
+          "part.blocker-note.text": "var(--ds-color-ink-muted)",
+          "state.blocked.border": "var(--ds-color-border-strong)"
+        }
+      },
+      {
+        "name": "status-chip",
+        "family": "indicator",
+        "role": "대기 수와 현재 상태 요약",
+        "supports_primitive": "status ledger",
+        "decision_reason": "요약은 별도 면이 아니라 헤더 칩으로 충분하다.",
+        "anatomy": [
+          "count",
+          "label"
+        ],
+        "states": [
+          "current",
+          "attention-required"
+        ],
+        "tokens": {
+          "component.status-chip.border": "var(--ds-color-border-strong)",
+          "state.attention-required.text": "var(--ds-color-warning)",
+          "part.count.text": "var(--ds-color-ink)"
+        }
+      },
+      {
+        "name": "episode-tabs",
+        "family": "navigation",
+        "role": "에피소드 간 문맥 전환",
+        "supports_primitive": "shot row",
+        "decision_reason": "샷 목록은 항상 한 에피소드에 속한다.",
+        "anatomy": [
+          "tab",
+          "current-marker"
+        ],
+        "states": [
+          "current",
+          "selected"
+        ],
+        "tokens": {
+          "component.episode-tabs.border": "var(--ds-color-border-strong)",
+          "state.current.text": "var(--ds-color-ink)",
+          "part.tab.text": "var(--ds-color-ink-muted)"
+        }
+      }
+    ],
+    "primitive_reconciliation_version": "product-primitive-reconciliation/v1",
+    "primitive_reconciliation": [
+      {
+        "primitive": "shot row",
+        "resolution": "component",
+        "component": "shot-list-rail",
+        "reason": "샷은 개별 카드가 아니라 훑는 목록의 행이다."
+      },
+      {
+        "primitive": "generation attempt card",
+        "resolution": "component",
+        "component": "attempt-detail-panel",
+        "reason": "시도는 이력으로 쌓이므로 상세 패널이 소유한다."
+      },
+      {
+        "primitive": "QA verdict panel",
+        "resolution": "component",
+        "component": "qa-verdict-card",
+        "reason": "판정은 근거와 함께 독립된 면이 필요하다."
+      },
+      {
+        "primitive": "approval action",
+        "resolution": "component",
+        "component": "approval-action",
+        "reason": "승인은 차단 사유와 한 몸이라 별도 컴포넌트다."
+      },
+      {
+        "primitive": "status ledger",
+        "resolution": "anatomy",
+        "component": "status-chip",
+        "reason": "원장 요약은 별도 면이 아니라 헤더 칩의 해부로 흡수한다.",
+        "anatomy_parts": [
+          "count",
+          "label"
+        ]
+      }
+    ]
+  },
+  "interaction_variation_seed": 11,
+  "design_variation_seed": 11
+}

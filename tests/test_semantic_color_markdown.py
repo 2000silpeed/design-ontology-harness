@@ -204,8 +204,8 @@ def test_committed_markdown_snapshot_matches_local_semantic_os_graph():
 
     assert embedded is not None
     assert payload_sha256(embedded) == payload_sha256(expected)
-    assert embedded["node_count"] == 358
-    assert embedded["edge_count"] == 1227
+    assert embedded["node_count"] == 380
+    assert embedded["edge_count"] == 1266
 
 
 def test_default_runtime_ontology_comes_from_markdown_and_merges_local_cards():
@@ -658,5 +658,5 @@ def test_card_provenance_category_alignment_and_local_extension_topology():
             edge["relation"] == "belongs_to_topic" and edge["to"]["id"] == topic_id
             for edge in outgoing
         )
-    assert ontology["node_count"] == 361
-    assert ontology["edge_count"] == 1235
+    assert ontology["node_count"] == 383
+    assert ontology["edge_count"] == 1274

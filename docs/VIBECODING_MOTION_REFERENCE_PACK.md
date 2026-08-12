@@ -18,14 +18,27 @@ SourceReference
 
 ## Current status
 
-- `status`: `draft`
-- Sources: Originkit, Border Beam, Motionsites, Dotmatrix, VibeHub
-- Provenance: user-supplied labels
-- Canonical URLs: intentionally unset until each source is confirmed
-- License status: `unverified`
+- `status`: `reviewed` (2026-08-12)
+- Provenance: `inspected` — every URL confirmed by the user
 
-Do not promote this pack to `reviewed` or `stable` until canonical URLs and
-license boundaries are checked.
+| Source | URL | License status |
+|---|---|---|
+| Originkit | https://www.originkit.dev | `reference-only` |
+| Magic UI (Border Beam) | https://magicui.design | `verified` (MIT) |
+| MotionSites | https://motionsites.ai | `reference-only` · **paid product** |
+| Dot Matrix | https://dotmatrix.zzzzshawn.cloud | `reference-only` |
+| VibeHub | https://vibe-hub.org | `reference-only` |
+
+"Border Beam" turned out to be a component of **Magic UI** rather than a
+standalone library, which is why that source points at the library root. Magic
+UI is MIT, so it is the one `verified` entry; the rest stay `reference-only`
+because their licence text was not read.
+
+**MotionSites sells its prompts.** Never copy prompt text, prompt fragments, or
+preview media into this repository — only the interaction morphology.
+
+`stable` is still unclaimed. It would require reading each licence rather than
+applying a conservative reference-only boundary.
 
 ## Pattern routing
 

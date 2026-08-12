@@ -153,14 +153,42 @@ def test_operational_table_rail_is_not_mislabeled_as_card_wall(tmp_path):
     assert "fixture-workspace" in fingerprint.composition_markers
 
 
-def test_explicit_light_dark_tokens_report_dual_theme(tmp_path):
+def test_dark_support_is_recorded_without_erasing_the_measured_tone(tmp_path):
+    """Dark-mode support is a capability, not a surface tone.
+
+    Overwriting the tone with "dual-theme" made every emit-tokens project report
+    the same value, so the axis stopped separating anything while still adding
+    to the similarity score.
+    """
     css = """
     :root { --surface: #ffffff; }
     body { background: var(--surface); color: #101820; }
     html[data-theme="dark"] { --surface: #071821; }
     """
     fingerprint = extract_style_fingerprint(_write_project(tmp_path, "dual", css))
-    assert fingerprint.surface_tone == "dual-theme"
+
+    assert fingerprint.supports_dark_theme is True
+    assert fingerprint.surface_tone == "neutral-light"
+
+
+def test_status_and_link_colours_stay_out_of_the_accent_signature(tmp_path):
+    """Red means danger everywhere; sharing it is meaning, not convergence."""
+    css = """
+    :root {
+      --ds-color-primary: #2F6F4F;
+      --ds-color-accent: #B07D2A;
+      --ds-color-danger: #B91C1C;
+      --ds-color-success: #15803D;
+      --ds-color-info: #2F6FEB;
+      --ds-color-link: #2563EB;
+    }
+    body { background: #FFFFFF; color: #101820; }
+    """
+    fingerprint = extract_style_fingerprint(_write_project(tmp_path, "status", css))
+
+    # primary(green) + accent(orange)만 남고, danger/success/info/link의
+    # red·blue 계열은 지문에서 빠진다.
+    assert set(fingerprint.accent_hue_buckets) == {"green", "orange"}
 
 
 def test_tsx_structure_clone_fails_even_when_palette_and_fonts_change(tmp_path):
@@ -381,3 +409,64 @@ def test_emit_project_tokens_binds_blueprint_palette(tmp_path):
     assert "--ds-text-md: 1rem;" in css
     assert "--ds-duration-180: 180ms;" in css
     assert "--ds-ease-standard:" in css
+
+
+def test_fingerprint_captures_motion_axes(tmp_path: Path):
+    project = tmp_path / "motion-project"
+    project.mkdir()
+    (project / "styles.css").write_text(
+        """
+        .panel {
+          transition: opacity var(--ds-duration-180) var(--ds-ease-enter),
+                      transform var(--ds-duration-240) var(--ds-ease-exit);
+        }
+        .spinner { animation: spin var(--ds-loop-fast) var(--ds-ease-standard) infinite; }
+        """,
+        encoding="utf-8",
+    )
+
+    fingerprint = extract_style_fingerprint(project)
+
+    assert 180.0 in fingerprint.duration_values_ms
+    assert 240.0 in fingerprint.duration_values_ms
+    assert 1200.0 in fingerprint.duration_values_ms
+    assert {"enter", "exit", "standard"} <= set(fingerprint.easing_signatures)
+    assert {"opacity", "transform"} <= set(fingerprint.transition_properties)
+    assert fingerprint.enter_exit_asymmetry is True
+    assert fingerprint.has_decorative_loop is False
+
+
+def test_fingerprint_flags_transition_budget_spent_on_a_loop(tmp_path: Path):
+    project = tmp_path / "decorated"
+    project.mkdir()
+    (project / "styles.css").write_text(
+        ".glow { animation: breathe 2.8s ease-in-out infinite; }\n",
+        encoding="utf-8",
+    )
+
+    fingerprint = extract_style_fingerprint(project)
+
+    assert fingerprint.has_decorative_loop is True
+    assert 2800.0 in fingerprint.duration_values_ms
+
+
+def test_identical_motion_grammar_raises_similarity(tmp_path: Path):
+    def _build(name: str, accent: str) -> StyleFingerprint:
+        project = tmp_path / name
+        project.mkdir()
+        (project / "styles.css").write_text(
+            f"""
+            .a {{ color: {accent}; }}
+            .panel {{ transition: opacity 180ms cubic-bezier(0.2, 0, 0, 1); }}
+            """,
+            encoding="utf-8",
+        )
+        return extract_style_fingerprint(project)
+
+    first = _build("alpha", "#B03A2E")
+    second = _build("beta", "#1F6F78")
+
+    comparison = compare_fingerprints(first, second)
+
+    assert comparison["motion_similarity"] == 1.0
+    assert any("모션 문법 중복" in reason for reason in comparison["reasons"])

@@ -1596,13 +1596,19 @@
         240,
         320
       ],
+      "loop_ms": [
+        1200,
+        1600,
+        2400
+      ],
       "easing_tokens": [
         "standard",
         "enter",
         "exit",
         "emphasized"
       ],
-      "rule": "모션은 상태 설명용이며 과장된 장식 효과는 금지"
+      "rule": "모션은 상태 설명용이며 과장된 장식 효과는 금지",
+      "loop_rule": "loop 예산은 로딩·진행 상태에만 쓴다. 장식 목적 무한 반복은 금지"
     },
     "elevation": {
       "levels": [

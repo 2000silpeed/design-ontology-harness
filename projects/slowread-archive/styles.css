@@ -1,0 +1,251 @@
+/* Slowread Archive — 읽기 지면.
+   미감 방향: 계기판이 아니라 종이. 여백은 정보가 아니라 호흡이고,
+   위계는 색이 아니라 활자 크기와 무게가 만든다.
+   색·서체·간격·모션은 전부 design-system 토큰에서 온다. */
+
+* { box-sizing: border-box; }
+
+html { background: var(--ds-color-canvas); }
+
+body {
+  margin: 0;
+  min-inline-size: 320px;
+  color: var(--ds-color-ink);
+  background: var(--ds-color-canvas);
+  font-family: var(--ds-font-body);
+  font-size: var(--ds-text-md);
+  line-height: var(--ds-leading-relaxed);
+  word-break: var(--ds-wrap-word-break);
+  overflow-wrap: var(--ds-wrap-overflow);
+}
+
+h1, h2, h3 { margin: 0; text-wrap: balance; line-height: var(--ds-leading-tight); }
+
+button { font: inherit; }
+button:focus-visible { outline: 2px solid var(--ds-color-accent); outline-offset: 3px; }
+
+.page {
+  inline-size: min(100% - var(--ds-space-7), 68rem);
+  margin-inline: auto;
+  padding-block: var(--ds-space-8) var(--ds-space-9);
+}
+
+/* ── 머리 ────────────────────────────────────────── */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ds-space-6);
+  flex-wrap: wrap;
+  padding-block-end: var(--ds-space-5);
+  border-block-end: 1px solid var(--ds-color-border);
+}
+
+.wordmark {
+  font-family: var(--ds-font-heading);
+  font-size: var(--ds-text-lg);
+  letter-spacing: -.01em;
+}
+
+.season-tabs { position: relative; display: flex; gap: var(--ds-space-5); }
+
+.tab-anchor {
+  position: absolute;
+  inset-block-end: calc(var(--ds-space-2) * -1);
+  inline-size: 2.6rem;
+  block-size: 2px;
+  background: var(--ds-color-primary);
+}
+
+.season-tabs button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: var(--ds-text-sm);
+}
+
+.season-tabs i {
+  margin-inline-start: var(--ds-space-2);
+  color: var(--ds-color-ink-subtle);
+  font-style: normal;
+  font-size: var(--ds-text-xs);
+}
+
+/* ── 계절 리드 ───────────────────────────────────── */
+.lede { padding-block: var(--ds-space-9) var(--ds-space-8); }
+
+.season-meta {
+  margin: 0 0 var(--ds-space-5);
+  color: var(--ds-color-ink-subtle);
+  font-size: var(--ds-text-sm);
+  letter-spacing: .02em;
+}
+
+.lede h1 {
+  max-inline-size: 20ch;
+  font-family: var(--ds-font-heading);
+  font-size: var(--ds-text-4xl);
+  font-weight: 500;
+}
+
+.season-note {
+  max-inline-size: 34ch;
+  margin: var(--ds-space-6) 0 0;
+  color: var(--ds-color-ink-muted);
+}
+
+.season-visual { margin: var(--ds-space-8) 0 0; max-inline-size: 26rem; }
+.season-visual svg { inline-size: 100%; block-size: 72px; color: var(--ds-color-primary); }
+.season-visual figcaption {
+  margin-block-start: var(--ds-space-3);
+  color: var(--ds-color-ink-subtle);
+  font-size: var(--ds-text-xs);
+}
+
+/* ── 본문 + 레일 ─────────────────────────────────── */
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 18rem);
+  gap: var(--ds-space-9);
+  padding-block-start: var(--ds-space-8);
+  border-block-start: 1px solid var(--ds-color-border);
+}
+
+.canvas { min-inline-size: 0; max-inline-size: 62ch; }
+
+.kicker {
+  margin: 0 0 var(--ds-space-4);
+  color: var(--ds-color-ink-subtle);
+  font-size: var(--ds-text-xs);
+  letter-spacing: .1em;
+}
+
+.canvas h2 {
+  font-family: var(--ds-font-heading);
+  font-size: var(--ds-text-3xl);
+  font-weight: 500;
+}
+
+.byline {
+  margin: var(--ds-space-4) 0 var(--ds-space-7);
+  color: var(--ds-color-ink-subtle);
+  font-size: var(--ds-text-sm);
+}
+
+.canvas p { margin: 0 0 var(--ds-space-6); }
+
+.drop::first-letter {
+  float: inline-start;
+  margin-inline-end: var(--ds-space-3);
+  padding-block-start: var(--ds-space-1);
+  font-family: var(--ds-font-heading);
+  font-size: var(--ds-text-4xl);
+  line-height: .82;
+}
+
+blockquote {
+  margin: var(--ds-space-8) 0;
+  padding-inline: var(--ds-space-7);
+  color: var(--ds-color-ink);
+  font-family: var(--ds-font-heading);
+  font-size: var(--ds-text-2xl);
+  line-height: var(--ds-leading-tight);
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* ── 레일 ────────────────────────────────────────── */
+.rail { min-inline-size: 0; }
+
+.rail-title {
+  margin-block-end: var(--ds-space-5);
+  color: var(--ds-color-ink-subtle);
+  font-family: var(--ds-font-body);
+  font-size: var(--ds-text-xs);
+  font-weight: 500;
+}
+
+.article-list { margin: 0 0 var(--ds-space-8); padding: 0; list-style: none; }
+
+.entry {
+  padding-block: var(--ds-space-5);
+  border-block-start: 1px solid var(--ds-color-border);
+  cursor: pointer;
+}
+
+.entry p { margin: 0; }
+
+.entry-title { font-size: var(--ds-text-md); line-height: var(--ds-leading-tight); }
+
+.entry-meta {
+  margin-block-start: var(--ds-space-2) !important;
+  color: var(--ds-color-ink-subtle);
+  font-size: var(--ds-text-xs);
+}
+
+.entry-reason {
+  margin-block-start: var(--ds-space-3) !important;
+  color: var(--ds-color-ink-muted);
+  font-size: var(--ds-text-sm);
+}
+
+.note {
+  padding: var(--ds-space-5);
+  border-block-start: 1px solid var(--ds-color-border-strong);
+}
+
+.note p { margin: 0; }
+
+.note-quote {
+  font-family: var(--ds-font-heading);
+  font-size: var(--ds-text-md);
+  line-height: var(--ds-leading-tight);
+}
+
+.note-text {
+  margin-block-start: var(--ds-space-3) !important;
+  color: var(--ds-color-ink-muted);
+  font-size: var(--ds-text-sm);
+}
+
+.note-date {
+  margin-block-start: var(--ds-space-3) !important;
+  color: var(--ds-color-ink-subtle);
+  font-size: var(--ds-text-xs);
+}
+
+/* ── 꼬리 ────────────────────────────────────────── */
+.colophon {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--ds-space-5);
+  flex-wrap: wrap;
+  margin-block-start: var(--ds-space-9);
+  padding-block-start: var(--ds-space-5);
+  border-block-start: 1px solid var(--ds-color-border);
+  color: var(--ds-color-ink-subtle);
+  font-size: var(--ds-text-xs);
+}
+
+@media (max-width: 900px) {
+  .columns { grid-template-columns: minmax(0, 1fr); gap: var(--ds-space-8); }
+  .rail { padding-block-start: var(--ds-space-7); border-block-start: 1px solid var(--ds-color-border); }
+}
+
+@media (max-width: 600px) {
+  .lede { padding-block: var(--ds-space-7) var(--ds-space-6); }
+  .lede h1 { font-size: var(--ds-text-3xl); }
+  .season-tabs { gap: var(--ds-space-4); }
+}
+
+.icon {
+  inline-size: 14px;
+  block-size: 14px;
+  margin-inline-end: var(--ds-space-2);
+  color: var(--ds-color-ink-subtle);
+  vertical-align: -2px;
+}
+
+.rail-title { display: flex; align-items: center; }
+.rail-title .icon { color: var(--ds-color-ink-subtle); }

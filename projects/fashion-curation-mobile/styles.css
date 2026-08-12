@@ -583,7 +583,8 @@ img {
   background: var(--ds-color-ink);
   color: var(--ds-color-ink-inverse);
   z-index: 30;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity var(--ds-duration-240) var(--ds-ease-standard),
+              transform var(--ds-duration-240) var(--ds-ease-standard);
 }
 
 .confirmation-pill[data-state="hidden"] {

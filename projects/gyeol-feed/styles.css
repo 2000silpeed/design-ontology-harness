@@ -332,7 +332,8 @@ img {
   color: var(--ds-color-ink-inverse);
   box-shadow: 0 6px 16px color-mix(in srgb, var(--ds-color-ink) 30%, transparent);
   z-index: 30;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity var(--ds-duration-240) var(--ds-ease-standard),
+              transform var(--ds-duration-240) var(--ds-ease-standard);
 }
 
 .new-posts-pill[data-state="hidden"] {
@@ -380,7 +381,8 @@ img {
   background: var(--ds-color-ink);
   color: var(--ds-color-ink-inverse);
   z-index: 30;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity var(--ds-duration-240) var(--ds-ease-standard),
+              transform var(--ds-duration-240) var(--ds-ease-standard);
   white-space: nowrap;
 }
 

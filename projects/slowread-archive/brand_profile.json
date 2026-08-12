@@ -1,0 +1,327 @@
+{
+  "brand_name": "Slowread",
+  "system_name": "Slowread Archive System",
+  "product_summary": "긴 글을 계절 단위로 모아 다시 읽는 개인 아카이브",
+  "audiences": [
+    "긴 글을 모아두는 개인",
+    "다시 읽기를 습관으로 삼는 사람"
+  ],
+  "brand_keywords": [
+    "calm",
+    "editorial",
+    "quiet"
+  ],
+  "anti_keywords": [
+    "dashboard",
+    "dense",
+    "notification-heavy",
+    "gamified"
+  ],
+  "tone_of_voice": [
+    "차분한",
+    "문장 위주",
+    "재촉하지 않는"
+  ],
+  "visual_keywords": [
+    "paper",
+    "type-led",
+    "margin as silence",
+    "seasonal"
+  ],
+  "interaction_keywords": [
+    "reading rhythm",
+    "gentle reveal",
+    "no interruption"
+  ],
+  "platforms": [
+    "desktop-web",
+    "tablet-web"
+  ],
+  "accessibility_targets": [
+    "WCAG 2.2 AA",
+    "reduced motion",
+    "long-form readability"
+  ],
+  "application_concept": {
+    "primary_job": "모아둔 긴 글 중 지금 다시 읽을 것을 고르고 끊기지 않게 읽는다",
+    "domain_objects": [
+      "Article",
+      "Season",
+      "Highlight",
+      "ReadingSession"
+    ],
+    "operating_mode": "exploration",
+    "success_moment": "한 편을 끝까지 읽고 다음에 읽을 것이 이미 정해져 있다",
+    "differentiation": [
+      "읽을 거리를 큐가 아니라 계절의 층으로 쌓는다",
+      "진행률 대신 다시 읽을 이유를 남긴다",
+      "본문을 카드에 가두지 않고 화면의 주인공으로 둔다"
+    ]
+  },
+  "layout_skeleton": {
+    "composition": "document-canvas",
+    "navigation_model": "local-tabs",
+    "density": "spacious",
+    "primary_regions": [
+      {
+        "name": "Reading canvas",
+        "role": "본문이 화면의 주인공이 되는 읽기 면",
+        "priority": "primary"
+      },
+      {
+        "name": "Article list",
+        "role": "이번 계절에 모인 글과 다시 읽을 후보",
+        "priority": "secondary"
+      },
+      {
+        "name": "Season filter",
+        "role": "읽기 맥락을 계절 단위로 바꾸는 전환",
+        "priority": "secondary"
+      }
+    ],
+    "first_screen_contract": [
+      "지금 계절의 이름과 기간이 보여야 한다",
+      "이어 읽던 글이 있다면 어디까지 읽었는지 보여야 한다",
+      "다시 읽을 후보가 이유와 함께 보여야 한다",
+      "본문 첫 문단이 읽히는 크기로 보여야 한다"
+    ],
+    "avoid_layouts": [
+      "generic hero plus card grid",
+      "uniform dashboard metric cards",
+      "infinite feed with engagement counters",
+      "three-column news portal"
+    ]
+  },
+  "design_differentiation": {
+    "must_avoid": [
+      "읽기 흐름을 끊는 배지/알림",
+      "촘촘한 카드 격자",
+      "진행률 압박"
+    ],
+    "must_show": [
+      "본문 타이포그래피",
+      "계절 맥락",
+      "다시 읽을 후보"
+    ],
+    "must_feel_different_from": [
+      "읽기 목록 앱",
+      "뉴스 포털",
+      "북마크 매니저"
+    ],
+    "signature_moves": [
+      "여백을 정보가 아니라 호흡으로 쓰는 본문 레이아웃",
+      "계절이 배경색이 아니라 활자 리듬으로 바뀌는 전환",
+      "다시 읽을 이유를 글 옆에 문장으로 남기기"
+    ],
+    "repetition_risks": [
+      "카드 격자로 수렴",
+      "읽기 진행률 바 추가",
+      "태그 칩으로 화면 채우기"
+    ]
+  },
+  "product_primitives": [
+    "reading list",
+    "article canvas",
+    "season filter",
+    "highlight note"
+  ],
+  "reference_preferences": {
+    "prioritize_sources_containing": [
+      "components",
+      "typography",
+      "accessibility"
+    ],
+    "avoid_sources_containing": [
+      "brand-only"
+    ]
+  },
+  "seeds": [],
+  "color_reference": {
+    "path": "/Users/sungwoon/ai-projects/design-ontology-harness/docs/color-reference.md",
+    "preferred_families": [],
+    "palette_strategy": {
+      "mode": "brand-guided",
+      "candidate_count": 3,
+      "active_candidate": 1,
+      "temperature": "balanced",
+      "contrast": "balanced",
+      "diversity": "balanced",
+      "surface_style": "flat",
+      "prefer_moods": [],
+      "avoid_moods": []
+    },
+    "palette_expansion": {
+      "enabled": true,
+      "supporting_color_count": 8,
+      "combination_count": 3,
+      "prefer_pairings": true,
+      "prefer_related_families": true
+    },
+    "notes": [
+      "docs/color-reference.md is the synchronized Semantic OS color authority",
+      "preferred_families를 브랜드 방향에 맞춰 채우세요",
+      "prefer_moods / avoid_moods로 mood 기반 팔레트 선택 가능"
+    ]
+  },
+  "visual_reference": {
+    "mode": "local-images",
+    "query": [],
+    "sources": [],
+    "preferred_count": 12,
+    "weights": {
+      "layout": 0.3,
+      "component_shape": 0.25,
+      "color_balance": 0.2,
+      "typography_mood": 0.15,
+      "surface_style": 0.1
+    },
+    "extraction_policy": "advisory-only",
+    "must_include": [],
+    "avoid_patterns": [],
+    "notes": [
+      "로컬에 저장한 레퍼런스 이미지나 스크린샷 경로를 sources에 추가하세요",
+      "generate-visual-queries 결과를 검토한 뒤 query를 확정하세요",
+      "현재 단계에서는 Pinterest URL을 직접 수집하지 않고 로컬 파일 기준으로 분석합니다"
+    ],
+    "pinterest_assist": {
+      "enabled": false,
+      "capture_mode": "manual-save",
+      "capture_dir": "references/visual/pinterest-assisted",
+      "max_candidates_per_query": 6,
+      "max_selected_per_query": 2,
+      "preferred_sources": [
+        "pins",
+        "boards",
+        "adjacent-search"
+      ],
+      "notes": [
+        "Pinterest는 query 생성과 후보 수집 보조에만 사용합니다",
+        "최종 분석 입력은 항상 visual_reference.sources 의 로컬 파일로 고정합니다"
+      ]
+    }
+  },
+  "component_decision": {
+    "mode": "explicit",
+    "core_components": [
+      {
+        "name": "article-list",
+        "family": "list",
+        "role": "이번 계절에 모인 글과 다시 읽을 후보",
+        "supports_primitive": "reading list",
+        "decision_reason": "무엇을 읽을지 고르는 면이 필요하다.",
+        "anatomy": [
+          "list-heading",
+          "article-entry",
+          "reason-note",
+          "read-marker"
+        ],
+        "states": [
+          "default",
+          "filtered",
+          "content-enter",
+          "selected"
+        ],
+        "tokens": {
+          "component.article-list.surface": "var(--ds-color-canvas)",
+          "part.article-entry.border": "var(--ds-color-border)",
+          "state.selected.text": "var(--ds-color-ink)"
+        }
+      },
+      {
+        "name": "reading-canvas",
+        "family": "document",
+        "role": "본문이 주인공인 읽기 면",
+        "supports_primitive": "article canvas",
+        "decision_reason": "긴 글은 카드가 아니라 지면이 필요하다.",
+        "anatomy": [
+          "article-title",
+          "meta-line",
+          "body-column",
+          "pull-quote"
+        ],
+        "states": [
+          "default",
+          "open",
+          "focused"
+        ],
+        "tokens": {
+          "component.reading-canvas.surface": "var(--ds-color-canvas)",
+          "part.body-column.text": "var(--ds-color-ink)",
+          "part.pull-quote.border": "var(--ds-color-border)",
+          "state.focused.border": "var(--ds-color-border-strong)"
+        }
+      },
+      {
+        "name": "season-tabs",
+        "family": "navigation",
+        "role": "읽기 맥락을 계절 단위로 전환",
+        "supports_primitive": "season filter",
+        "decision_reason": "계절이 이 아카이브의 시간 단위다.",
+        "anatomy": [
+          "tab",
+          "current-marker",
+          "count"
+        ],
+        "states": [
+          "current",
+          "selected"
+        ],
+        "tokens": {
+          "component.season-tabs.border": "var(--ds-color-border)",
+          "state.current.text": "var(--ds-color-ink)",
+          "part.tab.text": "var(--ds-color-ink-muted)"
+        }
+      },
+      {
+        "name": "highlight-note",
+        "family": "annotation",
+        "role": "다시 읽을 이유를 남기는 메모",
+        "supports_primitive": "highlight note",
+        "decision_reason": "다시 읽기는 이유가 있을 때만 일어난다.",
+        "anatomy": [
+          "quote-line",
+          "note-text",
+          "date"
+        ],
+        "states": [
+          "default",
+          "selected"
+        ],
+        "tokens": {
+          "component.highlight-note.border": "var(--ds-color-border)",
+          "part.note-text.text": "var(--ds-color-ink-muted)",
+          "state.selected.border": "var(--ds-color-border-strong)"
+        }
+      }
+    ],
+    "primitive_reconciliation_version": "product-primitive-reconciliation/v1",
+    "primitive_reconciliation": [
+      {
+        "primitive": "reading list",
+        "resolution": "component",
+        "component": "article-list",
+        "reason": "고르는 행위가 읽기의 시작이다."
+      },
+      {
+        "primitive": "article canvas",
+        "resolution": "component",
+        "component": "reading-canvas",
+        "reason": "본문이 이 제품의 주 작업면이다."
+      },
+      {
+        "primitive": "season filter",
+        "resolution": "component",
+        "component": "season-tabs",
+        "reason": "계절은 필터가 아니라 문맥 전환이다."
+      },
+      {
+        "primitive": "highlight note",
+        "resolution": "component",
+        "component": "highlight-note",
+        "reason": "다시 읽을 이유를 본문 옆에 남긴다."
+      }
+    ]
+  },
+  "interaction_variation_seed": 11,
+  "design_variation_seed": 11
+}
