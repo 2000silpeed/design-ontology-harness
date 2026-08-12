@@ -325,14 +325,42 @@ blueprint가 프로젝트마다 다른 팔레트를 만들어도 구현 단계�
 
 | 장치 | 명령 | 역할 |
 |---|---|---|
-| 토큰 방출 | `emit-tokens --project-dir` | blueprint의 active palette·font_system·radius를 재생성 가능한 `design-system/tokens.css`(`--ds-*`)로 방출 |
-| 토큰 바인딩 린트 | `lint-implementation --target-repo` | 구현 CSS의 하드코딩 색/폰트/라운딩을 실패 처리 |
-| 스타일 지문 등록 | `fingerprint-style --project-dir` | 최종 HTML/CSS에서 surface tone, accent hue, 폰트 페어링, serif accent를 추출해 `registry/style_fingerprints.json`에 기록 |
+| 토큰 방출 | `emit-tokens --project-dir` | blueprint의 active palette·font_system·radius·motion_system을 재생성 가능한 `design-system/tokens.css`(`--ds-*`)로 방출하고, 선택된 인터랙션을 `interactions.css`·`INTERACTION.md`로 함께 내보냄 |
+| 토큰 바인딩 린트 | `lint-implementation --target-repo` | 구현 CSS의 하드코딩 색/폰트/라운딩/모션을 실패 처리하고, 선택과 구현이 어긋나면 막음 |
+| 스타일 지문 등록 | `fingerprint-style --project-dir` | 최종 HTML/CSS에서 surface tone, accent hue, 폰트 페어링, serif accent, 모션 문법을 추출해 `registry/style_fingerprints.json`에 기록 |
 | 발산 게이트 | `check-style-divergence --project-dir` | 최근 프로젝트 지문과의 유사도, 알려진 수렴 attractor 일치 시 실패 |
+| 인터랙션 되먹임 | `record-interaction-outcome --project-dir --score` | 선택된 패턴이 실제로 어떻게 평가됐는지 기록해, 다음 선택의 동점을 우연이 아니라 근거로 가름 |
 
 목업을 직접 구현할 때는 `skills/design-ontology-mockup-builder` skill이 이 순서를
 강제합니다. 자세한 규칙은 [docs/IMPLEMENTATION_WORKFLOW.md](docs/IMPLEMENTATION_WORKFLOW.md)의
 5.5절을 참고하세요.
+
+### 모션도 색·서체와 같은 등급의 결정이다
+
+모션을 방치하면 구현마다 임의의 `180ms ease`로 흩어지고, 역설적으로 모든 프로젝트가
+같은 움직임으로 수렴합니다. 그래서 duration·easing·loop 예산은 blueprint의
+`motion_system`이 소유하고 구현은 토큰으로만 참조합니다.
+
+| 규칙 | 막는 것 |
+|---|---|
+| `DS112` | 하드코딩 duration. 로컬 별칭이 `--ds-*`로 끝나지 않으면 사설 스케일로 간주 |
+| `DS113` | 하드코딩 easing |
+| `DS114` | 전이 예산으로 도는 무한 애니메이션. loop은 `--ds-loop-*`이고 로딩·진행 전용 |
+| `DS115` | 선택됐는데 마크업에 없는 패턴 |
+| `DS116` | 선택되지 않았는데 구현된 패턴 |
+
+인터랙션 후보는 두 팩에서 옵니다. `harness-interaction-candidates.json`은 하네스가
+직접 쓴 기준 후보이고, `vibecoding-motion-reference.json`은 외부 레퍼런스에서 온
+후보입니다. 출처를 섞지 않기 위해 파일을 나누되 선택 경로는 하나입니다.
+
+선택은 `enter · emphasis · progress · transition` 네 축에서 축마다 최대 하나만
+고릅니다. "한 화면에 주된 움직임 하나와 보조 반응"이 지침이 아니라 구조가 되도록
+만든 제약입니다. 후보는 프로젝트 고유 컴포넌트명이 아니라 역할(`list-surface`,
+`async-action` 등)에 매칭되므로 모든 프로젝트에서 재사용됩니다.
+
+`interactions.css`가 선택의 실행 가능한 형태입니다. 요소는
+`data-interaction="<slug>"`와 `data-state="<state>"`로 계약에 참여합니다.
+선택이 바뀌면 이 파일이 바뀌고 화면이 바뀝니다.
 
 ## 전체 흐름
 

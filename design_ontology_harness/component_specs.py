@@ -34,7 +34,7 @@ COMPONENT_ANATOMY: dict[str, dict] = {
             "font": "var(--font-body) / var(--text-md) / semibold",
             "hover-surface": "var(--color-link-hover)",
             "focus-ring": "box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-brand-primary)",
-            "motion": "background var(--duration-180) var(--ease-standard)",
+            "motion": "background var(--ds-duration-180) var(--ds-ease-standard)",
         },
     },
     "input": {
@@ -111,7 +111,7 @@ COMPONENT_ANATOMY: dict[str, dict] = {
             "gap": "var(--space-12)",
             "text": "var(--color-text)",
             "text-muted": "var(--color-text-muted)",
-            "motion": "border-color var(--duration-120) var(--ease-standard)",
+            "motion": "border-color var(--ds-duration-120) var(--ds-ease-standard)",
         },
     },
     "layout": {
@@ -185,7 +185,7 @@ COMPONENT_ANATOMY: dict[str, dict] = {
             "radius": "var(--radius-lg)",
             "padding": "var(--space-24)",
             "border": "var(--color-border)",
-            "motion": "opacity var(--duration-180) var(--ease-standard)",
+            "motion": "opacity var(--ds-duration-180) var(--ds-ease-standard)",
         },
     },
     "editorial": {
@@ -299,7 +299,7 @@ SLOT_ARCHETYPES: dict[str, dict] = {
             "radius": "var(--radius-lg)",
             "padding": "var(--space-32)",
             "gap": "var(--space-16)",
-            "motion": "border-color var(--duration-180) var(--ease-standard)",
+            "motion": "border-color var(--ds-duration-180) var(--ds-ease-standard)",
         },
     },
     "icon-holder": {
@@ -378,7 +378,7 @@ SLOT_ARCHETYPES: dict[str, dict] = {
             "color": "var(--color-text-muted)",
             "color-hover": "var(--color-text)",
             "underline-hover": "1px solid currentColor",
-            "motion": "color var(--duration-120) var(--ease-standard)",
+            "motion": "color var(--ds-duration-120) var(--ds-ease-standard)",
         },
     },
     "cta-inverse": {
@@ -517,14 +517,14 @@ def _infer_slot_archetype(name: str) -> str | None:
 BRAND_ADAPTATIONS: dict[str, dict[str, str]] = {
     "calm": {
         "hover": "opacity 변화 (0.08-0.12), elevation 변화 없음",
-        "motion": "150-200ms ease-out, bounce/spring 없음",
+        "motion": "var(--ds-duration-180)~var(--ds-duration-240) + var(--ds-ease-exit), bounce/spring 없음",
         "color": "중성 톤 위주, accent는 최소한으로",
         "density": "comfortable 모드 기본, 여유로운 padding",
         "feedback": "subtle inline alert 선호, 과한 컬러 블록 지양",
     },
     "precise": {
         "hover": "정확한 border/outline 변화",
-        "motion": "120-180ms, 군더더기 없는 전환",
+        "motion": "var(--ds-duration-120)~var(--ds-duration-180), 군더더기 없는 전환",
         "color": "정확한 semantic 분리, 모호한 중간 톤 지양",
         "density": "엄격한 spacing scale 준수, 임의 값 금지",
         "feedback": "명확한 상태 구분, 진행률/결과를 수치로 표시",
@@ -545,14 +545,14 @@ BRAND_ADAPTATIONS: dict[str, dict[str, str]] = {
     },
     "bold": {
         "hover": "확실한 색상 변화 또는 scale 변화",
-        "motion": "200-300ms, 시각적으로 확실한 전환",
+        "motion": "var(--ds-duration-240)~var(--ds-duration-320) + var(--ds-ease-emphasized), 시각적으로 확실한 전환",
         "color": "대비가 강한 accent, primary에 집중",
         "density": "큰 터치 영역, 핵심 요소 강조",
         "feedback": "눈에 띄는 성공/에러 표시, 컬러 블록 활용",
     },
     "minimal": {
         "hover": "미세한 opacity 또는 underline만",
-        "motion": "80-120ms, 거의 즉각적",
+        "motion": "var(--ds-duration-80)~var(--ds-duration-120), 거의 즉각적",
         "color": "monochrome 기반, accent 최소화",
         "density": "compact 가능, 불필요한 여백 제거",
         "feedback": "아이콘+텍스트 조합, 색상 배경 최소화",

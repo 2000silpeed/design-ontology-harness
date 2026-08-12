@@ -1,0 +1,274 @@
+/* Shotline Desk — 밀집 운영 원장.
+   미감 방향: 지면이 아니라 계기판. 카드 대신 행, 여백 대신 정렬.
+   모든 색·서체·간격·모션은 design-system 토큰에서만 온다. */
+
+* { box-sizing: border-box; }
+
+html { block-size: 100%; background: var(--ds-color-canvas); }
+
+body {
+  margin: 0;
+  min-inline-size: 320px;
+  min-block-size: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  color: var(--ds-color-ink);
+  background: var(--ds-color-canvas);
+  font-family: var(--ds-font-body);
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-body);
+  word-break: var(--ds-wrap-word-break);
+  overflow-wrap: var(--ds-wrap-overflow);
+}
+
+h1, h2 { margin: 0; text-wrap: balance; line-height: var(--ds-leading-tight); }
+h1 { font-size: var(--ds-text-lg); }
+h2 { font-size: var(--ds-text-md); }
+
+button { font: inherit; }
+button:focus-visible { outline: 2px solid var(--ds-color-accent); outline-offset: 2px; }
+
+/* ── 상단 바 ─────────────────────────────────────── */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-6);
+  padding: var(--ds-space-4) var(--ds-space-6);
+  border-block-end: 1px solid var(--ds-color-border-strong);
+  background: var(--ds-color-surface);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-xs);
+  letter-spacing: .14em;
+}
+
+.brand-mark { inline-size: 20px; block-size: 20px; color: var(--ds-color-primary); }
+
+.episode-tabs { display: flex; gap: var(--ds-space-1); margin-inline-start: auto; }
+
+.episode-tabs button {
+  padding: var(--ds-space-2) var(--ds-space-4);
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-sm);
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-xs);
+}
+
+.episode-tabs button[aria-current="true"] {
+  border-color: var(--ds-color-border-strong);
+  background: var(--ds-color-surface-muted);
+}
+
+.status-chip {
+  padding: var(--ds-space-2) var(--ds-space-4);
+  border: 1px solid var(--ds-color-border-strong);
+  border-radius: var(--ds-radius-sm);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-xs);
+}
+
+.status-chip b { font-weight: 650; }
+
+/* ── 3분할 작업면 ────────────────────────────────── */
+.desk {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) minmax(0, 19rem);
+  min-block-size: 0;
+}
+
+.rail, .detail, .verdict { min-inline-size: 0; padding: var(--ds-space-5) var(--ds-space-6); }
+
+.rail {
+  border-inline-end: 1px solid var(--ds-color-border);
+  background: var(--ds-color-surface);
+}
+
+.rail-head { margin-block-end: var(--ds-space-5); }
+
+.rail-meta {
+  display: block;
+  margin-block-start: var(--ds-space-2);
+  color: var(--ds-color-ink-subtle);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-xs);
+}
+
+.eyebrow {
+  margin: 0 0 var(--ds-space-2);
+  color: var(--ds-color-ink-subtle);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-xs);
+  letter-spacing: .1em;
+}
+
+/* 행 기반 목록 — 카드 벽을 피하는 핵심 결정 */
+.shot-list, .attempts { margin: 0; padding: 0; list-style: none; }
+
+.shot-row {
+  display: grid;
+  grid-template-columns: 10px 3rem 1fr auto;
+  align-items: center;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-3) var(--ds-space-2);
+  border-block-end: 1px solid var(--ds-color-border);
+  cursor: pointer;
+}
+
+.shot-row.is-current { background: var(--ds-color-surface-muted); }
+
+.sid { font-family: var(--ds-font-mono); font-size: var(--ds-text-xs); }
+.sdesc { min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.try { color: var(--ds-color-ink-subtle); font-family: var(--ds-font-mono); font-size: var(--ds-text-xs); }
+
+.mark { inline-size: 8px; block-size: 8px; border-radius: var(--ds-radius-pill); }
+.mark.ok { background: var(--ds-color-accent); }
+.mark.hold { background: var(--ds-color-warning); }
+.mark.todo { border: 1px solid var(--ds-color-border-strong); }
+
+/* ── 상세 ────────────────────────────────────────── */
+.detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ds-space-5);
+  margin-block-end: var(--ds-space-5);
+}
+
+.detail-actions { display: flex; gap: var(--ds-space-3); flex-wrap: wrap; }
+
+.btn {
+  padding: var(--ds-space-3) var(--ds-space-5);
+  border: 1px solid var(--ds-color-border-strong);
+  border-radius: var(--ds-radius-sm);
+  color: var(--ds-color-ink);
+  background: var(--ds-color-surface);
+  cursor: pointer;
+  font-size: var(--ds-text-xs);
+}
+
+.btn-primary {
+  border-color: var(--ds-color-primary);
+  color: var(--ds-color-ink-inverse);
+  background: var(--ds-color-primary);
+}
+
+.btn-primary[disabled] { cursor: not-allowed; opacity: .45; }
+.btn-quiet { background: transparent; }
+
+.attempt-trend { margin: 0 0 var(--ds-space-5); }
+.attempt-trend svg { inline-size: 100%; block-size: 60px; color: var(--ds-color-primary); }
+.attempt-trend figcaption {
+  margin-block-start: var(--ds-space-2);
+  color: var(--ds-color-ink-subtle);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-xs);
+}
+
+.attempt {
+  display: grid;
+  grid-template-columns: 8.5rem 4rem 1fr auto;
+  align-items: baseline;
+  gap: var(--ds-space-4);
+  padding: var(--ds-space-4) 0;
+  border-block-start: 1px solid var(--ds-color-border);
+}
+
+.tstamp, .tlabel, .tstate { font-family: var(--ds-font-mono); font-size: var(--ds-text-xs); }
+.tstamp { color: var(--ds-color-ink-subtle); }
+.tnote { min-inline-size: 0; color: var(--ds-color-ink-muted); }
+.tstate.hold { color: var(--ds-color-warning); }
+.tstate.fail { color: var(--ds-color-ink-subtle); }
+
+.loading-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-4);
+  margin-block-start: var(--ds-space-5);
+  padding: var(--ds-space-4);
+  border: 1px solid var(--ds-color-border);
+  border-radius: var(--ds-radius-sm);
+}
+
+.loading-row[hidden] { display: none; }
+.loading-text { margin: 0; color: var(--ds-color-ink-muted); font-size: var(--ds-text-xs); }
+.skeleton { display: block; flex: 1; block-size: 10px; border-radius: var(--ds-radius-sm); }
+
+/* ── 판정 패널 ───────────────────────────────────── */
+.verdict {
+  border-inline-start: 1px solid var(--ds-color-border);
+  background: var(--ds-color-surface);
+}
+
+.evidence { display: grid; gap: var(--ds-space-3); margin: var(--ds-space-5) 0; }
+.evidence > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--ds-space-4);
+  padding-block-end: var(--ds-space-3);
+  border-block-end: 1px solid var(--ds-color-border);
+}
+.evidence dt { color: var(--ds-color-ink-muted); font-size: var(--ds-text-xs); }
+.evidence dd { margin: 0; font-family: var(--ds-font-mono); font-size: var(--ds-text-xs); text-align: end; }
+
+.reviewer {
+  margin: 0 0 var(--ds-space-6);
+  color: var(--ds-color-ink-subtle);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-xs);
+}
+
+.approval {
+  display: grid;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-5);
+  border: 1px solid var(--ds-color-border);
+  border-radius: var(--ds-radius-sm);
+}
+
+.blocker {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-space-2);
+  margin: 0;
+  color: var(--ds-color-ink-muted);
+  font-size: var(--ds-text-xs);
+}
+
+.icon { flex: 0 0 auto; inline-size: 16px; block-size: 16px; color: var(--ds-color-warning); }
+
+@media (max-width: 1080px) {
+  .desk { grid-template-columns: minmax(0, 1fr); }
+  .rail, .verdict { border: 0; border-block-end: 1px solid var(--ds-color-border); }
+}
+
+@media (max-width: 720px) {
+  .topbar { flex-wrap: wrap; gap: var(--ds-space-4); }
+  .episode-tabs { margin-inline-start: 0; }
+  .attempt { grid-template-columns: minmax(0, 1fr); gap: var(--ds-space-2); }
+  .detail-head { flex-direction: column; }
+}
+
+.frame-preview { margin: 0 0 var(--ds-space-5); }
+
+.frame-visual {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: 34rem;
+  block-size: auto;
+  border: 1px solid var(--ds-color-border);
+  border-radius: var(--ds-radius-sm);
+}
+
+.frame-preview figcaption {
+  margin-block-start: var(--ds-space-2);
+  color: var(--ds-color-ink-subtle);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-xs);
+}

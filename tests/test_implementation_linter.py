@@ -149,6 +149,192 @@ def test_token_bound_css_passes(tmp_path: Path):
     assert report.checked_files == ["styles.css"]
 
 
+def test_token_bound_motion_passes(tmp_path: Path):
+    (tmp_path / "styles.css").write_text(
+        """
+        .panel {
+          transition: opacity var(--ds-duration-180) var(--ds-ease-standard),
+                      transform var(--ds-duration-240) var(--ds-ease-enter);
+        }
+        .spinner { animation: spin var(--ds-loop-fast) var(--ds-ease-standard) infinite; }
+        @media (prefers-reduced-motion: reduce) {
+          .panel { transition-duration: .01ms !important; }
+          .spinner { animation: none; }
+        }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not ({"DS112", "DS113", "DS114"} & codes)
+
+
+def test_flags_hardcoded_motion_values(tmp_path: Path):
+    (tmp_path / "styles.css").write_text(
+        """
+        .panel { transition: opacity 180ms ease-in-out; }
+        @media (prefers-reduced-motion: reduce) { .panel { transition: none; } }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert {"DS112", "DS113"} <= codes
+
+
+def test_flags_private_motion_scale_behind_a_local_alias(tmp_path: Path):
+    """A local alias is only acceptable while it terminates in a --ds-* token."""
+    (tmp_path / "styles.css").write_text(
+        """
+        :root { --duration-standard: 180ms; --ease-standard: cubic-bezier(0.2, 0, 0, 1); }
+        .panel { transition: opacity var(--duration-standard) var(--ease-standard); }
+        @media (prefers-reduced-motion: reduce) { .panel { transition: none; } }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert {"DS112", "DS113"} <= codes
+
+
+def test_allows_alias_that_resolves_to_a_design_system_token(tmp_path: Path):
+    (tmp_path / "styles.css").write_text(
+        """
+        .panel { --ui-speed: var(--ds-duration-180); }
+        .panel { transition: opacity var(--ui-speed) var(--ds-ease-standard); }
+        @media (prefers-reduced-motion: reduce) { .panel { transition: none; } }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not ({"DS112", "DS113"} & codes)
+
+
+def test_flags_infinite_animation_that_skips_the_loop_budget(tmp_path: Path):
+    (tmp_path / "styles.css").write_text(
+        """
+        .signal { animation: pulse var(--ds-duration-240) var(--ds-ease-standard) infinite; }
+        @media (prefers-reduced-motion: reduce) { .signal { animation: none; } }
+        """,
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "DS114" in codes
+
+
+def _write_interaction_contract(tmp_path: Path, selected: list[dict]) -> None:
+    from design_ontology_harness.interaction_css import build_interactions_css
+
+    (tmp_path / "design-system").mkdir(exist_ok=True)
+    (tmp_path / "design-system" / "interactions.css").write_text(
+        build_interactions_css({"selected": selected}, "t"), encoding="utf-8"
+    )
+
+
+_STAGED_ENTER = {
+    "id": "interaction:staged-enter",
+    "axis": "enter",
+    "duration_ms": 180,
+    "easing": "enter",
+    "motion_kind": "transition",
+    "reduced_motion": "opacity-only",
+    "rationale": "staged",
+}
+_WEIGHT_SHIFT = {
+    "id": "interaction:weight-shift",
+    "axis": "emphasis",
+    "duration_ms": 120,
+    "easing": "standard",
+    "motion_kind": "transition",
+    "reduced_motion": "static",
+    "rationale": "weight",
+}
+
+
+def test_generated_interaction_contract_is_token_bound(tmp_path: Path):
+    """The generator must satisfy the rules it ships with."""
+    from design_ontology_harness.interaction_resolver import CANDIDATES
+
+    _write_interaction_contract(
+        tmp_path,
+        [
+            {
+                "id": candidate.id,
+                "axis": candidate.axis,
+                "duration_ms": candidate.duration_ms,
+                "easing": candidate.easing,
+                "motion_kind": candidate.motion_kind,
+                "reduced_motion": candidate.reduced_motion,
+                "rationale": candidate.rationale,
+            }
+            for candidate in CANDIDATES
+        ],
+    )
+    contract = (tmp_path / "design-system" / "interactions.css").read_text(encoding="utf-8")
+    (tmp_path / "styles.css").write_text(contract, encoding="utf-8")
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not ({"DS109", "DS110", "DS111", "DS112", "DS113", "DS114"} & codes)
+
+
+def test_flags_selected_pattern_that_is_never_implemented(tmp_path: Path):
+    _write_interaction_contract(tmp_path, [_STAGED_ENTER, _WEIGHT_SHIFT])
+    (tmp_path / "index.html").write_text(
+        '<!doctype html><html><body><li data-interaction="staged-enter">a</li></body></html>',
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    issues = [issue for issue in report.issues if issue.code == "DS115"]
+
+    assert len(issues) == 1
+    assert "weight-shift" in issues[0].message
+
+
+def test_flags_implemented_pattern_that_was_never_selected(tmp_path: Path):
+    _write_interaction_contract(tmp_path, [_STAGED_ENTER])
+    (tmp_path / "index.html").write_text(
+        '<!doctype html><html><body>'
+        '<li data-interaction="staged-enter">a</li>'
+        '<a data-interaction="context-crossfade">b</a>'
+        "</body></html>",
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    issues = [issue for issue in report.issues if issue.code == "DS116"]
+
+    assert len(issues) == 1
+    assert "context-crossfade" in issues[0].message
+
+
+def test_matching_selection_and_markup_passes(tmp_path: Path):
+    _write_interaction_contract(tmp_path, [_STAGED_ENTER])
+    (tmp_path / "index.html").write_text(
+        '<!doctype html><html><body><li data-interaction="staged-enter">a</li></body></html>',
+        encoding="utf-8",
+    )
+
+    report = lint_implementation(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert not ({"DS115", "DS116"} & codes)
+
+
 def test_flags_hardcoded_visual_values(tmp_path: Path):
     (tmp_path / "styles.css").write_text(
         """

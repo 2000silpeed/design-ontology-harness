@@ -1,0 +1,197 @@
+{
+  "$schema": "../../schemas/motion-reference-pack.schema.json",
+  "schema_version": "motion-reference-pack/v1",
+  "pack_id": "harness-interaction-candidates",
+  "status": "reviewed",
+  "sources": [
+    {
+      "id": "source:harness",
+      "label": "Design Ontology Harness",
+      "canonical_url": null,
+      "provenance": "harness-authored",
+      "license_status": "harness-owned",
+      "notes": "Baseline interaction candidates authored in this repository. They exist so every axis has more than one defensible answer; a pool of one is not a choice."
+    }
+  ],
+  "patterns": [
+    {
+      "id": "interaction:immediate-swap",
+      "label": "Immediate content swap",
+      "ontology_type": "InteractionPattern",
+      "axis": "enter",
+      "applies_to_roles": ["list-surface", "detail-panel", "status-region"],
+      "intents": ["operate", "monitor", "scan", "compare", "trade"],
+      "source_ids": ["source:harness"],
+      "component_states": ["state:content-enter", "state:result-ready"],
+      "motion": { "kind": "transition", "duration_ms": 80, "easing": "standard", "reduced_motion": "skip" },
+      "rationale": "Dense operational surfaces read faster when new content simply appears; motion costs attention the operator needs elsewhere.",
+      "guardrails": [
+        "Preferred when the user is scanning or comparing many rows at once.",
+        "Never animate position; only the content itself changes.",
+        "Keep a visible non-motion cue for what changed."
+      ]
+    },
+    {
+      "id": "interaction:staged-enter",
+      "label": "Staged list entry",
+      "ontology_type": "InteractionPattern",
+      "axis": "enter",
+      "applies_to_roles": ["list-surface", "showcase-surface"],
+      "intents": ["browse", "discover", "review", "remember"],
+      "source_ids": ["source:harness"],
+      "component_states": ["state:content-enter", "state:filtered"],
+      "motion": { "kind": "transition", "duration_ms": 180, "easing": "enter", "reduced_motion": "opacity-only" },
+      "rationale": "A short stagger communicates that several items arrived together without implying they are ranked.",
+      "guardrails": [
+        "Cap the stagger so the last item is not perceptibly late.",
+        "Never stagger more than one screen of items.",
+        "Drop to a single opacity change when reduced motion is requested."
+      ]
+    },
+    {
+      "id": "interaction:inline-expand",
+      "label": "In-place detail expansion",
+      "ontology_type": "InteractionPattern",
+      "axis": "enter",
+      "applies_to_roles": ["detail-panel", "list-surface"],
+      "intents": ["understand", "review", "trace", "inspect"],
+      "source_ids": ["source:harness"],
+      "component_states": ["state:open", "state:focused"],
+      "motion": { "kind": "transition", "duration_ms": 240, "easing": "enter", "reduced_motion": "opacity-only" },
+      "rationale": "Expanding where the user already looks keeps the origin of the detail obvious and avoids a context jump.",
+      "guardrails": [
+        "The trigger must stay visible while the detail is open.",
+        "Animate opacity and transform, never surrounding layout geometry.",
+        "Preserve scroll position of the surrounding surface."
+      ]
+    },
+    {
+      "id": "interaction:weight-shift",
+      "label": "Typographic weight emphasis",
+      "ontology_type": "InteractionPattern",
+      "axis": "emphasis",
+      "applies_to_roles": ["selection-target", "list-surface", "navigation-surface"],
+      "intents": ["read", "review", "orient", "compare"],
+      "source_ids": ["source:harness"],
+      "component_states": ["state:selected", "state:current"],
+      "motion": { "kind": "transition", "duration_ms": 120, "easing": "standard", "reduced_motion": "static" },
+      "rationale": "Editorial surfaces carry emphasis through type weight and contrast, so selection reads without adding a coloured frame.",
+      "guardrails": [
+        "Do not rely on weight alone where the state is critical; pair with a non-typographic cue.",
+        "Keep the layout stable — reserve the heavier metrics so nothing reflows.",
+        "Focus visibility stays independent of this emphasis."
+      ]
+    },
+    {
+      "id": "interaction:surface-lift",
+      "label": "Surface elevation emphasis",
+      "ontology_type": "InteractionPattern",
+      "axis": "emphasis",
+      "applies_to_roles": ["selection-target", "detail-panel"],
+      "intents": ["decide", "choose", "compare", "approve"],
+      "source_ids": ["source:harness"],
+      "component_states": ["state:selected", "state:attention-required"],
+      "motion": { "kind": "transition", "duration_ms": 120, "easing": "standard", "reduced_motion": "static" },
+      "rationale": "A small elevation change separates the chosen surface from its peers without recolouring it.",
+      "guardrails": [
+        "Elevation must map to a token, never an ad-hoc shadow.",
+        "Only one surface may be lifted within a group at a time.",
+        "Do not combine with an animated border on the same element."
+      ]
+    },
+    {
+      "id": "interaction:determinate-bar",
+      "label": "Determinate progress",
+      "ontology_type": "InteractionPattern",
+      "axis": "progress",
+      "applies_to_roles": ["async-action", "status-region"],
+      "intents": ["upload", "export", "render", "process", "sync"],
+      "source_ids": ["source:harness"],
+      "component_states": ["state:loading", "state:processing"],
+      "motion": { "kind": "transition", "duration_ms": 180, "easing": "standard", "reduced_motion": "static" },
+      "rationale": "When the remaining work is measurable, showing the measurement beats showing activity.",
+      "guardrails": [
+        "Use only when real progress is known; never fake the fill rate.",
+        "Pair the bar with a numeric or textual status.",
+        "Fall back to an indeterminate pattern rather than inventing a percentage."
+      ]
+    },
+    {
+      "id": "interaction:skeleton-placeholder",
+      "label": "Structural skeleton",
+      "ontology_type": "InteractionPattern",
+      "axis": "progress",
+      "applies_to_roles": ["list-surface", "detail-panel"],
+      "intents": ["browse", "load", "review", "monitor"],
+      "source_ids": ["source:harness"],
+      "component_states": ["state:loading", "state:data-refreshing"],
+      "motion": { "kind": "loop", "duration_ms": 1600, "easing": "standard", "reduced_motion": "static" },
+      "rationale": "Reserving the shape of the incoming content prevents the layout shift that a centred spinner invites.",
+      "guardrails": [
+        "The skeleton must match the real content's geometry, not a generic grey block.",
+        "Expose an accessible loading status; the shimmer is not an announcement.",
+        "Hold the shimmer to the loop budget and stop it as soon as content lands."
+      ]
+    },
+    {
+      "id": "interaction:context-crossfade",
+      "label": "Context crossfade",
+      "ontology_type": "InteractionPattern",
+      "axis": "transition",
+      "applies_to_roles": ["navigation-surface", "list-surface", "detail-panel"],
+      "intents": ["switch", "filter", "orient", "review"],
+      "source_ids": ["source:harness"],
+      "component_states": ["state:filtered", "state:current"],
+      "motion": { "kind": "transition", "duration_ms": 180, "easing": "standard", "reduced_motion": "opacity-only" },
+      "rationale": "A brief crossfade marks that the frame of reference changed while the surrounding chrome stayed put.",
+      "guardrails": [
+        "Chrome and navigation must not move during the fade.",
+        "Do not crossfade when the underlying data is identical.",
+        "Keep the outgoing and incoming content from overlapping legibly."
+      ]
+    },
+    {
+      "id": "interaction:anchored-shift",
+      "label": "Anchored positional shift",
+      "ontology_type": "InteractionPattern",
+      "axis": "transition",
+      "applies_to_roles": ["navigation-surface", "showcase-surface"],
+      "intents": ["orient", "navigate", "present", "compare"],
+      "source_ids": ["source:harness"],
+      "component_states": ["state:current", "state:selected"],
+      "motion": { "kind": "transition", "duration_ms": 240, "easing": "emphasized", "reduced_motion": "static" },
+      "rationale": "Moving a single shared anchor between positions explains the relationship between two views better than fading both.",
+      "guardrails": [
+        "Exactly one anchor element may move per transition.",
+        "The anchor must exist in both the outgoing and incoming state.",
+        "Snap the anchor into place immediately under reduced motion."
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "a11y:motion-reduce",
+      "label": "Reduced motion fallback",
+      "ontology_type": "AccessibilityRule",
+      "applies_to": ["all patterns"],
+      "severity": "required",
+      "statement": "Every non-essential motion pattern must define a static, opacity-only, or skipped reduced-motion behavior."
+    },
+    {
+      "id": "governance:reference-is-advisory",
+      "label": "Reference does not override product truth",
+      "ontology_type": "GovernanceRule",
+      "applies_to": ["all patterns"],
+      "severity": "required",
+      "statement": "Candidates inform morphology and affordance, but product brief, semantic tokens, component contracts, accessibility, and implementation rules remain authoritative."
+    },
+    {
+      "id": "governance:one-primary-motion",
+      "label": "One primary motion per surface",
+      "ontology_type": "GovernanceRule",
+      "applies_to": ["all patterns"],
+      "severity": "required",
+      "statement": "A screen carries one primary movement plus subordinate micro-response. Equal motion on every element is the signature of a generated layout, not a designed one."
+    }
+  ]
+}

@@ -94,10 +94,20 @@
   --ds-space-px-64: 64px;
   --ds-space-px-96: 96px;
 
-  /* component motion contract */
+  /* motion system (blueprint motion_system) */
+  --ds-duration-80: 80ms;
   --ds-duration-120: 120ms;
   --ds-duration-180: 180ms;
+  --ds-duration-240: 240ms;
+  --ds-duration-320: 320ms;
+  --ds-loop-fast: 1200ms;
+  --ds-loop-medium: 1600ms;
+  --ds-loop-slow: 2400ms;
+  --ds-ease-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ds-ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ds-ease-exit: cubic-bezier(0.4, 0, 1, 1);
   --ds-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ds-motion-reduced-strategy: opacity-only;
   --ds-elevation-lg: 0 18px 48px color-mix(in srgb, var(--ds-color-ink) 16%, transparent);
 }
 

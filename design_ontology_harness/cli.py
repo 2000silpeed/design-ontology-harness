@@ -564,6 +564,24 @@ def build_parser() -> argparse.ArgumentParser:
     emit_tokens_parser.add_argument("--project-dir", required=True, help="Harness project directory")
     emit_tokens_parser.add_argument("--output", default=None, help="Optional explicit output path")
 
+    interaction_outcome_parser = subparsers.add_parser(
+        "record-interaction-outcome",
+        help="Record how a project's selected interaction patterns reviewed, so future ties break on evidence",
+    )
+    interaction_outcome_parser.add_argument("--project-dir", required=True, help="Project whose selection is being scored")
+    interaction_outcome_parser.add_argument(
+        "--score",
+        required=True,
+        type=float,
+        help="Normalised review score between 0 and 1",
+    )
+    interaction_outcome_parser.add_argument(
+        "--registry",
+        default="registry/interaction_outcomes.json",
+        help="Outcome registry path (default: registry/interaction_outcomes.json)",
+    )
+    interaction_outcome_parser.add_argument("--note", default=None, help="Optional note about the review")
+
     fingerprint_parser = subparsers.add_parser(
         "fingerprint-style",
         help="Extract the final mockup's style fingerprint and register it in the cross-project registry",
@@ -1041,6 +1059,30 @@ def _write_component_contract_validation(
     return tokens_path, report
 
 
+def _drop_unobservable_dimensions(
+    ontology: dict,
+    dimension_ids: set[str],
+) -> dict:
+    """Remove dimensions a given evidence source cannot measure, and renormalise.
+
+    Scoring a dimension that the evidence cannot speak to is worse than not
+    scoring it: a neutral placeholder either drags the total down or fabricates
+    a pass. Dropping it keeps the remaining weights meaningful.
+    """
+    dimensions = [
+        dimension
+        for dimension in ontology.get("dimensions") or []
+        if dimension.get("id") not in dimension_ids
+    ]
+    total = sum(float(dimension.get("weight", 0.0)) for dimension in dimensions)
+    if dimensions and total > 0:
+        dimensions = [
+            {**dimension, "weight": round(float(dimension.get("weight", 0.0)) / total, 4)}
+            for dimension in dimensions
+        ]
+    return {**ontology, "dimensions": dimensions}
+
+
 def main() -> None:
     args = build_parser().parse_args()
     raw_output = getattr(args, "output_dir", None)
@@ -1201,6 +1243,38 @@ def main() -> None:
             output_path=Path(args.output) if args.output else None,
         )
         print(f"Wrote {target}")
+        return
+
+    if args.command == "record-interaction-outcome":
+        from .interaction_outcomes import preference_prior, record_outcome
+
+        project_dir = Path(args.project_dir).resolve()
+        blueprint_path = (
+            project_dir / "build" / "system" / "blueprint" / "design_system_blueprint.json"
+        )
+        if not blueprint_path.is_file():
+            raise SystemExit(f"No blueprint found at {blueprint_path}")
+        blueprint = json.loads(blueprint_path.read_text(encoding="utf-8"))
+        selection = blueprint.get("interaction_selection") or {}
+        pattern_ids = [item["id"] for item in selection.get("selected") or []]
+        if not pattern_ids:
+            raise SystemExit("Blueprint has no selected interaction patterns to score")
+
+        record_outcome(
+            Path(args.registry),
+            project=project_dir.name,
+            pattern_ids=pattern_ids,
+            score=args.score,
+            note=args.note,
+        )
+        print(f"Recorded {args.score:.2f} for {len(pattern_ids)} pattern(s) in {project_dir.name}")
+        for pattern_id in pattern_ids:
+            print(f"  - {pattern_id}")
+        prior = preference_prior(Path(args.registry))
+        if prior:
+            print("Active preference prior (>=2 observations):")
+            for pattern_id, value in sorted(prior.items(), key=lambda item: -item[1]):
+                print(f"  {value:.2f}  {pattern_id}")
         return
 
     if args.command == "fingerprint-style":
@@ -1419,7 +1493,13 @@ def main() -> None:
         print(format_candidate_json(candidate) if args.json else format_candidate_summary(candidate))
 
         if args.run_loop:
-            ontology = build_aesthetic_ontology(brand_profile)
+            # A screenshot is a still frame, so gating it on motion behaviour
+            # would block every run on evidence this path cannot produce.
+            # Motion is judged by lint-implementation and a human pass instead.
+            ontology = _drop_unobservable_dimensions(
+                build_aesthetic_ontology(brand_profile),
+                {"interaction_quality"},
+            )
             report = run_self_improvement_loop(
                 candidate,
                 ontology,

@@ -11,6 +11,7 @@ from .semantic_color_markdown import (
 )
 from .semantic_color_ontology import build_semantic_color_context
 from .semantic_color_selector import (
+    build_ontology_neutral_candidates,
     build_ontology_supporting_colors,
     build_semantic_color_selection,
     colors_from_semantic_palette,
@@ -41,6 +42,143 @@ DEFAULT_PALETTE_EXPANSION = {
     "prefer_pairings": True,
     "prefer_related_families": True,
 }
+
+
+#: Neutral roles whose fallback may be tinted toward the brand hue. Status
+#: colours and inverse ink stay on the typed policy — they carry meaning that
+#: must not drift per project.
+_TINTABLE_NEUTRALS = {
+    "canvas", "surface", "surface-elevated", "surface-muted",
+    "border", "border-strong", "ink", "ink-muted", "ink-subtle",
+}
+
+
+def _neutral_role(role: str, anchor_hex: str | None, temperament: str = "clinical") -> dict:
+    """Fallback for a neutral role, carrying the brand hue when one exists.
+
+    Falling back to one fixed grey table is why every generated project shipped
+    the same ``#F7F8FA`` canvas over the same ``#0F172A`` ink. A real system
+    tints its neutrals toward the brand, so the whole screen has a temperature
+    instead of defaulting to stock slate.
+    """
+    normalized = role.replace("_", "-")
+    if normalized not in _TINTABLE_NEUTRALS or not anchor_hex:
+        return _runtime_policy_role(role)
+
+    from .token_emitter import derive_neutral_ramp
+
+    hex_value = derive_neutral_ramp(anchor_hex, temperament=temperament).get(normalized)
+    if not hex_value:
+        return _runtime_policy_role(role)
+    return {
+        "name": normalized.replace("-", " ").title(),
+        "family": "Brand-derived neutral",
+        "hex": hex_value,
+        "mood": f"{temperament} neutral tinted toward the brand hue",
+        "usage": f"Neutral {normalized} derived from the active palette anchor.",
+    }
+
+
+def _neutral_anchor(pool: list[dict], active_roles: dict) -> str | None:
+    """The palette colour whose hue should tint the neutrals."""
+    candidates: list[dict] = []
+    for key in ("primary", "accent"):
+        entry = active_roles.get(key)
+        if isinstance(entry, dict):
+            candidates.append(entry)
+    candidates.extend(item for item in pool if isinstance(item, dict))
+
+    best: tuple[float, str] | None = None
+    for entry in candidates:
+        hex_value = entry.get("hex")
+        if not (isinstance(hex_value, str) and len(hex_value) == 7 and hex_value.startswith("#")):
+            continue
+        try:
+            r, g, b = (int(hex_value[i : i + 2], 16) / 255.0 for i in (1, 3, 5))
+        except ValueError:
+            continue
+        _, lightness, saturation = colorsys.rgb_to_hls(r, g, b)
+        if saturation < 0.12 or not 0.1 <= lightness <= 0.9:
+            continue
+        if best is None or saturation > best[0]:
+            best = (saturation, hex_value)
+    return best[1] if best else None
+
+
+
+def _brand_temperament(brand_profile: dict | None) -> str:
+    """Read the neutral temperament the brand is asking for."""
+    from .token_emitter import _neutral_temperament
+
+    return _neutral_temperament(brand_profile, None)
+
+
+
+#: Neutral roles that carry the brand hue once a step has been chosen.
+_HUE_TUNED_NEUTRALS = (
+    "canvas", "surface", "surface_muted", "surface_elevated",
+    "border", "border_strong", "ink", "ink_muted", "ink_subtle",
+)
+
+
+def _apply_brand_hue_to_neutrals(semantic_roles: dict, anchor_hex: str | None) -> None:
+    """Re-hue the chosen neutral steps toward the brand, keeping L and S.
+
+    The ontology supplies the ladder — which lightness and chroma each step
+    needs to clear its contrast floor. Which hue that ladder sits on is a brand
+    decision, so two projects never share one grey just because the ontology
+    happens to hold a limited set of temperatures.
+    """
+    if not anchor_hex:
+        return
+    anchor = _hls_of(anchor_hex)
+    if anchor is None:
+        return
+    brand_hue, _, brand_saturation = anchor
+    if brand_saturation < 0.06:
+        return
+
+    for role in _HUE_TUNED_NEUTRALS:
+        entry = semantic_roles.get(role)
+        if not isinstance(entry, dict):
+            continue
+        measured = _hls_of(entry.get("hex"))
+        if measured is None:
+            continue
+        _, lightness, saturation = measured
+        if saturation > 0.24:
+            # Not a neutral step; leave a chosen brand colour alone.
+            continue
+        tuned = _hls_to_hex(brand_hue, lightness, saturation)
+        if tuned == entry.get("hex"):
+            continue
+        base_name = entry.get("name") or role
+        semantic_roles[role] = {
+            **entry,
+            "hex": tuned,
+            "name": f"{base_name} · 브랜드 색조",
+            "family": entry.get("family"),
+            "usage": (
+                f"{base_name}의 명도·채도 계단에 브랜드 색조를 적용한 값. "
+                "계단은 온톨로지가, 색조는 브랜드가 정한다."
+            ),
+        }
+
+
+def _hls_to_hex(hue: float, lightness: float, saturation: float) -> str:
+    r, g, b = colorsys.hls_to_rgb(hue % 1.0, max(0.0, min(1.0, lightness)), max(0.0, min(1.0, saturation)))
+    return "#{:02X}{:02X}{:02X}".format(round(r * 255), round(g * 255), round(b * 255))
+
+
+def _hls_of(hex_value) -> tuple[float, float, float] | None:
+    if not (isinstance(hex_value, str) and len(hex_value) == 7 and hex_value.startswith("#")):
+        return None
+    try:
+        r, g, b = (int(hex_value[i : i + 2], 16) / 255.0 for i in (1, 3, 5))
+    except ValueError:
+        return None
+    hue, lightness, saturation = colorsys.rgb_to_hls(r, g, b)
+    return hue, lightness, saturation
 
 
 def _runtime_policy_role(role: str) -> dict:
@@ -400,7 +538,9 @@ def resolve_color_reference(
                 ontology=ontology,
             )
             runtime_semantic_roles = _build_semantic_roles(
-                active_palette, ontology_supporting
+                active_palette,
+                ontology_supporting,
+                temperament=_brand_temperament(profile),
             )
             expanded_palette = {
                 "enabled": bool(ontology_supporting),
@@ -506,7 +646,9 @@ def resolve_semantic_color_reference(
         ),
         ontology=ontology,
     )
-    runtime_semantic_roles = _build_semantic_roles(active_palette, supporting_colors)
+    runtime_semantic_roles = _build_semantic_roles(
+        active_palette, supporting_colors, temperament=_brand_temperament(brand_profile)
+    )
     semantic_ontology = build_semantic_color_context(
         parsed_reference=parsed,
         active_palette=active_palette,
@@ -1053,7 +1195,9 @@ def _build_expanded_palette(
         brand_profile=brand_profile,
     )[: expansion["supporting_color_count"]]
 
-    semantic_roles = _build_semantic_roles(active_palette, support_candidates)
+    semantic_roles = _build_semantic_roles(
+        active_palette, support_candidates, temperament=_brand_temperament(brand_profile)
+    )
     component_sets = build_component_color_sets(semantic_roles)
     combination_lists = _build_combination_lists(
         active_palette=active_palette,
@@ -1253,13 +1397,26 @@ def _score_support_color(
     return score, reasons or [f"{color.get('name')} broadens the seed palette safely."]
 
 
-def _build_semantic_roles(active_palette: dict, supporting_colors: list[dict]) -> dict[str, dict]:
+def _build_semantic_roles(
+    active_palette: dict,
+    supporting_colors: list[dict],
+    *,
+    temperament: str = "clinical",
+) -> dict[str, dict]:
     active_roles = active_palette.get("roles", {}) or {}
-    pool = _dedupe_palette_entries(
+    brand_pool = _dedupe_palette_entries(
         [
             _annotate_palette_entry(item, source_type=f"active-role:{role}")
             for role, item in active_roles.items()
         ] + supporting_colors
+    )
+    anchor = _neutral_anchor(brand_pool, active_roles)
+    # The brand search rarely surfaces low-chroma colours, so ask the ontology
+    # for neutrals directly and order them by distance from the brand hue. A
+    # named ontology colour beats a computed grey because it carries
+    # provenance; the derived ramp only covers what the ontology cannot.
+    pool = _dedupe_palette_entries(
+        brand_pool + build_ontology_neutral_candidates(anchor_hex=anchor)
     )
 
     primary = active_roles.get("primary")
@@ -1291,7 +1448,7 @@ def _build_semantic_roles(active_palette: dict, supporting_colors: list[dict]) -
             min_lightness=94,
             max_saturation=18,
             prefer_source_types={"pairing-reference", "pairing-swatch"},
-        ) or _runtime_policy_role("canvas")
+        ) or _neutral_role("canvas", anchor, temperament)
     # Surface should be near-white when no authored surface role exists.
     if "surface" not in semantic_roles:
         semantic_roles["surface"] = _choose_palette_entry(
@@ -1299,47 +1456,53 @@ def _build_semantic_roles(active_palette: dict, supporting_colors: list[dict]) -
             min_lightness=95,
             max_saturation=10,
             prefer_source_types={"pairing-reference", "pairing-swatch"},
-        ) or _runtime_policy_role("surface")
+        ) or _neutral_role("surface", anchor, temperament)
     semantic_roles["surface_muted"] = _choose_palette_entry(
         pool,
         min_lightness=88,
         max_lightness=95,
         max_saturation=14,
         prefer_source_types={"pairing-reference", "pairing-swatch"},
-    ) or _runtime_policy_role("surface-muted")
-    semantic_roles["surface_elevated"] = semantic_roles.get("surface") or _runtime_policy_role("surface-elevated")
+    ) or _neutral_role("surface-muted", anchor, temperament)
+    semantic_roles["surface_elevated"] = semantic_roles.get("surface") or _neutral_role("surface-elevated", anchor, temperament)
     semantic_roles["border"] = _choose_palette_entry(
         pool,
         min_lightness=76,
         max_lightness=92,
         max_saturation=20,
         prefer_source_types={"pairing-reference", "pairing-swatch"},
-    ) or _runtime_policy_role("border")
+    ) or _neutral_role("border", anchor, temperament)
     semantic_roles["border_strong"] = _choose_palette_entry(
         pool,
-        min_lightness=58,
+        # 3:1을 자체로 넘기는 중성 계단은 58%보다 어둡다. 하한을 그 아래로
+        # 두지 않으면 접근성을 만족하는 온톨로지 색이 배제된다.
+        min_lightness=53,
         max_lightness=78,
         max_saturation=24,
         prefer_source_types={"pairing-reference", "pairing-swatch"},
-    ) or _runtime_policy_role("border-strong")
+    ) or _neutral_role("border-strong", anchor, temperament)
     semantic_roles["ink"] = _choose_palette_entry(
         pool,
         max_lightness=20,
         prefer_source_types={"pairing-reference", "pairing-swatch", "reference-color"},
-    ) or _runtime_policy_role("ink")
+    ) or _neutral_role("ink", anchor, temperament)
     semantic_roles["ink_muted"] = _choose_palette_entry(
         pool,
         min_lightness=30,
         max_lightness=52,
         max_saturation=32,
-    ) or _runtime_policy_role("ink-muted")
+    ) or _neutral_role("ink-muted", anchor, temperament)
     semantic_roles["ink_subtle"] = _choose_palette_entry(
         pool,
         min_lightness=46,
         max_lightness=66,
         max_saturation=28,
-    ) or _runtime_policy_role("ink-subtle")
+    ) or _neutral_role("ink-subtle", anchor, temperament)
     semantic_roles["ink_inverse"] = _runtime_policy_role("ink-inverse")
+    # 온톨로지는 중성 계단의 명도·채도 구조를 소유하고, 브랜드는 색조를 소유한다.
+    # 계단 값을 그대로 쓰면 램프 종류가 몇 개든 브랜드 수보다 적어 서로 겹치므로,
+    # 고른 계단에 브랜드 hue를 입혀 프로젝트마다 다른 중성색이 되게 한다.
+    _apply_brand_hue_to_neutrals(semantic_roles, anchor)
 
     if primary:
         primary_hue = _family_hue(primary)

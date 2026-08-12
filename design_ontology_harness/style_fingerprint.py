@@ -107,6 +107,17 @@ BACKGROUND_DECL_RE = re.compile(
 )
 BORDER_RADIUS_RE = re.compile(r"border-radius\s*:\s*(?P<value>[^;{}]+)", re.IGNORECASE)
 RADIUS_PX_RE = re.compile(r"(\d+(?:\.\d+)?)px")
+#: Colours the brand actually chose. Status roles (red = danger everywhere),
+#: link roles, and text/surface neutrals are excluded: sharing those is meaning
+#: or legibility, not a converged aesthetic.
+BRAND_ACCENT_DECL_RE = re.compile(
+    r"--ds-color-(?:primary|accent|brand-[\w-]+|support-[\w-]+)\s*:\s*"
+    r"(?P<value>#[0-9a-fA-F]{3,8}|rgba?\([^)]*\))",
+    re.IGNORECASE,
+)
+#: Only the light block. Dark values are derived from it, so counting both
+#: doubles every hue and washes out the difference between projects.
+ROOT_BLOCK_RE = re.compile(r":root\s*\{(?P<body>[^}]*)\}", re.IGNORECASE)
 
 KNOWN_ATTRACTORS: list[dict[str, Any]] = [
     {
@@ -151,6 +162,14 @@ class StyleFingerprint:
     color_count: int = 0
     separation_style: str = "unknown"
     composition_markers: list[str] = field(default_factory=list)
+    # Motion axes. Without these, every project could share one duration and
+    # one easing curve and the divergence gate would still pass them.
+    duration_values_ms: list[float] = field(default_factory=list)
+    easing_signatures: list[str] = field(default_factory=list)
+    transition_properties: list[str] = field(default_factory=list)
+    has_decorative_loop: bool = False
+    enter_exit_asymmetry: bool = False
+    supports_dark_theme: bool = False
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -357,6 +376,79 @@ def _detect_separation_style(css_text: str) -> str:
     return "whitespace"
 
 
+MOTION_DECL_RE = re.compile(
+    r"(?<![-$@\w])(?:-webkit-)?(?P<prop>transition|animation)"
+    r"(?P<sub>-duration|-delay|-timing-function|-property)?\s*:\s*(?P<value>[^;{}]+)",
+    re.IGNORECASE,
+)
+_DURATION_LITERAL_RE = re.compile(r"(?<![\w.-])(?P<value>\d+(?:\.\d+)?)(?P<unit>ms|s)(?![\w-])", re.I)
+_DURATION_TOKEN_RE = re.compile(r"var\(\s*--ds-duration-(?P<step>\d+)\s*\)", re.I)
+_LOOP_TOKEN_RE = re.compile(r"var\(\s*--ds-loop-(?P<name>[a-z]+)\s*\)", re.I)
+_EASE_TOKEN_RE = re.compile(r"var\(\s*--ds-ease-(?P<name>[a-z]+)\s*\)", re.I)
+_EASE_LITERAL_RE = re.compile(
+    r"(?<![-\w])(?:cubic-bezier\([^)]*\)|ease-in-out|ease-in|ease-out|ease|linear)(?![-\w])",
+    re.IGNORECASE,
+)
+_LOOP_NAME_MS = {"fast": 1200.0, "medium": 1600.0, "slow": 2400.0}
+_TRANSITION_PROPERTY_RE = re.compile(r"(?<![-\w])(?P<name>[a-z][a-z-]{2,})(?![-\w(])", re.IGNORECASE)
+_NON_PROPERTY_WORDS = {
+    "ease", "ease-in", "ease-out", "ease-in-out", "linear", "infinite", "alternate",
+    "both", "forwards", "backwards", "normal", "reverse", "none", "step-start",
+    "step-end", "important", "var", "cubic-bezier", "steps", "running", "paused",
+}
+
+
+def _extract_motion_signature(text: str) -> dict[str, Any]:
+    """Read a stylesheet's motion character, resolving --ds-* tokens by name."""
+
+    durations: set[float] = set()
+    easings: set[str] = set()
+    properties: set[str] = set()
+    decorative_loop = False
+
+    for decl in MOTION_DECL_RE.finditer(text):
+        value = decl.group("value")
+        sub = (decl.group("sub") or "").lower()
+        is_loop = bool(re.search(r"(?<![-\w])infinite(?![-\w])", value, re.IGNORECASE))
+
+        for token in _DURATION_TOKEN_RE.finditer(value):
+            durations.add(float(token.group("step")))
+        for token in _LOOP_TOKEN_RE.finditer(value):
+            durations.add(_LOOP_NAME_MS.get(token.group("name").lower(), 1600.0))
+        for literal in _DURATION_LITERAL_RE.finditer(value):
+            amount = float(literal.group("value"))
+            if literal.group("unit").lower() == "s":
+                amount *= 1000
+            if amount > 0:
+                durations.add(amount)
+
+        for token in _EASE_TOKEN_RE.finditer(value):
+            easings.add(token.group("name").lower())
+        for literal in _EASE_LITERAL_RE.finditer(value):
+            easings.add(re.sub(r"\s+", "", literal.group(0).lower()))
+
+        if sub in {"", "-property"} and decl.group("prop").lower() == "transition":
+            for word in _TRANSITION_PROPERTY_RE.finditer(value):
+                name = word.group("name").lower()
+                if name not in _NON_PROPERTY_WORDS and not name.startswith("--"):
+                    properties.add(name)
+
+        # A loop spending the transition budget is decoration, not progress.
+        if is_loop and not _LOOP_TOKEN_RE.search(value):
+            decorative_loop = True
+
+    return {
+        "duration_values_ms": sorted(durations),
+        "easing_signatures": sorted(easings),
+        "transition_properties": sorted(properties),
+        "has_decorative_loop": decorative_loop,
+        # Distinct entry and exit curves mean the motion was designed rather
+        # than applied uniformly.
+        "enter_exit_asymmetry": len(easings & {"enter", "exit"}) == 2
+        or len({e for e in easings if e.startswith("cubic-bezier")}) >= 2,
+    }
+
+
 def _composition_markers(text: str) -> list[str]:
     marker_terms = {
         "header": ("header", "topbar", "app-bar"),
@@ -463,21 +555,44 @@ def extract_style_fingerprint(
         ]
 
     surface_tone, surface_hexes = _classify_surface(background_hexes)
-    if (
+    # Dark-mode support is a capability, not a surface tone. Overwriting the
+    # measured tone with "dual-theme" made every emit-tokens project report the
+    # same value, so the axis stopped separating anything while still adding to
+    # the similarity score.
+    supports_dark_theme = bool(
         re.search(r":root\s*\{", combined, re.IGNORECASE)
         and re.search(
             r"html\s*\[\s*data-theme\s*=\s*['\"]dark['\"]\s*\]",
             combined,
             re.IGNORECASE,
         )
-    ):
-        surface_tone = "dual-theme"
+    )
+
+    # Prefer the brand's own colour choices. Falling back to every saturated
+    # colour in the file (the old behaviour) swept in status, link and text
+    # colours, so any two token-bound projects looked alike.
+    brand_hexes: list[str] = []
+    for block in ROOT_BLOCK_RE.finditer(combined):
+        for match in BRAND_ACCENT_DECL_RE.finditer(block.group("body")):
+            resolved = _resolve_color_token(match.group("value"), custom_props)
+            if resolved and resolved not in brand_hexes:
+                brand_hexes.append(resolved)
 
     accent_entries: list[tuple[str, str, int]] = []
-    for value, count in color_counts.items():
-        _, lightness, saturation = _hex_to_hls(value)
-        if saturation >= 0.22 and 0.14 <= lightness <= 0.74:
-            accent_entries.append((_hue_bucket(_hex_to_hls(value)[0]), value, count))
+    if brand_hexes:
+        for value in brand_hexes:
+            _, lightness, saturation = _hex_to_hls(value)
+            if saturation >= 0.22 and 0.14 <= lightness <= 0.74:
+                accent_entries.append(
+                    (_hue_bucket(_hex_to_hls(value)[0]), value, color_counts.get(value, 1))
+                )
+    else:
+        # No design-system tokens (hand-authored CSS): fall back to the old scan
+        # so attractor detection still works on legacy surfaces.
+        for value, count in color_counts.items():
+            _, lightness, saturation = _hex_to_hls(value)
+            if saturation >= 0.22 and 0.14 <= lightness <= 0.74:
+                accent_entries.append((_hue_bucket(_hex_to_hls(value)[0]), value, count))
     accent_entries.sort(key=lambda item: item[2], reverse=True)
     accent_buckets: list[str] = []
     accent_hexes: list[str] = []
@@ -525,8 +640,10 @@ def extract_style_fingerprint(
         radius_values_px=sorted(radius_values),
         uses_pill_shapes=uses_pill,
         color_count=len(color_counts),
+        supports_dark_theme=supports_dark_theme,
         separation_style=_detect_separation_style(css_only or combined),
         composition_markers=_composition_markers(combined),
+        **_extract_motion_signature(css_only or combined),
     )
 
 
@@ -780,11 +897,28 @@ def compare_fingerprints(a: StyleFingerprint | dict, b: StyleFingerprint | dict)
         if abs(max_a - max_b) <= 4 and fa.get("uses_pill_shapes") == fb.get("uses_pill_shapes"):
             score += 0.10
 
+    motion_similarity = 0.0
+    durations_a = {float(value) for value in fa.get("duration_values_ms") or []}
+    durations_b = {float(value) for value in fb.get("duration_values_ms") or []}
+    easings_a = {str(value) for value in fa.get("easing_signatures") or []}
+    easings_b = {str(value) for value in fb.get("easing_signatures") or []}
+    if (durations_a or durations_b) and (easings_a or easings_b):
+        duration_overlap = len(durations_a & durations_b) / max(len(durations_a | durations_b), 1)
+        easing_overlap = len(easings_a & easings_b) / max(len(easings_a | easings_b), 1)
+        motion_similarity = (duration_overlap + easing_overlap) / 2
+        score += 0.12 * motion_similarity
+        if duration_overlap >= 0.75 and easing_overlap >= 0.75:
+            reasons.append(
+                f"모션 문법 중복 {motion_similarity:.0%} "
+                f"(duration {sorted(durations_a & durations_b)}, easing {sorted(easings_a & easings_b)})"
+            )
+
     return {
         "project_a": fa.get("project"),
         "project_b": fb.get("project"),
         "similarity": round(min(score, 1.0), 4),
         "structural_similarity": round(structural_similarity, 4),
+        "motion_similarity": round(motion_similarity, 4),
         "shared_composition_markers": sorted(markers_a & markers_b),
         "reasons": reasons,
     }

@@ -20,7 +20,9 @@
   background: var(--ds-color-surface);
   cursor: pointer;
   font-size: var(--ds-text-xs);
-  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+  transition: border-color var(--ds-duration-180) var(--ds-ease-standard),
+              background-color var(--ds-duration-180) var(--ds-ease-standard),
+              color var(--ds-duration-180) var(--ds-ease-standard);
 }
 .ui-button:hover { border-color: var(--ds-color-primary); background: var(--ds-color-surface-muted); }
 .ui-button[data-variant="ghost"] { border-color: transparent; background: transparent; color: var(--ds-color-ink-muted); }
@@ -46,15 +48,15 @@
   position: fixed;
   z-index: 20;
   inset: 0 0 0 auto;
-  width: min( min(100vw - var(--ds-space-6), 420px), 100% );
+  width: min(420px, 100%);
   padding: var(--ds-space-7);
   border-left: 1px solid var(--ds-color-primary);
   background: var(--ds-color-surface);
   box-shadow: var(--ds-elevation-lg);
   transform: translateX(100%);
-  transition: transform 220ms ease;
+  transition: transform var(--ds-duration-240) var(--ds-ease-enter);
 }
 .ui-sheet[data-open="true"] { transform: translateX(0); }
-.ui-sheet-backdrop { position: fixed; z-index: 19; inset: 0; border: 0; background: color-mix(in srgb, var(--ds-color-ink) 22%, transparent); opacity: 0; pointer-events: none; transition: opacity 180ms ease; }
+.ui-sheet-backdrop { position: fixed; z-index: 19; inset: 0; border: 0; background: color-mix(in srgb, var(--ds-color-ink) 22%, transparent); opacity: 0; pointer-events: none; transition: opacity var(--ds-duration-180) var(--ds-ease-standard); }
 .ui-sheet-backdrop[data-open="true"] { opacity: 1; pointer-events: auto; }
 @media (prefers-reduced-motion: reduce) { .ui-button, .ui-sheet, .ui-sheet-backdrop { transition: none; } }

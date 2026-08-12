@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Slowread — 2026년 여름 아카이브</title>
+    <link rel="stylesheet" href="design-system/tokens.css" />
+    <link rel="stylesheet" href="design-system/fonts.css" />
+    <link rel="stylesheet" href="design-system/interactions.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="masthead">
+        <span class="wordmark">Slowread</span>
+        <nav class="season-tabs" data-interaction="anchored-shift" aria-label="계절">
+          <span class="tab-anchor" data-anchor aria-hidden="true"></span>
+          <button type="button" data-interaction="weight-shift" data-state="current selected" aria-current="true">여름 <i>14</i></button>
+          <button type="button" data-interaction="weight-shift">봄 <i>21</i></button>
+          <button type="button" data-interaction="weight-shift">지난겨울 <i>9</i></button>
+        </nav>
+      </header>
+
+      <section class="lede" aria-labelledby="season-title">
+        <p class="season-meta">2026년 여름 · 6월 – 8월</p>
+        <h1 id="season-title">읽는 속도를<br />늦추는 것에 대하여</h1>
+        <p class="season-note">
+          이번 계절에 모은 열네 편 중 아홉 편을 읽었다.
+          남은 다섯 편은 급하지 않다.
+        </p>
+        <figure class="season-visual">
+          <svg class="reading-visual" viewBox="0 0 420 72" role="img" data-visual="season-reading"
+               aria-labelledby="rv-t rv-d">
+            <title id="rv-t">이번 계절 읽기 흐름</title>
+            <desc id="rv-d">6월 3편, 7월 4편, 8월 2편을 읽었고 다섯 편이 남았다.</desc>
+            <line x1="0" y1="62" x2="420" y2="62" stroke="currentColor" stroke-width="1" opacity=".2" />
+            <path d="M14 50h44M78 50h44M142 50h44" stroke="currentColor" stroke-width="6" stroke-linecap="round" opacity=".9" />
+            <path d="M206 50h44M270 50h44M334 50h44" stroke="currentColor" stroke-width="6" stroke-linecap="round" opacity=".9" />
+            <path d="M14 30h44M78 30h30" stroke="currentColor" stroke-width="6" stroke-linecap="round" opacity=".9" />
+            <path d="M142 30h44M206 30h20" stroke="currentColor" stroke-width="6" stroke-linecap="round" opacity=".22" />
+            <path d="M270 30h44" stroke="currentColor" stroke-width="6" stroke-linecap="round" opacity=".22" />
+          </svg>
+          <figcaption>읽음 9 · 남음 5</figcaption>
+        </figure>
+      </section>
+
+      <div class="columns">
+        <article class="canvas" aria-labelledby="article-title">
+          <p class="kicker">
+            <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3.5 2.5h9v11l-4.5-3-4.5 3z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" />
+            </svg>
+            이어 읽는 중
+          </p>
+          <h2 id="article-title">문장을 늦게 읽으면 생기는 일</h2>
+          <p class="byline">
+            <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
+              <circle cx="8" cy="8" r="6.4" fill="none" stroke="currentColor" stroke-width="1.2" />
+              <path d="M8 4.4V8l2.6 1.6" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+            </svg>
+            정한나 · 2026년 7월 · 18분
+          </p>
+          <div>
+            <p class="drop">
+              읽기의 속도를 스스로 정할 수 있다는 사실을 오래 잊고 살았다.
+              화면은 늘 다음을 권했고, 나는 그 권유를 성실하게 따랐다.
+            </p>
+            <p>
+              어느 날 문장 하나를 두 번 읽었다. 처음에는 실수였고 두 번째는 의도였다.
+              같은 문장인데 두 번째에서만 보이는 것이 있었다. 그때부터 나는 읽는 속도가
+              내용의 일부라는 것을 알게 됐다.
+            </p>
+            <blockquote>
+              빠르게 읽은 글은 요약으로 남고, 늦게 읽은 글은 문장으로 남는다.
+            </blockquote>
+            <p>
+              그래서 이 아카이브에는 진행률이 없다. 몇 퍼센트를 읽었는지는
+              읽기를 재촉할 뿐 도와주지 않는다. 대신 언제 멈췄고 왜 다시 열었는지를 적는다.
+            </p>
+          </div>
+        </article>
+
+        <aside class="rail" aria-labelledby="rail-title">
+          <h3 id="rail-title" class="rail-title">
+            <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M2.5 8a5.5 5.5 0 1 1 1.6 3.9" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+              <path d="M2.5 12.2V8.9h3.3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            다시 읽을 후보
+          </h3>
+          <ol class="article-list" data-staged>
+            <li class="entry" data-interaction="staged-enter weight-shift" data-state="content-enter selected">
+              <p class="entry-title">기억은 왜 계절 단위로 정리되는가</p>
+              <p class="entry-meta">김도윤 · 6월 · 24분</p>
+              <p class="entry-reason">지난번엔 중간에 멈췄다. 3장부터 다시.</p>
+            </li>
+            <li class="entry" data-interaction="staged-enter weight-shift" data-state="content-enter">
+              <p class="entry-title">편집자의 하루</p>
+              <p class="entry-meta">한서린 · 7월 · 11분</p>
+              <p class="entry-reason">짧아서 미뤄뒀다.</p>
+            </li>
+            <li class="entry" data-interaction="staged-enter weight-shift" data-state="content-enter">
+              <p class="entry-title">번역할 수 없는 문장들</p>
+              <p class="entry-meta">유민경 · 8월 · 31분</p>
+              <p class="entry-reason">인용하고 싶은 문단이 세 개 있었다.</p>
+            </li>
+          </ol>
+
+          <div class="note" data-interaction="weight-shift">
+            <p class="note-quote">“빠르게 읽은 글은 요약으로 남는다”</p>
+            <p class="note-text">이 문장 때문에 이번 계절 태그를 다시 정리했다.</p>
+            <p class="note-date">7월 29일</p>
+          </div>
+        </aside>
+      </div>
+
+      <footer class="colophon">
+        <span>Slowread</span>
+        <span>진행률 대신 이유를 남깁니다</span>
+      </footer>
+    </main>
+
+    <script>
+      document.querySelectorAll('.season-tabs button').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.season-tabs button').forEach((other) => {
+            other.removeAttribute('data-state');
+            other.removeAttribute('aria-current');
+          });
+          tab.setAttribute('data-state', 'current selected');
+          tab.setAttribute('aria-current', 'true');
+        });
+      });
+      document.querySelectorAll('.entry').forEach((entry) => {
+        entry.addEventListener('click', () => {
+          document.querySelectorAll('.entry').forEach((other) => other.removeAttribute('data-state'));
+          entry.setAttribute('data-state', 'selected');
+        });
+      });
+    </script>
+  </body>
+</html>

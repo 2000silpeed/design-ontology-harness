@@ -10,7 +10,20 @@ from .color_reference import resolve_color_reference, resolve_semantic_color_ref
 from .css_pipeline import load_css_extraction
 from .font_reference import resolve_font_system
 from .graph_builders import VISUAL_ASSET_COMPATIBLE_MANIFEST_PATHS
+from .interaction_outcomes import default_registry_path as interaction_registry_path
+from .interaction_outcomes import preference_prior as _load_interaction_prior
 from .interaction_resolver import resolve_design_language, resolve_interaction_patterns
+from .motion_reference import build_motion_system
+
+
+def _interaction_preference_prior() -> dict[str, float]:
+    """Load recorded interaction outcomes, tolerating a missing registry."""
+    try:
+        return _load_interaction_prior(
+            interaction_registry_path(Path(__file__).resolve().parent.parent)
+        )
+    except Exception:
+        return {}
 from .models import DocumentRecord, ReferenceLink
 from .reference_context import build_design_context_pack
 from .utils import ensure_dir, write_json
@@ -995,6 +1008,7 @@ def build_blueprint(
         motion_budget=int(brand_profile.get("motion_budget", 2) or 2),
         density=str(layout_skeleton.get("density") or "balanced"),
         variation_seed=brand_profile.get("interaction_variation_seed"),
+        preference_prior=_interaction_preference_prior(),
     )
     design_language_selection = resolve_design_language(
         visual_keywords=brand_profile.get("visual_keywords", []),
@@ -1045,6 +1059,7 @@ def build_blueprint(
         ),
         "interaction_selection": interaction_selection,
         "design_language_selection": design_language_selection,
+        "motion_system": build_motion_system(brand_profile),
         "color_reference": brand_profile.get("_resolved_color_reference"),
         "visual_reference": brand_profile.get("_resolved_visual_reference"),
         "visual_reference_issues": brand_profile.get("_visual_reference_issues", []),

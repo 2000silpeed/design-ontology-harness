@@ -3,15 +3,20 @@
   "entries": [
     {
       "project": "agent-org-network",
-      "recorded_at": "2026-07-08T13:08:45+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:55+00:00",
+      "note": null,
       "fingerprint": {
         "project": "agent-org-network",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
-          "index.html",
-          "styles.css"
+          "design-system/fonts.css",
+          "design-system/interactions.css",
+          "design-system/tokens.css",
+          "mockup/index.html",
+          "mockup/script.js",
+          "mockup/styles.css"
         ],
+        "source_snapshot_sha256": "b3bcd3f31a151334c32ddef0a3509e7c50a593ab4dcc62d98c4010e856a5269f",
         "surface_tone": "cool-tinted",
         "surface_hexes": [
           "#F5F7FA",
@@ -22,44 +27,66 @@
         "accent_hue_buckets": [
           "green",
           "teal",
-          "cyan",
           "orange",
           "red",
-          "blue",
-          "lime"
+          "blue"
         ],
         "accent_hexes": [
-          "#006A4E",
-          "#24323C",
           "#27503D",
-          "#0F5FBE",
-          "#147A4D",
-          "#A76700",
-          "#B72D22",
-          "#6F4BC4"
+          "#006A4E",
+          "#76C1B1",
+          "#0F4C81",
+          "#048475",
+          "#00A591",
+          "#CC7722",
+          "#E2725B"
         ],
-        "font_families": [],
+        "font_families": [
+          "Pretendard",
+          "Source Code Pro"
+        ],
         "serif_accent": false,
         "radius_values_px": [
           3.0,
           6.0
         ],
         "uses_pill_shapes": true,
-        "color_count": 50,
-        "separation_style": "card-wall"
+        "color_count": 89,
+        "separation_style": "card-wall",
+        "composition_markers": [
+          "canvas",
+          "card-grid",
+          "chart",
+          "drawer",
+          "header",
+          "sidebar",
+          "split-pane",
+          "status-strip",
+          "table",
+          "tabs",
+          "timeline"
+        ],
+        "duration_values_ms": [],
+        "easing_signatures": [],
+        "transition_properties": [],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": true
       }
     },
     {
       "project": "ai-chat-mobile-mock",
-      "recorded_at": "2026-07-08T13:08:45+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:55+00:00",
+      "note": null,
       "fingerprint": {
         "project": "ai-chat-mobile-mock",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
           "index.html",
+          "mockup.js",
           "styles.css"
         ],
+        "source_snapshot_sha256": "46173f39c5cfbca2bc39dedf56ed7102a18d4a073b2769fb5f65d7e66440bcb4",
         "surface_tone": "neutral-light",
         "surface_hexes": [
           "#EEF2F6",
@@ -104,22 +131,43 @@
         ],
         "uses_pill_shapes": true,
         "color_count": 27,
-        "separation_style": "card-wall"
+        "separation_style": "card-wall",
+        "composition_markers": [
+          "header"
+        ],
+        "duration_values_ms": [
+          160.0,
+          320.0,
+          1150.0,
+          1800.0
+        ],
+        "easing_signatures": [
+          "ease",
+          "ease-in-out"
+        ],
+        "transition_properties": [
+          "transform"
+        ],
+        "has_decorative_loop": true,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": false
       }
     },
     {
       "project": "contract-copilot-mock",
-      "recorded_at": "2026-07-08T13:08:45+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:55+00:00",
+      "note": null,
       "fingerprint": {
         "project": "contract-copilot-mock",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
+          "design-system/fonts.css",
+          "design-system/tokens.css",
           "index.html",
-          "styles.css",
-          "fonts.css",
-          "tokens.css"
+          "mockup.js",
+          "styles.css"
         ],
+        "source_snapshot_sha256": "5b8559a2f59f07b0aa9e5e89d7c0306bd799c32f61d5cd0b41b92df8705b55a6",
         "surface_tone": "neutral-light",
         "surface_hexes": [
           "#F7F8FA",
@@ -129,20 +177,11 @@
         ],
         "accent_hue_buckets": [
           "red",
-          "teal",
-          "magenta",
-          "lime",
-          "cyan"
+          "teal"
         ],
         "accent_hexes": [
-          "#D7A170",
-          "#05ADFF",
-          "#B87333",
-          "#0071A8",
-          "#CF3A7E",
-          "#3B6C9C",
-          "#0094DB",
-          "#5FC27D"
+          "#A6682F",
+          "#0071A8"
         ],
         "font_families": [
           "Pretendard Variable",
@@ -153,21 +192,37 @@
         "radius_values_px": [],
         "uses_pill_shapes": true,
         "color_count": 32,
-        "separation_style": "card-wall"
+        "separation_style": "card-wall",
+        "composition_markers": [
+          "canvas",
+          "footer",
+          "header",
+          "hero",
+          "sidebar",
+          "table"
+        ],
+        "duration_values_ms": [],
+        "easing_signatures": [],
+        "transition_properties": [],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": false
       }
     },
     {
       "project": "ekos-static-prototype",
-      "recorded_at": "2026-07-08T13:08:45+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:55+00:00",
+      "note": null,
       "fingerprint": {
         "project": "ekos-static-prototype",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
+          "app.js",
+          "design-system/tokens.css",
           "index.html",
-          "styles.css",
-          "tokens.css"
+          "styles.css"
         ],
+        "source_snapshot_sha256": "70ca2d2774d0f57ae813958d574baa32c494d85f7e6eaa6119e8a3a865128800",
         "surface_tone": "neutral-light",
         "surface_hexes": [
           "#F7F8FA",
@@ -177,40 +232,57 @@
         ],
         "accent_hue_buckets": [
           "cyan",
-          "orange",
-          "red",
-          "teal",
-          "green"
+          "orange"
         ],
         "accent_hexes": [
-          "#799FF3",
           "#2563EB",
-          "#F9C163",
-          "#EA9786",
-          "#197CD3",
-          "#00D69E",
-          "#FFA970",
-          "#F59E0B"
+          "#A36B0D"
         ],
         "font_families": [],
         "serif_accent": false,
         "radius_values_px": [],
         "uses_pill_shapes": false,
         "color_count": 32,
-        "separation_style": "whitespace"
+        "separation_style": "table-ledger",
+        "composition_markers": [
+          "canvas",
+          "card-grid",
+          "footer",
+          "header",
+          "hero",
+          "sidebar",
+          "table",
+          "timeline"
+        ],
+        "duration_values_ms": [
+          160.0
+        ],
+        "easing_signatures": [
+          "ease"
+        ],
+        "transition_properties": [
+          "background",
+          "border-color",
+          "transform"
+        ],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": false
       }
     },
     {
       "project": "faircite-dual-mode-console",
-      "recorded_at": "2026-07-08T13:08:45+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:56+00:00",
+      "note": null,
       "fingerprint": {
         "project": "faircite-dual-mode-console",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
+          "app.js",
           "index.html",
           "styles.css"
         ],
+        "source_snapshot_sha256": "684428c99c82e3eb3b20bfe3c3255eecefd833d0175abd85c4433525ffc02494",
         "surface_tone": "neutral-light",
         "surface_hexes": [
           "#F4F6F8",
@@ -241,22 +313,39 @@
         "radius_values_px": [],
         "uses_pill_shapes": true,
         "color_count": 26,
-        "separation_style": "card-wall"
+        "separation_style": "card-wall",
+        "composition_markers": [
+          "canvas",
+          "drawer",
+          "footer",
+          "header",
+          "sidebar"
+        ],
+        "duration_values_ms": [],
+        "easing_signatures": [],
+        "transition_properties": [],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": false
       }
     },
     {
       "project": "faircite-harness-console",
-      "recorded_at": "2026-07-08T13:08:45+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:56+00:00",
+      "note": null,
       "fingerprint": {
         "project": "faircite-harness-console",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
+          "app.js",
+          "design-system/fonts.css",
+          "design-system/fonts/local.css",
+          "design-system/interactions.css",
+          "design-system/tokens.css",
           "index.html",
-          "styles.css",
-          "fonts.css",
-          "tokens.css"
+          "styles.css"
         ],
+        "source_snapshot_sha256": "8d9bbbec423602b6ec253864a5478a3e4745710e33b4d3a31353aed7582e5c72",
         "surface_tone": "neutral-light",
         "surface_hexes": [
           "#FFFFFF",
@@ -266,88 +355,134 @@
         ],
         "accent_hue_buckets": [
           "green",
-          "orange",
-          "magenta",
+          "cyan",
           "teal",
-          "lime"
+          "indigo",
+          "lime",
+          "yellow",
+          "orange",
+          "amber"
         ],
         "accent_hexes": [
           "#27503D",
-          "#F59E0B",
-          "#8B2252",
-          "#0F4C81",
-          "#50C878",
-          "#CC7722"
+          "#048475",
+          "#76C1B1",
+          "#00A591",
+          "#006A4E",
+          "#007FFF",
+          "#00B1D2",
+          "#2A52BE"
         ],
         "font_families": [
-          "Pretendard"
+          "Pretendard",
+          "JetBrains Mono"
         ],
         "serif_accent": false,
         "radius_values_px": [],
         "uses_pill_shapes": true,
-        "color_count": 15,
-        "separation_style": "card-wall"
+        "color_count": 48,
+        "separation_style": "operations-table-rail",
+        "composition_markers": [
+          "canvas",
+          "chart",
+          "drawer",
+          "footer",
+          "header",
+          "hero"
+        ],
+        "duration_values_ms": [],
+        "easing_signatures": [],
+        "transition_properties": [],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": true
       }
     },
     {
       "project": "fashion-magazine-pipeline-test",
-      "recorded_at": "2026-07-08T13:08:46+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:56+00:00",
+      "note": null,
       "fingerprint": {
         "project": "fashion-magazine-pipeline-test",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
-          "reference-gallery.html",
-          "index.html"
+          "design-system/fonts.css",
+          "design-system/interactions.css",
+          "design-system/tokens.css",
+          "mockup/index.html",
+          "reference-gallery.html"
         ],
+        "source_snapshot_sha256": "9b019b0691661e28876be7e5fcc8cc6059e8252c58292db57eb8d4812b3ea7d8",
         "surface_tone": "neutral-light",
         "surface_hexes": [
-          "#F5F7FA",
-          "#FFFFFF",
-          "#EEF6F3",
+          "#F7F8FA",
+          "#F7F8FA",
+          "#F7F8FA",
           "#FFFFFF"
         ],
         "accent_hue_buckets": [
           "green",
+          "blue",
+          "red",
           "teal",
+          "orange",
           "magenta",
-          "orange"
+          "violet"
         ],
         "accent_hexes": [
-          "#95C7B5",
-          "#0F5B7F",
-          "#28785F",
-          "#214536",
-          "#0C5C8A",
-          "#7F1734",
+          "#27503D",
+          "#000080",
+          "#4A0404",
+          "#003153",
+          "#0F4C81",
+          "#FFBF00",
           "#BD2E4A",
-          "#27503D"
+          "#702963"
         ],
         "font_families": [
           "Inter",
           "Georgia",
-          "Times New Roman"
+          "Times New Roman",
+          "Playfair Display",
+          "JetBrains Mono"
         ],
         "serif_accent": true,
         "radius_values_px": [
           8.0
         ],
         "uses_pill_shapes": true,
-        "color_count": 29,
-        "separation_style": "card-wall"
+        "color_count": 59,
+        "separation_style": "whitespace",
+        "composition_markers": [
+          "canvas",
+          "feed",
+          "filter-bar",
+          "header",
+          "hero"
+        ],
+        "duration_values_ms": [],
+        "easing_signatures": [],
+        "transition_properties": [],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": true
       }
     },
     {
       "project": "omnigen-crm-demo",
-      "recorded_at": "2026-07-08T13:08:46+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:56+00:00",
+      "note": null,
       "fingerprint": {
         "project": "omnigen-crm-demo",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
           "demo-report.html",
-          "index.html"
+          "design-system/fonts.css",
+          "design-system/interactions.css",
+          "design-system/tokens.css",
+          "mockup/index.html"
         ],
+        "source_snapshot_sha256": "6bab19e1d25f69c00e275b6e1544e359189d33aeb2070edacd38008ea1b7e70c",
         "surface_tone": "cool-tinted",
         "surface_hexes": [
           "#F7F8FA",
@@ -357,20 +492,22 @@
         ],
         "accent_hue_buckets": [
           "teal",
+          "blue",
+          "amber",
+          "violet",
+          "yellow",
           "cyan",
-          "red",
-          "green",
           "orange"
         ],
         "accent_hexes": [
           "#003153",
           "#0F4C81",
-          "#172235",
-          "#CC5500",
-          "#157A4F",
-          "#1E3A5A",
-          "#0A3D6C",
-          "#6A3B04"
+          "#000080",
+          "#6A7E39",
+          "#8A9A5B",
+          "#708238",
+          "#702963",
+          "#4F7942"
         ],
         "font_families": [
           "Spoqa Han Sans Neo",
@@ -386,23 +523,43 @@
           8.0
         ],
         "uses_pill_shapes": true,
-        "color_count": 42,
-        "separation_style": "card-wall"
+        "color_count": 72,
+        "separation_style": "whitespace",
+        "composition_markers": [
+          "canvas",
+          "feed",
+          "footer",
+          "header",
+          "hero",
+          "sidebar",
+          "split-pane",
+          "table",
+          "tabs",
+          "timeline"
+        ],
+        "duration_values_ms": [],
+        "easing_signatures": [],
+        "transition_properties": [],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": true
       }
     },
     {
       "project": "panel-pop-mobile-mock",
-      "recorded_at": "2026-07-08T13:08:47+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:56+00:00",
+      "note": null,
       "fingerprint": {
         "project": "panel-pop-mobile-mock",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
+          "design-system/fonts.css",
+          "design-system/tokens.css",
           "index.html",
-          "styles.css",
-          "fonts.css",
-          "tokens.css"
+          "mockup.js",
+          "styles.css"
         ],
+        "source_snapshot_sha256": "40cdba9e2a84dd4a37719c0ee026feae8ce04efd646ce6603ea7109c1d1a363b",
         "surface_tone": "neutral-light",
         "surface_hexes": [
           "#F7F8FA",
@@ -412,20 +569,11 @@
         ],
         "accent_hue_buckets": [
           "cyan",
-          "red",
-          "magenta",
-          "lime",
-          "orange"
+          "red"
         ],
         "accent_hexes": [
-          "#808DEF",
-          "#FF7D70",
-          "#FF6F61",
-          "#CF3A7E",
-          "#808DF0",
-          "#5FC27D",
-          "#C4B8A2",
-          "#8B2252"
+          "#6A72B0",
+          "#BF564B"
         ],
         "font_families": [
           "Pretendard Variable",
@@ -436,21 +584,38 @@
         "radius_values_px": [],
         "uses_pill_shapes": true,
         "color_count": 30,
-        "separation_style": "whitespace"
+        "separation_style": "canvas-spatial",
+        "composition_markers": [
+          "bottom-nav",
+          "canvas",
+          "header",
+          "hero"
+        ],
+        "duration_values_ms": [],
+        "easing_signatures": [],
+        "transition_properties": [],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": false
       }
     },
     {
       "project": "seoul-alley-mood-map",
-      "recorded_at": "2026-07-08T13:08:47+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:57+00:00",
+      "note": null,
       "fingerprint": {
         "project": "seoul-alley-mood-map",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
+          "app.js",
+          "design-system/fonts.css",
+          "design-system/fonts/local.css",
+          "design-system/interactions.css",
+          "design-system/tokens.css",
           "index.html",
-          "styles.css",
-          "tokens.css"
+          "styles.css"
         ],
+        "source_snapshot_sha256": "a8a2d7bba41cc3542f2cdffccc9d74267010e21ed2159fc547444a64cd80634a",
         "surface_tone": "neutral-light",
         "surface_hexes": [
           "#F7F8FA",
@@ -461,39 +626,53 @@
         "accent_hue_buckets": [
           "yellow",
           "teal",
-          "magenta",
-          "blue",
-          "orange"
+          "orange",
+          "blue"
         ],
         "accent_hexes": [
-          "#70BF57",
-          "#7FC3CF",
           "#4F7942",
+          "#447F89",
+          "#FADA5E",
+          "#000080",
           "#4F97A3",
-          "#CF3A7E",
-          "#0000DC",
-          "#62B6C4",
-          "#E5A565"
+          "#0F4C81",
+          "#CC7722",
+          "#87CEEB"
         ],
-        "font_families": [],
+        "font_families": [
+          "Pretendard"
+        ],
         "serif_accent": false,
         "radius_values_px": [],
         "uses_pill_shapes": true,
-        "color_count": 32,
-        "separation_style": "card-wall"
+        "color_count": 39,
+        "separation_style": "card-wall",
+        "composition_markers": [
+          "canvas",
+          "header",
+          "inspector"
+        ],
+        "duration_values_ms": [],
+        "easing_signatures": [],
+        "transition_properties": [],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": true
       }
     },
     {
       "project": "sprout-community-mock",
-      "recorded_at": "2026-07-08T13:08:47+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:57+00:00",
+      "note": null,
       "fingerprint": {
         "project": "sprout-community-mock",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
           "index.html",
+          "mockup.js",
           "styles.css"
         ],
+        "source_snapshot_sha256": "93932685c5f87a457c939cd6bc9f005089d379c7bfa15a33a436097f0489ca01",
         "surface_tone": "neutral-light",
         "surface_hexes": [
           "#F9FFF7",
@@ -523,20 +702,34 @@
         "radius_values_px": [],
         "uses_pill_shapes": true,
         "color_count": 21,
-        "separation_style": "card-wall"
+        "separation_style": "card-wall",
+        "composition_markers": [
+          "canvas",
+          "feed",
+          "header",
+          "hero"
+        ],
+        "duration_values_ms": [],
+        "easing_signatures": [],
+        "transition_properties": [],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": false
       }
     },
     {
       "project": "tactic-lens-mock",
-      "recorded_at": "2026-07-08T13:08:47+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:57+00:00",
+      "note": null,
       "fingerprint": {
         "project": "tactic-lens-mock",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
           "index.html",
+          "mockup.js",
           "styles.css"
         ],
+        "source_snapshot_sha256": "48f793d6208a812819abd926d2435b2c6a423e3e579f7b6272205d79c9cb8766",
         "surface_tone": "warm-paper",
         "surface_hexes": [
           "#F8F8F4",
@@ -564,73 +757,129 @@
         "radius_values_px": [],
         "uses_pill_shapes": true,
         "color_count": 22,
-        "separation_style": "card-wall"
+        "separation_style": "card-wall",
+        "composition_markers": [
+          "card-grid",
+          "header",
+          "sidebar",
+          "table",
+          "timeline"
+        ],
+        "duration_values_ms": [],
+        "easing_signatures": [],
+        "transition_properties": [],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": false
       }
     },
     {
       "project": "world-cup-hub",
-      "recorded_at": "2026-07-08T13:08:47+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:58+00:00",
+      "note": null,
       "fingerprint": {
         "project": "world-cup-hub",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
+          "app.js",
+          "design-system/fonts.css",
+          "design-system/fonts/local.css",
+          "design-system/interactions.css",
+          "design-system/runtime-theme.css",
+          "design-system/tokens.css",
+          "fixture-desk/app.js",
+          "fixture-desk/index.html",
+          "fixture-desk/styles.css",
           "index.html",
-          "styles.css",
-          "tokens.css"
+          "matchroom-editorial/index.html",
+          "matchroom-editorial/src/App.jsx",
+          "matchroom-editorial/src/main.jsx",
+          "matchroom-editorial/src/styles.css",
+          "styles.css"
         ],
-        "surface_tone": "dark",
+        "source_snapshot_sha256": "d9c92c0c81fcb472e33e689f4c497946a744efbd8d53deff886813663c442677",
+        "surface_tone": "neutral-light",
         "surface_hexes": [
-          "#007A4D",
-          "#003893",
-          "#111111",
-          "#11457E"
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF"
         ],
         "accent_hue_buckets": [
-          "red",
           "teal",
-          "lime",
-          "green",
-          "cyan",
-          "magenta",
+          "red",
           "orange",
-          "blue"
+          "blue",
+          "green",
+          "lime",
+          "magenta"
         ],
         "accent_hexes": [
-          "#D52B1E",
           "#0F4C81",
-          "#178A4C",
-          "#007A4D",
-          "#11457E",
-          "#C1272D",
-          "#F36C21",
-          "#003893"
+          "#4A0404",
+          "#003153",
+          "#FFBF00",
+          "#000080",
+          "#27503D",
+          "#4E814E",
+          "#50C878"
         ],
         "font_families": [
+          "Noto Serif KR",
           "Space Grotesk",
-          "Pretendard",
           "Inter",
-          "JetBrains Mono"
+          "Pretendard",
+          "JetBrains Mono",
+          "Noto Sans KR Variable",
+          "Noto Sans KR",
+          "Barlow Condensed",
+          "Georgia"
         ],
-        "serif_accent": false,
+        "serif_accent": true,
         "radius_values_px": [],
         "uses_pill_shapes": true,
-        "color_count": 60,
-        "separation_style": "card-wall"
+        "color_count": 92,
+        "separation_style": "operations-table-rail",
+        "composition_markers": [
+          "canvas",
+          "chart",
+          "filter-bar",
+          "fixture-workspace",
+          "header",
+          "hero",
+          "match-ticker",
+          "sidebar",
+          "source-ledger",
+          "split-pane",
+          "status-strip",
+          "table",
+          "tabs",
+          "timeline"
+        ],
+        "duration_values_ms": [],
+        "easing_signatures": [],
+        "transition_properties": [],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": true
       }
     },
     {
       "project": "fashion-curation-mobile",
-      "recorded_at": "2026-07-08T13:08:47+00:00",
-      "note": "backfill v2 2026-07-08",
+      "recorded_at": "2026-08-12T14:17:58+00:00",
+      "note": null,
       "fingerprint": {
         "project": "fashion-curation-mobile",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
+          "app.js",
+          "design-system/fonts.css",
+          "design-system/interactions.css",
+          "design-system/tokens.css",
           "index.html",
-          "styles.css",
-          "tokens.css"
+          "styles.css"
         ],
+        "source_snapshot_sha256": "fdd3c236ff2449e6858d09251ae4587611eee5e03c5417d3d3b9854ddcd61429",
         "surface_tone": "dark",
         "surface_hexes": [
           "#141414",
@@ -639,15 +888,15 @@
           "#141414"
         ],
         "accent_hue_buckets": [
-          "green",
           "red",
+          "green",
           "magenta",
           "teal"
         ],
         "accent_hexes": [
-          "#00A591",
           "#4A0404",
-          "#006A4E",
+          "#048576",
+          "#00A591",
           "#7F1734",
           "#9C1F4B",
           "#003153"
@@ -661,38 +910,60 @@
         "serif_accent": true,
         "radius_values_px": [],
         "uses_pill_shapes": false,
-        "color_count": 19,
-        "separation_style": "hairline-rows"
+        "color_count": 40,
+        "separation_style": "canvas-spatial",
+        "composition_markers": [
+          "canvas",
+          "header"
+        ],
+        "duration_values_ms": [
+          240.0
+        ],
+        "easing_signatures": [
+          "standard"
+        ],
+        "transition_properties": [
+          "opacity",
+          "transform"
+        ],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": true
       }
     },
     {
       "project": "gyeol-feed",
-      "recorded_at": "2026-07-08T13:10:09+00:00",
-      "note": "registered on divergence pass",
+      "recorded_at": "2026-08-12T14:17:58+00:00",
+      "note": null,
       "fingerprint": {
         "project": "gyeol-feed",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
+          "app.js",
+          "design-system/fonts.css",
+          "design-system/interactions.css",
+          "design-system/tokens.css",
           "index.html",
-          "styles.css",
-          "tokens.css"
+          "styles.css"
         ],
-        "surface_tone": "neutral-light",
+        "source_snapshot_sha256": "d61195ce1bf56bd5c6b1fa8ea9933c8c64509ed5ca91505bfde368b647a71fea",
+        "surface_tone": "dark",
         "surface_hexes": [
-          "#FAFAFA",
-          "#FFFFFF",
-          "#F5DEB3",
-          "#C9C9C9"
+          "#141414",
+          "#141414",
+          "#141414",
+          "#141414"
         ],
         "accent_hue_buckets": [
           "red",
           "blue"
         ],
         "accent_hexes": [
+          "#CE4842",
           "#DC4C46",
           "#E2725B",
-          "#967BB6",
-          "#FA8072"
+          "#FA8072",
+          "#967BB6"
         ],
         "font_families": [
           "Noto Serif KR",
@@ -703,22 +974,44 @@
         "serif_accent": true,
         "radius_values_px": [],
         "uses_pill_shapes": false,
-        "color_count": 18,
-        "separation_style": "hairline-rows"
+        "color_count": 42,
+        "separation_style": "canvas-spatial",
+        "composition_markers": [
+          "canvas",
+          "feed",
+          "header"
+        ],
+        "duration_values_ms": [
+          240.0
+        ],
+        "easing_signatures": [
+          "standard"
+        ],
+        "transition_properties": [
+          "opacity",
+          "transform"
+        ],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": true
       }
     },
     {
       "project": "agent-org-desk",
-      "recorded_at": "2026-07-08T13:32:02+00:00",
-      "note": "registered on divergence pass",
+      "recorded_at": "2026-08-12T14:17:58+00:00",
+      "note": null,
       "fingerprint": {
         "project": "agent-org-desk",
         "schema_version": "style-fingerprint/v1",
         "source_files": [
+          "app.js",
+          "design-system/fonts.css",
+          "design-system/interactions.css",
+          "design-system/tokens.css",
           "index.html",
-          "styles.css",
-          "tokens.css"
+          "styles.css"
         ],
+        "source_snapshot_sha256": "0fd3727c9fdd15afad39f9be9882ef28dfd670338cbcc69c682d15e1982e2c50",
         "surface_tone": "neutral-light",
         "surface_hexes": [
           "#FAFAFA",
@@ -734,10 +1027,9 @@
         ],
         "accent_hexes": [
           "#6C3BAA",
-          "#E2725B",
           "#967BB6",
+          "#E2725B",
           "#50C878",
-          "#59308C",
           "#CC7722"
         ],
         "font_families": [
@@ -750,8 +1042,173 @@
         "serif_accent": false,
         "radius_values_px": [],
         "uses_pill_shapes": false,
-        "color_count": 19,
-        "separation_style": "whitespace"
+        "color_count": 41,
+        "separation_style": "canvas-spatial",
+        "composition_markers": [
+          "canvas",
+          "footer",
+          "header",
+          "inspector",
+          "timeline"
+        ],
+        "duration_values_ms": [
+          240.0
+        ],
+        "easing_signatures": [
+          "standard"
+        ],
+        "transition_properties": [
+          "opacity",
+          "transform"
+        ],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": true
+      }
+    },
+    {
+      "project": "shotline-desk",
+      "recorded_at": "2026-08-12T14:17:59+00:00",
+      "note": null,
+      "fingerprint": {
+        "project": "shotline-desk",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "design-system/fonts.css",
+          "design-system/fonts/local.css",
+          "design-system/interactions.css",
+          "design-system/tokens.css",
+          "index.html",
+          "styles.css"
+        ],
+        "source_snapshot_sha256": "687f98a30988cc41d98ccbf7cb3a0358fc20f2abb127ab22c587f77613a1a3be",
+        "surface_tone": "cool-tinted",
+        "surface_hexes": [
+          "#E8EDEC",
+          "#E8EDEC",
+          "#F5F7F6",
+          "#F5F7F6"
+        ],
+        "accent_hue_buckets": [
+          "amber",
+          "indigo",
+          "violet",
+          "green",
+          "orange"
+        ],
+        "accent_hexes": [
+          "#68764B",
+          "#8A9A5B",
+          "#804AA8",
+          "#C8A2C8",
+          "#006A4E",
+          "#88B04B",
+          "#708238",
+          "#27503D"
+        ],
+        "font_families": [
+          "Pretendard",
+          "IBM Plex Mono"
+        ],
+        "serif_accent": false,
+        "radius_values_px": [],
+        "uses_pill_shapes": false,
+        "color_count": 43,
+        "separation_style": "card-wall",
+        "composition_markers": [
+          "canvas",
+          "header"
+        ],
+        "duration_values_ms": [
+          120.0,
+          180.0,
+          1600.0
+        ],
+        "easing_signatures": [
+          "standard"
+        ],
+        "transition_properties": [
+          "color",
+          "opacity"
+        ],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": true
+      }
+    },
+    {
+      "project": "slowread-archive",
+      "recorded_at": "2026-08-12T14:17:59+00:00",
+      "note": null,
+      "fingerprint": {
+        "project": "slowread-archive",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "design-system/fonts.css",
+          "design-system/fonts/local.css",
+          "design-system/interactions.css",
+          "design-system/tokens.css",
+          "index.html",
+          "styles.css"
+        ],
+        "source_snapshot_sha256": "d4749d0fbcfa09053db54a41e6d600cf1c7d1885001e037822b59801e1da01fc",
+        "surface_tone": "rose-tinted",
+        "surface_hexes": [
+          "#F6F5F7",
+          "#F6F5F7"
+        ],
+        "accent_hue_buckets": [
+          "violet",
+          "cyan",
+          "amber",
+          "indigo",
+          "red"
+        ],
+        "accent_hexes": [
+          "#702963",
+          "#676CA6",
+          "#8A9A5B",
+          "#88B04B",
+          "#804AA8",
+          "#C8A2C8",
+          "#708238",
+          "#E9967A"
+        ],
+        "font_families": [
+          "Noto Serif KR",
+          "Pretendard",
+          "Georgia"
+        ],
+        "serif_accent": true,
+        "radius_values_px": [],
+        "uses_pill_shapes": false,
+        "color_count": 45,
+        "separation_style": "canvas-spatial",
+        "composition_markers": [
+          "canvas",
+          "footer",
+          "header",
+          "hero"
+        ],
+        "duration_values_ms": [
+          80.0,
+          120.0,
+          180.0,
+          240.0
+        ],
+        "easing_signatures": [
+          "emphasized",
+          "enter",
+          "standard"
+        ],
+        "transition_properties": [
+          "color",
+          "opacity",
+          "transform"
+        ],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": true
       }
     }
   ]

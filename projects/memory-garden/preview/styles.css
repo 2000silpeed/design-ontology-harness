@@ -121,7 +121,6 @@ h1 em { color: var(--ds-color-primary); font-style: normal; }
 [data-design-typography="field-note"] .entry-body h3 { font-weight: 450; letter-spacing: -.02em; }
 [data-design-typography="quiet-sans"] h1 { letter-spacing: -.025em; }
 [data-interaction~="timeline-focus"] .timeline-entry[data-state="focused"] .entry-body { border-bottom-color: var(--ds-color-primary); }
-[data-interaction~="season-transition"] .season-lens { border-left-color: var(--ds-color-accent); }
 [data-interaction~="contextual-reveal"] [data-component="context-drawer"][data-state="open"] { text-decoration: underline; text-underline-offset: .3em; }
 
 @media (max-width: 780px) {
@@ -143,3 +142,58 @@ h1 em { color: var(--ds-color-primary); font-style: normal; }
 .context-list div { padding-top: var(--ds-space-4); border-top: 1px solid var(--ds-color-border); }
 .context-list dt { margin-bottom: var(--ds-space-2); color: var(--ds-color-primary); font-family: var(--ds-font-mono); font-size: var(--ds-text-xs); }
 .context-list dd { margin: 0; color: var(--ds-color-ink); font-size: var(--ds-text-sm); line-height: var(--ds-leading-body); }
+
+.save-status {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-4);
+  margin-top: var(--ds-space-5);
+  padding: var(--ds-space-4) var(--ds-space-5);
+  border: 1px solid var(--ds-color-border);
+  border-radius: var(--ds-radius-md);
+  background: var(--ds-color-surface);
+}
+
+.save-status[hidden] { display: none; }
+
+.save-status .status-text {
+  margin: 0;
+  color: var(--ds-color-ink-muted);
+  font-size: var(--ds-text-sm);
+}
+
+.save-status .skeleton-line {
+  display: block;
+  flex: 1;
+  block-size: 10px;
+  border-radius: var(--ds-radius-sm);
+}
+
+.season-visual { margin: var(--ds-space-4) 0 0; }
+
+.season-visual svg {
+  inline-size: 100%;
+  block-size: 48px;
+  color: var(--ds-color-accent);
+}
+
+.season-visual figcaption {
+  margin-top: var(--ds-space-2);
+  color: var(--ds-color-ink-subtle);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-xs);
+}
+
+.node {
+  inline-size: 16px;
+  block-size: 16px;
+  color: var(--ds-color-ink-subtle);
+}
+
+.node-stone { color: var(--ds-color-primary); }
+
+.ritual-button .icon {
+  inline-size: 16px;
+  block-size: 16px;
+  vertical-align: middle;
+}

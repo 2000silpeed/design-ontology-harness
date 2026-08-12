@@ -14,6 +14,7 @@ mockup HTML links this file and consumes only ``var(--ds-*)`` values, so
 
 from __future__ import annotations
 
+import colorsys
 import json
 import re
 from pathlib import Path
@@ -33,6 +34,11 @@ from .implementation_linter import (
     BODY_LINE_HEIGHT_FLOOR,
     BODY_LINE_HEIGHT_FLOOR_HANGUL,
 )
+from .interaction_css import (
+    build_interaction_contract_md,
+    build_interactions_css,
+)
+from .motion_reference import build_motion_system, motion_token_declarations
 from .semantic_color_markdown import (
     load_runtime_color_policy,
     payload_sha256,
@@ -301,6 +307,123 @@ def _hex_saturation_lightness(value: str) -> tuple[float, float]:
     return saturation, lightness
 
 
+#: How far the brand hue bleeds into the neutral ramp. Low enough to still read
+#: as neutral, high enough that two brands do not share one grey.
+_NEUTRAL_TINT = {
+    "canvas": 0.030,
+    "surface": 0.012,
+    "surface-elevated": 0.008,
+    "surface-muted": 0.048,
+    "border": 0.075,
+    "border-strong": 0.115,
+    "ink-subtle": 0.130,
+    "ink-muted": 0.155,
+    "ink": 0.110,
+}
+
+#: Lightness for each neutral step, per surface temperament.
+#: Text steps sit low enough to clear 4.5:1 on their own surface, and
+#: ``border-strong`` low enough for the 3:1 non-text floor, before the contrast
+#: pass runs. A ramp that needs rescuing is a ramp that will drift.
+_NEUTRAL_LIGHTNESS = {
+    "paper": {
+        "canvas": 0.955, "surface": 0.988, "surface-elevated": 1.0, "surface-muted": 0.928,
+        "border": 0.855, "border-strong": 0.595, "ink-subtle": 0.430, "ink-muted": 0.345,
+        "ink": 0.145,
+    },
+    "clinical": {
+        "canvas": 0.975, "surface": 1.0, "surface-elevated": 1.0, "surface-muted": 0.950,
+        "border": 0.875, "border-strong": 0.610, "ink-subtle": 0.425, "ink-muted": 0.335,
+        "ink": 0.115,
+    },
+    "deep": {
+        "canvas": 0.935, "surface": 0.975, "surface-elevated": 0.995, "surface-muted": 0.900,
+        "border": 0.820, "border-strong": 0.575, "ink-subtle": 0.405, "ink-muted": 0.315,
+        "ink": 0.095,
+    },
+}
+
+_PAPER_KEYWORDS = {
+    "paper", "editorial", "calm", "quiet", "warm", "reading", "archive", "craft",
+    "organic", "natural", "vintage", "soft", "종이", "차분", "따뜻",
+}
+_DEEP_KEYWORDS = {
+    "cinematic", "dramatic", "premium", "luxury", "night", "moody", "bold",
+    "contrast", "深", "묵직",
+}
+
+
+def _hls_to_hex(hue: float, lightness: float, saturation: float) -> str:
+    r, g, b = colorsys.hls_to_rgb(hue % 1.0, max(0.0, min(1.0, lightness)), max(0.0, min(1.0, saturation)))
+    return "#{:02X}{:02X}{:02X}".format(round(r * 255), round(g * 255), round(b * 255))
+
+
+def _hex_hue(value: str) -> float | None:
+    raw = value.lstrip("#")
+    if len(raw) != 6:
+        return None
+    try:
+        r, g, b = (int(raw[i : i + 2], 16) / 255.0 for i in (0, 2, 4))
+    except ValueError:
+        return None
+    hue, _, saturation = colorsys.rgb_to_hls(r, g, b)
+    return hue if saturation > 0.02 else None
+
+
+def _neutral_temperament(brand_profile: dict | None, blueprint: dict | None) -> str:
+    """Pick the neutral ladder from what the brand says about itself."""
+    words: set[str] = set()
+    for source in (brand_profile or {}, blueprint or {}):
+        for key in ("brand_keywords", "visual_keywords", "tone_of_voice"):
+            for item in source.get(key) or ():
+                words.update(str(item).lower().split())
+    density = str(((brand_profile or {}).get("layout_skeleton") or {}).get("density") or "")
+    if words & _DEEP_KEYWORDS:
+        return "deep"
+    if (words & _PAPER_KEYWORDS) or density == "spacious":
+        return "paper"
+    return "clinical"
+
+
+def derive_neutral_ramp(
+    anchor_hex: str | None,
+    *,
+    temperament: str = "clinical",
+) -> dict[str, str]:
+    """Build a neutral ramp carrying the brand's hue.
+
+    Every project shipping the same ``#F7F8FA`` canvas and ``#0F172A`` ink is the
+    single loudest tell of a generated interface. Real systems tint their greys
+    toward the brand, so a warm brand gets warm neutrals. The tint stays small
+    enough to read as neutral; what changes is the temperature of the whole
+    screen.
+    """
+    hue = _hex_hue(anchor_hex or "")
+    steps = _NEUTRAL_LIGHTNESS.get(temperament, _NEUTRAL_LIGHTNESS["clinical"])
+    if hue is None:
+        # No usable brand hue: keep the ladder, drop the tint.
+        return {role: _hls_to_hex(0.0, lightness, 0.0) for role, lightness in steps.items()}
+    return {
+        role: _hls_to_hex(hue, lightness, _NEUTRAL_TINT.get(role, 0.0))
+        for role, lightness in steps.items()
+    }
+
+
+def _dominant_palette_hex(active_roles: dict) -> str | None:
+    """Most saturated colour in the active palette, as a hue anchor."""
+    best: tuple[float, str] | None = None
+    for entry in (active_roles or {}).values():
+        hex_value = entry.get("hex") if isinstance(entry, dict) else entry
+        if not (isinstance(hex_value, str) and len(hex_value) == 7 and hex_value.startswith("#")):
+            continue
+        saturation, lightness = _hex_saturation_lightness(hex_value)
+        if saturation < 0.12 or not 0.1 <= lightness <= 0.9:
+            continue
+        if best is None or saturation > best[0]:
+            best = (saturation, hex_value)
+    return best[1] if best else None
+
+
 def _brand_role_overrides(active_roles: dict) -> dict[str, str]:
     """Derive primary/accent/canvas/border from project palette role names.
 
@@ -425,6 +548,19 @@ def emit_project_tokens(
         semantic_tokens["surface-tint"] = runtime_defaults["surface-tint"]
         semantic_tokens["border-strong"] = runtime_defaults["border-strong"]
         semantic_tokens["link"] = ink
+    if not chrome_active:
+        # Neutrals are a brand decision too. Filling them from a fixed table is
+        # what made every project ship the same slate canvas and slate ink, so
+        # derive the ladder from the brand hue and let the fixed defaults cover
+        # only what remains (status colours, inverse ink).
+        anchor = (
+            semantic_tokens.get("primary")
+            or semantic_tokens.get("accent")
+            or _dominant_palette_hex(active_roles_early)
+        )
+        temperament = _neutral_temperament(brand_profile, bundle.blueprint)
+        for role, hex_value in derive_neutral_ramp(anchor, temperament=temperament).items():
+            semantic_tokens.setdefault(role, hex_value)
     semantic_tokens = apply_light_contrast_floor(_ensure_base_roles(semantic_tokens))
     color_reference = bundle.blueprint.get("color_reference") or {}
     explicit_dark = (
@@ -535,14 +671,12 @@ def emit_project_tokens(
     for value in sorted(spacing_aliases):
         lines.append(f"  --ds-space-px-{value}: {value}px;")
 
-    lines.extend([
-        "",
-        "  /* component motion contract */",
-        "  --ds-duration-120: 120ms;",
-        "  --ds-duration-180: 180ms;",
-        "  --ds-ease-standard: cubic-bezier(0.2, 0, 0, 1);",
-        "  --ds-elevation-lg: 0 18px 48px color-mix(in srgb, var(--ds-color-ink) 16%, transparent);",
-    ])
+    lines.append("")
+    lines.append("  /* motion system (blueprint motion_system) */")
+    lines.extend(motion_token_declarations(build_motion_system(blueprint)))
+    lines.append(
+        "  --ds-elevation-lg: 0 18px 48px color-mix(in srgb, var(--ds-color-ink) 16%, transparent);"
+    )
 
     lines.append("}")
     lines.append("")
@@ -562,7 +696,23 @@ def emit_project_tokens(
 
     if output_path is None:
         _emit_font_loading(target.parent, font_system, project_dir.name)
+        _emit_interaction_contract(target.parent, blueprint, project_dir.name)
     return target
+
+
+def _emit_interaction_contract(artifact_dir: Path, blueprint: dict, project: str) -> None:
+    """`interactions.css`와 `INTERACTION.md`를 방출한다.
+
+    선택 결과가 JSON에만 남으면 구현은 그것을 읽지 않는다. 선택을 실행 가능한
+    스타일시트로 내려보내야 선택을 바꿨을 때 화면이 바뀐다.
+    """
+    selection = blueprint.get("interaction_selection") or {}
+    (artifact_dir / "interactions.css").write_text(
+        build_interactions_css(selection, project), encoding="utf-8"
+    )
+    (artifact_dir / "INTERACTION.md").write_text(
+        build_interaction_contract_md(selection, project), encoding="utf-8"
+    )
 
 
 def _emit_font_loading(artifact_dir: Path, font_system: dict, project: str) -> None:
