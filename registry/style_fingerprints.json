@@ -1067,8 +1067,83 @@
       }
     },
     {
+      "project": "lookme-toss-inapp",
+      "recorded_at": "2026-08-13T13:23:04+00:00",
+      "note": null,
+      "fingerprint": {
+        "project": "lookme-toss-inapp",
+        "schema_version": "style-fingerprint/v1",
+        "source_files": [
+          "design-system/fonts.css",
+          "design-system/fonts/local.css",
+          "design-system/interactions.css",
+          "design-system/tokens.css",
+          "index.html",
+          "styles.css"
+        ],
+        "source_snapshot_sha256": "ddab179aaa3809b5b0f2a91f5d15ac103c74ec58b946693e113b9d61461ad474",
+        "surface_tone": "cool-tinted",
+        "surface_hexes": [
+          "#E8EDEC",
+          "#E8EDEC",
+          "#E8EDEC",
+          "#E8EDEC"
+        ],
+        "accent_hue_buckets": [
+          "green",
+          "yellow",
+          "cyan",
+          "magenta",
+          "amber",
+          "violet"
+        ],
+        "accent_hexes": [
+          "#27503D",
+          "#006A4E",
+          "#4F7942",
+          "#595CA1",
+          "#9C1B31",
+          "#0A7F70",
+          "#76C1B1",
+          "#00A591"
+        ],
+        "font_families": [],
+        "serif_accent": false,
+        "radius_values_px": [],
+        "uses_pill_shapes": false,
+        "color_count": 40,
+        "separation_style": "table-ledger",
+        "composition_markers": [
+          "canvas",
+          "footer",
+          "header",
+          "table"
+        ],
+        "duration_values_ms": [
+          80.0,
+          120.0,
+          180.0,
+          240.0,
+          1600.0
+        ],
+        "easing_signatures": [
+          "emphasized",
+          "enter",
+          "standard"
+        ],
+        "transition_properties": [
+          "color",
+          "opacity",
+          "transform"
+        ],
+        "has_decorative_loop": false,
+        "enter_exit_asymmetry": false,
+        "supports_dark_theme": true
+      }
+    },
+    {
       "project": "shotline-desk",
-      "recorded_at": "2026-08-12T14:17:59+00:00",
+      "recorded_at": "2026-08-13T13:23:04+00:00",
       "note": null,
       "fingerprint": {
         "project": "shotline-desk",
@@ -1107,7 +1182,6 @@
           "#27503D"
         ],
         "font_families": [
-          "Pretendard",
           "IBM Plex Mono"
         ],
         "serif_accent": false,
@@ -1138,7 +1212,7 @@
     },
     {
       "project": "slowread-archive",
-      "recorded_at": "2026-08-12T14:17:59+00:00",
+      "recorded_at": "2026-08-13T13:23:04+00:00",
       "note": null,
       "fingerprint": {
         "project": "slowread-archive",
@@ -1176,7 +1250,6 @@
         ],
         "font_families": [
           "Noto Serif KR",
-          "Pretendard",
           "Georgia"
         ],
         "serif_accent": true,

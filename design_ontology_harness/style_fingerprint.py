@@ -63,6 +63,25 @@ HUE_BUCKET_NAMES = [
     "magenta",
 ]
 
+#: Hangul UI faces that carry no design identity on their own. A Korean product
+#: picking Pretendard for body text is legibility, not a converged aesthetic —
+#: the identity lives in the display pairing, which is still counted. Kept
+#: separate from GENERIC_FONT_TOKENS so serif-accent detection still sees them.
+HANGUL_UI_BODY_FACES = {
+    "pretendard",
+    "pretendard variable",
+    "pretendard std",
+    "noto sans kr",
+    "noto sans korean",
+    "spoqa han sans",
+    "spoqa han sans neo",
+    "nanumsquare",
+    "nanum gothic",
+    "wanted sans",
+    "suit",
+    "ibm plex sans kr",
+}
+
 GENERIC_FONT_TOKENS = {
     "system-ui",
     "sans-serif",
@@ -303,6 +322,8 @@ def _extract_fonts(text: str) -> tuple[list[str], bool]:
         if generics and named:
             serif_accent = True
         for name in named:
+            if name and name.lower() in HANGUL_UI_BODY_FACES:
+                continue
             if name and name not in families:
                 families.append(name)
     for match in re.finditer(r"--ds-font-[\w-]+\s*:\s*(?P<value>[^;{}]+)", text):
@@ -310,14 +331,19 @@ def _extract_fonts(text: str) -> tuple[list[str], bool]:
             name = part.strip().strip("'\"").strip()
             if not name or "(" in name or ")" in name:
                 continue
-            if name.lower() in GENERIC_FONT_TOKENS:
+            if name.lower() in GENERIC_FONT_TOKENS or name.lower() in HANGUL_UI_BODY_FACES:
                 continue
             if name not in families:
                 families.append(name)
     for match in GOOGLE_FONTS_FAMILY_RE.finditer(text):
         name = match.group("family").replace("+", " ").strip()
         name = re.sub(r":.*$", "", name)
-        if name and name not in families and name.lower() not in GENERIC_FONT_TOKENS:
+        if (
+            name
+            and name not in families
+            and name.lower() not in GENERIC_FONT_TOKENS
+            and name.lower() not in HANGUL_UI_BODY_FACES
+        ):
             families.append(name)
         if "serif" in name.lower():
             serif_accent = True

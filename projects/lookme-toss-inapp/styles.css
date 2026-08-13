@@ -1,0 +1,286 @@
+/* LookMe Toss 인앱 — 실제 모바일 화면.
+   한 번에 한 단계만 보이고, 전진 동작은 화면당 하나다.
+   미감 방향: 금융 앱 옆에 놓여도 튀지 않는 조용한 신뢰. 장식 대신 여백과 위계,
+   선택지는 카드가 아니라 실물 이미지가 먼저 읽히는 행.
+   색·서체·간격·모션은 전부 design-system 토큰에서 온다. */
+
+* { box-sizing: border-box; }
+
+html {
+  block-size: 100%;
+  background: var(--ds-color-surface-muted);
+}
+
+body {
+  margin: 0;
+  min-block-size: 100%;
+  color: var(--ds-color-ink);
+  background: var(--ds-color-surface-muted);
+  font-family: var(--ds-font-body);
+  /* 모바일 본문은 토큰 스케일의 큰 단계를 쓴다 — sm(12px)은 보조 정보용이다 */
+  font-size: var(--ds-text-lg);
+  line-height: var(--ds-leading-body);
+  word-break: var(--ds-wrap-word-break);
+  overflow-wrap: var(--ds-wrap-overflow);
+}
+
+h1, h2 { margin: 0; text-wrap: balance; line-height: var(--ds-leading-tight); }
+p { margin: 0; }
+button { font: inherit; }
+button:focus-visible { outline: 2px solid var(--ds-color-accent); outline-offset: 2px; }
+
+/* 모바일 웹이라 폭을 제한하고 가운데 둔다. 데스크톱에서 열어도 앱처럼 읽힌다. */
+.app {
+  display: flex;
+  flex-direction: column;
+  inline-size: min(100%, 26.875rem);
+  min-block-size: 100dvh;
+  margin-inline: auto;
+  background: var(--ds-color-canvas);
+}
+
+/* ── 상단 바 ─────────────────────────────────── */
+.app-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-4);
+  padding: var(--ds-space-4) var(--ds-space-5);
+  border-block-end: 1px solid var(--ds-color-border);
+  background: var(--ds-color-canvas);
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 44px;
+  block-size: 44px;
+  margin-inline-start: calc(var(--ds-space-4) * -1);
+  border: 0;
+  border-radius: var(--ds-radius-md);
+  background: transparent;
+  color: var(--ds-color-ink-muted);
+  cursor: pointer;
+}
+
+.icon-btn svg { inline-size: 20px; block-size: 20px; }
+.app[data-step="1"] .icon-btn { visibility: hidden; }
+
+.app-title {
+  font-size: var(--ds-text-md);
+  font-weight: 650;
+  letter-spacing: -.01em;
+}
+
+.steps {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  margin-inline-start: auto;
+}
+
+.steps-anchor {
+  inline-size: 10px;
+  block-size: 3px;
+  border-radius: var(--ds-radius-pill);
+  background: var(--ds-color-primary);
+}
+
+.dot {
+  inline-size: 5px;
+  block-size: 5px;
+  border-radius: var(--ds-radius-pill);
+  background: var(--ds-color-border-strong);
+}
+
+.dot.is-on { background: var(--ds-color-primary); }
+
+/* ── 화면 ────────────────────────────────────── */
+.view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+.view[hidden] { display: none; }
+
+.view-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-6);
+  padding: var(--ds-space-6) var(--ds-space-6) var(--ds-space-7);
+}
+
+.view-body-center { justify-content: center; text-align: center; }
+
+.lede { font-size: var(--ds-text-3xl); font-weight: 700; }
+.head { font-size: var(--ds-text-2xl); font-weight: 650; }
+.sub { color: var(--ds-color-ink-muted); }
+
+.hero-visual, .result { margin: 0; }
+.hero-visual svg, .result svg {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  color: var(--ds-color-primary);
+}
+
+.result svg { border-radius: var(--ds-radius-lg); }
+
+.result figcaption {
+  margin-block-start: var(--ds-space-3);
+  color: var(--ds-color-ink-subtle);
+  font-size: var(--ds-text-md);
+}
+
+.facts {
+  display: grid;
+  gap: var(--ds-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ds-color-ink-muted);
+}
+
+.facts li {
+  padding-block-end: var(--ds-space-4);
+  border-block-end: 1px solid var(--ds-color-border);
+}
+
+.facts b { color: var(--ds-color-ink); font-weight: 650; }
+
+/* ── 스타일 세트 ─────────────────────────────── */
+.sets { display: grid; gap: var(--ds-space-3); margin: 0; padding: 0; list-style: none; }
+
+.set {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: var(--ds-space-4);
+  min-block-size: 44px;
+  padding: var(--ds-space-4);
+  border: 1px solid var(--ds-color-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-color-surface);
+  cursor: pointer;
+}
+
+.set-visual {
+  inline-size: 64px;
+  block-size: 64px;
+  border-radius: var(--ds-radius-md);
+  background: var(--ds-color-surface-muted);
+  color: var(--ds-color-primary);
+}
+
+.set-name { font-size: var(--ds-text-lg); }
+.set-tags {
+  margin-block-start: var(--ds-space-1);
+  color: var(--ds-color-ink-subtle);
+  font-size: var(--ds-text-md);
+}
+
+.check { inline-size: 20px; block-size: 20px; color: var(--ds-color-primary); }
+
+/* ── 생성 대기 ───────────────────────────────── */
+.status { color: var(--ds-color-ink-muted); }
+
+.skeletons { display: grid; gap: var(--ds-space-4); justify-items: center; }
+.sk { display: block; border-radius: var(--ds-radius-md); }
+.sk-frame { inline-size: 70%; block-size: 12rem; }
+.sk-line { inline-size: 80%; block-size: 12px; border-radius: var(--ds-radius-sm); }
+.sk-short { inline-size: 50%; }
+
+.wait-facts { display: grid; gap: var(--ds-space-4); margin: 0; text-align: start; }
+.wait-facts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--ds-space-4);
+  padding-block-end: var(--ds-space-4);
+  border-block-end: 1px solid var(--ds-color-border);
+}
+.wait-facts dt { color: var(--ds-color-ink-subtle); font-size: var(--ds-text-md); }
+.wait-facts dd { margin: 0; font-size: var(--ds-text-md); }
+
+/* ── 결과 ────────────────────────────────────── */
+.used-note {
+  padding: var(--ds-space-5);
+  border: 1px solid var(--ds-color-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-color-surface);
+  color: var(--ds-color-ink-muted);
+  font-size: var(--ds-text-md);
+}
+
+.credits { inline-size: 100%; border-collapse: collapse; font-size: var(--ds-text-md); }
+
+.credits caption {
+  margin-block-end: var(--ds-space-3);
+  color: var(--ds-color-ink-subtle);
+  font-size: var(--ds-text-sm);
+  text-align: start;
+}
+
+.credits th,
+.credits td {
+  /* 행이 선택 가능하므로 44px 터치 타겟을 패딩으로 확보한다 */
+  padding: var(--ds-space-4) var(--ds-space-2);
+  border-block-end: 1px solid var(--ds-color-border);
+  text-align: start;
+}
+
+.credits thead th {
+  color: var(--ds-color-ink-subtle);
+  font-size: var(--ds-text-sm);
+  font-weight: 500;
+}
+
+.credits tbody tr { cursor: pointer; }
+.credits tbody th { font-weight: 650; }
+
+/* ── 하단 액션 ───────────────────────────────── */
+.action-bar {
+  position: sticky;
+  inset-block-end: 0;
+  display: grid;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-5) var(--ds-space-6)
+           calc(var(--ds-space-6) + env(safe-area-inset-bottom, 0px));
+  border-block-start: 1px solid var(--ds-color-border);
+  background: var(--ds-color-surface);
+}
+
+.row-actions { display: flex; gap: var(--ds-space-3); }
+.row-actions .btn { flex: 1; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-2);
+  min-block-size: 52px;
+  padding: 0 var(--ds-space-5);
+  border: 1px solid var(--ds-color-border-strong);
+  border-radius: var(--ds-radius-lg);
+  color: var(--ds-color-ink);
+  background: var(--ds-color-canvas);
+  cursor: pointer;
+  font-size: var(--ds-text-lg);
+}
+
+.btn-primary {
+  border-color: var(--ds-color-primary);
+  color: var(--ds-color-ink-inverse);
+  background: var(--ds-color-primary);
+  font-weight: 650;
+}
+
+.icon { inline-size: 18px; block-size: 18px; flex: 0 0 auto; }
+
+.micro {
+  color: var(--ds-color-ink-subtle);
+  font-size: var(--ds-text-md);
+  text-align: center;
+}
