@@ -232,5 +232,401 @@
         "No external reference assets are final app assets."
       ]
     }
-  }
+  },
+  "application_concept": {
+    "primary_job": "얼굴 사진 한 장으로 선택한 스타일의 착장샷을 무료로 한 번 만들어보고, 살지 말지 판단한다",
+    "domain_objects": [
+      "FacePhoto",
+      "BodySampleTemplate",
+      "StyleSet",
+      "OutfitResult",
+      "CreditWallet",
+      "WardrobeItem"
+    ],
+    "operating_mode": "transaction",
+    "success_moment": "내 얼굴이 들어간 착장샷이 화면에 뜨고, 저장하거나 다른 스타일을 이어서 만들 수 있다",
+    "differentiation": [
+      "체형을 입력받지 않고 비슷한 샘플을 고르게 해서 첫 결과까지 걸리는 시간을 줄인다",
+      "무료 1회의 경계를 숨기지 않고 결과 화면에서 먼저 알린다",
+      "얼굴 사진의 사용 범위와 삭제 정책을 동의 단계에서 분리해 보여준다"
+    ]
+  },
+  "layout_skeleton": {
+    "composition": "wizard-flow",
+    "navigation_model": "none",
+    "density": "balanced",
+    "primary_regions": [
+      {
+        "name": "Step canvas",
+        "role": "한 번에 하나의 결정만 요구하는 단계 본문",
+        "priority": "primary"
+      },
+      {
+        "name": "Primary action bar",
+        "role": "화면당 하나의 전진 동작을 고정 위치에 두는 하단 바",
+        "priority": "primary"
+      },
+      {
+        "name": "Trust note",
+        "role": "사진 사용 범위와 무료 한도를 결정 직전에 알리는 자리",
+        "priority": "secondary"
+      }
+    ],
+    "first_screen_contract": [
+      "무엇을 얻는지가 한 문장으로 보여야 한다",
+      "무료 1회라는 조건이 CTA 근처에 보여야 한다",
+      "사진이 어디에 쓰이는지 한 줄로 보여야 한다",
+      "앱 대시보드형 네비게이션이 보이지 않아야 한다"
+    ],
+    "avoid_layouts": [
+      "generic hero plus card grid",
+      "uniform dashboard metric cards",
+      "app-like tab bar on first entry",
+      "shopping mall product grid",
+      "infinite feed with engagement counters"
+    ]
+  },
+  "design_differentiation": {
+    "must_feel_different_from": [
+      "쇼핑몰 상품 그리드",
+      "패션 편집숍 에디토리얼",
+      "일반 AI 이미지 생성 툴"
+    ],
+    "signature_moves": [
+      "한 화면 한 결정: 전진 버튼은 언제나 하나",
+      "선택지는 카드가 아니라 실물 이미지가 먼저 읽히는 타일",
+      "유료 경계를 결과 화면에서 문장으로 먼저 알리기"
+    ],
+    "repetition_risks": [
+      "카드 격자로 수렴",
+      "히어로+특징3칸 랜딩",
+      "상태를 배지 색으로만 표현"
+    ]
+  },
+  "component_decision": {
+    "mode": "explicit",
+    "primitive_reconciliation_version": "product-primitive-reconciliation/v1",
+    "primitive_reconciliation": [
+      {
+        "primitive": "Toss short funnel landing",
+        "resolution": "component",
+        "component": "funnel-landing",
+        "reason": "진입 화면은 전환의 시작이라 독립 컴포넌트다."
+      },
+      {
+        "primitive": "required and optional consent groups",
+        "resolution": "component",
+        "component": "consent-group",
+        "reason": "필수와 선택을 섞지 않으려면 그룹 자체가 계약이다."
+      },
+      {
+        "primitive": "face photo capture/upload",
+        "resolution": "component",
+        "component": "photo-intake",
+        "reason": "촬영과 업로드, 미리보기, 검증이 한 덩어리다."
+      },
+      {
+        "primitive": "body sample selector",
+        "resolution": "component",
+        "component": "sample-picker",
+        "reason": "체형 입력 대신 고르는 것이 이 제품의 핵심 단축이다."
+      },
+      {
+        "primitive": "Colorfit real item image set selector",
+        "resolution": "component",
+        "component": "style-set-picker",
+        "reason": "실물 이미지가 먼저 읽혀야 해서 별도 타일 문법이 필요하다."
+      },
+      {
+        "primitive": "generation progress state",
+        "resolution": "component",
+        "component": "generation-progress",
+        "reason": "대기 시간이 이탈 구간이라 별도 상태 면이 필요하다."
+      },
+      {
+        "primitive": "AI outfit result viewer",
+        "resolution": "component",
+        "component": "result-canvas",
+        "reason": "결과 이미지가 이 제품의 가치 전달 지점이다."
+      },
+      {
+        "primitive": "save and share actions",
+        "resolution": "anatomy",
+        "component": "result-canvas",
+        "anatomy_parts": [
+          "action-row"
+        ],
+        "reason": "저장·공유는 결과 화면의 해부이지 독립 면이 아니다."
+      },
+      {
+        "primitive": "credit wallet and paywall",
+        "resolution": "component",
+        "component": "credit-upsell",
+        "reason": "유료 경계는 숨기지 않고 명시적 면으로 다룬다."
+      },
+      {
+        "primitive": "paid wardrobe item upload",
+        "resolution": "component",
+        "component": "wardrobe-intake",
+        "reason": "옷장 업로드는 크레딧 구매 뒤에만 열리는 별도 흐름이다."
+      },
+      {
+        "primitive": "wardrobe item grid",
+        "resolution": "anatomy",
+        "component": "wardrobe-intake",
+        "anatomy_parts": [
+          "item-grid"
+        ],
+        "reason": "등록한 옷 목록은 업로드 면 안에서 함께 읽힌다."
+      },
+      {
+        "primitive": "wardrobe generation flow",
+        "resolution": "anatomy",
+        "component": "wardrobe-intake",
+        "anatomy_parts": [
+          "generate-action"
+        ],
+        "reason": "옷장 생성은 같은 면의 마지막 동작이다."
+      },
+      {
+        "primitive": "toast and error feedback",
+        "resolution": "component",
+        "component": "inline-feedback",
+        "reason": "실패를 되돌릴 수 있게 하려면 문맥 안 피드백이 필요하다."
+      }
+    ],
+    "core_components": [
+      {
+        "name": "funnel-landing",
+        "family": "landing",
+        "role": "값과 조건을 한 화면에서 알리고 무료 생성을 시작한다",
+        "supports_primitive": "Toss short funnel landing",
+        "decision_reason": "진입 직후 판단이 끝나야 퍼널이 짧아진다.",
+        "anatomy": [
+          "headline",
+          "value-line",
+          "free-badge",
+          "trust-note",
+          "primary-cta"
+        ],
+        "states": [
+          "default",
+          "loading"
+        ],
+        "tokens": {
+          "component.funnel-landing.surface": "var(--ds-color-canvas)",
+          "part.free-badge.border": "var(--ds-color-border-strong)",
+          "state.loading.text": "var(--ds-color-ink-muted)"
+        }
+      },
+      {
+        "name": "consent-group",
+        "family": "form",
+        "role": "필수와 선택 동의를 분리해 받는다",
+        "supports_primitive": "required and optional consent groups",
+        "decision_reason": "둘을 섞으면 동의의 의미가 무너진다.",
+        "anatomy": [
+          "group-title",
+          "consent-row",
+          "detail-link",
+          "required-mark"
+        ],
+        "states": [
+          "default",
+          "checked",
+          "attention-required"
+        ],
+        "tokens": {
+          "component.consent-group.surface": "var(--ds-color-surface)",
+          "part.consent-row.border": "var(--ds-color-border)",
+          "state.attention-required.text": "var(--ds-color-warning)"
+        }
+      },
+      {
+        "name": "photo-intake",
+        "family": "input",
+        "role": "얼굴 사진을 찍거나 올리고 미리 확인한다",
+        "supports_primitive": "face photo capture/upload",
+        "decision_reason": "미리보기 없이 넘기면 결과 실패가 늦게 발견된다.",
+        "anatomy": [
+          "capture-frame",
+          "preview",
+          "guidance",
+          "retake-action"
+        ],
+        "states": [
+          "default",
+          "selected",
+          "validating",
+          "invalid"
+        ],
+        "tokens": {
+          "component.photo-intake.surface": "var(--ds-color-surface-muted)",
+          "part.capture-frame.border": "var(--ds-color-border-strong)",
+          "state.invalid.text": "var(--ds-color-danger)"
+        }
+      },
+      {
+        "name": "sample-picker",
+        "family": "selection",
+        "role": "비슷한 체형 샘플을 고른다",
+        "supports_primitive": "body sample selector",
+        "decision_reason": "정확한 신체가 아니라 미리보기용 템플릿임을 형태로 드러내야 한다.",
+        "anatomy": [
+          "sample-tile",
+          "thumbnail",
+          "label",
+          "selected-mark"
+        ],
+        "states": [
+          "default",
+          "selected",
+          "filtered"
+        ],
+        "tokens": {
+          "component.sample-picker.surface": "var(--ds-color-canvas)",
+          "part.sample-tile.border": "var(--ds-color-border)",
+          "state.selected.border": "var(--ds-color-primary)"
+        }
+      },
+      {
+        "name": "style-set-picker",
+        "family": "selection",
+        "role": "Colorfit 실물 이미지 세트를 고른다",
+        "supports_primitive": "Colorfit real item image set selector",
+        "decision_reason": "옷은 이름보다 사진으로 판단된다.",
+        "anatomy": [
+          "set-tile",
+          "item-images",
+          "set-name",
+          "tag-row",
+          "premium-mark"
+        ],
+        "states": [
+          "default",
+          "selected",
+          "content-enter"
+        ],
+        "tokens": {
+          "component.style-set-picker.surface": "var(--ds-color-canvas)",
+          "part.set-tile.border": "var(--ds-color-border)",
+          "state.selected.border": "var(--ds-color-primary)"
+        }
+      },
+      {
+        "name": "generation-progress",
+        "family": "status",
+        "role": "생성 대기 상태를 설명한다",
+        "supports_primitive": "generation progress state",
+        "decision_reason": "대기 구간이 가장 큰 이탈 지점이다.",
+        "anatomy": [
+          "progress-visual",
+          "status-text",
+          "step-hint"
+        ],
+        "states": [
+          "loading",
+          "processing"
+        ],
+        "tokens": {
+          "component.generation-progress.surface": "var(--ds-color-surface-muted)",
+          "part.status-text.text": "var(--ds-color-ink-muted)",
+          "state.loading.indicator": "var(--ds-color-accent)"
+        }
+      },
+      {
+        "name": "result-canvas",
+        "family": "document",
+        "role": "생성된 착장샷과 다음 행동을 보여준다",
+        "supports_primitive": "AI outfit result viewer",
+        "decision_reason": "결과 이미지가 이 제품의 가치 전달 지점이다.",
+        "anatomy": [
+          "result-image",
+          "used-note",
+          "action-row",
+          "next-style-action"
+        ],
+        "states": [
+          "default",
+          "content-enter",
+          "saved"
+        ],
+        "tokens": {
+          "component.result-canvas.surface": "var(--ds-color-canvas)",
+          "part.result-image.border": "var(--ds-color-border)",
+          "state.saved.text": "var(--ds-color-success)"
+        }
+      },
+      {
+        "name": "credit-upsell",
+        "family": "commerce",
+        "role": "무료 소진 이후의 선택지를 알린다",
+        "supports_primitive": "credit wallet and paywall",
+        "decision_reason": "유료 경계를 숨기면 신뢰가 깨진다.",
+        "anatomy": [
+          "balance-line",
+          "package-row",
+          "price",
+          "purchase-action"
+        ],
+        "states": [
+          "default",
+          "selected",
+          "processing"
+        ],
+        "tokens": {
+          "component.credit-upsell.surface": "var(--ds-color-surface)",
+          "part.package-row.border": "var(--ds-color-border-strong)",
+          "state.selected.border": "var(--ds-color-primary)"
+        }
+      },
+      {
+        "name": "wardrobe-intake",
+        "family": "input",
+        "role": "내 옷 이미지를 올리고 착장샷을 만든다",
+        "supports_primitive": "paid wardrobe item upload",
+        "decision_reason": "크레딧 구매의 이유가 되는 프리미엄 가치다.",
+        "anatomy": [
+          "upload-action",
+          "item-grid",
+          "category-chip",
+          "generate-action"
+        ],
+        "states": [
+          "default",
+          "loading",
+          "empty",
+          "selected"
+        ],
+        "tokens": {
+          "component.wardrobe-intake.surface": "var(--ds-color-surface)",
+          "part.item-grid.border": "var(--ds-color-border)",
+          "state.empty.text": "var(--ds-color-ink-subtle)"
+        }
+      },
+      {
+        "name": "inline-feedback",
+        "family": "status",
+        "role": "실패와 확인을 문맥 안에서 알린다",
+        "supports_primitive": "toast and error feedback",
+        "decision_reason": "되돌릴 수 있는 실패로 만들려면 문맥 안에 있어야 한다.",
+        "anatomy": [
+          "icon",
+          "message",
+          "recovery-action"
+        ],
+        "states": [
+          "default",
+          "attention-required"
+        ],
+        "tokens": {
+          "component.inline-feedback.surface": "var(--ds-color-surface-muted)",
+          "part.message.text": "var(--ds-color-ink)",
+          "state.attention-required.border": "var(--ds-color-warning)"
+        }
+      }
+    ]
+  },
+  "interaction_variation_seed": 5,
+  "design_variation_seed": 5
 }

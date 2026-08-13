@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>LookMe — 무료 착장샷 만들기</title>
+    <link rel="stylesheet" href="design-system/tokens.css" />
+    <link rel="stylesheet" href="design-system/fonts.css" />
+    <link rel="stylesheet" href="design-system/interactions.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app" data-step="1">
+      <header class="app-bar">
+        <button class="icon-btn" type="button" data-back aria-label="뒤로">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6"
+                  stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <span class="app-title">LookMe</span>
+        <nav class="steps" data-interaction="anchored-shift" aria-label="진행 단계">
+          <span class="steps-anchor" data-anchor aria-hidden="true"></span>
+          <span class="dot" data-dot="1"></span><span class="dot" data-dot="2"></span>
+          <span class="dot" data-dot="3"></span><span class="dot" data-dot="4"></span>
+        </nav>
+      </header>
+
+      <!-- STEP 1 -->
+      <main class="view" data-view="1" aria-labelledby="v1-title">
+        <div class="view-body">
+          <h1 id="v1-title" class="lede">내 얼굴로<br />미리 입어보는<br />AI 착장샷</h1>
+          <p class="sub">구매 전, 나한테 어울리는지 먼저 확인하세요.</p>
+
+          <figure class="hero-visual">
+            <svg viewBox="0 0 320 200" role="img" data-visual="outfit-preview"
+                 aria-labelledby="pv-t pv-d">
+              <title id="pv-t">착장샷 미리보기 예시</title>
+              <desc id="pv-d">얼굴 사진과 체형 샘플에 스타일이 입혀진 전신 착장 이미지 세 컷.</desc>
+              <rect x="6" y="14" width="92" height="176" rx="8" fill="currentColor" opacity=".1" />
+              <rect x="112" y="6" width="96" height="188" rx="8" fill="currentColor" opacity=".18" />
+              <rect x="222" y="14" width="92" height="176" rx="8" fill="currentColor" opacity=".1" />
+              <circle cx="160" cy="62" r="19" fill="currentColor" opacity=".55" />
+              <path d="M132 194c0-30 12-52 28-52s28 22 28 52z" fill="currentColor" opacity=".5" />
+              <path d="M140 118h40" stroke="currentColor" stroke-width="2.5" opacity=".35" />
+            </svg>
+          </figure>
+
+          <ul class="facts">
+            <li><b>무료 1회</b> · 카드 등록 없이 바로</li>
+            <li>사진은 <b>착장 이미지 생성에만</b> 사용</li>
+            <li>결과 확인까지 <b>약 40초</b></li>
+          </ul>
+        </div>
+
+        <div class="action-bar">
+          <button class="btn btn-primary" type="button" data-next>무료로 1회 만들어보기</button>
+          <p class="micro">생성 후 사진은 즉시 삭제돼요</p>
+        </div>
+      </main>
+
+      <!-- STEP 2 -->
+      <main class="view" data-view="2" aria-labelledby="v2-title" hidden>
+        <div class="view-body">
+          <h2 id="v2-title" class="head">어떤 스타일로 볼까요?</h2>
+          <p class="sub">Colorfit에서 고른 실물 세트예요.</p>
+
+          <ol class="sets">
+            <li class="set" data-interaction="staged-enter weight-shift" data-state="content-enter selected">
+              <svg class="set-visual" viewBox="0 0 64 64" role="img" data-visual="style-set-minimal"
+                   aria-labelledby="set1-t set1-d">
+                <title id="set1-t">미니멀 출근룩 구성</title>
+                <desc id="set1-d">셔츠, 슬랙스, 로퍼 세 품목.</desc>
+                <path d="M14 8h14l4 4-4 4v18H14V16l-4-4z" fill="currentColor" opacity=".55" />
+                <rect x="36" y="10" width="16" height="30" rx="2" fill="currentColor" opacity=".35" />
+                <rect x="14" y="44" width="38" height="12" rx="3" fill="currentColor" opacity=".22" />
+              </svg>
+              <div class="set-meta">
+                <p class="set-name">미니멀 출근룩</p>
+                <p class="set-tags">셔츠 · 슬랙스 · 로퍼</p>
+              </div>
+              <svg class="check" viewBox="0 0 16 16" aria-label="선택됨">
+                <path d="M3.5 8.5l3 3 6-6.5" fill="none" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </li>
+            <li class="set" data-interaction="staged-enter weight-shift" data-state="content-enter">
+              <svg class="set-visual" viewBox="0 0 64 64" role="img" aria-label="꾸안꾸 데일리룩: 니트, 데님, 스니커즈">
+                <path d="M12 10h18l5 5-5 4v17H12V19l-5-4z" fill="currentColor" opacity=".45" />
+                <rect x="38" y="12" width="15" height="28" rx="2" fill="currentColor" opacity=".3" />
+                <rect x="12" y="44" width="41" height="11" rx="5" fill="currentColor" opacity=".2" />
+              </svg>
+              <div class="set-meta">
+                <p class="set-name">꾸안꾸 데일리룩</p>
+                <p class="set-tags">니트 · 데님 · 스니커즈</p>
+              </div>
+            </li>
+            <li class="set" data-interaction="staged-enter weight-shift" data-state="content-enter">
+              <svg class="set-visual" viewBox="0 0 64 64" role="img" aria-label="주말 카페룩: 후드, 와이드팬츠">
+                <path d="M13 12h17l4 5-4 4v16H13V21l-4-4z" fill="currentColor" opacity=".4" />
+                <rect x="37" y="14" width="16" height="26" rx="2" fill="currentColor" opacity=".28" />
+                <rect x="13" y="45" width="40" height="10" rx="4" fill="currentColor" opacity=".18" />
+              </svg>
+              <div class="set-meta">
+                <p class="set-name">주말 카페룩</p>
+                <p class="set-tags">후드 · 와이드팬츠</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="action-bar">
+          <button class="btn btn-primary" type="button" data-next>이 스타일로 만들기</button>
+        </div>
+      </main>
+
+      <!-- STEP 3 -->
+      <main class="view view-center" data-view="3" aria-labelledby="v3-title" hidden>
+        <div class="view-body view-body-center">
+          <h2 id="v3-title" class="head">착장샷을 만들고 있어요</h2>
+          <p class="status" role="status">얼굴을 유지한 채 스타일을 입히는 중 · 약 40초</p>
+
+          <div class="skeletons" aria-hidden="true">
+            <span class="sk sk-frame" data-interaction="skeleton-placeholder"></span>
+            <span class="sk sk-line" data-interaction="skeleton-placeholder"></span>
+            <span class="sk sk-line sk-short" data-interaction="skeleton-placeholder"></span>
+          </div>
+
+          <dl class="wait-facts">
+            <div><dt>얼굴</dt><dd>업로드 완료</dd></div>
+            <div><dt>체형 샘플</dt><dd>보통 · 170cm대</dd></div>
+            <div><dt>스타일</dt><dd>미니멀 출근룩</dd></div>
+          </dl>
+        </div>
+
+        <div class="action-bar">
+          <button class="btn btn-quiet" type="button" data-back>취소하고 돌아가기</button>
+        </div>
+      </main>
+
+      <!-- STEP 4 -->
+      <main class="view" data-view="4" aria-labelledby="v4-title" hidden>
+        <div class="view-body">
+          <h2 id="v4-title" class="head">완성됐어요</h2>
+
+          <figure class="result">
+            <svg viewBox="0 0 320 400" role="img" data-visual="outfit-result"
+                 aria-labelledby="rs-t rs-d">
+              <title id="rs-t">생성된 착장샷</title>
+              <desc id="rs-d">미니멀 출근룩을 입은 전신 착장 이미지. 셔츠와 슬랙스, 로퍼.</desc>
+              <rect x="0" y="0" width="320" height="400" rx="10" fill="currentColor" opacity=".07" />
+              <circle cx="160" cy="92" r="34" fill="currentColor" opacity=".55" />
+              <path d="M118 400c0-86 19-152 42-152s42 66 42 152z" fill="currentColor" opacity=".4" />
+              <path d="M126 196h68" stroke="currentColor" stroke-width="3" opacity=".45" />
+              <path d="M134 292h52" stroke="currentColor" stroke-width="3" opacity=".3" />
+            </svg>
+            <figcaption>미니멀 출근룩 · 보통 체형 샘플</figcaption>
+          </figure>
+
+          <p class="used-note">무료 생성 1회를 사용했어요. 크레딧을 사면 다른 스타일도 만들어볼 수 있어요.</p>
+
+          <table class="credits">
+            <caption>크레딧 안내</caption>
+            <thead>
+              <tr><th scope="col">패키지</th><th scope="col">생성</th><th scope="col">가격</th></tr>
+            </thead>
+            <tbody>
+              <tr data-interaction="weight-shift" data-state="selected">
+                <th scope="row">3 크레딧</th><td>스타일 3회</td><td>1,900원</td>
+              </tr>
+              <tr data-interaction="weight-shift">
+                <th scope="row">10 크레딧</th><td>옷장 5회</td><td>5,900원</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="action-bar">
+          <div class="row-actions">
+            <button class="btn btn-quiet" type="button">
+              <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M8 2v8m0 0L5 7m3 3l3-3M3 13h10" fill="none" stroke="currentColor"
+                      stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              저장
+            </button>
+            <button class="btn btn-quiet" type="button">
+              <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M11 5.5a2 2 0 1 0-1.9-2.6L6 4.6a2 2 0 1 0 0 2.8l3.1 1.7A2 2 0 1 0 11 5.5z"
+                      fill="none" stroke="currentColor" stroke-width="1.3" />
+              </svg>
+              공유
+            </button>
+          </div>
+          <button class="btn btn-primary" type="button">크레딧 사고 계속하기</button>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const app = document.querySelector('.app');
+      const views = [...document.querySelectorAll('.view')];
+      const anchor = document.querySelector('[data-anchor]');
+      const dots = [...document.querySelectorAll('.dot')];
+
+      function show(step) {
+        app.dataset.step = String(step);
+        views.forEach((view) => {
+          view.hidden = Number(view.dataset.view) !== step;
+        });
+        dots.forEach((dot) => {
+          dot.classList.toggle('is-on', Number(dot.dataset.dot) === step);
+        });
+        anchor.style.transform = `translateX(${(step - 1) * 14}px)`;
+        window.scrollTo(0, 0);
+      }
+
+      document.querySelectorAll('[data-next]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const step = Number(app.dataset.step);
+          show(Math.min(step + 1, views.length));
+          if (step + 1 === 3) window.setTimeout(() => show(4), 2400);
+        });
+      });
+      document.querySelectorAll('[data-back]').forEach((button) => {
+        button.addEventListener('click', () => show(Math.max(Number(app.dataset.step) - 1, 1)));
+      });
+
+      document.querySelectorAll('.set').forEach((set) => {
+        set.addEventListener('click', () => {
+          set.closest('.sets').querySelectorAll('.set').forEach((other) => {
+            other.setAttribute('data-state', 'content-enter');
+            other.querySelector('.check')?.remove();
+          });
+          set.setAttribute('data-state', 'content-enter selected');
+        });
+      });
+      document.querySelectorAll('.credits tbody tr').forEach((row) => {
+        row.addEventListener('click', () => {
+          row.closest('tbody').querySelectorAll('tr').forEach((o) => o.removeAttribute('data-state'));
+          row.setAttribute('data-state', 'selected');
+        });
+      });
+
+      show(1);
+    </script>
+  </body>
+</html>
