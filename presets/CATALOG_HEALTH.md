@@ -1,6 +1,6 @@
 # Catalog Health Report
 
-> Generated at `2026-08-10T10:15:40Z` · harness `0.2.0`
+> Generated at `2026-11-09T19:30:35Z` · harness `0.2.0`
 
 ## Overview
 
